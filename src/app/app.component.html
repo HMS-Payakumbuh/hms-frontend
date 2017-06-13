@@ -1,0 +1,21 @@
+<html>
+	<div class="row">
+		<div class="offset-md-1">
+			<h1>{{title}}</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3 offset-md-1">
+			<div class="card">
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item"><a routerLink="">Home</a></li>
+					<li class="list-group-item"><a routerLink="/transaksi">Transaksi</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-7">
+			<router-outlet>
+			</router-outlet>
+		</div> 
+	</div>
+</html>

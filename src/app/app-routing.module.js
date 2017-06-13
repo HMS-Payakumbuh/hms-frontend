@@ -6,31 +6,26 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require("@angular/core");
-var platform_browser_1 = require("@angular/platform-browser");
-var forms_1 = require("@angular/forms");
+var router_1 = require("@angular/router");
 var transaksi_component_1 = require("./transaksi.component");
-var app_component_1 = require("./app.component");
-var app_routing_module_1 = require("./app-routing.module");
-var AppModule = (function () {
-    function AppModule() {
+var routes = [
+    { path: '', redirectTo: '/', pathMatch: 'full' },
+    { path: 'transaksi', component: transaksi_component_1.TransaksiComponent }
+];
+var AppRoutingModule = (function () {
+    function AppRoutingModule() {
     }
-    return AppModule;
+    return AppRoutingModule;
 }());
-AppModule = __decorate([
+AppRoutingModule = __decorate([
     core_1.NgModule({
         imports: [
-            platform_browser_1.BrowserModule,
-            forms_1.FormsModule,
-            app_routing_module_1.AppRoutingModule
+            router_1.RouterModule.forRoot(routes)
         ],
-        declarations: [
-            app_component_1.AppComponent,
-            transaksi_component_1.TransaksiComponent
-        ],
-        bootstrap: [
-            app_component_1.AppComponent
+        exports: [
+            router_1.RouterModule
         ]
     })
-], AppModule);
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map
+], AppRoutingModule);
+exports.AppRoutingModule = AppRoutingModule;
+//# sourceMappingURL=app-routing.module.js.map
