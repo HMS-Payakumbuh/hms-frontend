@@ -8,9 +8,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var transaksi_component_1 = require("./transaksi.component");
+var transaksi_detail_component_1 = require("./transaksi-detail.component");
 var routes = [
     { path: '', redirectTo: '/', pathMatch: 'full' },
-    { path: 'transaksi', component: transaksi_component_1.TransaksiComponent }
+    { path: 'transaksi', component: transaksi_component_1.TransaksiComponent },
+    { path: 'transaksi/:id', component: transaksi_detail_component_1.TransaksiDetailComponent }
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {

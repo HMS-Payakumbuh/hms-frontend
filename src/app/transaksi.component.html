@@ -1,13 +1,48 @@
-<html>
+<html lang="en">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-header card-info mb-3">
-					Informasi Transaksi
+					Daftar Transaksi
 				</div>
 				<div class="card-block">
-					<h3 class="card-title">INV0000001</h3>
-					<p class="card-text"> info goes here</p>
+					<div class="row">
+						<div class="col-md-12 input-group">
+							<input type="text" class="form-control" placeholder="Nama Pasien atau Nomor Transaksi">
+							<span class="input-group-btn">
+								<button class="btn btn-default"><i class="fa fa-search"></i></button>
+							</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 input-group" id="datetimepicker">
+							<input type="text" class="form-control" placeholder="Tanggal Transaksi">
+							<span class="input-group-btn">
+								<button (click)="onClickDatePicker()" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+							</span>
+						</div>
+					</div>
+					<br>
+					<div>
+						<table class="table">
+							<tbody>
+								<tr>
+									<th>#</th>
+									<th>Nama Pasien</th>
+									<th>Tanggal Transaksi</th>
+									<th>Status</th>
+									<th></th>
+								</tr>
+								<tr *ngFor="let transaksi of allTransaksi">
+									<td>{{transaksi.id}}</td>
+									<td>{{transaksi.nama_pasien}}</td>
+									<td>{{transaksi.tanggal}}</td>
+									<td>{{transaksi.status}}</td>								
+									<td><button type="button" class="btn btn-primary" [routerLink] = "['/transaksi', transaksi.id]">Details</button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
