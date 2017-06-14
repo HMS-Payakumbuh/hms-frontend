@@ -11,6 +11,7 @@ import { InMemoryDataService }      from './in-memory-data.service';
 
 import { TransaksiComponent }       from './transaksi.component';
 import { TransaksiDetailComponent } from './transaksi-detail.component';
+import { PasienFormComponent }   from './pasien/pasien-form.component';
 import { AppComponent }             from './app.component';
 
 
@@ -25,6 +26,7 @@ import { AppComponent }             from './app.component';
     declarations: [ 
         AppComponent,
         TransaksiComponent,
+        PasienFormComponent ,
         TransaksiDetailComponent 
     ],
     bootstrap:    [ 

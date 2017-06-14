@@ -1,0 +1,188 @@
+  <div class="col-md-12">
+    <div class="card mb-3">
+
+      <div class="card-header card-info">
+        <ul class="nav nav-tabs card-header-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#baru" role="tab" style="color: black;">
+              <i class="fa fa-clipboard" aria-hidden="true"></i> Pasien Baru
+            </a>
+          </li>             
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#lama" role="tab" style="color: black;">
+              <i class="fa fa-stethoscope" aria-hidden="true"></i> Pasien Lama
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card-block">
+        <div class="tab-content">
+
+          <div class="tab-pane fade show active" id="baru" role="tabpanel">
+            <div class="card-text">
+                <form #pasienBaruForm="ngForm">
+                  <div class="form-group">
+                    <label for="name">Nama *</label>
+                    <input type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="gender">Jenis Kelamin *</label>
+                    <select class="form-control" id="gender" required [(ngModel)]="model.gender" name="gender">
+                      <option *ngFor="let gender of genders" [value]="gender">{{gender}}</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="dob">Tanggal Lahir</label>
+                    <input type="date" class="form-control" id="dob" [(ngModel)]="model.dob" name="dob">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="religion">Agama</label>
+                    <select class="form-control" id="religion" [(ngModel)]="model.religion" name="religion">
+                      <option *ngFor="let religion of religions" [value]="religion">{{religion}}</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="address">Alamat</label>
+                    <textarea class="form-control" id="address" [(ngModel)]="model.address" name="address"></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="phone">Kontak</label>
+                    <input type="tel" class="form-control" id="phone" [(ngModel)]="model.phone" name="phone">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="services">Layanan</label>
+                    <select class="form-control" id="service" [(ngModel)]="service" name="service">
+                      <option *ngFor="let service of services" [value]="service">{{service}}</option>
+                    </select>
+                  </div>
+
+                  <div *ngIf="service" class="form-group">
+                    <label for="doctor">Doktor</label>
+                    <select class="form-control" id="doctor" [(ngModel)]="doctor" name="doctor">
+                      <option *ngFor="let doctor of doctors" [value]="doctor">{{doctor}}</option>
+                    </select>
+                  </div>
+
+                  <div *ngIf="bpjs" class="form-group">
+                    <label for="norujukan">Nomor Rujukan</label>
+                    <input type="string" class="form-control" id="norujukan" [(ngModel)]="model.norujukan" name="norujukan">
+                  </div>
+
+                  <div *ngIf="bpjs" class="form-group">
+                    <label for="nosep">Nomor SEP</label>
+                    <input type="string" class="form-control" id="nosep" [(ngModel)]="model.nosep" name="nosep">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" [checked]="bpjs" (change)="bpjs = !bpjs">
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">Rujukan BPJS</span>
+                    </label>
+                  </div>
+
+                  <button type="submit" class="btn btn-success" [disabled]="!pasienBaruForm.form.valid">Simpan</button>
+                </form>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="lama" role="tabpanel">
+            <div class="card-text">
+
+                <div class="form-group">
+                  <label for="search">Cari Pasien</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" id="search" [(ngModel)]="search" placeholder="Masukkan id/nama pasien untuk memulai pencarian">
+                    <span class="input-group-btn">
+                      <button class="btn btn-secondary" type="button">Mulai</button>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" [checked]="update" (change)="update = !update">
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">Perbarui Data</span>
+                    </label>
+                  </div>
+
+                <form *ngIf="search">
+                  <div class="form-group">
+                    <label for="name">Nama *</label>
+                    <input *ngIf="update" type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name">
+                    <input *ngIf="!update" type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name" disabled>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="gender">Jenis Kelamin *</label>
+                    <select *ngIf="update" class="form-control" id="gender" required [(ngModel)]="model.gender" name="gender">
+                      <option *ngFor="let gender of genders" [value]="gender">{{gender}}</option>
+                    </select>
+                    <select *ngIf="!update" class="form-control" id="gender" required [(ngModel)]="model.gender" name="gender" disabled>
+                      <option *ngFor="let gender of genders" [value]="gender">{{gender}}</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="dob">Tanggal Lahir</label>
+                    <input *ngIf="update" type="date" class="form-control" id="dob" [(ngModel)]="model.dob" name="dob">
+                    <input *ngIf="!update" type="date" class="form-control" id="dob" [(ngModel)]="model.dob" name="dob" disabled>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="religion">Agama</label>
+                    <select *ngIf="update" class="form-control" id="religion" [(ngModel)]="model.religion" name="religion">
+                      <option *ngFor="let religion of religions" [value]="religion">{{religion}}</option>
+                    </select>
+                    <select *ngIf="!update" class="form-control" id="religion" [(ngModel)]="model.religion" name="religion" disabled>
+                      <option *ngFor="let religion of religions" [value]="religion">{{religion}}</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="address">Alamat</label>
+                    <textarea *ngIf="update" class="form-control" id="address" [(ngModel)]="model.address" name="address"></textarea>
+                    <textarea *ngIf="!update" class="form-control" id="address" [(ngModel)]="model.address" name="address" disabled></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="phone">Kontak</label>
+                    <input *ngIf="update" type="tel" class="form-control" id="phone" [(ngModel)]="model.phone" name="phone">
+                    <input *ngIf="!update" type="tel" class="form-control" id="phone" [(ngModel)]="model.phone" name="phone" disabled>
+                  </div>
+
+                  <div *ngIf="bpjs" class="form-group">
+                    <label for="nosep">Nomor SEP</label>
+                    <input *ngIf="update" type="string" class="form-control" id="nosep" [(ngModel)]="model.nosep" name="nosep">
+                    <input *ngIf="!update" type="string" class="form-control" id="nosep" [(ngModel)]="model.nosep" name="nosep" disabled>
+                  </div>
+
+                  <div *ngIf="bpjs" class="form-group">
+                    <label for="norujukan">Nomor Rujukan</label>
+                    <input type="string" class="form-control" id="norujukan" [(ngModel)]="model.norujukan" name="norujukan">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" [checked]="bpjs" (change)="bpjs = !bpjs">
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">Rujukan BPJS</span>
+                    </label>
+                  </div>
+
+                  <button type="submit" class="btn btn-success">Simpan</button>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
