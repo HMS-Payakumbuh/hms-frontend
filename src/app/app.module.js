@@ -8,9 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
-var transaksi_component_1 = require("./transaksi.component");
-var app_component_1 = require("./app.component");
+var http_1 = require("@angular/http");
 var app_routing_module_1 = require("./app-routing.module");
+// imports for loading & configuring the in-memory api
+var angular_in_memory_web_api_1 = require("angular-in-memory-web-api");
+var in_memory_data_service_1 = require("./in-memory-data.service");
+var transaksi_component_1 = require("./transaksi.component");
+var transaksi_detail_component_1 = require("./transaksi-detail.component");
+var app_component_1 = require("./app.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -21,11 +26,14 @@ AppModule = __decorate([
         imports: [
             platform_browser_1.BrowserModule,
             forms_1.FormsModule,
-            app_routing_module_1.AppRoutingModule
+            app_routing_module_1.AppRoutingModule,
+            http_1.HttpModule,
+            angular_in_memory_web_api_1.InMemoryWebApiModule.forRoot(in_memory_data_service_1.InMemoryDataService)
         ],
         declarations: [
             app_component_1.AppComponent,
-            transaksi_component_1.TransaksiComponent
+            transaksi_component_1.TransaksiComponent,
+            transaksi_detail_component_1.TransaksiDetailComponent
         ],
         bootstrap: [
             app_component_1.AppComponent
