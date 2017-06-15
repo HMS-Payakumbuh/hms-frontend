@@ -25,7 +25,7 @@ export class TransaksiComponent {
 			.then(allTransaksi => this.allTransaksi);
 	}
 
-	onClickDatePicker() {
-		$('#datetimepicker').datepicker();
+	onClickDatePicker(): void {
+		
 	}
 }
