@@ -25,7 +25,6 @@ var TransaksiComponent = (function () {
             .then(function (allTransaksi) { return _this.allTransaksi; });
     };
     TransaksiComponent.prototype.onClickDatePicker = function () {
-        $('#datetimepicker').datepicker();
     };
     return TransaksiComponent;
 }());
