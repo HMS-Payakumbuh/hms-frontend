@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var core_1 = require("@angular/core");
 var AppComponent = (function () {
     function AppComponent() {
-        this.title = 'HMS Front Page';
+        this.title = 'Hospital Management System';
     }
     return AppComponent;
 }());
