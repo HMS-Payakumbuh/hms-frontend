@@ -1,0 +1,44 @@
+<html lang="en">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header card-info mb-3">
+					Daftar Transaksi
+				</div>
+				<div class="card-block">
+					<div class="row">
+						<div class="col-md-12 input-group">
+							<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="Nama Pasien">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 input-group" id="datetimepicker">
+								<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" placeholder="Tanggal Transaksi">
+						</div>
+					</div>
+					<br>
+					<div>
+						<table class="table">
+							<tbody>
+								<tr>
+									<th>#</th>
+									<th>Nama Pasien</th>
+									<th>Tanggal Transaksi</th>
+									<th></th>
+									<th></th>
+								</tr>
+								<tr *ngFor="let transaksi of allTransaksi | matchesStatus: &quot;open&quot; | filterNamaPasien: searchParam : false">
+									<td>{{transaksi.id}}</td>
+									<td>{{transaksi.nama_pasien}}</td>
+									<td>{{transaksi.tanggal}}</td>
+									<td></td>								
+									<td><button type="button" class="btn btn-primary" [routerLink] = "['/transaksi', transaksi.id]">Details</button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</html>

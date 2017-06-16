@@ -7,16 +7,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var DaftarObatComponent = (function () {
-    function DaftarObatComponent() {
+var MatchesStatusPipe = (function () {
+    function MatchesStatusPipe() {
     }
-    return DaftarObatComponent;
+    MatchesStatusPipe.prototype.transform = function (items, status) {
+        if (!items || !status) {
+            return items;
+        }
+        return items.filter(function (item) { return item.status === status; });
+    };
+    return MatchesStatusPipe;
 }());
-DaftarObatComponent = __decorate([
-    core_1.Component({
-        selector: 'daftar-obat-page',
-        templateUrl: './daftar-obat.component.html'
+MatchesStatusPipe = __decorate([
+    core_1.Pipe({
+        name: 'matchesStatus'
     })
-], DaftarObatComponent);
-exports.DaftarObatComponent = DaftarObatComponent;
-//# sourceMappingURL=daftar-obat.component.js.map
+], MatchesStatusPipe);
+exports.MatchesStatusPipe = MatchesStatusPipe;
+//# sourceMappingURL=matches-status.pipe.js.map

@@ -3,17 +3,18 @@ import { BrowserModule }            from '@angular/platform-browser';
 import { FormsModule }              from '@angular/forms';
 import { ReactiveFormsModule }      from '@angular/forms';
 import { HttpModule }               from '@angular/http';
+import { DpDatePickerModule }       from 'ng2-date-picker';
 
+import { MatchesStatusPipe }        from './pipe/matches-status.pipe';
+import { FilterNamaPasienPipe }     from './pipe/filter-nama-pasien.pipe';
 
-// imports for loading & configuring the in-memory api
-//import { InMemoryWebApiModule }     from 'angular-in-memory-web-api';
-//import { InMemoryDataService }      from './in-memory-data.service';
-import { AppRoutingModule }         from './app-routing.module';
-import { TransaksiComponent }       from './transaksi.component';
-import { TransaksiDetailComponent } from './transaksi-detail.component';
-import { AntrianComponent }  from './antrian/antrian.component';
+import { TransaksiComponent }       from './transaksi/transaksi.component';
+import { TransaksiDetailComponent } from './transaksi/transaksi-detail.component';
+import { AntrianComponent }         from './antrian/antrian.component';
 import { PasienFormComponent }      from './pasien/pasien-form.component';
 import { RawatJalanComponent }      from './rawat-jalan.component';
+
+import { AppRoutingModule }         from './app-routing.module';
 import { AppComponent }             from './app.component';
 
 
@@ -23,16 +24,18 @@ import { AppComponent }             from './app.component';
       	FormsModule,
         ReactiveFormsModule,
         AppRoutingModule,
-        HttpModule
-        //InMemoryWebApiModule.forRoot(InMemoryDataService)
+        HttpModule,
+        DpDatePickerModule
     ],
     declarations: [ 
         AppComponent,
         TransaksiComponent,
         PasienFormComponent,
-        AntrianComponent,
-        TransaksiDetailComponent, 
-        RawatJalanComponent 
+        TransaksiDetailComponent,
+        RawatJalanComponent,
+        MatchesStatusPipe,
+        FilterNamaPasienPipe,
+        AntrianComponent
     ],
     bootstrap:    [ 
 	   AppComponent
