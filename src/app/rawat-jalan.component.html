@@ -1,24 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-  </head>
-  <body>
-  <div class="col-8">
-		<div class="card mb-3">
-			<div class="card-header card-info">
-				<h4>
-					<i class="fa fa-id-card-o" aria-hidden="true"></i> Data Pasien
-				</h4>
-			</div>
-			<div class="card-block">
-				<p class="card-text">
+<html>
+	<div class="row">
+	  <div class="col-md-12">
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-id-card-o" aria-hidden="true"></i> Data Pasien
+					</h4>
+				</div>
+				<div class="card-block">
 					<table class="table">
 						<tbody>
 							<tr>
@@ -35,42 +24,41 @@
 							</tr>
 						</tbody>
 					</table>
-				</p>
-			</div>
-		</div>
-
-		<div class="card mb-3">
-
-			<div class="card-header card-info">
-				<ul class="nav nav-tabs card-header-tabs">
-					<li class="nav-item">
-						<a class="nav-link active" data-toggle="tab" href="#pengecekan" role="tab" style="color: black;">
-							<i class="fa fa-clipboard" aria-hidden="true"></i> Pengecekan
-						</a>
-					</li>    					
-					<li class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#diagnosis" role="tab" style="color: black;">
-							<i class="fa fa-stethoscope" aria-hidden="true"></i> Diagnosis
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#tindakan" role="tab" style="color: black;">
-							<i class="fa fa-medkit" aria-hidden="true"></i> Tindakan
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#resep" role="tab" style="color: black;">
-							<i class="fa fa-sticky-note-o" aria-hidden="true"></i> Resep
-						</a>
-					</li>
-				</ul>
+				</div>
 			</div>
 
-			<div class="card-block">
-				<div class="tab-content">
+			<div class="card mb-3">
 
-					<div class="tab-pane fade show active" id="pengecekan" role="tabpanel">
-						<p class="card-text">
+				<div class="card-header card-info">
+					<ul class="nav nav-tabs card-header-tabs">
+						<li class="nav-item">
+							<a class="nav-link active" data-toggle="tab" href="#pengecekan" role="tab" style="color: black;">
+								<i class="fa fa-clipboard" aria-hidden="true"></i> Pengecekan
+							</a>
+						</li>    					
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#diagnosis" role="tab" style="color: black;">
+								<i class="fa fa-stethoscope" aria-hidden="true"></i> Diagnosis
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#tindakan" role="tab" style="color: black;">
+								<i class="fa fa-medkit" aria-hidden="true"></i> Tindakan
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#resep" role="tab" style="color: black;">
+								<i class="fa fa-sticky-note-o" aria-hidden="true"></i> Resep
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="card-block">
+					<div class="tab-content">
+
+						<div class="tab-pane fade show active" id="pengecekan" role="tabpanel">
+
 							<form>
 								<div class="form-group">
 
@@ -106,51 +94,56 @@
 
 								</div>
 							</form>
-						</p>
-					</div>
 
-					<div class="tab-pane fade" id="diagnosis" role="tabpanel">
-						<p class="card-text">
+						</div>
+
+						<div class="tab-pane fade" id="diagnosis" role="tabpanel">
+
   						<form>
   							<div class="form-group">
   								<label for="diagnosis">Masukkan kode diagnosis pasien (ICD-10)</label>
   								<input type="text" class="form-control" id="inputDiagnosis">
   							</div>
 							</form>
-						</p>	  							
-					</div>
+	  							
+						</div>
 
-					<div class="tab-pane fade" id="tindakan" role="tabpanel">
-						<p class="card-text">
-  						<form>
-  							<div class="form-group">
-  								<label for="tindakan">Masukkan tindakan yang dilakukan (ICD-9-CM)</label>
-  								<input type="text" class="form-control" id="inputTindakan">
-  							</div>
+						<div class="tab-pane fade" id="tindakan" role="tabpanel">
+
+							<form>
+								<div class="form-group">
+									<label for="tindakan">Masukkan tindakan yang dilakukan (ICD-9-CM)</label>
+									<input type="text" class="form-control" id="inputTindakan">
+								</div>
 							</form>
-						</p>	  							
+	 							
+						</div>
+
+						<div class="tab-pane fade" id="resep" role="tabpanel">
+
+							<div class="form-group" [formGroup]="addForm">
+								<div formArrayName="resepEntry">
+
+									<div *ngFor="let obat of addForm.controls.resepEntry.controls; index as i">										
+										<div [formGroupName]="i">
+											<label for="resep">Obat {{i + 1}}</label>
+											<input type="text" class="form-control mb-3" formControlName="obatResep">
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+							<div>
+								<button class="btn btn-info fa fa-plus-square" (click)="addResepEntry()"></button>
+								<button *ngIf="addForm.controls.resepEntry.controls.length > 1" class="btn btn-danger fa fa-minus-square" (click)="removeResepEntry(addForm.controls.resepEntry.controls.length-1)"></button>
+							</div>
+
+						</div>					
+
 					</div>
-
-					<div class="tab-pane fade" id="resep" role="tabpanel">
-						<p class="card-text">
-  						<form>
-  							<div class="form-group">
-  								<label for="resep">Masukkan obat yang diresepkan</label>
-  								<input type="text" class="form-control" id="inputResep">
-  							</div>
-							</form>
-						</p>	  							
-					</div>					
-
 				</div>
 			</div>
 		</div>
 	</div>
-
-
-    <!-- jQuery first, then Tether, then Bootstrap JS. -->
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-  </body>
 </html>
