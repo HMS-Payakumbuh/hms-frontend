@@ -29,7 +29,11 @@
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
       
       // ng-bootstrap
-      '@ng-bootstrap/ng-bootstrap': 'npm:@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js'
+      '@ng-bootstrap/ng-bootstrap': 'npm:@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
+
+      // ng2-date-picker
+      'ng2-date-picker': 'npm:ng2-date-picker',
+      'moment': 'npm:moment',
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -42,6 +46,14 @@
         }
       },
       rxjs: {
+        defaultExtension: 'js'
+      },
+      'ng2-date-picker' : {
+        main: './index.js',
+        defaultExtension: 'js'
+      },
+      'moment' : {
+        main: './moment.js',
         defaultExtension: 'js'
       }
     }

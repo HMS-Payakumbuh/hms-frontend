@@ -1,9 +1,9 @@
 import { NgModule }      		from '@angular/core';
 import { RouterModule, Routes }	from '@angular/router';
 
-import { TransaksiComponent }   from './transaksi.component';
-import { PasienFormComponent }	from './pasien/pasien-form.component';
-import { TransaksiDetailComponent }		from './transaksi-detail.component';
+import { TransaksiComponent }   		from './transaksi/transaksi.component';
+import { TransaksiDetailComponent }		from './transaksi/transaksi-detail.component';
+import { PasienFormComponent }			from './pasien/pasien-form.component';
 import { RawatJalanComponent }			from './rawat-jalan.component';
 
 const routes: Routes = [

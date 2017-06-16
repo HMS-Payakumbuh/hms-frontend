@@ -1,0 +1,70 @@
+<html>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header card-info mb-3">
+					Informasi Transaksi
+				</div>
+				<div *ngIf="transaksi" class="card-block">
+					<div class="row">
+						<div class="col-md-6">
+							Invoice No. INV265000001
+						</div>
+						<div class="col-md-6">
+							<div class="row">
+								<div class="col-md-12">
+									<b>{{transaksi.nama_pasien}}</b>
+									<p>Laki-Laki</p>
+									<p>20 Tahun</p>
+									<p>No. Sep: {{transaksi.no_sep}}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<table class="table">
+							<tbody>
+								<tr>
+									<th>Tindakan</th>
+									<th></th>
+									<th>Harga</th>
+								</tr>
+								<tr *ngFor="let tindakan of transaksi.tindakan">
+									<td>{{tindakan.nama}}</td>
+									<td></td>
+									<td>Rp {{tindakan.harga}}</td>
+								</tr>
+								<tr>
+									<th>Obat</th>
+									<th></th>
+									<th></th>
+								</tr>
+								<tr *ngFor="let obat of transaksi.obat">
+									<td>{{obat.nama}}</td>
+									<td>{{obat.jumlah}} {{obat.satuan}}</td>
+									<td>Rp {{obat.jumlah * obat.harga_satuan}}</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td><b>Total Harga</b></td>
+									<td>Rp {{transaksi.harga}}</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td><b>Pembayaran Tunai</b></td>
+									<td>Rp {{transaksi.harga}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="row">
+						<div class="offset-md-8 col-md-4">
+							<button class="btn btn-danger" (click)="goBack()">Kembali</button>
+							<button class="btn btn-success">Bayar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</html>

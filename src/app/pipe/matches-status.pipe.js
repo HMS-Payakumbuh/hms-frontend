@@ -7,17 +7,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var AppComponent = (function () {
-    function AppComponent() {
-        this.title = 'Hospital Management System';
+var MatchesStatusPipe = (function () {
+    function MatchesStatusPipe() {
     }
-    return AppComponent;
+    MatchesStatusPipe.prototype.transform = function (items, status) {
+        if (!items || !status) {
+            return items;
+        }
+        return items.filter(function (item) { return item.status === status; });
+    };
+    return MatchesStatusPipe;
 }());
-AppComponent = __decorate([
-    core_1.Component({
-        selector: 'my-app',
-        templateUrl: './app.component.html'
+MatchesStatusPipe = __decorate([
+    core_1.Pipe({
+        name: 'matchesStatus'
     })
-], AppComponent);
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+], MatchesStatusPipe);
+exports.MatchesStatusPipe = MatchesStatusPipe;
+//# sourceMappingURL=matches-status.pipe.js.map
