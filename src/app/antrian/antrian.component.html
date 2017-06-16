@@ -1,0 +1,119 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-gear" aria-hidden="true">Antrian</i> 
+				</h4>
+			</div>
+			<div class="card-block">
+				<div class="card-text">
+					<div class="form-group" *ngIf="isfrontoffice">
+	                    <label for="kategori">Kategori Antrian</label>
+	                    <select class="form-control" id="kategori" [(ngModel)]="kategori" (ngModelChange)= "changeKategori()" name="kategori">
+	                      <option *ngFor="let kategori of kategoriAntrian" [value]="kategori">{{kategori}}</option>
+	                    </select>
+	                </div>
+	                <div class="form-group" *ngIf="kategori || !isfrontoffice">
+	                  	<label for="nomor">Sedang Melayani Nomor Antrian</label> 
+	                  	<input type="text" class="form-control" id="nomor" required [(ngModel)]="nomor" name="nomor" disabled>
+	              	</div>
+				</div>
+			</div>
+		</div>
+
+		<div *ngIf="kategori || !isfrontoffice">
+			<div class="card-header card-info">
+			    <ul class="nav nav-tabs card-header-tabs">
+		      <li class="nav-item">
+		        <a class="nav-link active" [ngClass]="{ 'active': umum, '': !umum }" data-toggle="tab" href="#umum" role="tab" style="color: black;">
+		          <i class="fa fa-drivers-license" aria-hidden="true"></i> Antrian Umum
+		        </a>
+		      </li>             
+		      <li class="nav-item">
+		        <a class="nav-link" [ngClass]="{ 'active': !umum, '': umum }" data-toggle="tab" href="#khusus" role="tab" style="color: black;">
+		          <i class="fa fa-drivers-license-o" aria-hidden="true"></i> Antrian Khusus
+		        </a>
+		      </li>
+		    </ul>
+			</div>
+
+			<div class="card-block">
+				<div class="tab-content">
+					<div [ngClass]="{ 'active': umum, '': !umum }" class="tab-pane fade show active" id="umum" role="tabpanel">
+						<div class="card-text">
+							<table class="table">
+								<tbody>
+									<tr>
+										<th>No Antrian</th>
+										<th>Nama Pasien</th>
+										<th>Waktu Masuk</th>
+										<th></th>
+									</tr>
+									<tr *ngFor="let antrian of antrianUmum">
+										<td>{{kategori}}{{antrian.no_antrian}}</td>
+										<td>{{antrian.nama_pasien}}</td>	
+										<td>{{antrian.waktu}}</td>
+										
+										<div *ngIf="(active==antrian.no_antrian)">
+											<td>
+												<button type="button" class="btn btn-danger btn-sm" [routerLink] = "['/antrian/undur', antrian.no_antrian]" (click)="proses(antrian.no_antrian)">Undur</button>
+											</td>
+											<td>
+												<button type="button" class="btn btn-primary btn-sm" [routerLink] = "['/antrian/proses', antrian.no_antrian]" (click)="proses(antrian.no_antrian)">Proses</button>
+											</td>
+										</div>
+										<div *ngIf="(active!=antrian.no_antrian)">
+											<td>
+												<button type="button" class="btn btn-warning btn-sm" [routerLink] = "['/antrian/undur', antrian.no_antrian]"  (click)="proses(antrian.no_antrian)" disabled>Undur</button>
+											</td>
+											<td>
+												<button type="button" class="btn btn-warning btn-sm" [routerLink] = "['/antrian/proses', antrian.no_antrian]" (click)="proses(antrian.no_antrian)" disabled>Proses</button>
+											</td>
+										</div>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					
+					<div [ngClass]="{ 'active': !umum, '': umum }" class="tab-pane fade show active" id="khusus" role="tabpanel">
+						<div class="card-text">
+							<table class="table">
+								<tbody>
+									<tr>
+										<th>No Antrian</th>
+										<th>Nama Pasien</th>
+										<th>Waktu Masuk</th>
+										<th></th>
+									</tr>
+									<tr *ngFor="let antrian of antrianKhusus">
+										<td>{{kategori}}{{antrian.no_antrian}}</td>
+										<td>{{antrian.nama_pasien}}</td>	
+										<td>{{antrian.waktu}}</td>
+										<div *ngIf="(active==antrian.no_antrian)">
+											<td>
+												<button type="button" class="btn btn-danger btn-sm" [routerLink] = "['/antrian/undur', antrian.no_antrian]" (click)="proses(antrian.no_antrian)">Undur</button>
+											</td>	
+											<td>
+												<button type="button" class="btn btn-primary btn-sm" [routerLink] = "['/antrian/proses', antrian.no_antrian]" (click)="proses(antrian.no_antrian)">Proses</button>
+											</td>
+										</div>
+										<div *ngIf="(active!=antrian.no_antrian)">
+											<td>
+												<button type="button" class="btn btn-warning btn-sm" [routerLink] = "['/antrian/undur', antrian.no_antrian]" (click)="proses(antrian.no_antrian)" disabled>Undur</button>
+											</td>	
+											<td>
+												<button type="button" class="btn btn-warning btn-sm" [routerLink] = "['/antrian/proses', antrian.no_antrian]" (click)="proses(antrian.no_antrian)" disabled>Proses</button>
+											</td>
+										</div>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

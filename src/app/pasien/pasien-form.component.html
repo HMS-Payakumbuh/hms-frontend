@@ -5,12 +5,12 @@
         <ul class="nav nav-tabs card-header-tabs">
           <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#baru" role="tab" style="color: black;">
-              <i class="fa fa-clipboard" aria-hidden="true"></i> Pasien Baru
+              <i class="fa fa-address-book" aria-hidden="true"></i> Pasien Baru
             </a>
           </li>             
           <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#lama" role="tab" style="color: black;">
-              <i class="fa fa-stethoscope" aria-hidden="true"></i> Pasien Lama
+              <i class="fa fa-address-book-o" aria-hidden="true"></i> Pasien Lama
             </a>
           </li>
         </ul>
@@ -28,8 +28,8 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="gender">Jenis Kelamin *</label>
-                    <select class="form-control" id="gender" required [(ngModel)]="model.gender" name="gender">
+                    <label for="gender">Jenis Kelamin</label>
+                    <select class="form-control" id="gender" [(ngModel)]="model.gender" name="gender">
                       <option *ngFor="let gender of genders" [value]="gender">{{gender}}</option>
                     </select>
                   </div>
@@ -71,13 +71,13 @@
                   </div>
 
                   <div *ngIf="bpjs" class="form-group">
-                    <label for="norujukan">Nomor Rujukan</label>
-                    <input type="string" class="form-control" id="norujukan" [(ngModel)]="model.norujukan" name="norujukan">
+                    <label for="no_rujukan">Nomor Rujukan</label>
+                    <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="model.no_rujukan" name="no_rujukan">
                   </div>
 
                   <div *ngIf="bpjs" class="form-group">
-                    <label for="nosep">Nomor SEP</label>
-                    <input type="string" class="form-control" id="nosep" [(ngModel)]="model.nosep" name="nosep">
+                    <label for="no_bpjs">Nomor BPJS</label>
+                    <input type="string" class="form-control" id="no_bpjs" [(ngModel)]="model.no_bpjs" name="no_bpjs">
                   </div>
                   
                   <div class="form-group">
@@ -123,10 +123,10 @@
 
                   <div class="form-group">
                     <label for="gender">Jenis Kelamin *</label>
-                    <select *ngIf="update" class="form-control" id="gender" required [(ngModel)]="model.gender" name="gender">
+                    <select *ngIf="update" class="form-control" id="gender" [(ngModel)]="model.gender" name="gender">
                       <option *ngFor="let gender of genders" [value]="gender">{{gender}}</option>
                     </select>
-                    <select *ngIf="!update" class="form-control" id="gender" required [(ngModel)]="model.gender" name="gender" disabled>
+                    <select *ngIf="!update" class="form-control" id="gender" [(ngModel)]="model.gender" name="gender" disabled>
                       <option *ngFor="let gender of genders" [value]="gender">{{gender}}</option>
                     </select>
                   </div>
@@ -160,14 +160,14 @@
                   </div>
 
                   <div *ngIf="bpjs" class="form-group">
-                    <label for="nosep">Nomor SEP</label>
-                    <input *ngIf="update" type="string" class="form-control" id="nosep" [(ngModel)]="model.nosep" name="nosep">
-                    <input *ngIf="!update" type="string" class="form-control" id="nosep" [(ngModel)]="model.nosep" name="nosep" disabled>
+                    <label for="no_bpjs">Nomor BPJS</label>
+                    <input *ngIf="update" type="string" class="form-control" id="no_bpjs" [(ngModel)]="model.no_bpjs" name="no_bpjs">
+                    <input *ngIf="!update" type="string" class="form-control" id="no_bpjs" [(ngModel)]="model.no_bpjs" name="no_bpjs" disabled>
                   </div>
 
                   <div *ngIf="bpjs" class="form-group">
-                    <label for="norujukan">Nomor Rujukan</label>
-                    <input type="string" class="form-control" id="norujukan" [(ngModel)]="model.norujukan" name="norujukan">
+                    <label for="no_rujukan">Nomor Rujukan</label>
+                    <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="model.no_rujukan" name="no_rujukan">
                   </div>
                   
                   <div class="form-group">

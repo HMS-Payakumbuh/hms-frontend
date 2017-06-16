@@ -7,8 +7,8 @@ export class Pasien {
     public religion: string,
     public address: string,
     public phone: string,
-    public nosep: string,
-    public norujukan: string
+    public no_bpjs: string,
+    public no_rujukan: string
   ) {  }
 
 }
