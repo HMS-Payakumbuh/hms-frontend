@@ -38,7 +38,7 @@ var AntrianComponent = (function () {
         this.umum = !this.umum;
     };
     AntrianComponent.prototype.changeKategori = function () {
-        alert("kategori baru", this.kategori);
+        console.log("kategori baru");
     };
     AntrianComponent.prototype.onSubmit = function () { this.submitted = true; };
     return AntrianComponent;

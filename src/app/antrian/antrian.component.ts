@@ -40,7 +40,7 @@ export class AntrianComponent {
   }
 
   changeKategori() {
-    alert("kategori baru", this.kategori);
+    console.log("kategori baru");
   }
 
   submitted = false;
