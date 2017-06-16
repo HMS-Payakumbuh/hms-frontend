@@ -14,6 +14,13 @@ import { AntrianComponent }         from './antrian/antrian.component';
 import { PasienFormComponent }      from './pasien/pasien-form.component';
 import { RawatJalanComponent }      from './rawat-jalan.component';
 
+import { DaftarObatComponent }          from './farmasi/daftar-obat/daftar-obat.component';
+import { DetailObatComponent }          from './farmasi/detail-obat/detail-obat.component';
+import { ObatMasukFormComponent }       from './farmasi/obat-masuk-form/obat-masuk-form.component';
+
+import { DaftarJenisObatComponent }     from './farmasi/daftar-jenis-obat/daftar-jenis-obat.component';
+import { JenisObatFormComponent }       from './farmasi/jenis-obat-form/jenis-obat-form.component';
+
 import { AppRoutingModule }         from './app-routing.module';
 import { AppComponent }             from './app.component';
 
@@ -35,7 +42,12 @@ import { AppComponent }             from './app.component';
         RawatJalanComponent,
         MatchesStatusPipe,
         FilterNamaPasienPipe,
-        AntrianComponent
+        AntrianComponent,
+        DaftarObatComponent,
+        DetailObatComponent,
+        ObatMasukFormComponent,
+        DaftarJenisObatComponent,
+        JenisObatFormComponent
     ],
     bootstrap:    [ 
 	   AppComponent
