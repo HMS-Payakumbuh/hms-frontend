@@ -3,16 +3,19 @@ import { BrowserModule }            from '@angular/platform-browser';
 import { FormsModule }              from '@angular/forms';
 import { HttpModule }               from '@angular/http';
 
-import { AppRoutingModule }         from './app-routing.module';
 
 // imports for loading & configuring the in-memory api
-import { InMemoryWebApiModule }     from 'angular-in-memory-web-api';
+//import { InMemoryWebApiModule }     from 'angular-in-memory-web-api';
 //import { InMemoryDataService }      from './in-memory-data.service';
-
+import { AppRoutingModule }         from './app-routing.module';
 import { TransaksiComponent }       from './transaksi.component';
 import { TransaksiDetailComponent } from './transaksi-detail.component';
 import { AntrianComponent }  from './antrian/antrian.component';
 import { PasienFormComponent }   from './pasien/pasien-form.component';
+import { TransaksiComponent }       from './transaksi.component';
+import { TransaksiDetailComponent } from './transaksi-detail.component';
+import { PasienFormComponent }      from './pasien/pasien-form.component';
+import { RawatJalanComponent }      from './rawat-jalan.component';
 import { AppComponent }             from './app.component';
 
 
@@ -29,7 +32,8 @@ import { AppComponent }             from './app.component';
         TransaksiComponent,
         PasienFormComponent,
         AntrianComponent,
-        TransaksiDetailComponent 
+        TransaksiDetailComponent, 
+        RawatJalanComponent 
     ],
     bootstrap:    [ 
 	   AppComponent
