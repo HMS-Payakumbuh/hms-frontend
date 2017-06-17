@@ -1,0 +1,36 @@
+<html>
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>Daftar Poliklinik</h4>
+				</div>
+
+				<div class="card-block">
+					<table class="table">
+						<thead>
+							<th>Nama</th>
+							<th>Kategori Antrian</th>
+							<th>Sisa Pelayanan</th>
+							<th>Jumlah Antrian</th>
+							<th></th>
+						</thead>
+						<tbody *ngFor="let poliklinik of allPoliklinik">
+							<tr>
+								<td>{{poliklinik?.nama}}</td>
+								<td>{{poliklinik?.kategori_antrian}}</td>
+								<td>{{poliklinik?.sisa_pelayanan}}</td>
+								<td>0</td>
+								<td>
+									<button class="btn btn-info" routerLink="/{{poliklinik.nama}}/1">Lihat Antrian</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</html>
