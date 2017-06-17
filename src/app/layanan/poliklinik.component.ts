@@ -2,11 +2,11 @@ import { Component, OnInit }				from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
- 	selector: 'rawat-jalan-page',
- 	templateUrl: './rawat-jalan.component.html'
+ 	selector: 'poliklinik-page',
+ 	templateUrl: './poliklinik.component.html'
 })
 
-export class RawatJalanComponent implements OnInit {
+export class PoliklinikComponent implements OnInit {
 	addForm: FormGroup;
 
 	constructor(private formBuilder: FormBuilder) {}

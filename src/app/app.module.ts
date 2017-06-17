@@ -12,7 +12,7 @@ import { TransaksiComponent }       from './transaksi/transaksi.component';
 import { TransaksiDetailComponent } from './transaksi/transaksi-detail.component';
 import { AntrianComponent }         from './antrian/antrian.component';
 import { PasienFormComponent }      from './pasien/pasien-form.component';
-import { RawatJalanComponent }      from './rawat-jalan.component';
+import { PoliklinikComponent }      from './layanan/poliklinik.component';
 
 import { DaftarObatComponent }          from './farmasi/daftar-obat/daftar-obat.component';
 import { DetailObatComponent }          from './farmasi/detail-obat/detail-obat.component';
@@ -40,7 +40,7 @@ import { AppComponent }             from './app.component';
         TransaksiComponent,
         PasienFormComponent,
         TransaksiDetailComponent,
-        RawatJalanComponent,
+        PoliklinikComponent,
         MatchesStatusPipe,
         FilterNamaPasienPipe,
         AntrianComponent,
