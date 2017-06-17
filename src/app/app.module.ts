@@ -21,9 +21,10 @@ import { ObatMasukFormComponent }       from './farmasi/obat-masuk-form/obat-mas
 import { DaftarJenisObatComponent }     from './farmasi/daftar-jenis-obat/daftar-jenis-obat.component';
 import { JenisObatFormComponent }       from './farmasi/jenis-obat-form/jenis-obat-form.component';
 
+import { ObatPindahFormComponent }      from './farmasi/obat-pindah-form/obat-pindah-form.component';
+
 import { AppRoutingModule }         from './app-routing.module';
 import { AppComponent }             from './app.component';
-
 
 @NgModule({
     imports:      [
@@ -47,7 +48,8 @@ import { AppComponent }             from './app.component';
         DetailObatComponent,
         ObatMasukFormComponent,
         DaftarJenisObatComponent,
-        JenisObatFormComponent
+        JenisObatFormComponent,
+        ObatPindahFormComponent
     ],
     bootstrap:    [ 
 	   AppComponent
