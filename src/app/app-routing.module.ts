@@ -26,7 +26,7 @@ const routes: Routes = [
 	{ path: 'daftar-obat/:id', component: DetailObatComponent },
 	{ path: 'obat-masuk-form', component: ObatMasukFormComponent },
 	{ path: 'jenis-obat', component: DaftarJenisObatComponent },
-	{ path: 'jenis-obat-form', component: RawatJalanComponent }
+	{ path: 'jenis-obat-form', component: JenisObatFormComponent }	
 ];
 
 @NgModule ({
