@@ -5,7 +5,9 @@ import { TransaksiComponent }   		from './transaksi/transaksi.component';
 import { TransaksiDetailComponent }		from './transaksi/transaksi-detail.component';
 import { PasienFormComponent }			from './pasien/pasien-form.component';
 import { AntrianComponent }				from './antrian/antrian.component';
-import { PoliklinikComponent }			from './layanan/poliklinik.component';
+
+import { PoliklinikListComponent }				from './layanan/poliklinik-list.component';
+import { PoliklinikDetailComponent }			from './layanan/poliklinik-detail.component';
 
 import { DaftarObatComponent }			from './farmasi/daftar-obat/daftar-obat.component';
 import { DetailObatComponent }			from './farmasi/detail-obat/detail-obat.component';
@@ -26,7 +28,8 @@ const routes: Routes = [
 	{ path: 'antrian', component: AntrianComponent },
 	{ path: 'pendaftaran', component: PasienFormComponent},
 	{ path: 'transaksi/:id', component: TransaksiDetailComponent },
-	{ path: 'poliklinik', component: PoliklinikComponent },
+	{ path: 'poliklinik', component: PoliklinikListComponent },
+	{ path: 'poliklinik/:namaPoliklinik/:idTransaksi', component: PoliklinikDetailComponent },
 	{ path: 'daftar-obat', component: DaftarObatComponent },
 	{ path: 'daftar-obat/:id', component: DetailObatComponent },
 	{ path: 'obat-masuk-form', component: ObatMasukFormComponent },

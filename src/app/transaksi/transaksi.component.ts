@@ -1,7 +1,7 @@
 import { Component }				from '@angular/core';
 
-import { TransaksiService }		from './transaksi.service';
 import { Transaksi }			from './transaksi';
+import { TransaksiService }		from './transaksi.service';
 
 @Component({
  	selector: 'transaksi-page',
