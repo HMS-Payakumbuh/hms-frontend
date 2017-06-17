@@ -16,6 +16,8 @@ import { JenisObatFormComponent }		from './farmasi/jenis-obat-form/jenis-obat-fo
 
 import { ObatPindahFormComponent }		from './farmasi/obat-pindah-form/obat-pindah-form.component';
 
+import { ObatRusakFormComponent }      from './farmasi/obat-rusak-form/obat-rusak-form.component';
+
 const routes: Routes = [
 	{ path: '', redirectTo: '/', pathMatch: 'full' },
 	{ path: 'pendaftaran', component: PasienFormComponent },
@@ -29,7 +31,8 @@ const routes: Routes = [
 	{ path: 'obat-masuk-form', component: ObatMasukFormComponent },
 	{ path: 'jenis-obat', component: DaftarJenisObatComponent },
 	{ path: 'jenis-obat-form', component: JenisObatFormComponent },	
-	{ path: 'obat-pindah-form', component: ObatPindahFormComponent }	
+	{ path: 'obat-pindah-form', component: ObatPindahFormComponent },
+	{ path: 'obat-rusak-form', component: ObatRusakFormComponent }	
 ];
 
 @NgModule ({

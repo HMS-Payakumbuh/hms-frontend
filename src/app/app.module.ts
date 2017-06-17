@@ -23,6 +23,8 @@ import { JenisObatFormComponent }       from './farmasi/jenis-obat-form/jenis-ob
 
 import { ObatPindahFormComponent }      from './farmasi/obat-pindah-form/obat-pindah-form.component';
 
+import { ObatRusakFormComponent }      from './farmasi/obat-rusak-form/obat-rusak-form.component';
+
 import { AppRoutingModule }         from './app-routing.module';
 import { AppComponent }             from './app.component';
 
@@ -49,7 +51,8 @@ import { AppComponent }             from './app.component';
         ObatMasukFormComponent,
         DaftarJenisObatComponent,
         JenisObatFormComponent,
-        ObatPindahFormComponent
+        ObatPindahFormComponent,
+        ObatRusakFormComponent
     ],
     bootstrap:    [ 
 	   AppComponent
