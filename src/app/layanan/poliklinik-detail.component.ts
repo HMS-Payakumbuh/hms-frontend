@@ -4,6 +4,7 @@ import { FormGroup, FormArray, FormBuilder, Validators }	from '@angular/forms';
 
 import { Transaksi }						from '../transaksi/transaksi';
 import { TransaksiService }			from '../transaksi/transaksi.service';
+import { Poliklinik }						from './poliklinik';
 import { PoliklinikService }		from './poliklinik.service';
 
 @Component({
@@ -33,7 +34,7 @@ export class PoliklinikDetailComponent implements OnInit {
 		});
 
 		this.route.params
-			.switchMap((params: Params) => this.poliklinikService.getPoliklinik(+params['namaPoliklinik']))
+			.switchMap((params: Params) => this.poliklinikService.getPoliklinik(params['namaPoliklinik']))
 			.subscribe(poliklinik => this.poliklinik = poliklinik);
 
 		this.route.params

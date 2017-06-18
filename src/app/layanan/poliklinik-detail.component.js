@@ -27,7 +27,7 @@ var PoliklinikDetailComponent = (function () {
             resepEntry: this.formBuilder.array([this.initResepEntry()])
         });
         this.route.params
-            .switchMap(function (params) { return _this.poliklinikService.getPoliklinik(+params['namaPoliklinik']); })
+            .switchMap(function (params) { return _this.poliklinikService.getPoliklinik(params['namaPoliklinik']); })
             .subscribe(function (poliklinik) { return _this.poliklinik = poliklinik; });
         this.route.params
             .switchMap(function (params) { return _this.transaksiService.getTransaksi(+params['idTransaksi']); })
