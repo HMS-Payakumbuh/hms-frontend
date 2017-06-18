@@ -1,0 +1,95 @@
+  <div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-list-alt" aria-hidden="true"></i> Daftar Obat Pindah
+				</h4>
+			</div>
+			<div class="card-block">
+				<div class="card-text">
+					<div class="row">
+						<div class="col-md-6 pull-left">
+							<div class="input-group">
+				                <label for="asal"><b>Asal:</b></label>
+						  		<select class="form-control" id="asal">			
+								    <option>Gudang utama (GUD)</option>
+								    <option>Apotek (APT)</option>
+								    <option>Poliklinik Anak (PAN)</option>
+								    <option>Poliklinik Gigi (PGI)</option>
+								    <option>Poliklinik Kandungan (PKA)</option>
+								    <option>Poliklinik THT (PTH)</option>							
+								    <option>Instalasi Gawat Darurat (IGD)</option>
+						  		</select>
+							</div>
+						</div>
+
+						<div class="col-md-6 pull-right">
+							<div class="input-group">
+							<label for="tujuan"><b>Tujuan:</b></label>
+					  		<select class="form-control" id="tujuan">			
+							    <option>Gudang utama (GUD)</option>
+							    <option>Apotek (APT)</option>
+							    <option>Poliklinik Anak (PAN)</option>
+							    <option>Poliklinik Gigi (PGI)</option>
+							    <option>Poliklinik Kandungan (PKA)</option>
+							    <option>Poliklinik THT (PTH)</option>							
+							    <option>Instalasi Gawat Darurat (IGD)</option>
+					  		</select>
+						  	</div>
+						</div>
+					</div>
+
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>Kode Obat</th>
+								<th>Merek Obat</th>
+								<th>Kadaluarsa</th>
+								<th>Waktu Keluar</th>
+								<th>Jumlah</th>
+								<th>Asal</th>								
+								<th>Tujuan</th>
+								<th></th>
+							</tr>
+							<tr *ngFor="let obatPindah of allObatPindah">
+								<td>{{obatPindah.kode_obat}}</td>
+								<td>{{obatPindah.merek}}</td>	
+								<td>{{obatPindah.kadaluarsa}}</td>
+								<td>{{obatPindah.waktu_keluar}}</td>	
+								<td>{{obatPindah.jumlah}}</td>
+								<td>{{obatPindah.asal}}</td>
+								<td>{{obatPindah.tujuan}}</td>						
+								<td><button type="button" class="btn btn-primary" [routerLink] = "['/obat-pindah', obatPindah.waktu_keluar]">Detail</button></td>
+							</tr>	
+						</tbody>				
+					</table>
+
+					<nav aria-label="Halaman daftar obat pindah">
+						<div class="pull-left">
+						<a routerLink="/obat-pindah-form"><button type="button" class="btn btn-primary">Tambah obat pindah</button></a>
+						</div>
+
+					  	<ul class="pagination pull-right">
+						    <li class="page-item">
+		      					<a class="page-link" href="#" aria-label="Previous">
+							        <span aria-hidden="true">&laquo;</span>
+							        <span class="sr-only">Previous</span>
+		      					</a>
+		    				</li>
+						    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+						    <li class="page-item"><a class="page-link" href="#">2</a></li>
+						    <li class="page-item"><a class="page-link" href="#">3</a></li>
+						    <li class="page-item"><a class="page-link" href="#">4</a></li>
+						    <li class="page-item"><a class="page-link" href="#">5</a></li>
+						    <li class="page-item">
+					      		<a class="page-link" href="#" aria-label="Next">
+					        		<span aria-hidden="true">&raquo;</span>
+					        		<span class="sr-only">Next</span>
+					      		</a>
+		    				</li>
+					  	</ul>
+					</nav>
+				</div>
+			</div>	
+		</div>
+	</div>
