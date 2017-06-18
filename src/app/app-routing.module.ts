@@ -5,6 +5,7 @@ import { TransaksiComponent }   		from './transaksi/transaksi.component';
 import { TransaksiDetailComponent }		from './transaksi/transaksi-detail.component';
 import { PasienFormComponent }			from './pasien/pasien-form.component';
 import { AntrianComponent }				from './antrian/antrian.component';
+import { DaftarAntrianComponent }				from './antrian/daftar-antrian.component';
 
 import { PoliklinikListComponent }		from './layanan/poliklinik-list.component';
 import { PoliklinikDetailComponent }	from './layanan/poliklinik-detail.component';
@@ -27,6 +28,7 @@ const routes: Routes = [
 	{ path: 'pendaftaran', component: PasienFormComponent },
 	{ path: 'transaksi', component: TransaksiComponent },
 	{ path: 'antrian', component: AntrianComponent },
+	{ path: 'daftar-antrian', component: DaftarAntrianComponent },
 	{ path: 'pendaftaran', component: PasienFormComponent},
 	{ path: 'transaksi/:id', component: TransaksiDetailComponent },
 	{ path: 'poliklinik', component: PoliklinikListComponent },

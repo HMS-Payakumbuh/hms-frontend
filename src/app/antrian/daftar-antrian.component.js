@@ -10,42 +10,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
-var pasien_1 = require("./pasien");
 var poliklinik_service_1 = require("../layanan/poliklinik.service");
-var PasienFormComponent = (function () {
-    function PasienFormComponent(route, poliklinikService) {
+var DaftarAntrianComponent = (function () {
+    function DaftarAntrianComponent(route, poliklinikService) {
         this.route = route;
         this.poliklinikService = poliklinikService;
-        this.genders = ['Laki-laki', 'Perempuan'];
-        this.religions = ['Islam', 'Protestan', 'Katolik', 'Buddha', 'Hindu', 'Konghucu'];
-        this.doctors = ['Dr. Juan', 'Dr. Alec', 'Dr. Hans', 'Dr. Kelvin'];
-        this.model = new pasien_1.Pasien('Dr IQ', '2012-09-12', this.genders[0], this.religions[0], 'Chuck Overstreet', '0892983211', 'aa', 'a');
-        this.submitted = false;
+        this.disabilitas = false;
+        this.usia = 0;
     }
-    PasienFormComponent.prototype.ngOnInit = function () {
+    DaftarAntrianComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.poliklinikService.getAllPoliklinik()
             .then(function (allPoliklinik) { return _this.allPoliklinik = allPoliklinik; });
     };
-    PasienFormComponent.prototype.onSubmit = function () { this.submitted = true; };
-    Object.defineProperty(PasienFormComponent.prototype, "diagnostic", {
-        // TODO: Remove this when we're done
-        get: function () { return JSON.stringify(this.model); },
-        enumerable: true,
-        configurable: true
-    });
-    return PasienFormComponent;
+    DaftarAntrianComponent.prototype.daftar = function () {
+        console.log(this.poliklinik + this.usia + this.disabilitas);
+    };
+    return DaftarAntrianComponent;
 }());
-PasienFormComponent = __decorate([
+DaftarAntrianComponent = __decorate([
     core_1.Component({
-        selector: 'pasien-form',
-        templateUrl: './pasien-form.component.html',
+        selector: 'daftar-antrian',
+        templateUrl: './daftar-antrian.component.html',
         providers: [
             poliklinik_service_1.PoliklinikService
         ]
     }),
     __metadata("design:paramtypes", [router_1.ActivatedRoute,
         poliklinik_service_1.PoliklinikService])
-], PasienFormComponent);
-exports.PasienFormComponent = PasienFormComponent;
-//# sourceMappingURL=pasien-form.component.js.map
+], DaftarAntrianComponent);
+exports.DaftarAntrianComponent = DaftarAntrianComponent;
+//# sourceMappingURL=daftar-antrian.component.js.map

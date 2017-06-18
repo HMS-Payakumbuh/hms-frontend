@@ -12,6 +12,7 @@ import { FilterTanggalPipe }     from './pipe/filter-tanggal.pipe';
 import { TransaksiComponent }       from './transaksi/transaksi.component';
 import { TransaksiDetailComponent } from './transaksi/transaksi-detail.component';
 import { AntrianComponent }         from './antrian/antrian.component';
+import { DaftarAntrianComponent }         from './antrian/daftar-antrian.component';
 import { PasienFormComponent }      from './pasien/pasien-form.component';
 
 import { PoliklinikListComponent }      from './layanan/poliklinik-list.component';
@@ -53,6 +54,7 @@ import { AppComponent }             from './app.component';
         FilterNamaPasienPipe,
         FilterTanggalPipe,
         AntrianComponent,
+        DaftarAntrianComponent,
         DaftarObatComponent,
         DetailObatComponent,
         ObatMasukFormComponent,

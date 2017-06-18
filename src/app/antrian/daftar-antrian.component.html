@@ -1,0 +1,43 @@
+<div class="col-md-12">
+	<div class="card mb-3">
+		<div class="card-header card-info">
+			<h4>
+				<i class="fa fa-gear" aria-hidden="true"> Pendaftaran Antrian</i> 
+			</h4>
+		</div>
+		<div class="card-block">
+			<div class="card-text">
+				<form>
+					<div class="form-group">
+	                    <label for="poliklinik">Poliklinik Tujuan *</label>
+	                    <select class="form-control" id="poliklinik" [(ngModel)]="poliklinik" required name="poliklinik">
+		                    <ng-container *ngFor="let poliklinik of allPoliklinik">
+		                      <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}} - {{poliklinik.sisa_pelayanan}}</option>
+			                </ng-container>
+	                    </select>
+	                </div>
+	              	<div class="form-group">
+	                  	<label for="usia">Usia *</label> 
+	                  	<input type="number" class="form-control" id="usia" [(ngModel)]="usia" required name="usia">
+	              	</div>
+	              	<div class="form-group">
+	                  	<label for="radio">Apakah Anda seorang penyandang disabilitas? *</label> 
+	                  	<div class="form-check">
+						  <label class="form-check-label">
+						    <input class="form-check-input" type="radio" [(ngModel)]="disabilitas" name="disabilitas" id="disabilitas" [value]=false >
+						    Tidak
+						  </label>
+						</div>
+						<div class="form-check">
+						  <label class="form-check-label">
+						    <input class="form-check-input" type="radio" [(ngModel)]="disabilitas"  name="disabilitas" id="disabilitas" [value]=true>
+						    Ya
+						  </label>
+						</div>
+	                </div>
+                 	<button type="button" class="btn btn-success" (click)="daftar()">Daftar</button>
+                 </form>
+			</div>
+		</div>
+	</div>
+</div>
