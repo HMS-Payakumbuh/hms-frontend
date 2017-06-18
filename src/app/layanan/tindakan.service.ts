@@ -3,6 +3,7 @@ import { Headers, Http}		from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
+import { Tindakan }								from './tindakan';
 import { TindakanReference }			from './tindakan-reference';
 
 @Injectable()
