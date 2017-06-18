@@ -6,13 +6,16 @@ import { Transaksi }						from '../transaksi/transaksi';
 import { TransaksiService }			from '../transaksi/transaksi.service';
 import { Poliklinik }						from './poliklinik';
 import { PoliklinikService }		from './poliklinik.service';
+import { TindakanReference }		from './tindakan-reference';
+import { TindakanService }			from './tindakan.service';
 
 @Component({
  	selector: 'poliklinik-detail-page',
  	templateUrl: './poliklinik-detail.component.html',
  	providers: [
  		PoliklinikService,
- 		TransaksiService
+ 		TransaksiService,
+ 		TindakanService
 	]
 })
 
@@ -20,12 +23,14 @@ export class PoliklinikDetailComponent implements OnInit {
 	addForm: FormGroup;
 	transaksi: Transaksi;
 	poliklinik: Poliklinik;
+	alltindakanReference: TindakanReference[];
 
 	constructor(
 		private route: ActivatedRoute,
 		private formBuilder: FormBuilder,
 		private transaksiService: TransaksiService,
-		private poliklinikService: PoliklinikService
+		private poliklinikService: PoliklinikService,
+		private tindakanService: TindakanService
 	) {}
 	
 	ngOnInit() {
@@ -40,6 +45,9 @@ export class PoliklinikDetailComponent implements OnInit {
 		this.route.params
 			.switchMap((params: Params) => this.transaksiService.getTransaksi(+params['idTransaksi']))
 			.subscribe(transaksi => this.transaksi = transaksi);
+
+		this.tindakanService.getAllTindakanReference()
+			.then(allTindakanReference => this.allTindakanReference = allTindakanReference);
 	}
 
 	initResepEntry() {

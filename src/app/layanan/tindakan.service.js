@@ -12,34 +12,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/toPromise");
-var PoliklinikService = (function () {
-    function PoliklinikService(http) {
+var TindakanService = (function () {
+    function TindakanService(http) {
         this.http = http;
         //Mock data
-        this.allPoliklinik = [
-            { nama: 'Umum', kategori_antrian: 'A', kapasitas_pelayanan: 100, sisa_pelayanan: 100, id_lokasi: 1 },
-            { nama: 'THT', kategori_antrian: 'B', kapasitas_pelayanan: 100, sisa_pelayanan: 100, id_lokasi: 2 },
-            { nama: 'Jantung', kategori_antrian: 'B', kapasitas_pelayanan: 40, sisa_pelayanan: 40, id_lokasi: 3 }
+        this.allTindakanReference = [
+            { kode: '17.11', nama: 'LAP DIR ING HERN-GRAFT', harga: 100000 },
+            { kode: '17.12', nama: 'LAP INDIR ING HERN-GRAFT', harga: 150000 },
+            { kode: '17.13', nama: 'LAP ING HERN-GRAFT NOS', harga: 200000 }
         ];
     }
-    PoliklinikService.prototype.handleError = function (error) {
+    TindakanService.prototype.handleError = function (error) {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
     };
-    PoliklinikService.prototype.getAllPoliklinik = function () {
-        return Promise.resolve(this.allPoliklinik)
+    TindakanService.prototype.getAllTindakanReference = function () {
+        return Promise.resolve(this.allTindakanReference)
             .catch(this.handleError);
     };
-    PoliklinikService.prototype.getPoliklinik = function (nama) {
-        return this.getAllPoliklinik()
-            .then(function (allPoliklinik) { return allPoliklinik.find(function (poliklinik) { return poliklinik.nama === nama; }); })
+    TindakanService.prototype.getPoliklinik = function (kode) {
+        return this.getAllTindakanReference()
+            .then(function (allTindakanReference) { return allTindakanReference.find(function (TindakanReference) { return TindakanReference.kode === kode; }); })
             .catch(this.handleError);
     };
-    return PoliklinikService;
+    return TindakanService;
 }());
-PoliklinikService = __decorate([
+TindakanService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http])
-], PoliklinikService);
-exports.PoliklinikService = PoliklinikService;
-//# sourceMappingURL=poliklinik.service.js.map
+], TindakanService);
+exports.TindakanService = TindakanService;
+//# sourceMappingURL=tindakan.service.js.map
