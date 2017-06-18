@@ -16,9 +16,9 @@ import { PasienFormComponent }      from './pasien/pasien-form.component';
 import { PoliklinikListComponent }      from './layanan/poliklinik-list.component';
 import { PoliklinikDetailComponent }    from './layanan/poliklinik-detail.component';
 
-import { DaftarObatComponent }          from './farmasi/daftar-obat/daftar-obat.component';
-import { DetailObatComponent }          from './farmasi/detail-obat/detail-obat.component';
-import { ObatMasukFormComponent }       from './farmasi/obat-masuk-form/obat-masuk-form.component';
+import { DaftarObatComponent }          from './farmasi/obat-batch/daftar-obat.component';
+import { DetailObatComponent }          from './farmasi/obat-batch/detail-obat.component';
+import { ObatMasukFormComponent }       from './farmasi/obat-batch/obat-masuk-form.component';
 
 import { DaftarJenisObatComponent }     from './farmasi/jenis-obat/daftar-jenis-obat.component';
 import { DetailJenisObatComponent }     from './farmasi/jenis-obat/detail-jenis-obat.component';

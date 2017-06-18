@@ -37,50 +37,25 @@
 					<table class="table">
 						<tbody>
 							<tr>
+								<th>Kode Obat</th>
 								<th>ID Jenis Obat</th>
 								<th>Merek Obat</th>
 								<th>Satuan</th>
-								<th>Harga Satuan</th>
+								<th>Harga Beli Satuan</th>
 								<th>Kadaluarsa</th>
 								<th>Jumlah</th>
 								<th></th>
 							</tr>
-							<tr>
-								<td>02534</td>
-								<td>Amlodipine tab 10mg</td>
-								<td>Tablet</td>
-								<td>Rp.420,00</td>
-								<td>30-Jun-2017</td>
-								<td>1.191</td>								
-								<td><a routerLink="/detail-obat"><button type="button" class="btn btn-primary">Detail</button></a></td>
-							</tr>
-							<tr>
-								<td>02534</td>
-								<td>Amlodipine tab 10mg</td>
-								<td>Tablet</td>
-								<td>Rp.420,00</td>
-								<td>24-Jul-2017</td>
-								<td>250</td>								
-								<td><a routerLink="/detail-obat"><button type="button" class="btn btn-primary">Detail</button></a></td>
-							</tr>
-							<tr>
-								<td>02517</td>
-								<td>Amlodipine tab 5mg</td>
-								<td>Tablet</td>
-								<td>Rp.229,09</td>
-								<td>11-Jul-2017</td>
-								<td>843</td>								
-								<td><a routerLink="/detail-obat"><button type="button" class="btn btn-primary">Detail</button></a></td>
-							</tr>
-							<tr>
-								<td>02138</td>
-								<td>Cefixim syr kering 100mg/5ml</td>
-								<td>Botol</td>
-								<td>Rp.10.106,36</td>
-								<td>10-Mar-2018</td>
-								<td>137</td>								
-								<td><a routerLink="/detail-obat"><button type="button" class="btn btn-primary">Detail</button></a></td>
-							</tr>
+							<tr *ngFor="let obatBatch of allObatBatch">
+								<td>{{obatBatch.kode_obat}}</td>
+								<td>{{obatBatch.id_jenis}}</td>
+								<td>{{obatBatch.merek}}</td>
+								<td>{{obatBatch.satuan}}</td>
+								<td>Rp. {{obatBatch.harga_beli}}</td>	
+								<td>{{obatBatch.kadaluarsa}}</td>	
+								<td>{{obatBatch.jumlah}}</td>								
+								<td><button type="button" class="btn btn-primary" [routerLink] = "['/daftar-obat', obatBatch.kode_obat]">Detail</button></td>
+							</tr>						
 						</tbody>				
 					</table>
 
