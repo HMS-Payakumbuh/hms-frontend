@@ -13,7 +13,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12 input-group" id="datetimepicker">
-								<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" placeholder="Tanggal Transaksi">
+								<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal Transaksi">
 						</div>
 					</div>
 					<br>
@@ -27,7 +27,7 @@
 									<th></th>
 									<th></th>
 								</tr>
-								<tr *ngFor="let transaksi of allTransaksi | matchesStatus: &quot;open&quot; | filterNamaPasien: searchParam : false">
+								<tr *ngFor="let transaksi of allTransaksi | matchesStatus: &quot;open&quot; | filterNamaPasien: searchParam | filterTanggal: selectedDate">
 									<td>{{transaksi.id}}</td>
 									<td>{{transaksi.nama_pasien}}</td>
 									<td>{{transaksi.tanggal}}</td>

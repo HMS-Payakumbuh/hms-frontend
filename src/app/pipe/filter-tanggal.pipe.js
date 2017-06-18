@@ -7,21 +7,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var FilterNamaPasienPipe = (function () {
-    function FilterNamaPasienPipe() {
+var FilterTanggalPipe = (function () {
+    function FilterTanggalPipe() {
     }
-    FilterNamaPasienPipe.prototype.transform = function (items, param) {
+    FilterTanggalPipe.prototype.transform = function (items, param) {
         if (!items || !param) {
             return items;
         }
-        return items.filter(function (item) { return item.nama_pasien.toLowerCase().indexOf(param.toLowerCase()) > -1; });
+        return items.filter(function (item) { return item.tanggal.toLowerCase().indexOf(param.toLowerCase()) > -1; });
     };
-    return FilterNamaPasienPipe;
+    return FilterTanggalPipe;
 }());
-FilterNamaPasienPipe = __decorate([
+FilterTanggalPipe = __decorate([
     core_1.Pipe({
-        name: 'filterNamaPasien'
+        name: 'filterTanggal'
     })
-], FilterNamaPasienPipe);
-exports.FilterNamaPasienPipe = FilterNamaPasienPipe;
-//# sourceMappingURL=filter-nama-pasien.pipe.js.map
+], FilterTanggalPipe);
+exports.FilterTanggalPipe = FilterTanggalPipe;
+//# sourceMappingURL=filter-tanggal.pipe.js.map

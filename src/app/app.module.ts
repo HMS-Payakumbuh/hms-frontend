@@ -7,6 +7,7 @@ import { DpDatePickerModule }       from 'ng2-date-picker';
 
 import { MatchesStatusPipe }        from './pipe/matches-status.pipe';
 import { FilterNamaPasienPipe }     from './pipe/filter-nama-pasien.pipe';
+import { FilterTanggalPipe }     from './pipe/filter-tanggal.pipe';
 
 import { TransaksiComponent }       from './transaksi/transaksi.component';
 import { TransaksiDetailComponent } from './transaksi/transaksi-detail.component';
@@ -50,6 +51,7 @@ import { AppComponent }             from './app.component';
         PoliklinikDetailComponent,
         MatchesStatusPipe,
         FilterNamaPasienPipe,
+        FilterTanggalPipe,
         AntrianComponent,
         DaftarObatComponent,
         DetailObatComponent,
