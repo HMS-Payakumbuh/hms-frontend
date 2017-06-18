@@ -28,8 +28,7 @@ DaftarObatRusakComponent = __decorate([
         templateUrl: './daftar-obat-rusak.component.html',
         providers: [obat_rusak_service_1.ObatRusakService]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof obat_rusak_service_1.ObatRusakService !== "undefined" && obat_rusak_service_1.ObatRusakService) === "function" && _a || Object])
+    __metadata("design:paramtypes", [obat_rusak_service_1.ObatRusakService])
 ], DaftarObatRusakComponent);
 exports.DaftarObatRusakComponent = DaftarObatRusakComponent;
-var _a;
 //# sourceMappingURL=daftar-obat-rusak.component.js.map

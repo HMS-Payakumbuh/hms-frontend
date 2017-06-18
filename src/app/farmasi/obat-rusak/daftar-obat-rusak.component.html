@@ -35,38 +35,22 @@
 								<th>Kode Obat</th>
 								<th>Merek Obat</th>
 								<th>Kadaluarsa</th>
+								<th>Waktu Keluar</th>
 								<th>Jumlah</th>
 								<th>Alasan</th>								
 								<th>Keterangan</th>
 								<th></th>
 							</tr>
-							<tr>
-								<td>02534211233</td>
-								<td>Amlodipine tab 10mg</td>
-								<td>30-Apr-2017</td>
-								<td>10</td>
-								<td>Kadaluarsa</td>	
-								<td></td>									
-								<td><a routerLink="/detail-obat"><button type="button" class="btn btn-primary">Detail</button></a></td>
-							</tr>
-							<tr>
-								<td>02517176023</td>
-								<td>Amlodipine tab 5mg</td>
-								<td>11-Jul-2017</td>
-								<td>843</td>								
-								<td>Rusak</td>	
-								<td>Segel sobek</td>									
-								<td><a routerLink="/detail-obat"><button type="button" class="btn btn-primary">Detail</button></a></td>
-							</tr>
-							<tr>
-								<td>02138408481</td>
-								<td>Cefixim syr kering 100mg/5ml</td>
-								<td>10-Mar-2018</td>
-								<td>13</td>														
-								<td>Hilang</td>	
-								<td>Stock opname apotek 3 desember</td>							
-								<td><a routerLink="/detail-obat"><button type="button" class="btn btn-primary">Detail</button></a></td>
-							</tr>
+							<tr *ngFor="let obatRusak of allObatRusak">
+								<td>{{obatRusak.kode_obat}}</td>
+								<td>{{obatRusak.merek}}</td>	
+								<td>{{obatRusak.kadaluarsa}}</td>
+								<td>{{obatRusak.waktu_keluar}}</td>	
+								<td>{{obatRusak.jumlah}}</td>
+								<td>{{obatRusak.kadaluarsa}}</td>
+								<td>{{obatRusak.kadaluarsa}}</td>						
+								<td><button type="button" class="btn btn-primary" [routerLink] = "['/obat-rusak', obatRusak.waktu_keluar]">Detail</button></td>
+							</tr>	
 						</tbody>				
 					</table>
 
