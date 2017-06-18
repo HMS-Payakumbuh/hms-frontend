@@ -21,6 +21,7 @@ import { DetailObatComponent }          from './farmasi/detail-obat/detail-obat.
 import { ObatMasukFormComponent }       from './farmasi/obat-masuk-form/obat-masuk-form.component';
 
 import { DaftarJenisObatComponent }     from './farmasi/daftar-jenis-obat/daftar-jenis-obat.component';
+import { DetailJenisObatComponent }     from './farmasi/daftar-jenis-obat/detail-jenis-obat.component';
 import { JenisObatFormComponent }       from './farmasi/jenis-obat-form/jenis-obat-form.component';
 
 import { ObatPindahFormComponent }      from './farmasi/obat-pindah-form/obat-pindah-form.component';
@@ -54,6 +55,7 @@ import { AppComponent }             from './app.component';
         DetailObatComponent,
         ObatMasukFormComponent,
         DaftarJenisObatComponent,
+        DetailJenisObatComponent,
         JenisObatFormComponent,
         ObatPindahFormComponent,
         DaftarObatRusakComponent,

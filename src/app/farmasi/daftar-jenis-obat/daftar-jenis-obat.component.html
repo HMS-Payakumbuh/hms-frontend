@@ -17,7 +17,7 @@
 					<table class="table">
 						<tbody>
 							<tr>
-								<th>Kode Obat</th>
+								<th>ID Jenis Obat</th>
 								<th>Merek Obat</th>
 								<th>Nama Generik</th>
 								<th>Pabrikan</th>
@@ -26,35 +26,15 @@
 								<th>Harga Jual</th>
 								<th></th>
 							</tr>
-							<tr>
-								<td>02534</td>
-								<td>Amlodipine tab 10mg</td>
-								<td>Amlodipine</td>
-								<td>Hexpharm</td>
-								<td>Keras</td>
-								<td>Tablet</td>
-								<td>Rp.420,00</td>								
-								<td><a routerLink="/detail-obat"><button type="button" class="btn btn-warning">Edit</button></a></td>
-							</tr>
-							<tr>
-								<td>02517</td>
-								<td>Amlodipine tab 5mg</td>
-								<td>Amlodipine</td>
-								<td>Hexpharm</td>
-								<td>Keras</td>
-								<td>Tablet</td>
-								<td>Rp.229,00</td>									
-								<td><a routerLink="/detail-obat"><button type="button" class="btn btn-warning">Edit</button></a></td>
-							</tr>
-							<tr>
-								<td>02138</td>
-								<td>Cefixim syr kering 100mg/5ml</td>	
-								<td>Cefixim</td>
-								<td>Indofarma</td>
-								<td>Antibiotik</td>
-								<td>Botol</td>
-								<td>Rp.10.106,36</td>									
-								<td><a routerLink="/detail-obat"><button type="button" class="btn btn-warning">Edit</button></a></td>
+							<tr *ngFor="let jenisObat of allJenisObat">
+								<td>{{jenisObat.id}}</td>
+								<td>{{jenisObat.merek}}</td>
+								<td>{{jenisObat.nama_generik}}</td>
+								<td>{{jenisObat.pembuat}}</td>
+								<td>{{jenisObat.golongan}}</td>
+								<td>{{jenisObat.satuan}}</td>
+								<td>Rp. {{jenisObat.harga}}</td>								
+								<td><button type="button" class="btn btn-primary" [routerLink] = "['/jenis-obat', jenisObat.id]">Detail</button></td>
 							</tr>
 						</tbody>				
 					</table>
