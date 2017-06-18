@@ -1,0 +1,56 @@
+  <div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-newspaper-o" aria-hidden="true"></i> Detail Jenis Obat
+				</h4>
+			</div>
+			<div *ngIf="jenisObat" class="card-block">
+				<div class="card-text">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td><b>ID Jenis Obat</b></td>
+								<td>{{jenisObat.id}}</td>	
+							</tr>
+							<tr>
+								<td><b>Merek Obat</b></td>								
+								<td>{{jenisObat.merek}}</td>								
+							</tr>
+							<tr>
+								<td><b>Nama Generik</b></td>
+								<td>{{jenisObat.nama_generik}}</td>								
+							</tr>
+							<tr>
+								<td><b>Pembuat</b></td>
+								<td>{{jenisObat.pembuat}}</td>								
+							</tr>
+							<tr>
+								<td><b>Golongan</b></td>
+								<td>{{jenisObat.golongan}}</td>
+							</tr>
+							<tr>
+								<td><b>Satuan</b></td>								
+								<td>{{jenisObat.satuan}}</td>
+							</tr>
+							<tr>
+								<td><b>Harga</b></td>								
+								<td>Rp. {{jenisObat.harga}}</td>
+							</tr>
+							<tr>
+								<td><b>Keterangan</b></td>								
+								<td>{{jenisObat.keterangan}}</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="row">
+						<div class="offset-md-8 col-md-4">
+							<button class="btn btn-danger" (click)="goBack()">Kembali</button>
+							<button class="btn btn-warning">Edit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
