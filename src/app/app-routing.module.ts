@@ -7,15 +7,16 @@ import { PasienFormComponent }			from './pasien/pasien-form.component';
 import { AntrianComponent }				from './antrian/antrian.component';
 import { DaftarAntrianComponent }				from './antrian/daftar-antrian.component';
 
-import { PoliklinikListComponent }				from './layanan/poliklinik-list.component';
-import { PoliklinikDetailComponent }			from './layanan/poliklinik-detail.component';
+import { PoliklinikListComponent }		from './layanan/poliklinik-list.component';
+import { PoliklinikDetailComponent }	from './layanan/poliklinik-detail.component';
 
-import { DaftarObatComponent }			from './farmasi/daftar-obat/daftar-obat.component';
-import { DetailObatComponent }			from './farmasi/detail-obat/detail-obat.component';
-import { ObatMasukFormComponent }		from './farmasi/obat-masuk-form/obat-masuk-form.component';
+import { DaftarObatComponent }			from './farmasi/obat-batch/daftar-obat.component';
+import { DetailObatComponent }			from './farmasi/obat-batch/detail-obat.component';
+import { ObatMasukFormComponent }		from './farmasi/obat-batch/obat-masuk-form.component';
 
-import { DaftarJenisObatComponent }		from './farmasi/daftar-jenis-obat/daftar-jenis-obat.component';
-import { JenisObatFormComponent }		from './farmasi/jenis-obat-form/jenis-obat-form.component';
+import { DaftarJenisObatComponent }		from './farmasi/jenis-obat/daftar-jenis-obat.component';
+import { DetailJenisObatComponent }     from './farmasi/jenis-obat/detail-jenis-obat.component';
+import { JenisObatFormComponent }		from './farmasi/jenis-obat/jenis-obat-form.component';
 
 import { ObatPindahFormComponent }		from './farmasi/obat-pindah-form/obat-pindah-form.component';
 
@@ -33,9 +34,10 @@ const routes: Routes = [
 	{ path: 'poliklinik', component: PoliklinikListComponent },
 	{ path: 'poliklinik/:namaPoliklinik/:idTransaksi', component: PoliklinikDetailComponent },
 	{ path: 'daftar-obat', component: DaftarObatComponent },
-	{ path: 'daftar-obat/:id', component: DetailObatComponent },
+	{ path: 'daftar-obat/:kode-obat', component: DetailObatComponent },
 	{ path: 'obat-masuk-form', component: ObatMasukFormComponent },
 	{ path: 'jenis-obat', component: DaftarJenisObatComponent },
+	{ path: 'jenis-obat/:id', component: DetailJenisObatComponent },
 	{ path: 'jenis-obat-form', component: JenisObatFormComponent },	
 	{ path: 'obat-pindah-form', component: ObatPindahFormComponent },	
 	{ path: 'obat-rusak', component: DaftarObatRusakComponent },

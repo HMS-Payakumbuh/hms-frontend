@@ -7,6 +7,7 @@ import { DpDatePickerModule }       from 'ng2-date-picker';
 
 import { MatchesStatusPipe }        from './pipe/matches-status.pipe';
 import { FilterNamaPasienPipe }     from './pipe/filter-nama-pasien.pipe';
+import { FilterTanggalPipe }     from './pipe/filter-tanggal.pipe';
 
 import { TransaksiComponent }       from './transaksi/transaksi.component';
 import { TransaksiDetailComponent } from './transaksi/transaksi-detail.component';
@@ -17,12 +18,13 @@ import { PasienFormComponent }      from './pasien/pasien-form.component';
 import { PoliklinikListComponent }      from './layanan/poliklinik-list.component';
 import { PoliklinikDetailComponent }    from './layanan/poliklinik-detail.component';
 
-import { DaftarObatComponent }          from './farmasi/daftar-obat/daftar-obat.component';
-import { DetailObatComponent }          from './farmasi/detail-obat/detail-obat.component';
-import { ObatMasukFormComponent }       from './farmasi/obat-masuk-form/obat-masuk-form.component';
+import { DaftarObatComponent }          from './farmasi/obat-batch/daftar-obat.component';
+import { DetailObatComponent }          from './farmasi/obat-batch/detail-obat.component';
+import { ObatMasukFormComponent }       from './farmasi/obat-batch/obat-masuk-form.component';
 
-import { DaftarJenisObatComponent }     from './farmasi/daftar-jenis-obat/daftar-jenis-obat.component';
-import { JenisObatFormComponent }       from './farmasi/jenis-obat-form/jenis-obat-form.component';
+import { DaftarJenisObatComponent }     from './farmasi/jenis-obat/daftar-jenis-obat.component';
+import { DetailJenisObatComponent }     from './farmasi/jenis-obat/detail-jenis-obat.component';
+import { JenisObatFormComponent }       from './farmasi/jenis-obat/jenis-obat-form.component';
 
 import { ObatPindahFormComponent }      from './farmasi/obat-pindah-form/obat-pindah-form.component';
 
@@ -50,12 +52,14 @@ import { AppComponent }             from './app.component';
         PoliklinikDetailComponent,
         MatchesStatusPipe,
         FilterNamaPasienPipe,
+        FilterTanggalPipe,
         AntrianComponent,
         DaftarAntrianComponent,
         DaftarObatComponent,
         DetailObatComponent,
         ObatMasukFormComponent,
         DaftarJenisObatComponent,
+        DetailJenisObatComponent,
         JenisObatFormComponent,
         ObatPindahFormComponent,
         DaftarObatRusakComponent,

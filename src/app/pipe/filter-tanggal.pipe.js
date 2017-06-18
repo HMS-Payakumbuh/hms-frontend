@@ -6,16 +6,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require("@angular/core");
-var DaftarObatComponent = (function () {
-    function DaftarObatComponent() {
+var FilterTanggalPipe = (function () {
+    function FilterTanggalPipe() {
     }
-    return DaftarObatComponent;
+    FilterTanggalPipe.prototype.transform = function (items, param) {
+        if (!items || !param) {
+            return items;
+        }
+        return items.filter(function (item) { return item.tanggal.toLowerCase().indexOf(param.toLowerCase()) > -1; });
+    };
+    return FilterTanggalPipe;
 }());
-DaftarObatComponent = __decorate([
-    core_1.Component({
-        selector: 'daftar-obat-page',
-        templateUrl: './daftar-obat.component.html'
+FilterTanggalPipe = __decorate([
+    core_1.Pipe({
+        name: 'filterTanggal'
     })
-], DaftarObatComponent);
-exports.DaftarObatComponent = DaftarObatComponent;
-//# sourceMappingURL=daftar-obat.component.js.map
+], FilterTanggalPipe);
+exports.FilterTanggalPipe = FilterTanggalPipe;
+//# sourceMappingURL=filter-tanggal.pipe.js.map

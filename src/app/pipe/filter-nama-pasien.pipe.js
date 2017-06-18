@@ -13,7 +13,7 @@ var FilterNamaPasienPipe = (function () {
         if (!items || !param) {
             return items;
         }
-        return items.filter(function (item) { return item.nama_pasien.toLowerCase() === param.toLowerCase(); });
+        return items.filter(function (item) { return item.nama_pasien.toLowerCase().indexOf(param.toLowerCase()) > -1; });
     };
     return FilterNamaPasienPipe;
 }());
