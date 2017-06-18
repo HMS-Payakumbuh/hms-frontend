@@ -20,8 +20,9 @@ import { JenisObatFormComponent }		from './farmasi/jenis-obat/jenis-obat-form.co
 
 import { ObatPindahFormComponent }		from './farmasi/obat-pindah-form/obat-pindah-form.component';
 
-import { DaftarObatRusakComponent }      from './farmasi/daftar-obat-rusak/daftar-obat-rusak.component';
-import { ObatRusakFormComponent }      from './farmasi/obat-rusak-form/obat-rusak-form.component';
+import { DaftarObatRusakComponent }      from './farmasi/obat-rusak/daftar-obat-rusak.component';
+// import { DetailObatRusakComponent }      from './farmasi/obat-rusak/detail-obat-rusak.component';
+import { ObatRusakFormComponent }      from './farmasi/obat-rusak/obat-rusak-form.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: '/', pathMatch: 'full' },
@@ -40,7 +41,8 @@ const routes: Routes = [
 	{ path: 'jenis-obat/:id', component: DetailJenisObatComponent },
 	{ path: 'jenis-obat-form', component: JenisObatFormComponent },	
 	{ path: 'obat-pindah-form', component: ObatPindahFormComponent },	
-	{ path: 'obat-rusak', component: DaftarObatRusakComponent },
+	{ path: 'obat-rusak', component: DaftarObatRusakComponent },	
+	// { path: 'obat-rusak/:waktu-keluar', component: DetailObatRusakComponent },
 	{ path: 'obat-rusak-form', component: ObatRusakFormComponent }
 ];
 
