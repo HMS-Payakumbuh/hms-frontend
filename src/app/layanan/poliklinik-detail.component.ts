@@ -23,7 +23,7 @@ export class PoliklinikDetailComponent implements OnInit {
 	addForm: FormGroup;
 	transaksi: Transaksi;
 	poliklinik: Poliklinik;
-	alltindakanReference: TindakanReference[];
+	allTindakanReference: TindakanReference[];
 
 	constructor(
 		private route: ActivatedRoute,
