@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var Pasien = (function () {
     function Pasien(name, dob, gender, religion, address, phone, no_bpjs, no_rujukan) {
         this.name = name;

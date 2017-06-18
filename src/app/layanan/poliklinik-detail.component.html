@@ -102,7 +102,7 @@
 
   						<form>
   							<div class="form-group">
-  								<label for="diagnosis">Masukkan kode diagnosis pasien (ICD-10)</label>
+  								<label for="inputDiagnosis">Masukkan kode diagnosis pasien (ICD-10)</label>
   								<input type="text" class="form-control" id="inputDiagnosis">
   							</div>
 							</form>
@@ -113,8 +113,10 @@
 
 							<form>
 								<div class="form-group">
-									<label for="tindakan">Masukkan tindakan yang dilakukan (ICD-9-CM)</label>
-									<input type="text" class="form-control" id="inputTindakan">
+									<label for="inputTindakan">Masukkan tindakan yang dilakukan (ICD-9-CM)</label>
+									<select class="form-control" id="inputTindakan">
+										<option *ngFor="let tindakanReference of allTindakanReference">{{tindakanReference.kode}} - {{tindakanReference.nama}}</option>
+									</select>
 								</div>
 							</form>
 	 							
@@ -127,7 +129,7 @@
 
 									<div *ngFor="let obat of addForm.controls.resepEntry.controls; index as i">										
 										<div [formGroupName]="i">
-											<label for="resep">Obat {{i + 1}}</label>
+											<label for="obatResep">Obat {{i + 1}}</label>
 											<input type="text" class="form-control mb-3" formControlName="obatResep">
 										</div>
 									</div>

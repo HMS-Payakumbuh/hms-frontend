@@ -8,17 +8,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var forms_1 = require("@angular/forms");
 var transaksi_service_1 = require("../transaksi/transaksi.service");
 var poliklinik_service_1 = require("./poliklinik.service");
+var tindakan_service_1 = require("./tindakan.service");
 var PoliklinikDetailComponent = (function () {
-    function PoliklinikDetailComponent(route, formBuilder, transaksiService, poliklinikService) {
+    function PoliklinikDetailComponent(route, formBuilder, transaksiService, poliklinikService, tindakanService) {
         this.route = route;
         this.formBuilder = formBuilder;
         this.transaksiService = transaksiService;
         this.poliklinikService = poliklinikService;
+        this.tindakanService = tindakanService;
     }
     PoliklinikDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -31,6 +34,8 @@ var PoliklinikDetailComponent = (function () {
         this.route.params
             .switchMap(function (params) { return _this.transaksiService.getTransaksi(+params['idTransaksi']); })
             .subscribe(function (transaksi) { return _this.transaksi = transaksi; });
+        this.tindakanService.getAllTindakanReference()
+            .then(function (allTindakanReference) { return _this.allTindakanReference = allTindakanReference; });
     };
     PoliklinikDetailComponent.prototype.initResepEntry = function () {
         return this.formBuilder.group({
@@ -53,13 +58,15 @@ PoliklinikDetailComponent = __decorate([
         templateUrl: './poliklinik-detail.component.html',
         providers: [
             poliklinik_service_1.PoliklinikService,
-            transaksi_service_1.TransaksiService
+            transaksi_service_1.TransaksiService,
+            tindakan_service_1.TindakanService
         ]
     }),
     __metadata("design:paramtypes", [router_1.ActivatedRoute,
         forms_1.FormBuilder,
         transaksi_service_1.TransaksiService,
-        poliklinik_service_1.PoliklinikService])
+        poliklinik_service_1.PoliklinikService,
+        tindakan_service_1.TindakanService])
 ], PoliklinikDetailComponent);
 exports.PoliklinikDetailComponent = PoliklinikDetailComponent;
 //# sourceMappingURL=poliklinik-detail.component.js.map
