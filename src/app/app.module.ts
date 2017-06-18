@@ -20,9 +20,9 @@ import { DaftarObatComponent }          from './farmasi/daftar-obat/daftar-obat.
 import { DetailObatComponent }          from './farmasi/detail-obat/detail-obat.component';
 import { ObatMasukFormComponent }       from './farmasi/obat-masuk-form/obat-masuk-form.component';
 
-import { DaftarJenisObatComponent }     from './farmasi/daftar-jenis-obat/daftar-jenis-obat.component';
-import { DetailJenisObatComponent }     from './farmasi/daftar-jenis-obat/detail-jenis-obat.component';
-import { JenisObatFormComponent }       from './farmasi/jenis-obat-form/jenis-obat-form.component';
+import { DaftarJenisObatComponent }     from './farmasi/jenis-obat/daftar-jenis-obat.component';
+import { DetailJenisObatComponent }     from './farmasi/jenis-obat/detail-jenis-obat.component';
+import { JenisObatFormComponent }       from './farmasi/jenis-obat/jenis-obat-form.component';
 
 import { ObatPindahFormComponent }      from './farmasi/obat-pindah-form/obat-pindah-form.component';
 
