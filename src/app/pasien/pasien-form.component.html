@@ -56,28 +56,30 @@
                     <input type="tel" class="form-control" id="phone" [(ngModel)]="model.phone" name="phone">
                   </div>
 
-                  <div class="form-group">
-                    <label for="services">Layanan</label>
-                    <select class="form-control" id="service" [(ngModel)]="service" name="service">
-                      <option *ngFor="let service of services" [value]="service">{{service}}</option>
-                    </select>
-                  </div>
-
-                  <div *ngIf="service" class="form-group">
-                    <label for="doctor">Doktor</label>
-                    <select class="form-control" id="doctor" [(ngModel)]="doctor" name="doctor">
-                      <option *ngFor="let doctor of doctors" [value]="doctor">{{doctor}}</option>
-                    </select>
-                  </div>
-
                   <div *ngIf="bpjs" class="form-group">
                     <label for="no_rujukan">Nomor Rujukan</label>
-                    <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="model.no_rujukan" name="no_rujukan">
+                    <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="model.no_rujukan" name="no_rujukan" required>
                   </div>
 
                   <div *ngIf="bpjs" class="form-group">
                     <label for="no_bpjs">Nomor BPJS</label>
-                    <input type="string" class="form-control" id="no_bpjs" [(ngModel)]="model.no_bpjs" name="no_bpjs">
+                    <input type="string" class="form-control" id="no_bpjs" [(ngModel)]="model.no_bpjs" name="no_bpjs" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="poliklinik">Layanan</label>
+                    <select class="form-control" id="poliklinik" [(ngModel)]="poliklinik" name="poliklinik" required>
+                      <ng-container *ngFor="let poliklinik of allPoliklinik">
+                        <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}}</option>
+                      </ng-container>
+                    </select>
+                  </div>
+
+                  <div *ngIf="poliklinik" class="form-group">
+                    <label for="doctor">Doktor</label>
+                    <select class="form-control" id="doctor" [(ngModel)]="doctor" name="doctor" required>
+                      <option *ngFor="let doctor of doctors" [value]="doctor">{{doctor}}</option>
+                    </select>
                   </div>
                   
                   <div class="form-group">
@@ -116,13 +118,13 @@
 
                 <form *ngIf="search">
                   <div class="form-group">
-                    <label for="name">Nama *</label>
+                    <label for="name">Nama</label>
                     <input *ngIf="update" type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name">
                     <input *ngIf="!update" type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name" disabled>
                   </div>
 
                   <div class="form-group">
-                    <label for="gender">Jenis Kelamin *</label>
+                    <label for="gender">Jenis Kelamin</label>
                     <select *ngIf="update" class="form-control" id="gender" [(ngModel)]="model.gender" name="gender">
                       <option *ngFor="let gender of genders" [value]="gender">{{gender}}</option>
                     </select>
@@ -161,13 +163,29 @@
 
                   <div *ngIf="bpjs" class="form-group">
                     <label for="no_bpjs">Nomor BPJS</label>
-                    <input *ngIf="update" type="string" class="form-control" id="no_bpjs" [(ngModel)]="model.no_bpjs" name="no_bpjs">
-                    <input *ngIf="!update" type="string" class="form-control" id="no_bpjs" [(ngModel)]="model.no_bpjs" name="no_bpjs" disabled>
+                    <input *ngIf="update" type="string" class="form-control" id="no_bpjs" [(ngModel)]="model.no_bpjs" name="no_bpjs" required>
+                    <input *ngIf="!update" type="string" class="form-control" id="no_bpjs" [(ngModel)]="model.no_bpjs" name="no_bpjs" disabled required>
                   </div>
 
                   <div *ngIf="bpjs" class="form-group">
                     <label for="no_rujukan">Nomor Rujukan</label>
-                    <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="model.no_rujukan" name="no_rujukan">
+                    <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="model.no_rujukan" name="no_rujukan" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="poliklinik">Layanan</label>
+                    <select class="form-control" id="poliklinik" [(ngModel)]="poliklinik" name="poliklinik" required>
+                      <ng-container *ngFor="let poliklinik of allPoliklinik">
+                        <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}}</option>
+                      </ng-container>
+                    </select>
+                  </div>
+
+                  <div *ngIf="poliklinik" class="form-group">
+                    <label for="doctor">Doktor</label>
+                    <select class="form-control" id="doctor" [(ngModel)]="doctor" name="doctor" required>
+                      <option *ngFor="let doctor of doctors" [value]="doctor">{{doctor}}</option>
+                    </select>
                   </div>
                   
                   <div class="form-group">

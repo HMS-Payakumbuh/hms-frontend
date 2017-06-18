@@ -1,11 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import * as _ from "lodash";
 import { Antrian }    from './antrian';
+import { Poliklinik }    from '../layanan/poliklinik';
+import { PoliklinikService }    from '../layanan/poliklinik.service';
 
 @Component({
   selector: 'antrian',
-  templateUrl: './antrian.component.html'
+  templateUrl: './antrian.component.html',
+  providers: [
+    PoliklinikService
+  ]
 })
-export class AntrianComponent {
+export class AntrianComponent implements OnInit {
   antrianUmum: Antrian[] = [
       {no_antrian: 1, nama_pasien: 'Jonathan',  waktu:'09:15:15' },
       {no_antrian: 2, nama_pasien: 'Ben Lemuel',  waktu:'09:15:45'},
@@ -17,14 +24,23 @@ export class AntrianComponent {
       {no_antrian: 5, nama_pasien: 'Hu Wan',  waktu:'09:15:45'},
       {no_antrian: 6, nama_pasien: 'Gunawan', waktu:'09:16:15'},
   ];
-  kategoriAntrian: string[] = ['A','B','C','D'];
-
+  allKategori: Poliklinik[];
   kategori: string;
 
   nomor: number = 0;
   active: number = 1;
   umum: boolean = true;
   isfrontoffice: boolean = true;
+
+  constructor(
+    private route: ActivatedRoute,
+    private poliklinikService: PoliklinikService
+  ) {}
+
+  ngOnInit() {
+    this.poliklinikService.getAllPoliklinik()
+      .then(allPoliklinik => this.allKategori = _.uniqBy(allPoliklinik, 'kategori_antrian'));
+  }
 
   public proses(no_antrian: number) {
     this.nomor = no_antrian;
@@ -42,7 +58,7 @@ export class AntrianComponent {
   changeKategori() {
     console.log("kategori baru");
   }
-
+  
   submitted = false;
 
   onSubmit() { this.submitted = true; }
