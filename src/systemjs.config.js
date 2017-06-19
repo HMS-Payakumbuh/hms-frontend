@@ -38,8 +38,11 @@
       //lodash
       'lodash': 'npm:lodash',
 
-      //typeahead
-      'ng2-input-autocomplete': 'npm:ng2-input-autocomplete/bundles/'
+      //ng2-input-autocomplete
+      'ng2-input-autocomplete': 'npm:ng2-input-autocomplete/bundles/',
+
+      // angular2-datatable
+      'angular2-datatable':'npm:angular2-datatable'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -68,6 +71,10 @@
       },
       'ng2-input-autocomplete' : {
         main: './ng2-input-autocomplete.js',
+        defaultExtension: 'js'
+      },
+      'angular2-datatable': {
+        main: './index.js',
         defaultExtension: 'js'
       }
     }

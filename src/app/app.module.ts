@@ -9,6 +9,7 @@ import { AutocompleteModule}        from 'ng2-input-autocomplete';
 import { MatchesStatusPipe }        from './pipe/matches-status.pipe';
 import { FilterNamaPasienPipe }     from './pipe/filter-nama-pasien.pipe';
 import { FilterTanggalPipe }     from './pipe/filter-tanggal.pipe';
+import { FilterJenisObatPipe }     from './pipe/filter-jenis-obat.pipe';
 
 import { TransaksiComponent }       from './transaksi/transaksi.component';
 import { TransaksiDetailComponent } from './transaksi/transaksi-detail.component';
@@ -38,6 +39,8 @@ import { ObatRusakFormComponent }      from './farmasi/obat-rusak/obat-rusak-for
 import { AppRoutingModule }         from './app-routing.module';
 import { AppComponent }             from './app.component';
 
+import { DataTableModule }    from 'angular2-datatable';
+
 @NgModule({
     imports:      [
       	BrowserModule,
@@ -46,7 +49,8 @@ import { AppComponent }             from './app.component';
         AppRoutingModule,
         HttpModule,
         DpDatePickerModule,
-        AutocompleteModule.forRoot()
+        AutocompleteModule.forRoot(),
+        DataTableModule
     ],
     declarations: [ 
         AppComponent,
@@ -58,6 +62,7 @@ import { AppComponent }             from './app.component';
         MatchesStatusPipe,
         FilterNamaPasienPipe,
         FilterTanggalPipe,
+        FilterJenisObatPipe,
         AntrianComponent,
         DaftarAntrianComponent,
         DaftarObatComponent,
