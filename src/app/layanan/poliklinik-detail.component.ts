@@ -4,8 +4,13 @@ import { FormGroup, FormArray, FormBuilder, Validators }	from '@angular/forms';
 
 import { Transaksi }						from '../transaksi/transaksi';
 import { TransaksiService }			from '../transaksi/transaksi.service';
+
 import { Poliklinik }						from './poliklinik';
 import { PoliklinikService }		from './poliklinik.service';
+
+import { DiagnosisReference }		from './diagnosis-reference';
+import { DiagnosisService }			from './diagnosis.service';
+
 import { TindakanReference }		from './tindakan-reference';
 import { TindakanService }			from './tindakan.service';
 
@@ -15,17 +20,24 @@ import { TindakanService }			from './tindakan.service';
  	providers: [
  		PoliklinikService,
  		TransaksiService,
+ 		DiagnosisService,
  		TindakanService
 	]
 })
 
 export class PoliklinikDetailComponent implements OnInit {
+
 	addForm: FormGroup;
 	transaksi: Transaksi;
 	poliklinik: Poliklinik;
+
+	allDiagnosisReference: DiagnosisReference[];
 	allTindakanReference: TindakanReference[];
+
+	selectedDiagnosis: DiagnosisReference[] = [];
 	selectedTindakan: TindakanReference[] = [];
 
+	diagnosisAutocompleteConfig: any = {'placeholder': 'Tuliskan kode diagnosis', 'sourceField': ['nama']};
 	tindakanAutocompleteConfig: any = {'placeholder': 'Tuliskan kode tindakan', 'sourceField': ['nama']};
 
 	constructor(
@@ -33,6 +45,7 @@ export class PoliklinikDetailComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private transaksiService: TransaksiService,
 		private poliklinikService: PoliklinikService,
+		private diagnosisService: DiagnosisService,
 		private tindakanService: TindakanService
 	) {}
 	
@@ -51,6 +64,17 @@ export class PoliklinikDetailComponent implements OnInit {
 
 		this.tindakanService.getAllTindakanReference()
 			.then(allTindakanReference => this.allTindakanReference = allTindakanReference);
+
+		this.diagnosisService.getAllDiagnosisReference()
+			.then(allDiagnosisReference => this.allDiagnosisReference = allDiagnosisReference);
+	}
+
+	addSelectedDiagnosis(diagnosis: DiagnosisReference) {
+		this.selectedDiagnosis.push(diagnosis);
+	}
+
+	removeSelectedDiagnosis(i: number) {
+		this.selectedDiagnosis.splice(i, 1);
 	}
 
 	addSelectedTindakan(tindakan: TindakanReference) {
