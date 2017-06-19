@@ -6,18 +6,25 @@ import { HttpModule }               from '@angular/http';
 import { DpDatePickerModule }       from 'ng2-date-picker';
 import { AutocompleteModule}        from 'ng2-input-autocomplete';
 
-import { MatchesStatusPipe }        from './pipe/matches-status.pipe';
-import { FilterNamaPasienPipe }     from './pipe/filter-nama-pasien.pipe';
-import { FilterTanggalPipe }     from './pipe/filter-tanggal.pipe';
+import { MatchesStatusPipe }            from './pipe/matches-status.pipe';
+import { FilterNamaPasienPipe }         from './pipe/filter-nama-pasien.pipe';
+import { FilterTanggalPipe }            from './pipe/filter-tanggal.pipe';
+import { FilterNamaAsuransiPipe }       from './pipe/filter-nama-asuransi.pipe';
 import { FilterJenisObatPipe }     from './pipe/filter-jenis-obat.pipe';
 import { FilterObatRusakPipe }     from './pipe/filter-obat-rusak.pipe';
 import { FilterObatPindahPipe }     from './pipe/filter-obat-pindah.pipe';
 
 import { TransaksiComponent }       from './transaksi/transaksi.component';
 import { TransaksiDetailComponent } from './transaksi/transaksi-detail.component';
-import { AntrianComponent }         from './antrian/antrian.component';
-import { DaftarAntrianComponent }         from './antrian/daftar-antrian.component';
-import { PasienFormComponent }      from './pasien/pasien-form.component';
+
+import { PembayaranComponent }				from './pembayaran/pembayaran.component';
+import { PembayaranDetailComponent }        from './pembayaran/pembayaran-detail.component';
+import { KlaimComponent }        			from './pembayaran/klaim/klaim.component';
+import { KlaimDetailComponent }        		from './pembayaran/klaim/klaim-detail.component';
+
+import { AntrianComponent }         		from './antrian/antrian.component';
+import { DaftarAntrianComponent }         	from './antrian/daftar-antrian.component';
+import { PasienFormComponent }      		from './pasien/pasien-form.component';
 
 import { PoliklinikListComponent }      from './layanan/poliklinik-list.component';
 import { PoliklinikDetailComponent }    from './layanan/poliklinik-detail.component';
@@ -56,17 +63,22 @@ import { DataTableModule }    from 'angular2-datatable';
     ],
     declarations: [ 
         AppComponent,
-        TransaksiComponent,
-        PasienFormComponent,
-        TransaksiDetailComponent,
-        PoliklinikListComponent,
-        PoliklinikDetailComponent,
         MatchesStatusPipe,
         FilterNamaPasienPipe,
         FilterTanggalPipe,
+        FilterNamaAsuransiPipe,
         FilterJenisObatPipe,
         FilterObatRusakPipe,
         FilterObatPindahPipe,
+        TransaksiComponent,
+        TransaksiDetailComponent,
+        PembayaranComponent,
+        PembayaranDetailComponent,
+        KlaimComponent,
+        KlaimDetailComponent,
+        PasienFormComponent,
+        PoliklinikListComponent,
+        PoliklinikDetailComponent,
         AntrianComponent,
         DaftarAntrianComponent,
         DaftarObatComponent,

@@ -1,0 +1,65 @@
+<html lang="en">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header card-info mb-3">
+					Daftar Pembayaran
+				</div>
+				<div class="card-block">
+					<div class="row">
+						<div class="col-md-12 input-group">
+							<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="Nama Pasien">
+						</div>
+						<div class="col-md-12 input-group" id="datetimepicker">
+								<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal Pembayaran">
+						</div>
+					</div>
+					<br>
+					<div>
+						<table class="table">
+							<tbody>
+								<tr>
+									<th>#</th>
+									<th>Nama Pasien</th>
+									<th>Tanggal Pembayaran</th>
+									<th>Metode Pembayaran</th>
+									<th></th>
+								</tr>
+								<tr>
+									<td></td>
+									<td>
+										<div class="col-md-12 input-group">
+											<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="Nama Pasien">
+										</div>
+									</td>
+									<td>
+										<div class="col-md-12 input-group" id="datetimepicker">
+												<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal Transaksi">
+										</div>
+									</td>
+									<td>
+										<div class="col-md-12 input-group">
+											<select class="form-control" [(ngModel)]="asuransi" id="metodeDropdown">
+												<option *ngFor="let asuransi of allAsuransi">
+													{{asuransi.toUpperCase()}}
+												</option>
+											</select>
+										</div>
+									</td>
+									<td></td>
+								</tr>
+								<tr *ngFor="let pembayaran of allPembayaran | filterNamaPasien: searchParam | filterNamaAsuransi: asuransi | filterTanggal: selectedDate">
+									<td>{{pembayaran.id}}</td>
+									<td>{{pembayaran.nama_pasien}}</td>								
+									<td>{{pembayaran.tanggal}}</td>
+									<td>{{pembayaran.nama_asuransi.toUpperCase()}}</td>
+									<td><button type="button" class="btn btn-primary" [routerLink] = "['/pembayaran', pembayaran.id]">Details</button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</html>

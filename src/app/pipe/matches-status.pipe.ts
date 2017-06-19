@@ -8,6 +8,6 @@ export class MatchesStatusPipe implements PipeTransform {
   	if (!items || !status) {
   		return items;
   	}
-    return items.filter(item => item.status === status);
+    return items.filter(item => item.status.toLowerCase() === status.toLowerCase());
   }
 }
