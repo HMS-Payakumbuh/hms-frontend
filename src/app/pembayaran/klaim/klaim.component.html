@@ -3,7 +3,7 @@
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-header card-info mb-3">
-					Daftar Transaksi
+					Daftar Klaim
 				</div>
 				<div class="card-block">
 					<div>
@@ -12,8 +12,9 @@
 								<tr>
 									<th>#</th>
 									<th>Nama Pasien</th>
-									<th>Tanggal Transaksi</th>
-									<th>Status Transaksi</th>
+									<th>Tanggal Klaim</th>
+									<th>Nama Asuransi</th>
+									<th>Status Klaim</th>
 									<th></th>
 								</tr>
 								<tr>
@@ -25,7 +26,16 @@
 									</td>
 									<td>
 										<div class="col-md-12 input-group" id="datetimepicker">
-												<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal Transaksi">
+												<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal Klaim">
+										</div>
+									</td>
+									<td>
+										<div class="col-md-12 input-group">
+											<select class="form-control" [(ngModel)]="nama_asuransi" id="statusDropdown">
+												<option *ngFor="let asuransi of allAsuransi">
+													{{asuransi.toUpperCase()}}
+												</option>
+											</select>
 										</div>
 									</td>
 									<td>
@@ -39,12 +49,13 @@
 									</td>
 									<td></td>
 								</tr>
-								<tr *ngFor="let transaksi of allTransaksi | matchesStatus: status | filterNamaPasien: searchParam | filterTanggal: selectedDate">
-									<td>{{transaksi.id}}</td>
-									<td>{{transaksi.nama_pasien}}</td>
-									<td>{{transaksi.tanggal}}</td>
-									<td>{{transaksi.status.toUpperCase()}}</td>								
-									<td><button type="button" class="btn btn-primary" [routerLink] = "['/transaksi', transaksi.id]">Details</button></td>
+								<tr *ngFor="let klaim of allKlaim | filterNamaPasien: searchParam | filterTanggal: selectedDate | filterNamaAsuransi: nama_asuransi | matchesStatus: status">
+									<td>{{klaim.id}}</td>
+									<td>{{klaim.nama_pasien}}</td>
+									<td>{{klaim.tanggal}}</td>
+									<td>{{klaim.nama_asuransi.toUpperCase()}}</td>
+									<td>{{klaim.status}}</td>								
+									<td><button type="button" class="btn btn-primary" [routerLink] = "['/klaim', klaim.id]">Details</button></td>
 								</tr>
 							</tbody>
 						</table>

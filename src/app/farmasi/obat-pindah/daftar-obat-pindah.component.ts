@@ -11,7 +11,12 @@ import { ObatPindahService }		from './obat-pindah.service';
 
 export class DaftarObatPindahComponent {
 
-	allObatPindah: ObatPindah[];
+	public allObatPindah: ObatPindah[];
+
+	public filterQuery = "";
+    public rowsOnPage = 5;
+    public sortBy = "waktu_keluar";
+    public sortOrder = "asc";
 
 	constructor(
 		private ObatPindahService: ObatPindahService
@@ -20,5 +25,9 @@ export class DaftarObatPindahComponent {
 	ngOnInit(): void {
 		this.ObatPindahService.getAllObatPindah()
 			.then(allObatPindah => this.allObatPindah = allObatPindah);
+	}
+
+	onClickDatePicker(): void {
+		
 	}
 }

@@ -11,7 +11,12 @@ import { ObatRusakService }		from './obat-rusak.service';
 
 export class DaftarObatRusakComponent {
 
-	allObatRusak: ObatRusak[];
+	public allObatRusak: ObatRusak[];
+
+	public filterQuery = "";
+    public rowsOnPage = 5;
+    public sortBy = "waktu_keluar";
+    public sortOrder = "asc";
 
 	constructor(
 		private ObatRusakService: ObatRusakService
@@ -20,5 +25,9 @@ export class DaftarObatRusakComponent {
 	ngOnInit(): void {
 		this.ObatRusakService.getAllObatRusak()
 			.then(allObatRusak => this.allObatRusak = allObatRusak);
+	}
+
+	onClickDatePicker(): void {
+		
 	}
 }
