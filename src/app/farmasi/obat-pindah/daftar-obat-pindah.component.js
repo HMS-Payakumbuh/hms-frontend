@@ -14,11 +14,17 @@ var obat_pindah_service_1 = require("./obat-pindah.service");
 var DaftarObatPindahComponent = (function () {
     function DaftarObatPindahComponent(ObatPindahService) {
         this.ObatPindahService = ObatPindahService;
+        this.filterQuery = "";
+        this.rowsOnPage = 5;
+        this.sortBy = "waktu_keluar";
+        this.sortOrder = "asc";
     }
     DaftarObatPindahComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.ObatPindahService.getAllObatPindah()
             .then(function (allObatPindah) { return _this.allObatPindah = allObatPindah; });
+    };
+    DaftarObatPindahComponent.prototype.onClickDatePicker = function () {
     };
     return DaftarObatPindahComponent;
 }());
