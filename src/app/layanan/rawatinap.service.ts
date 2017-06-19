@@ -12,7 +12,8 @@ export class RawatinapService {
 	allRawatinap: Rawatinap[] = [
 		{no_kamar: 'Anggrek-001', jenis_kamar: 'Rawat Inap', kelas: '3', harga_per_hari: 100, kapasitas_kamar: 2},
 		{no_kamar: 'Anggrek-002', jenis_kamar: 'ICU', kelas : '2', harga_per_hari: 100, kapasitas_kamar: 2},
-		{no_kamar: 'Mawar-001', jenis_kamar: 'Rawat Inap', kelas : '1', harga_per_hari: 40, kapasitas_kamar: 2}
+		{no_kamar: 'Mawar-001', jenis_kamar: 'Rawat Inap', kelas : '1', harga_per_hari: 40, kapasitas_kamar: 2},
+		{no_kamar: 'Matahari-001', jenis_kamar: 'Rawat Inap', kelas : 'VIP', harga_per_hari: 400, kapasitas_kamar: 2}
 	];
 
 	constructor(private http:Http) { }

@@ -43,7 +43,7 @@
 		<div class="card mb-3">
 			<div class="card-header card-info">
 				<h4>
-					<i class="fa" aria-hidden="true"></i> {{allTempatTidur[2].status}}
+					<i class="fa" aria-hidden="true"></i> {{rawatinap.no_kamar}}
 				</h4>
 			</div>
 			<div class="card-block">
@@ -51,18 +51,21 @@
 					<div class="row">
 						<div *ngIf="rawatinap.kelas == 'VIP'" class="col-md-8 mx-4 ml-1 py-5 px-5" style="border: 2px solid black">
 							<div class="row">
-								<div class="col-md-12">			
-						            <button class="btn btn-sq-sm btn-info px-4 py-3">
+								<div class="col-md-12 text-center">			
+						            <button [disabled]= "!checkStatus(1)" class="btn btn-sq-sm btn-info px-4 py-3" [ngClass]="{'btn-info':checkStatus(1), 'btn-warning':isSelected(1)}" (click)="selectTempatTidur(1)">
 						                1
 						            </button>      
 								</div>
 							</div>
 						</div>
 						
+
+
+
 						<div *ngIf="rawatinap.kelas == 1" class="col-md-8 mx-4 ml-1 py-5 px-5" style="border: 2px solid black">
 							<div class="row">
 								<div class="col-md-12 text-center">			
-						            <button class="btn btn-sq-sm btn-info px-4 py-3">
+						            <button [disabled]= "!checkStatus(1)" class="btn btn-sq-sm btn-info px-4 py-3" [ngClass]="{'btn-info':checkStatus(1), 'btn-warning':isSelected(1)}" (click)="selectTempatTidur(1)">
 						                1
 						            </button>      
 								</div>
@@ -70,20 +73,24 @@
 
 							<div class="row mt-5 text-center">
 								<div class="col-md-12">
-						            <button class="btn btn-sq-sm btn-info px-4 py-3">
+						            <button [disabled]= "!checkStatus(2)" class="btn btn-sq-sm btn-info px-4 py-3" [ngClass]="{'btn-info':checkStatus(2), 'btn-warning':isSelected(2)}" (click)="selectTempatTidur(2)">
 						                2
 						            </button>         
 								</div>
 							</div>
 						</div>
 
+
+
+
+
 						<div *ngIf="rawatinap.kelas == 2" class="col-md-8 mx-4 ml-1 py-5 px-5" style="border: 2px solid black">
 							<div class="row">
 								<div class="col-md-12">			
-						            <button class="btn btn-sq-sm btn-info float-left px-4 py-3">
+						            <button [disabled]= "!checkStatus(1)" class="btn btn-sq-sm float-left px-4 py-3" [ngClass]="{'btn-info':checkStatus(1), 'btn-warning':isSelected(1)}" (click)="selectTempatTidur(1)">
 						                1
 						            </button>
-						            <button class="btn btn-sq-sm btn-danger float-right px-4 py-3">
+						            <button [disabled]= "!checkStatus(2)" class="btn btn-sq-sm float-right px-4 py-3" [ngClass]="{'btn-info':checkStatus(2), 'btn-warning':isSelected(2)}" (click)="selectTempatTidur(2)">
 						              	2
 						            </button>            
 								</div>
@@ -91,34 +98,38 @@
 
 							<div class="row mt-5">
 								<div class="col-md-12">
-						            <button class="btn btn-sq-sm btn-info float-left px-4 py-3">
+						            <button [disabled]= "!checkStatus(3)" class="btn btn-sq-sm float-left px-4 py-3" [ngClass]="{'btn-info':checkStatus(3), 'btn-warning':isSelected(3)}" (click)="selectTempatTidur(3)">
 						                3
 						            </button>
-						            <button class="btn btn-sq-sm btn-danger float-right px-4 py-3">
+						            <button [disabled]= "!checkStatus(4)" class="btn btn-sq-sm float-right px-4 py-3" [ngClass]="{'btn-info':checkStatus(4), 'btn-warning':isSelected(4)}" (click)="selectTempatTidur(4)">
 						             	4
 						            </button>            
 								</div>
 							</div>
 						</div>
 
+
+
+
+
 						<div *ngIf="rawatinap.kelas == 3" class="col-md-8 mx-4 ml-1 py-5 px-5" style="border: 2px solid black">
-							<div class="row" *ngFor="let tempatTidur of allTempatTidur">
+							<div class="row">
 								<div class="col-md-12">			
-						            <button class="btn btn-sq-sm btn-info float-left px-4 py-3">
-						                {{tempatTidur.status}}
+						            <button [disabled]= "!checkStatus(1)" class="btn btn-sq-sm float-left px-4 py-3" [ngClass]="{'btn-info':checkStatus(1), 'btn-warning':isSelected(1)}" (click)="selectTempatTidur(1)">
+						                1
 						            </button>
-						            <button class="btn btn-sq-sm btn-danger float-right px-4 py-3">
-						              	i+1
+						            <button [disabled]= "!checkStatus(2)" class="btn btn-sq-sm float-right px-4 py-3" [ngClass]="{'btn-info':checkStatus(2), 'btn-warning':isSelected(2)}" (click)="selectTempatTidur(2)">
+						              	2
 						            </button>            
 								</div>
 							</div>
 
 							<div class="row mt-5">
 								<div class="col-md-12">
-						            <button class="btn btn-sq-sm btn-info float-left px-4 py-3">
+						            <button [disabled]= "!checkStatus(3)" class="btn btn-sq-sm float-left px-4 py-3" [ngClass]="{'btn-info':checkStatus(3), 'btn-warning':isSelected(3)}" (click)="selectTempatTidur(3)">
 						                3
 						            </button>
-						            <button class="btn btn-sq-sm btn-danger float-right px-4 py-3">
+						            <button [disabled]= "!checkStatus(4)" class="btn btn-sq-sm float-right px-4 py-3" [ngClass]="{'btn-info':checkStatus(4), 'btn-warning':isSelected(4)}" (click)="selectTempatTidur(4)">
 						             	4
 						            </button>            
 								</div>
@@ -126,10 +137,10 @@
 
 							<div class="row mt-5">
 								<div class="col-md-12">
-						            <button class="btn btn-sq-sm btn-info float-left px-4 py-3">
+						            <button [disabled]= "!checkStatus(5)" class="btn btn-sq-sm float-left px-4 py-3" [ngClass]="{'btn-info':checkStatus(5), 'btn-warning':isSelected(5)}" (click)="selectTempatTidur(5)">
 						                5
 						            </button>
-						            <button class="btn btn-sq-sm btn-danger float-right px-4 py-3">
+						            <button [disabled]= "!checkStatus(6)" class="btn btn-sq-sm float-right px-4 py-3" [ngClass]="{'btn-info':checkStatus(6), 'btn-warning':isSelected(6)}" (click)="selectTempatTidur(6)">
 						             	6
 						            </button>            
 								</div>
@@ -139,21 +150,21 @@
 
 						<div class="col-md-3 mx-2">
 							<div class="row mt-3">
-								<a href="" class="btn btn-sq-sm btn-info float-left p-3 mr-2">
+								<button class="btn btn-sq-sm btn-info float-left p-3 mr-2">
 							                
-							    </a>
+							    </button>
 							    <span class="mt-1 pl-3">Tersedia</span>
 							</div>
 							<div class="row mt-3">
-								<a href="" class="btn btn-sq-sm btn-danger float-left p-3 mr-2">
+								<button class="btn bg-faded btn-sq-sm float-left p-3 mr-2">
 							             
-							    </a>
+							    </button>
 							    <span class="mt-1 pl-3">Tidak Tersedia</span>
 							</div>
 							<div class="row mt-3">
-								<a href="" class="btn btn-sq-sm btn-warning float-left p-3 mr-2">
+								<button class="btn btn-sq-sm btn-warning float-left p-3 mr-2">
 							             
-							    </a>
+							    </button>
 							    <span class="mt-1 pl-3">Dipilih</span>
 							</div>
 							<div class="row mt-5 pt-5">

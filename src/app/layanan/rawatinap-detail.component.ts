@@ -25,6 +25,7 @@ export class RawatinapDetailComponent implements OnInit {
     allTempatTidur: Tempattidur[];
     transaksi: Transaksi;
 	selectedTempatTidur: number;
+	noKamar: string;
 
 	constructor(
 		private transaksiService: TransaksiService,
@@ -40,15 +41,31 @@ export class RawatinapDetailComponent implements OnInit {
 			.subscribe(rawatinap => this.rawatinap = rawatinap);
 
 		this.route.params
+			.subscribe(params => { 
+				this.noKamar = params['noKamar'];
+			});
+
+		this.route.params
 			.switchMap((params: Params) => this.transaksiService.getTransaksi(+params['idTransaksi']))
 			.subscribe(transaksi => this.transaksi = transaksi);
 
-		this.tempattidurService.getTempattidurByNoKamar('Anggrek-001')
+		this.tempattidurService.getTempattidurByNoKamar(this.noKamar)
 			.then(allTempatTidur => this.allTempatTidur = allTempatTidur);
 	}
 
 	selectTempatTidur(noTempatTidur:number) : void {
-		this.selectedTempatTidur = noTempatTidur;
+		if(noTempatTidur === this.selectedTempatTidur) 
+			this.selectedTempatTidur = 0;
+		else
+			this.selectedTempatTidur = noTempatTidur;
+	}
+
+	isSelected(noTempatTidur:number) {
+		return(this.selectedTempatTidur === noTempatTidur);
+	}
+
+	checkStatus(noTempatTidur:number) {
+		return (this.allTempatTidur[noTempatTidur-1].status === 1); 
 	}
 
 	goBack(): void {

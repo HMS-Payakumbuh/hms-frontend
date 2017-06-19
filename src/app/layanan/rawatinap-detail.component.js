@@ -30,13 +30,26 @@ var RawatinapDetailComponent = (function () {
             .switchMap(function (params) { return _this.rawatinapService.getRawatinapByNoKamar(params['noKamar']); })
             .subscribe(function (rawatinap) { return _this.rawatinap = rawatinap; });
         this.route.params
+            .subscribe(function (params) {
+            _this.noKamar = params['noKamar'];
+        });
+        this.route.params
             .switchMap(function (params) { return _this.transaksiService.getTransaksi(+params['idTransaksi']); })
             .subscribe(function (transaksi) { return _this.transaksi = transaksi; });
-        this.tempattidurService.getTempattidurByNoKamar('Anggrek-001')
+        this.tempattidurService.getTempattidurByNoKamar(this.noKamar)
             .then(function (allTempatTidur) { return _this.allTempatTidur = allTempatTidur; });
     };
     RawatinapDetailComponent.prototype.selectTempatTidur = function (noTempatTidur) {
-        this.selectedTempatTidur = noTempatTidur;
+        if (noTempatTidur === this.selectedTempatTidur)
+            this.selectedTempatTidur = 0;
+        else
+            this.selectedTempatTidur = noTempatTidur;
+    };
+    RawatinapDetailComponent.prototype.isSelected = function (noTempatTidur) {
+        return (this.selectedTempatTidur === noTempatTidur);
+    };
+    RawatinapDetailComponent.prototype.checkStatus = function (noTempatTidur) {
+        return (this.allTempatTidur[noTempatTidur - 1].status === 1);
     };
     RawatinapDetailComponent.prototype.goBack = function () {
         this.location.back();

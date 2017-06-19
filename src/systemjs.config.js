@@ -19,7 +19,7 @@
       '@angular/common': 'npm:@angular/common/bundles/common.umd.js',
       '@angular/compiler': 'npm:@angular/compiler/bundles/compiler.umd.js',
       '@angular/platform-browser': 'npm:@angular/platform-browser/bundles/platform-browser.umd.js',
-      '@angular/platform-browser-dynamic': 'npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
+      '@angular/platform-browser-dynamic': 'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
       '@angular/http': 'npm:@angular/http/bundles/http.umd.js',
       '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
       '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
@@ -38,8 +38,6 @@
       //lodash
       'lodash': 'npm:lodash',
 
-      'ng2-date-picker': 'npm:ng2-date-picker',
-      'moment': 'npm:moment',
       //ng2-input-autocomplete
       'ng2-input-autocomplete': 'npm:ng2-input-autocomplete/bundles/',
 
@@ -71,21 +69,20 @@
         main: './lodash.js',
         defaultExtension: 'js'
       },
-<<<<<<< HEAD
       'ng2-date-picker' : {
         main: './index.js',
         defaultExtension: 'js'
       },
       'moment' : {
         main: './moment.js',
-=======
+        defaultExtension: 'js'
+      },
       'ng2-input-autocomplete' : {
         main: './ng2-input-autocomplete.js',
         defaultExtension: 'js'
       },
       'angular2-datatable': {
         main: './index.js',
->>>>>>> upstream/master
         defaultExtension: 'js'
       }
     }

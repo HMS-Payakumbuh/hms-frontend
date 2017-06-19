@@ -23,6 +23,13 @@ var TempattidurService = (function () {
             { no_kamar: 'Anggrek-001', no_tempat_tidur: 4, status: 1 },
             { no_kamar: 'Anggrek-001', no_tempat_tidur: 5, status: 0 },
             { no_kamar: 'Anggrek-001', no_tempat_tidur: 6, status: 1 },
+            { no_kamar: 'Anggrek-002', no_tempat_tidur: 1, status: 0 },
+            { no_kamar: 'Anggrek-002', no_tempat_tidur: 2, status: 1 },
+            { no_kamar: 'Anggrek-002', no_tempat_tidur: 3, status: 1 },
+            { no_kamar: 'Anggrek-002', no_tempat_tidur: 4, status: 0 },
+            { no_kamar: 'Mawar-001', no_tempat_tidur: 1, status: 1 },
+            { no_kamar: 'Mawar-001', no_tempat_tidur: 2, status: 0 },
+            { no_kamar: 'Matahari-001', no_tempat_tidur: 1, status: 0 },
         ];
     }
     TempattidurService.prototype.handleError = function (error) {
@@ -35,7 +42,9 @@ var TempattidurService = (function () {
     };
     TempattidurService.prototype.getTempattidurByNoKamar = function (no_kamar) {
         return this.getAllTempattidur()
-            .then(function (allTempattidur) { return allTempattidur.find(function (tempattidur) { return tempattidur.no_kamar === no_kamar; }); })
+            .then(function (allTempattidur) { return allTempattidur.filter(function (item) {
+            return item.no_kamar === no_kamar;
+        }); })
             .catch(this.handleError);
     };
     return TempattidurService;
