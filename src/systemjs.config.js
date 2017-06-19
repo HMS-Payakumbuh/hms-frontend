@@ -36,7 +36,10 @@
       'moment': 'npm:moment',
 
       //lodash
-      'lodash': 'npm:lodash'
+      'lodash': 'npm:lodash',
+
+      //typeahead
+      'ng2-input-autocomplete': 'npm:ng2-input-autocomplete/bundles/'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -61,6 +64,10 @@
       },
       'lodash' : {
         main: './lodash.js',
+        defaultExtension: 'js'
+      },
+      'ng2-input-autocomplete' : {
+        main: './ng2-input-autocomplete.js',
         defaultExtension: 'js'
       }
     }

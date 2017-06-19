@@ -4,6 +4,7 @@ import { FormsModule }              from '@angular/forms';
 import { ReactiveFormsModule }      from '@angular/forms';
 import { HttpModule }               from '@angular/http';
 import { DpDatePickerModule }       from 'ng2-date-picker';
+import { AutocompleteModule}        from 'ng2-input-autocomplete';
 
 import { MatchesStatusPipe }        from './pipe/matches-status.pipe';
 import { FilterNamaPasienPipe }     from './pipe/filter-nama-pasien.pipe';
@@ -44,7 +45,8 @@ import { AppComponent }             from './app.component';
         ReactiveFormsModule,
         AppRoutingModule,
         HttpModule,
-        DpDatePickerModule
+        DpDatePickerModule,
+        AutocompleteModule.forRoot()
     ],
     declarations: [ 
         AppComponent,
@@ -69,7 +71,7 @@ import { AppComponent }             from './app.component';
         ObatPindahFormComponent,
         DaftarObatRusakComponent,
         DetailObatRusakComponent,
-        ObatRusakFormComponent
+        ObatRusakFormComponent,
     ],
     bootstrap:    [ 
 	   AppComponent
