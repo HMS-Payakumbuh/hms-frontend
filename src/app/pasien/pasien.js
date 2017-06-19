@@ -1,15 +1,13 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var Pasien = (function () {
-    function Pasien(name, dob, gender, religion, address, phone, no_bpjs, no_rujukan) {
-        this.name = name;
-        this.dob = dob;
-        this.gender = gender;
-        this.religion = religion;
-        this.address = address;
-        this.phone = phone;
-        this.no_bpjs = no_bpjs;
-        this.no_rujukan = no_rujukan;
+    function Pasien(nama, tanggal_lahir, jender, agama, alamat, kontak, no_asuransi) {
+        this.nama = nama;
+        this.tanggal_lahir = tanggal_lahir;
+        this.jender = jender;
+        this.agama = agama;
+        this.alamat = alamat;
+        this.kontak = kontak;
+        this.no_asuransi = no_asuransi;
     }
     return Pasien;
 }());

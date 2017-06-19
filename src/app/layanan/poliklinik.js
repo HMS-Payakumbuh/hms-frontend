@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var Poliklinik = (function () {
     function Poliklinik() {
     }

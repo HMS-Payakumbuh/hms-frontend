@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var pasien_1 = require("./pasien");
@@ -17,18 +16,26 @@ var PasienFormComponent = (function () {
     function PasienFormComponent(route, poliklinikService) {
         this.route = route;
         this.poliklinikService = poliklinikService;
+        this.submitted = false;
         this.genders = ['Laki-laki', 'Perempuan'];
         this.religions = ['Islam', 'Protestan', 'Katolik', 'Buddha', 'Hindu', 'Konghucu'];
         this.doctors = ['Dr. Juan', 'Dr. Alec', 'Dr. Hans', 'Dr. Kelvin'];
-        this.model = new pasien_1.Pasien('Dr IQ', '2012-09-12', this.genders[0], this.religions[0], 'Chuck Overstreet', '0892983211', 'aa', 'a');
-        this.submitted = false;
+        this.model = new pasien_1.Pasien('Jane', '08-06-1988', this.genders[0], this.religions[5], 'Jln. Haji Slamet', '123515151', ['12314', '12324']);
     }
     PasienFormComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.poliklinikService.getAllPoliklinik()
             .then(function (allPoliklinik) { return _this.allPoliklinik = allPoliklinik; });
     };
-    PasienFormComponent.prototype.onSubmit = function () { this.submitted = true; };
+    PasienFormComponent.prototype.customTrackBy = function (index, obj) {
+        return index;
+    };
+    PasienFormComponent.prototype.pakaiAsuransi = function (no_asuransi) {
+        this.no_asuransi = no_asuransi;
+    };
+    PasienFormComponent.prototype.save = function () {
+        this.submitted = true;
+    };
     Object.defineProperty(PasienFormComponent.prototype, "diagnostic", {
         // TODO: Remove this when we're done
         get: function () { return JSON.stringify(this.model); },
