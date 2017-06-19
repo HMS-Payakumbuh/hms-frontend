@@ -39,8 +39,11 @@ var PoliklinikDetailComponent = (function () {
         this.tindakanService.getAllTindakanReference()
             .then(function (allTindakanReference) { return _this.allTindakanReference = allTindakanReference; });
     };
-    PoliklinikDetailComponent.prototype.tindakanSelected = function (tindakan) {
+    PoliklinikDetailComponent.prototype.addSelectedTindakan = function (tindakan) {
         this.selectedTindakan.push(tindakan);
+    };
+    PoliklinikDetailComponent.prototype.removeSelectedTindakan = function (i) {
+        this.selectedTindakan.splice(i, 1);
     };
     PoliklinikDetailComponent.prototype.initResepEntry = function () {
         return this.formBuilder.group({
