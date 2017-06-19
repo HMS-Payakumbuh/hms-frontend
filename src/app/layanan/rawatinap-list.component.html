@@ -1,0 +1,36 @@
+<html>
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>Daftar Kamar Rawat Inap</h4>
+				</div>
+
+				<div class="card-block">
+					<table class="table">
+						<thead>
+							<th>No. Kamar</th>
+							<th>Jenis Kamar</th>
+							<th>Kelas</th>
+							<th>Tempat Tidur Tersedia</th>
+							<th></th>
+						</thead>
+						<tbody *ngFor="let rawatinap of allRawatinap">
+							<tr>
+								<td>{{rawatinap?.no_kamar}}</td>
+								<td>{{rawatinap?.jenis_kamar}}</td>
+								<td>{{rawatinap?.kelas}}</td>
+								<td>0</td>
+								<td>
+									<button type="button" class="btn btn-primary" routerLink="{{rawatinap.no_kamar}}/1">Detail</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</html>
