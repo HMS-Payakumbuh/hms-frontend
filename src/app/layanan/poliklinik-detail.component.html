@@ -107,8 +107,30 @@
 
 							<div class="form-group">
 								<label for="inputDiagnosis">Masukkan kode diagnosis pasien (ICD-10)</label>
-								<input type="text" class="form-control" id="inputDiagnosis">
+								<br/>
+								<input id="inputDiagnosis" autocomplete [items]="allDiagnosisReference" [config]="diagnosisAutocompleteConfig" (selectEvent)="addSelectedDiagnosis($event)">
 							</div>
+
+							<table class="table" *ngIf="selectedDiagnosis.length > 0">
+								<thead>
+									<th>#</th>
+									<th>Kode</th>
+									<th>Nama</th>
+									<th></th>
+								</thead>
+								<tbody>
+									<tr *ngFor="let diagnosis of selectedDiagnosis; index as i">
+										<td style="vertical-align: middle;">{{i + 1}}</td>
+										<td style="vertical-align: middle;">{{diagnosis.kode}}</td>
+										<td style="vertical-align: middle;">{{diagnosis.nama}}</td>
+										<td style="vertical-align: middle;">
+											<button type="button" class="btn btn-sm btn-outline-danger" (click)="removeSelectedDiagnosis(i)">
+												<i class="fa fa-window-close"></i>
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>							
 	  							
 						</div>
 
