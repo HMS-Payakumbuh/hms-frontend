@@ -10,6 +10,7 @@ import { MatchesStatusPipe }        from './pipe/matches-status.pipe';
 import { FilterNamaPasienPipe }     from './pipe/filter-nama-pasien.pipe';
 import { FilterTanggalPipe }     from './pipe/filter-tanggal.pipe';
 import { FilterJenisObatPipe }     from './pipe/filter-jenis-obat.pipe';
+import { FilterObatRusakPipe }     from './pipe/filter-obat-rusak.pipe';
 
 import { TransaksiComponent }       from './transaksi/transaksi.component';
 import { TransaksiDetailComponent } from './transaksi/transaksi-detail.component';
@@ -63,6 +64,7 @@ import { DataTableModule }    from 'angular2-datatable';
         FilterNamaPasienPipe,
         FilterTanggalPipe,
         FilterJenisObatPipe,
+        FilterObatRusakPipe,
         AntrianComponent,
         DaftarAntrianComponent,
         DaftarObatComponent,
