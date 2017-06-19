@@ -53,8 +53,12 @@ export class PoliklinikDetailComponent implements OnInit {
 			.then(allTindakanReference => this.allTindakanReference = allTindakanReference);
 	}
 
-	tindakanSelected(tindakan: TindakanReference) {
+	addSelectedTindakan(tindakan: TindakanReference) {
 		this.selectedTindakan.push(tindakan);
+	}
+
+	removeSelectedTindakan(i: number) {
+		this.selectedTindakan.splice(i, 1);
 	}
 
 	initResepEntry() {
