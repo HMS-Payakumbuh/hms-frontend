@@ -1,4 +1,5 @@
 export class ObatRusak {
+	id: number;
 	id_jenis: number;	
 	merek: string;
 	nama_generik: string;

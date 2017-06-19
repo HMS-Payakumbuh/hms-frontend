@@ -18,8 +18,8 @@ var ObatRusakService = (function () {
         this.http = http;
         // private ObatRusakUrl = ENV.ObatRusakUrl;
         this.allObatRusak = [
-            { id_jenis: 2138, merek: 'Cefixim syr kering 100mg/5ml', nama_generik: 'Cefixim', pembuat: 'Indofarma', golongan: 'Antibiotik', satuan: 'Botol', harga_jual: 10100.00, nomor_batch: '085G611NV', waktu_masuk: '11 September 2016 16:18', kadaluarsa: '19 Juni 2017', harga_beli: 9180.36, kode_obat: 213816091102, waktu_keluar: '12 Juni 2017 08:33', jumlah: 5, alasan: 'Rusak', keterangan: 'Segel rusak' },
-            { id_jenis: 2138, merek: 'Cefixim syr kering 100mg/5ml', nama_generik: 'Cefixim', pembuat: 'Indofarma', golongan: 'Antibiotik', satuan: 'Botol', harga_jual: 10100.00, nomor_batch: '085G610NV', waktu_masuk: '11 September 2016 16:16', kadaluarsa: '18 Juni 2017', harga_beli: 9180.36, kode_obat: 213816091101, waktu_keluar: '19 Juni 2017 09:48', jumlah: 37, alasan: 'Kadaluarsa', keterangan: '' }
+            { id: 1, id_jenis: 2138, merek: 'Cefixim syr kering 100mg/5ml', nama_generik: 'Cefixim', pembuat: 'Indofarma', golongan: 'Antibiotik', satuan: 'Botol', harga_jual: 10100.00, nomor_batch: '085G611NV', waktu_masuk: '11 September 2016 16:18', kadaluarsa: '19 Juni 2017', harga_beli: 9180.36, kode_obat: 213816091102, waktu_keluar: '12 Juni 2017 08:33', jumlah: 5, alasan: 'Rusak', keterangan: 'Segel rusak' },
+            { id: 2, id_jenis: 2138, merek: 'Cefixim syr kering 100mg/5ml', nama_generik: 'Cefixim', pembuat: 'Indofarma', golongan: 'Antibiotik', satuan: 'Botol', harga_jual: 10100.00, nomor_batch: '085G610NV', waktu_masuk: '11 September 2016 16:16', kadaluarsa: '18 Juni 2017', harga_beli: 9180.36, kode_obat: 213816091101, waktu_keluar: '19 Juni 2017 09:48', jumlah: 37, alasan: 'Kadaluarsa', keterangan: '' }
         ]; // Mock-up
     }
     ObatRusakService.prototype.handleError = function (error) {
@@ -30,9 +30,9 @@ var ObatRusakService = (function () {
         return Promise.resolve(this.allObatRusak)
             .catch(this.handleError);
     };
-    ObatRusakService.prototype.getObatRusak = function (waktu_keluar) {
+    ObatRusakService.prototype.getObatRusak = function (id) {
         return this.getAllObatRusak()
-            .then(function (allObatRusak) { return allObatRusak.find(function (ObatRusak) { return ObatRusak.waktu_keluar === waktu_keluar; }); })
+            .then(function (allObatRusak) { return allObatRusak.find(function (ObatRusak) { return ObatRusak.id === id; }); })
             .catch(this.handleError);
     };
     return ObatRusakService;

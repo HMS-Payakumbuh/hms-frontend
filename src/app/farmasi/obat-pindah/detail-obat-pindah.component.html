@@ -1,0 +1,84 @@
+  <div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-newspaper-o" aria-hidden="true"></i> Detail Obat Pindah
+				</h4>
+			</div>
+			<div *ngIf="obatPindah" class="card-block">
+				<div class="card-text">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td><b>Kode Obat</b></td>
+								<td>{{obatPindah.kode_obat}}</td>	
+							</tr>
+							<tr>
+								<td><b>ID Jenis Obat</b></td>
+								<td>{{obatPindah.id_jenis}}</td>	
+							</tr>
+							<tr>
+								<td><b>Merek Obat</b></td>								
+								<td>{{obatPindah.merek}}</td>								
+							</tr>
+							<tr>
+								<td><b>Nama Generik</b></td>
+								<td>{{obatPindah.nama_generik}}</td>								
+							</tr>
+							<tr>
+								<td><b>Pembuat</b></td>
+								<td>{{obatPindah.pembuat}}</td>								
+							</tr>
+							<tr>
+								<td><b>Golongan</b></td>
+								<td>{{obatPindah.golongan}}</td>
+							</tr>
+							<tr>
+								<td><b>Satuan</b></td>					
+								<td>{{obatPindah.satuan}}</td>
+							</tr>
+							<tr>
+								<td><b>Nomor Batch</b></td>								
+								<td>{{obatPindah.nomor_batch}}</td>
+							</tr>
+							<tr>
+								<td><b>Waktu Masuk</b></td>								
+								<td>{{obatPindah.waktu_masuk}}</td>
+							</tr>
+							<tr>
+								<td><b>Kadaluarsa</b></td>								
+								<td>{{obatPindah.kadaluarsa}}</td>
+							</tr>
+							<tr>
+								<td><b>Waktu Keluar</b></td>								
+								<td>{{obatPindah.waktu_keluar}}</td>
+							</tr>
+							<tr>
+								<td><b>Jumlah Keluar</b></td>								
+								<td>{{obatPindah.jumlah}}</td>
+							</tr>
+							<tr>
+								<td><b>Asal</b></td>								
+								<td>{{obatPindah.asal}}</td>
+							</tr>
+							<tr>
+								<td><b>Tujuan</b></td>								
+								<td>{{obatPindah.tujuan}}</td>
+							</tr>
+							<tr>
+								<td><b>Keterangan</b></td>								
+								<td>{{obatPindah.keterangan}}</td>
+							</tr>							
+						</tbody>
+					</table>
+
+					<div class="row">
+						<div class="offset-md-8 col-md-4">
+							<button class="btn btn-danger" (click)="goBack()">Kembali</button>
+							<button class="btn btn-warning">Edit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

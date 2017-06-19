@@ -19,11 +19,11 @@ import { DetailJenisObatComponent }     from './farmasi/jenis-obat/detail-jenis-
 import { JenisObatFormComponent }		from './farmasi/jenis-obat/jenis-obat-form.component';
 
 import { DaftarObatPindahComponent }      from './farmasi/obat-pindah/daftar-obat-pindah.component';
-// import { DetailObatPindahComponent }      from './farmasi/obat-pindah/detail-obat-pindah.component';
+import { DetailObatPindahComponent }      from './farmasi/obat-pindah/detail-obat-pindah.component';
 import { ObatPindahFormComponent }		from './farmasi/obat-pindah/obat-pindah-form.component';
 
 import { DaftarObatRusakComponent }      from './farmasi/obat-rusak/daftar-obat-rusak.component';
-// import { DetailObatRusakComponent }      from './farmasi/obat-rusak/detail-obat-rusak.component';
+import { DetailObatRusakComponent }      from './farmasi/obat-rusak/detail-obat-rusak.component';
 import { ObatRusakFormComponent }      from './farmasi/obat-rusak/obat-rusak-form.component';
 
 const routes: Routes = [
@@ -43,10 +43,10 @@ const routes: Routes = [
 	{ path: 'jenis-obat/:id', component: DetailJenisObatComponent },
 	{ path: 'jenis-obat-form', component: JenisObatFormComponent },	
 	{ path: 'obat-pindah', component: DaftarObatPindahComponent },
-	// { path: 'obat-pindah/:waktu-keluar', component: DetailObatPindahComponent },
+	{ path: 'obat-pindah/:id', component: DetailObatPindahComponent },
 	{ path: 'obat-pindah-form', component: ObatPindahFormComponent },	
 	{ path: 'obat-rusak', component: DaftarObatRusakComponent },	
-	// { path: 'obat-rusak/:waktu-keluar', component: DetailObatRusakComponent },
+	{ path: 'obat-rusak/:id', component: DetailObatRusakComponent },
 	{ path: 'obat-rusak-form', component: ObatRusakFormComponent }
 ];
 
