@@ -27,11 +27,11 @@ import { DetailJenisObatComponent }     from './farmasi/jenis-obat/detail-jenis-
 import { JenisObatFormComponent }       from './farmasi/jenis-obat/jenis-obat-form.component';
 
 import { DaftarObatPindahComponent }      from './farmasi/obat-pindah/daftar-obat-pindah.component';
-// import { DetailObatPindahComponent }      from './farmasi/obat-pindah/detail-obat-pindah.component';
+import { DetailObatPindahComponent }      from './farmasi/obat-pindah/detail-obat-pindah.component';
 import { ObatPindahFormComponent }      from './farmasi/obat-pindah/obat-pindah-form.component';
 
 import { DaftarObatRusakComponent }      from './farmasi/obat-rusak/daftar-obat-rusak.component';
-// import { DetailObatRusakComponent }      from './farmasi/obat-rusak/detail-obat-rusak.component';
+import { DetailObatRusakComponent }      from './farmasi/obat-rusak/detail-obat-rusak.component';
 import { ObatRusakFormComponent }      from './farmasi/obat-rusak/obat-rusak-form.component';
 
 import { AppRoutingModule }         from './app-routing.module';
@@ -65,10 +65,10 @@ import { AppComponent }             from './app.component';
         DetailJenisObatComponent,
         JenisObatFormComponent,
         DaftarObatPindahComponent,
-        // DetailObatPindahComponent,
+        DetailObatPindahComponent,
         ObatPindahFormComponent,
         DaftarObatRusakComponent,
-        // DetailObatRusakComponent,
+        DetailObatRusakComponent,
         ObatRusakFormComponent
     ],
     bootstrap:    [ 

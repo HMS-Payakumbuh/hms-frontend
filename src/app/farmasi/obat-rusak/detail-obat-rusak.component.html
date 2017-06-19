@@ -1,0 +1,80 @@
+  <div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-newspaper-o" aria-hidden="true"></i> Detail Obat
+				</h4>
+			</div>
+			<div *ngIf="obatRusak" class="card-block">
+				<div class="card-text">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td><b>Kode Obat</b></td>
+								<td>{{obatRusak.kode_obat}}</td>	
+							</tr>
+							<tr>
+								<td><b>ID Jenis Obat</b></td>
+								<td>{{obatRusak.id_jenis}}</td>	
+							</tr>
+							<tr>
+								<td><b>Merek Obat</b></td>								
+								<td>{{obatRusak.merek}}</td>								
+							</tr>
+							<tr>
+								<td><b>Nama Generik</b></td>
+								<td>{{obatRusak.nama_generik}}</td>								
+							</tr>
+							<tr>
+								<td><b>Pembuat</b></td>
+								<td>{{obatRusak.pembuat}}</td>								
+							</tr>
+							<tr>
+								<td><b>Golongan</b></td>
+								<td>{{obatRusak.golongan}}</td>
+							</tr>
+							<tr>
+								<td><b>Satuan</b></td>					
+								<td>{{obatRusak.satuan}}</td>
+							</tr>
+							<tr>
+								<td><b>Nomor Batch</b></td>								
+								<td>{{obatRusak.nomor_batch}}</td>
+							</tr>
+							<tr>
+								<td><b>Waktu Masuk</b></td>								
+								<td>{{obatRusak.waktu_masuk}}</td>
+							</tr>
+							<tr>
+								<td><b>Kadaluarsa</b></td>								
+								<td>{{obatRusak.kadaluarsa}}</td>
+							</tr>
+							<tr>
+								<td><b>Waktu Keluar</b></td>								
+								<td>{{obatRusak.waktu_keluar}}</td>
+							</tr>
+							<tr>
+								<td><b>Jumlah Keluar</b></td>								
+								<td>{{obatRusak.jumlah}}</td>
+							</tr>
+							<tr>
+								<td><b>Alasan</b></td>								
+								<td>{{obatRusak.alasan}}</td>
+							</tr>
+							<tr>
+								<td><b>Keterangan</b></td>								
+								<td>{{obatRusak.keterangan}}</td>
+							</tr>							
+						</tbody>
+					</table>
+
+					<div class="row">
+						<div class="offset-md-8 col-md-4">
+							<button class="btn btn-danger" (click)="goBack()">Kembali</button>
+							<button class="btn btn-warning">Edit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

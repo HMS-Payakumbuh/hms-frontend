@@ -11,8 +11,8 @@ export class ObatPindahService {
 	// private ObatPindahUrl = ENV.ObatPindahUrl;
 
 	allObatPindah: ObatPindah[] = [
-		{id_jenis: 2138, merek: 'Cefixim syr kering 100mg/5ml', nama_generik: 'Cefixim', pembuat: 'Indofarma', golongan: 'Antibiotik', satuan: 'Botol', harga_jual: 10100.00, nomor_batch: '085G611NV', waktu_masuk: '11 September 2016 16:18', kadaluarsa: '19 Juni 2017', harga_beli: 9180.36, kode_obat: 213816091102, waktu_keluar: '12 Juni 2017 08:33', jumlah: 5, asal: 'Gudang Utama', tujuan: 'Apotek', keterangan: ''},
-		{id_jenis: 2138, merek: 'Cefixim syr kering 100mg/5ml', nama_generik: 'Cefixim', pembuat: 'Indofarma', golongan: 'Antibiotik', satuan: 'Botol', harga_jual: 10100.00, nomor_batch: '085G610NV', waktu_masuk: '11 September 2016 16:16', kadaluarsa: '18 Juni 2017', harga_beli: 9180.36, kode_obat: 213816091101, waktu_keluar: '19 Juni 2017 09:48', jumlah: 37, asal: 'Apotek', tujuan: 'Gudang Utama', keterangan: ''}
+		{id: 1, id_jenis: 2138, merek: 'Cefixim syr kering 100mg/5ml', nama_generik: 'Cefixim', pembuat: 'Indofarma', golongan: 'Antibiotik', satuan: 'Botol', harga_jual: 10100.00, nomor_batch: '085G611NV', waktu_masuk: '11 September 2016 16:18', kadaluarsa: '19 Juni 2017', harga_beli: 9180.36, kode_obat: 213816091102, waktu_keluar: '12 Juni 2017 08:33', jumlah: 5, asal: 'Gudang Utama', tujuan: 'Apotek', keterangan: ''},
+		{id: 2, id_jenis: 2138, merek: 'Cefixim syr kering 100mg/5ml', nama_generik: 'Cefixim', pembuat: 'Indofarma', golongan: 'Antibiotik', satuan: 'Botol', harga_jual: 10100.00, nomor_batch: '085G610NV', waktu_masuk: '11 September 2016 16:16', kadaluarsa: '18 Juni 2017', harga_beli: 9180.36, kode_obat: 213816091101, waktu_keluar: '19 Juni 2017 09:48', jumlah: 37, asal: 'Apotek', tujuan: 'Gudang Utama', keterangan: ''}
 	]; // Mock-up
 
 	constructor(private http:Http) { }
@@ -27,9 +27,9 @@ export class ObatPindahService {
 			.catch(this.handleError);
 	}
 
-	getObatPindah(waktu_keluar: string): Promise<ObatPindah> {
+	getObatPindah(id: number): Promise<ObatPindah> {
 		return this.getAllObatPindah()
-			.then(allObatPindah => allObatPindah.find(ObatPindah => ObatPindah.waktu_keluar === waktu_keluar))
+			.then(allObatPindah => allObatPindah.find(ObatPindah => ObatPindah.id === id))
 			.catch(this.handleError);
 	}
 
