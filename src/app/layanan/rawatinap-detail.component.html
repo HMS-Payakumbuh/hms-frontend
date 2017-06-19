@@ -1,0 +1,173 @@
+<html>
+	 <div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-newspaper-o" aria-hidden="true"></i> Detail Kamar
+				</h4>
+			</div>
+			<div *ngIf="rawatinap" class="card-block">
+				<div class="card-text">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td><b>No. Kamar</b></td>
+								<td>{{rawatinap.no_kamar}}</td>	
+							</tr>
+							<tr>
+								<td><b>Jenis Kamar</b></td>								
+								<td>{{rawatinap.jenis_kamar}}</td>								
+							</tr>
+							<tr>
+								<td><b>Kelas</b></td>
+								<td>{{rawatinap.kelas}}</td>								
+							</tr>
+							<tr>
+								<td><b>Harga per hari</b></td>
+								<td>{{rawatinap.harga_per_hari}}</td>								
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="row">
+						<div class="offset-md-8 col-md-4">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+  <div class="col-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa" aria-hidden="true"></i> {{allTempatTidur[2].status}}
+				</h4>
+			</div>
+			<div class="card-block">
+				<div class="card-text">
+					<div class="row">
+						<div *ngIf="rawatinap.kelas == 'VIP'" class="col-md-8 mx-4 ml-1 py-5 px-5" style="border: 2px solid black">
+							<div class="row">
+								<div class="col-md-12">			
+						            <button class="btn btn-sq-sm btn-info px-4 py-3">
+						                1
+						            </button>      
+								</div>
+							</div>
+						</div>
+						
+						<div *ngIf="rawatinap.kelas == 1" class="col-md-8 mx-4 ml-1 py-5 px-5" style="border: 2px solid black">
+							<div class="row">
+								<div class="col-md-12 text-center">			
+						            <button class="btn btn-sq-sm btn-info px-4 py-3">
+						                1
+						            </button>      
+								</div>
+							</div>
+
+							<div class="row mt-5 text-center">
+								<div class="col-md-12">
+						            <button class="btn btn-sq-sm btn-info px-4 py-3">
+						                2
+						            </button>         
+								</div>
+							</div>
+						</div>
+
+						<div *ngIf="rawatinap.kelas == 2" class="col-md-8 mx-4 ml-1 py-5 px-5" style="border: 2px solid black">
+							<div class="row">
+								<div class="col-md-12">			
+						            <button class="btn btn-sq-sm btn-info float-left px-4 py-3">
+						                1
+						            </button>
+						            <button class="btn btn-sq-sm btn-danger float-right px-4 py-3">
+						              	2
+						            </button>            
+								</div>
+							</div>
+
+							<div class="row mt-5">
+								<div class="col-md-12">
+						            <button class="btn btn-sq-sm btn-info float-left px-4 py-3">
+						                3
+						            </button>
+						            <button class="btn btn-sq-sm btn-danger float-right px-4 py-3">
+						             	4
+						            </button>            
+								</div>
+							</div>
+						</div>
+
+						<div *ngIf="rawatinap.kelas == 3" class="col-md-8 mx-4 ml-1 py-5 px-5" style="border: 2px solid black">
+							<div class="row" *ngFor="let tempatTidur of allTempatTidur">
+								<div class="col-md-12">			
+						            <button class="btn btn-sq-sm btn-info float-left px-4 py-3">
+						                {{tempatTidur.status}}
+						            </button>
+						            <button class="btn btn-sq-sm btn-danger float-right px-4 py-3">
+						              	i+1
+						            </button>            
+								</div>
+							</div>
+
+							<div class="row mt-5">
+								<div class="col-md-12">
+						            <button class="btn btn-sq-sm btn-info float-left px-4 py-3">
+						                3
+						            </button>
+						            <button class="btn btn-sq-sm btn-danger float-right px-4 py-3">
+						             	4
+						            </button>            
+								</div>
+							</div>
+
+							<div class="row mt-5">
+								<div class="col-md-12">
+						            <button class="btn btn-sq-sm btn-info float-left px-4 py-3">
+						                5
+						            </button>
+						            <button class="btn btn-sq-sm btn-danger float-right px-4 py-3">
+						             	6
+						            </button>            
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col-md-3 mx-2">
+							<div class="row mt-3">
+								<a href="" class="btn btn-sq-sm btn-info float-left p-3 mr-2">
+							                
+							    </a>
+							    <span class="mt-1 pl-3">Tersedia</span>
+							</div>
+							<div class="row mt-3">
+								<a href="" class="btn btn-sq-sm btn-danger float-left p-3 mr-2">
+							             
+							    </a>
+							    <span class="mt-1 pl-3">Tidak Tersedia</span>
+							</div>
+							<div class="row mt-3">
+								<a href="" class="btn btn-sq-sm btn-warning float-left p-3 mr-2">
+							             
+							    </a>
+							    <span class="mt-1 pl-3">Dipilih</span>
+							</div>
+							<div class="row mt-5 pt-5">
+								<button class="btn btn-danger" (click)="goBack()">Kembali</button>
+								<a href="#" class="btn btn-sq-sm btn-primary float-left p-3 mr-2 mx-auto">
+							        Confirm
+							    </a>
+							</div>
+						         
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</html>

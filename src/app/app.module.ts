@@ -18,6 +18,9 @@ import { PasienFormComponent }      from './pasien/pasien-form.component';
 import { PoliklinikListComponent }      from './layanan/poliklinik-list.component';
 import { PoliklinikDetailComponent }    from './layanan/poliklinik-detail.component';
 
+import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
+import { RawatinapDetailComponent } 	from './layanan/rawatinap-detail.component';
+
 import { DaftarObatComponent }          from './farmasi/obat-batch/daftar-obat.component';
 import { DetailObatComponent }          from './farmasi/obat-batch/detail-obat.component';
 import { ObatMasukFormComponent }       from './farmasi/obat-batch/obat-masuk-form.component';
@@ -53,6 +56,8 @@ import { AppComponent }             from './app.component';
         TransaksiDetailComponent,
         PoliklinikListComponent,
         PoliklinikDetailComponent,
+        RawatinapListComponent,
+        RawatinapDetailComponent,
         MatchesStatusPipe,
         FilterNamaPasienPipe,
         FilterTanggalPipe,

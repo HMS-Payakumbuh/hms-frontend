@@ -36,7 +36,10 @@
       'moment': 'npm:moment',
 
       //lodash
-      'lodash': 'npm:lodash'
+      'lodash': 'npm:lodash',
+
+      'ng2-date-picker': 'npm:ng2-date-picker',
+      'moment': 'npm:moment'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -61,6 +64,14 @@
       },
       'lodash' : {
         main: './lodash.js',
+        defaultExtension: 'js'
+      },
+      'ng2-date-picker' : {
+        main: './index.js',
+        defaultExtension: 'js'
+      },
+      'moment' : {
+        main: './moment.js',
         defaultExtension: 'js'
       }
     }
