@@ -13,11 +13,17 @@ var obat_rusak_service_1 = require("./obat-rusak.service");
 var DaftarObatRusakComponent = (function () {
     function DaftarObatRusakComponent(ObatRusakService) {
         this.ObatRusakService = ObatRusakService;
+        this.filterQuery = "";
+        this.rowsOnPage = 5;
+        this.sortBy = "waktu_keluar";
+        this.sortOrder = "asc";
     }
     DaftarObatRusakComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.ObatRusakService.getAllObatRusak()
             .then(function (allObatRusak) { return _this.allObatRusak = allObatRusak; });
+    };
+    DaftarObatRusakComponent.prototype.onClickDatePicker = function () {
     };
     return DaftarObatRusakComponent;
 }());

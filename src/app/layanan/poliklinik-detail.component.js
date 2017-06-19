@@ -21,6 +21,8 @@ var PoliklinikDetailComponent = (function () {
         this.transaksiService = transaksiService;
         this.poliklinikService = poliklinikService;
         this.tindakanService = tindakanService;
+        this.selectedTindakan = [];
+        this.tindakanAutocompleteConfig = { 'placeholder': 'Tuliskan kode tindakan', 'sourceField': ['nama'] };
     }
     PoliklinikDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -35,6 +37,9 @@ var PoliklinikDetailComponent = (function () {
             .subscribe(function (transaksi) { return _this.transaksi = transaksi; });
         this.tindakanService.getAllTindakanReference()
             .then(function (allTindakanReference) { return _this.allTindakanReference = allTindakanReference; });
+    };
+    PoliklinikDetailComponent.prototype.tindakanSelected = function (tindakan) {
+        this.selectedTindakan.push(tindakan);
     };
     PoliklinikDetailComponent.prototype.initResepEntry = function () {
         return this.formBuilder.group({

@@ -63,7 +63,7 @@
 							<form>
 								<div class="form-group">
 
-									<div class="row">
+									<div class="row mb-3">
 										<div class="col-4">
 											<label for="tekananDarah">TD (mmHg)</label>
 											<input type="text" class="form-control" id="inputTekananDarah">
@@ -100,26 +100,44 @@
 
 						<div class="tab-pane fade" id="diagnosis" role="tabpanel">
 
-  						<form>
-  							<div class="form-group">
-  								<label for="inputDiagnosis">Masukkan kode diagnosis pasien (ICD-10)</label>
-  								<input type="text" class="form-control" id="inputDiagnosis">
-  							</div>
-							</form>
+							<div class="form-group">
+								<label for="inputDiagnosis">Masukkan kode diagnosis pasien (ICD-10)</label>
+								<input type="text" class="form-control" id="inputDiagnosis">
+							</div>
 	  							
 						</div>
 
 						<div class="tab-pane fade" id="tindakan" role="tabpanel">
 
-							<form>
-								<div class="form-group">
-									<label for="inputTindakan">Masukkan tindakan yang dilakukan (ICD-9-CM)</label>
-									<select class="form-control" id="inputTindakan">
-										<option *ngFor="let tindakanReference of allTindakanReference">{{tindakanReference.kode}} - {{tindakanReference.nama}}</option>
-									</select>
-								</div>
-							</form>
-	 							
+							<div class="form-group">
+								<label for="inputTindakan">Masukkan tindakan yang dilakukan (ICD-9-CM)</label>
+								<br/>
+								<input type="text" class="form-control" id="inputTindakan" autocomplete [items]="allTindakanReference" [config]="tindakanAutocompleteConfig" (selectEvent)="tindakanSelected($event)">
+							</div>
+
+							<table class="table" *ngIf="selectedTindakan.length > 0">
+								<thead>
+									<th>Kode</th>
+									<th>Nama</th>
+									<th>Harga</th>
+									<th>Memakai obat?</th>
+								</thead>
+								<tbody>
+									<tr *ngFor="let tindakan of selectedTindakan">
+										<td>{{tindakan.kode}}</td>
+										<td>{{tindakan.nama}}</td>
+										<td>{{tindakan.harga}}</td>
+										<td>
+											<label class="custom-control custom-checkbox">
+												<input type="checkbox" class="custom-control-input">
+												<span class="custom-control-indicator"></span>
+												<span class="custom-control-description">Ya</span>
+											</label>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
 						</div>
 
 						<div class="tab-pane fade" id="resep" role="tabpanel">

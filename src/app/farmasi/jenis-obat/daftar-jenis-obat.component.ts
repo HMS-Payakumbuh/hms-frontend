@@ -10,7 +10,12 @@ import { JenisObatService }		from './jenis-obat.service';
 })
 
 export class DaftarJenisObatComponent {
-	allJenisObat: JenisObat[];
+	public allJenisObat: JenisObat[];
+
+	public filterQuery = "";
+    public rowsOnPage = 5;
+    public sortBy = "id";
+    public sortOrder = "asc";
 
 	constructor(
 		private JenisObatService: JenisObatService
