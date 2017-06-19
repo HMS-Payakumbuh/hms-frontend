@@ -8,16 +8,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var obat_pindah_service_1 = require("./obat-pindah.service");
 var DaftarObatPindahComponent = (function () {
     function DaftarObatPindahComponent(ObatPindahService) {
         this.ObatPindahService = ObatPindahService;
+        this.filterQuery = "";
+        this.rowsOnPage = 5;
+        this.sortBy = "waktu_keluar";
+        this.sortOrder = "asc";
     }
     DaftarObatPindahComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.ObatPindahService.getAllObatPindah()
             .then(function (allObatPindah) { return _this.allObatPindah = allObatPindah; });
+    };
+    DaftarObatPindahComponent.prototype.onClickDatePicker = function () {
     };
     return DaftarObatPindahComponent;
 }());
