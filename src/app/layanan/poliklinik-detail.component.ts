@@ -24,6 +24,9 @@ export class PoliklinikDetailComponent implements OnInit {
 	transaksi: Transaksi;
 	poliklinik: Poliklinik;
 	allTindakanReference: TindakanReference[];
+	selectedTindakan: TindakanReference[] = [];
+
+	tindakanAutocompleteConfig: any = {'placeholder': 'Tuliskan kode tindakan', 'sourceField': ['nama']};
 
 	constructor(
 		private route: ActivatedRoute,
@@ -48,6 +51,10 @@ export class PoliklinikDetailComponent implements OnInit {
 
 		this.tindakanService.getAllTindakanReference()
 			.then(allTindakanReference => this.allTindakanReference = allTindakanReference);
+	}
+
+	tindakanSelected(tindakan: TindakanReference) {
+		this.selectedTindakan.push(tindakan);
 	}
 
 	initResepEntry() {
