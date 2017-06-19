@@ -21,3 +21,7 @@ Datepicker module:
         main: './moment.js',
         defaultExtension: 'js'
       }
+
+Dependencies:
+- npm install angular2-datatable --save
+- npm install ng2-input-autocomplete --save
