@@ -14,6 +14,10 @@ var jenis_obat_service_1 = require("./jenis-obat.service");
 var DaftarJenisObatComponent = (function () {
     function DaftarJenisObatComponent(JenisObatService) {
         this.JenisObatService = JenisObatService;
+        this.filterQuery = "";
+        this.rowsOnPage = 5;
+        this.sortBy = "id";
+        this.sortOrder = "asc";
     }
     DaftarJenisObatComponent.prototype.ngOnInit = function () {
         var _this = this;

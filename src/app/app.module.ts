@@ -4,11 +4,15 @@ import { FormsModule }              from '@angular/forms';
 import { ReactiveFormsModule }      from '@angular/forms';
 import { HttpModule }               from '@angular/http';
 import { DpDatePickerModule }       from 'ng2-date-picker';
+import { AutocompleteModule}        from 'ng2-input-autocomplete';
 
 import { MatchesStatusPipe }            from './pipe/matches-status.pipe';
 import { FilterNamaPasienPipe }         from './pipe/filter-nama-pasien.pipe';
 import { FilterTanggalPipe }            from './pipe/filter-tanggal.pipe';
 import { FilterNamaAsuransiPipe }       from './pipe/filter-nama-asuransi.pipe';
+import { FilterJenisObatPipe }     from './pipe/filter-jenis-obat.pipe';
+import { FilterObatRusakPipe }     from './pipe/filter-obat-rusak.pipe';
+import { FilterObatPindahPipe }     from './pipe/filter-obat-pindah.pipe';
 
 import { TransaksiComponent }       from './transaksi/transaksi.component';
 import { TransaksiDetailComponent } from './transaksi/transaksi-detail.component';
@@ -44,6 +48,8 @@ import { ObatRusakFormComponent }      from './farmasi/obat-rusak/obat-rusak-for
 import { AppRoutingModule }         from './app-routing.module';
 import { AppComponent }             from './app.component';
 
+import { DataTableModule }    from 'angular2-datatable';
+
 @NgModule({
     imports:      [
       	BrowserModule,
@@ -51,7 +57,9 @@ import { AppComponent }             from './app.component';
         ReactiveFormsModule,
         AppRoutingModule,
         HttpModule,
-        DpDatePickerModule
+        DpDatePickerModule,
+        AutocompleteModule.forRoot(),
+        DataTableModule
     ],
     declarations: [ 
         AppComponent,
@@ -59,6 +67,9 @@ import { AppComponent }             from './app.component';
         FilterNamaPasienPipe,
         FilterTanggalPipe,
         FilterNamaAsuransiPipe,
+        FilterJenisObatPipe,
+        FilterObatRusakPipe,
+        FilterObatPindahPipe,
         TransaksiComponent,
         TransaksiDetailComponent,
         PembayaranComponent,
@@ -81,7 +92,7 @@ import { AppComponent }             from './app.component';
         ObatPindahFormComponent,
         DaftarObatRusakComponent,
         DetailObatRusakComponent,
-        ObatRusakFormComponent
+        ObatRusakFormComponent,
     ],
     bootstrap:    [ 
 	   AppComponent
