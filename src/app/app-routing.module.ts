@@ -3,6 +3,12 @@ import { RouterModule, Routes }	from '@angular/router';
 
 import { TransaksiComponent }   		from './transaksi/transaksi.component';
 import { TransaksiDetailComponent }		from './transaksi/transaksi-detail.component';
+
+import { PembayaranComponent }   		from './pembayaran/pembayaran.component';
+import { PembayaranDetailComponent }   	from './pembayaran/pembayaran-detail.component';
+import { KlaimComponent }   			from './pembayaran/klaim/klaim.component';
+import { KlaimDetailComponent }   		from './pembayaran/klaim/klaim-detail.component';
+
 import { PasienFormComponent }			from './pasien/pasien-form.component';
 import { AntrianComponent }				from './antrian/antrian.component';
 import { DaftarAntrianComponent }				from './antrian/daftar-antrian.component';
@@ -28,12 +34,16 @@ import { ObatRusakFormComponent }      from './farmasi/obat-rusak/obat-rusak-for
 
 const routes: Routes = [
 	{ path: '', redirectTo: '/', pathMatch: 'full' },
-	{ path: 'pendaftaran', component: PasienFormComponent },
 	{ path: 'transaksi', component: TransaksiComponent },
+	{ path: 'transaksi/:id', component: TransaksiDetailComponent },
+	{ path: 'pembayaran', component: PembayaranComponent },
+	{ path: 'pembayaran/:id', component: PembayaranDetailComponent },
+	{ path: 'klaim', component: KlaimComponent },
+	{ path: 'klaim/:id', component: KlaimDetailComponent },
+	{ path: 'pendaftaran', component: PasienFormComponent },
 	{ path: 'antrian', component: AntrianComponent },
 	{ path: 'daftar-antrian', component: DaftarAntrianComponent },
 	{ path: 'pendaftaran', component: PasienFormComponent},
-	{ path: 'transaksi/:id', component: TransaksiDetailComponent },
 	{ path: 'poliklinik', component: PoliklinikListComponent },
 	{ path: 'poliklinik/:namaPoliklinik/:idTransaksi', component: PoliklinikDetailComponent },
 	{ path: 'daftar-obat', component: DaftarObatComponent },

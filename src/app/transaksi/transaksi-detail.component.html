@@ -8,15 +8,13 @@
 				<div *ngIf="transaksi" class="card-block">
 					<div class="row">
 						<div class="col-md-6">
-							Invoice No. INV265000001
-						</div>
-						<div class="col-md-6">
 							<div class="row">
 								<div class="col-md-12">
 									<b>{{transaksi.nama_pasien}}</b>
 									<p>Laki-Laki</p>
 									<p>20 Tahun</p>
 									<p>No. Sep: {{transaksi.no_sep}}</p>
+									<p>Jenis Pasien: {{transaksi.jenis_pasien.toUpperCase()}}</p>
 								</div>
 							</div>
 						</div>
@@ -49,18 +47,34 @@
 									<td><b>Total Harga</b></td>
 									<td>Rp {{transaksi.harga}}</td>
 								</tr>
-								<tr>
-									<td></td>
-									<td><b>Pembayaran Tunai</b></td>
-									<td>Rp {{transaksi.harga}}</td>
-								</tr>
 							</tbody>
 						</table>
 					</div>
 					<div class="row">
 						<div class="offset-md-8 col-md-4">
 							<button class="btn btn-danger" (click)="goBack()">Kembali</button>
-							<button class="btn btn-success">Bayar</button>
+							<button *ngIf="transaksi.status === 'open'; else disabledButton" class="btn btn-success">Bayar</button>
+							<ng-template #disabledButton>
+								<button class="btn btn-success" disabled>Bayar</button>
+							</ng-template>
+						</div>
+					</div>
+					<div *ngIf="allPembayaran?.length > 0" class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+			                    <label class="custom-control custom-checkbox">
+			                    	<input type="checkbox" class="custom-control-input" [checked]="showPembayaran" (change)="showPembayaran = !showPembayaran">
+			                    	<span class="custom-control-indicator"></span>
+			                    	<span class="custom-control-description">Tampilkan Pembayaran</span>
+			                    </label>
+		                	</div>
+						</div>
+					</div>
+					<div *ngIf="showPembayaran" class="row">
+						<div class="col-md-12">
+							<ul class='list-group'>
+								<a *ngFor="let pembayaran of allPembayaran" [routerLink] = "['/pembayaran', pembayaran.id]">Pembayaran {{pembayaran.nama_asuransi.toUpperCase()}}</a>
+							</ul>
 						</div>
 					</div>
 				</div>
