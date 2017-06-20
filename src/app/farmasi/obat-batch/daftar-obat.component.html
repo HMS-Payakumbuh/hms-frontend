@@ -1,0 +1,69 @@
+  <div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-list-alt" aria-hidden="true"></i> Daftar Obat
+				</h4>
+			</div>
+			<div class="card-block">
+				<div class="card-text">
+					<div class="row">
+						<div class="col-md-6 pull-left">
+							<div class="input-group">
+							  	<label for="lokasi"><b>Lokasi:</b></label>
+						  		<select class="form-control" [(ngModel)]="lokasi">	
+						  			<option></option>			
+								    <option>Gudang Utama</option>
+								    <option>Apotek</option>
+								    <option>Poliklinik Anak</option>
+								    <option>Poliklinik Gigi</option>
+								    <option>Poliklinik Kandungan</option>
+								    <option>Poliklinik THT</option>							
+								    <option>Instalasi Gawat Darurat</option>
+						  		</select>
+							</div>
+						</div>
+
+						<div class="col-md-6 pull-right">
+							<div class="input-group">							
+							    <input type="text" class="form-control" [(ngModel)]="param" placeholder="Cari kode/merek obat"/>
+							</div>
+						</div>
+					</div>
+
+					<table class="table" [mfData]="allObatBatch | filterDaftarObat : lokasi : param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+						<tbody>
+							<tr>
+								<th><mfDefaultSorter by="kode_obat">Kode Obat</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="id_jenis">ID Jenis Obat</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="merek">Merek Obat</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="satuan">Satuan</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="harga_beli">Harga Beli Satuan</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="kadaluarsa">Kadaluarsa</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="jumlah">Jumlah</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="lokasi">Lokasi</mfDefaultSorter></th>
+								<th></th>
+							</tr>
+							<tr *ngFor="let obatBatch of mf.data">
+								<td>{{obatBatch.kode_obat}}</td>
+								<td>{{obatBatch.id_jenis}}</td>
+								<td>{{obatBatch.merek}}</td>
+								<td>{{obatBatch.satuan}}</td>
+								<td>Rp. {{obatBatch.harga_beli}}</td>	
+								<td>{{obatBatch.kadaluarsa}}</td>	
+								<td>{{obatBatch.jumlah}}</td>						
+								<td>{{obatBatch.lokasi}}</td>		
+								<td><button type="button" class="btn btn-primary" [routerLink] = "['/daftar-obat', obatBatch.kode_obat]">Detail</button></td>
+							</tr>						
+						</tbody>	
+						<tfoot>
+			                <tr>
+			                    <td colspan="7">
+			                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+			                    </td>
+			                </tr>			
+					</table>
+				</div>
+			</div>	
+		</div>
+	</div>
