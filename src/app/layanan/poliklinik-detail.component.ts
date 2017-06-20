@@ -11,6 +11,7 @@ import { PoliklinikService }		from './poliklinik.service';
 import { DiagnosisReference }		from './diagnosis-reference';
 import { DiagnosisService }			from './diagnosis.service';
 
+import { Tindakan }			from './tindakan';
 import { TindakanReference }		from './tindakan-reference';
 import { TindakanService }			from './tindakan.service';
 
@@ -99,5 +100,9 @@ export class PoliklinikDetailComponent implements OnInit {
 	removeResepEntry(i: number) {
     const control = < FormArray > this.addForm.controls['resepEntry'];
     control.removeAt(i);
+	}
+
+	save() {
+		this.tindakanService.saveTindakan(this.transaksi.id, this.poliklinik.nama, true, null, this.selectedTindakan);
 	}
 }
