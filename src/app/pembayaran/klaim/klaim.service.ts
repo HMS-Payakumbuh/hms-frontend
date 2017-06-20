@@ -11,8 +11,8 @@ export class KlaimService {
 	private klaimUrl = ENV.klaimUrl;
 
 	allKlaim: Klaim[] = [
-		{id: 1, id_pembayaran: 1, id_pasien: 3, id_transaksi: 3, no_kartu: '0001461892608', status: 'closed', tanggal: '12-05-2016', tarif: '2000000', nama_asuransi: 'bpjs', nama_pasien: 'John'},
-		{id: 2, id_pembayaran: 3, id_pasien: 5, id_transaksi: 6, no_kartu: '0001461892728', status: 'closed', tanggal: '18-06-2017', tarif: '10000000', nama_asuransi: 'bpjs', nama_pasien: 'Yngwie Malmsteen'}
+		{id: 1, id_pembayaran: 1, id_pasien: 3, id_transaksi: 3, nomor_kartu: '0001461892608', status: 'closed', tanggal: '12-05-2016', tarif: '2000000', nama_asuransi: 'bpjs', nama_pasien: 'John'},
+		{id: 2, id_pembayaran: 3, id_pasien: 5, id_transaksi: 6, nomor_kartu: '0001461892728', status: 'closed', tanggal: '18-06-2017', tarif: '10000000', nama_asuransi: 'bpjs', nama_pasien: 'Yngwie Malmsteen'}
 	]; //Mock-up
 
 	constructor(private http:Http) { }

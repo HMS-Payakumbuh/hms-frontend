@@ -3,7 +3,7 @@ export class Klaim {
 	id_pembayaran: number;
 	id_pasien: number;
 	id_transaksi: number;
-	no_kartu: string;
+	nomor_kartu: string;
 	status: string;
 	tanggal: string;
 	tarif: string;

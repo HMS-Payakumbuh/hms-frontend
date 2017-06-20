@@ -16,6 +16,7 @@
 									<p>No. Sep: {{transaksi.no_sep}}</p>
 									<p>Jenis Pasien: {{transaksi.jenis_pasien.toUpperCase()}}</p>
 									<p>Tanggal Transaksi: {{transaksi.tanggal}}</p>
+									<p *ngIf="transaksi.pelunasan !== ''">Tanggal Pelunasan: {{transaksi.pelunasan}}</p>
 								</div>
 							</div>
 						</div>

@@ -19,6 +19,7 @@ import { FilterObatMasukPipe }     from './pipe/filter-obat-masuk.pipe';
 import { FilterObatResepPipe }     from './pipe/filter-obat-resep.pipe';
 import { FilterObatRusakPipe }     from './pipe/filter-obat-rusak.pipe';
 import { FilterObatPindahPipe }     from './pipe/filter-obat-pindah.pipe';
+import { FilterJenisAntrianPipe }     from './pipe/filter-jenis-antrian.pipe';
 
 import { TransaksiComponent }       from './transaksi/transaksi.component';
 import { TransaksiDetailComponent } from './transaksi/transaksi-detail.component';
@@ -64,6 +65,8 @@ import { DaftarObatRusakComponent }      from './farmasi/obat-rusak/daftar-obat-
 import { DetailObatRusakComponent }      from './farmasi/obat-rusak/detail-obat-rusak.component';
 import { ObatRusakFormComponent }      from './farmasi/obat-rusak/obat-rusak-form.component';
 
+import { SettingsComponent }        from './settings/settings.component';
+
 import { AppRoutingModule }         from './app-routing.module';
 import { AppComponent }             from './app.component';
 
@@ -95,6 +98,7 @@ import { DataTableModule }    from 'angular2-datatable';
         FilterObatResepPipe,
         FilterObatRusakPipe,
         FilterObatPindahPipe,
+        FilterJenisAntrianPipe,
         TransaksiComponent,
         TransaksiDetailComponent,
         PembayaranComponent,
@@ -130,6 +134,7 @@ import { DataTableModule }    from 'angular2-datatable';
         DaftarObatRusakComponent,
         DetailObatRusakComponent,
         ObatRusakFormComponent,
+        SettingsComponent,
     ],
     bootstrap:    [ 
 	   AppComponent

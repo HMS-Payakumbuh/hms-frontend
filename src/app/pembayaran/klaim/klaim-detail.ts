@@ -1,0 +1,29 @@
+export class KlaimDetail {
+	nomor_sep: string;
+	nomor_kartu: string;
+	tgl_masuk: string;
+	tgl_pulang: string;
+	jenis_rawat: string;
+	kelas_rawat: string;
+	adl_sub_acute: string;
+	adl_chronic: string;
+	icu_indikator: string;
+	icu_los: string;
+	ventilator_hour: string;
+	upgrade_class_ind: string;
+	upgrade_class_class: string;
+	upgrade_class_los: string;
+	add_payment_pct: string;
+	birth_weight: string;
+	discharge_status: string;
+	diagnosa: string;
+	procedure: string;
+	tarif_rs: string;
+	tarif_poli_eks: string;
+	nama_dokter: string;
+	kode_tarif: string;
+	payor_id: string;
+	payor_cd: string;
+	cob_cd: string;
+	coder_nik: string;
+}
