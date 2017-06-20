@@ -9,6 +9,8 @@ import { AutocompleteModule}        from 'ng2-input-autocomplete';
 import { MatchesStatusPipe }            from './pipe/matches-status.pipe';
 import { FilterNamaPasienPipe }         from './pipe/filter-nama-pasien.pipe';
 import { FilterTanggalPipe }            from './pipe/filter-tanggal.pipe';
+import { FilterWaktuMasukPipe }            from './pipe/filter-waktu-masuk.pipe';
+import { FilterWaktuKeluarPipe }            from './pipe/filter-waktu-keluar.pipe';
 import { FilterNamaAsuransiPipe }       from './pipe/filter-nama-asuransi.pipe';
 import { FilterJenisObatPipe }     from './pipe/filter-jenis-obat.pipe';
 import { FilterDaftarObatPipe }     from './pipe/filter-daftar-obat.pipe';
@@ -74,6 +76,8 @@ import { DataTableModule }    from 'angular2-datatable';
         MatchesStatusPipe,
         FilterNamaPasienPipe,
         FilterTanggalPipe,
+        FilterWaktuMasukPipe,
+        FilterWaktuKeluarPipe,
         FilterNamaAsuransiPipe,
         FilterJenisObatPipe,
         FilterDaftarObatPipe,

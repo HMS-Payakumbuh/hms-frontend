@@ -42,12 +42,15 @@
 					</div>
 
 					<div class="row">	
-						<div class="col-md-12">						
+						<div class="col-md-6 pull-left">
+							<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal keluar">
+						</div>
+						<div class="col-md-6 pull-right">						
 						    <input class="form-control" [(ngModel)]="param" placeholder="Cari kode/nama obat"/>
 						</div>
 					</div>
 
-					<table class="table" [mfData]="allObatPindah | filterObatPindah : asal : tujuan : param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+					<table class="table" [mfData]="allObatPindah | filterObatPindah : asal : tujuan : param | filterWaktuKeluar : selectedDate" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<tbody>
 							<tr>								
 								<th><mfDefaultSorter by="waktu_keluar">Waktu Keluar</mfDefaultSorter></th>
@@ -60,10 +63,10 @@
 								<th></th>
 							</tr>
 							<tr *ngFor="let obatPindah of mf.data">								
-								<td>{{obatPindah.waktu_keluar}}</td>
+								<td>{{obatPindah.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>
 								<td>{{obatPindah.kode_obat}}</td>
 								<td>{{obatPindah.merek}}</td>	
-								<td>{{obatPindah.kadaluarsa}}</td>	
+								<td>{{obatPindah.kadaluarsa | date:'d MMM y'}}</td>	
 								<td>{{obatPindah.jumlah}}</td>
 								<td>{{obatPindah.asal}}</td>
 								<td>{{obatPindah.tujuan}}</td>						
