@@ -16,6 +16,7 @@ import { FilterJenisPasienPipe }       from './pipe/filter-jenis-pasien.pipe';
 import { FilterJenisObatPipe }     from './pipe/filter-jenis-obat.pipe';
 import { FilterDaftarObatPipe }     from './pipe/filter-daftar-obat.pipe';
 import { FilterObatMasukPipe }     from './pipe/filter-obat-masuk.pipe';
+import { FilterObatResepPipe }     from './pipe/filter-obat-resep.pipe';
 import { FilterObatRusakPipe }     from './pipe/filter-obat-rusak.pipe';
 import { FilterObatPindahPipe }     from './pipe/filter-obat-pindah.pipe';
 
@@ -47,6 +48,9 @@ import { ObatMasukFormComponent }       from './farmasi/obat-masuk/obat-masuk-fo
 import { DaftarJenisObatComponent }     from './farmasi/jenis-obat/daftar-jenis-obat.component';
 import { DetailJenisObatComponent }     from './farmasi/jenis-obat/detail-jenis-obat.component';
 import { JenisObatFormComponent }       from './farmasi/jenis-obat/jenis-obat-form.component';
+
+import { DaftarObatResepComponent }         from './farmasi/obat-resep/daftar-obat-resep.component';
+import { DetailObatResepComponent }         from './farmasi/obat-resep/detail-obat-resep.component';
 
 import { DaftarObatPindahComponent }      from './farmasi/obat-pindah/daftar-obat-pindah.component';
 import { DetailObatPindahComponent }      from './farmasi/obat-pindah/detail-obat-pindah.component';
@@ -84,6 +88,7 @@ import { DataTableModule }    from 'angular2-datatable';
         FilterJenisObatPipe,
         FilterDaftarObatPipe,
         FilterObatMasukPipe,
+        FilterObatResepPipe,
         FilterObatRusakPipe,
         FilterObatPindahPipe,
         TransaksiComponent,
@@ -110,6 +115,8 @@ import { DataTableModule }    from 'angular2-datatable';
         DaftarJenisObatComponent,
         DetailJenisObatComponent,
         JenisObatFormComponent,
+        DaftarObatResepComponent,
+        DetailObatResepComponent,
         DaftarObatPindahComponent,
         DetailObatPindahComponent,
         ObatPindahFormComponent,
