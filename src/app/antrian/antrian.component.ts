@@ -1,62 +1,78 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import * as _ from "lodash";
+
 import { Antrian }    from './antrian';
+import { AntrianService } from './antrian.service';
 import { Poliklinik }    from '../layanan/poliklinik';
 import { PoliklinikService }    from '../layanan/poliklinik.service';
+
+import * as _ from "lodash";
 
 @Component({
   selector: 'antrian',
   templateUrl: './antrian.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
+    AntrianService,
     PoliklinikService
   ]
 })
 export class AntrianComponent implements OnInit {
-  antrianUmum: Antrian[] = [
-      {no_antrian: 1, nama_pasien: 'Jonathan',  waktu:'09:15:15' },
-      {no_antrian: 2, nama_pasien: 'Ben Lemuel',  waktu:'09:15:45'},
-      {no_antrian: 3, nama_pasien: 'Fiqie', waktu:'09:16:15'},
-  ]; //Mock-up
-
-  antrianKhusus: Antrian[] = [
-      {no_antrian: 4, nama_pasien: 'Al Ex',  waktu:'09:15:15' },
-      {no_antrian: 5, nama_pasien: 'Hu Wan',  waktu:'09:15:45'},
-      {no_antrian: 6, nama_pasien: 'Gunawan', waktu:'09:16:15'},
-  ];
   allKategori: Poliklinik[];
+  allAntrian: Antrian[];
   kategori: string;
 
-  nomor: number = 0;
-  active: number = 1;
+  nomor: number;
+  active: number;
   umum: boolean = true;
-  isfrontoffice: boolean = true;
+  isfrontoffice: boolean;
+  sub: any;
+  layanan: string;
 
   constructor(
     private route: ActivatedRoute,
-    private poliklinikService: PoliklinikService
+    private poliklinikService: PoliklinikService,
+    private antrianService : AntrianService
   ) {}
 
   ngOnInit() {
-    this.poliklinikService.getAllPoliklinik()
-      .then(allPoliklinik => this.allKategori = _.uniqBy(allPoliklinik, 'kategori_antrian'));
-  }
-
-  public proses(no_antrian: number) {
-    this.nomor = no_antrian;
-    if (this.umum) {
-      this.antrianUmum.splice(0 ,1);
-      this.active = this.antrianKhusus[0].no_antrian;
+    this.sub = this.route.params
+      .subscribe(params => { 
+        this.layanan = params['namaLayanan'];
+    });
+    if (this.layanan === undefined) {
+      this.layanan = 'Front Office';
+      this.poliklinikService.getAllPoliklinik()
+        .then(allPoliklinik => this.allKategori = _.uniqBy(allPoliklinik, 'kategori_antrian'));
+      this.isfrontoffice = true;
     }
     else {
-      this.antrianKhusus.splice(0 ,1);
-      this.active = this.antrianUmum[0].no_antrian;
+      this.layanan = 'Poli ' + this.layanan;
+      this.route.params
+        .switchMap((params: Params) => this.antrianService.getAntrian(params['namaLayanan']))
+        .subscribe(allAntrian => {
+            this.allAntrian = allAntrian;
+            this.active = allAntrian[0].no_antrian;
+          });
+      this.isfrontoffice = false;
+    }
+  }
+
+  private proses(antrian: Antrian) {
+    this.nomor = antrian.no_antrian; 
+    this.allAntrian.splice(this.allAntrian.indexOf(antrian), 1);
+    if (this.umum) {
+      this.active = _.find(this.allAntrian, {jenis: 'khusus'}).no_antrian;
+    } else {
+      this.active = _.find(this.allAntrian, {jenis: 'umum'}).no_antrian;
     }
     this.umum = !this.umum;
   }
 
   changeKategori() {
-    console.log("kategori baru");
+    this.antrianService.getAllAntrian()
+      .then(allAntrian => this.allAntrian = allAntrian)
+      .then(allAntrian => this.active = allAntrian[0].no_antrian);
   }
   
   submitted = false;
