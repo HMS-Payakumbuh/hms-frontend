@@ -10,7 +10,12 @@ import { ObatBatchService }		from './obat-batch.service';
 })
 
 export class DaftarObatComponent {
-	allObatBatch: ObatBatch[];
+	public allObatBatch: ObatBatch[];
+
+	public filterQuery = "";
+    public rowsOnPage = 5;
+    public sortBy = "kode_obat";
+    public sortOrder = "asc";
 
 	constructor(
 		private ObatBatchService: ObatBatchService

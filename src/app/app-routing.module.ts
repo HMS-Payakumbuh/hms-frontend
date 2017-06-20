@@ -21,7 +21,10 @@ import { RawatinapDetailComponent }	    from './layanan/rawatinap-detail.compone
 
 import { DaftarObatComponent }			from './farmasi/obat-batch/daftar-obat.component';
 import { DetailObatComponent }			from './farmasi/obat-batch/detail-obat.component';
-import { ObatMasukFormComponent }		from './farmasi/obat-batch/obat-masuk-form.component';
+
+import { DaftarObatMasukComponent }		from './farmasi/obat-masuk/daftar-obat-masuk.component';
+import { DetailObatMasukComponent }		from './farmasi/obat-masuk/detail-obat-masuk.component';
+import { ObatMasukFormComponent }		from './farmasi/obat-masuk/obat-masuk-form.component';
 
 import { DaftarJenisObatComponent }		from './farmasi/jenis-obat/daftar-jenis-obat.component';
 import { DetailJenisObatComponent }     from './farmasi/jenis-obat/detail-jenis-obat.component';
@@ -52,7 +55,9 @@ const routes: Routes = [
 	{ path: 'rawatinap', component: RawatinapListComponent },	
 	{ path: 'rawatinap/:noKamar/:idTransaksi', component: RawatinapDetailComponent },
 	{ path: 'daftar-obat', component: DaftarObatComponent },
-	{ path: 'daftar-obat/:kode-obat', component: DetailObatComponent },
+	{ path: 'daftar-obat/:kode-obat', component: DetailObatComponent },	
+	{ path: 'obat-masuk', component: DaftarObatMasukComponent },
+	{ path: 'obat-masuk/:kode-obat', component: DetailObatMasukComponent },
 	{ path: 'obat-masuk-form', component: ObatMasukFormComponent },
 	{ path: 'jenis-obat', component: DaftarJenisObatComponent },
 	{ path: 'jenis-obat/:id', component: DetailJenisObatComponent },

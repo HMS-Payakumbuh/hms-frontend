@@ -1,4 +1,4 @@
-export class ObatBatch {	
+export class ObatMasuk {	
 	kode_obat: number;
 	id_jenis: number;	
 	merek: string;
@@ -12,6 +12,5 @@ export class ObatBatch {
 	kadaluarsa: string;
 	harga_beli: number;
 	jumlah: number;
-	lokasi: string;
 	keterangan: string;
 }

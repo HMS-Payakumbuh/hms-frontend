@@ -11,8 +11,8 @@ export class ObatBatchService {
 	// private obatBatchUrl = ENV.obatBatchUrl;
 
 	allObatBatch: ObatBatch[] = [
-		{id_jenis: 2138, merek: 'Cefixim syr kering 100mg/5ml', nama_generik: 'Cefixim', pembuat: 'Indofarma', golongan: 'Antibiotik', satuan: 'Botol', harga_jual: 10100.00, nomor_batch: '085G610NV', waktu_masuk: '11 September 2016 16:16', kadaluarsa: '18 Juni 2017', harga_beli: 9180.36, jumlah: 137, kode_obat: 213816091101, keterangan: ''},
-		{id_jenis: 2138, merek: 'Cefixim syr kering 100mg/5ml', nama_generik: 'Cefixim', pembuat: 'Indofarma', golongan: 'Antibiotik', satuan: 'Botol', harga_jual: 10100.00, nomor_batch: '085G611NV', waktu_masuk: '11 September 2016 16:18', kadaluarsa: '19 Juni 2017', harga_beli: 9180.36, jumlah: 10, kode_obat: 213816091102, keterangan: ''}
+		{kode_obat: 213816091101, id_jenis: 2138, merek: 'Cefixim syr kering 100mg/5ml', nama_generik: 'Cefixim', pembuat: 'Indofarma', golongan: 'Antibiotik', satuan: 'Botol', harga_jual: 10100.00, nomor_batch: '085G610NV', waktu_masuk: '11 September 2016 16:16', kadaluarsa: '18 Juni 2017', harga_beli: 9180.36, jumlah: 10, lokasi: 'Apotek', keterangan: ''},
+		{ kode_obat: 213816091101, id_jenis: 2138, merek: 'Cefixim syr kering 100mg/5ml', nama_generik: 'Cefixim', pembuat: 'Indofarma', golongan: 'Antibiotik', satuan: 'Botol', harga_jual: 10100.00, nomor_batch: '085G610NV', waktu_masuk: '11 September 2016 16:18', kadaluarsa: '18 Juni 2017', harga_beli: 9180.36, jumlah: 137, lokasi: 'Gudang Utama', keterangan: ''}
 	]; // Mock-up
 
 	constructor(private http:Http) { }

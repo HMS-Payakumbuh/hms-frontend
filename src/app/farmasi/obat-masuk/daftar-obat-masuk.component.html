@@ -1,0 +1,55 @@
+  <div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-list-alt" aria-hidden="true"></i> Daftar Obat Masuk
+				</h4>
+			</div>
+			<div class="card-block">
+				<div class="card-text">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="input-group">							
+							    <input type="text" class="form-control" [(ngModel)]="param" placeholder="Cari kode/merek obat"/>
+							</div>
+						</div>
+					</div>
+
+					<table class="table" [mfData]="allObatMasuk | filterObatMasuk : param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+						<tbody>
+							<tr>
+								<th><mfDefaultSorter by="waktu_masuk">Waktu Masuk</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="kode_obat">Kode Obat</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="merek">Merek Obat</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="satuan">Satuan</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="harga_beli">Harga Beli Satuan</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="kadaluarsa">Kadaluarsa</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="jumlah">Jumlah</mfDefaultSorter></th>
+								<th></th>
+							</tr>
+							<tr *ngFor="let obatMasuk of mf.data">
+								<td>{{obatMasuk.waktu_masuk}}</td>
+								<td>{{obatMasuk.kode_obat}}</td>
+								<td>{{obatMasuk.merek}}</td>
+								<td>{{obatMasuk.satuan}}</td>
+								<td>Rp. {{obatMasuk.harga_beli}}</td>	
+								<td>{{obatMasuk.kadaluarsa}}</td>	
+								<td>{{obatMasuk.jumlah}}</td>			
+								<td><button type="button" class="btn btn-primary" [routerLink] = "['/obat-masuk', obatMasuk.kode_obat]">Detail</button></td>
+							</tr>						
+						</tbody>	
+						<tfoot>
+			                <tr>
+			                    <td colspan="7">
+			                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+			                    </td>
+			                </tr>			
+					</table>
+
+					<div class="pull-left">
+						<a routerLink="/obat-masuk-form"><button type="button" class="btn btn-primary">Tambah obat masuk</button></a>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>
