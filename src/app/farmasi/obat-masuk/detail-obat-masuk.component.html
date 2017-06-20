@@ -1,0 +1,81 @@
+  <div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-newspaper-o" aria-hidden="true"></i> Detail Obat Masuk
+				</h4>
+			</div>
+			<div *ngIf="obatMasuk" class="card-block">
+				<div class="card-text">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td><b>Kode Obat</b></td>
+								<td>{{obatMasuk.kode_obat}}</td>	
+							</tr>
+							<tr>
+								<td><b>ID Jenis Obat</b></td>
+								<td>{{obatMasuk.id_jenis}}</td>	
+							</tr>
+							<tr>
+								<td><b>Merek Obat</b></td>								
+								<td>{{obatMasuk.merek}}</td>								
+							</tr>
+							<tr>
+								<td><b>Nama Generik</b></td>
+								<td>{{obatMasuk.nama_generik}}</td>								
+							</tr>
+							<tr>
+								<td><b>Pembuat</b></td>
+								<td>{{obatMasuk.pembuat}}</td>								
+							</tr>
+							<tr>
+								<td><b>Golongan</b></td>
+								<td>{{obatMasuk.golongan}}</td>
+							</tr>
+							<tr>
+								<td><b>Satuan</b></td>					
+								<td>{{obatMasuk.satuan}}</td>
+							</tr>
+							<tr>
+								<td><b>Harga Jual Satuan</b></td>								
+								<td>Rp. {{obatMasuk.harga_jual}}</td>
+							</tr>
+							<tr>
+								<td><b>Nomor Batch</b></td>								
+								<td>{{obatMasuk.nomor_batch}}</td>
+							</tr>
+							<tr>
+								<td><b>Waktu Masuk</b></td>								
+								<td>{{obatMasuk.waktu_masuk}}</td>
+							</tr>
+							<tr>
+								<td><b>Kadaluarsa</b></td>								
+								<td>{{obatMasuk.kadaluarsa}}</td>
+							</tr>
+
+							<tr>
+								<td><b>Harga Beli Satuan</b></td>								
+								<td>Rp. {{obatMasuk.harga_beli}}</td>
+							</tr>
+							<tr>
+								<td><b>Jumlah</b></td>								
+								<td>{{obatMasuk.jumlah}}</td>
+							</tr>
+							<tr>
+								<td><b>Keterangan</b></td>								
+								<td>{{obatMasuk.keterangan}}</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="row">
+						<div class="offset-md-8 col-md-4">
+							<button class="btn btn-danger" (click)="goBack()">Kembali</button>
+							<button class="btn btn-warning">Edit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

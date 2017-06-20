@@ -35,7 +35,10 @@ import { RawatinapDetailComponent } 	from './layanan/rawatinap-detail.component'
 
 import { DaftarObatComponent }          from './farmasi/obat-batch/daftar-obat.component';
 import { DetailObatComponent }          from './farmasi/obat-batch/detail-obat.component';
-import { ObatMasukFormComponent }       from './farmasi/obat-batch/obat-masuk-form.component';
+
+import { DaftarObatMasukComponent }     from './farmasi/obat-masuk/daftar-obat-masuk.component';
+import { DetailObatMasukComponent }     from './farmasi/obat-masuk/detail-obat-masuk.component';
+import { ObatMasukFormComponent }       from './farmasi/obat-masuk/obat-masuk-form.component';
 
 import { DaftarJenisObatComponent }     from './farmasi/jenis-obat/daftar-jenis-obat.component';
 import { DetailJenisObatComponent }     from './farmasi/jenis-obat/detail-jenis-obat.component';
@@ -93,6 +96,8 @@ import { DataTableModule }    from 'angular2-datatable';
         DaftarAntrianComponent,
         DaftarObatComponent,
         DetailObatComponent,
+        DaftarObatMasukComponent,
+        DetailObatMasukComponent,
         ObatMasukFormComponent,
         DaftarJenisObatComponent,
         DetailJenisObatComponent,
