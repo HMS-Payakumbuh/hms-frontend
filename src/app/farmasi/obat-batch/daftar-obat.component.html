@@ -35,7 +35,6 @@
 						<tbody>
 							<tr>
 								<th><mfDefaultSorter by="kode_obat">Kode Obat</mfDefaultSorter></th>
-								<th><mfDefaultSorter by="id_jenis">ID Jenis Obat</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="merek">Merek Obat</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="satuan">Satuan</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="harga_beli">Harga Beli Satuan</mfDefaultSorter></th>
@@ -46,7 +45,6 @@
 							</tr>
 							<tr *ngFor="let obatBatch of mf.data">
 								<td>{{obatBatch.kode_obat}}</td>
-								<td>{{obatBatch.id_jenis}}</td>
 								<td>{{obatBatch.merek}}</td>
 								<td>{{obatBatch.satuan}}</td>
 								<td>Rp. {{obatBatch.harga_beli}}</td>	
