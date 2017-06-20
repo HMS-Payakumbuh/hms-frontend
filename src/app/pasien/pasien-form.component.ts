@@ -21,6 +21,7 @@ export class PasienFormComponent implements OnInit {
 	search: string;
   no_rujukan: string;
   searchDone: boolean;
+  update: boolean;
   asuransi: Asuransi;
   pasien: Pasien;
   allAsuransi: Asuransi[];

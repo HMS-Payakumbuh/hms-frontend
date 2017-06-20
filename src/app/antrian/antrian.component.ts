@@ -1,4 +1,4 @@
-import { Component, OnInit,  ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { Antrian }    from './antrian';
@@ -11,7 +11,7 @@ import * as _ from "lodash";
 @Component({
   selector: 'antrian',
   templateUrl: './antrian.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   providers: [
     AntrianService,
     PoliklinikService
@@ -52,6 +52,7 @@ export class AntrianComponent implements OnInit {
         .switchMap((params: Params) => this.antrianService.getAntrian(params['namaLayanan']))
         .subscribe(allAntrian => {
             this.allAntrian = allAntrian;
+            console.log(this.allAntrian);
             this.active = allAntrian[0].no_antrian;
           });
       this.isfrontoffice = false;
