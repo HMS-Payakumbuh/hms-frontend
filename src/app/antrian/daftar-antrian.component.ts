@@ -13,6 +13,7 @@ import { PoliklinikService }    from '../layanan/poliklinik.service';
 })
 export class DaftarAntrianComponent implements OnInit {
   poliklinik: string;
+  nama: string;
   disabilitas: boolean = false;
   usia: number = 0;
   allPoliklinik: Poliklinik[];
@@ -28,7 +29,12 @@ export class DaftarAntrianComponent implements OnInit {
   }
 
   public daftar() {
-    console.log(this.poliklinik + this.usia + this.disabilitas);
+    if (this.usia >= 65 || this.disabilitas) {
+      console.log(this.poliklinik +','+ this.nama +', khusus');
+    } else {
+      console.log(this.poliklinik +','+ this.nama +', umum');
+    }
   }
+    
   
 }

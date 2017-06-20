@@ -48,6 +48,7 @@ const routes: Routes = [
 	{ path: 'klaim/:id', component: KlaimDetailComponent },
 	{ path: 'pendaftaran', component: PasienFormComponent },
 	{ path: 'antrian', component: AntrianComponent },
+	{ path: 'antrian/:namaLayanan', component: AntrianComponent },
 	{ path: 'daftar-antrian', component: DaftarAntrianComponent },
 	{ path: 'pendaftaran', component: PasienFormComponent},
 	{ path: 'poliklinik', component: PoliklinikListComponent },
