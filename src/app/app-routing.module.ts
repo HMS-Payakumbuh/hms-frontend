@@ -42,6 +42,8 @@ import { DaftarObatRusakComponent }      from './farmasi/obat-rusak/daftar-obat-
 import { DetailObatRusakComponent }      from './farmasi/obat-rusak/detail-obat-rusak.component';
 import { ObatRusakFormComponent }      from './farmasi/obat-rusak/obat-rusak-form.component';
 
+import { SettingsComponent }        from './settings/settings.component';
+
 const routes: Routes = [
 	{ path: '', redirectTo: '/', pathMatch: 'full' },
 	{ path: 'transaksi', component: TransaksiComponent },
@@ -75,7 +77,8 @@ const routes: Routes = [
 	{ path: 'obat-pindah-form', component: ObatPindahFormComponent },	
 	{ path: 'obat-rusak', component: DaftarObatRusakComponent },	
 	{ path: 'obat-rusak/:id', component: DetailObatRusakComponent },
-	{ path: 'obat-rusak-form', component: ObatRusakFormComponent }
+	{ path: 'obat-rusak-form', component: ObatRusakFormComponent },
+	{ path: 'settings', component: SettingsComponent }
 ];
 
 @NgModule ({

@@ -62,6 +62,8 @@ import { DaftarObatRusakComponent }      from './farmasi/obat-rusak/daftar-obat-
 import { DetailObatRusakComponent }      from './farmasi/obat-rusak/detail-obat-rusak.component';
 import { ObatRusakFormComponent }      from './farmasi/obat-rusak/obat-rusak-form.component';
 
+import { SettingsComponent }        from './settings/settings.component';
+
 import { AppRoutingModule }         from './app-routing.module';
 import { AppComponent }             from './app.component';
 
@@ -127,6 +129,7 @@ import { DataTableModule }    from 'angular2-datatable';
         DaftarObatRusakComponent,
         DetailObatRusakComponent,
         ObatRusakFormComponent,
+        SettingsComponent,
     ],
     bootstrap:    [ 
 	   AppComponent
