@@ -48,7 +48,7 @@
 								<td>{{obatBatch.merek}}</td>
 								<td>{{obatBatch.satuan}}</td>
 								<td>Rp. {{obatBatch.harga_beli}}</td>	
-								<td>{{obatBatch.kadaluarsa}}</td>	
+								<td>{{obatBatch.kadaluarsa | date:'d MMM y'}}</td>	
 								<td>{{obatBatch.jumlah}}</td>						
 								<td>{{obatBatch.lokasi}}</td>		
 								<td><button type="button" class="btn btn-primary" [routerLink] = "['/daftar-obat', obatBatch.kode_obat]">Detail</button></td>

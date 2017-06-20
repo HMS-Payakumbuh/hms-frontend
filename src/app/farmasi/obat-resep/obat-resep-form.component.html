@@ -14,17 +14,17 @@
     <div class="card mb-3">
       <div class="card-header card-info">
         <h4>
-          <i class="fa fa-newspaper-o" aria-hidden="true"></i> Obat Masuk Baru
+          <i class="fa fa-newspaper-o" aria-hidden="true"></i> Obat Resep Baru
         </h4>
       </div>
 
       <div class="card-block">
         <div class="card-text">
-            <form #obatMasukForm="ngForm">
+            <form #obatResepForm="ngForm">
               <div class="form-group">
-                <label for="id">ID Jenis Obat *</label>
+                <label for="id_transaksi">ID Transaksi *</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" id="id" required name="id"> 
+                  <input type="text" class="form-control" id="id_transaksi" required name="id_transaksi"> 
                   <span class="form-group-btn">
                     <a href="#"><button class="btn btn-success">Cari</button></a>
                   </span>
@@ -32,58 +32,13 @@
               </div>
 
               <div class="form-group">
-                <label for="merek">Merek Obat</label>
+                <label for="merek">ID Pasien</label>
                 <input type="text" class="form-control" id="merek" disabled name="merek">
               </div>
 
               <div class="form-group">
-                <label for="nama_generik">Nama Generik</label>
+                <label for="nama_generik">Nama Pasien</label>
                 <input type="text" class="form-control" id="nama_generik" disabled  name="nama_generik">
-              </div>
-
-              <div class="form-group">
-                <label for="pabrikan">Pabrikan</label>
-                <input type="text" class="form-control" id="pabrikan" disabled name="pabrikan">
-              </div>
-
-              <div class="form-group">
-                <label for="golongan">Golongan</label>
-                <input type="text" class="form-control" id="golongan" disabled name="golongan">
-              </div>
-
-              <div class="form-group">
-                <label for="no_batch">Nomor Batch</label>
-                <input type="text" class="form-control" id="no_batch" required name="no_batch">
-              </div>
-
-              <div class="form-group">
-                <label for="jumlah">Jumlah</label>
-                <div class="input-group">
-                  <input type="text" class="form-control" id="jumlah" required name="jumlah"> 
-                  <input type="text" class="form-control" id="satuan" disabled name="satuan">
-                </div>    
-                 
-                <!-- TODO: Resize Col, Make satuan dynamic according to satuan from Obat -->
-              </div>
-
-              <div class="form-group">
-                <label for="kadaluarsa">Tanggal Kadaluarsa</label>
-                <input type="date" class="form-control" id="kadaluarsa" name="kadaluarsa">
-              </div>
-
-              <div class="form-group">
-                <label for="harga_beli">Harga beli satuan</label>
-                <input type="text" class="form-control" id="harga_beli" required name="harga_beli">
-              </div>
-
-              <div class="form-group">
-                <label for="harga_total">Harga beli total</label>
-                <input type="text" class="form-control" id="harga_total" disabled name="harga_total">
-              </div>
-
-              <div class="form-group">
-                <label for="harga_jual">Harga jual satuan</label>
-                <input type="text" class="form-control" id="harga_jual" disabled name="harga_jual">
               </div>
 
               <button type="submit" class="btn btn-success">Simpan</button>
