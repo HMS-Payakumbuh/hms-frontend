@@ -10,8 +10,8 @@ export class AsuransiService {
 
 	//Mock data
 	allAsuransi: Asuransi[] = [
-		{no_kartu_asuransi: 1231313, nama_asuransi: 'Prudensial', id_pasien: 1},
-		{no_kartu_asuransi: 12313553, nama_asuransi: 'Prudensial', id_pasien: 4},
+		{no_kartu_asuransi: 1231313, nama_asuransi: 'Prudential', id_pasien: 1},
+		{no_kartu_asuransi: 12313553, nama_asuransi: 'Prudential', id_pasien: 4},
 		{no_kartu_asuransi: 2124141, nama_asuransi: 'BPJS', id_pasien: 1},
 		{no_kartu_asuransi: 1241241, nama_asuransi: 'BPJS', id_pasien: 2},
 		{no_kartu_asuransi: 1241241, nama_asuransi: 'AIG', id_pasien: 3}
