@@ -12,7 +12,7 @@
 							<br>
 							<p>Nama Asuransi &nbsp; : {{klaim.nama_asuransi.toUpperCase()}}</p>
 							<br>
-							<p>Nomor Kartu &nbsp; : {{klaim.no_kartu}}</p>
+							<p>Nomor Kartu &nbsp; : {{klaim.nomor_kartu}}</p>
 							<br>
 							<p>Tanggal Klaim &nbsp; : {{klaim.tanggal}}</p>
 							<br>
@@ -20,6 +20,46 @@
 							<br>
 							<p>Tarif &nbsp; : {{klaim.tarif}}</p>
 						</div>
+					</div>
+					<div class="row">
+						<table class="table">
+							<tbody>
+								<tr>
+									<td>Jenis Rawat:</td>
+									<td *ngIf="transaksi.jenis_rawat === 1">Jalan</td>
+									<td *ngIf="transaksi.jenis_rawat === 2">Inap</td>
+									<td>Kelas Rawat</td>
+									<td *ngIf="transaksi.jenis_rawat === 1">Reguler</td>
+									<td *ngIf="transaksi.jenis_rawat === 2">Kelas {{transaksi.kelas_rawat}}</td>
+								</tr>
+								<tr>
+									<td>Tanggal Rawat: </td>
+									<td>Masuk: {{transaksi.tanggal}} Pulang: {{transaksi.pelunasan}}</td>
+									<td>Berat Lahir</td>
+									<td>0</td>
+								</tr>
+								<tr>
+									<td>LOS (hari)</td>
+									<td>0</td>
+									<td>Cara Pulang</td>
+									<td>Atas Persetujuan Dokter</td>
+								</tr>
+								<tr>
+									<td>ADL Score</td>
+									<td>Sub Acute: -  Chronic: -</td>
+									<td>Tarif Rumah Sakit</td>
+									<td>0</td>
+								</tr>
+								<tr>
+									<td>DPJP</td>
+									<td>RUDY, DR</td>
+									<td>Jenis Tarif</td>
+									<td>Rumah Sakit Pemerintah Kelas C</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="row">
 					</div>
 					<div class="row">
 						<div class="offset-md-6 col-md-6">
