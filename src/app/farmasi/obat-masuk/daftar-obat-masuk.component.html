@@ -15,7 +15,7 @@
 						</div>
 					</div>
 
-					<table class="table" [mfData]="allObatMasuk" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+					<table class="table" [mfData]="allObatMasuk | filterObatMasuk : param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<tbody>
 							<tr>
 								<th><mfDefaultSorter by="waktu_masuk">Waktu Masuk</mfDefaultSorter></th>
@@ -47,7 +47,7 @@
 					</table>
 
 					<div class="pull-left">
-						<a routerLink="/obat-masuk-form"><button type="button" class="btn btn-primary">Tambah obat rusak</button></a>
+						<a routerLink="/obat-masuk-form"><button type="button" class="btn btn-primary">Tambah obat masuk</button></a>
 					</div>
 				</div>
 			</div>	
