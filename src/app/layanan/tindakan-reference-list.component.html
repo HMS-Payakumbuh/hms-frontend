@@ -1,0 +1,43 @@
+<html>
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h3>Daftar Tindakan</h3>
+				</div>
+
+				<div class="card-block">
+					<table class="table" [mfData]="allTindakanReference" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+						<thead>
+							<th>#</th>
+							<th><mfDefaultSorter by="kode">Kode</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="harga">Harga</mfDefaultSorter></th>
+							<th></th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let tindakanReference of mf.data; index as i">
+								<td>{{i + 1}}</td>
+								<td>{{tindakanReference.kode}}</td>
+								<td>{{tindakanReference.nama}}</td>
+								<td>{{tindakanReference.harga}}</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-info" [routerLink]="['/daftar-tindakan', tindakanReference.kode]">Edit</button>
+								</td>
+							</tr>
+						</tbody>
+						<tfoot>
+	            <tr>
+	              <td colspan="7">
+	                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+	              </td>
+	            </tr>
+	          </tfoot>						
+					</table>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</html>

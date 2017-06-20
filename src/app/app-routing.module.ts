@@ -19,6 +19,9 @@ import { PoliklinikDetailComponent }	from './layanan/poliklinik-detail.component
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent }	    from './layanan/rawatinap-detail.component';
 
+import { TindakanReferenceListComponent }		from './layanan/tindakan-reference-list.component';
+import { TindakanReferenceFormComponent }		from './layanan/tindakan-reference-form.component';
+
 import { DaftarObatComponent }			from './farmasi/obat-batch/daftar-obat.component';
 import { DetailObatComponent }			from './farmasi/obat-batch/detail-obat.component';
 
@@ -58,6 +61,8 @@ const routes: Routes = [
 	{ path: 'poliklinik/:namaPoliklinik/:idTransaksi', component: PoliklinikDetailComponent },
 	{ path: 'rawatinap', component: RawatinapListComponent },	
 	{ path: 'rawatinap/:noKamar/:idTransaksi', component: RawatinapDetailComponent },
+	{ path: 'daftar-tindakan', component: TindakanReferenceListComponent },
+	{ path: 'daftar-tindakan/:kode', component: TindakanReferenceFormComponent },	
 	{ path: 'daftar-obat', component: DaftarObatComponent },
 	{ path: 'daftar-obat/:kode-obat', component: DetailObatComponent },	
 	{ path: 'obat-masuk', component: DaftarObatMasukComponent },

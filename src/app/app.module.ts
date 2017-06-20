@@ -38,6 +38,9 @@ import { PoliklinikDetailComponent }    from './layanan/poliklinik-detail.compon
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent } 	from './layanan/rawatinap-detail.component';
 
+import { TindakanReferenceListComponent }    from './layanan/tindakan-reference-list.component';
+import { TindakanReferenceFormComponent }        from './layanan/tindakan-reference-form.component';
+
 import { DaftarObatComponent }          from './farmasi/obat-batch/daftar-obat.component';
 import { DetailObatComponent }          from './farmasi/obat-batch/detail-obat.component';
 
@@ -103,6 +106,8 @@ import { DataTableModule }    from 'angular2-datatable';
         PoliklinikDetailComponent,
         RawatinapListComponent,
         RawatinapDetailComponent,
+        TindakanReferenceListComponent,
+        TindakanReferenceFormComponent,
         MatchesStatusPipe,
         FilterNamaPasienPipe,
         FilterTanggalPipe,

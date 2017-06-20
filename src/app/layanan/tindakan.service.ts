@@ -15,9 +15,9 @@ export class TindakanService {
 
 	//Mock data
 	allTindakanReference: TindakanReference[] = [
-		{kode: '17.11', nama: 'LAP DIR ING HERN-GRAFT', harga: 100000},
-		{kode: '17.12', nama: 'LAP INDIR ING HERN-GRAFT', harga: 150000},
-		{kode: '17.13', nama: 'LAP ING HERN-GRAFT NOS', harga: 200000}
+		{kode: '17-11', nama: 'LAP DIR ING HERN-GRAFT', harga: 100000},
+		{kode: '17-12', nama: 'LAP INDIR ING HERN-GRAFT', harga: 150000},
+		{kode: '17-13', nama: 'LAP ING HERN-GRAFT NOS', harga: 200000}
 	];
 
 	constructor(private http:Http) { }
