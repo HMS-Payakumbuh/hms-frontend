@@ -34,19 +34,19 @@ export class RawatinapService {
 			.catch(this.handleError);
 	}
 
-	getRawatinapByJenisKamar(jenis_kamar: string): Promise<Rawatinap[]> {
+	getRawatinapByJenisKamar(jenis_kamar: string): Promise<Rawatinap> {
 		return this.getAllRawatinap()
 			.then(allRawatinap => allRawatinap.find(rawatinap => rawatinap.jenis_kamar === jenis_kamar))
 			.catch(this.handleError);
 	}
 
-    getRawatinapByKelas(kelas: string): Promise<Rawatinap[]> {
+    getRawatinapByKelas(kelas: string): Promise<Rawatinap> {
 		return this.getAllRawatinap()
 			.then(allRawatinap => allRawatinap.find(rawatinap => rawatinap.kelas === kelas))
 			.catch(this.handleError);
 	}
 
-    getAvailableRawatinap(): Promise<Rawatinap[]> {
+    getAvailableRawatinap(): Promise<Rawatinap> {
 		return this.getAllRawatinap()
 			.then(allRawatinap => allRawatinap.find(rawatinap => rawatinap.kapasitas_kamar > 0))
 			.catch(this.handleError);
