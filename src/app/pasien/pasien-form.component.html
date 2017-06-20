@@ -24,46 +24,55 @@
                 <form #pasienBaruForm="ngForm">
                   <div class="form-group">
                     <label for="name">Nama *</label>
-                    <input type="text" class="form-control" id="name" required [(ngModel)]="model.nama" name="name">
+                    <input type="text" class="form-control" id="name" required [(ngModel)]="pasien.nama" name="name">
                   </div>
 
                   <div class="form-group">
                     <label for="gender">Jenis Kelamin</label>
-                    <select class="form-control" id="gender" [(ngModel)]="model.jender" name="gender">
+                    <select class="form-control" id="gender" [(ngModel)]="pasien.jender" name="gender">
                       <option *ngFor="let gender of genders" [value]="gender">{{gender}}</option>
                     </select>
                   </div>
 
                   <div>
                     <label for="dob">Tanggal Lahir</label>
-                    <input [dpDayPicker]="config" [(ngModel)]="model.tanggal_lahir" id="dob" class="form-control" theme="dp-material" name="dob">
+                    <input [dpDayPicker]="config" [(ngModel)]="pasien.tanggal_lahir" id="dob" class="form-control" theme="dp-material" name="dob">
                   </div>
 
                   <div class="form-group">
                     <label for="religion">Agama</label>
-                    <select class="form-control" id="religion" [(ngModel)]="model.agama" name="religion">
+                    <select class="form-control" id="religion" [(ngModel)]="pasien.agama" name="religion">
                       <option *ngFor="let religion of religions" [value]="religion">{{religion}}</option>
                     </select>
                   </div>
 
                   <div class="form-group">
                     <label for="address">Alamat</label>
-                    <textarea class="form-control" id="address" [(ngModel)]="model.alamat" name="address"></textarea>
+                    <textarea class="form-control" id="address" [(ngModel)]="pasien.alamat" name="address"></textarea>
                   </div>
 
                   <div class="form-group">
                     <label for="phone">Kontak</label>
-                    <input type="tel" class="form-control" id="phone" [(ngModel)]="model.kontak" name="phone">
+                    <input type="tel" class="form-control" id="phone" [(ngModel)]="pasien.kontak" name="phone">
                   </div>
 
-                  <div *ngIf="rujukan" class="form-group">
+                  <div *ngIf="rujukanChecked" class="form-group">
                     <label for="no_rujukan">Nomor Rujukan</label>
                     <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="no_rujukan" name="no_rujukan" required>
                   </div>
 
-                  <div *ngIf="asuransi" class="form-group">
-                    <label for="no_asuransi">Nomor Asuransi</label>
-                    <input type="string" class="form-control" id="no_asuransi" [(ngModel)]="no_asuransi" name="no_asuransi" required>
+                  <div *ngIf="asuransiChecked" class="form-group">
+                    <label for="asuransi">Asuransi yang dipakai</label>
+                    <div class="form-inline">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">Nomor</div>
+                        <input type="string" class="form-control" id="no_asuransi" [(ngModel)]="asuransi.no_kartu_asuransi" name="no_asuransi" required>
+                      </div>
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">Nama</div>
+                        <input type="string" class="form-control" id="nama_asuransi" [(ngModel)]="asuransi.nama_asuransi" name="nama_asuransi" required>
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
@@ -85,12 +94,12 @@
                   <div class="form-group">
                     <label>Opsi Tambahan :   </label>
                     <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" [checked]="rujukan" (change)="rujukan = !rujukan">
+                      <input type="checkbox" class="custom-control-input" [checked]="rujukanChecked" (change)="rujukanChecked = !rujukanChecked">
                       <span class="custom-control-indicator"></span>
                       <span class="custom-control-description">Rujukan</span>
                     </label>
                     <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" [checked]="asuransi" (change)="asuransi = !asuransi">
+                      <input type="checkbox" class="custom-control-input" [checked]="asuransiChecked" (change)="asuransiChecked = !asuransiChecked">
                       <span class="custom-control-indicator"></span>
                       <span class="custom-control-description">Asuransi</span>
                     </label>
@@ -105,14 +114,23 @@
             <div class="card-text">
 
                 <div class="form-group">
-                  <label for="search">Cari Pasien</label>
-                  <div class="input-group">
-                    <input type="text" class="form-control" id="search" [(ngModel)]="search" placeholder="Masukkan id/nama pasien untuk memulai pencarian">
-                    <span class="input-group-btn">
-                      <button class="btn btn-secondary" type="button">Mulai</button>
-                    </span>
-                  </div>
+                  <label for="search">Cari Pasien</label> <br>
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="search" [(ngModel)]="search" placeholder="Masukkan id/nama pasien untuk memulai pencarian">
+                      <!--<input type="text" class="form-control" id="search" autocomplete [items]="allPasien" [config]="pasienAutocompleteConfig" (selectEvent)="pasienSelected($event)">-->
+                      <span class="input-group-btn">
+                        <button class="btn btn-secondary" type="button" (click)="searchPasien()">Mulai</button>
+                      </span>
+                    </div>
                 </div>
+                <div class="form-group">
+                    <label for="pasien">Pilih Pasien</label>
+                    <select class="form-control" id="pasien" name="pasien" [(ngModel)]="pasien" (ngModelChange)= "selectPasien()">
+                      <option *ngFor="let pasien of allPasien" [ngValue]="pasien">{{pasien.id}} - {{pasien.nama}}</option>
+                    }
+                    }
+                    </select>
+                  </div>
 
                 <div class="form-group">
                     <label class="custom-control custom-checkbox">
@@ -122,70 +140,97 @@
                     </label>
                   </div>
 
-                <form *ngIf="search" #pasienLamaForm="ngForm">
+                <form *ngIf="searchDone" #pasienLamaForm="ngForm">
                   <div class="form-group">
                     <label for="name">Nama</label>
-                    <input *ngIf="update" type="text" class="form-control" id="name" required [(ngModel)]="model.nama" name="name">
-                    <input *ngIf="!update" type="text" class="form-control" id="name" required [(ngModel)]="model.nama" name="name" disabled>
+                    <input *ngIf="update" type="text" class="form-control" id="name" required [(ngModel)]="pasien.nama" name="name">
+                    <input *ngIf="!update" type="text" class="form-control" id="name" required [(ngModel)]="pasien.nama" name="name" disabled>
                   </div>
 
                   <div class="form-group">
                     <label for="gender">Jenis Kelamin</label>
-                    <select *ngIf="update" class="form-control" id="gender" [(ngModel)]="model.jender" name="gender">
+                    <select *ngIf="update" class="form-control" id="gender" value="{{pasien.jender}}" [(ngModel)]="pasien.jender" name="gender">
                       <option *ngFor="let gender of genders" [value]="gender">{{gender}}</option>
                     </select>
-                    <select *ngIf="!update" class="form-control" id="gender" [(ngModel)]="model.jender" name="gender" disabled>
+                    <select *ngIf="!update" class="form-control" id="gender" value="{{pasien.jender}}" [(ngModel)]="pasien.jender" name="gender" disabled>
                       <option *ngFor="let gender of genders" [value]="gender">{{gender}}</option>
                     </select>
                   </div>
 
                   <div>
                     <label for="dob">Tanggal Lahir</label>
-                    <input *ngIf="update" [dpDayPicker]="config" [(ngModel)]="model.tanggal_lahir" id="dob" class="form-control" theme="dp-material" name="dob">
-                    <input *ngIf="!update" [dpDayPicker]="config" [(ngModel)]="model.tanggal_lahir" id="dob" class="form-control" theme="dp-material" name="dob" disabled>
+                    <input *ngIf="update" [dpDayPicker]="config" [(ngModel)]="pasien.tanggal_lahir" id="dob" class="form-control" theme="dp-material" name="dob">
+                    <input *ngIf="!update" [dpDayPicker]="config" [(ngModel)]="pasien.tanggal_lahir" id="dob" class="form-control" theme="dp-material" name="dob" disabled>
                   </div>
 
                   <div class="form-group">
                     <label for="religion">Agama</label>
-                    <select *ngIf="update" class="form-control" id="religion" [(ngModel)]="model.agama" name="religion">
+                    <select *ngIf="update" class="form-control" id="religion" value="{{pasien.agama}}" [(ngModel)]="pasien.agama" name="religion">
                       <option *ngFor="let religion of religions" [value]="religion">{{religion}}</option>
                     </select>
-                    <select *ngIf="!update" class="form-control" id="religion" [(ngModel)]="model.agama" name="religion" disabled>
+                    <select *ngIf="!update" class="form-control" id="religion" value="{{pasien.agama}}" [(ngModel)]="pasien.agama" name="religion" disabled>
                       <option *ngFor="let religion of religions" [value]="religion">{{religion}}</option>
                     </select>
                   </div>
 
                   <div class="form-group">
                     <label for="address">Alamat</label>
-                    <textarea *ngIf="update" class="form-control" id="address" [(ngModel)]="model.alamat" name="address"></textarea>
-                    <textarea *ngIf="!update" class="form-control" id="address" [(ngModel)]="model.alamat" name="address" disabled></textarea>
+                    <textarea *ngIf="update" class="form-control" id="address" [(ngModel)]="pasien.alamat" name="address"></textarea>
+                    <textarea *ngIf="!update" class="form-control" id="address" [(ngModel)]="pasien.alamat" name="address" disabled></textarea>
                   </div>
 
                   <div class="form-group">
                     <label for="phone">Kontak</label>
-                    <input *ngIf="update" type="tel" class="form-control" id="phone" [(ngModel)]="model.kontak" name="phone">
-                    <input *ngIf="!update" type="tel" class="form-control" id="phone" [(ngModel)]="model.kontak" name="phone" disabled>
+                    <input *ngIf="update" type="tel" class="form-control" id="phone" [(ngModel)]="pasien.kontak" name="phone">
+                    <input *ngIf="!update" type="tel" class="form-control" id="phone" [(ngModel)]="pasien.kontak" name="phone" disabled>
                   </div>
 
-                  <div *ngIf="asuransi">
-                    <div class="form-group" *ngFor="let noAsuransi of model.no_asuransi; let i = index; trackBy: customTrackBy ">           
-                      <label for="no_asuransi">Nomor Asuransi {{i + 1}}</label>
-                      <div class="input-group">
-                        <input *ngIf="update" type="text" class="form-control" name="no_asuransi" [(ngModel)]= "model.no_asuransi[i]" value="{{noAsuransi}}">
-                        <input *ngIf="!update" type="text" class="form-control" name="no_asuransi" value="{{noAsuransi}}" disabled>
+                  <div *ngIf="asuransiChecked">
+                    <div class="form-group" *ngFor="let asuransi of allAsuransi; let i = index; trackBy: customTrackBy ">
+                      <label for="asuransi">Asuransi {{i + 1}}</label>
+                      <div class="form-inline">
+                        <div *ngIf="update">
+                          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon">Nomor</div>
+                            <input type="text" class="form-control" name="no_asuransi" [(ngModel)]= "allAsuransi[i].no_kartu_asuransi" value="{{asuransi.no_kartu_asuransi}}">
+                          </div>
+                          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon">Nama</div>
+                            <input type="text" class="form-control" name="nama_asuransi" [(ngModel)]= "allAsuransi[i].nama_asuransi" value="{{asuransi.nama_asuransi}}">
+                          </div>
+                        </div>
+                        <div *ngIf="!update" class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon">Nomor</div>
+                            <input type="text" class="form-control" name="no_asuransi" value="{{asuransi.no_kartu_asuransi}}" disabled>
+                          </div>
+                          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon">Nama</div>
+                            <input type="text" class="form-control" name="nama_asuransi" value="{{asuransi.nama_asuransi}}" disabled>
+                          </div>
+                        </div>
                         <span class="input-group-btn">
-                          <button class="btn btn-secondary" type="button" (click)="pakaiAsuransi(noAsuransi)">Pakai</button>
+                          <button class="btn btn-secondary" type="button" (click)="pakaiAsuransi(asuransi)">Pakai</button>
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  <div class="form-group">
-                    <label for="no_asuransi">Nomor Asuransi yang dipakai</label>
-                    <input type="string" class="form-control" id="no_asuransi" [(ngModel)]="no_asuransi" name="no_asuransi" required>
+                  <div *ngIf="asuransiChecked" class="form-group">
+                    <label for="asuransi">Asuransi yang dipakai</label>
+                    <div class="form-inline">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">Nomor</div>
+                        <input type="string" class="form-control" id="no_asuransi" [(ngModel)]="asuransi.no_kartu_asuransi" name="no_asuransi" required>
+                      </div>
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">Nama</div>
+                        <input type="string" class="form-control" id="nama_asuransi" [(ngModel)]="asuransi.nama_asuransi" name="nama_asuransi" required>
+                      </div>
+                    </div>
                   </div>
 
-                  <div *ngIf="rujukan" class="form-group">
+                  <div *ngIf="rujukanChecked" class="form-group">
                     <label for="no_rujukan">Nomor Rujukan</label>
                     <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="no_rujukan" name="no_rujukan" required>
                   </div>
@@ -209,12 +254,12 @@
                   <div class="form-group">
                     <label>Opsi Tambahan :  </label>
                     <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" [checked]="rujukan" (change)="rujukan = !rujukan">
+                      <input type="checkbox" class="custom-control-input" [checked]="rujukanChecked" (change)="rujukanChecked = !rujukanChecked">
                       <span class="custom-control-indicator"></span>
                       <span class="custom-control-description">Rujukan</span>
                     </label>
                     <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" [checked]="asuransi" (change)="asuransi = !asuransi">
+                      <input type="checkbox" class="custom-control-input" [checked]="asuransiChecked" (change)="asuransiChecked = !asuransiChecked">
                       <span class="custom-control-indicator"></span>
                       <span class="custom-control-description">Asuransi</span>
                     </label>

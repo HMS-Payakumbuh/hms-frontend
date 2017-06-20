@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Pasien }    from './pasien';
+import { PasienService }    from './pasien.service';
+import { Asuransi }  from './asuransi';
+import { AsuransiService }  from './asuransi.service';
 import { Poliklinik }    from '../layanan/poliklinik';
 import { PoliklinikService }    from '../layanan/poliklinik.service';
 
@@ -8,19 +11,27 @@ import { PoliklinikService }    from '../layanan/poliklinik.service';
   selector: 'pasien-form',
   templateUrl: './pasien-form.component.html',
   providers: [
-    PoliklinikService
+    PoliklinikService,
+    PasienService,
+    AsuransiService
   ]
 })
 export class PasienFormComponent implements OnInit {
 	poliklinik: string;
 	search: string;
   no_rujukan: string;
-  no_asuransi: string;
+  searchDone: boolean;
+  asuransi: Asuransi;
+  pasien: Pasien;
+  allAsuransi: Asuransi[];
   allPoliklinik: Poliklinik[];
+  allPasien: Pasien[];
 
   constructor(
     private route: ActivatedRoute,
-    private poliklinikService: PoliklinikService
+    private poliklinikService: PoliklinikService,
+    private pasienService: PasienService,
+    private asuransiService: AsuransiService
   ) {}
 
   submitted = false;
@@ -31,25 +42,42 @@ export class PasienFormComponent implements OnInit {
 
   doctors = ['Dr. Juan', 'Dr. Alec', 'Dr. Hans', 'Dr. Kelvin'];
 
-  model = new Pasien('Jane', '08-06-1988', this.genders[0], this.religions[5], 'Jln. Haji Slamet', '123515151', ['12314','12324']);
+  //pasienAutocompleteConfig: any = {'placeholder': 'Tuliskan nama pasien', 'sourceField': ['nama']};
 
   ngOnInit() {
     this.poliklinikService.getAllPoliklinik()
       .then(allPoliklinik => this.allPoliklinik = allPoliklinik);
+    this.pasien = new Pasien(null,'','','','','','');
+    this.asuransi = new Asuransi(null,'',null);
+
+    // this.pasienService.getAllPasien()
+    //   .then(allPasien => this.allPasien = allPasien);
+  }
+
+  /*pasienSelected(pasien: Pasien) {
+    this.pasien = pasien;
+    this.asuransiService.getAsuransi(this.pasien.id).then(allAsuransi => this.allAsuransi = allAsuransi);  
+  }*/
+
+  private searchPasien() {
+    this.pasienService.getPasien(this.search)
+      .then(allPasien => this.allPasien = allPasien);
+  }
+
+  private selectPasien() {
+    this.asuransiService.getAsuransi(this.pasien.id).then(allAsuransi => this.allAsuransi = allAsuransi);
+    this.searchDone = true;
   }
 
   private customTrackBy(index: number, obj: any): any {
     return index;
   }
 
-  private pakaiAsuransi(no_asuransi: string) {
-    this.no_asuransi = no_asuransi;
+  private pakaiAsuransi(asuransi: Asuransi) {
+    this.asuransi = asuransi;
   }
 
 	private save() { 
     this.submitted = true;
   }
-
-	// TODO: Remove this when we're done
-	get diagnostic() { return JSON.stringify(this.model); }
 }
