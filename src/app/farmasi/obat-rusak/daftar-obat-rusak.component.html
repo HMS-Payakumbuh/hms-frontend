@@ -20,12 +20,18 @@
 							</div>
 						</div>
 
-						<div class="col-md-6 pull-right">						
+						<div class="col-md-6 pull-right">
+							<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal keluar">
+						</div>
+					</div>
+
+					<div class="row">			
+						<div class="col-md-12 pull-right">						
 						    <input class="form-control" [(ngModel)]="param2" placeholder="Cari kode/nama obat"/>
 						</div>
 					</div>
 
-					<table class="table" [mfData]="allObatRusak | filterObatRusak : param1 : param2" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+					<table class="table" [mfData]="allObatRusak | filterObatRusak : param1 : param2 | filterWaktuKeluar : selectedDate" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<tbody>
 							<tr>								
 								<th><mfDefaultSorter by="waktu_keluar">Waktu Keluar</mfDefaultSorter></th>
@@ -38,10 +44,10 @@
 								<th></th>
 							</tr>
 							<tr *ngFor="let obatRusak of mf.data">
-								<td>{{obatRusak.waktu_keluar}}</td>	
+								<td>{{obatRusak.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>	
 								<td>{{obatRusak.kode_obat}}</td>
 								<td>{{obatRusak.merek}}</td>	
-								<td>{{obatRusak.kadaluarsa}}</td>
+								<td>{{obatRusak.kadaluarsa | date:'d MMM y'}}</td>
 								<td>{{obatRusak.jumlah}}</td>
 								<td>{{obatRusak.alasan}}</td>
 								<td>{{obatRusak.keterangan}}</td>						
