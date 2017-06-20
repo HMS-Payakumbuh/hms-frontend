@@ -10,6 +10,7 @@ import { MatchesStatusPipe }            from './pipe/matches-status.pipe';
 import { FilterNamaPasienPipe }         from './pipe/filter-nama-pasien.pipe';
 import { FilterTanggalPipe }            from './pipe/filter-tanggal.pipe';
 import { FilterNamaAsuransiPipe }       from './pipe/filter-nama-asuransi.pipe';
+import { FilterJenisPasienPipe }       from './pipe/filter-jenis-pasien.pipe';
 import { FilterJenisObatPipe }     from './pipe/filter-jenis-obat.pipe';
 import { FilterDaftarObatPipe }     from './pipe/filter-daftar-obat.pipe';
 import { FilterObatMasukPipe }     from './pipe/filter-obat-masuk.pipe';
@@ -75,6 +76,7 @@ import { DataTableModule }    from 'angular2-datatable';
         FilterNamaPasienPipe,
         FilterTanggalPipe,
         FilterNamaAsuransiPipe,
+        FilterJenisPasienPipe,
         FilterJenisObatPipe,
         FilterDaftarObatPipe,
         FilterObatMasukPipe,

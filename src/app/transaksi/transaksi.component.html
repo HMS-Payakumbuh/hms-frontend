@@ -14,6 +14,7 @@
 									<th>Nama Pasien</th>
 									<th>Tanggal Transaksi</th>
 									<th>Status Transaksi</th>
+									<th>Jenis Pasien</th>
 									<th></th>
 								</tr>
 								<tr>
@@ -37,13 +38,23 @@
 											</select>
 										</div>
 									</td>
+									<td>
+										<div class="col-md-12 input-group">
+											<select class="form-control" [(ngModel)]="jenis" id="statusDropdown">
+												<option *ngFor="let jenis of allJenis">
+													{{jenis.toUpperCase()}}
+												</option>
+											</select>
+										</div>
+									</td>
 									<td></td>
 								</tr>
-								<tr *ngFor="let transaksi of allTransaksi | matchesStatus: status | filterNamaPasien: searchParam | filterTanggal: selectedDate">
+								<tr *ngFor="let transaksi of allTransaksi | matchesStatus: status | filterNamaPasien: searchParam | filterTanggal: selectedDate | filterJenisPasien: jenis">
 									<td>{{transaksi.id}}</td>
 									<td>{{transaksi.nama_pasien}}</td>
 									<td>{{transaksi.tanggal}}</td>
-									<td>{{transaksi.status.toUpperCase()}}</td>								
+									<td>{{transaksi.status.toUpperCase()}}</td>	
+									<td>{{transaksi.jenis_pasien.toUpperCase()}}</td>
 									<td><button type="button" class="btn btn-primary" [routerLink] = "['/transaksi', transaksi.id]">Details</button></td>
 								</tr>
 							</tbody>

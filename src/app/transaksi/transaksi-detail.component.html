@@ -11,10 +11,11 @@
 							<div class="row">
 								<div class="col-md-12">
 									<b>{{transaksi.nama_pasien}}</b>
-									<p>Laki-Laki</p>
-									<p>20 Tahun</p>
+									<p>{{pasien.jender}}</p>
+									<p>{{pasien.umur}} Tahun</p>
 									<p>No. Sep: {{transaksi.no_sep}}</p>
 									<p>Jenis Pasien: {{transaksi.jenis_pasien.toUpperCase()}}</p>
+									<p>Tanggal Transaksi: {{transaksi.tanggal}}</p>
 								</div>
 							</div>
 						</div>
@@ -73,7 +74,7 @@
 					<div *ngIf="showPembayaran" class="row">
 						<div class="col-md-12">
 							<ul class='list-group'>
-								<a *ngFor="let pembayaran of allPembayaran" [routerLink] = "['/pembayaran', pembayaran.id]">Pembayaran {{pembayaran.nama_asuransi.toUpperCase()}}</a>
+								<a *ngFor="let pembayaran of allPembayaran" [routerLink] = "['/pembayaran', pembayaran.id]">Pembayaran {{pembayaran.nama_asuransi.toUpperCase()}} : {{pembayaran.tanggal}}</a>
 							</ul>
 						</div>
 					</div>
