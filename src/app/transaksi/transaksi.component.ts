@@ -11,6 +11,7 @@ import { TransaksiService }		from './transaksi.service';
 
 export class TransaksiComponent {
 	allTransaksi: Transaksi[];
+	statuses = ['', 'open', 'closed'];
 
 	constructor(
 		private transaksiService: TransaksiService

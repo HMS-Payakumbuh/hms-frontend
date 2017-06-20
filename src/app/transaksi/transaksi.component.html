@@ -6,17 +6,6 @@
 					Daftar Transaksi
 				</div>
 				<div class="card-block">
-					<div class="row">
-						<div class="col-md-12 input-group">
-							<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="Nama Pasien">
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12 input-group" id="datetimepicker">
-								<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal Transaksi">
-						</div>
-					</div>
-					<br>
 					<div>
 						<table class="table">
 							<tbody>
@@ -24,14 +13,37 @@
 									<th>#</th>
 									<th>Nama Pasien</th>
 									<th>Tanggal Transaksi</th>
-									<th></th>
+									<th>Status Transaksi</th>
 									<th></th>
 								</tr>
-								<tr *ngFor="let transaksi of allTransaksi | matchesStatus: &quot;open&quot; | filterNamaPasien: searchParam | filterTanggal: selectedDate">
+								<tr>
+									<td></td>
+									<td>
+										<div class="col-md-12 input-group">
+											<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="Nama Pasien">
+										</div>
+									</td>
+									<td>
+										<div class="col-md-12 input-group" id="datetimepicker">
+												<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal Transaksi">
+										</div>
+									</td>
+									<td>
+										<div class="col-md-12 input-group">
+											<select class="form-control" [(ngModel)]="status" id="statusDropdown">
+												<option *ngFor="let status of statuses">
+													{{status.toUpperCase()}}
+												</option>
+											</select>
+										</div>
+									</td>
+									<td></td>
+								</tr>
+								<tr *ngFor="let transaksi of allTransaksi | matchesStatus: status | filterNamaPasien: searchParam | filterTanggal: selectedDate">
 									<td>{{transaksi.id}}</td>
 									<td>{{transaksi.nama_pasien}}</td>
 									<td>{{transaksi.tanggal}}</td>
-									<td></td>								
+									<td>{{transaksi.status.toUpperCase()}}</td>								
 									<td><button type="button" class="btn btn-primary" [routerLink] = "['/transaksi', transaksi.id]">Details</button></td>
 								</tr>
 							</tbody>

@@ -1,0 +1,35 @@
+<html>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header card-info mb-3">
+					Informasi Klaim
+				</div>
+				<div *ngIf="klaim" class="card-block">
+					<div class="row">
+						<div class="col-md-12">
+							<p>Nama Pasien &nbsp; : {{klaim.nama_pasien}}</p>
+							<br>
+							<p>Nama Asuransi &nbsp; : {{klaim.nama_asuransi.toUpperCase()}}</p>
+							<br>
+							<p>Nomor Kartu &nbsp; : {{klaim.no_kartu}}</p>
+							<br>
+							<p>Tanggal Klaim &nbsp; : {{klaim.tanggal}}</p>
+							<br>
+							<p>Status Klaim &nbsp; : {{klaim.status}}</p>
+							<br>
+							<p>Tarif &nbsp; : {{klaim.tarif}}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="offset-md-6 col-md-6">
+							<button class="btn btn-danger" (click)="goBack()">Kembali</button>
+							<button class="btn btn-primary" [routerLink] = "['/pembayaran', klaim.id_pembayaran]">Lihat Pembayaran</button>
+							<button class="btn btn-primary" [routerLink] = "['/transaksi', klaim.id_transaksi]">Lihat Transaksi</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</html>
