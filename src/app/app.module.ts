@@ -9,10 +9,14 @@ import { AutocompleteModule}        from 'ng2-input-autocomplete';
 import { MatchesStatusPipe }            from './pipe/matches-status.pipe';
 import { FilterNamaPasienPipe }         from './pipe/filter-nama-pasien.pipe';
 import { FilterTanggalPipe }            from './pipe/filter-tanggal.pipe';
+import { FilterWaktuMasukPipe }            from './pipe/filter-waktu-masuk.pipe';
+import { FilterWaktuKeluarPipe }            from './pipe/filter-waktu-keluar.pipe';
 import { FilterNamaAsuransiPipe }       from './pipe/filter-nama-asuransi.pipe';
+import { FilterJenisPasienPipe }       from './pipe/filter-jenis-pasien.pipe';
 import { FilterJenisObatPipe }     from './pipe/filter-jenis-obat.pipe';
 import { FilterDaftarObatPipe }     from './pipe/filter-daftar-obat.pipe';
 import { FilterObatMasukPipe }     from './pipe/filter-obat-masuk.pipe';
+import { FilterObatResepPipe }     from './pipe/filter-obat-resep.pipe';
 import { FilterObatRusakPipe }     from './pipe/filter-obat-rusak.pipe';
 import { FilterObatPindahPipe }     from './pipe/filter-obat-pindah.pipe';
 import { FilterJenisAntrianPipe }     from './pipe/filter-jenis-antrian.pipe';
@@ -46,6 +50,10 @@ import { DaftarJenisObatComponent }     from './farmasi/jenis-obat/daftar-jenis-
 import { DetailJenisObatComponent }     from './farmasi/jenis-obat/detail-jenis-obat.component';
 import { JenisObatFormComponent }       from './farmasi/jenis-obat/jenis-obat-form.component';
 
+import { DaftarObatResepComponent }         from './farmasi/obat-resep/daftar-obat-resep.component';
+import { DetailObatResepComponent }         from './farmasi/obat-resep/detail-obat-resep.component';
+import { ObatResepFormComponent }           from './farmasi/obat-resep/obat-resep-form.component';
+
 import { DaftarObatPindahComponent }      from './farmasi/obat-pindah/daftar-obat-pindah.component';
 import { DetailObatPindahComponent }      from './farmasi/obat-pindah/detail-obat-pindah.component';
 import { ObatPindahFormComponent }      from './farmasi/obat-pindah/obat-pindah-form.component';
@@ -75,10 +83,14 @@ import { DataTableModule }    from 'angular2-datatable';
         MatchesStatusPipe,
         FilterNamaPasienPipe,
         FilterTanggalPipe,
+        FilterWaktuMasukPipe,
+        FilterWaktuKeluarPipe,
         FilterNamaAsuransiPipe,
+        FilterJenisPasienPipe,
         FilterJenisObatPipe,
         FilterDaftarObatPipe,
         FilterObatMasukPipe,
+        FilterObatResepPipe,
         FilterObatRusakPipe,
         FilterObatPindahPipe,
         FilterJenisAntrianPipe,
@@ -106,6 +118,9 @@ import { DataTableModule }    from 'angular2-datatable';
         DaftarJenisObatComponent,
         DetailJenisObatComponent,
         JenisObatFormComponent,
+        DaftarObatResepComponent,
+        DetailObatResepComponent,
+        ObatResepFormComponent,
         DaftarObatPindahComponent,
         DetailObatPindahComponent,
         ObatPindahFormComponent,

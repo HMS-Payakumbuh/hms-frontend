@@ -8,14 +8,17 @@
 			<div class="card-block">
 				<div class="card-text">
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-md-6 pull-left">
+							<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal masuk">
+						</div>
+						<div class="col-md-6 pull-right">
 							<div class="input-group">							
 							    <input type="text" class="form-control" [(ngModel)]="param" placeholder="Cari kode/merek obat"/>
 							</div>
 						</div>
 					</div>
 
-					<table class="table" [mfData]="allObatMasuk | filterObatMasuk : param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+					<table class="table" [mfData]="allObatMasuk | filterObatMasuk : param | filterWaktuMasuk : selectedDate" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<tbody>
 							<tr>
 								<th><mfDefaultSorter by="waktu_masuk">Waktu Masuk</mfDefaultSorter></th>
@@ -28,12 +31,12 @@
 								<th></th>
 							</tr>
 							<tr *ngFor="let obatMasuk of mf.data">
-								<td>{{obatMasuk.waktu_masuk}}</td>
+								<td>{{obatMasuk.waktu_masuk | date:'d MMM y H:mm:ss'}}</td>
 								<td>{{obatMasuk.kode_obat}}</td>
 								<td>{{obatMasuk.merek}}</td>
 								<td>{{obatMasuk.satuan}}</td>
 								<td>Rp. {{obatMasuk.harga_beli}}</td>	
-								<td>{{obatMasuk.kadaluarsa}}</td>	
+								<td>{{obatMasuk.kadaluarsa | date:'d MMM y'}}</td>	
 								<td>{{obatMasuk.jumlah}}</td>			
 								<td><button type="button" class="btn btn-primary" [routerLink] = "['/obat-masuk', obatMasuk.kode_obat]">Detail</button></td>
 							</tr>						

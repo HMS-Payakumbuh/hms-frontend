@@ -47,7 +47,7 @@ export class PasienFormComponent implements OnInit {
   ngOnInit() {
     this.poliklinikService.getAllPoliklinik()
       .then(allPoliklinik => this.allPoliklinik = allPoliklinik);
-    this.pasien = new Pasien(null,'','','','','','');
+    this.pasien = new Pasien(null,'','',null,'','','','');
     this.asuransi = new Asuransi(null,'',null);
 
     // this.pasienService.getAllPasien()
@@ -60,7 +60,7 @@ export class PasienFormComponent implements OnInit {
   }*/
 
   private searchPasien() {
-    this.pasienService.getPasien(this.search)
+    this.pasienService.getPasienByName(this.search)
       .then(allPasien => this.allPasien = allPasien);
   }
 

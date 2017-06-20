@@ -8,8 +8,8 @@ export class ObatMasuk {
 	satuan: string;
 	harga_jual: number;
 	nomor_batch: string;
-	waktu_masuk: string;
-	kadaluarsa: string;
+	waktu_masuk: Date;
+	kadaluarsa: Date;
 	harga_beli: number;
 	jumlah: number;
 	keterangan: string;

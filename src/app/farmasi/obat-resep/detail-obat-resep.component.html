@@ -1,0 +1,74 @@
+  <div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-newspaper-o" aria-hidden="true"></i> Detail Obat Resep
+				</h4>
+			</div>
+			<div *ngIf="obatResep" class="card-block">
+				<div class="card-text">
+
+					<div class="row">
+						<table class="table">
+							<tbody>
+								<tr>
+									<td><b>Nama Pasien</b></td>
+									<td>{{obatResep.nama_pasien}}</td>	
+								</tr>
+								<tr>
+									<td><b>ID Transaksi</b></td>
+									<td>{{obatResep.id_transaksi}}</td>	
+								</tr>
+								<tr>
+									<td><b>ID Pasien</b></td>
+									<td> {{obatResep.id_pasien}}</td>	
+								</tr>
+								<tr>
+									<td><b>Waktu Tebus Obat:</b></td>
+									<td>{{obatResep.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>	
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="row">
+						<table class="table" [mfData]="obatResep.obat" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+							<tbody>
+								<tr>
+									<th><mfDefaultSorter by="kode_obat">Kode Obat</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="merek">Merek Obat</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="kadaluarsa">Kadaluarsa</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="jumlah">Jumlah</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="satuan">Satuan</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="harga_jual_realisasi">Harga Jual Satuan</mfDefaultSorter></th>
+									<th></th>
+								</tr>
+								<tr *ngFor="let obatResepItem of mf.data">
+									<td>{{obatResepItem.kode_obat}}</td>
+									<td>{{obatResepItem.merek}}</td>
+									<td>{{obatResepItem.kadaluarsa | date:'d MMM y'}}</td>
+									<td>{{obatResepItem.jumlah}}</td>
+									<td>{{obatResepItem.satuan}}</td>
+									<td>Rp. {{obatResepItem.harga_jual_realisasi}}</td>	
+								</tr>						
+							</tbody>	
+							<tfoot>
+				                <tr>
+				                    <td colspan="7">
+				                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+				                    </td>
+				                </tr>
+				            </tfoot>			
+						</table>
+					</div>
+
+					<div class="row">
+						<div class="offset-md-8 col-md-4">
+							<button class="btn btn-danger" (click)="goBack()">Kembali</button>
+							<button class="btn btn-warning">Edit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
