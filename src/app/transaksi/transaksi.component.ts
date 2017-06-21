@@ -14,8 +14,11 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 
 export class TransaksiComponent {
 	allTransaksi: Transaksi[];
-	statuses = ['', 'open', 'closed'];
 	allJenis = ['', 'umum'];
+
+    public rowsOnPage = 10;
+    public sortBy = "tanggal";
+    public sortOrder = "desc";
 
 	constructor(
 		private transaksiService: TransaksiService,
