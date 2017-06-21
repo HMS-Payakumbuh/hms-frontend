@@ -5,7 +5,7 @@
 
 	  	<div class="card card-outline-info mb-3">
 	  		<div class="card-block">
-		  		<h3>Poliklinik {{poliklinik?.nama}} - Transaksi #{{transaksi?.id}}</h3>
+		  		<h3>{{laboratorium?.nama}} - Transaksi #{{transaksi?.id}}</h3>
 	  		</div>
 	  	</div>
 
@@ -44,18 +44,8 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" data-toggle="tab" href="#diagnosis" role="tab" style="color: black;">
-								<i class="fa fa-stethoscope" aria-hidden="true"></i> Diagnosis
-							</a>
-						</li>
-						<li class="nav-item">
 							<a class="nav-link" data-toggle="tab" href="#tindakan" role="tab" style="color: black;">
 								<i class="fa fa-medkit" aria-hidden="true"></i> Tindakan
-							</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" data-toggle="tab" href="#resep" role="tab" style="color: black;">
-								<i class="fa fa-sticky-note-o" aria-hidden="true"></i> Resep
 							</a>
 						</li>
 					</ul>
@@ -103,37 +93,6 @@
 
 						</div>
 
-						<div class="tab-pane fade" id="diagnosis" role="tabpanel">
-
-							<div class="form-group">
-								<label for="inputDiagnosis">Masukkan kode diagnosis pasien (ICD-10)</label>
-								<br/>
-								<input id="inputDiagnosis" autocomplete [items]="allDiagnosisReference" [config]="diagnosisAutocompleteConfig" (selectEvent)="addSelectedDiagnosis($event)">
-							</div>
-
-							<table class="table" *ngIf="selectedDiagnosis.length > 0">
-								<thead>
-									<th>#</th>
-									<th>Kode</th>
-									<th>Nama</th>
-									<th></th>
-								</thead>
-								<tbody>
-									<tr *ngFor="let diagnosis of selectedDiagnosis; index as i">
-										<td style="vertical-align: middle;">{{i + 1}}</td>
-										<td style="vertical-align: middle;">{{diagnosis.kode}}</td>
-										<td style="vertical-align: middle;">{{diagnosis.nama}}</td>
-										<td style="vertical-align: middle;">
-											<button type="button" class="btn btn-sm btn-outline-danger" (click)="removeSelectedDiagnosis(i)">
-												<i class="fa fa-window-close"></i>
-											</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>							
-	  							
-						</div>
-
 						<div class="tab-pane fade" id="tindakan" role="tabpanel">
 
 							<div class="form-group">
@@ -149,7 +108,6 @@
 									<th>Nama</th>
 									<th>Harga</th>
 									<th></th>
-									<th></th>
 								</thead>
 								<tbody>
 									<tr *ngFor="let tindakan of selectedTindakan; index as i">
@@ -157,11 +115,6 @@
 										<td style="vertical-align: middle;">{{tindakan.kode}}</td>
 										<td style="vertical-align: middle;">{{tindakan.nama}}</td>
 										<td style="vertical-align: middle;">{{tindakan.harga}}</td>
-										<td style="vertical-align: middle;">
-											<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#obatTindakanModal' + i">
-												Pemakaian Obat
-											</button>
-										</td>
 										<td style="vertical-align: middle;">
 											<button type="button" class="btn btn-sm btn-outline-danger" (click)="removeSelectedTindakan(i)">
 												<i class="fa fa-window-close"></i>
@@ -173,64 +126,13 @@
 
 						</div>
 
-						<div class="tab-pane fade" id="resep" role="tabpanel">
-
-							<div class="form-group" [formGroup]="addForm">
-								<div formArrayName="resepEntry">
-
-									<div *ngFor="let obat of addForm.controls.resepEntry.controls; index as i">										
-										<div [formGroupName]="i">
-											<label for="obatResep">Obat {{i + 1}}</label>
-											<input type="text" class="form-control mb-3" formControlName="obatResep">
-										</div>
-									</div>
-
-								</div>
-							</div>
-
-							<div>
-								<button type="button" class="btn btn-sm btn-outline-info" (click)="addResepEntry()">
-									<i class="fa fa-plus-square"></i>
-								</button>
-								<button *ngIf="addForm.controls.resepEntry.controls.length > 1" type="button" class="btn btn-sm btn-outline-danger" (click)="removeResepEntry(addForm.controls.resepEntry.controls.length-1)">
-									<i class="fa fa-minus-square"></i>
-								</button>
-							</div>
-
-						</div>
-
 					</div>
 				</div>
 			</div>
 
-			<div class="offset-md-9">
-				<button type="button" class="btn btn-success" (click)=save()>Simpan</button>
-			</div>
-
-		</div>
-
-		<div *ngFor="let tindakan of selectedTindakan; index as i" class="modal fade" tabindex="-1" role="dialog" id="obatTindakanModal{{i}}" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-
-					<div class="modal-header">
-						<h5 class="modal-title" id="obatTindakanModal{{i}}">Pemakaian Obat untuk Tindakan {{i + 1}}</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<i class="fa fa-times" aria-hidden="true"></i>
-						</button>
-					</div>
-
-					<div class="modal-body">
-						<label for="">Obat 1</label>
-						<input id="inputObatTindakanModal{{i}}" type="text" class="form-control">
-					</div>
-
-					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-						<button type="button" class="btn btn-success">Simpan</button>
-					</div>
-
-				</div>
+			<div class="pull-right">
+				<button type="button" class="btn btn-warning" (click)="goBack()">Kembali</button>
+				<button type="button" class="btn btn-success" (click)="save()">Simpan</button>
 			</div>
 
 		</div>
