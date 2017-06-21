@@ -23,7 +23,7 @@ import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent }	    from './layanan/rawatinap-detail.component';
 
 import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-operasi-list.component';
-// import { PemakaianKamarOperasiDetailComponent }	    from './layanan/pemakaian-kamar-operasi-detail.component';
+import { PemakaianKamarOperasiFormComponent }	    from './layanan/pemakaian-kamar-operasi-form.component';
 
 import { TindakanReferenceListComponent }		from './layanan/tindakan-reference-list.component';
 import { TindakanReferenceFormComponent }		from './layanan/tindakan-reference-form.component';
@@ -73,7 +73,8 @@ const routes: Routes = [
 	{ path: 'laboratorium/:namaLaboratorium/:idTransaksi', component: LaboratoriumPemeriksaanComponent },	
 	{ path: 'rawatinap', component: RawatinapListComponent },	
 	{ path: 'rawatinap/:noKamar/:idTransaksi', component: RawatinapDetailComponent },
-	{ path: 'kamaroperasi', component: PemakaianKamarOperasiListComponent },	
+	{ path: 'kamaroperasi', component: PemakaianKamarOperasiListComponent },
+	{ path: 'kamaroperasi-form', component: PemakaianKamarOperasiFormComponent },	
 	{ path: 'daftar-tindakan', component: TindakanReferenceListComponent },
 	{ path: 'daftar-tindakan/:kode', component: TindakanReferenceFormComponent },	
 	{ path: 'daftar-obat', component: DaftarObatComponent },

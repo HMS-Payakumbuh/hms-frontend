@@ -47,7 +47,7 @@ import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent } 	from './layanan/rawatinap-detail.component';
 
 import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-operasi-list.component';
-// import { PemakaianKamarOperasiDetailComponent }	    from './layanan/pemakaian-kamar-operasi-detail.component';
+import { PemakaianKamarOperasiFormComponent }	    from './layanan/pemakaian-kamar-operasi-form.component';
 
 import { TindakanReferenceListComponent }    from './layanan/tindakan-reference-list.component';
 import { TindakanReferenceFormComponent }        from './layanan/tindakan-reference-form.component';
@@ -128,6 +128,7 @@ import { DataTableModule }    from 'angular2-datatable';
         RawatinapListComponent,
         RawatinapDetailComponent,
         PemakaianKamarOperasiListComponent,
+         PemakaianKamarOperasiFormComponent,
         TindakanReferenceListComponent,
         TindakanReferenceFormComponent,
         MatchesStatusPipe,
