@@ -4,26 +4,24 @@
 
 			<div class="card mb-3">
 				<div class="card-header card-info">
-					<h4>Daftar Poliklinik</h4>
+					<h4>Daftar Laboratorium</h4>
 				</div>
 
 				<div class="card-block">
-					<table class="table" [mfData]="allPoliklinik" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+					<table class="table" [mfData]="allLaboratorium" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<thead>
 							<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="kategori_antrian">Kategori Antrian</mfDefaultSorter></th>
-							<th><mfDefaultSorter by="sisa_pelayanan">Sisa Pelayanan</mfDefaultSorter></th>
 							<th>Jumlah Antrian</th>
 							<th></th>
 						</thead>
-						<tbody *ngFor="let poliklinik of mf.data">
+						<tbody *ngFor="let laboratorium of mf.data">
 							<tr>
-								<td>{{poliklinik?.nama}}</td>
-								<td>{{poliklinik?.kategori_antrian}}</td>
-								<td>{{poliklinik?.sisa_pelayanan}}</td>
+								<td>{{laboratorium?.nama}}</td>
+								<td>{{laboratorium?.kategori_antrian}}</td>
 								<td>0</td>
 								<td>
-									<button class="btn btn-info" [routerLink]="['/antrian', poliklinik.nama]">Lihat Antrian</button>
+									<button class="btn btn-info" [routerLink]="['/antrian', laboratorium.nama]">Lihat Antrian</button>
 								</td>
 							</tr>
 						</tbody>

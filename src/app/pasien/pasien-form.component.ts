@@ -63,8 +63,7 @@ export class PasienFormComponent implements OnInit {
   private searchPasien() {
     if (this.search.match(/([1-9][0-9]*)/)) {
       this.allPasien = [];
-      this.search = parseInt(this.search);
-      this.pasienService.getPasien(this.search)
+      this.pasienService.getPasien(parseInt(this.search))
         .then(allPasien => {
           this.allPasien.push(allPasien);
         });

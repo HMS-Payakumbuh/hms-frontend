@@ -47,7 +47,6 @@ export class AntrianComponent implements OnInit {
       this.isfrontoffice = true;
     }
     else {
-      this.layanan = 'Poli ' + this.layanan;
       this.route.params
         .switchMap((params: Params) => this.antrianService.getAntrian(params['namaLayanan']))
         .subscribe(allAntrian => {

@@ -12,6 +12,11 @@ import { PoliklinikService }		from './poliklinik.service';
 export class PoliklinikListComponent implements OnInit {
 	allPoliklinik: Poliklinik[];
 
+	public filterQuery = "";
+  public rowsOnPage = 10;
+  public sortBy = "nama";
+  public sortOrder = "asc";
+
 	constructor(
 		private poliklinikService: PoliklinikService
 	) {}
