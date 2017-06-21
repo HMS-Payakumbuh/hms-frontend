@@ -46,6 +46,7 @@ import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent } 	from './layanan/rawatinap-detail.component';
 
 import { TenagaMedisListComponent }     from './tenaga-medis/tenaga-medis-list.component';
+import { JadwalDokterListComponent }    from './tenaga-medis/jadwal-dokter-list.component';
 
 import { TindakanReferenceListComponent }    from './layanan/tindakan-reference-list.component';
 import { TindakanReferenceFormComponent }        from './layanan/tindakan-reference-form.component';
@@ -117,16 +118,23 @@ import { DataTableModule }    from 'angular2-datatable';
         KlaimDetailComponent,
         PasienFormComponent,
         PasienListComponent,
+
         PoliklinikListComponent,
         PoliklinikFormComponent,
         PoliklinikPemeriksaanComponent,
+
         LaboratoriumListComponent,
         LaboratoriumPemeriksaanComponent,
+
         RawatinapListComponent,
         RawatinapDetailComponent,
+
         TenagaMedisListComponent,
+        JadwalDokterListComponent,
+
         TindakanReferenceListComponent,
         TindakanReferenceFormComponent,
+        
         MatchesStatusPipe,
         FilterNamaPasienPipe,
         FilterTanggalPipe,

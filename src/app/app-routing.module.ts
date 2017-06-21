@@ -24,7 +24,8 @@ import { LaboratoriumPemeriksaanComponent }	from './layanan/laboratorium-pemerik
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent }	    from './layanan/rawatinap-detail.component';
 
-import { TenagaMedisListComponent } from './tenaga-medis/tenaga-medis-list.component';
+import { TenagaMedisListComponent } 	from './tenaga-medis/tenaga-medis-list.component';
+import { JadwalDokterListComponent }	from './tenaga-medis/jadwal-dokter-list.component';
 
 import { TindakanReferenceListComponent }		from './layanan/tindakan-reference-list.component';
 import { TindakanReferenceFormComponent }		from './layanan/tindakan-reference-form.component';
@@ -80,7 +81,8 @@ const routes: Routes = [
 	{ path: 'rawatinap', component: RawatinapListComponent },	
 	{ path: 'rawatinap/:noKamar/:idTransaksi', component: RawatinapDetailComponent },
 
-	{ path: 'tenaga-medis', component: TenagaMedisListComponent },	
+	{ path: 'tenaga-medis', component: TenagaMedisListComponent },
+	{ path: 'jadwal-dokter', component: JadwalDokterListComponent },
 
 	{ path: 'daftar-tindakan', component: TindakanReferenceListComponent },
 	{ path: 'daftar-tindakan/:kode', component: TindakanReferenceFormComponent },	
