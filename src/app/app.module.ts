@@ -34,9 +34,10 @@ import { DaftarAntrianComponent }         	from './antrian/daftar-antrian.compon
 import { PasienFormComponent }      		from './pasien/pasien-form.component';
 
 import { PoliklinikListComponent }      from './layanan/poliklinik-list.component';
-import { PoliklinikDetailComponent }    from './layanan/poliklinik-detail.component';
+import { PoliklinikPemeriksaanComponent }    from './layanan/poliklinik-pemeriksaan.component';
 
 import { LaboratoriumListComponent }      from './layanan/laboratorium-list.component';
+import { LaboratoriumPemeriksaanComponent }    from './layanan/laboratorium-pemeriksaan.component';
 
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent } 	from './layanan/rawatinap-detail.component';
@@ -109,8 +110,9 @@ import { DataTableModule }    from 'angular2-datatable';
         KlaimDetailComponent,
         PasienFormComponent,
         PoliklinikListComponent,
-        PoliklinikDetailComponent,
+        PoliklinikPemeriksaanComponent,
         LaboratoriumListComponent,
+        LaboratoriumPemeriksaanComponent,
         RawatinapListComponent,
         RawatinapDetailComponent,
         TindakanReferenceListComponent,
