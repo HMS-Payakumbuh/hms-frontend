@@ -55,6 +55,7 @@ import { ObatMasukFormComponent }       from './farmasi/obat-masuk/obat-masuk-fo
 import { DaftarJenisObatComponent }     from './farmasi/jenis-obat/daftar-jenis-obat.component';
 import { DetailJenisObatComponent }     from './farmasi/jenis-obat/detail-jenis-obat.component';
 import { JenisObatFormComponent }       from './farmasi/jenis-obat/jenis-obat-form.component';
+import { EditJenisObatComponent }       from './farmasi/jenis-obat/edit-jenis-obat.component';
 
 import { DaftarObatResepComponent }         from './farmasi/obat-resep/daftar-obat-resep.component';
 import { DetailObatResepComponent }         from './farmasi/obat-resep/detail-obat-resep.component';
@@ -130,6 +131,7 @@ import { DataTableModule }    from 'angular2-datatable';
         DaftarJenisObatComponent,
         DetailJenisObatComponent,
         JenisObatFormComponent,
+        EditJenisObatComponent,
         DaftarObatResepComponent,
         DetailObatResepComponent,
         ObatResepFormComponent,
