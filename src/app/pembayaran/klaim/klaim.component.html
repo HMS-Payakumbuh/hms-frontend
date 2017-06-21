@@ -57,6 +57,13 @@
 									<td><button type="button" class="btn btn-primary" [routerLink] = "['/klaim', klaim.id]">Details</button></td>
 								</tr>
 							</tbody>
+							<tfoot>
+				                <tr>
+				                    <td colspan="7">
+				                        <mfBootstrapPaginator [rowsOnPageSet]="[10,20,30]"></mfBootstrapPaginator>
+				                    </td>
+				                </tr>
+			                </tfoot>
 						</table>
 					</div>
 				</div>

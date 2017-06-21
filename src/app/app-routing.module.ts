@@ -55,7 +55,7 @@ import { ObatRusakFormComponent }      from './farmasi/obat-rusak/obat-rusak-for
 import { SettingsComponent }        from './settings/settings.component';
 
 const routes: Routes = [
-	{ path: '', redirectTo: '/', pathMatch: 'full' },
+	{ path: '', redirectTo: '/pendaftaran', pathMatch: 'full' },
 	{ path: 'transaksi', component: TransaksiComponent },
 	{ path: 'transaksi/:id', component: TransaksiDetailComponent },
 	{ path: 'pembayaran', component: PembayaranComponent },
