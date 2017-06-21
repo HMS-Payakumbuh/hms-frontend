@@ -4,20 +4,23 @@ import { Pasien }    from './pasien';
 import { PasienService }    from './pasien.service';
 import { Asuransi }  from './asuransi';
 import { AsuransiService }  from './asuransi.service';
-import { Poliklinik }    from '../layanan/poliklinik';
 import { PoliklinikService }    from '../layanan/poliklinik.service';
+import { LaboratoriumService }    from '../layanan/laboratorium.service';
 
 @Component({
   selector: 'pasien-form',
   templateUrl: './pasien-form.component.html',
   providers: [
     PoliklinikService,
+    LaboratoriumService,
     PasienService,
     AsuransiService
   ]
 })
 export class PasienFormComponent implements OnInit {
-	poliklinik: string;
+	tipe: string;
+  layanan: string;
+  doktor: string;
 	search: string;
   no_rujukan: string;
   searchDone: boolean;
@@ -25,17 +28,20 @@ export class PasienFormComponent implements OnInit {
   asuransi: Asuransi;
   pasien: Pasien;
   allAsuransi: Asuransi[];
-  allPoliklinik: Poliklinik[];
+  allLayanan: any[];
   allPasien: Pasien[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private poliklinikService: PoliklinikService,
+    private laboratoriumService: LaboratoriumService,
     private pasienService: PasienService,
     private asuransiService: AsuransiService
   ) {}
 
   submitted = false;
+
+  allTipeLayanan = ['Poliklinik', 'Laboratorium'];
 
   genders = ['Laki-laki', 'Perempuan'];
 
@@ -46,8 +52,6 @@ export class PasienFormComponent implements OnInit {
   //pasienAutocompleteConfig: any = {'placeholder': 'Tuliskan nama pasien', 'sourceField': ['nama']};
 
   ngOnInit() {
-    this.poliklinikService.getAllPoliklinik()
-      .then(allPoliklinik => this.allPoliklinik = allPoliklinik);
     this.pasien = new Pasien(null,'','',null,'','','','');
     this.asuransi = new Asuransi(null,'',null);
 
@@ -78,6 +82,16 @@ export class PasienFormComponent implements OnInit {
     this.searchDone = true;
   }
 
+  private selectLayanan() {
+    if (this.tipe === 'Poliklinik') {
+      this.poliklinikService.getAllPoliklinik()
+        .then(allPoliklinik => this.allLayanan = allPoliklinik);
+    } else if (this.tipe === 'Laboratorium') {
+      this.laboratoriumService.getAllLaboratorium()
+        .then(allLaboratorium => this.allLayanan = allLaboratorium);  
+    }
+  }
+
   private customTrackBy(index: number, obj: any): any {
     return index;
   }
@@ -86,7 +100,8 @@ export class PasienFormComponent implements OnInit {
     this.asuransi = asuransi;
   }
 
-	private save() { 
+	private save() {
+    alert(JSON.stringify(this.pasien)+','+JSON.stringify(this.asuransi)+','+this.layanan); 
     this.submitted = true;
   }
 }

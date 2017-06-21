@@ -7,6 +7,7 @@ import { DpDatePickerModule }       from 'ng2-date-picker';
 import { AutocompleteModule}        from 'ng2-input-autocomplete';
 
 import { MatchesStatusPipe }            from './pipe/matches-status.pipe';
+import { FilterPasienPipe }         from './pipe/filter-pasien.pipe';
 import { FilterNamaPasienPipe }         from './pipe/filter-nama-pasien.pipe';
 import { FilterTanggalPipe }            from './pipe/filter-tanggal.pipe';
 import { FilterWaktuMasukPipe }            from './pipe/filter-waktu-masuk.pipe';
@@ -32,6 +33,7 @@ import { KlaimDetailComponent }        		from './pembayaran/klaim/klaim-detail.c
 import { AntrianComponent }         		from './antrian/antrian.component';
 import { DaftarAntrianComponent }         	from './antrian/daftar-antrian.component';
 import { PasienFormComponent }      		from './pasien/pasien-form.component';
+import { PasienListComponent }              from './pasien/pasien-list.component';
 
 import { PoliklinikListComponent }          from './layanan/poliklinik-list.component';
 import { PoliklinikFormComponent }          from './layanan/poliklinik-form.component';
@@ -93,6 +95,7 @@ import { DataTableModule }    from 'angular2-datatable';
     declarations: [ 
         AppComponent,
         MatchesStatusPipe,
+        FilterPasienPipe,
         FilterNamaPasienPipe,
         FilterTanggalPipe,
         FilterWaktuMasukPipe,
@@ -113,6 +116,7 @@ import { DataTableModule }    from 'angular2-datatable';
         KlaimComponent,
         KlaimDetailComponent,
         PasienFormComponent,
+        PasienListComponent,
         PoliklinikListComponent,
         PoliklinikFormComponent,
         PoliklinikPemeriksaanComponent,
