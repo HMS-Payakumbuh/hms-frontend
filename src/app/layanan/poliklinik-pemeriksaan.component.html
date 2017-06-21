@@ -148,6 +148,7 @@
 									<th>Kode</th>
 									<th>Nama</th>
 									<th>Harga</th>
+									<th>Keterangan</th>
 									<th></th>
 									<th></th>
 								</thead>
@@ -156,7 +157,12 @@
 										<td style="vertical-align: middle;">{{i + 1}}</td>
 										<td style="vertical-align: middle;">{{tindakan.kode}}</td>
 										<td style="vertical-align: middle;">{{tindakan.nama}}</td>
-										<td style="vertical-align: middle;">{{tindakan.harga}}</td>
+										<td style="vertical-align: middle;">
+											<input type="text" class="form-control" [(ngModel)]="tindakan.harga" required>
+										</td>
+										<td style="vertical-align: middle;">
+											<input type="text" class="form-control" placeholder="Keterangan Tindakan" [(ngModel)]="keteranganTindakan[i]">
+										</td>
 										<td style="vertical-align: middle;">
 											<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#obatTindakanModal' + i">
 												Pemakaian Obat
