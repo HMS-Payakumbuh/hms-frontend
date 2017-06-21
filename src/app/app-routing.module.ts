@@ -35,6 +35,7 @@ import { ObatMasukFormComponent }		from './farmasi/obat-masuk/obat-masuk-form.co
 import { DaftarJenisObatComponent }		from './farmasi/jenis-obat/daftar-jenis-obat.component';
 import { DetailJenisObatComponent }     from './farmasi/jenis-obat/detail-jenis-obat.component';
 import { JenisObatFormComponent }		from './farmasi/jenis-obat/jenis-obat-form.component';
+import { EditJenisObatComponent }		from './farmasi/jenis-obat/edit-jenis-obat.component';
 
 import { DaftarObatResepComponent }			from './farmasi/obat-resep/daftar-obat-resep.component';
 import { DetailObatResepComponent }			from './farmasi/obat-resep/detail-obat-resep.component';
@@ -77,7 +78,8 @@ const routes: Routes = [
 	{ path: 'obat-masuk/:kode-obat', component: DetailObatMasukComponent },
 	{ path: 'obat-masuk-form', component: ObatMasukFormComponent },
 	{ path: 'jenis-obat', component: DaftarJenisObatComponent },
-	{ path: 'jenis-obat/:id', component: DetailJenisObatComponent },
+	{ path: 'jenis-obat/:id', component: DetailJenisObatComponent },	
+	{ path: 'jenis-obat/edit/:id', component: EditJenisObatComponent },
 	{ path: 'jenis-obat-form', component: JenisObatFormComponent },		
 	{ path: 'obat-resep', component: DaftarObatResepComponent },
 	{ path: 'obat-resep/:id', component: DetailObatResepComponent },	
