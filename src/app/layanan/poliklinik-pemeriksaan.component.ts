@@ -17,8 +17,8 @@ import { TindakanReference }		from './tindakan-reference';
 import { TindakanService }			from './tindakan.service';
 
 @Component({
- 	selector: 'poliklinik-detail-page',
- 	templateUrl: './poliklinik-detail.component.html',
+ 	selector: 'poliklinik-pemeriksaan-page',
+ 	templateUrl: './poliklinik-pemeriksaan.component.html',
  	providers: [
  		PoliklinikService,
  		TransaksiService,
@@ -27,7 +27,7 @@ import { TindakanService }			from './tindakan.service';
 	]
 })
 
-export class PoliklinikDetailComponent implements OnInit {
+export class PoliklinikPemeriksaanComponent implements OnInit {
 
 	addForm: FormGroup;
 	transaksi: Transaksi;
