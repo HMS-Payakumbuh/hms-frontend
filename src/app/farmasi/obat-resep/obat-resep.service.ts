@@ -11,7 +11,7 @@ export class ObatResepService {
 	// private obatResepUrl = ENV.obatResepUrl;
 
 	allObatResep: ObatResep[] = [
-		{id: 1, id_transaksi: 1, id_pasien: 1, nama_pasien: 'Octavianus Markus', waktu_keluar: new Date('2016-09-11T16:16+07:00'), obat:[{id: 1, kode_obat: 213816091101 , merek: 'Cefixim syr kering 100mg/5ml' , nomor_batch: '085G610NV', satuan: 'Botol', harga_jual_referensi: 10100, harga_jual_realisasi: 10000, kadaluarsa: new Date('2017-06-18'), jumlah: 1}, {id: 2, kode_obat: 213816091102 , merek: 'Cefixim syr kering 100mg/5ml' , nomor_batch: '085G611NV', satuan: 'Botol', harga_jual_referensi: 10100, harga_jual_realisasi: 10000, kadaluarsa: new Date('2017-06-19'), jumlah: 1}]}
+		{id: 1, id_transaksi: 1, id_pasien: 1, nama_pasien: 'Octavianus Markus', waktu_keluar: new Date('2016-09-11T16:16+07:00'), obat:[{id: 1, kode_obat: 213817061901 , merek: 'Cefixim syr kering 100mg/5ml' , nomor_batch: '085G610NV', satuan: 'Botol', harga_jual_referensi: 10100, harga_jual_realisasi: 10000, kadaluarsa: new Date('2018-04-18'), jumlah: 1}, {id: 2, kode_obat: 213817061902 , merek: 'Cefixim syr kering 100mg/5ml' , nomor_batch: '085G611NV', satuan: 'Botol', harga_jual_referensi: 10100, harga_jual_realisasi: 10000, kadaluarsa: new Date('2018-04-19'), jumlah: 1}]}
 	]; // Mock-up
 
 	constructor(private http:Http) { }
