@@ -19,7 +19,7 @@ import * as _ from "lodash";
 })
 export class AntrianComponent implements OnInit {
   allKategori: Poliklinik[];
-  allAntrian: Antrian[];
+  allAntrian: any[];
   kategori: string;
 
   nomor: number;
@@ -52,28 +52,36 @@ export class AntrianComponent implements OnInit {
         .switchMap((params: Params) => this.antrianService.getAntrian(params['namaLayanan']))
         .subscribe(allAntrian => {
             this.allAntrian = allAntrian;
-            console.log(this.allAntrian);
             this.active = allAntrian[0].no_antrian;
           });
       this.isfrontoffice = false;
     }
   }
 
-  private proses(antrian: Antrian) {
+  private proses(antrian: any) {
     this.nomor = antrian.no_antrian; 
     this.allAntrian.splice(this.allAntrian.indexOf(antrian), 1);
-    if (this.umum) {
-      this.active = _.find(this.allAntrian, {jenis: 'khusus'}).no_antrian;
+    this.active = this.nextAntrian(this.umum);
+    if (!this.active) 
+      this.active = this.nextAntrian(!this.umum);
+    else 
+      this.umum = !this.umum;
+  }
+
+  private nextAntrian(umum: boolean) {
+    if (umum) {
+      return _.find(this.allAntrian, {jenis: 'khusus'}) ? _.find(this.allAntrian, {jenis: 'khusus'}).no_antrian: null;
     } else {
-      this.active = _.find(this.allAntrian, {jenis: 'umum'}).no_antrian;
+      return _.find(this.allAntrian, {jenis: 'umum'}) ? _.find(this.allAntrian, {jenis: 'umum'}).no_antrian: null;
     }
-    this.umum = !this.umum;
   }
 
   changeKategori() {
-    this.antrianService.getAllAntrian()
-      .then(allAntrian => this.allAntrian = allAntrian)
-      .then(allAntrian => this.active = allAntrian[0].no_antrian);
+    this.antrianService.getAntrianFrontOffice(this.kategori)
+      .then(allAntrian => {
+        this.allAntrian = allAntrian;
+        this.active = allAntrian[0].no_antrian; 
+      });
   }
   
   submitted = false;

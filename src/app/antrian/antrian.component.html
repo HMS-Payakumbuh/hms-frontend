@@ -47,13 +47,15 @@
 									<tr>
 										<th>No Antrian</th>
 										<th>Nama Pasien</th>
+										<th *ngIf="isfrontoffice">Layanan Tujuan</th>
 										<th>Waktu Masuk</th>
 										<th></th>
 										<th></th>
 									</tr>
 									<tr *ngFor="let antrian of allAntrian | filterJenisAntrian : &quot;umum&quot;">
 										<td>{{kategori}}{{antrian.no_antrian}}</td>
-										<td>{{antrian.nama_pasien}}</td>	
+										<td>{{antrian.nama_pasien}}</td>
+										<td *ngIf="isfrontoffice">{{antrian.nama_layanan}}</td>	
 										<td>{{antrian.waktu_masuk_antrian}}</td>
 										<td>
 											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-danger': (active == antrian.no_antrian), 'btn-warning disabled': (active != antrian.no_antrian) }" (click)="proses(antrian)">Undur</button>
@@ -77,13 +79,15 @@
 									<tr>
 										<th>No Antrian</th>
 										<th>Nama Pasien</th>
+										<th *ngIf="isfrontoffice">Layanan Tujuan</th>
 										<th>Waktu Masuk</th>
 										<th></th>
 										<th></th>
 									</tr>
 									<tr *ngFor="let antrian of allAntrian | filterJenisAntrian : &quot;khusus&quot;">
 										<td>{{kategori}}{{antrian.no_antrian}}</td>
-										<td>{{antrian.nama_pasien}}</td>	
+										<td>{{antrian.nama_pasien}}</td>
+										<td *ngIf="isfrontoffice">{{antrian.nama_layanan}}</td>		
 										<td>{{antrian.waktu_masuk_antrian}}</td>
 										<td>
 											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-danger': (active == antrian.no_antrian), 'btn-warning disabled': (active != antrian.no_antrian) }" (click)="proses(antrian)">Undur</button>

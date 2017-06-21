@@ -127,8 +127,6 @@
                     <label for="pasien">Pilih Pasien</label>
                     <select class="form-control" id="pasien" name="pasien" [(ngModel)]="pasien" (ngModelChange)= "selectPasien()">
                       <option *ngFor="let pasien of allPasien" [ngValue]="pasien">{{pasien.id}} - {{pasien.nama}}</option>
-                    }
-                    }
                     </select>
                   </div>
 
