@@ -7,8 +7,8 @@ export class Transaksi {
 	jenis_rawat: number;
 	kelas_rawat: number;
 	harga: number;
-	tanggal: string;
-	pelunasan: string;
+	tanggal: Date;
+	pelunasan: Date;
 	status: string;
 	tindakan: any[];
 	obat: any[];

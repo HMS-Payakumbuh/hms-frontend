@@ -17,6 +17,7 @@ import { Transaksi }				from '../../transaksi/transaksi';
 export class KlaimDetailComponent implements OnInit {
 	klaim: Klaim;
 	transaksi: Transaksi;
+	displayJenisTarif: string;
 
 	constructor(
 		private klaimService: KlaimService,
@@ -25,6 +26,19 @@ export class KlaimDetailComponent implements OnInit {
 		private location: Location
 	) {}
 
+	private determineJenisTarif(input: string): string {
+		var res = input.split("");
+		if (res.length !== 2) {
+			return "Invalid Code";
+		}
+		if (res[1] === "P") {
+			return "Rumah Sakit Pemerintah Kelas " + res[0];
+		}
+		if (res[1] === "S") {
+			return "Rumah Sakit Swasta Kelas " + res[0];
+		}
+	}
+
 	ngOnInit(): void {
 		this.route.params
 			.switchMap((params: Params) => this.klaimService.getKlaim(+params['id']))
@@ -32,6 +46,7 @@ export class KlaimDetailComponent implements OnInit {
 				this.klaim = klaim;
 				this.transaksiService.getTransaksi(this.klaim.id_transaksi)
 				.then(transaksi => this.transaksi = transaksi);
+				this.displayJenisTarif = this.determineJenisTarif(klaim.kode_tarif);
 			});
 	}
 

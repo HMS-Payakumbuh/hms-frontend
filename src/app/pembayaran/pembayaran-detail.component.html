@@ -15,6 +15,7 @@
 									<b>{{pembayaran.nama_pasien}}</b>
 									<p>No. Sep: {{pembayaran.no_sep}}</p>
 									<p>Tipe Pembayaran: {{pembayaran.nama_asuransi.toUpperCase()}}</p>
+									<p>Tanggal Pembayaran: {{pembayaran.tanggal | date: 'dd/MM/y HH:mm'}}</p>
 								</div>
 							</div>
 						</div>
@@ -30,7 +31,7 @@
 								<tr *ngFor="let tindakan of pembayaran.tindakan">
 									<td>{{tindakan.nama}}</td>
 									<td></td>
-									<td>Rp {{tindakan.harga}}</td>
+									<td>Rp {{tindakan.harga | number: '.2-2'}}</td>
 								</tr>
 								<tr>
 									<th>Obat</th>
@@ -40,12 +41,12 @@
 								<tr *ngFor="let obat of pembayaran.obat">
 									<td>{{obat.nama}}</td>
 									<td>{{obat.jumlah}} {{obat.satuan}}</td>
-									<td>Rp {{obat.jumlah * obat.harga_satuan}}</td>
+									<td>Rp {{obat.jumlah * obat.harga_satuan | number: '.2-2'}}</td>
 								</tr>
 								<tr>
 									<td></td>
 									<td><b>Total Pembayaran</b></td>
-									<td>Rp {{pembayaran.harga}}</td>
+									<td>Rp {{pembayaran.harga | number: '.2-2'}}</td>
 								</tr>
 							</tbody>
 						</table>

@@ -8,6 +8,9 @@ export class FilterTanggalPipe implements PipeTransform {
   	if (!items || !param) {
   		return items;
   	}
-    return items.filter(item => item.tanggal.toLowerCase().indexOf(param.toLowerCase()) > -1);
+    return items.filter(function(item) {
+    	var dateString = item.tanggal.getDate() + "-" + ("0" + (item.tanggal.getMonth() + 1)).slice(-2) + "-" + item.tanggal.getFullYear();
+    	return dateString.toLowerCase().indexOf(param.toLowerCase()) > -1;
+    });
   }
 }
