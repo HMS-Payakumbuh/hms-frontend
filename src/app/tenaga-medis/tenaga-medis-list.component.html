@@ -1,0 +1,41 @@
+<html>
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>Daftar Tenaga Medis</h4>
+				</div>
+
+				<div class="card-block">
+					<table class="table" [mfData]="allTenagaMedis" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+						<thead>
+							<th><mfDefaultSorter by="id">ID</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="jabatan">Jabatan</mfDefaultSorter></th>
+							<th></th>
+						</thead>
+						<tbody *ngFor="let tenagaMedis of mf.data">
+							<tr>
+								<td>{{tenagaMedis?.id}}</td>
+								<td>{{tenagaMedis?.nama}}</td>
+								<td>{{tenagaMedis?.jabatan}}</td>
+								<td>
+									<button class="btn btn-info" [routerLink]="['/tenaga-medis', tenagaMedis.id]">Edit</button>
+								</td>
+							</tr>
+						</tbody>
+						<tfoot>
+	            <tr>
+	              <td colspan="7">
+	                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+	              </td>
+	            </tr>
+	          </tfoot>						
+					</table>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</html>
