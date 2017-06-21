@@ -5,8 +5,10 @@ export class Klaim {
 	id_transaksi: number;
 	nomor_kartu: string;
 	status: string;
-	tanggal: string;
-	tarif: string;
+	tanggal: Date;
+	tarif: number;
 	nama_asuransi: string;
 	nama_pasien: string;
+	tarif_rs: number;
+	kode_tarif: string;
 }

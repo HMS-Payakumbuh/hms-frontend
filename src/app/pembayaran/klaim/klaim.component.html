@@ -51,7 +51,7 @@
 								</tr>
 								<tr *ngFor="let klaim of mf.data | filterNamaPasien: searchParam | filterTanggal: selectedDate | filterNamaAsuransi: nama_asuransi | matchesStatus: status">
 									<td>{{klaim.nama_pasien}}</td>
-									<td>{{klaim.tanggal}}</td>
+									<td>{{klaim.tanggal | date: 'dd/MM/y HH:mm'}}</td>
 									<td>{{klaim.nama_asuransi.toUpperCase()}}</td>
 									<td>{{klaim.status.toUpperCase()}}</td>								
 									<td><button type="button" class="btn btn-primary" [routerLink] = "['/klaim', klaim.id]">Details</button></td>
@@ -60,7 +60,7 @@
 							<tfoot>
 				                <tr>
 				                    <td colspan="7">
-				                        <mfBootstrapPaginator [rowsOnPageSet]="[10,20,30]"></mfBootstrapPaginator>
+				                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
 				                    </td>
 				                </tr>
 			                </tfoot>

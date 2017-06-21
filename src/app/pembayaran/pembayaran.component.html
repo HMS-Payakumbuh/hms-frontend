@@ -41,7 +41,7 @@
 								</tr>
 								<tr *ngFor="let pembayaran of mf.data | filterNamaPasien: searchParam | filterNamaAsuransi: asuransi | filterTanggal: selectedDate">
 									<td>{{pembayaran.nama_pasien}}</td>								
-									<td>{{pembayaran.tanggal}}</td>
+									<td>{{pembayaran.tanggal | date: 'dd/MM/y HH:mm'}}</td>
 									<td>{{pembayaran.nama_asuransi.toUpperCase()}}</td>
 									<td><button type="button" class="btn btn-primary" [routerLink] = "['/pembayaran', pembayaran.id]">Details</button></td>
 								</tr>
@@ -49,7 +49,7 @@
 							<tfoot>
 				                <tr>
 				                    <td colspan="7">
-				                        <mfBootstrapPaginator [rowsOnPageSet]="[10,20,30]"></mfBootstrapPaginator>
+				                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
 				                    </td>
 				                </tr>
 			                </tfoot>
