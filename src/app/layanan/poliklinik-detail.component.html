@@ -5,7 +5,7 @@
 
 	  	<div class="card card-outline-info mb-3">
 	  		<div class="card-block">
-		  		<h3>Poliklinik {{poliklinik?.nama}} - Transaksi #{{transaksi?.id}}</h3>
+		  		<h3>{{poliklinik?.nama}} - Transaksi #{{transaksi?.id}}</h3>
 	  		</div>
 	  	</div>
 
@@ -203,8 +203,9 @@
 				</div>
 			</div>
 
-			<div class="offset-md-9">
-				<button type="button" class="btn btn-success" (click)=save()>Simpan</button>
+			<div class="pull-right">
+				<button type="button" class="btn btn-warning" (click)="goBack()">Kembali</button>
+				<button type="button" class="btn btn-success" (click)="save()">Simpan</button>
 			</div>
 
 		</div>
@@ -223,6 +224,16 @@
 					<div class="modal-body">
 						<label for="">Obat 1</label>
 						<input id="inputObatTindakanModal{{i}}" type="text" class="form-control">
+
+						<div>
+							<button type="button" class="btn btn-sm btn-outline-info">
+								<i class="fa fa-plus-square"></i>
+							</button>
+
+							<button type="button" class="btn btn-sm btn-outline-danger">
+								<i class="fa fa-minus-square"></i>
+							</button>
+						</div>
 					</div>
 
 					<div class="modal-footer">
