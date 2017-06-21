@@ -20,6 +20,9 @@ import { FilterObatResepPipe }     from './pipe/filter-obat-resep.pipe';
 import { FilterObatRusakPipe }     from './pipe/filter-obat-rusak.pipe';
 import { FilterObatPindahPipe }     from './pipe/filter-obat-pindah.pipe';
 import { FilterJenisAntrianPipe }     from './pipe/filter-jenis-antrian.pipe';
+import { FilterNomorKamarPipe }     from './pipe/filter-nomor-kamar.pipe';
+import { FilterJenisKamarPipe }     from './pipe/filter-jenis-kamar.pipe';
+import { FilterKelasKamarPipe }     from './pipe/filter-kelas-kamar.pipe';
 
 import { TransaksiComponent }       from './transaksi/transaksi.component';
 import { TransaksiDetailComponent } from './transaksi/transaksi-detail.component';
@@ -99,6 +102,9 @@ import { DataTableModule }    from 'angular2-datatable';
         FilterObatRusakPipe,
         FilterObatPindahPipe,
         FilterJenisAntrianPipe,
+        FilterJenisKamarPipe,
+        FilterNomorKamarPipe,
+        FilterKelasKamarPipe,
         TransaksiComponent,
         TransaksiDetailComponent,
         PembayaranComponent,

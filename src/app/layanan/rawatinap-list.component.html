@@ -15,8 +15,36 @@
 							<th>Kelas</th>
 							<th>Tempat Tidur Tersedia</th>
 							<th></th>
+							<tr>
+									<td>
+										<div class="col-md-12 input-group">
+											<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="No. Kamar">
+										</div>
+									</td>
+									<td>
+										<div class="col-md-12 input-group">
+											<select class="form-control" [(ngModel)]="jenis" id="statusDropdown">
+												<option *ngFor="let jenis of allJenis">
+													{{jenis}}
+												</option>
+											</select>
+										</div>
+									</td>
+									<td>
+										<div class="col-md-12 input-group">
+											<select class="form-control" [(ngModel)]="kelas" id="statusDropdown">
+												
+												<option *ngFor="let kelas of allKelas">
+													{{kelas}}
+												</option>
+											</select>
+										</div>
+									</td>
+									<td></td>
+								</tr>
 						</thead>
-						<tbody *ngFor="let rawatinap of allRawatinap">
+						
+						<tbody *ngFor="let rawatinap of allRawatinap | filterKelasKamar: kelas | filterNoKamar: searchParam | filterJenisKamar: jenis">
 							<tr>
 								<td>{{rawatinap?.no_kamar}}</td>
 								<td>{{rawatinap?.jenis_kamar}}</td>
