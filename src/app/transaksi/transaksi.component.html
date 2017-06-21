@@ -3,22 +3,22 @@
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-header card-info mb-3">
-					Daftar Transaksi
+					<h4>
+						<i class="fa fa-money" aria-hidden="true"></i> Daftar Transaksi
+					</h4>
 				</div>
 				<div class="card-block">
 					<div>
-						<table class="table">
+						<table class="table" [mfData]="allTransaksi" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 							<tbody>
 								<tr>
-									<th>#</th>
-									<th>Nama Pasien</th>
-									<th>Tanggal Transaksi</th>
+									<th><mfDefaultSorter by="nama_pasien">Nama Pasien</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="tanggal">Tanggal Transaksi</mfDefaultSorter></th>
 									<th>Status Transaksi</th>
 									<th>Jenis Pasien</th>
 									<th></th>
 								</tr>
 								<tr>
-									<td></td>
 									<td>
 										<div class="col-md-12 input-group">
 											<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="Nama Pasien">
@@ -31,16 +31,16 @@
 									</td>
 									<td>
 										<div class="col-md-12 input-group">
-											<select class="form-control" [(ngModel)]="status" id="statusDropdown">
-												<option *ngFor="let status of statuses">
-													{{status.toUpperCase()}}
-												</option>
+											<select class="form-control custom-select" [(ngModel)]="status" id="statusDropdown">
+												<option></option>
+												<option selected>OPEN</option>
+												<option>CLOSED</option>
 											</select>
 										</div>
 									</td>
 									<td>
 										<div class="col-md-12 input-group">
-											<select class="form-control" [(ngModel)]="jenis" id="statusDropdown">
+											<select class="form-control" [(ngModel)]="jenis" id="jenisDropdown">
 												<option *ngFor="let jenis of allJenis">
 													{{jenis.toUpperCase()}}
 												</option>
@@ -49,8 +49,7 @@
 									</td>
 									<td></td>
 								</tr>
-								<tr *ngFor="let transaksi of allTransaksi | matchesStatus: status | filterNamaPasien: searchParam | filterTanggal: selectedDate | filterJenisPasien: jenis">
-									<td>{{transaksi.id}}</td>
+								<tr *ngFor="let transaksi of mf.data | matchesStatus: status | filterNamaPasien: searchParam | filterTanggal: selectedDate | filterJenisPasien: jenis">
 									<td>{{transaksi.nama_pasien}}</td>
 									<td>{{transaksi.tanggal}}</td>
 									<td>{{transaksi.status.toUpperCase()}}</td>	
