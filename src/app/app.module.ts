@@ -33,14 +33,17 @@ import { AntrianComponent }         		from './antrian/antrian.component';
 import { DaftarAntrianComponent }         	from './antrian/daftar-antrian.component';
 import { PasienFormComponent }      		from './pasien/pasien-form.component';
 
-import { PoliklinikListComponent }      from './layanan/poliklinik-list.component';
-import { PoliklinikPemeriksaanComponent }    from './layanan/poliklinik-pemeriksaan.component';
+import { PoliklinikListComponent }          from './layanan/poliklinik-list.component';
+import { PoliklinikFormComponent }          from './layanan/poliklinik-form.component';
+import { PoliklinikPemeriksaanComponent }   from './layanan/poliklinik-pemeriksaan.component';
 
 import { LaboratoriumListComponent }      from './layanan/laboratorium-list.component';
 import { LaboratoriumPemeriksaanComponent }    from './layanan/laboratorium-pemeriksaan.component';
 
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent } 	from './layanan/rawatinap-detail.component';
+
+import { TenagaMedisListComponent }     from './tenaga-medis/tenaga-medis-list.component';
 
 import { TindakanReferenceListComponent }    from './layanan/tindakan-reference-list.component';
 import { TindakanReferenceFormComponent }        from './layanan/tindakan-reference-form.component';
@@ -111,11 +114,13 @@ import { DataTableModule }    from 'angular2-datatable';
         KlaimDetailComponent,
         PasienFormComponent,
         PoliklinikListComponent,
+        PoliklinikFormComponent,
         PoliklinikPemeriksaanComponent,
         LaboratoriumListComponent,
         LaboratoriumPemeriksaanComponent,
         RawatinapListComponent,
         RawatinapDetailComponent,
+        TenagaMedisListComponent,
         TindakanReferenceListComponent,
         TindakanReferenceFormComponent,
         MatchesStatusPipe,

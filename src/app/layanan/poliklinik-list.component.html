@@ -13,7 +13,7 @@
 							<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="kategori_antrian">Kategori Antrian</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="sisa_pelayanan">Sisa Pelayanan</mfDefaultSorter></th>
-							<th>Jumlah Antrian</th>
+							<th></th>
 							<th></th>
 						</thead>
 						<tbody *ngFor="let poliklinik of mf.data">
@@ -21,7 +21,9 @@
 								<td>{{poliklinik?.nama}}</td>
 								<td>{{poliklinik?.kategori_antrian}}</td>
 								<td>{{poliklinik?.sisa_pelayanan}}</td>
-								<td>0</td>
+								<td>
+									<button class="btn btn-info" [routerLink]="['/poliklinik', poliklinik.nama]">Edit</button>									
+								</td>
 								<td>
 									<button class="btn btn-info" [routerLink]="['/antrian', poliklinik.nama]">Lihat Antrian</button>
 								</td>
