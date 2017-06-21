@@ -22,7 +22,7 @@ export class PoliklinikFormComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.route.params
-			.switchMap((params: Params) => this.poliklinikService.getPoliklinik(decodeURIComponent(this.route.params['namaPoliklinik'])))
+			.switchMap((params: Params) => this.poliklinikService.getPoliklinik(params['namaPoliklinik']))
 			.subscribe(poliklinik => this.poliklinik = poliklinik);
 	}
 
