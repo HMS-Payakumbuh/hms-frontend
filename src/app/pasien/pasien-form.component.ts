@@ -26,7 +26,7 @@ export class PasienFormComponent implements OnInit {
   pasien: Pasien;
   allAsuransi: Asuransi[];
   allPoliklinik: Poliklinik[];
-  allPasien: Pasien[];
+  allPasien: Pasien[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -61,8 +61,16 @@ export class PasienFormComponent implements OnInit {
   }*/
 
   private searchPasien() {
-    this.pasienService.getPasienByName(this.search)
-      .then(allPasien => this.allPasien = allPasien);
+    if (this.search.match(/([1-9][0-9]*)/)) {
+      this.allPasien = [];
+      this.pasienService.getPasien(parseInt(this.search))
+        .then(allPasien => {
+          this.allPasien.push(allPasien);
+        });
+    } else {
+       this.pasienService.getPasienByName(this.search)
+        .then(allPasien => this.allPasien = allPasien);
+    }
   }
 
   private selectPasien() {
