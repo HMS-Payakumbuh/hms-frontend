@@ -33,7 +33,7 @@
 								<td>{{pasien.alamat}}</td>
 								<td>{{pasien.kontak}}</td>
 								<td>
-									<button type="button" class="btn btn-sm btn-info">Edit</button>
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#editPasienModal" (click)="editPasien(pasien)">Edit</button>
 								</td>
 							</tr>
 						</tbody>
@@ -45,6 +45,59 @@
 	            </tr>
 	          </tfoot>
 					</table>
+				</div>
+				<div class="modal fade" id="editPasienModal" tabindex="-1" role="dialog" aria-labelledby="editPasienModal" aria-hidden="true" *ngIf="pasien">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="editPasienModal">Data Pasien</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        <form #pasienForm="ngForm">
+		                  <div class="form-group">
+		                    <label for="name">Nama</label>
+		                    <input type="text" class="form-control" id="name" [value]="pasien.nama" name="name" required>
+		                  </div>
+
+		                  <div class="form-group">
+		                    <label for="gender">Jenis Kelamin</label>
+		                    <select class="form-control" id="gender" [value]="pasien.jender" name="gender" required>
+		                      <option *ngFor="let gender of allJender" [value]="gender">{{gender}}</option>
+		                    </select>
+		                  </div>
+
+		                  <div>
+		                    <label for="dob">Tanggal Lahir</label>
+		                    <input [dpDayPicker]="config" [value]="pasien.tanggal_lahir" id="dob" class="form-control" theme="dp-material" name="dob" required>
+		                  </div>
+
+		                  <div class="form-group">
+		                    <label for="religion">Agama</label>
+		                    <select class="form-control" id="religion" [value]="pasien.agama" name="religion" required>
+		                      <option *ngFor="let religion of allAgama" [value]="religion">{{religion}}</option>
+		                    </select>
+		                  </div>
+
+		                  <div class="form-group">
+		                    <label for="address">Alamat</label>
+		                    <textarea class="form-control" id="address" [value]="pasien.alamat" name="address" required></textarea>
+		                  </div>
+
+		                  <div class="form-group">
+		                    <label for="phone">Kontak</label>
+		                    <input type="tel" class="form-control" id="phone" [value]="pasien.kontak" name="phone" required>
+		                  </div>
+	                    </form>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-danger" data-dismiss="modal">Catat Kematian</button>
+				        <button type="button" class="btn btn-primary" [disabled]="!pasienForm.form.valid">Simpan</button>
+				      </div>
+				    </div>
+				  </div>
 				</div>
 			</div>
 		</div>
