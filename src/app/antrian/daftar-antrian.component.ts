@@ -3,24 +3,30 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Antrian }    from './antrian';
 import { Poliklinik }    from '../layanan/poliklinik';
 import { PoliklinikService }    from '../layanan/poliklinik.service';
+import { LaboratoriumService }    from '../layanan/laboratorium.service';
 
 @Component({
   selector: 'daftar-antrian',
   templateUrl: './daftar-antrian.component.html',
   providers: [
-    PoliklinikService
+    PoliklinikService,
+    LaboratoriumService
   ]
 })
 export class DaftarAntrianComponent implements OnInit {
-  poliklinik: string;
+  tipe: string;
+  layanan: string;
   nama: string;
   disabilitas: boolean = false;
   usia: number = 0;
-  allPoliklinik: Poliklinik[];
+  allLayanan: any[];
+
+  allTipeLayanan = ['Poliklinik', 'Laboratorium'];
 
   constructor(
     private route: ActivatedRoute,
-    private poliklinikService: PoliklinikService
+    private poliklinikService: PoliklinikService,
+    private laboratoriumService: LaboratoriumService,
   ) {}
 
   ngOnInit() {
@@ -28,11 +34,21 @@ export class DaftarAntrianComponent implements OnInit {
       .then(allPoliklinik => this.allPoliklinik = allPoliklinik);
   }
 
+  private selectLayanan() {
+    if (this.tipe === 'Poliklinik') {
+      this.poliklinikService.getAllPoliklinik()
+        .then(allPoliklinik => this.allLayanan = allPoliklinik);
+    } else if (this.tipe === 'Laboratorium') {
+      this.laboratoriumService.getAllLaboratorium()
+        .then(allLaboratorium => this.allLayanan = allLaboratorium);  
+    }
+  }
+
   public daftar() {
     if (this.usia >= 65 || this.disabilitas) {
-      console.log(this.poliklinik +','+ this.nama +', khusus');
+      alert('Anda akan mendaftar ke layanan '+this.layanan +' dengan nama '+ this.nama +' dan masuk ke antrian khusus dengan nomor antrian A1');
     } else {
-      console.log(this.poliklinik +','+ this.nama +', umum');
+      alert('Anda akan mendaftar ke layanan '+this.layanan +' dengan nama '+ this.nama +' dan masuk ke antrian umum dengan nomor antrian A1');
     }
   }
     
