@@ -29,9 +29,9 @@ export class PasienService {
 			.catch(this.handleError);
 	}
 
-	getPasien(key: number): Promise<Pasien> {
+	getPasien(id: number): Promise<Pasien> {
 		return this.getAllPasien()
-			.then(allPasien => allPasien.find(Pasien => Pasien.id === key))
+			.then(allPasien => allPasien.find(pasien => pasien.id === id))
 			.catch(this.handleError);
 	}
 

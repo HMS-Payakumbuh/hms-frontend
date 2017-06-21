@@ -1,6 +1,7 @@
 import { Component, OnInit }															from '@angular/core';
 import { ActivatedRoute, Params }													from '@angular/router';
 import { FormGroup, FormArray, FormBuilder, Validators }	from '@angular/forms';
+import { Location }																				from '@angular/common';
 
 import { Transaksi }						from '../transaksi/transaksi';
 import { TransaksiService }			from '../transaksi/transaksi.service';
@@ -16,8 +17,8 @@ import { TindakanReference }		from './tindakan-reference';
 import { TindakanService }			from './tindakan.service';
 
 @Component({
- 	selector: 'poliklinik-detail-page',
- 	templateUrl: './poliklinik-detail.component.html',
+ 	selector: 'poliklinik-pemeriksaan-page',
+ 	templateUrl: './poliklinik-pemeriksaan.component.html',
  	providers: [
  		PoliklinikService,
  		TransaksiService,
@@ -26,7 +27,7 @@ import { TindakanService }			from './tindakan.service';
 	]
 })
 
-export class PoliklinikDetailComponent implements OnInit {
+export class PoliklinikPemeriksaanComponent implements OnInit {
 
 	addForm: FormGroup;
 	transaksi: Transaksi;
@@ -37,12 +38,14 @@ export class PoliklinikDetailComponent implements OnInit {
 
 	selectedDiagnosis: DiagnosisReference[] = [];
 	selectedTindakan: TindakanReference[] = [];
+	keteranganTindakan: string[] = [];
 
 	diagnosisAutocompleteConfig: any = {'placeholder': 'Tuliskan kode diagnosis', 'sourceField': ['nama']};
 	tindakanAutocompleteConfig: any = {'placeholder': 'Tuliskan kode tindakan', 'sourceField': ['nama']};
 
 	constructor(
 		private route: ActivatedRoute,
+		private location: Location,		
 		private formBuilder: FormBuilder,
 		private transaksiService: TransaksiService,
 		private poliklinikService: PoliklinikService,
@@ -83,6 +86,7 @@ export class PoliklinikDetailComponent implements OnInit {
 	}
 
 	removeSelectedTindakan(i: number) {
+		this.keteranganTindakan.splice(i, 1);
 		this.selectedTindakan.splice(i, 1);
 	}
 
@@ -102,7 +106,11 @@ export class PoliklinikDetailComponent implements OnInit {
     control.removeAt(i);
 	}
 
+	goBack(): void {
+		this.location.back();
+	}	
+
 	save() {
-		this.tindakanService.saveTindakan(this.transaksi.id, this.poliklinik.nama, true, null, this.selectedTindakan);
+		this.tindakanService.saveTindakan(this.transaksi.id, this.poliklinik.nama, true, null, this.selectedTindakan, this.keteranganTindakan);
 	}
 }

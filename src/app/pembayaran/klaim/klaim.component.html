@@ -3,22 +3,22 @@
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-header card-info mb-3">
-					Daftar Klaim
+					<h4>
+						<i class="fa fa-money" aria-hidden="true"></i> Daftar Klaim
+					</h4>
 				</div>
 				<div class="card-block">
 					<div>
-						<table class="table">
+						<table class="table" [mfData]="allKlaim" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 							<tbody>
 								<tr>
-									<th>#</th>
-									<th>Nama Pasien</th>
-									<th>Tanggal Klaim</th>
+									<th><mfDefaultSorter by="nama_pasien">Nama Pasien</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="tanggal">Tanggal Klaim</mfDefaultSorter></th>
 									<th>Nama Asuransi</th>
 									<th>Status Klaim</th>
 									<th></th>
 								</tr>
 								<tr>
-									<td></td>
 									<td>
 										<div class="col-md-12 input-group">
 											<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="Nama Pasien">
@@ -41,23 +41,29 @@
 									<td>
 										<div class="col-md-12 input-group">
 											<select class="form-control" [(ngModel)]="status" id="statusDropdown">
-												<option *ngFor="let status of statuses">
-													{{status.toUpperCase()}}
-												</option>
+												<option></option>
+												<option>PROCESSED</option>
+												<option>ERROR</option>
 											</select>
 										</div>
 									</td>
 									<td></td>
 								</tr>
-								<tr *ngFor="let klaim of allKlaim | filterNamaPasien: searchParam | filterTanggal: selectedDate | filterNamaAsuransi: nama_asuransi | matchesStatus: status">
-									<td>{{klaim.id}}</td>
+								<tr *ngFor="let klaim of mf.data | filterNamaPasien: searchParam | filterTanggal: selectedDate | filterNamaAsuransi: nama_asuransi | matchesStatus: status">
 									<td>{{klaim.nama_pasien}}</td>
 									<td>{{klaim.tanggal}}</td>
 									<td>{{klaim.nama_asuransi.toUpperCase()}}</td>
-									<td>{{klaim.status}}</td>								
+									<td>{{klaim.status.toUpperCase()}}</td>								
 									<td><button type="button" class="btn btn-primary" [routerLink] = "['/klaim', klaim.id]">Details</button></td>
 								</tr>
 							</tbody>
+							<tfoot>
+				                <tr>
+				                    <td colspan="7">
+				                        <mfBootstrapPaginator [rowsOnPageSet]="[10,20,30]"></mfBootstrapPaginator>
+				                    </td>
+				                </tr>
+			                </tfoot>
 						</table>
 					</div>
 				</div>

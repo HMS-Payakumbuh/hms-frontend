@@ -16,6 +16,10 @@ export class PembayaranComponent {
 	allPembayaran: Pembayaran[];
 	allAsuransi = ['', 'tunai'];
 
+	public rowsOnPage = 10;
+    public sortBy = "tanggal";
+    public sortOrder = "desc";
+
 	constructor(
 		private pembayaranService: PembayaranService,
 		private asuransiService: AsuransiService

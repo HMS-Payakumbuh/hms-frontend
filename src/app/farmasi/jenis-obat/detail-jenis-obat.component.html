@@ -34,7 +34,7 @@
 								<td>{{jenisObat.satuan}}</td>
 							</tr>
 							<tr>
-								<td><b>Harga</b></td>								
+								<td><b>Harga Satuan</b></td>								
 								<td>Rp. {{jenisObat.harga}}</td>
 							</tr>
 							<tr>
@@ -45,9 +45,9 @@
 					</table>
 
 					<div class="row">
-						<div class="offset-md-8 col-md-4">
+						<div class="offset-md-9 col-md-3">
 							<button class="btn btn-danger" (click)="goBack()">Kembali</button>
-							<button class="btn btn-warning">Edit</button>
+							<button class="btn btn-warning" [routerLink] = "['/jenis-obat/edit/', jenisObat.id]">Edit Harga</button>
 						</div>
 					</div>
 				</div>

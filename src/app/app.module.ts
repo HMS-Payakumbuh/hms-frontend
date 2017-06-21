@@ -37,7 +37,10 @@ import { DaftarAntrianComponent }         	from './antrian/daftar-antrian.compon
 import { PasienFormComponent }      		from './pasien/pasien-form.component';
 
 import { PoliklinikListComponent }      from './layanan/poliklinik-list.component';
-import { PoliklinikDetailComponent }    from './layanan/poliklinik-detail.component';
+import { PoliklinikPemeriksaanComponent }    from './layanan/poliklinik-pemeriksaan.component';
+
+import { LaboratoriumListComponent }      from './layanan/laboratorium-list.component';
+import { LaboratoriumPemeriksaanComponent }    from './layanan/laboratorium-pemeriksaan.component';
 
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent } 	from './layanan/rawatinap-detail.component';
@@ -55,6 +58,7 @@ import { ObatMasukFormComponent }       from './farmasi/obat-masuk/obat-masuk-fo
 import { DaftarJenisObatComponent }     from './farmasi/jenis-obat/daftar-jenis-obat.component';
 import { DetailJenisObatComponent }     from './farmasi/jenis-obat/detail-jenis-obat.component';
 import { JenisObatFormComponent }       from './farmasi/jenis-obat/jenis-obat-form.component';
+import { EditJenisObatComponent }       from './farmasi/jenis-obat/edit-jenis-obat.component';
 
 import { DaftarObatResepComponent }         from './farmasi/obat-resep/daftar-obat-resep.component';
 import { DetailObatResepComponent }         from './farmasi/obat-resep/detail-obat-resep.component';
@@ -113,7 +117,9 @@ import { DataTableModule }    from 'angular2-datatable';
         KlaimDetailComponent,
         PasienFormComponent,
         PoliklinikListComponent,
-        PoliklinikDetailComponent,
+        PoliklinikPemeriksaanComponent,
+        LaboratoriumListComponent,
+        LaboratoriumPemeriksaanComponent,
         RawatinapListComponent,
         RawatinapDetailComponent,
         TindakanReferenceListComponent,
@@ -131,6 +137,7 @@ import { DataTableModule }    from 'angular2-datatable';
         DaftarJenisObatComponent,
         DetailJenisObatComponent,
         JenisObatFormComponent,
+        EditJenisObatComponent,
         DaftarObatResepComponent,
         DetailObatResepComponent,
         ObatResepFormComponent,

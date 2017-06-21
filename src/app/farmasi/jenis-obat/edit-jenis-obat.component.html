@@ -2,7 +2,7 @@
     <div class="card mb-3">
       <div class="card-header card-info">
         <h4>
-          <i class="fa fa-newspaper-o" aria-hidden="true"></i> Jenis Obat Baru
+          <i class="fa fa-newspaper-o" aria-hidden="true"></i> Edit Jenis Obat
         </h4>
       </div>
 
@@ -11,32 +11,32 @@
           <form #jenisObatForm="ngForm">
             <div class="form-group">
               <label for="merek">Merek *</label>
-              <input type="text" class="form-control" id="merek" required name="merek">
+              <input type="text" class="form-control" id="merek" disabled name="merek" value={{jenisObat.merek}}>
             </div>
 
             <div class="form-group">
               <label for="nama_generik">Nama Generik *</label>
-              <input type="text" class="form-control" id="nama_generik" required  name="nama_generik">
+              <input type="text" class="form-control" id="nama_generik" disabled  name="nama_generik" value={{jenisObat.nama_generik}}>
             </div>
 
             <div class="form-group">
-              <label for="pabrikan">Pabrikan</label>
-              <input type="text" class="form-control" id="pabrikan" name="pabrikan">
+              <label for="pembuat">Pembuat</label>
+              <input type="text" class="form-control" id="pembuat" disabled name="pembuat" value={{jenisObat.pembuat}}>
             </div>
 
             <div class="form-group">
               <label for="golongan">Golongan *</label>
-              <input type="text" class="form-control" id="golongan" required name="golongan">
+              <input type="text" class="form-control" id="golongan" disabled name="golongan" value={{jenisObat.golongan}}>
             </div>
 
             <div class="form-group">
               <label for="satuan">Satuan</label>
-              <input type="text" class="form-control" id="satuan" name="satuan">
+              <input type="text" class="form-control" id="satuan" disabled name="satuan" value={{jenisObat.satuan}}>
             </div>
 
             <div class="form-group">
               <label for="harga_jual">Harga jual satuan</label>
-              <input type="text" class="form-control" id="harga_jual" name="harga_jual">
+              <input type="text" class="form-control" id="harga_jual" name="harga_jual" value={{jenisObat.harga}}>
             </div>
 
             <button type="submit" class="btn btn-success">Simpan</button>
