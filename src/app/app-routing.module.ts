@@ -10,6 +10,7 @@ import { KlaimComponent }   			from './pembayaran/klaim/klaim.component';
 import { KlaimDetailComponent }   		from './pembayaran/klaim/klaim-detail.component';
 
 import { PasienFormComponent }			from './pasien/pasien-form.component';
+import { PasienListComponent }			from './pasien/pasien-list.component';
 import { AntrianComponent }				from './antrian/antrian.component';
 import { DaftarAntrianComponent }				from './antrian/daftar-antrian.component';
 
@@ -63,6 +64,7 @@ const routes: Routes = [
 	{ path: 'antrian', component: AntrianComponent },
 	{ path: 'antrian/:namaLayanan', component: AntrianComponent },
 	{ path: 'daftar-antrian', component: DaftarAntrianComponent },
+	{ path: 'daftar-pasien', component: PasienListComponent },
 	{ path: 'pendaftaran', component: PasienFormComponent},
 	{ path: 'poliklinik', component: PoliklinikListComponent },
 	{ path: 'poliklinik/:namaPoliklinik/:idTransaksi', component: PoliklinikPemeriksaanComponent },

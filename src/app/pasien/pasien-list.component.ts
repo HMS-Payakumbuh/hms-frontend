@@ -14,7 +14,7 @@ export class PasienListComponent {
 
 	public filterQuery = "";
  	public rowsOnPage = 10;
-	public sortBy = "kode";
+	public sortBy = "id";
 	public sortOrder = "asc";
 
 	constructor(
