@@ -1,0 +1,52 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-list-alt" aria-hidden="true"></i> Daftar Pasien
+				</h4>
+			</div>
+
+			<div class="card-block">
+				<div class="card-text">	
+					<input class="form-control"  [(ngModel)]="param" placeholder="Cari ID/nama pasien"/>
+					<table class="table" [mfData]="allPasien | filterPasien : param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+						<thead>
+							<th><mfDefaultSorter by="id">ID</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="tanggal_lahir">Tanggal Lahir</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="umur">Umur</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="jender">Jender</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="agama">Agama</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="alamat">Alamat</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="kontak">Kontak</mfDefaultSorter></th>
+							<th></th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let pasien of mf.data">
+								<td>{{pasien.id}}</td>
+								<td>{{pasien.nama}}</td>
+								<td>{{pasien.tanggal_lahir}}</td>
+								<td>{{pasien.umur}}</td>
+								<td>{{pasien.jender}}</td>
+								<td>{{pasien.agama}}</td>
+								<td>{{pasien.alamat}}</td>
+								<td>{{pasien.kontak}}</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-info">Edit</button>
+								</td>
+							</tr>
+						</tbody>
+						<tfoot>
+	            <tr>
+	              <td colspan="9">
+	                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+	              </td>
+	            </tr>
+	          </tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
