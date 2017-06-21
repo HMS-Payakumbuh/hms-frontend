@@ -8,23 +8,30 @@
 		<div class="col-md-2 ml-4">
 			<div class="card">
 				<div class="list-group list-group-flush">
-					<a routerLink="/pendaftaran" class="list-group-item">Pendaftaran</a>
-					<a routerLink="/daftar-antrian" class="list-group-item">Pendaftaran Antrian</a>
-					<a routerLink="/antrian" class="list-group-item">Antrian</a>
-					<a href="" class="list-group-item" data-toggle="collapse" data-target="#LayananSubMenu">Layanan</a>
+					<a routerLink="/pendaftaran" class="list-group-item list-group-item-info">Pendaftaran</a>
+					<a routerLink="/daftar-antrian" class="list-group-item list-group-item-info">Pendaftaran Antrian</a>
+					<a routerLink="/antrian" class="list-group-item list-group-item-info">Antrian</a>
+					<a href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#LayananSubMenu">Layanan</a>
+
 					<div id="LayananSubMenu" class="collapse">
 						<a routerLink="/poliklinik" class="list-group-item">Poliklinik</a>
 						<a routerLink="/laboratorium" class="list-group-item">Laboratorium</a>
 						<a routerLink="/rawatinap" class="list-group-item">Rawat Inap</a>
 						<a routerLink="/daftar-tindakan" class="list-group-item">Daftar Tindakan</a>
 					</div>
-					<a routerLink="/transaksi" class="list-group-item">Transaksi</a>
-					<a href="" class="list-group-item" data-toggle="collapse" data-target="#PembayaranSubMenu">Pembayaran</a>
+
+					<a href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#TenagaMedisSubMenu">Tenaga Medis</a>
+					<div id="TenagaMedisSubMenu" class="collapse">
+						<a routerLink="/tenaga-medis" class="list-group-item">Daftar Tenaga Medis</a>
+					</div>					
+
+					<a routerLink="/transaksi" class="list-group-item list-group-item-info">Transaksi</a>
+					<a href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#PembayaranSubMenu">Pembayaran</a>
 					<div id="PembayaranSubMenu" class="collapse">
 						<a routerLink="/pembayaran" class="list-group-item">Data Pembayaran</a>
 						<a routerLink="/klaim" class="list-group-item">Data Klaim</a>
 					</div>
-					<a href="" class="list-group-item" data-toggle="collapse" data-target="#FarmasiSubMenu">Farmasi</a>
+					<a href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#FarmasiSubMenu">Farmasi</a>
 					<div id="FarmasiSubMenu" class="collapse">							
 						<a routerLink="/jenis-obat" class="list-group-item">Jenis Obat</a>
 						<a routerLink="/daftar-obat" class="list-group-item">Daftar Obat</a>
@@ -33,7 +40,7 @@
 						<a routerLink="/obat-pindah" class="list-group-item">Obat Pindah</a>	
 						<a routerLink="/obat-rusak" class="list-group-item">Obat Rusak/Hilang</a>
 					</div>
-					<a routerLink="/settings" class="list-group-item">Settings</a>
+					<a routerLink="/settings" class="list-group-item list-group-item-info">Settings</a>
 				</div>
 			</div>
 		</div>

@@ -1,0 +1,47 @@
+<html>
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h3>Edit {{poliklinik?.nama}}</h3>
+				</div>
+
+				<div class="card-block">
+					<form #poliklinikForm="ngForm">
+						<div class="form-group">
+							<label for="nama">Nama</label>
+							<input type="text" class="form-control" id="nama" required [(ngModel)]="poliklinik.nama" name="nama">
+						</div>
+
+						<div class="form-group">
+							<label for="kategori_antrian">Kategori Antrian</label>
+							<input type="text" class="form-control" id="kategori_antrian" required [(ngModel)]="poliklinik.kategori_antrian" name="nama">
+						</div>
+
+						<div class="form-group">
+							<label for="kapasitas_layanan">Kapasitas Layanan</label>
+							<input type="text" class="form-control" id="kapasitas_layanan" required [(ngModel)]="poliklinik.kapasitas_layanan" name="kapasitas_layanan">
+						</div>
+
+						<div class="form-group">
+							<label for="sisa_layanan">Sisa Layanan</label>
+							<input type="text" class="form-control" id="sisa_layanan" required [(ngModel)]="poliklinik.sisa_layanan" name="sisa_layanan">
+						</div>						
+
+						<div class="form-group">
+							<label for="id_lokasi">ID Lokasi</label>
+							<input type="text" class="form-control" id="id_lokasi" required [(ngModel)]="poliklinik.id_lokasi" name="id_lokasi">
+						</div>						
+					</form>
+
+					<div class="row pull-right">
+						<button type="button" class="btn btn-warning" (click)="goBack()">Kembali</button>
+						<button type="submit" class="btn btn-success">Simpan</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</html>
