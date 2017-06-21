@@ -11,6 +11,7 @@ import { LaboratoriumService }		from './laboratorium.service';
 
 export class LaboratoriumListComponent implements OnInit {
 	allLaboratorium: Laboratorium[];
+	laboratoriumModal: Laboratorium = null;
 
 	public filterQuery = "";
   public rowsOnPage = 10;
@@ -24,5 +25,9 @@ export class LaboratoriumListComponent implements OnInit {
 	ngOnInit() {
 		this.laboratoriumService.getAllLaboratorium()
 			.then(allLaboratorium => this.allLaboratorium = allLaboratorium);
+	}
+
+	editLaboratorium(laboratorium: Laboratorium) {
+		this.laboratoriumModal = laboratorium;
 	}
 }

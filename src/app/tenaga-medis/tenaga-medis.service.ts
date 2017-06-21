@@ -4,6 +4,7 @@ import { Headers, Http}		from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Dokter }					from './dokter';
+import { JadwalDokter }		from './jadwal-dokter';
 import { TenagaMedis }		from './tenaga-medis';
 
 @Injectable()
