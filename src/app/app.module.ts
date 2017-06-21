@@ -23,6 +23,7 @@ import { FilterJenisAntrianPipe }     from './pipe/filter-jenis-antrian.pipe';
 import { FilterNomorKamarPipe }     from './pipe/filter-nomor-kamar.pipe';
 import { FilterJenisKamarPipe }     from './pipe/filter-jenis-kamar.pipe';
 import { FilterKelasKamarPipe }     from './pipe/filter-kelas-kamar.pipe';
+import { FilterPemakaianKamarOperasiPipe }     from './pipe/filter-pemakaian-kamar-operasi.pipe';
 
 import { TransaksiComponent }       from './transaksi/transaksi.component';
 import { TransaksiDetailComponent } from './transaksi/transaksi-detail.component';
@@ -44,6 +45,9 @@ import { LaboratoriumPemeriksaanComponent }    from './layanan/laboratorium-peme
 
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent } 	from './layanan/rawatinap-detail.component';
+
+import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-operasi-list.component';
+// import { PemakaianKamarOperasiDetailComponent }	    from './layanan/pemakaian-kamar-operasi-detail.component';
 
 import { TindakanReferenceListComponent }    from './layanan/tindakan-reference-list.component';
 import { TindakanReferenceFormComponent }        from './layanan/tindakan-reference-form.component';
@@ -109,6 +113,7 @@ import { DataTableModule }    from 'angular2-datatable';
         FilterJenisKamarPipe,
         FilterNomorKamarPipe,
         FilterKelasKamarPipe,
+        FilterPemakaianKamarOperasiPipe,
         TransaksiComponent,
         TransaksiDetailComponent,
         PembayaranComponent,
@@ -122,6 +127,7 @@ import { DataTableModule }    from 'angular2-datatable';
         LaboratoriumPemeriksaanComponent,
         RawatinapListComponent,
         RawatinapDetailComponent,
+        PemakaianKamarOperasiListComponent,
         TindakanReferenceListComponent,
         TindakanReferenceFormComponent,
         MatchesStatusPipe,
