@@ -3,7 +3,9 @@
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-header card-info mb-3">
-					Informasi Klaim
+					<h4>
+						<i class="fa fa-money" aria-hidden="true"></i> Informasi Klaim
+					</h4>
 				</div>
 				<div *ngIf="klaim" class="card-block">
 					<div class="row">
@@ -16,116 +18,143 @@
 							<br>
 							<p>Tanggal Klaim &nbsp; : {{klaim.tanggal}}</p>
 							<br>
-							<p>Status Klaim &nbsp; : {{klaim.status}}</p>
-							<br>
-							<p>Tarif &nbsp; : {{klaim.tarif}}</p>
+							<p>Status Klaim &nbsp; : {{klaim.status.toUpperCase()}}</p>
 						</div>
 					</div>
-					<div class="row">
-						<table class="table">
-							<tbody>
-								<tr>
-									<td>Jenis Rawat:</td>
-									<td *ngIf="transaksi.jenis_rawat === 1">Jalan</td>
-									<td *ngIf="transaksi.jenis_rawat === 2">Inap</td>
-									<td>Kelas Rawat</td>
-									<td *ngIf="transaksi.jenis_rawat === 1">Reguler</td>
-									<td *ngIf="transaksi.jenis_rawat === 2">Kelas {{transaksi.kelas_rawat}}</td>
-								</tr>
-								<tr>
-									<td>Tanggal Rawat: </td>
-									<td>Masuk: {{transaksi.tanggal}} Pulang: {{transaksi.pelunasan}}</td>
-									<td>Berat Lahir</td>
-									<td>0</td>
-								</tr>
-								<tr>
-									<td>LOS (hari)</td>
-									<td>0</td>
-									<td>Cara Pulang</td>
-									<td>Atas Persetujuan Dokter</td>
-								</tr>
-								<tr>
-									<td>ADL Score</td>
-									<td>Sub Acute: -  Chronic: -</td>
-									<td>Tarif Rumah Sakit</td>
-									<td>0</td>
-								</tr>
-								<tr>
-									<td>DPJP</td>
-									<td>RUDY, DR</td>
-									<td>Jenis Tarif</td>
-									<td>Rumah Sakit Pemerintah Kelas C</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div class="row">
+					<div *ngIf="klaim.status === 'error'" class="row">
 						<div class="col-md-12">
-							<b>Diagnosa (ICD-10)</b>
-							<br>
-							<span>Open Wound of Hip S71.0</span>
+							<div class="card">
+								<div class="card-block">
+									Error No: E2003
+									<br>
+									Message : Nomor SEP Terduplikasi
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-							<b>Prosedur (ICD-9-CM)</b>
-							<br>
-							<span>Partial hip replacement 81.52</span>
+							<div class="row">
+								<table class="table">
+									<tbody>
+										<tr>
+											<td>Jenis Rawat:</td>
+											<td *ngIf="transaksi.jenis_rawat === 1">Jalan</td>
+											<td *ngIf="transaksi.jenis_rawat === 2">Inap</td>
+											<td>Kelas Rawat</td>
+											<td *ngIf="transaksi.jenis_rawat === 1">Reguler</td>
+											<td *ngIf="transaksi.jenis_rawat === 2">Kelas {{transaksi.kelas_rawat}}</td>
+										</tr>
+										<tr>
+											<td>Tanggal Rawat: </td>
+											<td>Masuk: {{transaksi.tanggal}} Pulang: {{transaksi.pelunasan}}</td>
+											<td>Berat Lahir</td>
+											<td>0</td>
+										</tr>
+										<tr>
+											<td>LOS (hari)</td>
+											<td>0</td>
+											<td>Cara Pulang</td>
+											<td>Atas Persetujuan Dokter</td>
+										</tr>
+										<tr>
+											<td>ADL Score</td>
+											<td>Sub Acute: -  Chronic: -</td>
+											<td>Tarif Rumah Sakit</td>
+											<td>0</td>
+										</tr>
+										<tr>
+											<td>DPJP</td>
+											<td>RUDY, DR</td>
+											<td>Jenis Tarif</td>
+											<td>Rumah Sakit Pemerintah Kelas C</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<b>Diagnosa (ICD-10)</b>
+									<br>
+									<ul class="list-group">
+										<li class="list-group-item">
+											<span>Open Wound of Hip S71.0</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<b>Prosedur (ICD-9-CM)</b>
+									<br>
+									<ul class="list-group">
+										<li class="list-group-item">
+											<span>Partial hip replacement 81.52</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="row">
+								<table class="table">
+									<tbody>
+										<tr>
+											<td>Jenis Rawat</td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>Group</td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>Sub Acute</td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>Chronic</td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>Special Procedure</td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>Special Prosthesis</td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>Special Investigation</td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>Special Drug</td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+											<td></td>
+											<td><b>Tarif Klaim</b></td>
+											<td>{{klaim.tarif}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
-					</div>
-					<div class="row">
-						<table class="table">
-							<tbody>
-								<tr>
-									<td>Jenis Rawat</td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>Group</td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>Sub Acute</td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>Chronic</td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>Special Procedure</td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>Special Prosthesis</td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>Special Investigation</td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>Special Drug</td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-							</tbody>
-						</table>
 					</div>
 					<div class="row">
 						<div class="offset-md-6 col-md-6">

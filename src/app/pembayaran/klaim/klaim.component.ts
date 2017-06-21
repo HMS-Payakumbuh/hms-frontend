@@ -14,8 +14,11 @@ import { AsuransiService }		from '../../pasien/asuransi.service';
 
 export class KlaimComponent {
 	allKlaim: Klaim[];
-	statuses = ['', 'open', 'closed', 'processing'];
 	allAsuransi = [''];
+
+	public rowsOnPage = 10;
+    public sortBy = "tanggal";
+    public sortOrder = "desc";
 
 	constructor(
 		private klaimService: KlaimService,
