@@ -16,6 +16,8 @@ import { DaftarAntrianComponent }				from './antrian/daftar-antrian.component';
 import { PoliklinikListComponent }		from './layanan/poliklinik-list.component';
 import { PoliklinikDetailComponent }	from './layanan/poliklinik-detail.component';
 
+import { LaboratoriumListComponent }		from './layanan/laboratorium-list.component';
+
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent }	    from './layanan/rawatinap-detail.component';
 
@@ -62,6 +64,7 @@ const routes: Routes = [
 	{ path: 'pendaftaran', component: PasienFormComponent},
 	{ path: 'poliklinik', component: PoliklinikListComponent },
 	{ path: 'poliklinik/:namaPoliklinik/:idTransaksi', component: PoliklinikDetailComponent },
+	{ path: 'laboratorium', component: LaboratoriumListComponent },	
 	{ path: 'rawatinap', component: RawatinapListComponent },	
 	{ path: 'rawatinap/:noKamar/:idTransaksi', component: RawatinapDetailComponent },
 	{ path: 'daftar-tindakan', component: TindakanReferenceListComponent },

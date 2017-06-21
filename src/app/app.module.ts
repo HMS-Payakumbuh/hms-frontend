@@ -36,6 +36,8 @@ import { PasienFormComponent }      		from './pasien/pasien-form.component';
 import { PoliklinikListComponent }      from './layanan/poliklinik-list.component';
 import { PoliklinikDetailComponent }    from './layanan/poliklinik-detail.component';
 
+import { LaboratoriumListComponent }      from './layanan/laboratorium-list.component';
+
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent } 	from './layanan/rawatinap-detail.component';
 
@@ -108,6 +110,7 @@ import { DataTableModule }    from 'angular2-datatable';
         PasienFormComponent,
         PoliklinikListComponent,
         PoliklinikDetailComponent,
+        LaboratoriumListComponent,
         RawatinapListComponent,
         RawatinapDetailComponent,
         TindakanReferenceListComponent,

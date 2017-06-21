@@ -1,6 +1,7 @@
 import { Component, OnInit }															from '@angular/core';
 import { ActivatedRoute, Params }													from '@angular/router';
 import { FormGroup, FormArray, FormBuilder, Validators }	from '@angular/forms';
+import { Location }																				from '@angular/common';
 
 import { Transaksi }						from '../transaksi/transaksi';
 import { TransaksiService }			from '../transaksi/transaksi.service';
@@ -43,6 +44,7 @@ export class PoliklinikDetailComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
+		private location: Location,		
 		private formBuilder: FormBuilder,
 		private transaksiService: TransaksiService,
 		private poliklinikService: PoliklinikService,
@@ -101,6 +103,10 @@ export class PoliklinikDetailComponent implements OnInit {
     const control = < FormArray > this.addForm.controls['resepEntry'];
     control.removeAt(i);
 	}
+
+	goBack(): void {
+		this.location.back();
+	}	
 
 	save() {
 		this.tindakanService.saveTindakan(this.transaksi.id, this.poliklinik.nama, true, null, this.selectedTindakan);

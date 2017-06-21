@@ -10,9 +10,9 @@ export class PoliklinikService {
 
 	//Mock data
 	allPoliklinik: Poliklinik[] = [
-		{nama: 'Umum', kategori_antrian: 'A', kapasitas_pelayanan: 100, sisa_pelayanan: 100, id_lokasi: 1},
-		{nama: 'THT', kategori_antrian: 'B', kapasitas_pelayanan: 100, sisa_pelayanan: 100, id_lokasi: 2},
-		{nama: 'Jantung', kategori_antrian: 'B', kapasitas_pelayanan: 40, sisa_pelayanan: 40, id_lokasi: 3}
+		{nama: 'Poli Umum', kategori_antrian: 'A', kapasitas_pelayanan: 100, sisa_pelayanan: 100, id_lokasi: 1},
+		{nama: 'Poli THT', kategori_antrian: 'B', kapasitas_pelayanan: 100, sisa_pelayanan: 100, id_lokasi: 2},
+		{nama: 'Poli Jantung', kategori_antrian: 'B', kapasitas_pelayanan: 40, sisa_pelayanan: 40, id_lokasi: 3}
 	];
 
 	constructor(private http:Http) { }
