@@ -1,4 +1,3 @@
-  <body>
   <div class="col-md-12">
     <div class="card mb-3">
       <div class="card-header card-info">
@@ -21,13 +20,53 @@
               </div>
 
               <div class="form-group">
-                <label for="merek">ID Pasien</label>
-                <input type="text" class="form-control" id="merek" disabled name="merek">
+                <label for="id_pasien">ID Pasien</label>
+                <input type="text" class="form-control" id="id_pasien" disabled name="id_pasien">
               </div>
 
               <div class="form-group">
-                <label for="nama_generik">Nama Pasien</label>
-                <input type="text" class="form-control" id="nama_generik" disabled  name="nama_generik">
+                <label for="nama_pasien">Nama Pasien</label>
+                <input type="text" class="form-control" id="nama_pasien" disabled name="nama_pasien">
+              </div>
+
+              <div class="form-group">
+                <label for="kode_obat">Kode Obat</label>           
+                <div class="input-group">
+                  <input type="text" class="form-control" id="kode_obat"> 
+                    <span class="form-group-btn">
+                      <a href="#"><button class="btn btn-success">Cari</button></a>
+                    </span>
+                    <span class="form-group-btn">
+                      <button class="btn btn-info" (click)="addObatEntry()">Tambah</button>
+                    </span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Kode Obat</th>
+                      <th>Merek Obat</th>
+                      <th>Kadaluarsa</th>
+                      <th>Jumlah</th>
+                      <th>Harga Satuan</th>
+                      <th>Harga Total</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of rowData">
+                      <td><input type="text" class="form-control" id="kode_obat" disabled name="kode_obat" value="{{row.kode_obat}}"></td>
+                      <td><input type="text" class="form-control" id="merek" disabled name="merek"></td>
+                      <td><input type="text" class="form-control" id="kadaluarsa" disabled name="kadaluarsa"></td>
+                      <td><input type="text" class="form-control" id="jumlah" name="jumlah"></td>
+                      <td><input type="text" class="form-control" id="harga" name="harga"></td>
+                      <td><input type="text" class="form-control" id="harga_total" disabled name="harga_total"></td> 
+                      <td><button class="btn btn-danger" (click)="removeObatEntry(index)">Hapus</button></td>
+                    </tr>
+                  </tbody>    
+                </table>
               </div>
 
               <button type="submit" class="btn btn-success">Simpan</button>
@@ -36,4 +75,3 @@
       </div>
     </div>
   </div>
-</html>
