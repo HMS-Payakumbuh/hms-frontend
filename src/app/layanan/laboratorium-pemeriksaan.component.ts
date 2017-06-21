@@ -31,12 +31,13 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 
 	allTindakanReference: TindakanReference[];
 	selectedTindakan: TindakanReference[] = [];
+	keteranganTindakan: string[] = [];
 
 	tindakanAutocompleteConfig: any = {'placeholder': 'Tuliskan kode tindakan', 'sourceField': ['nama']};
 
 	constructor(
 		private route: ActivatedRoute,
-		private location: Location,		
+		private location: Location,
 		private formBuilder: FormBuilder,
 		private transaksiService: TransaksiService,
 		private laboratoriumService: LaboratoriumService,
@@ -61,14 +62,15 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 	}
 
 	removeSelectedTindakan(i: number) {
+		this.keteranganTindakan.splice(i, 1);
 		this.selectedTindakan.splice(i, 1);
 	}
 
 	goBack(): void {
 		this.location.back();
-	}	
+	}
 
 	save() {
-		this.tindakanService.saveTindakan(this.transaksi.id, this.laboratorium.nama, false, null, this.selectedTindakan);
+		this.tindakanService.saveTindakan(this.transaksi.id, this.laboratorium.nama, false, null, this.selectedTindakan, this.keteranganTindakan);
 	}
 }

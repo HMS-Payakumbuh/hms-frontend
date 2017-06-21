@@ -43,9 +43,13 @@ export class TindakanService {
 		namaLayanan: string,
 		isPoli: boolean,
 		dokumenPenunjang: number,
-		selectedTindakan: TindakanReference[]
+		selectedTindakan: TindakanReference[],
+		keteranganTindakan: string[]
 	) {
+		
 		this.i = 0;
+		this.tindakanInstances.length = 0;
+
 		for (let tindakanReference of selectedTindakan) {
 			this.i++;
 
@@ -59,7 +63,7 @@ export class TindakanService {
 			else
 				this.tindakan.dokumen_penunjang = null;
 
-			this.tindakan.keterangan = 'HOHO HAHA';
+			this.tindakan.keterangan = keteranganTindakan[this.i - 1];
 			this.tindakan.id_pembayaran = null;
 			this.tindakan.kode_tindakan = tindakanReference.kode;
 			this.tindakan.tanggal_waktu = 'temp';

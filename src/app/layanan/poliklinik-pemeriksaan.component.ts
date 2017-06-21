@@ -38,6 +38,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 
 	selectedDiagnosis: DiagnosisReference[] = [];
 	selectedTindakan: TindakanReference[] = [];
+	keteranganTindakan: string[] = [];
 
 	diagnosisAutocompleteConfig: any = {'placeholder': 'Tuliskan kode diagnosis', 'sourceField': ['nama']};
 	tindakanAutocompleteConfig: any = {'placeholder': 'Tuliskan kode tindakan', 'sourceField': ['nama']};
@@ -85,6 +86,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	}
 
 	removeSelectedTindakan(i: number) {
+		this.keteranganTindakan.splice(i, 1);
 		this.selectedTindakan.splice(i, 1);
 	}
 
@@ -109,6 +111,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	}	
 
 	save() {
-		this.tindakanService.saveTindakan(this.transaksi.id, this.poliklinik.nama, true, null, this.selectedTindakan);
+		this.tindakanService.saveTindakan(this.transaksi.id, this.poliklinik.nama, true, null, this.selectedTindakan, this.keteranganTindakan);
 	}
 }
