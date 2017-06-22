@@ -11,8 +11,9 @@ import { KlaimDetailComponent }   		from './pembayaran/klaim/klaim-detail.compon
 
 import { PasienFormComponent }			from './pasien/pasien-form.component';
 import { PasienListComponent }			from './pasien/pasien-list.component';
+import { CatatanKematianFormComponent } from './pasien/catatan-kematian-form.component';
 import { AntrianComponent }				from './antrian/antrian.component';
-import { DaftarAntrianComponent }				from './antrian/daftar-antrian.component';
+import { DaftarAntrianComponent }	    from './antrian/daftar-antrian.component';
 
 import { PoliklinikListComponent }		from './layanan/poliklinik-list.component';
 import { PoliklinikFormComponent }	from './layanan/poliklinik-form.component';
@@ -23,6 +24,10 @@ import { LaboratoriumPemeriksaanComponent }	from './layanan/laboratorium-pemerik
 
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent }	    from './layanan/rawatinap-detail.component';
+import { RawatinapFormComponent }	    from './layanan/rawatinap-form.component';
+
+import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-operasi-list.component';
+import { PemakaianKamarOperasiFormComponent }	    from './layanan/pemakaian-kamar-operasi-form.component';
 
 import { TenagaMedisListComponent } 	from './tenaga-medis/tenaga-medis-list.component';
 import { JadwalDokterListComponent }	from './tenaga-medis/jadwal-dokter-list.component';
@@ -70,6 +75,7 @@ const routes: Routes = [
 	{ path: 'daftar-antrian', component: DaftarAntrianComponent },
 	{ path: 'daftar-pasien', component: PasienListComponent },
 	{ path: 'pendaftaran', component: PasienFormComponent},
+	{ path: 'daftar-pasien/catatan-kematian-form', component: CatatanKematianFormComponent},
 
 	{ path: 'poliklinik', component: PoliklinikListComponent },
 	{ path: 'poliklinik/:namaPoliklinik', component: PoliklinikFormComponent },	
@@ -79,14 +85,16 @@ const routes: Routes = [
 	{ path: 'laboratorium/:namaLaboratorium/:idTransaksi', component: LaboratoriumPemeriksaanComponent },	
 
 	{ path: 'rawatinap', component: RawatinapListComponent },	
-	{ path: 'rawatinap/:noKamar/:idTransaksi', component: RawatinapDetailComponent },
+	{ path: 'rawatinap/:noKamar', component: RawatinapDetailComponent },
+	{ path: 'rawatinap/:noKamar/rawatinap-form', component: RawatinapFormComponent },
+	{ path: 'kamaroperasi', component: PemakaianKamarOperasiListComponent },
+	{ path: 'kamaroperasi-form', component: PemakaianKamarOperasiFormComponent },	
 
 	{ path: 'tenaga-medis', component: TenagaMedisListComponent },
 	{ path: 'jadwal-dokter', component: JadwalDokterListComponent },
-
 	{ path: 'daftar-tindakan', component: TindakanReferenceListComponent },
 	{ path: 'daftar-tindakan/:kode', component: TindakanReferenceFormComponent },	
-	
+
 	{ path: 'daftar-obat', component: DaftarObatComponent },
 	{ path: 'daftar-obat/:kode-obat', component: DetailObatComponent },	
 	{ path: 'obat-masuk', component: DaftarObatMasukComponent },

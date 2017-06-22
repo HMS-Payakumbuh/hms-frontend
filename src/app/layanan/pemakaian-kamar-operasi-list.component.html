@@ -1,0 +1,58 @@
+<html>
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>Daftar Pemakaian Kamar Operasi</h4>
+				</div>
+
+				<div class="card-block">
+                    <div class="row">
+						<div class="col-md-6 pull-left">
+							<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal Operasi">
+						</div>
+						<div class="col-md-6 pull-right">
+							<div class="input-group">							
+							    <input type="text" class="form-control" [(ngModel)]="param" placeholder="No.Kamar/Nama Pasien/Nama Dokter"/>
+							</div>
+						</div>
+					</div>
+
+					<table class="table">
+                        
+						<thead>
+							<th>No. Kamar</th>
+                            <th>Nama Pasien</th>
+                            <th>Dokter Sp. Bedah</th>
+                            <th>Dokter Sp. Anestesi</th>
+							<th>Waktu Masuk</th>
+							<th>Waktu Keluar</th>
+							<th></th>
+							<tr>
+						</thead>
+						
+						<tbody *ngFor="let kamaroperasi of allPemakaianKamarOperasi | filterWaktuKeluar: selectedDate | filterObatResep: param">
+							<tr>
+								<td>{{kamaroperasi?.no_kamar}}</td>
+                                <td>Nama Pasien</td>
+                                <td>Dokter Bedah</td>
+                                <td>Dokter Anestesi</td>
+								<td>{{kamaroperasi?.waktu_masuk | date:'d MMM y H:mm:ss'}}</td>
+                                <td>{{kamaroperasi?.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>
+								<td>
+									<button type="button" class="btn btn-primary" routerLink="{{kamaroperasi.no_kamar}}/1">Detail</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+                    <div class="pull-left">
+						<a routerLink="/kamaroperasi-form"><button type="button" class="btn btn-primary">Tambah Pemakaian</button></a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</html>

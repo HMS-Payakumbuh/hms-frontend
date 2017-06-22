@@ -7,7 +7,7 @@ import { Tempattidur }			from './tempattidur';
 
 @Injectable()
 export class TempattidurService {
-
+	selectedTempatTidur : number;
 	//Mock data
 	allTempattidur: Tempattidur[] = [
 		{no_kamar: 'Anggrek-001', no_tempat_tidur: 1, status: 0},
@@ -34,6 +34,11 @@ export class TempattidurService {
 
 	getAllTempattidur(): Promise<Tempattidur[]> {
 		return Promise.resolve(this.allTempattidur)
+			.catch(this.handleError);
+	}
+
+	getSelectedTempattidur(): Promise<number> {
+		return Promise.resolve(this.selectedTempatTidur)
 			.catch(this.handleError);
 	}
 

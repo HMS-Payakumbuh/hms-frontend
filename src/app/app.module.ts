@@ -21,6 +21,10 @@ import { FilterObatResepPipe }     from './pipe/filter-obat-resep.pipe';
 import { FilterObatRusakPipe }     from './pipe/filter-obat-rusak.pipe';
 import { FilterObatPindahPipe }     from './pipe/filter-obat-pindah.pipe';
 import { FilterJenisAntrianPipe }     from './pipe/filter-jenis-antrian.pipe';
+import { FilterNomorKamarPipe }     from './pipe/filter-nomor-kamar.pipe';
+import { FilterJenisKamarPipe }     from './pipe/filter-jenis-kamar.pipe';
+import { FilterKelasKamarPipe }     from './pipe/filter-kelas-kamar.pipe';
+import { FilterPemakaianKamarOperasiPipe }     from './pipe/filter-pemakaian-kamar-operasi.pipe';
 
 import { TransaksiComponent }       from './transaksi/transaksi.component';
 import { TransaksiDetailComponent } from './transaksi/transaksi-detail.component';
@@ -34,6 +38,8 @@ import { AntrianComponent }         		from './antrian/antrian.component';
 import { DaftarAntrianComponent }         	from './antrian/daftar-antrian.component';
 import { PasienFormComponent }      		from './pasien/pasien-form.component';
 import { PasienListComponent }              from './pasien/pasien-list.component';
+import { CatatanKematianFormComponent }              from './pasien/catatan-kematian-form.component';
+
 
 import { PoliklinikListComponent }          from './layanan/poliklinik-list.component';
 import { PoliklinikFormComponent }          from './layanan/poliklinik-form.component';
@@ -44,6 +50,10 @@ import { LaboratoriumPemeriksaanComponent }    from './layanan/laboratorium-peme
 
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent } 	from './layanan/rawatinap-detail.component';
+import { RawatinapFormComponent }	    from './layanan/rawatinap-form.component';
+
+import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-operasi-list.component';
+import { PemakaianKamarOperasiFormComponent }	    from './layanan/pemakaian-kamar-operasi-form.component';
 
 import { TenagaMedisListComponent }     from './tenaga-medis/tenaga-medis-list.component';
 import { JadwalDokterListComponent }    from './tenaga-medis/jadwal-dokter-list.component';
@@ -110,6 +120,10 @@ import { DataTableModule }    from 'angular2-datatable';
         FilterObatRusakPipe,
         FilterObatPindahPipe,
         FilterJenisAntrianPipe,
+        FilterJenisKamarPipe,
+        FilterNomorKamarPipe,
+        FilterKelasKamarPipe,
+        FilterPemakaianKamarOperasiPipe,
         TransaksiComponent,
         TransaksiDetailComponent,
         PembayaranComponent,
@@ -118,6 +132,7 @@ import { DataTableModule }    from 'angular2-datatable';
         KlaimDetailComponent,
         PasienFormComponent,
         PasienListComponent,
+        CatatanKematianFormComponent,
 
         PoliklinikListComponent,
         PoliklinikFormComponent,
@@ -128,6 +143,9 @@ import { DataTableModule }    from 'angular2-datatable';
 
         RawatinapListComponent,
         RawatinapDetailComponent,
+        RawatinapFormComponent,
+        PemakaianKamarOperasiListComponent,
+        PemakaianKamarOperasiFormComponent,
 
         TenagaMedisListComponent,
         JadwalDokterListComponent,

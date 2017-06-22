@@ -24,7 +24,6 @@ export class RawatinapDetailComponent implements OnInit {
 	rawatinap: Rawatinap;
     allTempatTidur: Tempattidur[];
     transaksi: Transaksi;
-	selectedTempatTidur: number;
 	noKamar: string;
 
 	constructor(
@@ -54,14 +53,14 @@ export class RawatinapDetailComponent implements OnInit {
 	}
 
 	selectTempatTidur(noTempatTidur:number) : void {
-		if(noTempatTidur === this.selectedTempatTidur) 
-			this.selectedTempatTidur = 0;
+		if(noTempatTidur === this.tempattidurService.selectedTempatTidur) 
+			this.tempattidurService.selectedTempatTidur = 0;
 		else
-			this.selectedTempatTidur = noTempatTidur;
+			this.tempattidurService.selectedTempatTidur = noTempatTidur;
 	}
 
 	isSelected(noTempatTidur:number) {
-		return(this.selectedTempatTidur === noTempatTidur);
+		return(this.tempattidurService.selectedTempatTidur === noTempatTidur);
 	}
 
 	checkStatus(noTempatTidur:number) {
