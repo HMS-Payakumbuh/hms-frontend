@@ -30,8 +30,6 @@ export class DaftarAntrianComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.poliklinikService.getAllPoliklinik()
-      .then(allPoliklinik => this.allPoliklinik = allPoliklinik);
   }
 
   private selectLayanan() {
