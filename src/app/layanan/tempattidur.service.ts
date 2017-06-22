@@ -7,7 +7,7 @@ import { Tempattidur }			from './tempattidur';
 
 @Injectable()
 export class TempattidurService {
-
+	selectedTempatTidur : number;
 	//Mock data
 	allTempattidur: Tempattidur[] = [
 		{no_kamar: 'Anggrek-001', no_tempat_tidur: 1, status: 0},
