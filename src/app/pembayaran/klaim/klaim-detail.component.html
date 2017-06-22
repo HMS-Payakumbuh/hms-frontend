@@ -16,7 +16,7 @@
 							<br>
 							<p>Nomor Kartu &nbsp; : {{klaim.nomor_kartu}}</p>
 							<br>
-							<p>Tanggal Klaim &nbsp; : {{klaim.tanggal}}</p>
+							<p>Tanggal Klaim &nbsp; : {{klaim.tanggal | date: 'dd/MM/y HH:mm'}}</p>
 							<br>
 							<p>Status Klaim &nbsp; : {{klaim.status.toUpperCase()}}</p>
 						</div>
@@ -47,8 +47,8 @@
 										</tr>
 										<tr>
 											<td>Tanggal Rawat: </td>
-											<td>Masuk: {{transaksi.tanggal}} Pulang: {{transaksi.pelunasan}}</td>
-											<td>Berat Lahir</td>
+											<td>Masuk: {{transaksi.tanggal | date: 'dd-MM-y HH:mm:ss'}} Pulang: {{transaksi.pelunasan | date: 'dd-MM-y HH:mm:ss'}}</td>
+											<td>Berat Lahir (gr)</td>
 											<td>0</td>
 										</tr>
 										<tr>
@@ -61,13 +61,13 @@
 											<td>ADL Score</td>
 											<td>Sub Acute: -  Chronic: -</td>
 											<td>Tarif Rumah Sakit</td>
-											<td>0</td>
+											<td>Rp. {{klaim.tarif_rs | number: '.2-2'}}</td>
 										</tr>
 										<tr>
 											<td>DPJP</td>
 											<td>RUDY, DR</td>
 											<td>Jenis Tarif</td>
-											<td>Rumah Sakit Pemerintah Kelas C</td>
+											<td>{{displayJenisTarif}}</td>
 										</tr>
 									</tbody>
 								</table>
@@ -99,15 +99,15 @@
 									<tbody>
 										<tr>
 											<td>Jenis Rawat</td>
-											<td></td>
+											<td>Rawat Jalan</td>
 											<td></td>
 											<td></td>
 										</tr>
 										<tr>
 											<td>Group</td>
-											<td></td>
-											<td></td>
-											<td></td>
+											<td>PROSEDUR PADA SENDI TUNGKAI BAWAH</td>
+											<td>M-1-04-II</td>
+											<td>Rp. 47119400</td>
 										</tr>
 										<tr>
 											<td>Sub Acute</td>
@@ -123,15 +123,15 @@
 										</tr>
 										<tr>
 											<td>Special Procedure</td>
-											<td></td>
-											<td></td>
-											<td></td>
+											<td>Hip Replacement / knee replacement</td>
+											<td>YY-01-II</td>
+											<td>Rp. 13099000</td>
 										</tr>
 										<tr>
 											<td>Special Prosthesis</td>
-											<td></td>
-											<td></td>
-											<td></td>
+											<td>Hip Implant / knee implant</td>
+											<td>RR-4-III</td>
+											<td>Rp. 26197900</td>
 										</tr>
 										<tr>
 											<td>Special Investigation</td>
@@ -149,7 +149,7 @@
 											<td></td>
 											<td></td>
 											<td><b>Tarif Klaim</b></td>
-											<td>{{klaim.tarif}}</td>
+											<td>Rp. {{klaim.tarif | number: '.2-2'}}</td>
 										</tr>
 									</tbody>
 								</table>

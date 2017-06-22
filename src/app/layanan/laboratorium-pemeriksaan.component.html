@@ -30,6 +30,11 @@
 								<td><b>Usia</b></td>
 								<td>21 tahun</td>
 							</tr>
+							<tr>
+								<td colspan="2">
+									<button type="button" class="btn btn-outline-primary">Lihat Rekam Medis</button>
+								</td>
+							</tr>							
 						</tbody>
 					</table>
 				</div>
@@ -109,6 +114,7 @@
 									<th>Harga</th>
 									<th>Keterangan</th>
 									<th></th>
+									<th></th>
 								</thead>
 								<tbody>
 									<tr *ngFor="let tindakan of selectedTindakan; index as i">
@@ -120,6 +126,9 @@
 										</td>
 										<td style="vertical-align: middle;">
 											<input type="text" class="form-control" placeholder="Keterangan Tindakan" [(ngModel)]="keteranganTindakan[i]">
+										</td>
+										<td style="vertical-align: middle;">
+											<button type="button" class="btn btn-sm btn-info">Upload Hasil</button>											
 										</td>
 										<td style="vertical-align: middle;">
 											<button type="button" class="btn btn-sm btn-outline-danger" (click)="removeSelectedTindakan(i)">

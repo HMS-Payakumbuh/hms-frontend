@@ -37,6 +37,11 @@ export class TempattidurService {
 			.catch(this.handleError);
 	}
 
+	getSelectedTempattidur(): Promise<number> {
+		return Promise.resolve(this.selectedTempatTidur)
+			.catch(this.handleError);
+	}
+
 	getTempattidurByNoKamar(no_kamar: string): Promise<Tempattidur[]> {
 		return this.getAllTempattidur()
 			.then(allTempattidur=> allTempattidur.filter(function(item) {

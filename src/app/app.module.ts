@@ -7,6 +7,7 @@ import { DpDatePickerModule }       from 'ng2-date-picker';
 import { AutocompleteModule}        from 'ng2-input-autocomplete';
 
 import { MatchesStatusPipe }            from './pipe/matches-status.pipe';
+import { FilterPasienPipe }         from './pipe/filter-pasien.pipe';
 import { FilterNamaPasienPipe }         from './pipe/filter-nama-pasien.pipe';
 import { FilterTanggalPipe }            from './pipe/filter-tanggal.pipe';
 import { FilterWaktuMasukPipe }            from './pipe/filter-waktu-masuk.pipe';
@@ -36,9 +37,13 @@ import { KlaimDetailComponent }        		from './pembayaran/klaim/klaim-detail.c
 import { AntrianComponent }         		from './antrian/antrian.component';
 import { DaftarAntrianComponent }         	from './antrian/daftar-antrian.component';
 import { PasienFormComponent }      		from './pasien/pasien-form.component';
+import { PasienListComponent }              from './pasien/pasien-list.component';
+import { CatatanKematianFormComponent }              from './pasien/catatan-kematian-form.component';
 
-import { PoliklinikListComponent }      from './layanan/poliklinik-list.component';
-import { PoliklinikPemeriksaanComponent }    from './layanan/poliklinik-pemeriksaan.component';
+
+import { PoliklinikListComponent }          from './layanan/poliklinik-list.component';
+import { PoliklinikFormComponent }          from './layanan/poliklinik-form.component';
+import { PoliklinikPemeriksaanComponent }   from './layanan/poliklinik-pemeriksaan.component';
 
 import { LaboratoriumListComponent }      from './layanan/laboratorium-list.component';
 import { LaboratoriumPemeriksaanComponent }    from './layanan/laboratorium-pemeriksaan.component';
@@ -49,6 +54,9 @@ import { RawatinapFormComponent }	    from './layanan/rawatinap-form.component';
 
 import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-operasi-list.component';
 import { PemakaianKamarOperasiFormComponent }	    from './layanan/pemakaian-kamar-operasi-form.component';
+
+import { TenagaMedisListComponent }     from './tenaga-medis/tenaga-medis-list.component';
+import { JadwalDokterListComponent }    from './tenaga-medis/jadwal-dokter-list.component';
 
 import { TindakanReferenceListComponent }    from './layanan/tindakan-reference-list.component';
 import { TindakanReferenceFormComponent }        from './layanan/tindakan-reference-form.component';
@@ -98,6 +106,7 @@ import { DataTableModule }    from 'angular2-datatable';
     declarations: [ 
         AppComponent,
         MatchesStatusPipe,
+        FilterPasienPipe,
         FilterNamaPasienPipe,
         FilterTanggalPipe,
         FilterWaktuMasukPipe,
@@ -122,17 +131,28 @@ import { DataTableModule }    from 'angular2-datatable';
         KlaimComponent,
         KlaimDetailComponent,
         PasienFormComponent,
+        PasienListComponent,
+        CatatanKematianFormComponent,
+
         PoliklinikListComponent,
+        PoliklinikFormComponent,
         PoliklinikPemeriksaanComponent,
+
         LaboratoriumListComponent,
         LaboratoriumPemeriksaanComponent,
+
         RawatinapListComponent,
         RawatinapDetailComponent,
         RawatinapFormComponent,
         PemakaianKamarOperasiListComponent,
         PemakaianKamarOperasiFormComponent,
+
+        TenagaMedisListComponent,
+        JadwalDokterListComponent,
+
         TindakanReferenceListComponent,
         TindakanReferenceFormComponent,
+        
         MatchesStatusPipe,
         FilterNamaPasienPipe,
         FilterTanggalPipe,

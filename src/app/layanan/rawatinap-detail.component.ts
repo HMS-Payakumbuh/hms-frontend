@@ -35,8 +35,6 @@ export class RawatinapDetailComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		// this.tempattidurService.selectedTempatTidur = 0;
-		
 		this.route.params
 			.switchMap((params: Params) => this.rawatinapService.getRawatinapByNoKamar(params['noKamar']))
 			.subscribe(rawatinap => this.rawatinap = rawatinap);

@@ -11,6 +11,10 @@ export class JenisObatService {
 	// private jenisObatUrl = ENV.jenisObatUrl;
 
 	allJenisObat: JenisObat[] = [
+		{id: 1121, merek: 'Panadol Regular', nama_generik: 'Paracetamol', pembuat: 'GSK', golongan: 'Bebas', satuan: 'Blister', harga: 9500, keterangan: ''},
+		{id: 1122, merek: 'Panadol Extra', nama_generik: 'Paracetamol, Caffeine', pembuat: 'GSK', golongan: 'Bebas', satuan: 'Blister', harga: 12000, keterangan: ''},
+		{id: 1123, merek: 'Panadol Cold & Flu', nama_generik: 'Paracetamol, Pseudoephedrine, Dextromethorphan', pembuat: 'GSK', golongan: 'Bebas', satuan: 'Blister', harga: 13000, keterangan: ''},
+		{id: 1124, merek: 'Panadol Anak', nama_generik: 'Paracetamol', pembuat: 'GSK', golongan: 'Bebas', satuan: 'Botol', harga: 25000, keterangan: ''},
 		{id: 2138, merek: 'Cefixim syr kering 100mg/5ml	', nama_generik: 'Cefixim', pembuat: 'Indofarma', golongan: 'Antibiotik', satuan: 'Botol', harga: 10106.36, keterangan: ''},
 		{id: 2517, merek: 'Amlodipine tab 5mg', nama_generik: 'Amlodipine', pembuat: 'Hexpharm', golongan: 'Keras', satuan: 'Tablet', harga: 229.00, keterangan: ''},
 		{id: 2534, merek: 'Amlodipine tab 10mg', nama_generik: 'Amlodipine', pembuat: 'Hexpharm', golongan: 'Keras', satuan: 'Tablet', harga: 420.00, keterangan: ''}

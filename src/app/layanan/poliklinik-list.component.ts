@@ -11,6 +11,7 @@ import { PoliklinikService }		from './poliklinik.service';
 
 export class PoliklinikListComponent implements OnInit {
 	allPoliklinik: Poliklinik[];
+	poliklinikModal: Poliklinik = null;
 
 	public filterQuery = "";
   public rowsOnPage = 10;
@@ -24,5 +25,9 @@ export class PoliklinikListComponent implements OnInit {
 	ngOnInit() {
 		this.poliklinikService.getAllPoliklinik()
 			.then(allPoliklinik => this.allPoliklinik = allPoliklinik);
+	}
+
+	editPoliklinik(poliklinik: Poliklinik) {
+		this.poliklinikModal = poliklinik;
 	}
 }

@@ -32,8 +32,9 @@ export class RawatinapFormComponent {
 	) {}
 
 	ngOnInit(): void {		
-        this.selectedTempatTidur = this.tempattidurService.selectedTempatTidur;
-
+        this.tempattidurService.getSelectedTempattidur()
+			.then(selectedTempatTidur => this.selectedTempatTidur = selectedTempatTidur);
+		
 		this.route.params
 			.switchMap((params: Params) => this.rawatinapService.getRawatinapByNoKamar(params['noKamar']))
 			.subscribe(rawatinap => this.rawatinap = rawatinap);

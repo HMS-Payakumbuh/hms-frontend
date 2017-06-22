@@ -12,14 +12,16 @@
 						<thead>
 							<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="kategori_antrian">Kategori Antrian</mfDefaultSorter></th>
-							<th>Jumlah Antrian</th>
+							<th></th>
 							<th></th>
 						</thead>
 						<tbody *ngFor="let laboratorium of mf.data">
 							<tr>
 								<td>{{laboratorium?.nama}}</td>
 								<td>{{laboratorium?.kategori_antrian}}</td>
-								<td>0</td>
+								<td>
+									<button class="btn btn-info" data-toggle="modal" [attr.data-target]="'#editLaboratoriumModal'" (click)="editLaboratorium(laboratorium)">Edit</button>									
+								</td>
 								<td>
 									<button class="btn btn-info" [routerLink]="['/antrian', laboratorium.nama]">Lihat Antrian</button>
 								</td>
@@ -34,6 +36,38 @@
 	          </tfoot>						
 					</table>
 				</div>
+
+				<div class="modal fade" tabindex="-1" role="dialog" id="editLaboratoriumModal" aria-hidden="true" *ngIf="laboratoriumModal != null">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+
+							<div class="modal-header">
+								<h5 class="modal-title" id="editLaboratoriumModal">Editing {{laboratoriumModal.nama}}</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<i class="fa fa-times" aria-hidden="true"></i>
+								</button>
+							</div>
+
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="nama">Nama</label>
+									<input type="text" class="form-control" id="nama" required [(ngModel)]="laboratoriumModal.nama" name="nama">
+								</div>
+
+								<div class="form-group">
+									<label for="kategori_antrian">Kategori Antrian</label>
+									<input type="text" class="form-control" id="kategori_antrian" required [(ngModel)]="laboratoriumModal.kategori_antrian" name="kategori_antrian">
+								</div>
+							</div>
+
+							<div class="modal-footer">
+<!-- 								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button> -->
+								<button type="button" class="btn btn-success">Simpan</button>
+							</div>
+
+						</div>
+					</div>
+				</div>				
 
 			</div>
 		</div>

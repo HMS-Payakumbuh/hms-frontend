@@ -14,7 +14,8 @@ export class PasienService {
 		{id: 2, nama: 'Alexander Zucchini', tanggal_lahir: '25-02-1970', umur: 47, jender: 'Laki-laki', agama: 'Katolik', alamat: 'Jln.Sapi', kontak: '0987652131'},
 		{id: 3, nama: 'John', tanggal_lahir: '12-03-1983', umur: 34, jender: 'Laki-laki', agama: 'Protestan', alamat: 'Jln.Machan', kontak: '098712321'},
 		{id: 4, nama: 'Cliphonse Jo', tanggal_lahir: '12-03-1973', umur: 44, jender: 'Laki-laki', agama: 'Buddha', alamat: 'Jln.Michin', kontak: '09871425321'},
-		{id: 5, nama: 'Yngwie Malmsteen', tanggal_lahir: '30-06-1963', umur: 53, jender: 'Laki-laki', agama: 'Katolik', alamat: 'Jln.Musik', kontak: '09871422719'}
+		{id: 5, nama: 'Yngwie Malmsteen', tanggal_lahir: '30-06-1963', umur: 53, jender: 'Laki-laki', agama: 'Katolik', alamat: 'Jln.Musik', kontak: '09871422719'},
+		{id: 6, nama: 'Stephen Andi', tanggal_lahir: '23-10-1978', umur: 49, jender: 'Laki-laki', agama: 'Islam', alamat: 'Jln.Mosak', kontak: '0987241122719'},
 	];
 
 	constructor(private http:Http) { }

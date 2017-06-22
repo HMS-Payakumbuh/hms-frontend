@@ -2,7 +2,7 @@ export class Pembayaran {
 	id: number;
 	id_transaksi: number;
 	harga: number;
-	tanggal: string;
+	tanggal: Date;
 	nama_asuransi: string;
 	nama_pasien: string;
 	no_sep: string;
