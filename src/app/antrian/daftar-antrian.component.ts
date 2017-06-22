@@ -20,6 +20,7 @@ export class DaftarAntrianComponent implements OnInit {
   disabilitas: boolean = false;
   usia: number = 0;
   allLayanan: any[];
+  allPoliklinik: Poliklinik[];
 
   allTipeLayanan = ['Poliklinik', 'Laboratorium'];
 
