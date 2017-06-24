@@ -7,6 +7,8 @@ import { Dokter }					from './dokter';
 import { JadwalDokter }		from './jadwal-dokter';
 import { TenagaMedis }		from './tenaga-medis';
 
+import * as _ from "lodash";
+
 @Injectable()
 export class TenagaMedisService {
 
@@ -43,6 +45,14 @@ export class TenagaMedisService {
 
 	getAllJadwalDokter(): Promise<JadwalDokter[]> {
 		return Promise.resolve(this.allJadwalDokter)
+			.catch(this.handleError);
+	}
+
+	getAllAvailableJadwalDokter(poli: string): Promise<JadwalDokter[]> {
+		return this.getAllJadwalDokter()
+			.then(allJadwalDokter => 
+				_.filter(_.uniqBy(allJadwalDokter, 'nama_poliklinik'), {nama_poliklinik: poli})
+			)
 			.catch(this.handleError);
 	}
 }

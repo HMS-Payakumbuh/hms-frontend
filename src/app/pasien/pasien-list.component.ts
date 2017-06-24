@@ -12,6 +12,7 @@ import { PasienService }		from './pasien.service';
 export class PasienListComponent {
 	public allPasien: Pasien[];
 	public pasien: Pasien;
+	public search: string;
 
 	public filterQuery = "";
  	public rowsOnPage = 10;
@@ -27,11 +28,24 @@ export class PasienListComponent {
 	) {}
 
 	ngOnInit(): void {
-		this.pasienService.getAllPasien()
-			.then(allPasien => this.allPasien = allPasien);
+		// this.pasienService.getAllPasien()
+		// 	.then(allPasien => this.allPasien = allPasien);
 	}
 
-	editPasien(pasien: Pasien): void {
+	private editPasien(pasien: Pasien): void {
 		this.pasien = pasien;
 	}
+
+	private searchPasien() {
+    if (this.search.match(/([1-9][0-9]*)/)) {
+      this.allPasien = [];
+      this.pasienService.getPasien(parseInt(this.search))
+        .then(allPasien => {
+          this.allPasien.push(allPasien);
+        });
+    } else {
+       this.pasienService.getPasienByName(this.search)
+        .then(allPasien => this.allPasien = allPasien);
+    }
+  }
 }
