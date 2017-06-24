@@ -70,6 +70,7 @@ const routes: Routes = [
 	{ path: 'klaim', component: KlaimComponent },
 	{ path: 'klaim/:id', component: KlaimDetailComponent },
 	{ path: 'pendaftaran', component: PasienFormComponent },
+	{ path: 'pendaftaran/:namaLayanan', component: PasienFormComponent },
 	{ path: 'antrian', component: AntrianComponent },
 	{ path: 'antrian/:namaLayanan', component: AntrianComponent },
 	{ path: 'daftar-antrian', component: DaftarAntrianComponent },

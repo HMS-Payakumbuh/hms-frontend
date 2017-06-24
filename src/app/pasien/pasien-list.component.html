@@ -9,8 +9,16 @@
 
 			<div class="card-block">
 				<div class="card-text">	
-					<input class="form-control"  [(ngModel)]="param" placeholder="Cari ID/nama pasien"/>
-					<table class="table" [mfData]="allPasien | filterPasien : param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+					<div class="form-group">
+	                  <label for="search">Cari Pasien</label> <br>
+	                    <div class="input-group">
+	                      <input type="text" class="form-control" id="search" [(ngModel)]="search" placeholder="Cari ID/nama pasien">
+	                      <span class="input-group-btn">
+	                        <button class="btn btn-secondary" type="button" (click)="searchPasien()">Mulai</button>
+	                      </span>
+	                    </div>
+	                </div>
+					<table *ngIf="allPasien" class="table" [mfData]="allPasien | filterPasien : param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<thead>
 							<th><mfDefaultSorter by="id">ID</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>

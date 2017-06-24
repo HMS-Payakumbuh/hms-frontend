@@ -16,12 +16,10 @@ import { LaboratoriumService }    from '../layanan/laboratorium.service';
 export class DaftarAntrianComponent implements OnInit {
   tipe: string;
   layanan: string;
-  nama: string;
   disabilitas: boolean = false;
   usia: number = 0;
   allLayanan: any[];
   allTipeLayanan = ['Poliklinik', 'Laboratorium'];
-  allPoliklinik: Poliklinik[];
 
   constructor(
     private route: ActivatedRoute,
@@ -44,9 +42,9 @@ export class DaftarAntrianComponent implements OnInit {
 
   public daftar() {
     if (this.usia >= 65 || this.disabilitas) {
-      alert('Anda akan mendaftar ke layanan '+this.layanan +' dengan nama '+ this.nama +' dan masuk ke antrian khusus dengan nomor antrian A1');
+      alert('Anda akan mendaftar ke layanan '+this.layanan +' dan masuk ke antrian khusus dengan nomor antrian A1');
     } else {
-      alert('Anda akan mendaftar ke layanan '+this.layanan +' dengan nama '+ this.nama +' dan masuk ke antrian umum dengan nomor antrian A1');
+      alert('Anda akan mendaftar ke layanan '+this.layanan +' dan masuk ke antrian umum dengan nomor antrian A1');
     }
   }
     
