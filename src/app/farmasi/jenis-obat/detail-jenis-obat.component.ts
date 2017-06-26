@@ -12,7 +12,7 @@ import { JenisObatService }		from './jenis-obat.service';
  	providers: [JenisObatService]
 })
 
-export class DetailJenisObatComponent implements OnInit {
+export class DetailJenisObatComponent {
 	jenisObat: JenisObat;
 
 	constructor(
@@ -21,11 +21,11 @@ export class DetailJenisObatComponent implements OnInit {
 		private location: Location
 	) {}
 
-	ngOnInit(): void {
-		this.route.params
-			.switchMap((params: Params) => this.jenisObatService.getJenisObat(+params['id']))
-			.subscribe(jenisObat => this.jenisObat = jenisObat);
-	}
+//	ngOnInit(): void {
+//		this.route.params
+//			.switchMap((params: Params) => this.jenisObatService.getJenisObat(+params['id']))
+//			.subscribe(jenisObat => this.jenisObat = jenisObat);
+//	}
 
 	goBack(): void {
 		this.location.back();

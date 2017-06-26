@@ -11,7 +11,7 @@ export class FilterJenisObatPipe implements PipeTransform {
   	}
     return items.filter(function(item){
               var paramInId = item.id.toString().toLowerCase().indexOf(param.toLowerCase()) > -1;
-              var paramInMerek = item.merek.toLowerCase().indexOf(param.toLowerCase()) > -1;              
+              var paramInMerek = item.merek_obat.toLowerCase().indexOf(param.toLowerCase()) > -1;              
               var paramInGenerik = item.nama_generik.toLowerCase().indexOf(param.toLowerCase()) > -1;
               return paramInId || paramInMerek || paramInGenerik;
   	})

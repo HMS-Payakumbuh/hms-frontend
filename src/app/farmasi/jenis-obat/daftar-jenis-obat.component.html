@@ -12,24 +12,24 @@
 						<thead>
 							<tr>
 								<th><mfDefaultSorter by="id">ID Jenis Obat</mfDefaultSorter></th>
-								<th><mfDefaultSorter by="merek">Merek Obat</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="merek_obat">Merek Obat</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="nama_generik">Nama Generik</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="pembuat">Pabrikan</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="golongan">Golongan</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="satuan">Satuan</mfDefaultSorter></th>							
-								<th><mfDefaultSorter by="harga">Harga Jual</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="harga_jual_satuan">Harga Jual</mfDefaultSorter></th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr *ngFor="let jenisObat of mf.data">
 								<td>{{jenisObat.id}}</td>
-								<td>{{jenisObat.merek}}</td>
+								<td>{{jenisObat.merek_obat}}</td>
 								<td>{{jenisObat.nama_generik}}</td>
 								<td>{{jenisObat.pembuat}}</td>
 								<td>{{jenisObat.golongan}}</td>
 								<td>{{jenisObat.satuan}}</td>
-								<td>Rp. {{jenisObat.harga}}</td>								
+								<td>Rp. {{jenisObat.harga_jual_satuan}}</td>								
 								<td><button type="button" class="btn btn-primary" [routerLink] = "['/jenis-obat', jenisObat.id]">Detail</button></td>
 							</tr>
 						</tbody>		
