@@ -13,15 +13,15 @@ export class AntrianService {
 
 	//Mock data
 	allAntrianFrontOffice: AntrianFrontOffice[] = [
-      {no_antrian: 1, nama_pasien: 'Octavianus Markus', waktu_masuk_antrian:'09:15:15', jenis: 'umum', nama_layanan: 'Poli Umum', kategori_antrian: 'A' },
-      {no_antrian: 2, nama_pasien: 'John', waktu_masuk_antrian:'09:15:45', jenis: 'umum', nama_layanan: 'Poli Umum', kategori_antrian: 'A' },
-      {no_antrian: 3, nama_pasien: 'Alexander Zucchini', waktu_masuk_antrian:'09:16:15', jenis: 'umum', nama_layanan: 'Poli Umum', kategori_antrian: 'A' },
-      {no_antrian: 4, nama_pasien: 'Al Ex', waktu_masuk_antrian:'09:15:15', jenis: 'khusus', nama_layanan: 'Poli Umum', kategori_antrian: 'A' },
-      {no_antrian: 5, nama_pasien: 'Hu Wan', waktu_masuk_antrian:'09:15:45', jenis: 'khusus', nama_layanan: 'Poli Umum', kategori_antrian: 'A' },
-      {no_antrian: 6, nama_pasien: 'Gunawan', waktu_masuk_antrian:'09:16:15', jenis: 'khusus', nama_layanan: 'Poli Umum', kategori_antrian: 'A' },
-      {no_antrian: 1, nama_pasien: 'Jenika', waktu_masuk_antrian:'09:15:15', jenis: 'umum', nama_layanan: 'Poli THT', kategori_antrian: 'B' },
-      {no_antrian: 2, nama_pasien: 'Nate Tan', waktu_masuk_antrian:'09:15:45', jenis: 'umum', nama_layanan: 'Poli THT', kategori_antrian: 'B' },
-      {no_antrian: 3, nama_pasien: 'John Jr', waktu_masuk_antrian:'09:16:15', jenis: 'umum', nama_layanan: 'Poli THT', kategori_antrian: 'B' },
+      {no_antrian: 1, waktu_masuk_antrian:'09:15:15', jenis: 'umum', nama_layanan: 'Poli Umum', kategori_antrian: 'A' },
+      {no_antrian: 2, waktu_masuk_antrian:'09:15:45', jenis: 'umum', nama_layanan: 'Poli Umum', kategori_antrian: 'A' },
+      {no_antrian: 3, waktu_masuk_antrian:'09:16:15', jenis: 'umum', nama_layanan: 'Poli Umum', kategori_antrian: 'A' },
+      {no_antrian: 4, waktu_masuk_antrian:'09:15:15', jenis: 'khusus', nama_layanan: 'Poli Umum', kategori_antrian: 'A' },
+      {no_antrian: 5, waktu_masuk_antrian:'09:15:45', jenis: 'khusus', nama_layanan: 'Poli Umum', kategori_antrian: 'A' },
+      {no_antrian: 6, waktu_masuk_antrian:'09:16:15', jenis: 'khusus', nama_layanan: 'Poli Umum', kategori_antrian: 'A' },
+      {no_antrian: 1, waktu_masuk_antrian:'09:15:15', jenis: 'umum', nama_layanan: 'Poli THT', kategori_antrian: 'B' },
+      {no_antrian: 2, waktu_masuk_antrian:'09:15:45', jenis: 'umum', nama_layanan: 'Poli THT', kategori_antrian: 'B' },
+      {no_antrian: 3, waktu_masuk_antrian:'09:16:15', jenis: 'umum', nama_layanan: 'Poli THT', kategori_antrian: 'B' },
 	];
 
 	allAntrian: Antrian[] = [

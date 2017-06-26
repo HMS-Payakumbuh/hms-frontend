@@ -6,6 +6,8 @@ import { Asuransi }  from './asuransi';
 import { AsuransiService }  from './asuransi.service';
 import { PoliklinikService }    from '../layanan/poliklinik.service';
 import { LaboratoriumService }    from '../layanan/laboratorium.service';
+import { JadwalDokter }   from '../tenaga-medis/jadwal-dokter';
+import { TenagaMedisService}  from '../tenaga-medis/tenaga-medis.service';
 
 @Component({
   selector: 'pasien-form',
@@ -14,7 +16,8 @@ import { LaboratoriumService }    from '../layanan/laboratorium.service';
     PoliklinikService,
     LaboratoriumService,
     PasienService,
-    AsuransiService
+    AsuransiService,
+    TenagaMedisService
   ]
 })
 export class PasienFormComponent implements OnInit {
@@ -25,18 +28,21 @@ export class PasienFormComponent implements OnInit {
   no_rujukan: string;
   searchDone: boolean;
   update: boolean;
+  sub: any;
   asuransi: Asuransi;
   pasien: Pasien;
   allAsuransi: Asuransi[];
   allLayanan: any[];
   allPasien: Pasien[] = [];
+  allJadwalDokter: JadwalDokter[];
 
   constructor(
     private route: ActivatedRoute,
     private poliklinikService: PoliklinikService,
     private laboratoriumService: LaboratoriumService,
     private pasienService: PasienService,
-    private asuransiService: AsuransiService
+    private asuransiService: AsuransiService,
+    private tenagaMedisService: TenagaMedisService,
   ) {}
 
   submitted = false;
@@ -47,22 +53,28 @@ export class PasienFormComponent implements OnInit {
 
   religions = ['Islam', 'Protestan', 'Katolik', 'Buddha', 'Hindu', 'Konghucu'];
 
-  doctors = ['Dr. Juan', 'Dr. Alec', 'Dr. Hans', 'Dr. Kelvin'];
-
   //pasienAutocompleteConfig: any = {'placeholder': 'Tuliskan nama pasien', 'sourceField': ['nama']};
 
   ngOnInit() {
     this.pasien = new Pasien(null,'','',null,'','','','');
     this.asuransi = new Asuransi(null,'',null);
 
-    // this.pasienService.getAllPasien()
-    //   .then(allPasien => this.allPasien = allPasien);
-  }
+    this.sub = this.route.params
+      .subscribe(params => { 
+        this.layanan = params['namaLayanan'];
+    });
+    if (this.layanan === undefined) {
+      
+    } else {
+      if (this.layanan.indexOf("Poli") >= 0)
+          this.tipe = "Poliklinik";
+        else
+          this.tipe = "Laboratorium";  
+        this.selectTipeLayanan();
+        this.selectLayanan();
+    }
 
-  /*pasienSelected(pasien: Pasien) {
-    this.pasien = pasien;
-    this.asuransiService.getAsuransi(this.pasien.id).then(allAsuransi => this.allAsuransi = allAsuransi);  
-  }*/
+  }
 
   private searchPasien() {
     if (this.search.match(/([1-9][0-9]*)/)) {
@@ -82,7 +94,7 @@ export class PasienFormComponent implements OnInit {
     this.searchDone = true;
   }
 
-  private selectLayanan() {
+  private selectTipeLayanan() {
     if (this.tipe === 'Poliklinik') {
       this.poliklinikService.getAllPoliklinik()
         .then(allPoliklinik => this.allLayanan = allPoliklinik);
@@ -90,6 +102,11 @@ export class PasienFormComponent implements OnInit {
       this.laboratoriumService.getAllLaboratorium()
         .then(allLaboratorium => this.allLayanan = allLaboratorium);  
     }
+  }
+
+  private selectLayanan() {
+    this.tenagaMedisService.getAllAvailableJadwalDokter(this.layanan)
+       .then(allJadwalDokter => this.allJadwalDokter = allJadwalDokter);
   }
 
   private customTrackBy(index: number, obj: any): any {

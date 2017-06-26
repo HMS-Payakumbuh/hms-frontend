@@ -21,9 +21,15 @@ export class DaftarJenisObatComponent {
 		private JenisObatService: JenisObatService
 	) {}
 
+//	ngOnInit(): void {
+//		this.JenisObatService.getAllJenisObat()
+//			.then(allJenisObat => this.allJenisObat = allJenisObat);
+//	}
+
 	ngOnInit(): void {
-		this.JenisObatService.getAllJenisObat()
-			.then(allJenisObat => this.allJenisObat = allJenisObat);
+		this.JenisObatService.getAllJenisObat().subscribe(
+			data => { this.allJenisObat = data }
+		);
 	}
 
 	onClickDatePicker(): void {
