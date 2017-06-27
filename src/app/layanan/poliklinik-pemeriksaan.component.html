@@ -76,6 +76,8 @@
 									<div class="row mb-3">
 										<div class="col-4">
 											<label for="tekananDarah">TD (mmHg)</label>
+											<ng-template #tekananDarahTooltip>Tekanan Darah (optional)</ng-template>
+											<i class="fa fa-question-circle" [ngbTooltip]="tekananDarahTooltip"></i>
 											<input type="text" class="form-control" id="inputTekananDarah">
 										</div>
 										<div class="col-4">
@@ -112,8 +114,7 @@
 
 							<div class="form-group">
 								<label for="inputDiagnosis">Masukkan kode diagnosis pasien (ICD-10)</label>
-								<br/>
-								<input id="inputDiagnosis" autocomplete [items]="allDiagnosisReference" [config]="diagnosisAutocompleteConfig" (selectEvent)="addSelectedDiagnosis($event)">
+								<input id="inputTindakan" class="form-control" [ngbTypeahead]="searchDiagnosis" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addSelectedDiagnosis($event.item)">								
 							</div>
 
 							<table class="table" *ngIf="selectedDiagnosis.length > 0">
@@ -143,8 +144,7 @@
 
 							<div class="form-group">
 								<label for="inputTindakan">Masukkan tindakan yang dilakukan (ICD-9-CM)</label>
-								<br/>
-								<input id="inputTindakan" autocomplete [items]="allTindakanReference" [config]="tindakanAutocompleteConfig" (selectEvent)="addSelectedTindakan($event)">
+								<input id="inputTindakan" class="form-control" [ngbTypeahead]="searchTindakan" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addSelectedTindakan($event.item)">
 							</div>
 
 							<table class="table" *ngIf="selectedTindakan.length > 0">
@@ -162,11 +162,9 @@
 										<td style="vertical-align: middle;">{{i + 1}}</td>
 										<td style="vertical-align: middle;">{{tindakan.kode}}</td>
 										<td style="vertical-align: middle;">{{tindakan.nama}}</td>
+										<td style="vertical-align: middle;">Rp. {{tindakan.harga | number: '.2-2'}}</td>
 										<td style="vertical-align: middle;">
-											<input type="text" class="form-control" [(ngModel)]="tindakan.harga" required>
-										</td>
-										<td style="vertical-align: middle;">
-											<input type="text" class="form-control" placeholder="Keterangan Tindakan" [(ngModel)]="keteranganTindakan[i]">
+											<textarea class="form-control" rows="2" [(ngModel)]="keteranganTindakan[i]"></textarea>
 										</td>
 										<td style="vertical-align: middle;">
 											<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#obatTindakanModal' + i">

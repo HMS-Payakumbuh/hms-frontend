@@ -3,8 +3,10 @@ import { BrowserModule }            from '@angular/platform-browser';
 import { FormsModule }              from '@angular/forms';
 import { ReactiveFormsModule }      from '@angular/forms';
 import { HttpModule }               from '@angular/http';
+import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
 import { DpDatePickerModule }       from 'ng2-date-picker';
 import { AutocompleteModule}        from 'ng2-input-autocomplete';
+import { DataTableModule }          from 'angular2-datatable';
 
 import { MatchesStatusPipe }            from './pipe/matches-status.pipe';
 import { FilterPasienPipe }         from './pipe/filter-pasien.pipe';
@@ -90,8 +92,6 @@ import { SettingsComponent }        from './settings/settings.component';
 import { AppRoutingModule }         from './app-routing.module';
 import { AppComponent }             from './app.component';
 
-import { DataTableModule }    from 'angular2-datatable';
-
 @NgModule({
     imports:      [
       	BrowserModule,
@@ -99,6 +99,7 @@ import { DataTableModule }    from 'angular2-datatable';
         ReactiveFormsModule,
         AppRoutingModule,
         HttpModule,
+        NgbModule.forRoot(),
         DpDatePickerModule,
         AutocompleteModule.forRoot(),
         DataTableModule

@@ -2,6 +2,8 @@ import { Component, OnInit }															from '@angular/core';
 import { ActivatedRoute, Params }													from '@angular/router';
 import { FormGroup, FormArray, FormBuilder, Validators }	from '@angular/forms';
 import { Location }																				from '@angular/common';
+import { Observable }																			from 'rxjs/Observable';
+import { NgbTypeaheadConfig } 														from '@ng-bootstrap/ng-bootstrap';
 
 import { Transaksi }						from '../transaksi/transaksi';
 import { TransaksiService }			from '../transaksi/transaksi.service';
@@ -12,7 +14,7 @@ import { PoliklinikService }		from './poliklinik.service';
 import { DiagnosisReference }		from './diagnosis-reference';
 import { DiagnosisService }			from './diagnosis.service';
 
-import { Tindakan }			from './tindakan';
+import { Tindakan }							from './tindakan';
 import { TindakanReference }		from './tindakan-reference';
 import { TindakanService }			from './tindakan.service';
 
@@ -23,7 +25,8 @@ import { TindakanService }			from './tindakan.service';
  		PoliklinikService,
  		TransaksiService,
  		DiagnosisService,
- 		TindakanService
+ 		TindakanService,
+ 		NgbTypeaheadConfig
 	]
 })
 
@@ -40,8 +43,22 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	selectedTindakan: TindakanReference[] = [];
 	keteranganTindakan: string[] = [];
 
-	diagnosisAutocompleteConfig: any = {'placeholder': 'Tuliskan kode diagnosis', 'sourceField': ['nama']};
-	tindakanAutocompleteConfig: any = {'placeholder': 'Tuliskan kode tindakan', 'sourceField': ['nama']};
+	inputFormatter = (value : any) => value.nama;
+	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
+
+	searchTindakan = (text$: Observable<string>) =>
+		text$
+			.debounceTime(200)
+			.distinctUntilChanged()
+			.map(term => term.length < 2 ? []
+				: this.allTindakanReference.filter(tindakanReference => tindakanReference.nama.toLowerCase().indexOf(term.toLowerCase()) > -1));
+
+	searchDiagnosis = (text$: Observable<string>) =>
+		text$
+			.debounceTime(200)
+			.distinctUntilChanged()
+			.map(term => term.length < 2 ? []
+				: this.allDiagnosisReference.filter(diagnosisReference => diagnosisReference.nama.toLowerCase().indexOf(term.toLowerCase()) > -1));
 
 	constructor(
 		private route: ActivatedRoute,
@@ -50,8 +67,11 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 		private transaksiService: TransaksiService,
 		private poliklinikService: PoliklinikService,
 		private diagnosisService: DiagnosisService,
-		private tindakanService: TindakanService
-	) {}
+		private tindakanService: TindakanService,
+		private config: NgbTypeaheadConfig
+	) {
+		config.editable = false;
+	}
 	
 	ngOnInit() {
 		this.addForm = this.formBuilder.group({
