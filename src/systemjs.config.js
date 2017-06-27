@@ -35,10 +35,10 @@
       'ng2-date-picker': 'npm:ng2-date-picker',
       'moment': 'npm:moment',
 
-      //lodash
+      // lodash
       'lodash': 'npm:lodash',
 
-      //ng2-input-autocomplete
+      // ng2-input-autocomplete
       'ng2-input-autocomplete': 'npm:ng2-input-autocomplete/bundles/',
 
       // angular2-datatable

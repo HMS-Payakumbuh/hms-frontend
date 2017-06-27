@@ -2,6 +2,8 @@ import { Component, OnInit }															from '@angular/core';
 import { ActivatedRoute, Params }													from '@angular/router';
 import { FormGroup, FormArray, FormBuilder, Validators }	from '@angular/forms';
 import { Location }																				from '@angular/common';
+import { Observable }																			from 'rxjs/Observable';
+import { NgbTypeaheadConfig } 														from '@ng-bootstrap/ng-bootstrap';
 
 import { Transaksi }						from '../transaksi/transaksi';
 import { TransaksiService }			from '../transaksi/transaksi.service';
@@ -33,7 +35,15 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 	selectedTindakan: TindakanReference[] = [];
 	keteranganTindakan: string[] = [];
 
-	tindakanAutocompleteConfig: any = {'placeholder': 'Tuliskan kode tindakan', 'sourceField': ['nama']};
+	inputFormatter = (value : any) => value.nama;
+	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
+
+	searchTindakan = (text$: Observable<string>) =>
+		text$
+			.debounceTime(200)
+			.distinctUntilChanged()
+			.map(term => term.length < 2 ? []
+				: this.allTindakanReference.filter(tindakanReference => tindakanReference.nama.toLowerCase().indexOf(term.toLowerCase()) > -1));	
 
 	constructor(
 		private route: ActivatedRoute,
@@ -41,8 +51,11 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private transaksiService: TransaksiService,
 		private laboratoriumService: LaboratoriumService,
-		private tindakanService: TindakanService
-	) {}
+		private tindakanService: TindakanService,
+		private config: NgbTypeaheadConfig
+	) {
+		config.editable = false;
+	}
 	
 	ngOnInit() {
 		this.route.params

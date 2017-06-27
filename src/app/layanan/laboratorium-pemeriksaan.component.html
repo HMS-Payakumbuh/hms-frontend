@@ -102,8 +102,7 @@
 
 							<div class="form-group">
 								<label for="inputTindakan">Masukkan tindakan yang dilakukan (ICD-9-CM)</label>
-								<br/>
-								<input id="inputTindakan" autocomplete [items]="allTindakanReference" [config]="tindakanAutocompleteConfig" (selectEvent)="addSelectedTindakan($event)">
+								<input id="inputTindakan" class="form-control" [ngbTypeahead]="searchTindakan" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addSelectedTindakan($event.item)">
 							</div>
 
 							<table class="table" *ngIf="selectedTindakan.length > 0">
@@ -121,11 +120,9 @@
 										<td style="vertical-align: middle;">{{i + 1}}</td>
 										<td style="vertical-align: middle;">{{tindakan.kode}}</td>
 										<td style="vertical-align: middle;">{{tindakan.nama}}</td>
+										<td style="vertical-align: middle;">Rp. {{tindakan.harga | number: '.2-2'}}</td>
 										<td style="vertical-align: middle;">
-											<input type="text" class="form-control" [(ngModel)]="tindakan.harga" required>
-										</td>
-										<td style="vertical-align: middle;">
-											<input type="text" class="form-control" placeholder="Keterangan Tindakan" [(ngModel)]="keteranganTindakan[i]">
+											<textarea class="form-control" rows="2" [(ngModel)]="keteranganTindakan[i]"></textarea>
 										</td>
 										<td style="vertical-align: middle;">
 											<button type="button" class="btn btn-sm btn-info">Upload Hasil</button>											
