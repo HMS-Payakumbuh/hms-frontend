@@ -21,11 +21,11 @@ export class DetailJenisObatComponent {
 		private location: Location
 	) {}
 
-//	ngOnInit(): void {
-//		this.route.params
-//			.switchMap((params: Params) => this.jenisObatService.getJenisObat(+params['id']))
-//			.subscribe(jenisObat => this.jenisObat = jenisObat);
-//	}
+	ngOnInit(): void {
+		this.route.params
+			.switchMap((params: Params) => this.jenisObatService.getJenisObat(+params['id']))
+			.subscribe(jenisObat => this.jenisObat = jenisObat);
+	}
 
 	goBack(): void {
 		this.location.back();

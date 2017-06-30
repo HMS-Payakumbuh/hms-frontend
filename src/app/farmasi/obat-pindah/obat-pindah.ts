@@ -1,20 +1,13 @@
 export class ObatPindah {
-	id: number;
-	id_jenis: number;	
-	merek: string;
-	nama_generik: string;
-	pembuat: string;
-	golongan: string;
-	satuan: string;
-	harga_jual: number;
-	nomor_batch: string;
-	waktu_masuk: Date;
-	kadaluarsa: Date;
-	harga_beli: number;
-	kode_obat: number;	
-	waktu_keluar: Date;	
-	jumlah: number;
-	asal: string;
-	tujuan: string;
-	keterangan: string;
+	constructor(
+    public id: number,
+    public id_jenis_obat: number,
+    public id_obat_masuk: number,
+    public waktu_pindah: Date,
+    public jumlah: string,
+    public alasan: string,    
+    public asal: number, 
+    public tujuan: number,
+    public keterangan: string
+  	) {  }
 }

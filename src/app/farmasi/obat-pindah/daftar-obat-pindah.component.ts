@@ -10,7 +10,6 @@ import { ObatPindahService }		from './obat-pindah.service';
 })
 
 export class DaftarObatPindahComponent {
-
 	public allObatPindah: ObatPindah[];
 
 	public filterQuery = "";
@@ -23,8 +22,9 @@ export class DaftarObatPindahComponent {
 	) {}
 
 	ngOnInit(): void {
-		this.ObatPindahService.getAllObatPindah()
-			.then(allObatPindah => this.allObatPindah = allObatPindah);
+		this.ObatPindahService.getAllObatPindah().subscribe(
+			data => { this.allObatPindah = data }
+		);
 	}
 
 	onClickDatePicker(): void {

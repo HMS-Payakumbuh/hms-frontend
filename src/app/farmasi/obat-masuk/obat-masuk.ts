@@ -1,16 +1,12 @@
 export class ObatMasuk {	
-	kode_obat: number;
-	id_jenis: number;	
-	merek: string;
-	nama_generik: string;
-	pembuat: string;
-	golongan: string;
-	satuan: string;
-	harga_jual: number;
-	nomor_batch: string;
-	waktu_masuk: Date;
-	kadaluarsa: Date;
-	harga_beli: number;
-	jumlah: number;
-	keterangan: string;
+	constructor(
+    public id: number,
+    public id_jenis_obat: number,
+    public nomor_batch: string,
+    public waktu_masuk: Date,
+    public jumlah: number,
+    public harga_beli_satuan: number,
+    public kadaluarsa: Date,
+    public barcode: string
+  ) {  }
 }
