@@ -22,23 +22,21 @@
 						<tbody>
 							<tr>
 								<th><mfDefaultSorter by="waktu_masuk">Waktu Masuk</mfDefaultSorter></th>
-								<th><mfDefaultSorter by="kode_obat">Kode Obat</mfDefaultSorter></th>
-								<th><mfDefaultSorter by="merek">Merek Obat</mfDefaultSorter></th>
-								<th><mfDefaultSorter by="satuan">Satuan</mfDefaultSorter></th>
-								<th><mfDefaultSorter by="harga_beli">Harga Beli Satuan</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="barcode">Kode Obat</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="jenis_obat.merek_obat">Merek Obat</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="harga_beli_satuan">Harga Beli Satuan</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="kadaluarsa">Kadaluarsa</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="jumlah">Jumlah</mfDefaultSorter></th>
 								<th></th>
 							</tr>
 							<tr *ngFor="let obatMasuk of mf.data">
 								<td>{{obatMasuk.waktu_masuk | date:'d MMM y H:mm:ss'}}</td>
-								<td>{{obatMasuk.kode_obat}}</td>
-								<td>{{obatMasuk.merek}}</td>
-								<td>{{obatMasuk.satuan}}</td>
-								<td>Rp. {{obatMasuk.harga_beli}}</td>	
+								<td>{{obatMasuk.barcode}}</td>
+								<td>{{obatMasuk.jenis_obat.merek_obat}}</td>
+								<td>Rp. {{obatMasuk.harga_beli_satuan}}</td>	
 								<td>{{obatMasuk.kadaluarsa | date:'d MMM y'}}</td>	
-								<td>{{obatMasuk.jumlah}}</td>			
-								<td><button type="button" class="btn btn-primary" [routerLink] = "['/obat-masuk', obatMasuk.kode_obat]">Detail</button></td>
+								<td>{{obatMasuk.jumlah}} {{obatMasuk.jenis_obat.satuan}}</td>			
+								<td><button type="button" class="btn btn-primary" [routerLink] = "['/obat-masuk', obatMasuk.id]">Detail</button></td>
 							</tr>						
 						</tbody>	
 						<tfoot>

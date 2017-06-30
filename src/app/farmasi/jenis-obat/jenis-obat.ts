@@ -1,10 +1,13 @@
 export class JenisObat {
-	id: number;	
-	merek_obat: string;
-	nama_generik: string;
-	pembuat: string;
-	golongan: string;
-	satuan: string;
-	harga_jual_satuan: number;
-	keterangan: string;
+	constructor(
+    public id: number,
+    public merek_obat: string,
+    public nama_generik: string,
+    public pembuat: string,
+    public golongan: string,
+    public satuan: string,
+    public harga_jual_satuan: number,
+    public keterangan: string
+  ) {  }
 }
+

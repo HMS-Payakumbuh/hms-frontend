@@ -11,35 +11,31 @@
 						<tbody>
 							<tr>
 								<td><b>Kode Obat</b></td>
-								<td>{{obatMasuk.kode_obat}}</td>	
+								<td>{{obatMasuk.barcode}}</td>	
 							</tr>
 							<tr>
 								<td><b>ID Jenis Obat</b></td>
-								<td>{{obatMasuk.id_jenis}}</td>	
+								<td>{{obatMasuk.id_jenis_obat}}</td>	
 							</tr>
 							<tr>
 								<td><b>Merek Obat</b></td>								
-								<td>{{obatMasuk.merek}}</td>								
+								<td>{{obatMasuk.jenis_obat.merek_obat}}</td>								
 							</tr>
 							<tr>
 								<td><b>Nama Generik</b></td>
-								<td>{{obatMasuk.nama_generik}}</td>								
+								<td>{{obatMasuk.jenis_obat.nama_generik}}</td>								
 							</tr>
 							<tr>
 								<td><b>Pembuat</b></td>
-								<td>{{obatMasuk.pembuat}}</td>								
+								<td>{{obatMasuk.jenis_obat.pembuat}}</td>								
 							</tr>
 							<tr>
 								<td><b>Golongan</b></td>
-								<td>{{obatMasuk.golongan}}</td>
-							</tr>
-							<tr>
-								<td><b>Satuan</b></td>					
-								<td>{{obatMasuk.satuan}}</td>
+								<td>{{obatMasuk.jenis_obat.golongan}}</td>
 							</tr>
 							<tr>
 								<td><b>Harga Jual Satuan</b></td>								
-								<td>Rp. {{obatMasuk.harga_jual}}</td>
+								<td>Rp. {{obatMasuk.jenis_obat.harga_jual_satuan}}</td>
 							</tr>
 							<tr>
 								<td><b>Nomor Batch</b></td>								
@@ -60,7 +56,7 @@
 							</tr>
 							<tr>
 								<td><b>Jumlah</b></td>								
-								<td>{{obatMasuk.jumlah}}</td>
+								<td>{{obatMasuk.jumlah}} {{obatMasuk.jenis_obat.satuan}}</td>
 							</tr>
 							<tr>
 								<td><b>Keterangan</b></td>								

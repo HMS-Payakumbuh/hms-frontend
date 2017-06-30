@@ -14,7 +14,7 @@ export class DaftarObatMasukComponent {
 
 	public filterQuery = "";
     public rowsOnPage = 5;
-    public sortBy = "waktu_masuk";
+    public sortBy = "id";
     public sortOrder = "asc";
 
 	constructor(
@@ -22,7 +22,8 @@ export class DaftarObatMasukComponent {
 	) {}
 
 	ngOnInit(): void {
-		this.ObatMasukService.getAllObatMasuk()
-			.then(allObatMasuk => this.allObatMasuk = allObatMasuk);
+		this.ObatMasukService.getAllObatMasuk().subscribe(			
+			data => { this.allObatMasuk = data }
+		);
 	}
 }

@@ -11,59 +11,55 @@
 						<tbody>
 							<tr>
 								<td><b>Kode Obat</b></td>
-								<td>{{obatPindah.kode_obat}}</td>	
+								<td>{{obatPindah.obat_masuk.barcode}}</td>	
 							</tr>
 							<tr>
 								<td><b>ID Jenis Obat</b></td>
-								<td>{{obatPindah.id_jenis}}</td>	
+								<td>{{obatPindah.id_jenis_obat}}</td>	
 							</tr>
 							<tr>
 								<td><b>Merek Obat</b></td>								
-								<td>{{obatPindah.merek}}</td>								
+								<td>{{obatPindah.jenis_obat.merek_obat}}</td>								
 							</tr>
 							<tr>
 								<td><b>Nama Generik</b></td>
-								<td>{{obatPindah.nama_generik}}</td>								
+								<td>{{obatPindah.jenis_obat.nama_generik}}</td>								
 							</tr>
 							<tr>
 								<td><b>Pembuat</b></td>
-								<td>{{obatPindah.pembuat}}</td>								
+								<td>{{obatPindah.jenis_obat.pembuat}}</td>								
 							</tr>
 							<tr>
 								<td><b>Golongan</b></td>
-								<td>{{obatPindah.golongan}}</td>
-							</tr>
-							<tr>
-								<td><b>Satuan</b></td>					
-								<td>{{obatPindah.satuan}}</td>
+								<td>{{obatPindah.jenis_obat.golongan}}</td>
 							</tr>
 							<tr>
 								<td><b>Nomor Batch</b></td>								
-								<td>{{obatPindah.nomor_batch}}</td>
+								<td>{{obatPindah.obat_masuk.nomor_batch}}</td>
 							</tr>
 							<tr>
 								<td><b>Waktu Masuk</b></td>								
-								<td>{{obatPindah.waktu_masuk | date:'d MMM y H:mm:ss'}}</td>
+								<td>{{obatPindah.obat_masuk.waktu_masuk | date:'d MMM y H:mm:ss'}}</td>
 							</tr>
 							<tr>
 								<td><b>Kadaluarsa</b></td>								
-								<td>{{obatPindah.kadaluarsa | date:'d MMM y'}}</td>
+								<td>{{obatPindah.obat_masuk.kadaluarsa | date:'d MMM y'}}</td>
 							</tr>
 							<tr>
-								<td><b>Waktu Keluar</b></td>								
-								<td>{{obatPindah.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>
+								<td><b>Waktu Pindah</b></td>								
+								<td>{{obatPindah.waktu_pindah | date:'d MMM y H:mm:ss'}}</td>
 							</tr>
 							<tr>
 								<td><b>Jumlah Keluar</b></td>								
-								<td>{{obatPindah.jumlah}}</td>
+								<td>{{obatPindah.jumlah}} {{obatPindah.jenis_obat.satuan}}</td>
 							</tr>
 							<tr>
 								<td><b>Asal</b></td>								
-								<td>{{obatPindah.asal}}</td>
+								<td>{{obatPindah.lokasi_asal.nama}}</td>
 							</tr>
 							<tr>
 								<td><b>Tujuan</b></td>								
-								<td>{{obatPindah.tujuan}}</td>
+								<td>{{obatPindah.lokasi_tujuan.nama}}</td>
 							</tr>
 							<tr>
 								<td><b>Keterangan</b></td>								
