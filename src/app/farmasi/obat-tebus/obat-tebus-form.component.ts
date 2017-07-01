@@ -1,11 +1,11 @@
 import { Component, Input, ChangeDetectorRef } from '@angular/core';
 
 @Component({
-  selector: 'obat-resep-form-page',
-  templateUrl: './obat-resep-form.component.html'
+  selector: 'obat-tebus-form-page',
+  templateUrl: './obat-tebus-form.component.html'
 })
 
-export class ObatResepFormComponent {	
+export class ObatTebusFormComponent {	
 
 	rowData = [];
 

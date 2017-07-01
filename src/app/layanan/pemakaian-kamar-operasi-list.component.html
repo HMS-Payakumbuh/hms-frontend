@@ -32,7 +32,7 @@
 							<tr>
 						</thead>
 						
-						<tbody *ngFor="let kamaroperasi of allPemakaianKamarOperasi | filterWaktuKeluar: selectedDate | filterObatResep: param">
+						<tbody *ngFor="let kamaroperasi of allPemakaianKamarOperasi | filterWaktuKeluar: selectedDate">
 							<tr>
 								<td>{{kamaroperasi?.no_kamar}}</td>
                                 <td>Nama Pasien</td>

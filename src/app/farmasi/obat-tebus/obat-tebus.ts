@@ -1,10 +1,10 @@
-import { ObatResepItem }	from './obat-resep-item';
+import { ObatTebusItem }	from './obat-tebus-item';
 
-export class ObatResep {
+export class ObatTebus {
 	id: number;	
 	id_transaksi: number;
 	id_pasien: number;
 	nama_pasien: string;
 	waktu_keluar: Date;
-	obat: ObatResepItem[];
+	obat: ObatTebusItem[];
 }

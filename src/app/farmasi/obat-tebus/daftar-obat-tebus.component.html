@@ -2,7 +2,7 @@
 		<div class="card mb-3">
 			<div class="card-header card-info">
 				<h4>
-					<i class="fa fa-list-alt" aria-hidden="true"></i> Daftar Obat Resep
+					<i class="fa fa-list-alt" aria-hidden="true"></i> Daftar Obat Tebus
 				</h4>
 			</div>
 			<div class="card-block">
@@ -18,7 +18,7 @@
 						</div>
 					</div>
 
-					<table class="table" [mfData]="allObatResep | filterWaktuKeluar: selectedDate | filterObatResep: param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+					<table class="table" [mfData]="allObatTebus | filterWaktuKeluar: selectedDate | filterObatTebus: param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<tbody>
 							<tr>
 								<th><mfDefaultSorter by="id_transaksi">ID Transaksi</mfDefaultSorter></th>
@@ -27,12 +27,12 @@
 								<th><mfDefaultSorter by="waktu_keluar">Waktu Tebus</mfDefaultSorter></th>
 								<th></th>
 							</tr>
-							<tr *ngFor="let obatResep of mf.data">
-								<td>{{obatResep.id_transaksi}}</td>
-								<td>{{obatResep.id_pasien}}</td>
-								<td>{{obatResep.nama_pasien}}</td>
-								<td>{{obatResep.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>
-								<td><button type="button" class="btn btn-primary" [routerLink] = "['/obat-resep', obatResep.id]">Detail</button></td>
+							<tr *ngFor="let obatTebus of mf.data">
+								<td>{{obatTebus.id_transaksi}}</td>
+								<td>{{obatTebus.id_pasien}}</td>
+								<td>{{obatTebus.nama_pasien}}</td>
+								<td>{{obatTebus.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>
+								<td><button type="button" class="btn btn-primary" [routerLink] = "['/obat-tebus', obatTebus.id]">Detail</button></td>
 							</tr>						
 						</tbody>	
 						<tfoot>
@@ -44,7 +44,7 @@
 					</table>
 
 					<div class="pull-left">
-						<a routerLink="/obat-resep-form"><button type="button" class="btn btn-primary">Tambah obat resep</button></a>
+						<a routerLink="/obat-tebus-form"><button type="button" class="btn btn-primary">Tambah obat tebus</button></a>
 					</div>
 				</div>
 			</div>	

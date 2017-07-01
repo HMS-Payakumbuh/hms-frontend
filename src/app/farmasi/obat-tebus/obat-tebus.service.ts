@@ -3,14 +3,14 @@ import { Headers, Http }		from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { ObatResep }		from './obat-resep';
+import { ObatTebus }		from './obat-tebus';
 // import { ENV }				from '.../environment';
 
 @Injectable()
-export class ObatResepService {
-	// private obatResepUrl = ENV.obatResepUrl;
+export class ObatTebusService {
+	// private obatTebusUrl = ENV.obatTebusUrl;
 
-	allObatResep: ObatResep[] = [
+	allObatTebus: ObatTebus[] = [
 		{id: 1, id_transaksi: 1, id_pasien: 1, nama_pasien: 'Octavianus Markus', waktu_keluar: new Date('2016-09-11T16:16+07:00'), obat:[{id: 1, kode_obat: 213817061901 , merek: 'Cefixim syr kering 100mg/5ml' , nomor_batch: '085G610NV', satuan: 'Botol', harga_jual_referensi: 10100, harga_jual_realisasi: 10000, kadaluarsa: new Date('2018-04-18'), jumlah: 1}, {id: 2, kode_obat: 213817061902 , merek: 'Cefixim syr kering 100mg/5ml' , nomor_batch: '085G611NV', satuan: 'Botol', harga_jual_referensi: 10100, harga_jual_realisasi: 10000, kadaluarsa: new Date('2018-04-19'), jumlah: 1}]}
 	]; // Mock-up
 
@@ -21,29 +21,29 @@ export class ObatResepService {
 		return Promise.reject(error.message || error);
 	}
 
-	getAllObatResep(): Promise<ObatResep[]> {
-		return Promise.resolve(this.allObatResep)
+	getAllObatTebus(): Promise<ObatTebus[]> {
+		return Promise.resolve(this.allObatTebus)
 			.catch(this.handleError);
 	}
 
-	getObatResep(id: number): Promise<ObatResep> {
-		return this.getAllObatResep()
-			.then(allObatResep => allObatResep.find(ObatResep => ObatResep.id === id))
+	getObatTebus(id: number): Promise<ObatTebus> {
+		return this.getAllObatTebus()
+			.then(allObatTebus => allObatTebus.find(ObatTebus => ObatTebus.id === id))
 			.catch(this.handleError);
 	}
 
-//	getAllObatResep(): Promise<ObatResep[]> {
-//		return this.http.get(this.ObatResepUrl)
+//	getAllObatTebus(): Promise<ObatTebus[]> {
+//		return this.http.get(this.ObatTebusUrl)
 //			.toPromise()
-//			.then(response => response.json().data as ObatResep[])
+//			.then(response => response.json().data as ObatTebus[])
 //			.catch(this.handleError);
 //	}
 
-//	getObatResep(id: number): Promise<ObatResep> {
-//		const url = `${this.ObatResepUrl}/${id}`;
+//	getObatTebus(id: number): Promise<ObatTebus> {
+//		const url = `${this.ObatTebusUrl}/${id}`;
 //		return this.http.get(url)
 //			.toPromise()
-//			.then(response => response.json().data as ObatResep)
+//			.then(response => response.json().data as ObatTebus)
 //			.catch(this.handleError);
 //	}
 }
