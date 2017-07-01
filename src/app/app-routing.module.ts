@@ -35,8 +35,8 @@ import { JadwalDokterListComponent }	from './tenaga-medis/jadwal-dokter-list.com
 import { TindakanReferenceListComponent }		from './layanan/tindakan-reference-list.component';
 import { TindakanReferenceFormComponent }		from './layanan/tindakan-reference-form.component';
 
-import { DaftarObatComponent }			from './farmasi/obat-batch/daftar-obat.component';
-import { DetailObatComponent }			from './farmasi/obat-batch/detail-obat.component';
+import { DaftarStokObatComponent }			from './farmasi/stok-obat/daftar-stok-obat.component';
+import { DetailStokObatComponent }			from './farmasi/stok-obat/detail-stok-obat.component';
 
 import { DaftarObatMasukComponent }		from './farmasi/obat-masuk/daftar-obat-masuk.component';
 import { DetailObatMasukComponent }		from './farmasi/obat-masuk/detail-obat-masuk.component';
@@ -47,9 +47,9 @@ import { DetailJenisObatComponent }     from './farmasi/jenis-obat/detail-jenis-
 import { JenisObatFormComponent }		from './farmasi/jenis-obat/jenis-obat-form.component';
 import { EditJenisObatComponent }		from './farmasi/jenis-obat/edit-jenis-obat.component';
 
-import { DaftarObatResepComponent }			from './farmasi/obat-resep/daftar-obat-resep.component';
-import { DetailObatResepComponent }			from './farmasi/obat-resep/detail-obat-resep.component';
-import { ObatResepFormComponent }			from './farmasi/obat-resep/obat-resep-form.component';
+import { DaftarObatTebusComponent }			from './farmasi/obat-tebus/daftar-obat-tebus.component';
+import { DetailObatTebusComponent }			from './farmasi/obat-tebus/detail-obat-tebus.component';
+import { ObatTebusFormComponent }			from './farmasi/obat-tebus/obat-tebus-form.component';
 
 import { DaftarObatPindahComponent }      from './farmasi/obat-pindah/daftar-obat-pindah.component';
 import { DetailObatPindahComponent }      from './farmasi/obat-pindah/detail-obat-pindah.component';
@@ -96,18 +96,18 @@ const routes: Routes = [
 	{ path: 'daftar-tindakan', component: TindakanReferenceListComponent },
 	{ path: 'daftar-tindakan/:kode', component: TindakanReferenceFormComponent },	
 
-	{ path: 'daftar-obat', component: DaftarObatComponent },
-	{ path: 'daftar-obat/:kode-obat', component: DetailObatComponent },	
+	{ path: 'stok-obat', component: DaftarStokObatComponent },
+	{ path: 'stok-obat/:id', component: DetailStokObatComponent },	
 	{ path: 'obat-masuk', component: DaftarObatMasukComponent },
-	{ path: 'obat-masuk/:kode-obat', component: DetailObatMasukComponent },
+	{ path: 'obat-masuk/:id', component: DetailObatMasukComponent },
 	{ path: 'obat-masuk-form', component: ObatMasukFormComponent },
 	{ path: 'jenis-obat', component: DaftarJenisObatComponent },
 	{ path: 'jenis-obat/:id', component: DetailJenisObatComponent },	
 	{ path: 'jenis-obat/edit/:id', component: EditJenisObatComponent },
 	{ path: 'jenis-obat-form', component: JenisObatFormComponent },		
-	{ path: 'obat-resep', component: DaftarObatResepComponent },
-	{ path: 'obat-resep/:id', component: DetailObatResepComponent },	
-	{ path: 'obat-resep-form', component: ObatResepFormComponent },
+	{ path: 'obat-tebus', component: DaftarObatTebusComponent },
+	{ path: 'obat-tebus/:id', component: DetailObatTebusComponent },	
+	{ path: 'obat-tebus-form', component: ObatTebusFormComponent },
 	{ path: 'obat-pindah', component: DaftarObatPindahComponent },
 	{ path: 'obat-pindah/:id', component: DetailObatPindahComponent },
 	{ path: 'obat-pindah-form', component: ObatPindahFormComponent },	

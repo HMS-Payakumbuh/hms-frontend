@@ -23,7 +23,7 @@ export class DetailObatMasukComponent {
 
 	ngOnInit(): void {
 		this.route.params
-			.switchMap((params: Params) => this.obatMasukService.getObatMasuk(+params['kode-obat']))
+			.switchMap((params: Params) => this.obatMasukService.getObatMasuk(+params['id']))
 			.subscribe(obatMasuk => this.obatMasuk = obatMasuk);
 	}
 

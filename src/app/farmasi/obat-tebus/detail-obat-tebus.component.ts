@@ -3,17 +3,17 @@ import { Component, Input, OnInit }	from '@angular/core';
 import { ActivatedRoute, Params }	from '@angular/router';
 import { Location }					from '@angular/common';
 
-import { ObatResep }			from './obat-resep';
-import { ObatResepService }		from './obat-resep.service';
+import { ObatTebus }			from './obat-tebus';
+import { ObatTebusService }		from './obat-tebus.service';
 
 @Component({
- 	selector: 'detail-obat-resep-page',
- 	templateUrl: './detail-obat-resep.component.html',
- 	providers: [ObatResepService]
+ 	selector: 'detail-obat-tebus-page',
+ 	templateUrl: './detail-obat-tebus.component.html',
+ 	providers: [ObatTebusService]
 })
 
-export class DetailObatResepComponent {
-	public obatResep: ObatResep;
+export class DetailObatTebusComponent {
+	public obatTebus: ObatTebus;
 
 	public filterQuery = "";
     public rowsOnPage = 5;
@@ -21,15 +21,15 @@ export class DetailObatResepComponent {
     public sortOrder = "asc";
 
 	constructor(
-		private obatResepService: ObatResepService,
+		private obatTebusService: ObatTebusService,
 		private route: ActivatedRoute,
 		private location: Location
 	) {}
 
 	ngOnInit(): void {
 		this.route.params
-			.switchMap((params: Params) => this.obatResepService.getObatResep(+params['id']))
-			.subscribe(obatResep => this.obatResep = obatResep);
+			.switchMap((params: Params) => this.obatTebusService.getObatTebus(+params['id']))
+			.subscribe(obatTebus => this.obatTebus = obatTebus);
 	}
 
 	goBack(): void {

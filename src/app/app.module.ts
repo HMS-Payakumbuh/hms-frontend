@@ -19,7 +19,7 @@ import { FilterJenisPasienPipe }       from './pipe/filter-jenis-pasien.pipe';
 import { FilterJenisObatPipe }     from './pipe/filter-jenis-obat.pipe';
 import { FilterDaftarObatPipe }     from './pipe/filter-daftar-obat.pipe';
 import { FilterObatMasukPipe }     from './pipe/filter-obat-masuk.pipe';
-import { FilterObatResepPipe }     from './pipe/filter-obat-resep.pipe';
+import { FilterObatTebusPipe }     from './pipe/filter-obat-tebus.pipe';
 import { FilterObatRusakPipe }     from './pipe/filter-obat-rusak.pipe';
 import { FilterObatPindahPipe }     from './pipe/filter-obat-pindah.pipe';
 import { FilterJenisAntrianPipe }     from './pipe/filter-jenis-antrian.pipe';
@@ -63,8 +63,8 @@ import { JadwalDokterListComponent }    from './tenaga-medis/jadwal-dokter-list.
 import { TindakanReferenceListComponent }    from './layanan/tindakan-reference-list.component';
 import { TindakanReferenceFormComponent }        from './layanan/tindakan-reference-form.component';
 
-import { DaftarObatComponent }          from './farmasi/obat-batch/daftar-obat.component';
-import { DetailObatComponent }          from './farmasi/obat-batch/detail-obat.component';
+import { DaftarStokObatComponent }            from './farmasi/stok-obat/daftar-stok-obat.component';
+import { DetailStokObatComponent }            from './farmasi/stok-obat/detail-stok-obat.component';
 
 import { DaftarObatMasukComponent }     from './farmasi/obat-masuk/daftar-obat-masuk.component';
 import { DetailObatMasukComponent }     from './farmasi/obat-masuk/detail-obat-masuk.component';
@@ -75,9 +75,9 @@ import { DetailJenisObatComponent }     from './farmasi/jenis-obat/detail-jenis-
 import { JenisObatFormComponent }       from './farmasi/jenis-obat/jenis-obat-form.component';
 import { EditJenisObatComponent }       from './farmasi/jenis-obat/edit-jenis-obat.component';
 
-import { DaftarObatResepComponent }         from './farmasi/obat-resep/daftar-obat-resep.component';
-import { DetailObatResepComponent }         from './farmasi/obat-resep/detail-obat-resep.component';
-import { ObatResepFormComponent }           from './farmasi/obat-resep/obat-resep-form.component';
+import { DaftarObatTebusComponent }         from './farmasi/obat-tebus/daftar-obat-tebus.component';
+import { DetailObatTebusComponent }         from './farmasi/obat-tebus/detail-obat-tebus.component';
+import { ObatTebusFormComponent }           from './farmasi/obat-tebus/obat-tebus-form.component';
 
 import { DaftarObatPindahComponent }      from './farmasi/obat-pindah/daftar-obat-pindah.component';
 import { DetailObatPindahComponent }      from './farmasi/obat-pindah/detail-obat-pindah.component';
@@ -117,7 +117,7 @@ import { AppComponent }             from './app.component';
         FilterJenisObatPipe,
         FilterDaftarObatPipe,
         FilterObatMasukPipe,
-        FilterObatResepPipe,
+        FilterObatTebusPipe,
         FilterObatRusakPipe,
         FilterObatPindahPipe,
         FilterJenisAntrianPipe,
@@ -159,24 +159,31 @@ import { AppComponent }             from './app.component';
         FilterTanggalPipe,
         AntrianComponent,
         DaftarAntrianComponent,
-        DaftarObatComponent,
-        DetailObatComponent,
+
+        DaftarStokObatComponent,
+        DetailStokObatComponent,
+
         DaftarObatMasukComponent,
         DetailObatMasukComponent,
         ObatMasukFormComponent,
+
         DaftarJenisObatComponent,
         DetailJenisObatComponent,
         JenisObatFormComponent,
         EditJenisObatComponent,
-        DaftarObatResepComponent,
-        DetailObatResepComponent,
-        ObatResepFormComponent,
+
+        DaftarObatTebusComponent,
+        DetailObatTebusComponent,
+        ObatTebusFormComponent,
+
         DaftarObatPindahComponent,
         DetailObatPindahComponent,
         ObatPindahFormComponent,
+
         DaftarObatRusakComponent,
         DetailObatRusakComponent,
         ObatRusakFormComponent,
+        
         SettingsComponent,
     ],
     bootstrap:    [ 

@@ -1,4 +1,4 @@
-export class ObatResepItem {
+export class ObatTebusItem {
 	id: number;
 	kode_obat: number;	
 	merek: string;	

@@ -2,10 +2,10 @@
 		<div class="card mb-3">
 			<div class="card-header card-info">
 				<h4>
-					<i class="fa fa-newspaper-o" aria-hidden="true"></i> Detail Obat Resep
+					<i class="fa fa-newspaper-o" aria-hidden="true"></i> Detail Obat Tebus
 				</h4>
 			</div>
-			<div *ngIf="obatResep" class="card-block">
+			<div *ngIf="obatTebus" class="card-block">
 				<div class="card-text">
 
 					<div class="row">
@@ -13,26 +13,26 @@
 							<tbody>
 								<tr>
 									<td><b>Nama Pasien</b></td>
-									<td>{{obatResep.nama_pasien}}</td>	
+									<td>{{obatTebus.nama_pasien}}</td>	
 								</tr>
 								<tr>
 									<td><b>ID Transaksi</b></td>
-									<td>{{obatResep.id_transaksi}}</td>	
+									<td>{{obatTebus.id_transaksi}}</td>	
 								</tr>
 								<tr>
 									<td><b>ID Pasien</b></td>
-									<td> {{obatResep.id_pasien}}</td>	
+									<td> {{obatTebus.id_pasien}}</td>	
 								</tr>
 								<tr>
 									<td><b>Waktu Tebus Obat:</b></td>
-									<td>{{obatResep.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>	
+									<td>{{obatTebus.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>	
 								</tr>
 							</tbody>
 						</table>
 					</div>
 
 					<div class="row">
-						<table class="table" [mfData]="obatResep.obat" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+						<table class="table" [mfData]="obatTebus.obat" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 							<tbody>
 								<tr>
 									<th><mfDefaultSorter by="kode_obat">Kode Obat</mfDefaultSorter></th>
@@ -43,13 +43,13 @@
 									<th><mfDefaultSorter by="harga_jual_realisasi">Harga Jual Satuan</mfDefaultSorter></th>
 									<th></th>
 								</tr>
-								<tr *ngFor="let obatResepItem of mf.data">
-									<td>{{obatResepItem.kode_obat}}</td>
-									<td>{{obatResepItem.merek}}</td>
-									<td>{{obatResepItem.kadaluarsa | date:'d MMM y'}}</td>
-									<td>{{obatResepItem.jumlah}}</td>
-									<td>{{obatResepItem.satuan}}</td>
-									<td>Rp. {{obatResepItem.harga_jual_realisasi}}</td>	
+								<tr *ngFor="let obatTebusItem of mf.data">
+									<td>{{obatTebusItem.kode_obat}}</td>
+									<td>{{obatTebusItem.merek}}</td>
+									<td>{{obatTebusItem.kadaluarsa | date:'d MMM y'}}</td>
+									<td>{{obatTebusItem.jumlah}}</td>
+									<td>{{obatTebusItem.satuan}}</td>
+									<td>Rp. {{obatTebusItem.harga_jual_realisasi}}</td>	
 								</tr>						
 							</tbody>	
 							<tfoot>

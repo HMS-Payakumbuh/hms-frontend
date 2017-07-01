@@ -5,69 +5,69 @@
 					<i class="fa fa-newspaper-o" aria-hidden="true"></i> Detail Obat
 				</h4>
 			</div>
-			<div *ngIf="obatBatch" class="card-block">
+			<div *ngIf="stokObat" class="card-block">
 				<div class="card-text">
 					<table class="table">
 						<tbody>
 							<tr>
 								<td><b>Kode Obat</b></td>
-								<td>{{obatBatch.kode_obat}}</td>	
+								<td>{{stokObat.obat_masuk.barcode}}</td>	
 							</tr>
 							<tr>
 								<td><b>ID Jenis Obat</b></td>
-								<td>{{obatBatch.id_jenis}}</td>	
+								<td>{{stokObat.id_jenis_obat}}</td>	
 							</tr>
 							<tr>
 								<td><b>Merek Obat</b></td>								
-								<td>{{obatBatch.merek}}</td>								
+								<td>{{stokObat.jenis_obat.merek_obat}}</td>								
 							</tr>
 							<tr>
 								<td><b>Nama Generik</b></td>
-								<td>{{obatBatch.nama_generik}}</td>								
+								<td>{{stokObat.jenis_obat.nama_generik}}</td>								
 							</tr>
 							<tr>
 								<td><b>Pembuat</b></td>
-								<td>{{obatBatch.pembuat}}</td>								
+								<td>{{stokObat.jenis_obat.pembuat}}</td>								
 							</tr>
 							<tr>
 								<td><b>Golongan</b></td>
-								<td>{{obatBatch.golongan}}</td>
+								<td>{{stokObat.jenis_obat.golongan}}</td>
 							</tr>
 							<tr>
 								<td><b>Satuan</b></td>					
-								<td>{{obatBatch.satuan}}</td>
+								<td>{{stokObat.jenis_obat.satuan}}</td>
 							</tr>
 							<tr>
 								<td><b>Harga Jual Satuan</b></td>								
-								<td>Rp. {{obatBatch.harga_jual}}</td>
+								<td>Rp. {{stokObat.jenis_obat.harga_jual_satuan}}</td>
 							</tr>
 							<tr>
 								<td><b>Nomor Batch</b></td>								
-								<td>{{obatBatch.nomor_batch}}</td>
+								<td>{{stokObat.obat_masuk.nomor_batch}}</td>
 							</tr>
 							<tr>
 								<td><b>Waktu Masuk</b></td>								
-								<td>{{obatBatch.waktu_masuk | date:'d MMM y H:mm:ss'}}</td>
+								<td>{{stokObat.obat_masuk.waktu_masuk | date:'d MMM y H:mm:ss'}}</td>
 							</tr>
 							<tr>
 								<td><b>Kadaluarsa</b></td>								
-								<td>{{obatBatch.kadaluarsa | date:'d MMM y'}}</td>
+								<td>{{stokObat.obat_masuk.kadaluarsa | date:'d MMM y'}}</td>
 							</tr>
 							<tr>
 								<td><b>Harga Beli Satuan</b></td>								
-								<td>Rp. {{obatBatch.harga_beli}}</td>
+								<td>Rp. {{stokObat.obat_masuk.harga_beli_satuan}}</td>
 							</tr>
 							<tr>
 								<td><b>Jumlah</b></td>								
-								<td>{{obatBatch.jumlah}}</td>
+								<td>{{stokObat.jumlah}}</td>
 							</tr>
 							<tr>
 								<td><b>Lokasi</b></td>								
-								<td>{{obatBatch.lokasi}}</td>
+								<td>{{stokObat.lokasi_data.nama}}</td>
 							</tr>
 							<tr>
 								<td><b>Keterangan</b></td>								
-								<td>{{obatBatch.keterangan}}</td>
+								<td>{{stokObat.keterangan}}</td>
 							</tr>
 						</tbody>
 					</table>
