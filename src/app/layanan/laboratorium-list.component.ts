@@ -12,6 +12,7 @@ import { LaboratoriumService }		from './laboratorium.service';
 export class LaboratoriumListComponent implements OnInit {
 	allLaboratorium: Laboratorium[];
 	laboratoriumModal: Laboratorium = null;
+  laboratoriumModalNama: string = null;
 
 	public filterQuery = "";
   public rowsOnPage = 10;
@@ -21,13 +22,37 @@ export class LaboratoriumListComponent implements OnInit {
 	constructor(
 		private laboratoriumService: LaboratoriumService
 	) {}
-	
+
 	ngOnInit() {
-		this.laboratoriumService.getAllLaboratorium()
-			.then(allLaboratorium => this.allLaboratorium = allLaboratorium);
+		this.laboratoriumService.getAllLaboratorium().subscribe(
+      data => { this.allLaboratorium = data }
+    );
 	}
 
-	editLaboratorium(laboratorium: Laboratorium) {
-		this.laboratoriumModal = laboratorium;
+  newLaboratorium() {
+    this.laboratoriumModal = new Laboratorium();
+  }
+
+  createLaboratorium() {
+    this.laboratoriumService.createLaboratorium(this.laboratoriumModal).subscribe(
+      data => { window.location.reload() }
+    );
+  }
+
+	editLaboratorium(nama: string, laboratorium: Laboratorium) {
+    this.laboratoriumModalNama = nama;
+    this.laboratoriumModal = Object.assign({}, laboratorium);
 	}
+
+  updateLaboratorium() {
+    this.laboratoriumService.updateLaboratorium(this.laboratoriumModalNama, this.laboratoriumModal).subscribe(
+      data => { window.location.reload() }
+    );
+  }
+
+  destroyLaboratorium(nama: string) {
+    this.laboratoriumService.destroyLaboratorium(nama).subscribe(
+      data => { window.location.reload() }
+    );
+  }
 }

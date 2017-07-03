@@ -1,19 +1,13 @@
 import { Injectable }			from '@angular/core';
-import { Headers, Http}		from '@angular/http';
+import { Headers, Http, Response, RequestOptions }		from '@angular/http';
+import { Observable }			from 'rxjs/Rx';
 
-import 'rxjs/add/operator/toPromise';
-
+import { ENV }							from '../environment';
 import { Laboratorium }			from './laboratorium';
 
 @Injectable()
 export class LaboratoriumService {
-
-	//Mock data
-	allLaboratorium: Laboratorium[] = [
-		{nama: 'Lab Hematologi Rutin', kategori_antrian: 'C'},
-		{nama: 'Lab Immunologi', kategori_antrian: 'C'},
-		{nama: 'Lab Mikrobiologi', kategori_antrian: 'C'}
-	];
+	laboratoriumUrl = ENV.laboratoriumUrl;
 
 	constructor(private http:Http) { }
 
@@ -22,14 +16,39 @@ export class LaboratoriumService {
 		return Promise.reject(error.message || error);
 	}
 
-	getAllLaboratorium(): Promise<Laboratorium[]> {
-		return Promise.resolve(this.allLaboratorium)
-			.catch(this.handleError);
+	getAllLaboratorium(): Observable<Laboratorium[]> {
+		return this.http.get(this.laboratoriumUrl)
+			.map((res: Response) => res.json());
 	}
 
-	getLaboratorium(nama: string): Promise<Laboratorium> {
+	getLaboratorium(nama: string): Observable<Laboratorium> {
 		return this.getAllLaboratorium()
-			.then(allLaboratorium => allLaboratorium.find(laboratorium => laboratorium.nama === nama))
-			.catch(this.handleError);
+			.map(allLaboratorium => allLaboratorium.find(laboratorium => laboratorium.nama == nama));
+	}
+
+	createLaboratorium(laboratorium: Laboratorium) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(laboratorium);
+
+		return this.http.post(this.laboratoriumUrl, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	updateLaboratorium(nama: string, laboratorium: Laboratorium) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(laboratorium);
+
+		return this.http.put(this.laboratoriumUrl + '/' + nama, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	destroyLaboratorium(nama: string) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+
+		return this.http.delete(this.laboratoriumUrl + '/' + nama, options)
+			.map((res: Response) => res.json());
 	}
 }
