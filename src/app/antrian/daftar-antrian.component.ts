@@ -36,8 +36,9 @@ export class DaftarAntrianComponent implements OnInit {
         data => { this.allLayanan = data }
       )
     } else if (this.tipe === 'Laboratorium') {
-      this.laboratoriumService.getAllLaboratorium()
-        .then(allLaboratorium => this.allLayanan = allLaboratorium);
+      this.laboratoriumService.getAllLaboratorium().subscribe(
+        data => { this.allLayanan = data }
+      )
     }
   }
 
