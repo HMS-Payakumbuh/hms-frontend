@@ -15,6 +15,7 @@
 							<th><mfDefaultSorter by="sisa_pelayanan">Sisa Pelayanan</mfDefaultSorter></th>
 							<th></th>
 							<th></th>
+							<th></th>
 						</thead>
 						<tbody *ngFor="let poliklinik of mf.data">
 							<tr>
@@ -22,12 +23,17 @@
 								<td>{{poliklinik?.kategori_antrian}}</td>
 								<td>{{poliklinik?.sisa_pelayanan}}</td>
 								<td>
-									<button class="btn btn-info" data-toggle="modal" [attr.data-target]="'#editPoliklinikModal'" (click)="editPoliklinik(poliklinik.nama, poliklinik)">
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#editPoliklinikModal'" (click)="editPoliklinik(poliklinik.nama, poliklinik)">
 										Edit
 									</button>
 								</td>
 								<td>
-									<button class="btn btn-info" [routerLink]="['/antrian', poliklinik.nama]">Lihat Antrian</button>
+									<button type="button" class="btn btn-sm btn-info" [routerLink]="['/antrian', poliklinik.nama]">Lihat Antrian</button>
+								</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-danger" (click)="destroyPoliklinik(poliklinik.nama)">
+										<i class="fa fa-trash"></i>
+									</button>
 								</td>
 							</tr>
 						</tbody>
@@ -39,6 +45,10 @@
 	            </tr>
 	          </tfoot>
 					</table>
+
+					<button type="button" class="btn btn-info" data-toggle="modal" [attr.data-target]="'#newPoliklinikModal'" (click)="newPoliklinik()">
+						Buat Poliklinik Baru
+					</button>
 				</div>
 
 				<div class="modal fade" tabindex="-1" role="dialog" id="editPoliklinikModal" aria-hidden="true" *ngIf="poliklinikModal != null">
@@ -87,6 +97,55 @@
 						</div>
 					</div>
 				</div>
+
+				<div class="modal fade" tabindex="-1" role="dialog" id="newPoliklinikModal" aria-hidden="true" *ngIf="poliklinikBaru != null">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+
+							<div class="modal-header">
+								<h5 class="modal-title" id="editLaboratoriumModal">Poliklinik Baru</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<i class="fa fa-times" aria-hidden="true"></i>
+								</button>
+							</div>
+
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="nama">Nama</label>
+									<input type="text" class="form-control" id="nama" required [(ngModel)]="poliklinikBaru.nama" name="nama">
+								</div>
+
+								<div class="form-group">
+									<label for="kategori_antrian">Kategori Antrian</label>
+									<input type="text" class="form-control" id="kategori_antrian" required [(ngModel)]="poliklinikBaru.kategori_antrian" name="kategori_antrian">
+								</div>
+
+								<div class="form-group">
+									<label for="kapasitas_pelayanan">Kapasitas Pelayanan</label>
+									<input type="text" class="form-control" id="kapasitas_pelayanan" required [(ngModel)]="poliklinikBaru.kapasitas_pelayanan" name="kapasitas_pelayanan">
+								</div>
+
+								<div class="form-group">
+									<label for="sisa_pelayanan">Sisa Pelayanan</label>
+									<input type="text" class="form-control" id="sisa_pelayanan" required [(ngModel)]="poliklinikBaru.sisa_pelayanan" name="sisa_pelayanan">
+								</div>
+
+								<div class="form-group">
+									<label for="id_lokasi">ID Lokasi</label>
+									<input type="text" class="form-control" id="id_lokasi" required [(ngModel)]="poliklinikBaru.id_lokasi" name="id_lokasi">
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+								<button type="button" class="btn btn-success" (click)="createPoliklinik(poliklinikBaru)">Simpan</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+
 
 			</div>
 		</div>

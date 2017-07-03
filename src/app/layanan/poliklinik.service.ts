@@ -27,12 +27,29 @@ export class PoliklinikService {
 			.map(allPoliklinik => allPoliklinik.find(poliklinik => poliklinik.nama == nama));
 	}
 
+	createPoliklinik(poliklinik: Poliklinik) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(poliklinik);
+
+		return this.http.post(this.poliklinikUrl, body, options)
+			.map((res: Response) => res.json());
+	}
+
 	updatePoliklinik(nama: string, poliklinik: Poliklinik) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(poliklinik);
-		
+
 		return this.http.put(this.poliklinikUrl + '/' + nama, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	destroyPoliklinik(nama: string) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+
+		return this.http.delete(this.poliklinikUrl + '/' + nama, options)
 			.map((res: Response) => res.json());
 	}
 }

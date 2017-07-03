@@ -13,6 +13,7 @@ export class PoliklinikListComponent implements OnInit {
 	allPoliklinik: Poliklinik[];
 	poliklinikModal: Poliklinik = null;
   poliklinikModalNama: string = null;
+  poliklinikBaru: Poliklinik = null;
 
 	public filterQuery = "";
   public rowsOnPage = 10;
@@ -29,6 +30,10 @@ export class PoliklinikListComponent implements OnInit {
     );
 	}
 
+  newPoliklinik() {
+    this.poliklinikBaru = new Poliklinik();
+  }
+
 	editPoliklinik(nama: string, poliklinik: Poliklinik) {
     this.poliklinikModalNama = nama;
     this.poliklinikModal = new Poliklinik();
@@ -39,10 +44,21 @@ export class PoliklinikListComponent implements OnInit {
     this.poliklinikModal.id_lokasi = poliklinik.id_lokasi;
 	}
 
+  createPoliklinik() {
+    this.poliklinikService.createPoliklinik(this.poliklinikBaru).subscribe(
+      data => { window.location.reload() }
+    );
+  }
+
   updatePoliklinik() {
     this.poliklinikService.updatePoliklinik(this.poliklinikModalNama, this.poliklinikModal).subscribe(
-      data => {  }
+      data => { window.location.reload() }
     );
-    window.location.reload();
+  }
+
+  destroyPoliklinik(nama: string) {
+    this.poliklinikService.destroyPoliklinik(nama).subscribe(
+      data => { window.location.reload() }
+    );
   }
 }
