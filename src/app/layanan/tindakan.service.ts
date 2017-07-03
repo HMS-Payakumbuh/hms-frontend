@@ -31,11 +31,26 @@ export class TindakanService {
 			.map(allTindakanReference => allTindakanReference.find(tindakanReference => tindakanReference.kode == kode));
 	}
 
-	updateTindakanReference(tindakanReference: TindakanReference) {
+	createTindakanReference(tindakanReference: TindakanReference) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers});
 		let body = JSON.stringify(tindakanReference);
 		return this.http.post(this.tindakanReferenceUrl, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	updateTindakanReference(kode: string, tindakanReference: TindakanReference) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers});
+		let body = JSON.stringify(tindakanReference);
+		return this.http.put(this.tindakanReferenceUrl + '/' + kode, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	destroyTindakanReference(kode: string) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers});
+		return this.http.delete(this.tindakanReferenceUrl + '/' + kode, options)
 			.map((res: Response) => res.json());
 	}
 

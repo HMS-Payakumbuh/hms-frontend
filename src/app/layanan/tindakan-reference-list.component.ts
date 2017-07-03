@@ -12,18 +12,48 @@ import { TindakanService }		from './tindakan.service';
 export class TindakanReferenceListComponent {
 	public allTindakanReference: TindakanReference[];
 
+  tindakanReferenceModal: TindakanReference = null;
+  tindakanReferenceModalKode: string = null;
+
 	public filterQuery = "";
   public rowsOnPage = 10;
   public sortBy = "kode";
   public sortOrder = "asc";
 
 	constructor(
-		private JenisObatService: TindakanService
+		private tindakanService: TindakanService
 	) {}
 
 	ngOnInit(): void {
-		this.JenisObatService.getAllTindakanReference().subscribe(
+		this.tindakanService.getAllTindakanReference().subscribe(
       data => { this.allTindakanReference = data }
     );
 	}
+
+  newTindakanReference() {
+    this.tindakanReferenceModal = new TindakanReference();
+  }
+
+  createTindakanReference() {
+    this.tindakanService.createTindakanReference(this.tindakanReferenceModal).subscribe(
+      data => { window.location.reload() }
+    );
+  }
+
+  editTindakanReference(kode: string, tindakanReference: TindakanReference) {
+    this.tindakanReferenceModalKode = kode;
+    this.tindakanReferenceModal = Object.assign({}, tindakanReference);
+  }
+
+  updateTindakanReference() {
+    this.tindakanService.updateTindakanReference(this.tindakanReferenceModalKode, this.tindakanReferenceModal).subscribe(
+      data => { window.location.reload() }
+    );
+  }
+
+  destroyTindakanReference(kode: string) {
+    this.tindakanService.destroyTindakanReference(kode).subscribe(
+      data => { window.location.reload() }
+    );
+  }
 }
