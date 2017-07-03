@@ -15,6 +15,7 @@
 							<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="harga">Harga</mfDefaultSorter></th>
 							<th></th>
+							<th></th>
 						</thead>
 						<tbody>
 							<tr *ngFor="let tindakanReference of mf.data; index as i">
@@ -23,7 +24,15 @@
 								<td>{{tindakanReference.nama}}</td>
 								<td>Rp. {{tindakanReference.harga | number: '.2-2'}}</td>
 								<td>
-									<button type="button" class="btn btn-sm btn-info" [routerLink]="['/daftar-tindakan', tindakanReference.kode]">Edit</button>
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal"
+										[attr.data-target]="'#editTindakanReferenceModal'" (click)="editTindakanReference(tindakanReference.kode, tindakanReference)">
+										Edit
+									</button>
+								</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-danger" (click)="destroyTindakanReference(tindakanReference.kode)">
+										<i class="fa fa-trash"></i>
+									</button>
 								</td>
 							</tr>
 						</tbody>
@@ -35,6 +44,86 @@
 	            </tr>
 	          </tfoot>
 					</table>
+
+					<button type="button" class="btn btn-info" data-toggle="modal"
+						[attr.data-target]="'#createTindakanReferenceModal'" (click)="newTindakanReference()">
+						Buat Tindakan Baru
+					</button>
+
+				</div>
+			</div>
+
+			<div class="modal fade" tabindex="-1" role="dialog" id="editTindakanReferenceModal" aria-hidden="true" *ngIf="tindakanReferenceModal != null">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+
+						<div class="modal-header">
+							<h5 class="modal-title">Editing {{tindakanReferenceModalKode}}</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<i class="fa fa-times" aria-hidden="true"></i>
+							</button>
+						</div>
+
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="kode">Kode</label>
+								<input type="text" class="form-control" id="kode" required [(ngModel)]="tindakanReferenceModal.kode">
+							</div>
+
+							<div class="form-group">
+								<label for="nama">Nama</label>
+								<input type="text" class="form-control" id="nama" required [(ngModel)]="tindakanReferenceModal.nama">
+							</div>
+
+							<div class="form-group">
+								<label for="harga">Harga</label>
+								<input type="text" class="form-control" id="harga" required [(ngModel)]="tindakanReferenceModal.harga">
+							</div>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+							<button type="button" class="btn btn-success" (click)="updateTindakanReference()">Simpan</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade" tabindex="-1" role="dialog" id="createTindakanReferenceModal" aria-hidden="true" *ngIf="tindakanReferenceModal != null">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+
+						<div class="modal-header">
+							<h5 class="modal-title">Tindakan Baru</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<i class="fa fa-times" aria-hidden="true"></i>
+							</button>
+						</div>
+
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="kode">Kode</label>
+								<input type="text" class="form-control" id="kode" required [(ngModel)]="tindakanReferenceModal.kode">
+							</div>
+
+							<div class="form-group">
+								<label for="nama">Nama</label>
+								<input type="text" class="form-control" id="nama" required [(ngModel)]="tindakanReferenceModal.nama">
+							</div>
+
+							<div class="form-group">
+								<label for="harga">Harga</label>
+								<input type="text" class="form-control" id="harga" required [(ngModel)]="tindakanReferenceModal.harga">
+							</div>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+							<button type="button" class="btn btn-success" (click)="createTindakanReference()">Simpan</button>
+						</div>
+
+					</div>
 				</div>
 			</div>
 
