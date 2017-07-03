@@ -1,19 +1,14 @@
 import { Injectable }			from '@angular/core';
-import { Headers, Http}		from '@angular/http';
+import { Headers, Http, Response, RequestOptions }		from '@angular/http';
+import { Observable }			from 'rxjs/Rx';
 
-import 'rxjs/add/operator/toPromise';
-
+import { ENV }										from '../environment';
 import { DiagnosisReference }			from './diagnosis-reference';
 
 @Injectable()
 export class DiagnosisService {
 
-	//Mock data
-	allDiagnosisReference: DiagnosisReference[] = [
-		{kode: 'K.11.0', nama: 'Atrophy of salivary gland'},
-		{kode: 'K.11.1', nama: 'Hypertrophy of salivary gland'},
-		{kode: 'K.11.21', nama: 'Acute sialoadenitis'}
-	];
+	private diagnosisReferenceUrl = ENV.diagnosisReferenceUrl;
 
 	constructor(private http:Http) { }
 
@@ -22,8 +17,8 @@ export class DiagnosisService {
 		return Promise.reject(error.message || error);
 	}
 
-	getAllDiagnosisReference(): Promise<DiagnosisReference[]> {
-		return Promise.resolve(this.allDiagnosisReference)
-			.catch(this.handleError);
+	getAllDiagnosisReference(): Observable<DiagnosisReference[]> {
+		return this.http.get(this.diagnosisReferenceUrl)
+			.map((res: Response) => res.json());;
 	}
 }

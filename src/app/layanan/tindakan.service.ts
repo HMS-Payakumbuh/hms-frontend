@@ -1,24 +1,19 @@
 import { Injectable }			from '@angular/core';
-import { Headers, Http}		from '@angular/http';
+import { Headers, Http, Response, RequestOptions }		from '@angular/http';
+import { Observable }			from 'rxjs/Rx';
 
-import 'rxjs/add/operator/toPromise';
-
+import { ENV }										from '../environment';
 import { Tindakan }								from './tindakan';
 import { TindakanReference }			from './tindakan-reference';
 
 @Injectable()
 export class TindakanService {
 
+	private tindakanReferenceUrl = ENV.tindakanReferenceUrl;
+
 	tindakan: Tindakan;
 	tindakanInstances: Tindakan[] = [];
 	i: number;
-
-	//Mock data
-	allTindakanReference: TindakanReference[] = [
-		{kode: '01-10', nama: 'Intracranial pressure monitoring', harga: 100000},
-		{kode: '01-12', nama: 'Open biopsy of cerebral meninges', harga: 150000},
-		{kode: '01-16', nama: 'Intracranial oxygen monitoring', harga: 200000}
-	];
 
 	constructor(private http:Http) { }
 
@@ -27,15 +22,14 @@ export class TindakanService {
 		return Promise.reject(error.message || error);
 	}
 
-	getAllTindakanReference(): Promise<TindakanReference[]> {
-		return Promise.resolve(this.allTindakanReference)
-			.catch(this.handleError);
+	getAllTindakanReference(): Observable<TindakanReference[]> {
+		return this.http.get(this.tindakanReferenceUrl)
+			.map((res: Response) => res.json());
 	}
 
-	getTindakanReference(kode: string): Promise<TindakanReference> {
+	getTindakanReference(kode: string): Observable<TindakanReference> {
 		return this.getAllTindakanReference()
-			.then(allTindakanReference => allTindakanReference.find(TindakanReference => TindakanReference.kode === kode))
-			.catch(this.handleError);
+			.map(allTindakanReference => allTindakanReference.find(tindakanReference => tindakanReference.kode == kode));
 	}
 
 	saveTindakan (
@@ -46,7 +40,7 @@ export class TindakanService {
 		selectedTindakan: TindakanReference[],
 		keteranganTindakan: string[]
 	) {
-		
+
 		this.i = 0;
 		this.tindakanInstances.length = 0;
 
@@ -57,7 +51,7 @@ export class TindakanService {
 			this.tindakan.id_transaksi = idTransaksi;
 			this.tindakan.no_tindakan = this.i;
 			this.tindakan.harga = tindakanReference.harga;
-			
+
 			if (!isPoli)
 				this.tindakan.dokumen_penunjang = dokumenPenunjang;
 			else

@@ -21,7 +21,7 @@
 								<td>{{i + 1}}</td>
 								<td>{{tindakanReference.kode}}</td>
 								<td>{{tindakanReference.nama}}</td>
-								<td>{{tindakanReference.harga}}</td>
+								<td>Rp. {{tindakanReference.harga | number: '.2-2'}}</td>
 								<td>
 									<button type="button" class="btn btn-sm btn-info" [routerLink]="['/daftar-tindakan', tindakanReference.kode]">Edit</button>
 								</td>

@@ -11,7 +11,7 @@ import { TransaksiService }			from '../transaksi/transaksi.service';
 import { Laboratorium }						from './laboratorium';
 import { LaboratoriumService }		from './laboratorium.service';
 
-import { Tindakan }			from './tindakan';
+import { Tindakan }             from './tindakan';
 import { TindakanReference }		from './tindakan-reference';
 import { TindakanService }			from './tindakan.service';
 
@@ -43,7 +43,7 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 			.debounceTime(200)
 			.distinctUntilChanged()
 			.map(term => term.length < 2 ? []
-				: this.allTindakanReference.filter(tindakanReference => tindakanReference.nama.toLowerCase().indexOf(term.toLowerCase()) > -1));	
+				: this.allTindakanReference.filter(tindakanReference => tindakanReference.nama.toLowerCase().indexOf(term.toLowerCase()) > -1));
 
 	constructor(
 		private route: ActivatedRoute,
@@ -56,7 +56,7 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 	) {
 		config.editable = false;
 	}
-	
+
 	ngOnInit() {
 		this.route.params
 			.switchMap((params: Params) => this.laboratoriumService.getLaboratorium(params['namaLaboratorium']))
@@ -66,8 +66,9 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 			.switchMap((params: Params) => this.transaksiService.getTransaksi(+params['idTransaksi']))
 			.subscribe(transaksi => this.transaksi = transaksi);
 
-		this.tindakanService.getAllTindakanReference()
-			.then(allTindakanReference => this.allTindakanReference = allTindakanReference);
+    this.tindakanService.getAllTindakanReference().subscribe(
+      data => { this.allTindakanReference = data }
+    );
 	}
 
 	addSelectedTindakan(tindakan: TindakanReference) {

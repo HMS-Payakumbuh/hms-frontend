@@ -22,7 +22,8 @@ export class TindakanReferenceListComponent {
 	) {}
 
 	ngOnInit(): void {
-		this.JenisObatService.getAllTindakanReference()
-			.then(allTindakanReference => this.allTindakanReference = allTindakanReference);
+		this.JenisObatService.getAllTindakanReference().subscribe(
+      data => { this.allTindakanReference = data }
+    );
 	}
 }

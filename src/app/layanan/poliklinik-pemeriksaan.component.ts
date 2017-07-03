@@ -62,7 +62,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
-		private location: Location,		
+		private location: Location,
 		private formBuilder: FormBuilder,
 		private transaksiService: TransaksiService,
 		private poliklinikService: PoliklinikService,
@@ -72,7 +72,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	) {
 		config.editable = false;
 	}
-	
+
 	ngOnInit() {
 		this.addForm = this.formBuilder.group({
 			resepEntry: this.formBuilder.array([this.initResepEntry()])
@@ -86,11 +86,13 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 			.switchMap((params: Params) => this.transaksiService.getTransaksi(+params['idTransaksi']))
 			.subscribe(transaksi => this.transaksi = transaksi);
 
-		this.tindakanService.getAllTindakanReference()
-			.then(allTindakanReference => this.allTindakanReference = allTindakanReference);
+		this.tindakanService.getAllTindakanReference().subscribe(
+      data => { this.allTindakanReference = data }
+    );
 
-		this.diagnosisService.getAllDiagnosisReference()
-			.then(allDiagnosisReference => this.allDiagnosisReference = allDiagnosisReference);
+		this.diagnosisService.getAllDiagnosisReference().subscribe(
+      data => { this.allDiagnosisReference = data }  
+    )
 	}
 
 	addSelectedDiagnosis(diagnosis: DiagnosisReference) {
@@ -128,7 +130,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 
 	goBack(): void {
 		this.location.back();
-	}	
+	}
 
 	save() {
 		this.tindakanService.saveTindakan(this.transaksi.id, this.poliklinik.nama, true, null, this.selectedTindakan, this.keteranganTindakan);
