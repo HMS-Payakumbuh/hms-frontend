@@ -37,13 +37,16 @@ export class AntrianComponent implements OnInit {
 
   ngOnInit() {
     this.sub = this.route.params
-      .subscribe(params => { 
+      .subscribe(params => {
         this.layanan = params['namaLayanan'];
     });
     if (this.layanan === undefined) {
       this.layanan = 'Front Office';
-      this.poliklinikService.getAllPoliklinik()
-        .then(allPoliklinik => this.allKategori = _.uniqBy(allPoliklinik, 'kategori_antrian'));
+
+      this.poliklinikService.getAllPoliklinik().subscribe(
+        data => { this.allKategori = _.uniqBy(data, 'kategori_antrian') }
+      );
+      
       this.isfrontoffice = true;
     }
     else {
@@ -58,12 +61,12 @@ export class AntrianComponent implements OnInit {
   }
 
   private proses(antrian: any) {
-    this.nomor = antrian.no_antrian; 
+    this.nomor = antrian.no_antrian;
     this.allAntrian.splice(this.allAntrian.indexOf(antrian), 1);
     this.active = this.nextAntrian(this.umum);
-    if (!this.active) 
+    if (!this.active)
       this.active = this.nextAntrian(!this.umum);
-    else 
+    else
       this.umum = !this.umum;
   }
 
@@ -79,10 +82,10 @@ export class AntrianComponent implements OnInit {
     this.antrianService.getAntrianFrontOffice(this.kategori)
       .then(allAntrian => {
         this.allAntrian = allAntrian;
-        this.active = allAntrian[0].no_antrian; 
+        this.active = allAntrian[0].no_antrian;
       });
   }
-  
+
   submitted = false;
 
   onSubmit() { this.submitted = true; }

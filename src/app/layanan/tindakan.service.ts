@@ -8,7 +8,6 @@ import { TindakanReference }			from './tindakan-reference';
 
 @Injectable()
 export class TindakanService {
-
 	private tindakanReferenceUrl = ENV.tindakanReferenceUrl;
 
 	tindakan: Tindakan;
@@ -30,6 +29,14 @@ export class TindakanService {
 	getTindakanReference(kode: string): Observable<TindakanReference> {
 		return this.getAllTindakanReference()
 			.map(allTindakanReference => allTindakanReference.find(tindakanReference => tindakanReference.kode == kode));
+	}
+
+	updateTindakanReference(tindakanReference: TindakanReference) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers});
+		let body = JSON.stringify(tindakanReference);
+		return this.http.post(this.tindakanReferenceUrl, body, options)
+			.map((res: Response) => res.json());
 	}
 
 	saveTindakan (

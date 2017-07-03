@@ -1,19 +1,14 @@
 import { Injectable }			from '@angular/core';
-import { Headers, Http}		from '@angular/http';
+import { Headers, Http, Response, RequestOptions }		from '@angular/http';
+import { Observable }			from 'rxjs/Rx';
 
-import 'rxjs/add/operator/toPromise';
-
+import * as _ 						from 'lodash';
+import { ENV }						from '../environment';
 import { Poliklinik }			from './poliklinik';
 
 @Injectable()
 export class PoliklinikService {
-
-	//Mock data
-	allPoliklinik: Poliklinik[] = [
-		{nama: 'Poli Umum', kategori_antrian: 'A', kapasitas_pelayanan: 100, sisa_pelayanan: 100, id_lokasi: 1},
-		{nama: 'Poli THT', kategori_antrian: 'B', kapasitas_pelayanan: 100, sisa_pelayanan: 100, id_lokasi: 2},
-		{nama: 'Poli Jantung', kategori_antrian: 'B', kapasitas_pelayanan: 40, sisa_pelayanan: 40, id_lokasi: 3}
-	];
+	poliklinikUrl = ENV.poliklinikUrl;
 
 	constructor(private http:Http) { }
 
@@ -22,14 +17,22 @@ export class PoliklinikService {
 		return Promise.reject(error.message || error);
 	}
 
-	getAllPoliklinik(): Promise<Poliklinik[]> {
-		return Promise.resolve(this.allPoliklinik)
-			.catch(this.handleError);
+	getAllPoliklinik(): Observable<Poliklinik[]> {
+		return this.http.get(this.poliklinikUrl)
+			.map((res: Response) => res.json());
 	}
 
-	getPoliklinik(nama: string): Promise<Poliklinik> {
+	getPoliklinik(nama: string): Observable<Poliklinik> {
 		return this.getAllPoliklinik()
-			.then(allPoliklinik => allPoliklinik.find(poliklinik => poliklinik.nama === nama))
-			.catch(this.handleError);
+			.map(allPoliklinik => allPoliklinik.find(poliklinik => poliklinik.nama == nama));
+	}
+
+	updatePoliklinik(nama: string, poliklinik: Poliklinik) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(poliklinik);
+		
+		return this.http.put(this.poliklinikUrl + '/' + nama, body, options)
+			.map((res: Response) => res.json());
 	}
 }

@@ -60,16 +60,16 @@ export class PasienFormComponent implements OnInit {
     this.asuransi = new Asuransi(null,'',null);
 
     this.sub = this.route.params
-      .subscribe(params => { 
+      .subscribe(params => {
         this.layanan = params['namaLayanan'];
     });
     if (this.layanan === undefined) {
-      
+
     } else {
       if (this.layanan.indexOf("Poli") >= 0)
           this.tipe = "Poliklinik";
         else
-          this.tipe = "Laboratorium";  
+          this.tipe = "Laboratorium";
         this.selectTipeLayanan();
         this.selectLayanan();
     }
@@ -96,11 +96,12 @@ export class PasienFormComponent implements OnInit {
 
   private selectTipeLayanan() {
     if (this.tipe === 'Poliklinik') {
-      this.poliklinikService.getAllPoliklinik()
-        .then(allPoliklinik => this.allLayanan = allPoliklinik);
+      this.poliklinikService.getAllPoliklinik().subscribe(
+        data => { this.allLayanan = data }
+      )
     } else if (this.tipe === 'Laboratorium') {
       this.laboratoriumService.getAllLaboratorium()
-        .then(allLaboratorium => this.allLayanan = allLaboratorium);  
+        .then(allLaboratorium => this.allLayanan = allLaboratorium);
     }
   }
 
@@ -118,7 +119,7 @@ export class PasienFormComponent implements OnInit {
   }
 
 	private save() {
-    alert(JSON.stringify(this.pasien)+','+JSON.stringify(this.asuransi)+','+this.layanan); 
+    alert(JSON.stringify(this.pasien)+','+JSON.stringify(this.asuransi)+','+this.layanan);
     this.submitted = true;
   }
 }

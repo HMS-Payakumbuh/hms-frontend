@@ -32,11 +32,12 @@ export class DaftarAntrianComponent implements OnInit {
 
   private selectLayanan() {
     if (this.tipe === 'Poliklinik') {
-      this.poliklinikService.getAllPoliklinik()
-        .then(allPoliklinik => this.allLayanan = allPoliklinik);
+      this.poliklinikService.getAllPoliklinik().subscribe(
+        data => { this.allLayanan = data }
+      )
     } else if (this.tipe === 'Laboratorium') {
       this.laboratoriumService.getAllLaboratorium()
-        .then(allLaboratorium => this.allLayanan = allLaboratorium);  
+        .then(allLaboratorium => this.allLayanan = allLaboratorium);
     }
   }
 
@@ -47,6 +48,6 @@ export class DaftarAntrianComponent implements OnInit {
       alert('Anda akan mendaftar ke layanan '+this.layanan +' dan masuk ke antrian umum dengan nomor antrian A1');
     }
   }
-    
-  
+
+
 }
