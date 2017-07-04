@@ -17,7 +17,7 @@ import { FilterWaktuKeluarPipe }            from './pipe/filter-waktu-keluar.pip
 import { FilterNamaAsuransiPipe }       from './pipe/filter-nama-asuransi.pipe';
 import { FilterJenisPasienPipe }       from './pipe/filter-jenis-pasien.pipe';
 import { FilterJenisObatPipe }     from './pipe/filter-jenis-obat.pipe';
-import { FilterDaftarObatPipe }     from './pipe/filter-daftar-obat.pipe';
+import { FilterStokObatPipe }     from './pipe/filter-stok-obat.pipe';
 import { FilterObatMasukPipe }     from './pipe/filter-obat-masuk.pipe';
 import { FilterObatTebusPipe }     from './pipe/filter-obat-tebus.pipe';
 import { FilterObatRusakPipe }     from './pipe/filter-obat-rusak.pipe';
@@ -115,7 +115,7 @@ import { AppComponent }             from './app.component';
         FilterNamaAsuransiPipe,
         FilterJenisPasienPipe,
         FilterJenisObatPipe,
-        FilterDaftarObatPipe,
+        FilterStokObatPipe,
         FilterObatMasukPipe,
         FilterObatTebusPipe,
         FilterObatRusakPipe,

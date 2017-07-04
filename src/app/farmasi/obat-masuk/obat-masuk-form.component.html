@@ -1,15 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-  </head>
-  <body>
   <div class="col-md-12">
     <div class="card mb-3">
       <div class="card-header card-info">
@@ -22,45 +10,46 @@
         <div class="card-text">
             <form #obatMasukForm="ngForm">
               <div class="form-group">
-                <label for="id">ID Jenis Obat *</label>
+                <label for="id_jenis_obat">ID Jenis Obat *</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" id="id" required name="id"> 
+                  <input type="text" class="form-control" id="id_jenis_obat" required [(ngModel)] = "obatMasuk.id_jenis_obat" name="id_jenis_obat"> 
                   <span class="form-group-btn">
-                    <a href="#"><button class="btn btn-success">Cari</button></a>
+                    <a href="#"><button class="btn btn-success" (click)="getJenisObat(obatMasuk.id_jenis_obat)">Cari</button></a>
                   </span>
                 </div>                    
               </div>
 
+              <!-- TO-DO: Display jenis obat informations -->
               <div class="form-group">
                 <label for="merek">Merek Obat</label>
-                <input type="text" class="form-control" id="merek" disabled name="merek">
+                <input type="text" class="form-control" id="merek" disabled [(ngModel)] = "jenisObat.merek_obat" name="merek">
               </div>
 
               <div class="form-group">
                 <label for="nama_generik">Nama Generik</label>
-                <input type="text" class="form-control" id="nama_generik" disabled  name="nama_generik">
+                <input type="text" class="form-control" id="nama_generik" disabled [(ngModel)] = "jenisObat.nama_generik" name="nama_generik">
               </div>
 
               <div class="form-group">
-                <label for="pabrikan">Pabrikan</label>
-                <input type="text" class="form-control" id="pabrikan" disabled name="pabrikan">
+                <label for="pembuat">Pembuat</label>
+                <input type="text" class="form-control" id="pembuat" disabled [(ngModel)] = "jenisObat.pembuat" name="pabrikan">
               </div>
 
               <div class="form-group">
                 <label for="golongan">Golongan</label>
-                <input type="text" class="form-control" id="golongan" disabled name="golongan">
+                <input type="text" class="form-control" id="golongan" disabled  [(ngModel)] = "jenisObat.golongan" name="golongan">
               </div>
 
               <div class="form-group">
-                <label for="no_batch">Nomor Batch</label>
-                <input type="text" class="form-control" id="no_batch" required name="no_batch">
+                <label for="nomor_batch">Nomor Batch</label>
+                <input type="text" class="form-control" id="no_batch" required [(ngModel)] = "obatMasuk.nomor_batch" name="nomor_batch">
               </div>
 
               <div class="form-group">
                 <label for="jumlah">Jumlah</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" id="jumlah" required name="jumlah"> 
-                  <input type="text" class="form-control" id="satuan" disabled name="satuan">
+                  <input type="text" class="form-control" id="jumlah" required [(ngModel)] = "obatMasuk.jumlah" name="jumlah"> 
+                  <input type="text" class="form-control" id="satuan" disabled  [(ngModel)] = "jenisObat.satuan" name="satuan">
                 </div>    
                  
                 <!-- TODO: Resize Col, Make satuan dynamic according to satuan from Obat -->
@@ -68,34 +57,27 @@
 
               <div class="form-group">
                 <label for="kadaluarsa">Tanggal Kadaluarsa</label>
-                <input type="date" class="form-control" id="kadaluarsa" name="kadaluarsa">
+                <input type="date" class="form-control" id="kadaluarsa" [(ngModel)] = "obatMasuk.kadaluarsa" name="kadaluarsa">
               </div>
 
               <div class="form-group">
-                <label for="harga_beli">Harga beli satuan</label>
-                <input type="text" class="form-control" id="harga_beli" required name="harga_beli">
+                <label for="harga_beli_satuan">Harga beli satuan</label>
+                <input type="text" class="form-control" id="harga_beli_satuan" required [(ngModel)] = "obatMasuk.harga_beli_satuan" name="harga_beli_satuan">
               </div>
 
               <div class="form-group">
                 <label for="harga_total">Harga beli total</label>
-                <input type="text" class="form-control" id="harga_total" disabled name="harga_total">
+                <input type="text" class="form-control" id="harga_total" disabled [(ngModel)] = "obatMasuk.harga_beli_satuan*obatMasuk.jumlah" name="harga_total">
               </div>
 
               <div class="form-group">
                 <label for="harga_jual">Harga jual satuan</label>
-                <input type="text" class="form-control" id="harga_jual" disabled name="harga_jual">
+                <input type="text" class="form-control" id="harga_jual" disabled [(ngModel)] = "jenisObat.harga_jual_satuan" name="harga_jual">
               </div>
 
-              <button type="submit" class="btn btn-success">Simpan</button>
+              <button type="submit" class="btn btn-success" (click)="save()">Simpan</button>
             </form>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- jQuery first, then Tether, then Bootstrap JS. -->
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-  </body>
-</html>

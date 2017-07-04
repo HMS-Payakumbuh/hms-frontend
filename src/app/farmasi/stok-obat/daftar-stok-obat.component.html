@@ -31,7 +31,7 @@
 						</div>
 					</div>
 
-					<table class="table" [mfData]="allStokObat | filterDaftarObat : lokasi : param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+					<table class="table" [mfData]="allStokObat | filterStokObat : lokasi : param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<tbody>
 							<tr>
 								<th><mfDefaultSorter by="obat_masuk.barcode">Kode Obat</mfDefaultSorter></th>
