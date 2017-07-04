@@ -102,7 +102,7 @@
 										<div class="col-4">
 											<label for="tinggiBadan">Tinggi Badan (cm)</label>
 											<input type="text" class="form-control" id="tinggiBadan">
-										</div>										
+										</div>
 									</div>
 
 								</div>
@@ -114,7 +114,7 @@
 
 							<div class="form-group">
 								<label for="inputDiagnosis">Masukkan kode diagnosis pasien (ICD-10)</label>
-								<input id="inputTindakan" class="form-control" [ngbTypeahead]="searchDiagnosis" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addSelectedDiagnosis($event.item)">								
+								<input id="inputTindakan" class="form-control" [ngbTypeahead]="searchDiagnosis" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addSelectedDiagnosis($event.item)">
 							</div>
 
 							<table class="table" *ngIf="selectedDiagnosis.length > 0">
@@ -136,8 +136,8 @@
 										</td>
 									</tr>
 								</tbody>
-							</table>							
-	  							
+							</table>
+
 						</div>
 
 						<div class="tab-pane fade" id="tindakan" role="tabpanel">
@@ -152,7 +152,6 @@
 									<th>#</th>
 									<th>Kode</th>
 									<th>Nama</th>
-									<th>Harga</th>
 									<th>Keterangan</th>
 									<th></th>
 									<th></th>
@@ -162,7 +161,6 @@
 										<td style="vertical-align: middle;">{{i + 1}}</td>
 										<td style="vertical-align: middle;">{{tindakan.kode}}</td>
 										<td style="vertical-align: middle;">{{tindakan.nama}}</td>
-										<td style="vertical-align: middle;">Rp. {{tindakan.harga | number: '.2-2'}}</td>
 										<td style="vertical-align: middle;">
 											<textarea class="form-control" rows="2" [(ngModel)]="keteranganTindakan[i]"></textarea>
 										</td>
@@ -187,7 +185,7 @@
 							<div class="form-group" [formGroup]="addForm">
 								<div formArrayName="resepEntry">
 
-									<div *ngFor="let obat of addForm.controls.resepEntry.controls; index as i">										
+									<div *ngFor="let obat of addForm.controls.resepEntry.controls; index as i">
 										<div [formGroupName]="i">
 											<label for="obatResep">Obat {{i + 1}}</label>
 											<input type="text" class="form-control mb-3" formControlName="obatResep">

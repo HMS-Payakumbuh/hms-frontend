@@ -1,5 +1,5 @@
 export class TenagaMedis {
-	id: number;
+	no_pegawai: string;
 	nama: string;
 	jabatan: string;
 }

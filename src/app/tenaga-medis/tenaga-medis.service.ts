@@ -1,8 +1,8 @@
 import { Injectable }			from '@angular/core';
-import { Headers, Http}		from '@angular/http';
+import { Headers, Http, Response, RequestOptions }		from '@angular/http';
+import { Observable }			from 'rxjs/Rx';
 
-import 'rxjs/add/operator/toPromise';
-
+import { ENV }						from '../environment';
 import { Dokter }					from './dokter';
 import { JadwalDokter }		from './jadwal-dokter';
 import { TenagaMedis }		from './tenaga-medis';
@@ -11,13 +11,8 @@ import * as _ from "lodash";
 
 @Injectable()
 export class TenagaMedisService {
-
-	//Mock data
-	allTenagaMedis: TenagaMedis[] = [
-		{id: 1, nama: 'Calvin', jabatan: 'Dokter'},
-		{id: 2, nama: 'Aditya', jabatan: 'Dokter'},
-		{id: 3, nama: 'Jonathan', jabatan: 'Petugas Lab'}
-	];
+	private tenagaMedisUrl = ENV.tenagaMedisUrl;
+	private jadwalDokterUrl = ENV.jadwalDokterUrl;
 
 	allJadwalDokter: JadwalDokter[] = [
 		{nama_poliklinik: 'Poli Umum', id_dokter: 1, nama_dokter: 'Calvin', tanggal:'22/06/2017', waktu_mulai_praktik:'09:00', waktu_selesai_praktik:'15:00'},
@@ -32,27 +27,49 @@ export class TenagaMedisService {
 		return Promise.reject(error.message || error);
 	}
 
-	getAllTenagaMedis(): Promise<TenagaMedis[]> {
-		return Promise.resolve(this.allTenagaMedis)
-			.catch(this.handleError);
+	getAllTenagaMedis(): Observable<TenagaMedis[]> {
+		return this.http.get(this.tenagaMedisUrl)
+			.map((res: Response) => res.json());
 	}
 
-	getTenagaMedis(id: number): Promise<TenagaMedis> {
+	getTenagaMedis(no_pegawai: string): Observable<TenagaMedis> {
 		return this.getAllTenagaMedis()
-			.then(allTenagaMedis => allTenagaMedis.find(tenagaMedis => tenagaMedis.id === id))
-			.catch(this.handleError);
+			.map(allTenagaMedis => allTenagaMedis.find(tenagaMedis => tenagaMedis.no_pegawai === no_pegawai));
 	}
 
-	getAllJadwalDokter(): Promise<JadwalDokter[]> {
-		return Promise.resolve(this.allJadwalDokter)
-			.catch(this.handleError);
+	createTenagaMedis(tenagaMedis: TenagaMedis) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(tenagaMedis);
+
+		return this.http.post(this.tenagaMedisUrl, body, options)
+			.map((res: Response) => res.json());
 	}
 
-	getAllAvailableJadwalDokter(poli: string): Promise<JadwalDokter[]> {
+	updateTenagaMedis(no_pegawai: string, tenagaMedis: TenagaMedis) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(tenagaMedis);
+
+		return this.http.put(this.tenagaMedisUrl + '/' + no_pegawai, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	destroyTenagaMedis(no_pegawai: string) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+
+		return this.http.delete(this.tenagaMedisUrl + '/' + no_pegawai, options)
+			.map((res: Response) => res.json());
+	}
+
+	getAllJadwalDokter(): Observable<JadwalDokter[]> {
+		return this.http.get(this.jadwalDokterUrl)
+			.map((res: Response) => res.json());
+	}
+
+	getAllAvailableJadwalDokter(nama_poli: string): Observable<JadwalDokter[]> {
 		return this.getAllJadwalDokter()
-			.then(allJadwalDokter => 
-				_.filter(_.uniqBy(allJadwalDokter, 'nama_poliklinik'), {nama_poliklinik: poli})
-			)
-			.catch(this.handleError);
+			.map(allJadwalDokter => _.filter(_.uniqBy(allJadwalDokter, 'nama_poli'), {nama_poli: nama_poli}));
 	}
 }
