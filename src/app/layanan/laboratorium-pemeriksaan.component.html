@@ -30,11 +30,6 @@
 								<td><b>Usia</b></td>
 								<td>21 tahun</td>
 							</tr>
-							<tr>
-								<td colspan="2">
-									<button type="button" class="btn btn-outline-primary">Lihat Rekam Medis</button>
-								</td>
-							</tr>							
 						</tbody>
 					</table>
 				</div>
@@ -90,7 +85,7 @@
 										<div class="col-4">
 											<label for="tinggiBadan">Tinggi Badan (cm)</label>
 											<input type="text" class="form-control" id="tinggiBadan">
-										</div>										
+										</div>
 									</div>
 
 								</div>
@@ -110,7 +105,6 @@
 									<th>#</th>
 									<th>Kode</th>
 									<th>Nama</th>
-									<th>Harga</th>
 									<th>Keterangan</th>
 									<th></th>
 									<th></th>
@@ -120,12 +114,11 @@
 										<td style="vertical-align: middle;">{{i + 1}}</td>
 										<td style="vertical-align: middle;">{{tindakan.kode}}</td>
 										<td style="vertical-align: middle;">{{tindakan.nama}}</td>
-										<td style="vertical-align: middle;">Rp. {{tindakan.harga | number: '.2-2'}}</td>
 										<td style="vertical-align: middle;">
 											<textarea class="form-control" rows="2" [(ngModel)]="keteranganTindakan[i]"></textarea>
 										</td>
 										<td style="vertical-align: middle;">
-											<button type="button" class="btn btn-sm btn-info">Upload Hasil</button>											
+											<button type="button" class="btn btn-sm btn-info">Upload Hasil</button>
 										</td>
 										<td style="vertical-align: middle;">
 											<button type="button" class="btn btn-sm btn-outline-danger" (click)="removeSelectedTindakan(i)">

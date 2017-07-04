@@ -91,7 +91,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     );
 
 		this.diagnosisService.getAllDiagnosisReference().subscribe(
-      data => { this.allDiagnosisReference = data }  
+      data => { this.allDiagnosisReference = data }
     )
 	}
 
@@ -133,6 +133,9 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	}
 
 	save() {
-		this.tindakanService.saveTindakan(this.transaksi.id, this.poliklinik.nama, true, null, this.selectedTindakan, this.keteranganTindakan);
+		this.tindakanService.saveTindakan(this.transaksi, this.poliklinik.nama, true, null, this.selectedTindakan, this.keteranganTindakan)
+    .subscribe(
+      data => { console.log(data) }
+    );
 	}
 }
