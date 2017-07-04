@@ -12,6 +12,7 @@ import * as _ from "lodash";
 @Injectable()
 export class TenagaMedisService {
 	private tenagaMedisUrl = ENV.tenagaMedisUrl;
+	private dokterUrl = ENV.dokterUrl;
 	private jadwalDokterUrl = ENV.jadwalDokterUrl;
 
 	allJadwalDokter: JadwalDokter[] = [
