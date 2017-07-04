@@ -85,6 +85,6 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 	}
 
 	save() {
-		this.tindakanService.saveTindakan(this.transaksi.id, this.laboratorium.nama, false, null, this.selectedTindakan, this.keteranganTindakan);
+		this.tindakanService.saveTindakan(this.transaksi, this.laboratorium.nama, false, null, this.selectedTindakan, this.keteranganTindakan);
 	}
 }
