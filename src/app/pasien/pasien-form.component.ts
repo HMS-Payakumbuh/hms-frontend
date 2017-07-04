@@ -107,8 +107,9 @@ export class PasienFormComponent implements OnInit {
   }
 
   private selectLayanan() {
-    this.tenagaMedisService.getAllAvailableJadwalDokter(this.layanan)
-       .then(allJadwalDokter => this.allJadwalDokter = allJadwalDokter);
+    this.tenagaMedisService.getAllAvailableJadwalDokter(this.layanan).subscribe(
+      data => { this.allJadwalDokter = data }
+    )
   }
 
   private customTrackBy(index: number, obj: any): any {

@@ -21,9 +21,10 @@ export class JadwalDokterListComponent implements OnInit {
 	constructor(
 		private tenagaMedisService: TenagaMedisService
 	) {}
-	
+
 	ngOnInit() {
-		this.tenagaMedisService.getAllJadwalDokter()
-			.then(allJadwalDokter => this.allJadwalDokter = allJadwalDokter);
+		this.tenagaMedisService.getAllJadwalDokter().subscribe(
+      data => { this.allJadwalDokter = data }
+    )
 	}
 }
