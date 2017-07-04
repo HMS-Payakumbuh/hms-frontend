@@ -1,5 +1,5 @@
 import { Injectable }		from '@angular/core';
-import { Headers, Http, Response, RequestOptions }		from '@angular/http';
+import { Headers, Http, Response, RequestOptions, URLSearchParams }		from '@angular/http';
 import { Observable }		from 'rxjs/Rx';
 
 import 'rxjs/add/operator/toPromise';
@@ -34,5 +34,17 @@ export class StokObatService {
     	let options = new RequestOptions({ headers: headers });
     	let body = JSON.stringify(stokObat);
     	return this.http.post(this.stokObatUrl, body, options ).map((res: Response) => res.json());
+	}
+	
+	searchStokObat(id_obat_masuk: number, lokasi: number): Observable<StokObat> {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('id_obat_masuk', ''+id_obat_masuk);		
+		params.set('lokasi', ''+lokasi);
+
+		let requestOptions = new RequestOptions();
+		requestOptions.params = params;
+
+		return this.http.get(this.stokObatUrl+'/search', requestOptions)
+		    .map((res: Response) => res.json());			
 	}
 }
