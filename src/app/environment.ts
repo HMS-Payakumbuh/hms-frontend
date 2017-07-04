@@ -8,6 +8,7 @@ export var ENV = {
 
 	diagnosisReferenceUrl: baseUrl + "/api/daftar_diagnosis",
 	tindakanReferenceUrl: baseUrl + "/api/daftar_tindakan",
+	tindakanUrl: baseUrl + "/api/tindakan",
 	poliklinikUrl: baseUrl + "/api/poliklinik",
 	laboratoriumUrl: baseUrl + "/api/laboratorium",
 	ambulansUrl: baseUrl + "/api/ambulans",

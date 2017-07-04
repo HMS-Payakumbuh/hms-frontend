@@ -3,12 +3,14 @@ import { Headers, Http, Response, RequestOptions }		from '@angular/http';
 import { Observable }			from 'rxjs/Rx';
 
 import { ENV }										from '../environment';
+import { Transaksi }							from '../transaksi/transaksi';
 import { Tindakan }								from './tindakan';
 import { TindakanReference }			from './tindakan-reference';
 
 @Injectable()
 export class TindakanService {
 	private tindakanReferenceUrl = ENV.tindakanReferenceUrl;
+	private tindakanUrl = ENV.tindakanUrl;
 
 	tindakan: Tindakan;
 	tindakanInstances: Tindakan[] = [];
@@ -55,14 +57,13 @@ export class TindakanService {
 	}
 
 	saveTindakan (
-		idTransaksi: number,
+		transaksi: Transaksi,
 		namaLayanan: string,
 		isPoli: boolean,
 		dokumenPenunjang: number,
 		selectedTindakan: TindakanReference[],
 		keteranganTindakan: string[]
 	) {
-
 		this.i = 0;
 		this.tindakanInstances.length = 0;
 
@@ -70,25 +71,37 @@ export class TindakanService {
 			this.i++;
 
 			this.tindakan = new Tindakan();
-			this.tindakan.id_transaksi = idTransaksi;
+			this.tindakan.no_transaksi = transaksi.id;
 			this.tindakan.no_tindakan = this.i;
 			this.tindakan.harga = tindakanReference.harga;
 
-			if (!isPoli)
-				this.tindakan.dokumen_penunjang = dokumenPenunjang;
-			else
+			if (isPoli) {
+				this.tindakan.nama_poli = namaLayanan;
+				this.tindakan.nama_lab = null;
+				this.tindakan.nama_ambulans = null;
 				this.tindakan.dokumen_penunjang = null;
+			}
+			else {
+				this.tindakan.nama_poli = null;
+				this.tindakan.nama_lab = namaLayanan;
+				this.tindakan.nama_ambulans = null;
+				this.tindakan.dokumen_penunjang = dokumenPenunjang;
+			}
 
 			this.tindakan.keterangan = keteranganTindakan[this.i - 1];
 			this.tindakan.id_pembayaran = null;
 			this.tindakan.kode_tindakan = tindakanReference.kode;
-			this.tindakan.tanggal_waktu = 'temp';
-			this.tindakan.id_tenaga_medis = 1;
-			this.tindakan.nama_layanan = namaLayanan;
+			this.tindakan.id_pasien = transaksi.id_pasien;
+			this.tindakan.tanggal_waktu = '2017-07-04 10:00:00';
+			this.tindakan.np_tenaga_medis = '101';
 
 			this.tindakanInstances.push(this.tindakan);
 		}
 
-		console.log(JSON.stringify(this.tindakanInstances));
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers});
+		let body = JSON.stringify(this.tindakanInstances);
+		return this.http.post(this.tindakanUrl, body, options)
+			.map((res: Response) => res.json());
 	}
 }
