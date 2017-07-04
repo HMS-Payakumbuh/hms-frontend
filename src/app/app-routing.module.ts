@@ -16,7 +16,6 @@ import { AntrianComponent }				from './antrian/antrian.component';
 import { DaftarAntrianComponent }	    from './antrian/daftar-antrian.component';
 
 import { PoliklinikListComponent }		from './layanan/poliklinik-list.component';
-import { PoliklinikFormComponent }	from './layanan/poliklinik-form.component';
 import { PoliklinikPemeriksaanComponent }	from './layanan/poliklinik-pemeriksaan.component';
 
 import { LaboratoriumListComponent }		from './layanan/laboratorium-list.component';
@@ -33,7 +32,6 @@ import { TenagaMedisListComponent } 	from './tenaga-medis/tenaga-medis-list.comp
 import { JadwalDokterListComponent }	from './tenaga-medis/jadwal-dokter-list.component';
 
 import { TindakanReferenceListComponent }		from './layanan/tindakan-reference-list.component';
-import { TindakanReferenceFormComponent }		from './layanan/tindakan-reference-form.component';
 
 import { DaftarStokObatComponent }			from './farmasi/stok-obat/daftar-stok-obat.component';
 import { DetailStokObatComponent }			from './farmasi/stok-obat/detail-stok-obat.component';
@@ -79,39 +77,37 @@ const routes: Routes = [
 	{ path: 'daftar-pasien/catatan-kematian-form', component: CatatanKematianFormComponent},
 
 	{ path: 'poliklinik', component: PoliklinikListComponent },
-	{ path: 'poliklinik/:namaPoliklinik', component: PoliklinikFormComponent },	
 	{ path: 'poliklinik/:namaPoliklinik/:idTransaksi', component: PoliklinikPemeriksaanComponent },
 
 	{ path: 'laboratorium', component: LaboratoriumListComponent },
-	{ path: 'laboratorium/:namaLaboratorium/:idTransaksi', component: LaboratoriumPemeriksaanComponent },	
+	{ path: 'laboratorium/:namaLaboratorium/:idTransaksi', component: LaboratoriumPemeriksaanComponent },
 
-	{ path: 'rawatinap', component: RawatinapListComponent },	
+	{ path: 'rawatinap', component: RawatinapListComponent },
 	{ path: 'rawatinap/:noKamar', component: RawatinapDetailComponent },
 	{ path: 'rawatinap/:noKamar/rawatinap-form', component: RawatinapFormComponent },
 	{ path: 'kamaroperasi', component: PemakaianKamarOperasiListComponent },
-	{ path: 'kamaroperasi-form', component: PemakaianKamarOperasiFormComponent },	
+	{ path: 'kamaroperasi-form', component: PemakaianKamarOperasiFormComponent },
 
 	{ path: 'tenaga-medis', component: TenagaMedisListComponent },
 	{ path: 'jadwal-dokter', component: JadwalDokterListComponent },
 	{ path: 'daftar-tindakan', component: TindakanReferenceListComponent },
-	{ path: 'daftar-tindakan/:kode', component: TindakanReferenceFormComponent },	
 
 	{ path: 'stok-obat', component: DaftarStokObatComponent },
-	{ path: 'stok-obat/:id', component: DetailStokObatComponent },	
+	{ path: 'stok-obat/:id', component: DetailStokObatComponent },
 	{ path: 'obat-masuk', component: DaftarObatMasukComponent },
 	{ path: 'obat-masuk/:id', component: DetailObatMasukComponent },
 	{ path: 'obat-masuk-form', component: ObatMasukFormComponent },
 	{ path: 'jenis-obat', component: DaftarJenisObatComponent },
-	{ path: 'jenis-obat/:id', component: DetailJenisObatComponent },	
+	{ path: 'jenis-obat/:id', component: DetailJenisObatComponent },
 	{ path: 'jenis-obat/edit/:id', component: EditJenisObatComponent },
-	{ path: 'jenis-obat-form', component: JenisObatFormComponent },		
+	{ path: 'jenis-obat-form', component: JenisObatFormComponent },
 	{ path: 'obat-tebus', component: DaftarObatTebusComponent },
-	{ path: 'obat-tebus/:id', component: DetailObatTebusComponent },	
+	{ path: 'obat-tebus/:id', component: DetailObatTebusComponent },
 	{ path: 'obat-tebus-form', component: ObatTebusFormComponent },
 	{ path: 'obat-pindah', component: DaftarObatPindahComponent },
 	{ path: 'obat-pindah/:id', component: DetailObatPindahComponent },
-	{ path: 'obat-pindah-form', component: ObatPindahFormComponent },	
-	{ path: 'obat-rusak', component: DaftarObatRusakComponent },	
+	{ path: 'obat-pindah-form', component: ObatPindahFormComponent },
+	{ path: 'obat-rusak', component: DaftarObatRusakComponent },
 	{ path: 'obat-rusak/:id', component: DetailObatRusakComponent },
 	{ path: 'obat-rusak-form', component: ObatRusakFormComponent },
 	{ path: 'settings', component: SettingsComponent }

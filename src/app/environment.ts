@@ -13,6 +13,7 @@ export var ENV = {
 	ambulansUrl: baseUrl + "/api/ambulans",
 	tenagaMedisUrl: baseUrl + "/api/tenaga_medis",
 	dokterUrl: baseUrl + "/api/dokter",
+	jadwalDokterUrl: baseUrl + "/api/jadwal_dokter",
 
 	jenisObatUrl: baseUrl + "/api/jenis_obat",
 	stokObatUrl: baseUrl + "/api/stok_obat",

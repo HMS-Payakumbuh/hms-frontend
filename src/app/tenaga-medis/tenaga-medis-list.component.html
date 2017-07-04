@@ -10,18 +10,27 @@
 				<div class="card-block">
 					<table class="table" [mfData]="allTenagaMedis" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<thead>
-							<th><mfDefaultSorter by="id">ID</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="id">No Pegawai</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="jabatan">Jabatan</mfDefaultSorter></th>
+							<th></th>
 							<th></th>
 						</thead>
 						<tbody *ngFor="let tenagaMedis of mf.data">
 							<tr>
-								<td>{{tenagaMedis?.id}}</td>
+								<td>{{tenagaMedis?.no_pegawai}}</td>
 								<td>{{tenagaMedis?.nama}}</td>
 								<td>{{tenagaMedis?.jabatan}}</td>
 								<td>
-									<button class="btn btn-info" [routerLink]="['/tenaga-medis', tenagaMedis.id]">Edit</button>
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal"
+									[attr.data-target]="'#editTenagaMedisModal'" (click)="editTenagaMedis(tenagaMedis.no_pegawai, tenagaMedis)">
+										Edit
+									</button>
+								</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-danger" (click)="destroyTenagaMedis(tenagaMedis.no_pegawai)">
+										<i class="fa fa-trash"></i>
+									</button>
 								</td>
 							</tr>
 						</tbody>
@@ -31,11 +40,92 @@
 	                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
 	              </td>
 	            </tr>
-	          </tfoot>						
+	          </tfoot>
 					</table>
+
+					<button type="button" class="btn btn-info" data-toggle="modal"
+					 [attr.data-target]="'#createTenagaMedisModal'" (click)="newTenagaMedis()">
+					 	Buat Tenaga Medis Baru
+					</button>
+
 				</div>
 
 			</div>
+
+			<div class="modal fade" tabindex="-1" role="dialog" id="editTenagaMedisModal" aria-hidden="true" *ngIf="tenagaMedisModal != null">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+
+						<div class="modal-header">
+							<h5 class="modal-title">Editing {{tenagaMedisModalNoPegawai}}</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<i class="fa fa-times" aria-hidden="true"></i>
+							</button>
+						</div>
+
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="no_pegawai">No Pegawai</label>
+								<input type="text" class="form-control" id="no_pegawai" required [(ngModel)]="tenagaMedisModal.no_pegawai">
+							</div>
+
+							<div class="form-group">
+								<label for="nama">Nama</label>
+								<input type="text" class="form-control" id="nama" required [(ngModel)]="tenagaMedisModal.nama">
+							</div>
+
+							<div class="form-group">
+								<label for="jabatan">Jabatan</label>
+								<input type="text" class="form-control" id="jabatan" required [(ngModel)]="tenagaMedisModal.jabatan">
+							</div>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+							<button type="button" class="btn btn-success" (click)="updateTenagaMedis()">Simpan</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade" tabindex="-1" role="dialog" id="createTenagaMedisModal" aria-hidden="true" *ngIf="tenagaMedisModal != null">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+
+						<div class="modal-header">
+							<h5 class="modal-title">Tenaga Medis Baru</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<i class="fa fa-times" aria-hidden="true"></i>
+							</button>
+						</div>
+
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="no_pegawai">No Pegawai</label>
+								<input type="text" class="form-control" id="no_pegawai" required [(ngModel)]="tenagaMedisModal.no_pegawai">
+							</div>
+
+							<div class="form-group">
+								<label for="nama">Nama</label>
+								<input type="text" class="form-control" id="nama" required [(ngModel)]="tenagaMedisModal.nama">
+							</div>
+
+							<div class="form-group">
+								<label for="jabatan">Jabatan</label>
+								<input type="text" class="form-control" id="jabatan" required [(ngModel)]="tenagaMedisModal.jabatan">
+							</div>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+							<button type="button" class="btn btn-success" (click)="createTenagaMedis()">Simpan</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
 		</div>
 	</div>
 </html>

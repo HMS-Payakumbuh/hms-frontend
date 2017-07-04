@@ -44,7 +44,6 @@ import { CatatanKematianFormComponent }              from './pasien/catatan-kema
 
 
 import { PoliklinikListComponent }          from './layanan/poliklinik-list.component';
-import { PoliklinikFormComponent }          from './layanan/poliklinik-form.component';
 import { PoliklinikPemeriksaanComponent }   from './layanan/poliklinik-pemeriksaan.component';
 
 import { LaboratoriumListComponent }      from './layanan/laboratorium-list.component';
@@ -61,7 +60,6 @@ import { TenagaMedisListComponent }     from './tenaga-medis/tenaga-medis-list.c
 import { JadwalDokterListComponent }    from './tenaga-medis/jadwal-dokter-list.component';
 
 import { TindakanReferenceListComponent }    from './layanan/tindakan-reference-list.component';
-import { TindakanReferenceFormComponent }        from './layanan/tindakan-reference-form.component';
 
 import { DaftarStokObatComponent }            from './farmasi/stok-obat/daftar-stok-obat.component';
 import { DetailStokObatComponent }            from './farmasi/stok-obat/detail-stok-obat.component';
@@ -104,7 +102,7 @@ import { AppComponent }             from './app.component';
         AutocompleteModule.forRoot(),
         DataTableModule
     ],
-    declarations: [ 
+    declarations: [
         AppComponent,
         MatchesStatusPipe,
         FilterPasienPipe,
@@ -136,7 +134,6 @@ import { AppComponent }             from './app.component';
         CatatanKematianFormComponent,
 
         PoliklinikListComponent,
-        PoliklinikFormComponent,
         PoliklinikPemeriksaanComponent,
 
         LaboratoriumListComponent,
@@ -152,8 +149,7 @@ import { AppComponent }             from './app.component';
         JadwalDokterListComponent,
 
         TindakanReferenceListComponent,
-        TindakanReferenceFormComponent,
-        
+
         MatchesStatusPipe,
         FilterNamaPasienPipe,
         FilterTanggalPipe,
@@ -183,10 +179,10 @@ import { AppComponent }             from './app.component';
         DaftarObatRusakComponent,
         DetailObatRusakComponent,
         ObatRusakFormComponent,
-        
+
         SettingsComponent,
     ],
-    bootstrap:    [ 
+    bootstrap:    [
 	   AppComponent
     ]
 })
