@@ -9,7 +9,8 @@ import { ENV }				from '../../environment';
 
 @Injectable()
 export class ObatMasukService {
-	private obatMasukUrl = ENV.obatMasukUrl;
+	private obatMasukUrl = ENV.obatMasukUrl;	
+	private jenisObatUrl = ENV.jenisObatUrl;
 
 	constructor(private http:Http) { }
 
