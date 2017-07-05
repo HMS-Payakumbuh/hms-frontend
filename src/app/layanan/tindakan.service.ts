@@ -71,7 +71,7 @@ export class TindakanService {
 			this.i++;
 
 			this.tindakan = new Tindakan();
-			this.tindakan.no_transaksi = transaksi.id;
+			this.tindakan.id_transaksi = transaksi.id;
 			this.tindakan.no_tindakan = this.i;
 			this.tindakan.harga = tindakanReference.harga;
 
