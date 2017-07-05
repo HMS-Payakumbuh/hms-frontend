@@ -44,8 +44,8 @@ export class KlaimDetailComponent implements OnInit {
 			.switchMap((params: Params) => this.klaimService.getKlaim(+params['id']))
 			.subscribe(klaim => {
 				this.klaim = klaim;
-				this.transaksiService.getTransaksi(this.klaim.id_transaksi)
-				.then(transaksi => this.transaksi = transaksi);
+				// this.transaksiService.getTransaksi(this.klaim.id_transaksi)
+				// .then(transaksi => this.transaksi = transaksi);
 				this.displayJenisTarif = this.determineJenisTarif(klaim.kode_tarif);
 			});
 	}
