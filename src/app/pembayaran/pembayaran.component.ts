@@ -13,8 +13,9 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 })
 
 export class PembayaranComponent {
-	allPembayaran: Pembayaran[];
-	allAsuransi = ['', 'tunai'];
+	response: any;
+	allPembayaran: any[];
+	allAsuransi = [''];
 
 	public rowsOnPage = 10;
     public sortBy = "tanggal";
@@ -36,6 +37,10 @@ export class PembayaranComponent {
 			.then(allAsuransi => this.initAsuransiList(allAsuransi));
 
 		this.pembayaranService.getAllPembayaran()
-			.then(allPembayaran => this.allPembayaran = allPembayaran);
+			.subscribe(data => {
+				this.response = data;
+				this.allPembayaran = this.response.allPembayaran;
+				console.log(this.allPembayaran);
+			});
 	}
 }

@@ -13,8 +13,9 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 })
 
 export class TransaksiComponent {
-	allTransaksi: Transaksi[];
-	allJenis = ['', 'umum'];
+	response: any;
+	allTransaksi: any[];
+	allJenis = [''];
 
     public rowsOnPage = 10;
     public sortBy = "tanggal";
@@ -36,10 +37,10 @@ export class TransaksiComponent {
 			.then(allAsuransi => this.initJenisList(allAsuransi));
 
 		this.transaksiService.getAllTransaksi()
-			.then(allTransaksi => this.allTransaksi = allTransaksi);
-	}
-
-	onClickDatePicker(): void {
-		
+			.subscribe(data => {
+				this.response = data;
+				this.allTransaksi = this.response.allTransaksi;
+				console.log(this.allTransaksi);
+			});
 	}
 }

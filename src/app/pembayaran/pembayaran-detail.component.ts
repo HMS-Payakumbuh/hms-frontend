@@ -13,7 +13,8 @@ import { Pembayaran }				from './pembayaran';
 })
 
 export class PembayaranDetailComponent implements OnInit {
-	pembayaran: Pembayaran;
+	response: any;
+	pembayaran: any;
 
 	constructor(
 		private pembayaranService: PembayaranService,
@@ -25,6 +26,14 @@ export class PembayaranDetailComponent implements OnInit {
 		this.route.params
 			.switchMap((params: Params) => this.pembayaranService.getPembayaran(+params['id']))
 			.subscribe(pembayaran => this.pembayaran = pembayaran);
+
+		this.route.params
+			.switchMap((params: Params) => this.pembayaranService.getPembayaran(+params['id']))
+			.subscribe(data => {
+				this.response = data;
+				this.pembayaran = this.response.pembayaran;
+				console.log(this.pembayaran);
+			});
 	}
 
 	goBack(): void {

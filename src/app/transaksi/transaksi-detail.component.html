@@ -12,13 +12,13 @@
 						<div class="col-md-6">
 							<div class="row">
 								<div class="col-md-12">
-									<b>{{transaksi.nama_pasien}}</b>
-									<p>{{pasien.jender}}</p>
-									<p>{{pasien.umur}} Tahun</p>
+									<b>{{transaksi.pasien.nama}}</b>
+									<p>{{transaksi.pasien.gender}}</p>
+									<p>{{transaksi.pasien.usia}} Tahun</p>
 									<p>No. Sep: {{transaksi.no_sep}}</p>
-									<p>Jenis Pasien: {{transaksi.jenis_pasien.toUpperCase()}}</p>
-									<p>Tanggal Transaksi: {{transaksi.tanggal | date: 'dd/MM/y HH:mm'}}</p>
-									<p *ngIf="transaksi.pelunasan !== null">Tanggal Pelunasan: {{transaksi.pelunasan | date: 'dd/MM/y HH:mm'}}</p>
+									<p>Asuransi Pasien: {{transaksi.asuransi_pasien.toUpperCase()}}</p>
+									<p>Waktu Masuk: {{transaksi.waktu_masuk_pasien | date: 'dd/MM/y HH:mm'}}</p>
+									<p *ngIf="transaksi.status === 'closed'">Waktu Keluar: {{transaksi.waktu_perubahan_terakhir | date: 'dd/MM/y HH:mm'}}</p>
 								</div>
 							</div>
 						</div>
@@ -49,7 +49,7 @@
 								<tr>
 									<td></td>
 									<td><b>Total Harga</b></td>
-									<td>Rp. {{transaksi.harga | number: '.2-2'}}</td>
+									<td>Rp. {{transaksi.harga_total | number: '.2-2'}}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -57,7 +57,7 @@
 					<div class="row">
 						<div class="offset-md-8 col-md-4">
 							<button class="btn btn-danger" (click)="goBack()">Kembali</button>
-							<button *ngIf="transaksi.status === 'open'; else disabledButton" class="btn btn-success">Bayar</button>
+							<button *ngIf="transaksi.status === 'open'; else disabledButton" class="btn btn-success" (click)="createPembayaran(transaksi.harga_total, transaksi.asuransi_pasien)">Bayar</button>
 							<ng-template #disabledButton>
 								<button class="btn btn-success" disabled>Bayar</button>
 							</ng-template>
