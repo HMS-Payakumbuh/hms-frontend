@@ -1,20 +1,13 @@
 import { Injectable }			from '@angular/core';
-import { Headers, Http}		from '@angular/http';
+import { Headers, Http, Response, RequestOptions }	from '@angular/http';
+import { Observable }			from 'rxjs/Rx';
 
-import 'rxjs/add/operator/toPromise';
-
+import { ENV }						from '../environment';
 import { PemakaianKamarOperasi }			from './pemakaian-kamar-operasi';
 
 @Injectable()
 export class PemakaianKamarOperasiService {
-
-	//Mock data
-	allPemakaianKamarOperasi: PemakaianKamarOperasi[] = [
-		{no_kamar: 'Operasi-001', waktu_masuk: new Date('2017-09-11T16:00+07:00'), waktu_keluar: new Date('2017-09-11T18:00+07:00'), no_tindakan: 1},
-		{no_kamar: 'Operasi-002', waktu_masuk: new Date('2017-09-11T16:00+07:00'), waktu_keluar: new Date('2017-09-11T18:00+07:00'), no_tindakan: 1},
-		{no_kamar: 'Operasi-003', waktu_masuk: new Date('2017-09-11T16:00+07:00'), waktu_keluar: new Date('2017-09-11T18:00+07:00'), no_tindakan: 1},
-		{no_kamar: 'Operasi-004', waktu_masuk: new Date('2017-09-11T16:00+07:00'), waktu_keluar: new Date('2017-09-11T18:00+07:00'), no_tindakan: 1}
-	];
+	pemakaianKamarOperasiUrl = ENV.pemakaianKamarOperasiUrl;
 
 	constructor(private http:Http) { }
 
@@ -23,9 +16,40 @@ export class PemakaianKamarOperasiService {
 		return Promise.reject(error.message || error);
 	}
 
-	getAllPemakaianKamarOperasi(): Promise<PemakaianKamarOperasi[]> {
-		return Promise.resolve(this.allPemakaianKamarOperasi)
-			.catch(this.handleError);
+	getAllPemakaianKamarOperasi(): Observable<PemakaianKamarOperasi[]> {
+		return this.http.get(this.pemakaianKamarOperasiUrl)
+			.map((res: Response) => res.json());
+	}
+
+	getPemakaianKamarOperasi(no_kamar: string): Observable<PemakaianKamarOperasi> {
+		return this.getAllPemakaianKamarOperasi()
+			.map(allPemakaianKamarOperasi => allPemakaianKamarOperasi.find(PemakaianKamarOperasi => PemakaianKamarOperasi.no_kamar == no_kamar));
+	}
+
+	createPemakaianKamarOperasi(PemakaianKamarOperasi: PemakaianKamarOperasi) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(PemakaianKamarOperasi);
+
+		return this.http.post(this.pemakaianKamarOperasiUrl, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	updatePemakaianKamarOperasi(no_kamar: string, PemakaianKamarOperasi: PemakaianKamarOperasi) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(PemakaianKamarOperasi);
+
+		return this.http.put(this.pemakaianKamarOperasiUrl + '/' + no_kamar, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	destroyPemakaianKamarOperasi(no_kamar: string) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+
+		return this.http.delete(this.pemakaianKamarOperasiUrl + '/' + no_kamar, options)
+			.map((res: Response) => res.json());
 	}
 
 }

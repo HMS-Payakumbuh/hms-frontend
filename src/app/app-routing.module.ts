@@ -23,7 +23,6 @@ import { LaboratoriumPemeriksaanComponent }	from './layanan/laboratorium-pemerik
 
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent }	    from './layanan/rawatinap-detail.component';
-import { RawatinapFormComponent }	    from './layanan/rawatinap-form.component';
 
 import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-operasi-list.component';
 import { PemakaianKamarOperasiFormComponent }	    from './layanan/pemakaian-kamar-operasi-form.component';
@@ -86,7 +85,6 @@ const routes: Routes = [
 
 	{ path: 'rawatinap', component: RawatinapListComponent },
 	{ path: 'rawatinap/:noKamar', component: RawatinapDetailComponent },
-	{ path: 'rawatinap/:noKamar/rawatinap-form', component: RawatinapFormComponent },
 	{ path: 'kamaroperasi', component: PemakaianKamarOperasiListComponent },
 	{ path: 'kamaroperasi-form', component: PemakaianKamarOperasiFormComponent },
 
