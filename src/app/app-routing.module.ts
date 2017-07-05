@@ -36,6 +36,8 @@ import { TindakanReferenceListComponent }		from './layanan/tindakan-reference-li
 import { DaftarStokObatComponent }			from './farmasi/stok-obat/daftar-stok-obat.component';
 import { DetailStokObatComponent }			from './farmasi/stok-obat/detail-stok-obat.component';
 
+import { DaftarLokasiObatComponent }			from './farmasi/lokasi-obat/daftar-lokasi-obat.component';
+
 import { DaftarObatMasukComponent }		from './farmasi/obat-masuk/daftar-obat-masuk.component';
 import { DetailObatMasukComponent }		from './farmasi/obat-masuk/detail-obat-masuk.component';
 import { ObatMasukFormComponent }		from './farmasi/obat-masuk/obat-masuk-form.component';
@@ -93,7 +95,8 @@ const routes: Routes = [
 	{ path: 'daftar-tindakan', component: TindakanReferenceListComponent },
 
 	{ path: 'stok-obat', component: DaftarStokObatComponent },
-	{ path: 'stok-obat/:id', component: DetailStokObatComponent },
+	{ path: 'stok-obat/:id', component: DetailStokObatComponent },	
+	{ path: 'lokasi-obat', component: DaftarLokasiObatComponent },
 	{ path: 'obat-masuk', component: DaftarObatMasukComponent },
 	{ path: 'obat-masuk/:id', component: DetailObatMasukComponent },
 	{ path: 'obat-masuk-form', component: ObatMasukFormComponent },

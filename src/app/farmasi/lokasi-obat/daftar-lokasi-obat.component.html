@@ -1,0 +1,105 @@
+<html>
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>Daftar Lokasi Obat</h4>
+				</div>
+
+				<div class="card-block">
+					<table class="table" [mfData]="allLokasiObat" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+						<thead>
+							<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
+							<!--
+							<th></th>
+							<th></th>
+							-->
+						</thead>
+						<tbody *ngFor="let lokasiObat of mf.data">
+							<tr>
+								<td>{{lokasiObat?.nama}}</td>
+								<!--
+								<td>
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#editLokasiObatModal'" (click)="editLokasiObat(lokasiObat.nama, lokasiObat)">Edit</button>
+								</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-danger" (click)="destroyLokasiObat(lokasiObat.nama)">
+										<i class="fa fa-trash"></i>
+									</button>
+								</td>
+								-->
+							</tr>
+						</tbody>
+						<tfoot>
+	            <tr>
+	              <td colspan="7">
+	                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+	              </td>
+	            </tr>
+	          </tfoot>
+					</table>
+					<button type="button" class="btn btn-info" data-toggle="modal"
+					[attr.data-target]="'#createLokasiObatModal'" (click)="newLokasiObat()">
+						Buat Lokasi Obat Baru
+					</button>
+				</div>
+
+				<div class="modal fade" tabindex="-1" role="dialog" id="editLokasiObatModal" aria-hidden="true" *ngIf="lokasiObatModal != null">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+
+							<div class="modal-header">
+								<h5 class="modal-title">Editing {{lokasiObatModalNama}}</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<i class="fa fa-times" aria-hidden="true"></i>
+								</button>
+							</div>
+
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="nama">Nama</label>
+									<input type="text" class="form-control" id="nama" required [(ngModel)]="lokasiObatModal.nama" name="nama">
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+								<button type="button" class="btn btn-success" (click)="updateLokasiObat()">Simpan</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="modal fade" tabindex="-1" role="dialog" id="createLokasiObatModal" aria-hidden="true" *ngIf="lokasiObatModal != null">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+
+							<div class="modal-header">
+								<h5 class="modal-title">Lokasi Obat Baru</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<i class="fa fa-times" aria-hidden="true"></i>
+								</button>
+							</div>
+
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="nama">Nama</label>
+									<input type="text" class="form-control" id="nama" required [(ngModel)]="lokasiObatModal.nama" name="nama">
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+								<button type="button" class="btn btn-success" (click)="createLokasiObat()">Simpan</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</html>

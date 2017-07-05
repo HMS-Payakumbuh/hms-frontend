@@ -65,6 +65,8 @@ import { TindakanReferenceListComponent }    from './layanan/tindakan-reference-
 import { DaftarStokObatComponent }            from './farmasi/stok-obat/daftar-stok-obat.component';
 import { DetailStokObatComponent }            from './farmasi/stok-obat/detail-stok-obat.component';
 
+import { DaftarLokasiObatComponent }            from './farmasi/lokasi-obat/daftar-lokasi-obat.component';
+
 import { DaftarObatMasukComponent }     from './farmasi/obat-masuk/daftar-obat-masuk.component';
 import { DetailObatMasukComponent }     from './farmasi/obat-masuk/detail-obat-masuk.component';
 import { ObatMasukFormComponent }       from './farmasi/obat-masuk/obat-masuk-form.component';
@@ -160,6 +162,8 @@ import { AppComponent }             from './app.component';
 
         DaftarStokObatComponent,
         DetailStokObatComponent,
+
+        DaftarLokasiObatComponent,
 
         DaftarObatMasukComponent,
         DetailObatMasukComponent,
