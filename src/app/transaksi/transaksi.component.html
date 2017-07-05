@@ -50,10 +50,10 @@
 									<td></td>
 								</tr>
 								<tr *ngFor="let transaksi of mf.data | matchesStatus: status | filterNamaPasien: searchParam | filterTanggal: selectedDate | filterJenisPasien: jenis">
-									<td>{{transaksi.nama_pasien}}</td>
-									<td>{{transaksi.tanggal | date: 'dd/MM/y HH:mm'}}</td>
+									<td>{{transaksi.pasien.nama}}</td>
+									<td>{{transaksi.waktu_masuk_pasien | date: 'dd/MM/y HH:mm'}}</td>
 									<td>{{transaksi.status.toUpperCase()}}</td>	
-									<td>{{transaksi.jenis_pasien.toUpperCase()}}</td>
+									<td>{{transaksi.asuransi_pasien.toUpperCase()}}</td>
 									<td><button type="button" class="btn btn-primary" [routerLink] = "['/transaksi', transaksi.id]">Details</button></td>
 								</tr>
 							</tbody>

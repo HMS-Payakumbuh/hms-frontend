@@ -12,14 +12,8 @@
 							<div class="input-group">
 							  	<label for="lokasi"><b>Lokasi:</b></label>
 						  		<select class="form-control" [(ngModel)]="lokasi">	
-						  			<option></option>			
-								    <option>Gudang Utama</option>
-								    <option>Apotek</option>
-								    <option>Poliklinik Anak</option>
-								    <option>Poliklinik Gigi</option>
-								    <option>Poliklinik Kandungan</option>
-								    <option>Poliklinik THT</option>							
-								    <option>Instalasi Gawat Darurat</option>
+						  			<option></option>
+						  			<option *ngFor="let lokasiObat of allLokasiObat">{{lokasiObat.nama}}</option>
 						  		</select>
 							</div>
 						</div>

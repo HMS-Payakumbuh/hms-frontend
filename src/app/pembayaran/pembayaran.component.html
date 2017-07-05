@@ -12,8 +12,8 @@
 						<table class="table" [mfData]="allPembayaran" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 							<tbody>
 								<tr>
-									<th><mfDefaultSorter by="nama_pasien">Nama Pasien</mfDefaultSorter></th>
-									<th><mfDefaultSorter by="tanggal">Tanggal Pembayaran</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="no_transaksi">Nomor Transaksi</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="created_at">Waktu Pembayaran</mfDefaultSorter></th>
 									<th>Metode Pembayaran</th>
 									<th></th>
 								</tr>
@@ -40,9 +40,9 @@
 									<td></td>
 								</tr>
 								<tr *ngFor="let pembayaran of mf.data | filterNamaPasien: searchParam | filterNamaAsuransi: asuransi | filterTanggal: selectedDate">
-									<td>{{pembayaran.nama_pasien}}</td>								
-									<td>{{pembayaran.tanggal | date: 'dd/MM/y HH:mm'}}</td>
-									<td>{{pembayaran.nama_asuransi.toUpperCase()}}</td>
+									<td>{{pembayaran.transaksi.no_transaksi}}</td>								
+									<td>{{pembayaran.created_at | date: 'dd/MM/y HH:mm'}}</td>
+									<td>{{pembayaran.metode_bayar.toUpperCase()}}</td>
 									<td><button type="button" class="btn btn-primary" [routerLink] = "['/pembayaran', pembayaran.id]">Details</button></td>
 								</tr>
 							</tbody>

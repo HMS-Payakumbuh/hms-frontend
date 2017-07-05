@@ -13,13 +13,7 @@
 				                <label for="asal"><b>Asal:</b></label>
 						  		<select class="form-control" [(ngModel)]="asal">	
 						  			<option></option>
-								    <option>Gudang Utama</option>
-								    <option>Apotek</option>
-								    <option>Poliklinik Anak</option>
-								    <option>Poliklinik Gigi</option>
-								    <option>Poliklinik Kandungan</option>
-								    <option>Poliklinik THT</option>							
-								    <option>Instalasi Gawat Darurat</option>
+						  			<option *ngFor="let lokasiObat of allLokasiObat">{{lokasiObat.nama}}</option>>
 						  		</select>
 							</div>
 						</div>
@@ -27,15 +21,9 @@
 						<div class="col-md-6 pull-right">
 							<div class="input-group">
 							<label for="tujuan"><b>Tujuan:</b></label>
-					  		<select class="form-control" [(ngModel)]="tujuan">		
-					  			<option></option>
-							    <option>Gudang utama</option>
-							    <option>Apotek</option>
-							    <option>Poliklinik Anak</option>
-							    <option>Poliklinik Gigi</option>
-							    <option>Poliklinik Kandungan</option>
-							    <option>Poliklinik THT</option>							
-							    <option>Instalasi Gawat Darurat</option>
+					  		<select class="form-control" [(ngModel)]="tujuan">
+					  			<option></option>		
+					  			<option *ngFor="let lokasiObat of allLokasiObat">{{lokasiObat.nama}}</option>
 					  		</select>
 						  	</div>
 						</div>
@@ -43,14 +31,14 @@
 
 					<div class="row">	
 						<div class="col-md-6 pull-left">
-							<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal keluar">
+							<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal pindah">
 						</div>
 						<div class="col-md-6 pull-right">						
 						    <input class="form-control" [(ngModel)]="param" placeholder="Cari kode/nama obat"/>
 						</div>
 					</div>
 
-					<table class="table" [mfData]="allObatPindah | filterObatPindah : asal : tujuan : param | filterWaktuKeluar : selectedDate" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+					<table class="table" [mfData]="allObatPindah | filterObatPindah : asal : tujuan : param | filterWaktuPindah : selectedDate" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<tbody>
 							<tr>								
 								<th><mfDefaultSorter by="waktu_pindah">Waktu Pindah</mfDefaultSorter></th>
@@ -83,7 +71,7 @@
 					</table>
 
 					<div class="pull-left">
-						<a routerLink="/obat-pindah-form"><button type="button" class="btn btn-primary">Tambah obat pindah</button></a>
+						<a routerLink="/obat-pindah-form"><button type="button" class="btn btn-primary">Catat pemindahan obat</button></a>
 					</div>
 				</div>
 			</div>	

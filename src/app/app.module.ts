@@ -14,6 +14,7 @@ import { FilterNamaPasienPipe }         from './pipe/filter-nama-pasien.pipe';
 import { FilterTanggalPipe }            from './pipe/filter-tanggal.pipe';
 import { FilterWaktuMasukPipe }            from './pipe/filter-waktu-masuk.pipe';
 import { FilterWaktuKeluarPipe }            from './pipe/filter-waktu-keluar.pipe';
+import { FilterWaktuPindahPipe }            from './pipe/filter-waktu-pindah.pipe';
 import { FilterNamaAsuransiPipe }       from './pipe/filter-nama-asuransi.pipe';
 import { FilterJenisPasienPipe }       from './pipe/filter-jenis-pasien.pipe';
 import { FilterJenisObatPipe }     from './pipe/filter-jenis-obat.pipe';
@@ -63,6 +64,8 @@ import { TindakanReferenceListComponent }    from './layanan/tindakan-reference-
 import { DaftarStokObatComponent }            from './farmasi/stok-obat/daftar-stok-obat.component';
 import { DetailStokObatComponent }            from './farmasi/stok-obat/detail-stok-obat.component';
 
+import { DaftarLokasiObatComponent }            from './farmasi/lokasi-obat/daftar-lokasi-obat.component';
+
 import { DaftarObatMasukComponent }     from './farmasi/obat-masuk/daftar-obat-masuk.component';
 import { DetailObatMasukComponent }     from './farmasi/obat-masuk/detail-obat-masuk.component';
 import { ObatMasukFormComponent }       from './farmasi/obat-masuk/obat-masuk-form.component';
@@ -109,6 +112,7 @@ import { AppComponent }             from './app.component';
         FilterTanggalPipe,
         FilterWaktuMasukPipe,
         FilterWaktuKeluarPipe,
+        FilterWaktuPindahPipe,
         FilterNamaAsuransiPipe,
         FilterJenisPasienPipe,
         FilterJenisObatPipe,
@@ -156,6 +160,8 @@ import { AppComponent }             from './app.component';
 
         DaftarStokObatComponent,
         DetailStokObatComponent,
+
+        DaftarLokasiObatComponent,
 
         DaftarObatMasukComponent,
         DetailObatMasukComponent,

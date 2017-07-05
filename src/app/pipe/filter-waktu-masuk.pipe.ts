@@ -8,8 +8,9 @@ export class FilterWaktuMasukPipe implements PipeTransform {
   	if (!items || !param) {
   		return items;
   	}
-    return items.filter(function(item){    
-              var dateString = item.waktu_masuk.getDate() + "-" + ("0" + (item.waktu_masuk.getMonth() + 1)).slice(-2) + "-" + item.waktu_masuk.getFullYear();
+    return items.filter(function(item){  
+              var dateTemp = new Date(item.waktu_masuk);  
+              var dateString = ("0" + dateTemp.getDate()).slice(-2) + "-" + ("0" + (dateTemp.getMonth() + 1)).slice(-2) + "-" + dateTemp.getFullYear();
               return dateString.toLowerCase().indexOf(param.toLowerCase()) > -1;
   	})
   }

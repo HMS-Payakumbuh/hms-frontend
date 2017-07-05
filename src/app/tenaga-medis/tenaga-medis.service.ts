@@ -15,12 +15,6 @@ export class TenagaMedisService {
 	private dokterUrl = ENV.dokterUrl;
 	private jadwalDokterUrl = ENV.jadwalDokterUrl;
 
-	allJadwalDokter: JadwalDokter[] = [
-		{nama_poliklinik: 'Poli Umum', id_dokter: 1, nama_dokter: 'Calvin', tanggal:'22/06/2017', waktu_mulai_praktik:'09:00', waktu_selesai_praktik:'15:00'},
-		{nama_poliklinik: 'Poli Umum', id_dokter: 1, nama_dokter: 'Calvin', tanggal:'23/06/2017', waktu_mulai_praktik:'09:00', waktu_selesai_praktik:'15:00'},
-		{nama_poliklinik: 'Poli THT', id_dokter: 2, nama_dokter: 'Aditya', tanggal:'22/06/2017', waktu_mulai_praktik:'09:00', waktu_selesai_praktik:'13:00'}
-	];
-
 	constructor(private http:Http) { }
 
 	private handleError(error: any): Promise<any> {
@@ -72,5 +66,31 @@ export class TenagaMedisService {
 	getAllAvailableJadwalDokter(nama_poli: string): Observable<JadwalDokter[]> {
 		return this.getAllJadwalDokter()
 			.map(allJadwalDokter => _.filter(_.uniqBy(allJadwalDokter, 'nama_poli'), {nama_poli: nama_poli}));
+	}
+
+	createJadwalDokter(jadwalDokter: JadwalDokter) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(jadwalDokter);
+
+		return this.http.post(this.jadwalDokterUrl, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	updateJadwalDokter(nama_poli: string, np_dokter: string, tanggal: string, jadwalDokter: JadwalDokter) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(jadwalDokter);
+
+		return this.http.put(this.jadwalDokterUrl + '/' + nama_poli + '/' + np_dokter + '/' + tanggal, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	destroyJadwalDokter(nama_poli: string, np_dokter: string, tanggal: string) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+
+		return this.http.delete(this.jadwalDokterUrl + '/' + nama_poli + '/' + np_dokter + '/' + tanggal, options)
+			.map((res: Response) => res.json());
 	}
 }

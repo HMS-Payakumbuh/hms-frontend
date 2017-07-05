@@ -1,6 +1,6 @@
 export class JadwalDokter {
-	nama_poliklinik: string;
-	id_dokter: number;
+	nama_poli: string;
+	np_dokter: number;
 	nama_dokter: string;
 	tanggal: string;
 	waktu_mulai_praktik: string;
