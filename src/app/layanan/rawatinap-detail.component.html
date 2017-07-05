@@ -191,112 +191,55 @@
 							</div>
 
 							<div class="modal-body">
+
 								<div class="form-group">
-									<label for="id_transaksi">ID Transaksi *</label>
+									<label for="id_transaksi">Nama Pasien *</label>
 									<div class="input-group">
-									<input type="text" class="form-control" id="id_transaksi" required name="id_transaksi"> 
+									<input type="text" class="form-control" id="nama_pasien" required name="nama_pasien" [(ngModel)]="pemakaianKamarModal.nama_pasien"> 
 									<span class="form-group-btn">
-										<a href="#"><button class="btn btn-success">Cari</button></a>
+										<button class="btn btn-success" (click)="getNoTransaksi(namaPasien)">Cari</button>
 									</span>
 									</div>                    
 								</div>
 
 								<div class="form-group">
-									<label for="id_pasien">ID Pasien</label>
-									<input type="text" class="form-control" id="id_pasien" disabled name="id_pasien">
-								</div>
-
-								<div class="form-group">
-									<label for="nama_pasien">Nama Pasien</label>
-									<input type="text" class="form-control" id="nama_pasien" disabled name="nama_pasien">
+									<label for="id_pasien">ID Transaksi</label>
+									<input type="text" class="form-control" id="id_pasien" disabled name="id_pasien" [(ngModel)]="pemakaianKamarModal.no_transaksi">
 								</div>
 
 								<div class="form-group">
 									<label for="nama_pasien">No. Kamar</label>
-									<input type="text" class="form-control" id="nama_pasien" disabled name="no_kamar" value="{{rawatinap.no_kamar}}">
+									<input type="text" class="form-control" id="nama_pasien" disabled name="no_kamar" value="{{rawatinap.no_kamar}}" [(ngModel)]="pemakaianKamarModal.no_kamar">
 								</div>
 
 								<div class="form-group">
 									<label for="nama_pasien">No. Tempat Tidur</label>
-									<input type="text" class="form-control" id="no_tempat_tidur" disabled name="no_tempat_tidur" value="{{getSelectedTempatTidur()}}">
+									<input type="text" class="form-control" id="no_tempat_tidur" disabled name="no_tempat_tidur" value="{{getSelectedTempatTidur()}}" [(ngModel)]="pemakaianKamarModal.no_tempat_tidur">
+								</div>
+
+								<div class="form-group">
+									<label for="nama_pasien">Harga</label>
+									<input type="text" class="form-control" id="harga" disabled name="harga" value="{{rawatinap.harga_per_hari}}" [(ngModel)]="pemakaianKamarModal.harga">
+								</div>
+
+								<div class="form-group">
+									<label for="nama_pasien">Nama Dokter Rawat</label>
+									<select class="form-control" id="no_pegawai">
+										<option *ngFor="let tenagaMedis of allTenagaMedis" [value]="tenagaMedis.no_pegawai" [(ngModel)]="pemakaianKamarModal.no_pegawai">
+											{{tenagaMedis.nama}}
+										</option>
+									</select>
 								</div>
 							</div>
 
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-								<button type="button" class="btn btn-success" (click)="updatePoliklinik()">Simpan</button>
+								<button type="button" class="btn btn-success" (click)="createPemakaianKamar(rawatinap.no_kamar)">Simpan</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			
-			
-			<!--<div class="modal fade" tabindex="-1" role="dialog" id="createPemakaianKamarModal" aria-hidden="true" *ngIf="pemakaianKamarModal != null">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-
-							<div class="modal-header">
-								<h5 class="modal-title" id="createPemakaianKamarModal">Buat Pemakaian Kamar Rawat Inap</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<i class="fa fa-times" aria-hidden="true"></i>
-								</button>
-							</div>
-
-							<div class="modal-body">
-							<div class="form-group">
-								<label for="id_transaksi">ID Transaksi *</label>
-								<div class="input-group">
-								<input type="text" class="form-control" id="id_transaksi" required name="id_transaksi"> 
-								<span class="form-group-btn">
-									<a href="#"><button class="btn btn-success">Cari</button></a>
-								</span>
-								</div>                    
-							</div>
-
-							<div class="form-group">
-								<label for="id_pasien">ID Pasien</label>
-								<input type="text" class="form-control" id="id_pasien" disabled name="id_pasien">
-							</div>
-
-							<div class="form-group">
-								<label for="nama_pasien">Nama Pasien</label>
-								<input type="text" class="form-control" id="nama_pasien" disabled name="nama_pasien">
-							</div>
-
-							<div class="form-group">
-								<label for="nama_pasien">No. Kamar</label>
-								<input type="text" class="form-control" id="nama_pasien" disabled name="no_kamar" value="{{rawatinap.no_kamar}}">
-							</div>
-
-							<div class="form-group">
-								<label for="nama_pasien">No. Tempat Tidur</label>
-								<input type="text" class="form-control" id="no_tempat_tidur" disabled name="no_tempat_tidur" value="{{selectedTempatTidur}}">
-							</div>
-
-							<div class="form-group">
-								<label for="nama_pasien">Jenis Kamar</label>
-								<input type="text" class="form-control" id="jenis_kamar" disabled name="jenis_kamar" value="{{rawatinap.jenis_kamar}}">
-							</div>
-
-							<div class="form-group">
-								<label for="nama_pasien">Kelas</label>
-								<input type="text" class="form-control" id="kelas" disabled name="kelas" value="{{rawatinap.kelas}}">
-							</div>
-
-							<div class="form-group">
-								<label for="nama_pasien">Harga</label>
-								<input type="text" class="form-control" id="harga" disabled name="harga" value="{{rawatinap.harga_per_hari}}">
-							</div>
-							</div>
-
-							<div class="modal-footer">
-								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-								<button type="button" class="btn btn-success" (click)="updatePoliklinik()">Simpan</button>
-							</div>
-
-						</div>
-					</div>
-			</div>-->
 			</div>
 		</div>
 	</div>

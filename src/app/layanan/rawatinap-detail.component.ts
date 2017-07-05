@@ -11,6 +11,8 @@ import { Tempattidur }          from './tempattidur';
 import { TempattidurService }		from './tempattidur.service';
 import { PemakaianKamar }          from './pemakaian-kamar';
 import { PemakaianKamarService }   from './pemakaian-kamar.service';
+import { TenagaMedis }		from '../tenaga-medis/tenaga-medis';
+import { TenagaMedisService }		from '../tenaga-medis/tenaga-medis.service';
 
 
 @Component({
@@ -20,13 +22,15 @@ import { PemakaianKamarService }   from './pemakaian-kamar.service';
          RawatinapService,
          TempattidurService,
 		 PemakaianKamarService,
-         TransaksiService
+         TransaksiService,
+		 TenagaMedisService
     ]
 })
 
 export class RawatinapDetailComponent implements OnInit {
 	rawatinap: Rawatinap;
     allTempatTidur: Tempattidur[];
+	allTenagaMedis: TenagaMedis[];
     transaksi: Transaksi;
 	noKamar: string;
 	selectedTempatTidur: number;
@@ -38,6 +42,7 @@ export class RawatinapDetailComponent implements OnInit {
 		private rawatinapService: RawatinapService,
 		private tempattidurService: TempattidurService,
 		private pemakaianKamarService: PemakaianKamarService,
+		private TenagaMedisService: TenagaMedisService,
 		private route: ActivatedRoute,
 		private location: Location
 	) {}
@@ -54,7 +59,9 @@ export class RawatinapDetailComponent implements OnInit {
 		this.route.params
 			.switchMap((params: Params) => this.transaksiService.getTransaksi(+params['idTransaksi']))
 			.subscribe(transaksi => this.transaksi = transaksi);
-
+		
+		this.TenagaMedisService.getAllTenagaMedis().
+			subscribe(data => this.allTenagaMedis = data);
 	}
 
 	selectTempatTidur(noTempatTidur:number) : void {
@@ -81,11 +88,19 @@ export class RawatinapDetailComponent implements OnInit {
     	this.pemakaianKamarModal = new PemakaianKamar();
  	}
 
-    // createPemakaianKamarRawatInap() {
-    // 	this.pemakaianKamarService.(this.pemakaianKamarModal).subscribe(
-    //   		data => { window.location.reload() }
-    // 	);
-  	// }
+	getNoTransaksi(namaPasien: string) {
+		// this.route.params
+		// 	.switchMap((params: Params) => this.pemakaianKamarService.getNoTransaksi(namaPasien,params['noKamar']))
+		// 	.subscribe(transaksi => this.transaksi = transaksi);
+
+		// this.pemakaianKamarModal.id_transaksi = this.transaksi.no_transaksi;
+	}
+
+    createPemakaianKamar(noKamar: string) {
+    	this.pemakaianKamarService.createPemakaianKamar(noKamar,this.pemakaianKamarModal).subscribe(
+      		data => { window.location.reload() }
+    	);
+  	}
 
 	goBack(): void {
 		this.location.back();

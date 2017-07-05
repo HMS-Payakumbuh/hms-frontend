@@ -28,12 +28,4 @@ export class TempattidurService {
 		return Promise.resolve(this.selectedTempatTidur)
 			.catch(this.handleError);
 	}
-
-	getTempattidurByNoKamar(no_kamar: string): Promise<Tempattidur[]> {
-		return this.getAllTempattidur()
-			.then(allTempattidur=> allTempattidur.filter(function(item) {
-				return item.no_kamar === no_kamar;
-			}))
-			.catch(this.handleError);
-	}
 }

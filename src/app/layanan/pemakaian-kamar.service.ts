@@ -4,10 +4,12 @@ import { Observable }			from 'rxjs/Rx';
 
 import { ENV }						from '../environment';
 import { PemakaianKamar }			from './pemakaian-kamar';
+import { Transaksi }			from '../transaksi/transaksi';
 
 @Injectable()
 export class PemakaianKamarService {
 	rawatinapUrl = ENV.rawatinapUrl;
+	transaksiUrl = ENV.transaksiUrl;
 
 	constructor(private http:Http) { }
 
@@ -24,6 +26,11 @@ export class PemakaianKamarService {
 	getPemakaianKamar(no_kamar: string): Observable<PemakaianKamar> {
 		return this.getAllPemakaianKamar()
 			.map(allRawatinap => allRawatinap.find(Rawatinap => Rawatinap.no_kamar == no_kamar));
+	}
+
+	getNoTransaksi(nama_pasien: string, no_kamar : string): Observable<Transaksi> {
+		return this.http.get(this.transaksiUrl + '/' + no_kamar)
+			.map((res: Response) => res.json());
 	}
 
 	createPemakaianKamar(no_kamar : string, PemakaianKamar: PemakaianKamar) {
