@@ -1,5 +1,5 @@
 export class Tindakan {
-	no_transaksi: number;
+	id_transaksi: number;
 	no_tindakan: number;
 	harga: number;
 	dokumen_penunjang: number;
