@@ -11,91 +11,89 @@
             <form #obatPindahForm="ngForm">
               <div class="form-group">
                 <label for="asal">Asal *</label>
-                <select class="form-control" id="asal" required name="asal">   
-                  <option>Gudang utama (GUD)</option>
-                  <option>Apotek (APT)</option>
-                  <option>Poliklinik Anak (PAN)</option>
-                  <option>Poliklinik Gigi (PGI)</option>
-                  <option>Poliklinik Kandungan (PKA)</option>
-                  <option>Poliklinik THT (PTH)</option>             
-                  <option>Instalasi Gawat Darurat (IGD)</option>
+                <select class="form-control" id="asal" required [(ngModel)] = "obatPindah.asal" name="asal">   
+                  <option *ngFor="let lokasiObat of allLokasiObat" [value]="lokasiObat.id">{{lokasiObat.nama}}</option>
                 </select>
               </div>
 
               <div class="form-group">
                 <label for="tujuan">Tujuan *</label>
-                <select class="form-control" id="tujuan" required name="tujuan">      
-                  <option>Gudang utama (GUD)</option>
-                  <option>Apotek (APT)</option>
-                  <option>Poliklinik Anak (PAN)</option>
-                  <option>Poliklinik Gigi (PGI)</option>
-                  <option>Poliklinik Kandungan (PKA)</option>
-                  <option>Poliklinik THT (PTH)</option>             
-                  <option>Instalasi Gawat Darurat (IGD)</option>
+                <select class="form-control" id="tujuan" required [(ngModel)] = "obatPindah.tujuan" name="tujuan">   
+                  <option *ngFor="let lokasiObat of allLokasiObat" [value]="lokasiObat.id">{{lokasiObat.nama}}</option>
                 </select>
               </div>    
 
               <div class="form-group">
                 <label for="kode">Kode Obat *</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" id="kode" required name="kode"> 
+                  <input type="text" class="form-control" id="kode" required [(ngModel)] = "kode" name="kode"> 
                   <span class="form-group-btn">
-                    <a href="#"><button class="btn btn-success">Cari</button></a>
+                    <button class="btn btn-success" (click)="searchObat(kode, obatPindah.asal)">Cari</button>
                   </span>
                 </div>                    
               </div>
 
               <div class="form-group">
                 <label for="id">ID Jenis Obat</label>
-                <input type="text" class="form-control" id="id" disabled name="id">
+                <input type="text" class="form-control" id="id" disabled [(ngModel)] = "stokObat.jenis_obat.id" name="id">
               </div>
 
               <div class="form-group">
                 <label for="merek">Merek Obat</label>
-                <input type="text" class="form-control" id="merek" disabled name="merek">
+                <input type="text" class="form-control" id="merek" disabled [(ngModel)] = "stokObat.jenis_obat.merek_obat" name="merek">
               </div>
 
               <div class="form-group">
                 <label for="nama_generik">Nama Generik</label>
-                <input type="text" class="form-control" id="nama_generik" disabled  name="nama_generik">
+                <input type="text" class="form-control" id="nama_generik" disabled [(ngModel)] = "stokObat.jenis_obat.nama_generik"  name="nama_generik">
               </div>
 
               <div class="form-group">
-                <label for="pabrikan">Pabrikan</label>
-                <input type="text" class="form-control" id="pabrikan" disabled name="pabrikan">
+                <label for="pembuat">Pembuat</label>
+                <input type="text" class="form-control" id="pembuat" disabled [(ngModel)] = "stokObat.jenis_obat.pembuat" name="pembuat">
               </div>
 
               <div class="form-group">
                 <label for="golongan">Golongan</label>
-                <input type="text" class="form-control" id="golongan" disabled name="golongan">
+                <input type="text" class="form-control" id="golongan" disabled [(ngModel)] = "stokObat.jenis_obat.golongan" name="golongan">
               </div>
 
               <div class="form-group">
                 <label for="no_batch">Nomor Batch</label>
-                <input type="text" class="form-control" id="no_batch" disabled name="no_batch">
+                <input type="text" class="form-control" id="no_batch" disabled [(ngModel)] = "obatMasuk.nomor_batch" name="no_batch">
               </div>
 
               <div class="form-group">
-                <label for="kadaluarsa">Tanggal Kadaluarsa</label>
-                <input type="date" class="form-control" id="kadaluarsa" disabled name="kadaluarsa">
+                <label for="kadaluarsa">Kadaluarsa</label>
+                <input type="date" class="form-control" id="kadaluarsa" disabled [(ngModel)] = "formattedKadaluarsa" name="kadaluarsa">
               </div>
 
               <div class="form-group">
-                <label for="jumlah">Jumlah *</label>
+                <label for="stok">Jumlah Stok</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" id="jumlah" required name="jumlah"> 
-                  <input type="text" class="form-control" id="satuan" disabled name="satuan">
+                  <input type="text" class="form-control" id="stok" disabled [(ngModel)] = "stokObat.jumlah" name="stok"> 
+                  <input type="text" class="form-control" id="satuan" disabled [(ngModel)] = "stokObat.jenis_obat.satuan" name="satuan">
                 </div>    
                  
-                <!-- TODO: Resize Col, Make satuan dynamic according to satuan from Obat -->
+                <!-- TODO: Resize Col -->
+              </div>   
+
+              <div class="form-group">
+                <label for="jumlah">Jumlah Pindah *</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="jumlah" required [(ngModel)] = "obatPindah.jumlah" name="jumlah"> 
+                  <input type="text" class="form-control" id="satuan" disabled [(ngModel)] = "stokObat.jenis_obat.satuan" name="satuan">
+                </div>    
+                 
+                <!-- TODO: Resize Col -->
               </div>              
 
               <div class="form-group">
                 <label for="keterangan">Keterangan</label>
-                <input type="text" class="form-control" id="no_batch" name="keterangan">
+                <input type="text" class="form-control" id="no_batch" [(ngModel)] = "obatPindah.keterangan" name="keterangan">
               </div>
 
-              <button type="submit" class="btn btn-success">Simpan</button>
+              <button type="submit" class="btn btn-success" (click)="save()">Simpan</button>
             </form>
         </div>
       </div>
