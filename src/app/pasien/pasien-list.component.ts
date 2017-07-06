@@ -11,7 +11,8 @@ import { PasienService }		from './pasien.service';
 
 export class PasienListComponent {
 	public allPasien: Pasien[];
-	public pasien: Pasien;
+	public pasien: Pasien = null;
+	public pasienId: number= null;
 	public search: string;
 
 	public filterQuery = "";
@@ -19,7 +20,7 @@ export class PasienListComponent {
 	public sortBy = "id";
 	public sortOrder = "asc";
 
-	public allJender = ['Laki-laki', 'Perempuan'];
+	public allJender = [{id: 0, nama: 'Laki-laki'}, {id: 1, nama:'Perempuan'}];
 
   	public allAgama = ['Islam', 'Protestan', 'Katolik', 'Buddha', 'Hindu', 'Konghucu'];
 
@@ -27,25 +28,33 @@ export class PasienListComponent {
 		private pasienService: PasienService
 	) {}
 
-	ngOnInit(): void {
-		// this.pasienService.getAllPasien()
-		// 	.then(allPasien => this.allPasien = allPasien);
+	private editPasien(id: number, pasien: Pasien): void {
+		this.pasienId = id;
+		this.pasien = Object.assign({}, pasien);
 	}
 
-	private editPasien(pasien: Pasien): void {
-		this.pasien = pasien;
+	private updatePasien() {
+	    this.pasienService.updatePasien(this.pasienId, this.pasien).subscribe(
+	      data => { window.location.reload() }
+	    );
+	}
+
+	private destroyPasien(id: number) {
+	    this.pasienService.destroyPasien(id).subscribe(
+	      data => { window.location.reload() }
+	    );
 	}
 
 	private searchPasien() {
     if (this.search.match(/([1-9][0-9]*)/)) {
       this.allPasien = [];
       this.pasienService.getPasien(parseInt(this.search))
-        .then(allPasien => {
+        .subscribe(allPasien => {
           this.allPasien.push(allPasien);
         });
     } else {
        this.pasienService.getPasienByName(this.search)
-        .then(allPasien => this.allPasien = allPasien);
+        .subscribe(allPasien => this.allPasien = allPasien);
     }
   }
 }

@@ -6,6 +6,9 @@ export var ENV = {
 	klaimUrl: baseUrl + "/api/klaim",
 	settingsUrl: baseUrl + "/api/settings",
 
+	pasienUrl: baseUrl + "/api/pasien",
+	asuransiUrl: baseUrl + "/api/asuransi",
+
 	diagnosisReferenceUrl: baseUrl + "/api/daftar_diagnosis",
 	tindakanReferenceUrl: baseUrl + "/api/daftar_tindakan",
 	tindakanUrl: baseUrl + "/api/tindakan",

@@ -21,27 +21,32 @@
 					<table *ngIf="allPasien" class="table" [mfData]="allPasien | filterPasien : param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<thead>
 							<th><mfDefaultSorter by="id">ID</mfDefaultSorter></th>
-							<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="nama_pasien">Nama</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="tanggal_lahir">Tanggal Lahir</mfDefaultSorter></th>
-							<th><mfDefaultSorter by="umur">Umur</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="jender">Jender</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="agama">Agama</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="alamat">Alamat</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="kontak">Kontak</mfDefaultSorter></th>
 							<th></th>
+							<th></th>
 						</thead>
 						<tbody>
 							<tr *ngFor="let pasien of mf.data">
 								<td>{{pasien.id}}</td>
-								<td>{{pasien.nama}}</td>
+								<td>{{pasien.nama_pasien}}</td>
 								<td>{{pasien.tanggal_lahir}}</td>
-								<td>{{pasien.umur}}</td>
-								<td>{{pasien.jender}}</td>
+								<td *ngIf="pasien.jender === 0">Laki-laki</td>
+								<td *ngIf="pasien.jender === 1">Perempuan</td>
 								<td>{{pasien.agama}}</td>
 								<td>{{pasien.alamat}}</td>
 								<td>{{pasien.kontak}}</td>
 								<td>
-									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#editPasienModal" (click)="editPasien(pasien)">Edit</button>
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#editPasienModal" [attr.data-target]="'#editPasienModal'" (click)="editPasien(pasien.id, pasien)">Edit</button>
+								</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-danger" (click)="destroyPasien(pasien.id)">
+										<i class="fa fa-trash"></i>
+									</button>
 								</td>
 							</tr>
 						</tbody>
@@ -67,42 +72,42 @@
 				        <form #pasienForm="ngForm">
 		                  <div class="form-group">
 		                    <label for="name">Nama</label>
-		                    <input type="text" class="form-control" id="name" [value]="pasien.nama" name="name" required>
+		                    <input type="text" class="form-control" id="name" [(ngModel)]="pasien.nama_pasien" name="name" required>
 		                  </div>
 
 		                  <div class="form-group">
 		                    <label for="gender">Jenis Kelamin</label>
-		                    <select class="form-control" id="gender" [value]="pasien.jender" name="gender" required>
-		                      <option *ngFor="let gender of allJender" [value]="gender">{{gender}}</option>
+		                    <select class="form-control" id="gender" [(ngModel)]="pasien.jender" name="gender" required>
+		                      <option *ngFor="let gender of allJender" [value]="gender.id">{{gender.nama}}</option>
 		                    </select>
 		                  </div>
 
 		                  <div>
 		                    <label for="dob">Tanggal Lahir</label>
-		                    <input [dpDayPicker]="config" [value]="pasien.tanggal_lahir" id="dob" class="form-control" theme="dp-material" name="dob" required>
+		                    <input [dpDayPicker]="config" [(ngModel)]="pasien.tanggal_lahir" id="dob" class="form-control" theme="dp-material" name="dob" required>
 		                  </div>
 
 		                  <div class="form-group">
 		                    <label for="religion">Agama</label>
-		                    <select class="form-control" id="religion" [value]="pasien.agama" name="religion" required>
+		                    <select class="form-control" id="religion" [(ngModel)]="pasien.agama" name="religion" required>
 		                      <option *ngFor="let religion of allAgama" [value]="religion">{{religion}}</option>
 		                    </select>
 		                  </div>
 
 		                  <div class="form-group">
 		                    <label for="address">Alamat</label>
-		                    <textarea class="form-control" id="address" [value]="pasien.alamat" name="address" required></textarea>
+		                    <textarea class="form-control" id="address" [(ngModel)]="pasien.alamat" name="address" required></textarea>
 		                  </div>
 
 		                  <div class="form-group">
 		                    <label for="phone">Kontak</label>
-		                    <input type="tel" class="form-control" id="phone" [value]="pasien.kontak" name="phone" required>
+		                    <input type="tel" class="form-control" id="phone" [(ngModel)]="pasien.kontak" name="phone" required>
 		                  </div>
 	                    </form>
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-danger" data-dismiss="modal" routerLink="catatan-kematian-form">Catat Kematian</button>
-				        <button type="button" class="btn btn-primary" [disabled]="!pasienForm.form.valid">Simpan</button>
+				        <button type="button" class="btn btn-primary" (click)="updatePasien()" [disabled]="!pasienForm.form.valid">Simpan</button>
 				      </div>
 				    </div>
 				  </div>
