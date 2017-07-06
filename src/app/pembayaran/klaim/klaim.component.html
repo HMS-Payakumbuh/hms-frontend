@@ -51,9 +51,9 @@
 									<td></td>
 								</tr>
 								<tr *ngFor="let klaim of mf.data | filterNamaPasien: searchParam | filterCreatedAt: selectedDate | filterNamaAsuransi: nama_asuransi | matchesStatus: status">
-									<td>{{klaim.nama_pasien}}</td>
+									<td>{{klaim.asuransi.pasien.nama_pasien}}</td>
 									<td>{{klaim.created_at}}</td>
-									<td>{{klaim.pembayaran.metode_bayar.toUpperCase()}}</td>
+									<td>{{klaim.asuransi.nama_asuransi.toUpperCase()}}</td>
 									<td>{{klaim.status.toUpperCase()}}</td>								
 									<td><button type="button" class="btn btn-primary" [routerLink] = "['/klaim', klaim.id]">Details</button></td>
 								</tr>

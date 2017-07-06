@@ -17,6 +17,7 @@ export class TransaksiDetailComponent implements OnInit {
 	response: any;
 	transaksi: any;
 	umur: number = 0;
+	listOfTindakan: number[] = [];
 
 	constructor(
 		private transaksiService: TransaksiService,
@@ -40,6 +41,18 @@ export class TransaksiDetailComponent implements OnInit {
 		this.location.back();
 	}
 
+	updateCheckedTindakan(value): void {
+		let html = <HTMLInputElement>document.getElementById('tindakan' + value);
+		if (html.checked == true) {
+			this.listOfTindakan.push(value);
+		}
+		else if (html.checked == false) {
+			let index = this.listOfTindakan.indexOf(value);
+			this.listOfTindakan.splice(index, 1);
+		}
+		console.log(this.listOfTindakan);
+	}
+
 	calculateAge(tanggal: string): void {
 		let birthDate: Date = new Date(tanggal);
 		let today: Date = new Date();
@@ -51,32 +64,60 @@ export class TransaksiDetailComponent implements OnInit {
 		console.log(this.umur);
 	}
 
-	createPembayaran(harga: number, metode: string): void {
+	close(): void {
+		let payload: any = {
+			status: 'closed'
+		};
+		let transaksi: any = {
+			transaksi: payload
+		};
+
+		this.transaksiService.updateTransaksi(transaksi, this.transaksi.id)
+		.subscribe(data => {
+			console.log(data);
+		});
+
+		let total_harga: number = 0;
+		let listOfTindakan: number[] = [];
+		for (let i of this.transaksi.tindakan) {
+			if (i.id_pembayaran === null) {
+				total_harga += i.harga;
+				listOfTindakan.push(i.id);
+			}
+		}
+
+		this.createPembayaran(total_harga, this.transaksi.asuransi_pasien, listOfTindakan);
+	}
+
+	bayar(): void {
+		if (this.listOfTindakan.length > 0) {
+			let total_harga: number = 0;
+			for (let i of this.listOfTindakan) {
+				for (let a of this.transaksi.tindakan) {
+					if (a.id === i) {
+						total_harga += a.harga;
+					}
+				}
+			}
+			this.createPembayaran(total_harga, 'tunai', this.listOfTindakan);
+		}
+	}
+
+	createPembayaran(harga: number, metode: string, listOfTindakan: number[] = null): void {
 		let payload: any = {
 			id_transaksi: this.transaksi.id,
 			harga_bayar: harga,
-			metode_bayar: metode
+			metode_bayar: metode,
+			tindakan: listOfTindakan
 		};
 		let request: any = {
 			pembayaran: payload
 		};
 
-		let payloadTransaksi: any = {
-			status: 'closed'
-		};
-		let transaksiRequest: any = {
-			transaksi: payloadTransaksi
-		}
-
 		console.log(request);
 		this.pembayaranService.createPembayaran(request)
-			.subscribe(data => {
-				console.log(data);
-				this.transaksiService.updateTransaksi(transaksiRequest, this.transaksi.id)
-					.subscribe(data => {
-						window.location.reload();
-						console.log(data);
-					});
-			});
+		.subscribe(data => {
+			console.log(data);
+		});
 	}
 }

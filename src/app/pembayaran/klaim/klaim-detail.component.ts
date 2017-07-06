@@ -41,6 +41,7 @@ export class KlaimDetailComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		console.log("Init Klaim")
 		this.route.params
 			.switchMap((params: Params) => this.klaimService.getKlaim(+params['id']))
 			.subscribe(data => {
