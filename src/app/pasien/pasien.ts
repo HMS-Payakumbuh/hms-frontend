@@ -8,7 +8,6 @@ export class Pasien {
     public jender: number,
     public agama: string,
     public alamat: string,
-    public kontak: string,
-    public asuransi?: any
+    public kontak: string
   ) {  }
 }
