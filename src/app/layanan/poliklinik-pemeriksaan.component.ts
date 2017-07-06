@@ -159,8 +159,10 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	}
 
 	save() {
-		this.tindakanService.saveTindakan(this.selectedTindakan)
-    .subscribe(
+		this.tindakanService.saveTindakan(this.selectedTindakan).subscribe(
+      data => { console.log(data) }
+    );
+    this.diagnosisService.saveDiagnosis(this.selectedDiagnosis).subscribe(
       data => { console.log(data) }
     );
 	}

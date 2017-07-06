@@ -100,7 +100,9 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 		this.location.back();
 	}
 
-	save() {
-		this.tindakanService.saveTindakan(this.selectedTindakan);
+  save() {
+		this.tindakanService.saveTindakan(this.selectedTindakan).subscribe(
+      data => { }
+    );
 	}
 }
