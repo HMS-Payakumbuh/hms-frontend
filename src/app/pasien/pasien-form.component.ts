@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Pasien }    from './pasien';
 import { PasienService }    from './pasien.service';
+import { AntrianService }    from '../antrian/antrian.service';
 import { Asuransi }  from './asuransi';
 import { AsuransiService }  from './asuransi.service';
 import { PoliklinikService }    from '../layanan/poliklinik.service';
 import { LaboratoriumService }    from '../layanan/laboratorium.service';
 import { JadwalDokter }   from '../tenaga-medis/jadwal-dokter';
 import { TenagaMedisService}  from '../tenaga-medis/tenaga-medis.service';
+import { TransaksiService}  from '../transaksi/transaksi.service';
 
 @Component({
   selector: 'pasien-form',
@@ -16,7 +18,9 @@ import { TenagaMedisService}  from '../tenaga-medis/tenaga-medis.service';
     PoliklinikService,
     LaboratoriumService,
     PasienService,
+    AntrianService,
     AsuransiService,
+    TransaksiService,
     TenagaMedisService
   ]
 })
@@ -31,6 +35,7 @@ export class PasienFormComponent implements OnInit {
   sub: any;
   asuransi: Asuransi;
   pasien: Pasien;
+  asuransiChecked:boolean;
   allAsuransi: Asuransi[];
   allLayanan: any[];
   allPasien: Pasien[] = [];
@@ -41,7 +46,9 @@ export class PasienFormComponent implements OnInit {
     private poliklinikService: PoliklinikService,
     private laboratoriumService: LaboratoriumService,
     private pasienService: PasienService,
+    private antrianService: AntrianService,
     private asuransiService: AsuransiService,
+    private transaksiService: TransaksiService,
     private tenagaMedisService: TenagaMedisService,
   ) {}
 
@@ -54,7 +61,7 @@ export class PasienFormComponent implements OnInit {
   religions = ['Islam', 'Protestan', 'Katolik', 'Buddha', 'Hindu', 'Konghucu'];
 
   ngOnInit() {
-    this.pasien = new Pasien(null,'','',null,null,'','','',null);
+    this.pasien = new Pasien(null,'','',null,null,'','','');
     this.asuransi = new Asuransi(null,'',null);
 
     this.sub = this.route.params
@@ -118,10 +125,61 @@ export class PasienFormComponent implements OnInit {
     this.asuransi = asuransi;
   }
 
+  //jenis still hardcoded
+  private createAntrian(id: number) {
+    let request: any = null;
+    if (this.tipe === 'Poliklinik') {
+      request = {
+        id_transaksi: id,
+        nama_layanan_poli: this.layanan,
+        jenis: 0,
+      };
+    }
+    else if (this.tipe === 'Laboratorium') {
+      request = {
+        id_transaksi: id,
+        nama_layanan_lab: this.layanan,
+        jenis: 0,
+      };
+    }
+    this.antrianService.createAntrian(request).subscribe(
+      data => {window.location.reload()}
+    );
+  }
+
+  private createTransaksi(id: number) {
+    let kode_jenis_pasien:number = 1;
+    if (this.asuransiChecked) {
+      kode_jenis_pasien = 2;
+    }
+    let payload: any = {
+      id_pasien: id,
+      no_sep: "00990099",
+      kode_jenis_pasien: kode_jenis_pasien,
+      asuransi_pasien: this.asuransi.nama_asuransi,
+      jenis_rawat: 2,
+    };
+    let request: any = {
+      transaksi : payload
+    }
+    this.transaksiService.createTransaksi(request).subscribe(
+      data => {
+        this.createAntrian(data.transaksi.id)
+      }
+    );
+  }
+
   private createPasien() {
     alert(JSON.stringify(this.pasien));
-    this.pasienService.createPasien(this.pasien, this.asuransi).subscribe(
-      data => { window.location.reload() }
+    this.pasienService.createPasien(this.pasien).subscribe(
+      data => {
+        this.asuransi.id_pasien = data.id;
+        let asuransi:any = { asuransi: this.asuransi };  
+        this.asuransiService.createAsuransi(asuransi).subscribe(
+          data => {}
+        );
+        this.createTransaksi(data.id);
+      }
     );
   }
 }

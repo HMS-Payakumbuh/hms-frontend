@@ -34,7 +34,7 @@ export class TransaksiComponent {
 
 	ngOnInit(): void {
 		this.asuransiService.getAllAsuransi()
-			.subscribe(allAsuransi => this.initJenisList(allAsuransi));
+			.subscribe(allAsuransi => this.initJenisList(allAsuransi.allAsuransi));
 
 		this.transaksiService.getAllTransaksi()
 			.subscribe(data => {

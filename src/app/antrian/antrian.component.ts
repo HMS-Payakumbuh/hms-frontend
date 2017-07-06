@@ -60,9 +60,23 @@ export class AntrianComponent implements OnInit {
     }
   }
 
-  private proses(antrian: any) {
+  private proses(jenis:string, antrian: any) {
     this.nomor = antrian.no_antrian;
     this.allAntrian.splice(this.allAntrian.indexOf(antrian), 1);
+    if (jenis === 'undur') {
+      if (this.isfrontoffice) {
+        this.antrianService.updateAntrianFrontOffice(antrian.nama_layanan, antrian.no_antrian).subscribe();
+      } else {
+        this.antrianService.updateAntrian(antrian.id_transaksi, antrian.no_antrian).subscribe();
+      }
+    } else {
+      if (this.isfrontoffice) {
+        this.antrianService.destroyAntrianFrontOffice(antrian.nama_layanan, antrian.no_antrian).subscribe();
+      } else {
+        this.antrianService.destroyAntrian(antrian.id_transaksi, antrian.no_antrian).subscribe();
+      }
+    }
+    
     this.active = this.nextAntrian(this.umum);
     if (!this.active)
       this.active = this.nextAntrian(!this.umum);
@@ -72,15 +86,15 @@ export class AntrianComponent implements OnInit {
 
   private nextAntrian(umum: boolean) {
     if (umum) {
-      return _.find(this.allAntrian, {jenis: 'khusus'}) ? _.find(this.allAntrian, {jenis: 'khusus'}).no_antrian: null;
+      return _.find(this.allAntrian, {jenis: 1}) ? _.find(this.allAntrian, {jenis: 1}).no_antrian: null;
     } else {
-      return _.find(this.allAntrian, {jenis: 'umum'}) ? _.find(this.allAntrian, {jenis: 'umum'}).no_antrian: null;
+      return _.find(this.allAntrian, {jenis: 0}) ? _.find(this.allAntrian, {jenis: 0}).no_antrian: null;
     }
   }
 
-  changeKategori() {
+  private changeKategori() {
     this.antrianService.getAntrianFrontOffice(this.kategori)
-      .then(allAntrian => {
+      .subscribe(allAntrian => {
         this.allAntrian = allAntrian;
         this.active = allAntrian[0].no_antrian;
       });

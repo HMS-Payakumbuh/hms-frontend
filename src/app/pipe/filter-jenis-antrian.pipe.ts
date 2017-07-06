@@ -10,6 +10,6 @@ export class FilterJenisAntrianPipe implements PipeTransform {
   	if (!items || !param) {
   		return items;
   	}
-    return items.filter(item => item.jenis.toLowerCase().indexOf(param.toLowerCase()) > -1);
+    return items.filter(item => item.jenis.toString().toLowerCase().indexOf(param.toString().toLowerCase()) > -1);
   }
 }

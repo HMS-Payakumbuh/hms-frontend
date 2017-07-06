@@ -7,6 +7,8 @@ export var ENV = {
 	settingsUrl: baseUrl + "/api/setting_bpjs",
 
 	pasienUrl: baseUrl + "/api/pasien",
+	antrianUrl: baseUrl + "/api/antrian",
+	antrianFrontOfficeUrl: baseUrl + "/api/antrian_front_office",
 	asuransiUrl: baseUrl + "/api/asuransi",
 
 	diagnosisReferenceUrl: baseUrl + "/api/daftar_diagnosis",
