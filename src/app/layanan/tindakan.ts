@@ -1,3 +1,5 @@
+import { ObatTindakan }		from '../farmasi/obat-tindakan/obat-tindakan';
+
 export class Tindakan {
 	id_transaksi: number;
 	no_tindakan: number;
@@ -12,4 +14,5 @@ export class Tindakan {
 	nama_poli: string;
 	nama_lab: string;
 	nama_ambulans: string;
+	obat_tindakan: ObatTindakan[] = [];
 }
