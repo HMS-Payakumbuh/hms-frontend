@@ -8,6 +8,6 @@ export class FilterJenisPasienPipe implements PipeTransform {
   	if (!items || !jenis) {
   		return items;
   	}
-    return items.filter(item => item.jenis_pasien.toLowerCase() === jenis.toLowerCase());
+    return items.filter(item => item.asuransi_pasien.toLowerCase() === jenis.toLowerCase());
   }
 }

@@ -1,0 +1,116 @@
+<html>
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>Daftar Pemakaian Kamar Jenazah</h4>
+				</div>
+
+				<div class="card-block">
+                    <div class="row">
+						<div class="col-md-6 pull-left">
+							<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal Pemakaian">
+						</div>
+						<div class="col-md-6 pull-right">
+							<div class="input-group">							
+							    <input type="text" class="form-control" [(ngModel)]="param" placeholder="No.Kamar/Nama Jenazah"/>
+							</div>
+						</div>
+					</div>
+
+					<table class="table">
+                        
+						<thead>
+							<th>No. Kamar</th>
+                            <th>Nama Jenazah</th>
+							<th>Waktu Masuk</th>
+							<th>Waktu Keluar</th>
+							<th></th>
+							<th></th>
+							<tr>
+						</thead>
+						
+						<tbody *ngFor="let kamarjenazah of allPemakaianKamarJenazah | filterWaktuKeluar: selectedDate">
+							<tr>
+								<td>{{kamarjenazah?.no_kamar}}</td>
+                                <td>{{kamarjenazah?.nama_pasien}}</td>
+								<td>{{kamarjenazah?.waktu_masuk | date:'d MMM y H:mm:ss'}}</td>
+                                <td>{{kamarjenazah?.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#editPoliklinikModal'" (click)="editPemakaianKamarJenazah(kamarjenazah.nama, kamarjenazah)">
+										Edit
+									</button>
+								</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-danger" (click)="destroyPemakaianKamarJenazah(kamarjenazah.nama)">
+										<i class="fa fa-trash"></i>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+                    <div class="pull-left">
+						<button type="button" class="btn btn-info" data-toggle="modal" [attr.data-target]="'#createPemakaianKamarJenazahModal'" (click)="newPemakaianKamarJenazah()">
+							Buat Pemakaian Kamar Jenazah Baru
+						</button>
+					</div>
+
+					
+					<div class="modal fade" tabindex="-1" role="dialog" id="createPemakaianKamarJenazahModal" aria-hidden="true"  *ngIf="pemakaianKamarJenazahModal != null">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+
+							<div class="modal-header">
+								<h5 class="modal-title">Buat Pemakaian Kamar Jenazah Baru</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<i class="fa fa-times" aria-hidden="true"></i>
+								</button>
+							</div>
+
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="id_transaksi">Nama Jenazah *</label>
+									<div class="input-group">
+									<input type="text" class="form-control" id="nama_pasien" required name="nama_pasien" [(ngModel)]="pemakaianKamarJenazahModal.nama_pasien"> 
+									<span class="form-group-btn">
+										<button class="btn btn-success" (click)="getRecentTransaksi(pemakaianKamarJenazahModal.nama_pasien)">Cari</button>
+									</span>
+									</div>                    
+								</div>
+
+								<div class="form-group">
+									<label for="id_pasien">ID Transaksi</label>
+									<input type="text" class="form-control" id="id_transaksi" disabled name="id_transaksi" [(ngModel)]="pemakaianKamarJenazahModal.id_transaksi">
+								</div>
+								
+								<div class="form-group">
+									<label for="nama_pasien">No. Kamar</label>
+									<select class="form-control" id="no_kamar" [(ngModel)]="pemakaianKamarJenazahModal.no_kamar">
+										<option *ngFor="let kamarJenazah of allKamarJenazah" [value]="kamarJenazah.no_kamar" >
+											{{kamarJenazah.no_kamar}}
+										</option>
+									</select>
+								</div>
+
+								<div class="form-group">
+									<label for="id_pasien">Harga</label>
+									<input type="text" class="form-control" id="harga" disabled name="harga" [value]=300000 [(ngModel)]="pemakaianKamarJenazahModal.harga">
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+								<button type="button" class="btn btn-success" (click)="createPemakaianKamarJenazah()">Simpan</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</html>

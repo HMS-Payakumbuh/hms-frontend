@@ -11,6 +11,7 @@ import { TransaksiService }			from '../transaksi/transaksi.service';
 import { Poliklinik }						from './poliklinik';
 import { PoliklinikService }		from './poliklinik.service';
 
+import { Diagnosis }            from './diagnosis';
 import { DiagnosisReference }		from './diagnosis-reference';
 import { DiagnosisService }			from './diagnosis.service';
 
@@ -33,15 +34,17 @@ import { TindakanService }			from './tindakan.service';
 export class PoliklinikPemeriksaanComponent implements OnInit {
 
 	addForm: FormGroup;
-	transaksi: Transaksi;
+	transaksi: any = null;
 	poliklinik: Poliklinik;
 
 	allDiagnosisReference: DiagnosisReference[];
 	allTindakanReference: TindakanReference[];
 
-	selectedDiagnosis: DiagnosisReference[] = [];
-	selectedTindakan: TindakanReference[] = [];
-	keteranganTindakan: string[] = [];
+	selectedDiagnosis: Diagnosis[] = [];
+  selectedDiagnosisReference: DiagnosisReference[] = [];
+
+	selectedTindakan: Tindakan[] = [];
+  selectedTindakanReference: TindakanReference[] = [];
 
 	inputFormatter = (value : any) => value.nama;
 	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
@@ -83,7 +86,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 			.subscribe(poliklinik => this.poliklinik = poliklinik);
 
 		this.route.params
-			.switchMap((params: Params) => this.transaksiService.getTransaksi(+params['idTransaksi']))
+			.switchMap((params: Params) => this.transaksiService.getTransaksi(params['idTransaksi']))
 			.subscribe(transaksi => this.transaksi = transaksi);
 
 		this.tindakanService.getAllTindakanReference().subscribe(
@@ -95,21 +98,44 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     )
 	}
 
-	addSelectedDiagnosis(diagnosis: DiagnosisReference) {
-		this.selectedDiagnosis.push(diagnosis);
+	addSelectedDiagnosis(diagnosisReference: DiagnosisReference) {
+		this.selectedDiagnosisReference.push(diagnosisReference);
+
+    let temp = new Diagnosis();
+    temp.id_pasien = this.transaksi.transaksi.id_pasien;
+    temp.tanggal_waktu = '2017-07-06 10:00:00';
+    temp.kode_diagnosis = diagnosisReference.kode;
+    this.selectedDiagnosis.push(temp);
 	}
 
 	removeSelectedDiagnosis(i: number) {
 		this.selectedDiagnosis.splice(i, 1);
+    this.selectedDiagnosisReference.splice(i, 1);
 	}
 
-	addSelectedTindakan(tindakan: TindakanReference) {
-		this.selectedTindakan.push(tindakan);
+	addSelectedTindakan(tindakanReference: TindakanReference) {
+    this.selectedTindakanReference.push(tindakanReference);
+
+    let temp = new Tindakan();
+    temp.id_transaksi = this.transaksi.transaksi.id;
+    temp.no_tindakan = this.selectedTindakan.length + 1;
+    temp.harga = tindakanReference.harga;
+    temp.dokumen_penunjang = null;
+    temp.keterangan = '';
+    temp.id_pembayaran = null;
+    temp.kode_tindakan = tindakanReference.kode;
+    temp.id_pasien = this.transaksi.transaksi.id_pasien;
+    temp.tanggal_waktu = '2017-07-06 10:00:00';
+    temp.np_tenaga_medis = '101';
+    temp.nama_poli = this.poliklinik.nama;
+    temp.nama_lab = null;
+    temp.nama_ambulans = null;
+    this.selectedTindakan.push(temp);
 	}
 
 	removeSelectedTindakan(i: number) {
-		this.keteranganTindakan.splice(i, 1);
 		this.selectedTindakan.splice(i, 1);
+    this.selectedTindakanReference.splice(i, 1);
 	}
 
 	initResepEntry() {
@@ -133,8 +159,10 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	}
 
 	save() {
-		this.tindakanService.saveTindakan(this.transaksi, this.poliklinik.nama, true, null, this.selectedTindakan, this.keteranganTindakan)
-    .subscribe(
+		this.tindakanService.saveTindakan(this.transaksi.transaksi.tindakan.length, this.selectedTindakan).subscribe(
+      data => { console.log(data) }
+    );
+    this.diagnosisService.saveDiagnosis(this.selectedDiagnosis).subscribe(
       data => { console.log(data) }
     );
 	}

@@ -23,13 +23,16 @@ import { LaboratoriumPemeriksaanComponent }	from './layanan/laboratorium-pemerik
 
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent }	    from './layanan/rawatinap-detail.component';
+import { KamarOperasiListComponent }		from './layanan/kamar-operasi-list.component';
+// import { KamarJenazahListComponent }		from './layanan/kamar-jenazah-list.component';
 
 import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-operasi-list.component';
-import { PemakaianKamarOperasiFormComponent }	    from './layanan/pemakaian-kamar-operasi-form.component';
+import { PemakaianKamarJenazahListComponent }		from './layanan/pemakaian-kamar-jenazah-list.component';
 
 import { TenagaMedisListComponent } 	from './tenaga-medis/tenaga-medis-list.component';
 import { JadwalDokterListComponent }	from './tenaga-medis/jadwal-dokter-list.component';
 
+import { DiagnosisReferenceListComponent }	from './layanan/diagnosis-reference-list.component';
 import { TindakanReferenceListComponent }		from './layanan/tindakan-reference-list.component';
 
 import { DaftarStokObatComponent }			from './farmasi/stok-obat/daftar-stok-obat.component';
@@ -85,15 +88,17 @@ const routes: Routes = [
 
 	{ path: 'rawatinap', component: RawatinapListComponent },
 	{ path: 'rawatinap/:noKamar', component: RawatinapDetailComponent },
-	{ path: 'kamaroperasi', component: PemakaianKamarOperasiListComponent },
-	{ path: 'kamaroperasi-form', component: PemakaianKamarOperasiFormComponent },
+	
+	{ path: 'pemakaiankamaroperasi', component: PemakaianKamarOperasiListComponent },
+	{ path: 'pemakaiankamarjenazah', component: PemakaianKamarJenazahListComponent },
 
 	{ path: 'tenaga-medis', component: TenagaMedisListComponent },
 	{ path: 'jadwal-dokter', component: JadwalDokterListComponent },
+	{ path: 'daftar-diagnosis', component: DiagnosisReferenceListComponent },
 	{ path: 'daftar-tindakan', component: TindakanReferenceListComponent },
 
 	{ path: 'stok-obat', component: DaftarStokObatComponent },
-	{ path: 'stok-obat/:id', component: DetailStokObatComponent },	
+	{ path: 'stok-obat/:id', component: DetailStokObatComponent },
 	{ path: 'lokasi-obat', component: DaftarLokasiObatComponent },
 	{ path: 'obat-masuk', component: DaftarObatMasukComponent },
 	{ path: 'obat-masuk/:id', component: DetailObatMasukComponent },

@@ -29,6 +29,12 @@ export class TransaksiService {
 			.map((res: Response) => res.json());
 	}
 
+	getRecentTransaksi(nama_pasien : string): Observable<any> {
+		const url = `${this.transaksiUrl}` + '/' + "search" + '/' + nama_pasien;
+		return this.http.get(url)
+			.map((res: Response) => res.json());
+	}
+
 	updateTransaksi(transaksi: any, id: number) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});

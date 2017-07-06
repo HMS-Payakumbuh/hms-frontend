@@ -1,5 +1,6 @@
 import { Component } 	from '@angular/core';
 import { Observable } 	from 'rxjs/Observable';
+import { Location }					from '@angular/common';
 
 import { JenisObat }	from './jenis-obat';
 import { JenisObatService }		from './jenis-obat.service';
@@ -15,7 +16,8 @@ export class JenisObatFormComponent {
 	jenisObat: JenisObat;
 
 	constructor(
-		private jenisObatService: JenisObatService
+		private jenisObatService: JenisObatService,			
+		private location: Location
 	) {}
 
 	ngOnInit(): void {
@@ -23,9 +25,10 @@ export class JenisObatFormComponent {
 	}
 
 	private save() {
-		alert(JSON.stringify(this.jenisObat)); 
+		// alert(JSON.stringify(this.jenisObat)); 
 		this.jenisObatService.createJenisObat(this.jenisObat).subscribe(
 	       	data => {
+	         	this.location.back();
 	         	return true;
 	       	},
 	       	error => {

@@ -1,5 +1,6 @@
 import { Injectable }		from '@angular/core';
-import { Headers, Http}		from '@angular/http';
+import { Headers, Http, Response, RequestOptions }		from '@angular/http';
+import { Observable }			from 'rxjs/Rx';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -10,8 +11,6 @@ import { ENV }				from '../environment';
 export class SettingsService {
 	private settingsUrl = ENV.settingsUrl;
 
-	settings: Settings = {nik: '3173062100003', tarif: '10000000', kode_tarif: 'CP', payor_id: '3', payor_cd: 'JKN', vip_add_pct: '35'};
-
 	constructor(private http:Http) { }
 
 	private handleError(error: any): Promise<any> {
@@ -19,8 +18,18 @@ export class SettingsService {
 		return Promise.reject(error.message || error);
 	}
 
-	getSettings(): Promise<Settings> {
-		return Promise.resolve(this.settings)
-			.catch(this.handleError);
+	getSettings(): Observable<Settings> {
+		const url = `${this.settingsUrl}/1`;
+		return this.http.get(url)
+			.map((res: Response) => res.json());
+	}
+
+	updateSettings(settings: Settings, id: number): Observable<Settings> {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(settings);
+
+		return this.http.put(this.settingsUrl + '/' + id, body, options)
+			.map((res: Response) => res.json());
 	}
 }

@@ -13,9 +13,10 @@
 							<div class="row">
 								<div class="col-md-12">
 									<b>Transaksi: {{pembayaran.transaksi.no_transaksi}}</b>
+									<p>Nama Pasien: {{pembayaran.transaksi.pasien.nama_pasien}}</p>
 									<p>No. Sep: {{pembayaran.transaksi.no_sep}}</p>
 									<p>Tipe Pembayaran: {{pembayaran.metode_bayar.toUpperCase()}}</p>
-									<p>Waktu Pembayaran: {{pembayaran.created_at | date: 'dd/MM/y HH:mm'}}</p>
+									<p>Waktu Pembayaran: {{pembayaran.created_at}}</p>
 								</div>
 							</div>
 						</div>
@@ -29,7 +30,7 @@
 									<th>Harga</th>
 								</tr>
 								<tr *ngFor="let tindakan of pembayaran.tindakan">
-									<td>{{tindakan.nama}}</td>
+									<td>{{tindakan.daftar_tindakan.nama}}</td>
 									<td></td>
 									<td>Rp {{tindakan.harga | number: '.2-2'}}</td>
 								</tr>
@@ -46,7 +47,7 @@
 								<tr>
 									<td></td>
 									<td><b>Total Pembayaran</b></td>
-									<td>Rp {{pembayaran.harga | number: '.2-2'}}</td>
+									<td>Rp {{pembayaran.harga_bayar | number: '.2-2'}}</td>
 								</tr>
 							</tbody>
 						</table>
