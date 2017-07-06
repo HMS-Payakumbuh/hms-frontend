@@ -9,6 +9,7 @@ import { DiagnosisReference }			from './diagnosis-reference';
 @Injectable()
 export class DiagnosisService {
 
+	private diagnosisUrl = ENV.diagnosisUrl;
 	private diagnosisReferenceUrl = ENV.diagnosisReferenceUrl;
 
 	constructor(private http:Http) { }
@@ -48,6 +49,14 @@ export class DiagnosisService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers});
 		return this.http.delete(this.diagnosisReferenceUrl + '/' + kode, options)
+			.map((res: Response) => res.json());
+	}
+
+	saveDiagnosis (selectedDiagnosis: Diagnosis[]) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers});
+		let body = JSON.stringify(selectedDiagnosis);
+		return this.http.post(this.diagnosisUrl, body, options)
 			.map((res: Response) => res.json());
 	}
 }

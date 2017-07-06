@@ -56,9 +56,14 @@ export class TindakanService {
 			.map((res: Response) => res.json());
 	}
 
-	saveTindakan (selectedTindakan: Tindakan[]) {
+	saveTindakan (previousNoTindakan: number, selectedTindakan: Tindakan[]) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers});
+
+		for (let tindakan of selectedTindakan) {
+			tindakan.no_tindakan = tindakan.no_tindakan + previousNoTindakan;
+		}
+		
 		let body = JSON.stringify(selectedTindakan);
 		return this.http.post(this.tindakanUrl, body, options)
 			.map((res: Response) => res.json());
