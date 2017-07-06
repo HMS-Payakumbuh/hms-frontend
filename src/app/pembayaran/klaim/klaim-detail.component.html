@@ -16,7 +16,7 @@
 							<br>
 							<p>Nomor Kartu &nbsp; : {{klaim.nomor_kartu}}</p>
 							<br>
-							<p>Tanggal Klaim &nbsp; : {{klaim.tanggal | date: 'dd/MM/y HH:mm'}}</p>
+							<p>Waktu Klaim &nbsp; : {{klaim.created_at}}</p>
 							<br>
 							<p>Status Klaim &nbsp; : {{klaim.status.toUpperCase()}}</p>
 						</div>
@@ -47,7 +47,7 @@
 										</tr>
 										<tr>
 											<td>Tanggal Rawat: </td>
-											<td>Masuk: {{transaksi.tanggal | date: 'dd-MM-y HH:mm:ss'}} Pulang: {{transaksi.pelunasan | date: 'dd-MM-y HH:mm:ss'}}</td>
+											<td>Masuk: {{transaksi.waktu_masuk_pasien}} Pulang: {{transaksi.waktu_perubahan_terakhir}}</td>
 											<td>Berat Lahir (gr)</td>
 											<td>0</td>
 										</tr>

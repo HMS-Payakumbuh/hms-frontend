@@ -13,8 +13,13 @@ import { AsuransiService }		from '../../pasien/asuransi.service';
 })
 
 export class KlaimComponent {
-	allKlaim: Klaim[];
-	allAsuransi = [''];
+	response: any;
+	allKlaim: any[];
+	allAsuransi = ['', 'tunai'];
+
+	config = {
+		"format": "YYYY-MM-DD"
+	};
 
 	public rowsOnPage = 10;
     public sortBy = "tanggal";
@@ -36,6 +41,10 @@ export class KlaimComponent {
 			.then(allAsuransi => this.initAsuransiList(allAsuransi));
 
 		this.klaimService.getAllKlaim()
-			.then(allKlaim => this.allKlaim = allKlaim);
+			.subscribe(data => {
+				this.response = data;
+				this.allKlaim = this.response.allKlaim;
+				console.log(this.allKlaim);
+			});
 	}
 }

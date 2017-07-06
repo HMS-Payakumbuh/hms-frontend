@@ -15,7 +15,8 @@ import { Transaksi }				from '../../transaksi/transaksi';
 })
 
 export class KlaimDetailComponent implements OnInit {
-	klaim: Klaim;
+	response: any;
+	klaim: any;
 	transaksi: Transaksi;
 	displayJenisTarif: string;
 
@@ -42,11 +43,10 @@ export class KlaimDetailComponent implements OnInit {
 	ngOnInit(): void {
 		this.route.params
 			.switchMap((params: Params) => this.klaimService.getKlaim(+params['id']))
-			.subscribe(klaim => {
-				this.klaim = klaim;
-				// this.transaksiService.getTransaksi(this.klaim.id_transaksi)
-				// .then(transaksi => this.transaksi = transaksi);
-				this.displayJenisTarif = this.determineJenisTarif(klaim.kode_tarif);
+			.subscribe(data => {
+				this.response = data;
+				this.klaim = this.response.klaim;
+				console.log(this.klaim);
 			});
 	}
 

@@ -15,7 +15,7 @@
 									<b>Transaksi: {{pembayaran.transaksi.no_transaksi}}</b>
 									<p>No. Sep: {{pembayaran.transaksi.no_sep}}</p>
 									<p>Tipe Pembayaran: {{pembayaran.metode_bayar.toUpperCase()}}</p>
-									<p>Waktu Pembayaran: {{pembayaran.created_at | date: 'dd/MM/y HH:mm'}}</p>
+									<p>Waktu Pembayaran: {{pembayaran.created_at}}</p>
 								</div>
 							</div>
 						</div>
@@ -46,7 +46,7 @@
 								<tr>
 									<td></td>
 									<td><b>Total Pembayaran</b></td>
-									<td>Rp {{pembayaran.harga | number: '.2-2'}}</td>
+									<td>Rp {{pembayaran.harga_bayar | number: '.2-2'}}</td>
 								</tr>
 							</tbody>
 						</table>

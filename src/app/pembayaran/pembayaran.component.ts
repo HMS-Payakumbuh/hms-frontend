@@ -15,7 +15,10 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 export class PembayaranComponent {
 	response: any;
 	allPembayaran: any[];
-	allAsuransi = [''];
+	allAsuransi = ['', 'tunai'];
+	config = {
+		"format": "YYYY-MM-DD"
+	};
 
 	public rowsOnPage = 10;
     public sortBy = "tanggal";

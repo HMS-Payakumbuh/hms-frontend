@@ -16,6 +16,7 @@ import { Transaksi }				from './transaksi';
 export class TransaksiDetailComponent implements OnInit {
 	response: any;
 	transaksi: any;
+	umur: number = 0;
 
 	constructor(
 		private transaksiService: TransaksiService,
@@ -31,11 +32,23 @@ export class TransaksiDetailComponent implements OnInit {
 				this.response = data;
 				this.transaksi = this.response.transaksi;
 				console.log(this.transaksi);
+				this.calculateAge(this.transaksi.pasien.tanggal_lahir);
 			});
 	}
 
 	goBack(): void {
 		this.location.back();
+	}
+
+	calculateAge(tanggal: string): void {
+		let birthDate: Date = new Date(tanggal);
+		let today: Date = new Date();
+		this.umur = today.getFullYear() - birthDate.getFullYear();
+		let m = today.getMonth() - birthDate.getMonth();
+		if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+		    this.umur--;
+		}
+		console.log(this.umur);
 	}
 
 	createPembayaran(harga: number, metode: string): void {

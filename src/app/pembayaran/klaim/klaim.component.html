@@ -13,7 +13,7 @@
 							<tbody>
 								<tr>
 									<th><mfDefaultSorter by="nama_pasien">Nama Pasien</mfDefaultSorter></th>
-									<th><mfDefaultSorter by="tanggal">Tanggal Klaim</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="created_at">Tanggal Klaim</mfDefaultSorter></th>
 									<th>Nama Asuransi</th>
 									<th>Status Klaim</th>
 									<th></th>
@@ -42,6 +42,7 @@
 										<div class="col-md-12 input-group">
 											<select class="form-control" [(ngModel)]="status" id="statusDropdown">
 												<option></option>
+												<option>PROCESSING</option>
 												<option>PROCESSED</option>
 												<option>ERROR</option>
 											</select>
@@ -49,10 +50,10 @@
 									</td>
 									<td></td>
 								</tr>
-								<tr *ngFor="let klaim of mf.data | filterNamaPasien: searchParam | filterTanggal: selectedDate | filterNamaAsuransi: nama_asuransi | matchesStatus: status">
+								<tr *ngFor="let klaim of mf.data | filterNamaPasien: searchParam | filterCreatedAt: selectedDate | filterNamaAsuransi: nama_asuransi | matchesStatus: status">
 									<td>{{klaim.nama_pasien}}</td>
-									<td>{{klaim.tanggal | date: 'dd/MM/y HH:mm'}}</td>
-									<td>{{klaim.nama_asuransi.toUpperCase()}}</td>
+									<td>{{klaim.created_at}}</td>
+									<td>{{klaim.pembayaran.metode_bayar.toUpperCase()}}</td>
 									<td>{{klaim.status.toUpperCase()}}</td>								
 									<td><button type="button" class="btn btn-primary" [routerLink] = "['/klaim', klaim.id]">Details</button></td>
 								</tr>

@@ -12,13 +12,15 @@
 						<div class="col-md-6">
 							<div class="row">
 								<div class="col-md-12">
-									<b>{{transaksi.pasien.nama}}</b>
-									<p>{{transaksi.pasien.gender}}</p>
-									<p>{{transaksi.pasien.usia}} Tahun</p>
+									<h3>Transaksi {{transaksi.no_transaksi}}</h3>
+									<b>{{transaksi.pasien.nama_pasien}}</b>
+									<p *ngIf="transaksi.pasien.jender === 0">Laki-laki</p>
+									<p *ngIf="transaksi.pasien.jender === 1">Perempuan</p>
+									<p>{{umur}} Tahun</p>
 									<p>No. Sep: {{transaksi.no_sep}}</p>
 									<p>Asuransi Pasien: {{transaksi.asuransi_pasien.toUpperCase()}}</p>
-									<p>Waktu Masuk: {{transaksi.waktu_masuk_pasien | date: 'dd/MM/y HH:mm'}}</p>
-									<p *ngIf="transaksi.status === 'closed'">Waktu Keluar: {{transaksi.waktu_perubahan_terakhir | date: 'dd/MM/y HH:mm'}}</p>
+									<p>Waktu Masuk: {{transaksi.waktu_masuk_pasien}}</p>
+									<p *ngIf="transaksi.status === 'closed'">Waktu Keluar: {{transaksi.waktu_perubahan_terakhir}}</p>
 								</div>
 							</div>
 						</div>
@@ -77,7 +79,7 @@
 					<div *ngIf="showPembayaran" class="row">
 						<div class="col-md-12">
 							<ul class='list-group'>
-								<a *ngFor="let pembayaran of allPembayaran" [routerLink] = "['/pembayaran', pembayaran.id]">Pembayaran {{pembayaran.nama_asuransi.toUpperCase()}} : {{pembayaran.tanggal | date: 'dd/MM/y HH:mm'}}</a>
+								<a *ngFor="let pembayaran of allPembayaran" [routerLink] = "['/pembayaran', pembayaran.id]">Pembayaran {{pembayaran.metode_bayar.toUpperCase()}} : {{pembayaran.created_at}}</a>
 							</ul>
 						</div>
 					</div>

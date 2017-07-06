@@ -25,10 +25,6 @@ export class PembayaranDetailComponent implements OnInit {
 	ngOnInit(): void {
 		this.route.params
 			.switchMap((params: Params) => this.pembayaranService.getPembayaran(+params['id']))
-			.subscribe(pembayaran => this.pembayaran = pembayaran);
-
-		this.route.params
-			.switchMap((params: Params) => this.pembayaranService.getPembayaran(+params['id']))
 			.subscribe(data => {
 				this.response = data;
 				this.pembayaran = this.response.pembayaran;

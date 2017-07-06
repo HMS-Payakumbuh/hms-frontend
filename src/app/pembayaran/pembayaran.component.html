@@ -20,12 +20,12 @@
 								<tr>
 									<td>
 										<div class="col-md-12 input-group">
-											<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="Nama Pasien">
+											<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="Nomor Transaksi">
 										</div>
 									</td>
 									<td>
 										<div class="col-md-12 input-group" id="datetimepicker">
-												<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal Transaksi">
+												<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Waktu Pembayaran">
 										</div>
 									</td>
 									<td>
@@ -39,9 +39,9 @@
 									</td>
 									<td></td>
 								</tr>
-								<tr *ngFor="let pembayaran of mf.data | filterNamaPasien: searchParam | filterNamaAsuransi: asuransi | filterTanggal: selectedDate">
+								<tr *ngFor="let pembayaran of mf.data | filterNamaPasien: searchParam | filterNamaAsuransi: asuransi | filterCreatedAt: selectedDate">
 									<td>{{pembayaran.transaksi.no_transaksi}}</td>								
-									<td>{{pembayaran.created_at | date: 'dd/MM/y HH:mm'}}</td>
+									<td>{{pembayaran.created_at}}</td>
 									<td>{{pembayaran.metode_bayar.toUpperCase()}}</td>
 									<td><button type="button" class="btn btn-primary" [routerLink] = "['/pembayaran', pembayaran.id]">Details</button></td>
 								</tr>

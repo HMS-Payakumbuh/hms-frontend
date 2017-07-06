@@ -1,5 +1,6 @@
 import { Injectable }		from '@angular/core';
-import { Headers, Http}		from '@angular/http';
+import { Headers, Http, Response, RequestOptions}		from '@angular/http';
+import { Observable }		from 'rxjs/Rx';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -10,11 +11,6 @@ import { ENV }				from '../../environment';
 export class KlaimService {
 	private klaimUrl = ENV.klaimUrl;
 
-	allKlaim: Klaim[] = [
-		{id: 1, id_pembayaran: 1, id_pasien: 3, id_transaksi: 3, nomor_kartu: '0001461892608', status: 'error', tanggal: new Date('2016-05-12T15:00+07:00'), tarif: 72953600, nama_asuransi: 'bpjs', nama_pasien: 'John', tarif_rs: 10000000, kode_tarif: 'CP'},
-		{id: 2, id_pembayaran: 3, id_pasien: 5, id_transaksi: 6, nomor_kartu: '0001461892728', status: 'processed', tanggal: new Date('2017-06-18T17:00+07:00'), tarif: 72953600, nama_asuransi: 'bpjs', nama_pasien: 'Yngwie Malmsteen', tarif_rs: 10000000, kode_tarif: 'CP'}
-	]; //Mock-up
-
 	constructor(private http:Http) { }
 
 	private handleError(error: any): Promise<any> {
@@ -22,14 +18,14 @@ export class KlaimService {
 		return Promise.reject(error.message || error);
 	}
 
-	getAllKlaim(): Promise<Klaim[]> {
-		return Promise.resolve(this.allKlaim)
-			.catch(this.handleError);
+	getAllKlaim(): Observable<any[]> {
+		return this.http.get(this.klaimUrl)
+			.map((res: Response) => res.json());
 	}
 
-	getKlaim(id: number): Promise<Klaim> {
-		return this.getAllKlaim()
-			.then(allKlaim => allKlaim.find(klaim => klaim.id === id))
-			.catch(this.handleError);
+	getKlaim(id: number): Observable<any> {
+		const url = `${this.klaimUrl}/${id}`;
+		return this.http.get(url)
+			.map((res: Response) => res.json());
 	}
 }

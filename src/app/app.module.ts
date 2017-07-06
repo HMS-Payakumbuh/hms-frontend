@@ -12,6 +12,7 @@ import { MatchesStatusPipe }            from './pipe/matches-status.pipe';
 import { FilterPasienPipe }         from './pipe/filter-pasien.pipe';
 import { FilterNamaPasienPipe }         from './pipe/filter-nama-pasien.pipe';
 import { FilterTanggalPipe }            from './pipe/filter-tanggal.pipe';
+import { FilterCreatedAtPipe }            from './pipe/filter-created-at.pipe';
 import { FilterWaktuMasukPipe }            from './pipe/filter-waktu-masuk.pipe';
 import { FilterWaktuKeluarPipe }            from './pipe/filter-waktu-keluar.pipe';
 import { FilterWaktuPindahPipe }            from './pipe/filter-waktu-pindah.pipe';
@@ -110,6 +111,7 @@ import { AppComponent }             from './app.component';
         FilterPasienPipe,
         FilterNamaPasienPipe,
         FilterTanggalPipe,
+        FilterCreatedAtPipe,
         FilterWaktuMasukPipe,
         FilterWaktuKeluarPipe,
         FilterWaktuPindahPipe,
