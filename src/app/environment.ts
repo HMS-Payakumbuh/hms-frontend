@@ -18,7 +18,10 @@ export var ENV = {
 
 	tempattidurUrl : baseUrl + "/api/tempattidur",
 	rawatinapUrl : baseUrl + "/api/rawatinap",
-	pemakaianKamarOperasiUrl : baseUrl + "/api/kamaroperasi",
+	pemakaianKamarOperasiUrl : baseUrl + "/api/pemakaiankamaroperasi",
+	pemakaianKamarJenazahUrl : baseUrl + "/api/pemakaiankamarjenazah",
+	kamarOperasiUrl : baseUrl + "/api/kamaroperasi",
+	kamarJenazahUrl : baseUrl + "/api/kamarjenazah",
 
 	lokasiObatUrl: baseUrl + "/api/lokasi_obat",
 	jenisObatUrl: baseUrl + "/api/jenis_obat",
