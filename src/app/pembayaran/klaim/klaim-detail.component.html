@@ -10,13 +10,13 @@
 				<div *ngIf="klaim" class="card-block">
 					<div class="row">
 						<div class="col-md-12">
-							<p>Nama Pasien &nbsp; : {{klaim.nama_pasien}}</p>
+							<p>Nama Pasien &nbsp; : {{klaim.asuransi.pasien.nama_pasien}}</p>
 							<br>
-							<p>Nama Asuransi &nbsp; : {{klaim.nama_asuransi.toUpperCase()}}</p>
+							<p>Nama Asuransi &nbsp; : {{klaim.asuransi.nama_asuransi.toUpperCase()}}</p>
 							<br>
-							<p>Nomor Kartu &nbsp; : {{klaim.nomor_kartu}}</p>
+							<p>Nomor Kartu &nbsp; : {{klaim.asuransi.no_kartu}}</p>
 							<br>
-							<p>Tanggal Klaim &nbsp; : {{klaim.tanggal | date: 'dd/MM/y HH:mm'}}</p>
+							<p>Waktu Klaim &nbsp; : {{klaim.created_at}}</p>
 							<br>
 							<p>Status Klaim &nbsp; : {{klaim.status.toUpperCase()}}</p>
 						</div>
@@ -39,15 +39,15 @@
 									<tbody>
 										<tr>
 											<td>Jenis Rawat:</td>
-											<td *ngIf="transaksi.jenis_rawat === 1">Jalan</td>
-											<td *ngIf="transaksi.jenis_rawat === 2">Inap</td>
+											<td *ngIf="klaim.pembayaran.transaksi.jenis_rawat === 1">Jalan</td>
+											<td *ngIf="klaim.pembayaran.transaksi.jenis_rawat === 2">Inap</td>
 											<td>Kelas Rawat</td>
-											<td *ngIf="transaksi.jenis_rawat === 1">Reguler</td>
-											<td *ngIf="transaksi.jenis_rawat === 2">Kelas {{transaksi.kelas_rawat}}</td>
+											<td *ngIf="klaim.pembayaran.transaksi.jenis_rawat === 1">Reguler</td>
+											<td *ngIf="klaim.pembayaran.transaksi.jenis_rawat === 2">Kelas {{klaim.pembayaran.transaksi.kelas_rawat}}</td>
 										</tr>
 										<tr>
 											<td>Tanggal Rawat: </td>
-											<td>Masuk: {{transaksi.tanggal | date: 'dd-MM-y HH:mm:ss'}} Pulang: {{transaksi.pelunasan | date: 'dd-MM-y HH:mm:ss'}}</td>
+											<td>Masuk: {{klaim.pembayaran.transaksi.waktu_masuk_pasien}} Pulang: {{klaim.pembayaran.transaksi.waktu_perubahan_terakhir}}</td>
 											<td>Berat Lahir (gr)</td>
 											<td>0</td>
 										</tr>
@@ -160,7 +160,7 @@
 						<div class="offset-md-6 col-md-6">
 							<button class="btn btn-danger" (click)="goBack()">Kembali</button>
 							<button class="btn btn-primary" [routerLink] = "['/pembayaran', klaim.id_pembayaran]">Lihat Pembayaran</button>
-							<button class="btn btn-primary" [routerLink] = "['/transaksi', klaim.id_transaksi]">Lihat Transaksi</button>
+							<button class="btn btn-primary" [routerLink] = "['/transaksi', klaim.pembayaran.transaksi.id]">Lihat Transaksi</button>
 						</div>
 					</div>
 				</div>

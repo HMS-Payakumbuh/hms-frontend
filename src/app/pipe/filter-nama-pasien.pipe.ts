@@ -9,6 +9,6 @@ export class FilterNamaPasienPipe implements PipeTransform {
   	if (!items || !param) {
   		return items;
   	}
-    return items.filter(item => item.nama_pasien.toLowerCase().indexOf(param.toLowerCase()) > -1);
+    return items.filter(item => item.pasien.nama_pasien.toLowerCase().indexOf(param.toLowerCase()) > -1);
   }
 }

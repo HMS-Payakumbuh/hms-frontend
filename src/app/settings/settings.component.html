@@ -7,41 +7,29 @@
 					<i class="fa fa-gear" aria-hidden="true"> Settings</i> 
 				</h4>
 			</div>
-			<div class="card-block">
+			<div *ngIf="settings" class="card-block">
 				<div class="row">
 					<div class="col-md-12 form-group">
 						<label for="coder_nik">NIK Coder</label>
-						<input type="text" class="form-control" id="coder_nik" [(ngModel)]="settings.nik" [value]="settings.nik">
+						<input type="text" class="form-control" id="coder_nik" [(ngModel)]="settings.coder_nik" [value]="settings.nik">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12 form-group">
 						<label for="tarif">Tarif RS</label>
-						<input type="text" class="form-control" id="tarif" [(ngModel)]="settings.tarif">
+						<input type="text" class="form-control" id="tarif" [(ngModel)]="settings.tarif_rs">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12 form-group">
 						<label for="kode_tarif">Kode Tarif RS</label>
-						<input type="text" class="form-control" id="kode_tarif" [(ngModel)]="settings.kode_tarif">
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12 form-group">
-						<label for="payor_id">Payor ID</label>
-						<input type="text" class="form-control" id="payor_id" [(ngModel)]="settings.payor_id">
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12 form-group">
-						<label for="payor_code">Kode Payor</label>
-						<input type="text" class="form-control" id="payor_code" [(ngModel)]="settings.payor_cd">
+						<input type="text" class="form-control" id="kode_tarif" [(ngModel)]="settings.kd_tarif_rs">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12 form-group">
 						<label for="vip_add_pct">Added Value for VIP (in %)</label>
-						<input type="text" class="form-control" id="vip_add_pct" [(ngModel)]="settings.vip_add_pct">
+						<input type="text" class="form-control" id="vip_add_pct" [(ngModel)]="settings.add_payment_pct">
 					</div>
 				</div>
 				<div class="row">

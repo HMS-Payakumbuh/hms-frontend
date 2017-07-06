@@ -11,6 +11,7 @@ import { SettingsService }		from './settings.service';
 
 export class SettingsComponent {
 	settings: Settings;
+	response: any;
 
 	constructor(
 		private settingsService: SettingsService
@@ -18,10 +19,21 @@ export class SettingsComponent {
 
 	ngOnInit(): void {
 		this.settingsService.getSettings()
-			.then(settings => this.settings = settings);
+			.subscribe(data => {
+				this.response = data;
+				this.settings = this.response.setting_bpjs;
+				console.log(this.settings);
+			});
 	}
 
-	private save() { 
+	private save() {
+		let request: any = {
+			setting_bpjs: this.settings
+		}; 
+		this.settingsService.updateSettings(request, 1)
+			.subscribe(data => {
+				console.log(data);
+			});
 		console.log(this.settings);
 	}
 }
