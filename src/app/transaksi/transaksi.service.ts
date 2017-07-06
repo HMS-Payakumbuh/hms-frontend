@@ -49,6 +49,7 @@ export class TransaksiService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(transaksi);
+		console.log(body);
 
 		return this.http.post(this.transaksiUrl, body, options)
 			.map((res: Response) => res.json());

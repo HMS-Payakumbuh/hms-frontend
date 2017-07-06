@@ -11,7 +11,7 @@
 					<form #daftarAntrianForm="ngForm">
 						<div class="form-group">
 	                    <label for="layanan">Tipe Layanan</label>
-	                    <select class="form-control" id="layanan" [(ngModel)]="tipe" (ngModelChange)="selectLayanan()" name="layanan">
+	                    <select class="form-control" id="layanan" [(ngModel)]="tipe" (ngModelChange)="selectTipeLayanan()" name="layanan">
 	                      <option *ngFor="let layanan of allTipeLayanan" [value]="layanan">{{layanan}}</option>
 	                    </select>
 	                  </div>
@@ -20,7 +20,7 @@
 	                    <label for="poliklinik">Poliklinik</label>
 	                    <select class="form-control" id="poliklinik" [(ngModel)]="layanan" name="poliklinik" required>
 	                      <ng-container *ngFor="let poliklinik of allLayanan">
-	                        <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}}</option>
+	                        <option *ngIf="poliklinik.sisa_pelayanan > 0" [ngValue]="poliklinik">{{poliklinik.nama}}</option>
 	                      </ng-container>
 	                    </select>
 	                  </div>
@@ -29,7 +29,7 @@
 	                    <label for="laboratorium">Laboratorium</label>
 	                    <select class="form-control" id="laboratorium" [(ngModel)]="layanan" name="laboratorium" required>
 	                      <ng-container *ngFor="let laboratorium of allLayanan">
-	                        <option [value]="laboratorium.nama">{{laboratorium.nama}}</option>
+	                        <option [ngValue]="laboratorium">{{laboratorium.nama}}</option>
 	                      </ng-container>
 	                    </select>
 	                  </div>

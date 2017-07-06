@@ -46,25 +46,23 @@
 								<tbody>
 									<tr>
 										<th>No Antrian</th>
-										<th *ngIf="!isfrontoffice">Nama Pasien</th>
 										<th *ngIf="isfrontoffice">Layanan Tujuan</th>
 										<th>Waktu Masuk</th>
 										<th></th>
 										<th></th>
 									</tr>
-									<tr *ngFor="let antrian of allAntrian | filterJenisAntrian : &quot;umum&quot;">
+									<tr *ngFor="let antrian of allAntrian | filterJenisAntrian : &quot;0&quot;">
 										<td>{{kategori}}{{antrian.no_antrian}}</td>
-										<td *ngIf="!isfrontoffice">{{antrian.nama_pasien}}</td>
 										<td *ngIf="isfrontoffice">{{antrian.nama_layanan}}</td>	
-										<td>{{antrian.waktu_masuk_antrian}}</td>
+										<td>{{antrian.waktu_perubahan_antrian}}</td>
 										<td>
-											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-danger': (active == antrian.no_antrian), 'btn-warning': (active != antrian.no_antrian) }" [disabled]= "(active != antrian.no_antrian)" (click)="proses(antrian)">Undur</button>
+											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-danger': (active == antrian.no_antrian), 'btn-warning': (active != antrian.no_antrian) }" [disabled]= "(active != antrian.no_antrian)" (click)="proses('undur',antrian)">Undur</button>
 										</td>
 										<td *ngIf="isfrontoffice">
-											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-primary': (active == antrian.no_antrian), 'btn-warning': (active != antrian.no_antrian) }"[routerLink] = "['/pendaftaran', antrian.nama_layanan]" [disabled]= "(active != antrian.no_antrian)" (click)="proses(antrian)">Proses</button>
+											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-primary': (active == antrian.no_antrian), 'btn-warning': (active != antrian.no_antrian) }"[routerLink] = "['/pendaftaran', antrian.nama_layanan]" [disabled]= "(active != antrian.no_antrian)" (click)="proses('proses',antrian)">Proses</button>
 										</td>
 										<td *ngIf="!isfrontoffice">
-											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-primary': (active == antrian.no_antrian), 'btn-warning': (active != antrian.no_antrian) }"[routerLink] = "['/poliklinik', antrian.nama_layanan, antrian.id_transaksi]" [disabled]= "(active != antrian.no_antrian)" (click)="proses(antrian)">Proses</button>
+											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-primary': (active == antrian.no_antrian), 'btn-warning': (active != antrian.no_antrian) }"[routerLink] = "['/poliklinik', antrian.nama_layanan, antrian.id_transaksi]" [disabled]= "(active != antrian.no_antrian)" (click)="proses('proses',antrian)">Proses</button>
 										</td>
 									</tr>
 								</tbody>
@@ -78,25 +76,23 @@
 								<tbody>
 									<tr>
 										<th>No Antrian</th>
-										<th *ngIf="!isfrontoffice">Nama Pasien</th>
 										<th *ngIf="isfrontoffice">Layanan Tujuan</th>
 										<th>Waktu Masuk</th>
 										<th></th>
 										<th></th>
 									</tr>
-									<tr *ngFor="let antrian of allAntrian | filterJenisAntrian : &quot;khusus&quot;">
+									<tr *ngFor="let antrian of allAntrian | filterJenisAntrian : &quot;1&quot;">
 										<td>{{kategori}}{{antrian.no_antrian}}</td>
-										<td *ngIf="!isfrontoffice">{{antrian.nama_pasien}}</td>
 										<td *ngIf="isfrontoffice">{{antrian.nama_layanan}}</td>		
-										<td>{{antrian.waktu_masuk_antrian}}</td>
+										<td>{{antrian.waktu_perubahan_antrian}}</td>
 										<td>
-											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-danger': (active == antrian.no_antrian), 'btn-warning': (active != antrian.no_antrian) }" [disabled]= "(active != antrian.no_antrian)" (click)="proses(antrian)">Undur</button>
+											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-danger': (active == antrian.no_antrian), 'btn-warning': (active != antrian.no_antrian) }" [disabled]= "(active != antrian.no_antrian)" (click)="proses('undur',antrian)">Undur</button>
 										</td>
 										<td *ngIf="isfrontoffice">
-											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-primary': (active == antrian.no_antrian), 'btn-warning': (active != antrian.no_antrian) }"[routerLink] = "['/pendaftaran', antrian.nama_layanan]" [disabled]= "(active != antrian.no_antrian)" (click)="proses(antrian)">Proses</button>
+											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-primary': (active == antrian.no_antrian), 'btn-warning': (active != antrian.no_antrian) }"[routerLink] = "['/pendaftaran', antrian.nama_layanan]" [disabled]= "(active != antrian.no_antrian)" (click)="proses('proses',antrian)">Proses</button>
 										</td>
 										<td *ngIf="!isfrontoffice">
-											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-primary': (active == antrian.no_antrian), 'btn-warning': (active != antrian.no_antrian) }"[routerLink] = "['/poliklinik', antrian.nama_layanan, antrian.id_transaksi]" [disabled]= "(active != antrian.no_antrian)" (click)="proses(antrian)">Proses</button>
+											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-primary': (active == antrian.no_antrian), 'btn-warning': (active != antrian.no_antrian) }"[routerLink] = "['/poliklinik', antrian.nama_layanan, antrian.id_transaksi]" [disabled]= "(active != antrian.no_antrian)" (click)="proses('proses',antrian)">Proses</button>
 										</td>
 									</tr>
 								</tbody>

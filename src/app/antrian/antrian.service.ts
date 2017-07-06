@@ -1,8 +1,8 @@
 import { Injectable }		from '@angular/core';
-import { Headers, Http}		from '@angular/http';
+import { Headers, Http, Response, RequestOptions }		from '@angular/http';
+import { Observable }			from 'rxjs/Rx';
 
-import 'rxjs/add/operator/toPromise';
-
+import { ENV }						from '../environment';
 import { Antrian }	from './antrian';
 import { AntrianFrontOffice } from './antrian.front.office';
 
@@ -10,34 +10,8 @@ import * as _ from "lodash";
 
 @Injectable()
 export class AntrianService {
-
-	//Mock data
-	allAntrianFrontOffice: AntrianFrontOffice[] = [
-      {no_antrian: 1, waktu_masuk_antrian:'09:15:15', jenis: 'umum', nama_layanan: 'Poli Umum', kategori_antrian: 'A' },
-      {no_antrian: 2, waktu_masuk_antrian:'09:15:45', jenis: 'umum', nama_layanan: 'Poli Umum', kategori_antrian: 'A' },
-      {no_antrian: 3, waktu_masuk_antrian:'09:16:15', jenis: 'umum', nama_layanan: 'Poli Umum', kategori_antrian: 'A' },
-      {no_antrian: 4, waktu_masuk_antrian:'09:15:15', jenis: 'khusus', nama_layanan: 'Poli Umum', kategori_antrian: 'A' },
-      {no_antrian: 5, waktu_masuk_antrian:'09:15:45', jenis: 'khusus', nama_layanan: 'Poli Umum', kategori_antrian: 'A' },
-      {no_antrian: 6, waktu_masuk_antrian:'09:16:15', jenis: 'khusus', nama_layanan: 'Poli Umum', kategori_antrian: 'A' },
-      {no_antrian: 1, waktu_masuk_antrian:'09:15:15', jenis: 'umum', nama_layanan: 'Poli THT', kategori_antrian: 'B' },
-      {no_antrian: 2, waktu_masuk_antrian:'09:15:45', jenis: 'umum', nama_layanan: 'Poli THT', kategori_antrian: 'B' },
-      {no_antrian: 3, waktu_masuk_antrian:'09:16:15', jenis: 'umum', nama_layanan: 'Poli THT', kategori_antrian: 'B' },
-	];
-
-	allAntrian: Antrian[] = [
-      {id_transaksi: 1, nama_layanan: 'Poli Umum', waktu_masuk_antrian:'09:15:15', jenis: 'umum', no_antrian: 1, nama_pasien: 'Octavianus Markus', status: 'open' },
-      {id_transaksi: 2, nama_layanan: 'Poli Umum', waktu_masuk_antrian:'09:15:45', jenis: 'umum', no_antrian: 2, nama_pasien: 'John', status: 'open' },
-      {id_transaksi: 3, nama_layanan: 'Poli Umum', waktu_masuk_antrian:'09:16:15', jenis: 'umum', no_antrian: 3, nama_pasien: 'Alexander Zucchini', status: 'open' },
-      {id_transaksi: 4, nama_layanan: 'Poli Umum', waktu_masuk_antrian:'09:15:15', jenis: 'khusus', no_antrian: 4, nama_pasien: 'Al Ex', status: 'open' },
-      {id_transaksi: 5, nama_layanan: 'Poli Umum', waktu_masuk_antrian:'09:15:45', jenis: 'khusus', no_antrian: 5, nama_pasien: 'Hu Wan', status: 'open' },
-      {id_transaksi: 6, nama_layanan: 'Poli Umum', waktu_masuk_antrian:'09:16:15', jenis: 'khusus', no_antrian: 6, nama_pasien: 'Gunawan', status: 'open' },
-      {id_transaksi: 7, nama_layanan: 'Poli THT', waktu_masuk_antrian:'09:15:15', jenis: 'umum', no_antrian: 1, nama_pasien: 'Cliphonse Jo', status: 'open' },
-      {id_transaksi: 8, nama_layanan: 'Poli THT', waktu_masuk_antrian:'09:15:45', jenis: 'umum', no_antrian: 2, nama_pasien: 'Empol Sutempol', status: 'open' },
-      {id_transaksi: 9, nama_layanan: 'Poli THT', waktu_masuk_antrian:'09:16:15', jenis: 'umum', no_antrian: 3, nama_pasien: 'Stephen Andi', status: 'open' },
-      {id_transaksi: 10, nama_layanan: 'Poli THT', waktu_masuk_antrian:'09:15:15', jenis: 'khusus', no_antrian: 4, nama_pasien: 'Al El', status: 'open' },
-      {id_transaksi: 11, nama_layanan: 'Poli THT', waktu_masuk_antrian:'09:15:45', jenis: 'khusus', no_antrian: 5, nama_pasien: 'Ju Wan', status: 'open' },
-      {id_transaksi: 12, nama_layanan: 'Poli THT', waktu_masuk_antrian:'09:16:15', jenis: 'khusus', no_antrian: 6, nama_pasien: 'Sunawan', status: 'open' },
-	];
+	private antrianUrl = ENV.antrianUrl;
+	private antrianFrontOfficeUrl = ENV.antrianFrontOfficeUrl;
 
 	constructor(private http:Http) { }
 
@@ -46,29 +20,81 @@ export class AntrianService {
 		return Promise.reject(error.message || error);
 	}
 
-	getAllAntrian(): Promise<Antrian[]> {
-		return Promise.resolve(this.allAntrian)
-			.catch(this.handleError);
+	getAllAntrian(nama_layanan:string): Observable<Antrian[]> {
+		return this.http.get(this.antrianUrl + '/' + nama_layanan)
+			.map((res: Response) => res.json());
 	}
 
-	getAllAntrianFrontOffice(): Promise<AntrianFrontOffice[]> {
-		return Promise.resolve(this.allAntrianFrontOffice)
-			.catch(this.handleError);
+	getAllAntrianFrontOffice(): Observable<AntrianFrontOffice[]> {
+		return this.http.get(this.antrianFrontOfficeUrl)
+			.map((res: Response) => res.json());
 	}
 
-	getAntrianFrontOffice(kategori: string): Promise<AntrianFrontOffice[]> {
+	getAntrianFrontOffice(kategori: string): Observable<AntrianFrontOffice[]> {
 		return this.getAllAntrianFrontOffice()
-			.then(allAntrianFrontOffice => 
+			.map(allAntrianFrontOffice => 
 				_.filter(allAntrianFrontOffice, {kategori_antrian: kategori})
 			)
 			.catch(this.handleError);
 	}
 
-	getAntrian(nama: string): Promise<Antrian[]> {
-		return this.getAllAntrian()
-			.then(allAntrian => 
-				_.filter(allAntrian, {nama_layanan: nama})
+	getAntrian(nama_layanan:string): Observable<Antrian[]> {
+		return this.getAllAntrian(nama_layanan)
+			.map(allAntrian => 
+				_.each(allAntrian, antrian => {
+					if (antrian.nama_layanan_poli)
+						_.set(antrian, 'nama_layanan', antrian.nama_layanan_poli);
+					else if (antrian.nama_layanan_lab)	
+						_.set(antrian, 'nama_layanan', antrian.nama_layanan_lab);
+				})
 			)
 			.catch(this.handleError);
+	}
+
+	createAntrianFrontOffice(antrianFrontOffice: AntrianFrontOffice) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(antrianFrontOffice);
+
+		return this.http.post(this.antrianFrontOfficeUrl, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	destroyAntrianFrontOffice(nama_layanan: string, no_antrian: number) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		return this.http.delete(this.antrianFrontOfficeUrl + '/' + nama_layanan + '/' + no_antrian, options)
+		.map((res: Response) => res.json());
+	}
+
+	updateAntrianFrontOffice(nama_layanan: string, no_antrian: number) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		return this.http.put(this.antrianFrontOfficeUrl + '/' + nama_layanan + '/' + no_antrian, options)
+		.map((res: Response) => res.json());
+	}
+
+	createAntrian(antrian: Antrian) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(antrian);
+		console.log(body);
+
+		return this.http.post(this.antrianUrl, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	destroyAntrian(id_transaksi: number, no_antrian: number) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		return this.http.delete(this.antrianUrl + '/' + id_transaksi + '/' + no_antrian, options)
+		.map((res: Response) => res.json());
+	}
+
+	updateAntrian(id_transaksi: number, no_antrian: number) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		return this.http.put(this.antrianUrl + '/' + id_transaksi + '/' + no_antrian, options)
+		.map((res: Response) => res.json());
 	}
 }

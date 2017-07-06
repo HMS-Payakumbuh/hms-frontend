@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Antrian }    from './antrian';
-import { Poliklinik }    from '../layanan/poliklinik';
+import { AntrianService }    from './antrian.service';
 import { PoliklinikService }    from '../layanan/poliklinik.service';
 import { LaboratoriumService }    from '../layanan/laboratorium.service';
 
@@ -10,12 +10,13 @@ import { LaboratoriumService }    from '../layanan/laboratorium.service';
   templateUrl: './daftar-antrian.component.html',
   providers: [
     PoliklinikService,
-    LaboratoriumService
+    LaboratoriumService,
+    AntrianService,
   ]
 })
-export class DaftarAntrianComponent implements OnInit {
+export class DaftarAntrianComponent {
   tipe: string;
-  layanan: string;
+  layanan: any;
   disabilitas: boolean = false;
   umur: number = 0;
   allLayanan: any[];
@@ -25,12 +26,10 @@ export class DaftarAntrianComponent implements OnInit {
     private route: ActivatedRoute,
     private poliklinikService: PoliklinikService,
     private laboratoriumService: LaboratoriumService,
+    private antrianService: AntrianService,
   ) {}
 
-  ngOnInit() {
-  }
-
-  private selectLayanan() {
+  private selectTipeLayanan() {
     if (this.tipe === 'Poliklinik') {
       this.poliklinikService.getAllPoliklinik().subscribe(
         data => { this.allLayanan = data }
@@ -43,12 +42,23 @@ export class DaftarAntrianComponent implements OnInit {
   }
 
   public daftar() {
+    let request: any = null;
     if (this.umur >= 65 || this.disabilitas) {
-      alert('Anda akan mendaftar ke layanan '+this.layanan +' dan masuk ke antrian khusus dengan nomor antrian A1');
+      request = {
+        nama_layanan : this.layanan.nama,
+        jenis : 1,
+        kategori_antrian: this.layanan.kategori_antrian,
+      }
     } else {
-      alert('Anda akan mendaftar ke layanan '+this.layanan +' dan masuk ke antrian umum dengan nomor antrian A1');
+      request = {
+        nama_layanan : this.layanan.nama,
+        jenis : 0,
+        kategori_antrian: this.layanan.kategori_antrian,
+      }
     }
+    this.antrianService.createAntrianFrontOffice(request).subscribe(
+        data => {window.location.reload()}
+      );
+      alert('Anda akan mendaftar ke layanan : '+this.layanan.nama);
   }
-
-
 }

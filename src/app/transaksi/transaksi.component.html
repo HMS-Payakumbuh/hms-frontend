@@ -12,8 +12,8 @@
 						<table class="table" [mfData]="allTransaksi" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 							<tbody>
 								<tr>
-									<th><mfDefaultSorter by="nama_pasien">Nama Pasien</mfDefaultSorter></th>
-									<th><mfDefaultSorter by="tanggal">Tanggal Transaksi</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="nama">Nama Pasien</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="waktu_masuk_pasien">Tanggal Transaksi</mfDefaultSorter></th>
 									<th>Status Transaksi</th>
 									<th>Jenis Pasien</th>
 									<th></th>
@@ -50,7 +50,7 @@
 									<td></td>
 								</tr>
 								<tr *ngFor="let transaksi of mf.data | matchesStatus: status | filterNamaPasien: searchParam | filterTanggal: selectedDate | filterJenisPasien: jenis">
-									<td>{{transaksi.pasien.nama}}</td>
+									<td>{{transaksi.pasien.nama_pasien}}</td>
 									<td>{{transaksi.waktu_masuk_pasien | date: 'dd/MM/y HH:mm'}}</td>
 									<td>{{transaksi.status.toUpperCase()}}</td>	
 									<td>{{transaksi.asuransi_pasien.toUpperCase()}}</td>

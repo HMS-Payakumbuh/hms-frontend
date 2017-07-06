@@ -15,7 +15,11 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 export class TransaksiComponent {
 	response: any;
 	allTransaksi: any[];
-	allJenis = [''];
+	allJenis = ['', 'tunai'];
+	config = {
+		"format": "YYYY-MM-DD",
+		"type": "'daytime'"
+	};
 
     public rowsOnPage = 10;
     public sortBy = "tanggal";
@@ -34,7 +38,7 @@ export class TransaksiComponent {
 
 	ngOnInit(): void {
 		this.asuransiService.getAllAsuransi()
-			.subscribe(allAsuransi => this.initJenisList(allAsuransi));
+			.subscribe(allAsuransi => this.initJenisList(allAsuransi.allAsuransi));
 
 		this.transaksiService.getAllTransaksi()
 			.subscribe(data => {
