@@ -51,7 +51,7 @@ export class ObatRusakFormComponent {
 		this.obatRusak.id_jenis_obat = this.stokObat.jenis_obat.id;
 		this.obatRusak.id_obat_masuk = this.obatMasuk.id;
 
-		alert(JSON.stringify(this.obatRusak)); 
+		// alert(JSON.stringify(this.obatRusak)); 
 		this.obatRusakService.createObatRusak(this.obatRusak).subscribe(
 	       	data => {
 	         	this.location.back();
