@@ -1,21 +1,23 @@
 import { Injectable }		from '@angular/core';
-import { Headers, Http}		from '@angular/http';
+import { Headers, Http, Response, RequestOptions }		from '@angular/http';
+import { Observable }			from 'rxjs/Rx';
 import * as _ from "lodash";
-import 'rxjs/add/operator/toPromise';
 
+import { ENV }						from '../environment';
 import { Asuransi }	from './asuransi';
 
 @Injectable()
 export class AsuransiService {
+	private asuransiUrl = ENV.asuransiUrl;
 
 	//Mock data
-	allAsuransi: Asuransi[] = [
+/*	allAsuransi: Asuransi[] = [
 		{no_kartu_asuransi: 1231313, nama_asuransi: 'Prudential', id_pasien: 1},
 		{no_kartu_asuransi: 12313553, nama_asuransi: 'Prudential', id_pasien: 4},
 		{no_kartu_asuransi: 2124141, nama_asuransi: 'BPJS', id_pasien: 1},
 		{no_kartu_asuransi: 1241241, nama_asuransi: 'BPJS', id_pasien: 2},
 		{no_kartu_asuransi: 1241241, nama_asuransi: 'AIG', id_pasien: 3}
-	];
+	];*/
 
 	constructor(private http:Http) { }
 
@@ -24,14 +26,14 @@ export class AsuransiService {
 		return Promise.reject(error.message || error);
 	}
 
-	getAllAsuransi(): Promise<Asuransi[]> {
-		return Promise.resolve(this.allAsuransi)
-			.catch(this.handleError);
+	getAllAsuransi(): Observable<Asuransi[]> {
+		return this.http.get(this.asuransiUrl)
+			.map((res: Response) => res.json());
 	}
 
-	getAsuransi(id: number): Promise<Asuransi[]> {
+	getAsuransi(id: number): Observable<Asuransi[]> {
 		return this.getAllAsuransi()
-			.then(allAsuransi => 
+			.map(allAsuransi => 
 				_.filter(allAsuransi, {id_pasien: id})
 			)
 			.catch(this.handleError);

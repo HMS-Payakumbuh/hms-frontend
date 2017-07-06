@@ -38,7 +38,7 @@ export class KlaimComponent {
 
 	ngOnInit(): void {
 		this.asuransiService.getAllAsuransi()
-			.then(allAsuransi => this.initAsuransiList(allAsuransi));
+			.subscribe(allAsuransi => this.initAsuransiList(allAsuransi));
 
 		this.klaimService.getAllKlaim()
 			.subscribe(data => {

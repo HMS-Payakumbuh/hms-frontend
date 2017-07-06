@@ -1,0 +1,120 @@
+<html>
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h3>Daftar Diagnosis</h3>
+				</div>
+
+				<div class="card-block">
+					<table class="table" [mfData]="allDiagnosisReference" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+						<thead>
+							<th>#</th>
+							<th><mfDefaultSorter by="kode">Kode</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
+							<th></th>
+							<th></th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let diagnosisReference of mf.data; index as i">
+								<td>{{i + 1}}</td>
+								<td>{{diagnosisReference.kode}}</td>
+								<td>{{diagnosisReference.nama}}</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal"
+										[attr.data-target]="'#editDiagnosisReferenceModal'" (click)="editDiagnosisReference(diagnosisReference.kode, diagnosisReference)">
+										Edit
+									</button>
+								</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-danger" (click)="destroyDiagnosisReference(diagnosisReference.kode)">
+										<i class="fa fa-trash"></i>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+						<tfoot>
+	            <tr>
+	              <td colspan="7">
+	                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+	              </td>
+	            </tr>
+	          </tfoot>
+					</table>
+
+					<button type="button" class="btn btn-info" data-toggle="modal"
+						[attr.data-target]="'#createDiagnosisReferenceModal'" (click)="newDiagnosisReference()">
+						Buat Diagnosis Baru
+					</button>
+
+				</div>
+			</div>
+
+			<div class="modal fade" tabindex="-1" role="dialog" id="editDiagnosisReferenceModal" aria-hidden="true" *ngIf="diagnosisReferenceModal != null">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+
+						<div class="modal-header">
+							<h5 class="modal-title">Editing {{diagnosisReferenceModalKode}}</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<i class="fa fa-times" aria-hidden="true"></i>
+							</button>
+						</div>
+
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="kode">Kode</label>
+								<input type="text" class="form-control" id="kode" required [(ngModel)]="diagnosisReferenceModal.kode">
+							</div>
+
+							<div class="form-group">
+								<label for="nama">Nama</label>
+								<input type="text" class="form-control" id="nama" required [(ngModel)]="diagnosisReferenceModal.nama">
+							</div>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+							<button type="button" class="btn btn-success" (click)="updateDiagnosisReference()">Simpan</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade" tabindex="-1" role="dialog" id="createDiagnosisReferenceModal" aria-hidden="true" *ngIf="diagnosisReferenceModal != null">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+
+						<div class="modal-header">
+							<h5 class="modal-title">Diagnosis Baru</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<i class="fa fa-times" aria-hidden="true"></i>
+							</button>
+						</div>
+
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="kode">Kode</label>
+								<input type="text" class="form-control" id="kode" required [(ngModel)]="diagnosisReferenceModal.kode">
+							</div>
+
+							<div class="form-group">
+								<label for="nama">Nama</label>
+								<input type="text" class="form-control" id="nama" required [(ngModel)]="diagnosisReferenceModal.nama">
+							</div>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+							<button type="button" class="btn btn-success" (click)="createDiagnosisReference()">Simpan</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</html>
