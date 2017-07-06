@@ -52,7 +52,7 @@ export class ObatPindahFormComponent {
 		this.obatPindah.id_jenis_obat = this.stokObat.jenis_obat.id;
 		this.obatPindah.id_obat_masuk = this.obatMasuk.id;
 
-		alert(JSON.stringify(this.obatPindah)); 
+		// alert(JSON.stringify(this.obatPindah)); 
 		this.obatPindahService.createObatPindah(this.obatPindah).subscribe(
 	       	data => {
 	         	this.location.back();

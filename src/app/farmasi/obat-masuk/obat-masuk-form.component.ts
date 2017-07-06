@@ -29,7 +29,7 @@ export class ObatMasukFormComponent {
 	}
 
 	private save() {
-		alert(JSON.stringify(this.obatMasuk)); 
+		// alert(JSON.stringify(this.obatMasuk)); 
 		this.obatMasukService.createObatMasuk(this.obatMasuk).subscribe(
 	       	data => {
 	         	this.location.back();
