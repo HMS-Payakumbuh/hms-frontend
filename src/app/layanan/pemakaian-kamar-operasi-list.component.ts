@@ -21,13 +21,13 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 	allKelas = ['', 'VIP', '1', '2', '3'];
 	pemakaianKamarOperasiModal: PemakaianKamarOperasi = null;
     pemakaianKamarOperasiModalNama: string = null;
-	
+
 	constructor(
 		private pemakaianKamarOperasiService: PemakaianKamarOperasiService,
 		private tenagaMedisService: TenagaMedisService,
 		private tindakanService: TindakanService
 	) {}
-	
+
 	ngOnInit() {
 		this.pemakaianKamarOperasiService.getAllPemakaianKamarOperasi().subscribe(
      		data => { this.allPemakaianKamarOperasi = data }
@@ -42,7 +42,7 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
  	}
 
     createPemakaianKamarOperasi(noKamar: string) {
-    	this.pemakaianKamarOperasiService.createPemakaianKamarOperasi(this.pemakaianKamarModal).subscribe(
+    	this.pemakaianKamarOperasiService.createPemakaianKamarOperasi(this.pemakaianKamarOperasiModal).subscribe(
       		data => { window.location.reload() }
     	);
   	}
