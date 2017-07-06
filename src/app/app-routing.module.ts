@@ -24,7 +24,7 @@ import { LaboratoriumPemeriksaanComponent }	from './layanan/laboratorium-pemerik
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent }	    from './layanan/rawatinap-detail.component';
 import { KamarOperasiListComponent }		from './layanan/kamar-operasi-list.component';
-import { KamarJenazahListComponent }		from './layanan/kamar-jenazah-list.component';
+// import { KamarJenazahListComponent }		from './layanan/kamar-jenazah-list.component';
 
 import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-operasi-list.component';
 import { PemakaianKamarJenazahListComponent }		from './layanan/pemakaian-kamar-jenazah-list.component';

@@ -30,7 +30,7 @@ export class KamarOperasiListComponent implements OnInit {
  	}
 
     createKamarOperasi(noKamar: string) {
-    	this.KamarOperasiService.createKamarOperasi(this.kamarOperasiModal).subscribe(
+    	this.kamarOperasiService.createKamarOperasi(this.kamarOperasiModal).subscribe(
       		data => { window.location.reload() }
     	);
   	}
