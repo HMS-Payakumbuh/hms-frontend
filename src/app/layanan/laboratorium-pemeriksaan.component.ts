@@ -8,6 +8,9 @@ import { NgbTypeaheadConfig } 														from '@ng-bootstrap/ng-bootstrap';
 import { Transaksi }						from '../transaksi/transaksi';
 import { TransaksiService }			from '../transaksi/transaksi.service';
 
+import { TenagaMedis }          from '../tenaga-medis/tenaga-medis';
+import { TenagaMedisService }   from '../tenaga-medis/tenaga-medis.service';
+
 import { Laboratorium }						from './laboratorium';
 import { LaboratoriumService }		from './laboratorium.service';
 
@@ -21,6 +24,7 @@ import { TindakanService }			from './tindakan.service';
  	providers: [
  		LaboratoriumService,
  		TransaksiService,
+    TenagaMedisService,
  		TindakanService
 	]
 })
@@ -32,11 +36,14 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 	laboratorium: Laboratorium;
 
 	allTindakanReference: TindakanReference[];
+  allTenagaMedis: TenagaMedis[];
+
 	selectedTindakan: Tindakan[] = [];
   selectedTindakanReference: TindakanReference[] = [];
 
 	inputFormatter = (value : any) => value.nama;
 	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
+  tenagaMedisFormatter = (value : any) => value.nama + ' - ' + value.jabatan;
 
 	searchTindakan = (text$: Observable<string>) =>
 		text$
@@ -45,11 +52,19 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 			.map(term => term.length < 2 ? []
 				: this.allTindakanReference.filter(tindakanReference => tindakanReference.nama.toLowerCase().indexOf(term.toLowerCase()) > -1));
 
+  searchTenagaMedis = (text$: Observable<string>) =>
+    text$
+      .debounceTime(200)
+      .distinctUntilChanged()
+      .map(term => term.length < 2 ? []
+        : this.allTenagaMedis.filter(tenagaMedis => tenagaMedis.nama.toLowerCase().indexOf(term.toLowerCase()) > -1));
+
 	constructor(
 		private route: ActivatedRoute,
 		private location: Location,
 		private formBuilder: FormBuilder,
 		private transaksiService: TransaksiService,
+    private tenagaMedisService: TenagaMedisService,
 		private laboratoriumService: LaboratoriumService,
 		private tindakanService: TindakanService,
 		private config: NgbTypeaheadConfig
@@ -65,6 +80,10 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 		this.route.params
 			.switchMap((params: Params) => this.transaksiService.getTransaksi(+params['idTransaksi']))
 			.subscribe(transaksi => this.transaksi = transaksi);
+
+    this.tenagaMedisService.getAllTenagaMedis().subscribe(
+      data => { this.allTenagaMedis = data }
+    )
 
     this.tindakanService.getAllTindakanReference().subscribe(
       data => { this.allTindakanReference = data }
@@ -95,6 +114,10 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
     this.selectedTindakan.splice(i, 1);
 		this.selectedTindakanReference.splice(i, 1);
 	}
+
+  selectTenagaMedis(tindakan: Tindakan, tenagaMedis: TenagaMedis) {
+    tindakan.np_tenaga_medis = tenagaMedis.no_pegawai;
+  }
 
 	goBack(): void {
 		this.location.back();
