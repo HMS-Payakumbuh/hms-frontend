@@ -17,7 +17,7 @@ export class AsuransiService {
 		return Promise.reject(error.message || error);
 	}
 
-	getAllAsuransi(): Observable<Asuransi[]> {
+	getAllAsuransi(): Observable<any> {
 		return this.http.get(this.asuransiUrl)
 			.map((res: Response) => res.json());
 	}
