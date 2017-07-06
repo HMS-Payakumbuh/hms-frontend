@@ -6,6 +6,9 @@ export var ENV = {
 	klaimUrl: baseUrl + "/api/klaim",
 	settingsUrl: baseUrl + "/api/setting_bpjs",
 
+	pasienUrl: baseUrl + "/api/pasien",
+	asuransiUrl: baseUrl + "/api/asuransi",
+
 	diagnosisReferenceUrl: baseUrl + "/api/daftar_diagnosis",
 	tindakanReferenceUrl: baseUrl + "/api/daftar_tindakan",
 	tindakanUrl: baseUrl + "/api/tindakan",
@@ -17,7 +20,7 @@ export var ENV = {
 	jadwalDokterUrl: baseUrl + "/api/jadwal_dokter",
 
 	rawatinapUrl : baseUrl + "/api/rawatinap",
-	pemakaianKamarOperasiUrl : baseUrl + "/api/kamaroperasi"
+	pemakaianKamarOperasiUrl : baseUrl + "/api/kamaroperasi",
 
 	lokasiObatUrl: baseUrl + "/api/lokasi_obat",
 	jenisObatUrl: baseUrl + "/api/jenis_obat",

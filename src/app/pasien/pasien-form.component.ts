@@ -49,14 +49,12 @@ export class PasienFormComponent implements OnInit {
 
   allTipeLayanan = ['Poliklinik', 'Laboratorium'];
 
-  genders = ['Laki-laki', 'Perempuan'];
+  genders = [{id: 0, nama: 'Laki-laki'}, {id: 1, nama: 'Perempuan'}];
 
   religions = ['Islam', 'Protestan', 'Katolik', 'Buddha', 'Hindu', 'Konghucu'];
 
-  //pasienAutocompleteConfig: any = {'placeholder': 'Tuliskan nama pasien', 'sourceField': ['nama']};
-
   ngOnInit() {
-    this.pasien = new Pasien(null,'','',null,'','','','');
+    this.pasien = new Pasien(null,'','',null,null,'','','',null);
     this.asuransi = new Asuransi(null,'',null);
 
     this.sub = this.route.params
@@ -80,17 +78,17 @@ export class PasienFormComponent implements OnInit {
     if (this.search.match(/([1-9][0-9]*)/)) {
       this.allPasien = [];
       this.pasienService.getPasien(parseInt(this.search))
-        .then(allPasien => {
+        .subscribe(allPasien => {
           this.allPasien.push(allPasien);
         });
     } else {
        this.pasienService.getPasienByName(this.search)
-        .then(allPasien => this.allPasien = allPasien);
+        .subscribe(allPasien => this.allPasien = allPasien);
     }
   }
 
   private selectPasien() {
-    this.asuransiService.getAsuransi(this.pasien.id).then(allAsuransi => this.allAsuransi = allAsuransi);
+    this.asuransiService.getAsuransi(this.pasien.id).subscribe(allAsuransi => this.allAsuransi = allAsuransi);
     this.searchDone = true;
   }
 
@@ -120,8 +118,10 @@ export class PasienFormComponent implements OnInit {
     this.asuransi = asuransi;
   }
 
-	private save() {
-    alert(JSON.stringify(this.pasien)+','+JSON.stringify(this.asuransi)+','+this.layanan);
-    this.submitted = true;
+  private createPasien() {
+    alert(JSON.stringify(this.pasien));
+    this.pasienService.createPasien(this.pasien, this.asuransi).subscribe(
+      data => { window.location.reload() }
+    );
   }
 }
