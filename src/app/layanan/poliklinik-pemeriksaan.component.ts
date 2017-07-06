@@ -11,6 +11,7 @@ import { TransaksiService }			from '../transaksi/transaksi.service';
 import { Poliklinik }						from './poliklinik';
 import { PoliklinikService }		from './poliklinik.service';
 
+import { Diagnosis }            from './diagnosis';
 import { DiagnosisReference }		from './diagnosis-reference';
 import { DiagnosisService }			from './diagnosis.service';
 
@@ -39,10 +40,11 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	allDiagnosisReference: DiagnosisReference[];
 	allTindakanReference: TindakanReference[];
 
-	selectedDiagnosis: DiagnosisReference[] = [];
+	selectedDiagnosis: Diagnosis[] = [];
+  selectedDiagnosisReference: DiagnosisReference[] = [];
+
 	selectedTindakan: Tindakan[] = [];
   selectedTindakanReference: TindakanReference[] = [];
-	keteranganTindakan: string[] = [];
 
 	inputFormatter = (value : any) => value.nama;
 	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
@@ -96,12 +98,19 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     )
 	}
 
-	addSelectedDiagnosis(diagnosis: DiagnosisReference) {
-		this.selectedDiagnosis.push(diagnosis);
+	addSelectedDiagnosis(diagnosisReference: DiagnosisReference) {
+		this.selectedDiagnosisReference.push(diagnosisReference);
+
+    let temp = new Diagnosis();
+    temp.id_pasien = this.transaksi.transaksi.id_pasien;
+    temp.tanggal_waktu = '2017-07-06 10:00:00';
+    temp.kode_diagnosis = diagnosisReference.kode;
+    this.selectedDiagnosis.push(temp);
 	}
 
 	removeSelectedDiagnosis(i: number) {
 		this.selectedDiagnosis.splice(i, 1);
+    this.selectedDiagnosisReference.splice(i, 1);
 	}
 
 	addSelectedTindakan(tindakanReference: TindakanReference) {
@@ -125,8 +134,8 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	}
 
 	removeSelectedTindakan(i: number) {
-		this.keteranganTindakan.splice(i, 1);
 		this.selectedTindakan.splice(i, 1);
+    this.selectedTindakanReference.splice(i, 1);
 	}
 
 	initResepEntry() {

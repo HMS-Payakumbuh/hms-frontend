@@ -3,6 +3,7 @@ import { Headers, Http, Response, RequestOptions }		from '@angular/http';
 import { Observable }			from 'rxjs/Rx';
 
 import { ENV }										from '../environment';
+import { Diagnosis }							from './diagnosis';
 import { DiagnosisReference }			from './diagnosis-reference';
 
 @Injectable()
@@ -20,5 +21,33 @@ export class DiagnosisService {
 	getAllDiagnosisReference(): Observable<DiagnosisReference[]> {
 		return this.http.get(this.diagnosisReferenceUrl)
 			.map((res: Response) => res.json());;
+	}
+
+	getDiagnosisReference(kode: string): Observable<DiagnosisReference> {
+		return this.getAllDiagnosisReference()
+			.map(allDiagnosisReference => allDiagnosisReference.find(diagnosisReference => diagnosisReference.kode == kode));
+	}
+
+	createDiagnosisReference(diagnosisReference: DiagnosisReference) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers});
+		let body = JSON.stringify(diagnosisReference);
+		return this.http.post(this.diagnosisReferenceUrl, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	updateDiagnosisReference(kode: string, diagnosisReference: DiagnosisReference) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers});
+		let body = JSON.stringify(diagnosisReference);
+		return this.http.put(this.diagnosisReferenceUrl + '/' + kode, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	destroyDiagnosisReference(kode: string) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers});
+		return this.http.delete(this.diagnosisReferenceUrl + '/' + kode, options)
+			.map((res: Response) => res.json());
 	}
 }

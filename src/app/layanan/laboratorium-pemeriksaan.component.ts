@@ -28,12 +28,12 @@ import { TindakanService }			from './tindakan.service';
 export class LaboratoriumPemeriksaanComponent implements OnInit {
 
 	addForm: FormGroup;
-	transaksi: Transaksi;
+	transaksi: any = null;
 	laboratorium: Laboratorium;
 
 	allTindakanReference: TindakanReference[];
-	selectedTindakan: TindakanReference[] = [];
-	keteranganTindakan: string[] = [];
+	selectedTindakan: Tindakan[] = [];
+  selectedTindakanReference: TindakanReference[] = [];
 
 	inputFormatter = (value : any) => value.nama;
 	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
@@ -71,13 +71,29 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
     );
 	}
 
-	addSelectedTindakan(tindakan: TindakanReference) {
-		this.selectedTindakan.push(tindakan);
+	addSelectedTindakan(tindakanReference: TindakanReference) {
+		this.selectedTindakanReference.push(tindakanReference);
+
+    let temp = new Tindakan();
+    temp.id_transaksi = this.transaksi.transaksi.id;
+    temp.no_tindakan = this.selectedTindakan.length + 1;
+    temp.harga = tindakanReference.harga;
+    temp.dokumen_penunjang = null;
+    temp.keterangan = '';
+    temp.id_pembayaran = null;
+    temp.kode_tindakan = tindakanReference.kode;
+    temp.id_pasien = this.transaksi.transaksi.id_pasien;
+    temp.tanggal_waktu = '2017-07-06 10:00:00';
+    temp.np_tenaga_medis = '101';
+    temp.nama_poli = null;
+    temp.nama_lab = this.laboratorium.nama;
+    temp.nama_ambulans = null;
+    this.selectedTindakan.push(temp);
 	}
 
 	removeSelectedTindakan(i: number) {
-		this.keteranganTindakan.splice(i, 1);
-		this.selectedTindakan.splice(i, 1);
+    this.selectedTindakan.splice(i, 1);
+		this.selectedTindakanReference.splice(i, 1);
 	}
 
 	goBack(): void {
@@ -85,6 +101,6 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 	}
 
 	save() {
-		this.tindakanService.saveTindakan(this.transaksi, this.laboratorium.nama, false, null, this.selectedTindakan, this.keteranganTindakan);
+		this.tindakanService.saveTindakan(this.selectedTindakan);
 	}
 }
