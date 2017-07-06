@@ -98,41 +98,66 @@
 
 								<div class="form-group">
 									<label for="nama_pasien">Nama Dokter Operasi</label>
-									<select class="form-control" id="no_pegawai" [(ngModel)]="pemakaianKamarOperasiModal.no_pegawai">
+									<select class="form-control" id="no_pegawai" [(ngModel)]="no_pegawai">
 										<option *ngFor="let tenagaMedis of allTenagaMedis" [value]="tenagaMedis.no_pegawai">
 											{{tenagaMedis.nama}}
 										</option>
 									</select>
 								</div>
-
+								
 								<div class="form-group">
-									<label for="nama_pasien">Nama Tindakan</label>
-									<select class="form-control" id="no_tindakan">
-										<option *ngFor="let tindakanReference of allTindakanReference" [value]="tindakanReference.kode" [(ngModel)]="pemakaianKamarOperasiModal.no_tindakan">
-											{{tindakanReference.nama}}
-										</option>
-									</select>
+									<label for="inputTindakan">Masukkan tindakan yang dilakukan (ICD-9-CM)</label>
+									<input [disabled]= "isTindakanAlreadySelected()" id="inputTindakan" class="form-control" [ngbTypeahead]="searchTindakan" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addSelectedTindakan($event.item)">
 								</div>
+
+								<table class="table" *ngIf="selectedTindakan.length > 0">
+									<thead>
+										<th>Kode</th>
+										<th>Nama</th>
+										<th>Keterangan</th>
+										<th></th>
+										<th></th>
+									</thead>
+									<tbody>
+										<tr *ngFor="let tindakan of selectedTindakan; index as i">
+											<td style="vertical-align: middle;">{{tindakan.kode_tindakan}}</td>
+											<td style="vertical-align: middle;">{{selectedTindakanReference[i].nama}}</td>
+											<td style="vertical-align: middle;">
+												<textarea class="form-control" rows="2" [(ngModel)]="tindakan.keterangan"></textarea>
+											</td>
+											<td style="vertical-align: middle;">
+												<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#obatTindakanModal' + i">
+													Pemakaian Obat
+												</button>
+											</td>
+											<td style="vertical-align: middle;">
+												<button type="button" class="btn btn-sm btn-outline-danger" (click)="removeSelectedTindakan(i)">
+													<i class="fa fa-window-close"></i>
+												</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
 
 								<div class="form-group">
 									<label for="tanggal">Tanggal Operasi</label>       
-									<input type="date" class="form-control" id="tanggal" name="tanggal" [(ngModel)]="pemakaianKamarOperasiModal.no_tindakan">
+									<input type="date" class="form-control" id="tanggal" name="tanggal" >
 								</div>
 
 								<div class="form-group">
 									<label for="waktu_masuk">Waktu Masuk</label>           
-									<input type="time" class="form-control" id="waktu_masuk" name="waktu_masuk" placeholder="HH:mm" required [(ngModel)]="pemakaianKamarOperasiModal.no_tindakan"/>
+									<input type="time" class="form-control" id="waktu_masuk" name="waktu_masuk" placeholder="HH:mm" required />
 								</div>
 
 								<div class="form-group">
 									<label for="waktu_keluar">Waktu Keluar</label>           
-									<input type="time" class="form-control" id="waktu_keluar" name="waktu_keluar" placeholder="HH:mm" required [(ngModel)]="pemakaianKamarOperasiModal.no_tindakan"/>
+									<input type="time" class="form-control" id="waktu_keluar" name="waktu_keluar" placeholder="HH:mm" required />
 								</div>
 							</div>
 
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-								<button type="button" class="btn btn-success" (click)="createPoliklinik()">Simpan</button>
+								<button type="button" class="btn btn-success" (click)="createPemakaianKamarOperasi()">Simpan</button>
 							</div>
 
 						</div>
