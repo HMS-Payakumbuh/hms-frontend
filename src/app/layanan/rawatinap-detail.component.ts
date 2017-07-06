@@ -35,6 +35,7 @@ export class RawatinapDetailComponent implements OnInit {
 	noKamar: string;
 	selectedTempatTidur: number;
 	pemakaianKamarModal: PemakaianKamar = null;
+	tempatTidurModal : Tempattidur = null;
     pemakaianKamarModalNama: string = null;
 
 	constructor(
@@ -42,7 +43,7 @@ export class RawatinapDetailComponent implements OnInit {
 		private rawatinapService: RawatinapService,
 		private tempattidurService: TempattidurService,
 		private pemakaianKamarService: PemakaianKamarService,
-		private TenagaMedisService: TenagaMedisService,
+		private tenagaMedisService: TenagaMedisService,
 		private route: ActivatedRoute,
 		private location: Location
 	) {}
@@ -51,24 +52,32 @@ export class RawatinapDetailComponent implements OnInit {
 		this.route.params
 			.switchMap((params: Params) => this.rawatinapService.getRawatinap(params['noKamar']))
 			.subscribe(rawatinap => this.rawatinap = rawatinap);
-
+	
 		this.route.params
 			.switchMap((params: Params) => this.tempattidurService.getAllTempattidur(params['noKamar']))
 			.subscribe(data => this.allTempatTidur = data);
-
-		this.route.params
-			.switchMap((params: Params) => this.transaksiService.getTransaksi(+params['idTransaksi']))
-			.subscribe(transaksi => this.transaksi = transaksi);
 		
-		this.TenagaMedisService.getAllTenagaMedis().
+		this.tenagaMedisService.getAllTenagaMedis().
 			subscribe(data => this.allTenagaMedis = data);
 	}
 
+	getRecentTransaksi(nama_pasien: string) {
+		this.transaksiService.getRecentTransaksi(nama_pasien).
+			subscribe(data => {
+				this.transaksi = data;
+				this.pemakaianKamarModal.id_transaksi = this.transaksi.id;
+			} 		
+	}
+
 	selectTempatTidur(noTempatTidur:number) : void {
-		if(noTempatTidur === this.tempattidurService.selectedTempatTidur) 
+		if(noTempatTidur === this.tempattidurService.selectedTempatTidur) {
 			this.tempattidurService.selectedTempatTidur = 0;
-		else
+			this.selectedTempatTidur = 0;
+		}
+		else {
 			this.tempattidurService.selectedTempatTidur = noTempatTidur;
+			this.selectedTempatTidur = noTempatTidur;
+		}
 	}
 
 	isSelected(noTempatTidur:number) {
@@ -79,26 +88,25 @@ export class RawatinapDetailComponent implements OnInit {
 		return (this.allTempatTidur[noTempatTidur-1].status == 1); 
 	}
 
-	getSelectedTempatTidur() {
-		this.selectedTempatTidur = this.tempattidurService.selectedTempatTidur;
-		return this.selectedTempatTidur;
-	}
-
 	newPemakaianKamar() {
     	this.pemakaianKamarModal = new PemakaianKamar();
+		this.pemakaianKamarModal.no_kamar = this.rawatinap.no_kamar;
+		this.pemakaianKamarModal.harga = this.rawatinap.harga_per_hari;
+		this.pemakaianKamarModal.no_tempat_tidur = this.tempattidurService.selectedTempatTidur;
+
+		this.tempatTidurModal = new Tempattidur();
+		this.tempatTidurModal.no_kamar = this.rawatinap.no_kamar;
+		this.tempatTidurModal.no_tempat_tidur = this.tempattidurService.selectedTempatTidur;
+		this.tempatTidurModal.status = 0;
  	}
 
-	getNoTransaksi(namaPasien: string) {
-		// this.route.params
-		// 	.switchMap((params: Params) => this.pemakaianKamarService.getNoTransaksi(namaPasien,params['noKamar']))
-		// 	.subscribe(transaksi => this.transaksi = transaksi);
-
-		// this.pemakaianKamarModal.id_transaksi = this.transaksi.no_transaksi;
-	}
-
-    createPemakaianKamar(noKamar: string) {
+    createPemakaianKamar(noKamar: string, noTempatTidur: number) {
     	this.pemakaianKamarService.createPemakaianKamar(noKamar,this.pemakaianKamarModal).subscribe(
-      		data => { window.location.reload() }
+      		data => { 
+				this.tempattidurService.updateTempatTidur(this.tempatTidurModal, noKamar, noTempatTidur).subscribe(
+					data => { window.location.reload() }
+				);
+			}
     	);
   	}
 

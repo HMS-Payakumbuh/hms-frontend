@@ -42,7 +42,7 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
  	}
 
     createPemakaianKamarOperasi(noKamar: string) {
-    	this.pemakaianKamarOperasiService.createPemakaianKamarOperasi(this.pemakaianKamarModal).subscribe(
+    	this.pemakaianKamarOperasiService.createPemakaianKamarOperasi(this.pemakaianKamarOperasiModal).subscribe(
       		data => { window.location.reload() }
     	);
   	}
