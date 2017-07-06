@@ -56,51 +56,10 @@ export class TindakanService {
 			.map((res: Response) => res.json());
 	}
 
-	saveTindakan (
-		transaksi: Transaksi,
-		namaLayanan: string,
-		isPoli: boolean,
-		dokumenPenunjang: number,
-		selectedTindakan: TindakanReference[],
-		keteranganTindakan: string[]
-	) {
-		this.i = 0;
-		this.tindakanInstances.length = 0;
-
-		for (let tindakanReference of selectedTindakan) {
-			this.i++;
-
-			this.tindakan = new Tindakan();
-			this.tindakan.id_transaksi = transaksi.id;
-			this.tindakan.no_tindakan = this.i;
-			this.tindakan.harga = tindakanReference.harga;
-
-			if (isPoli) {
-				this.tindakan.nama_poli = namaLayanan;
-				this.tindakan.nama_lab = null;
-				this.tindakan.nama_ambulans = null;
-				this.tindakan.dokumen_penunjang = null;
-			}
-			else {
-				this.tindakan.nama_poli = null;
-				this.tindakan.nama_lab = namaLayanan;
-				this.tindakan.nama_ambulans = null;
-				this.tindakan.dokumen_penunjang = dokumenPenunjang;
-			}
-
-			this.tindakan.keterangan = keteranganTindakan[this.i - 1];
-			this.tindakan.id_pembayaran = null;
-			this.tindakan.kode_tindakan = tindakanReference.kode;
-			this.tindakan.id_pasien = transaksi.id_pasien;
-			this.tindakan.tanggal_waktu = '2017-07-04 10:00:00';
-			this.tindakan.np_tenaga_medis = '101';
-
-			this.tindakanInstances.push(this.tindakan);
-		}
-
+	saveTindakan (selectedTindakan: Tindakan[]) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers});
-		let body = JSON.stringify(this.tindakanInstances);
+		let body = JSON.stringify(selectedTindakan);
 		return this.http.post(this.tindakanUrl, body, options)
 			.map((res: Response) => res.json());
 	}
