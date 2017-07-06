@@ -106,6 +106,7 @@
 									<th>Kode</th>
 									<th>Nama</th>
 									<th>Keterangan</th>
+									<th>Tenaga Medis</th>
 									<th></th>
 									<th></th>
 								</thead>
@@ -116,6 +117,11 @@
 										<td style="vertical-align: middle;">{{selectedTindakanReference[i].nama}}</td>
 										<td style="vertical-align: middle;">
 											<textarea class="form-control" rows="2" [(ngModel)]="tindakan.keterangan"></textarea>
+										</td>
+										<td style="vertical-align: middle;">
+											<input class="form-control" [ngbTypeahead]="searchTenagaMedis"
+											[inputFormatter]="tenagaMedisFormatter" [resultFormatter]="tenagaMedisFormatter"
+											(selectItem)="selectTenagaMedis(tindakan, $event.item)">
 										</td>
 										<td style="vertical-align: middle;">
 											<button type="button" class="btn btn-sm btn-info">Upload Hasil</button>

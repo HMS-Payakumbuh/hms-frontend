@@ -1,6 +1,7 @@
 import { JenisObat }    from '../jenis-obat/jenis-obat';
+import { StokObat }			from '../stok-obat/stok-obat';
 
-export class ObatTindakan {	
+export class ObatTindakan {
 	constructor(
     public id: number = null ,
     public id_jenis_obat: number = null,
@@ -11,6 +12,7 @@ export class ObatTindakan {
     public asal: number = null,
     public harga_jual_realisasi: number = null,
     public id_transaksi: number = null,
-    public id_tindakan: number = null
+    public id_tindakan: number = null,
+		public stokObat: StokObat = null
   ) {  }
 }
