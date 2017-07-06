@@ -169,16 +169,79 @@
 							</div>
 							<div class="row mt-5 pt-5">
 								<button class="btn btn-danger" (click)="goBack()">Kembali</button>
-								<button class="btn btn-sq-sm btn-primary float-left p-3 mr-2 mx-auto" routerLink="rawatinap-form">
-							        Confirm
-							    </button>
+								<button type="button" class="btn btn-sq-sm btn-primary float-left p-3 mr-2 mx-auto" data-toggle="modal"
+								[attr.data-target]="'#createPemakaianKamarModal'" (click)="newPemakaianKamar()">
+									Confirm
+								</button>
 							</div>
 						         
 						</div>
 					</div>
 				</div>
-			</div>
 
+			<div class="modal fade" tabindex="-1" role="dialog" id="createPemakaianKamarModal" aria-hidden="true" *ngIf="pemakaianKamarModal != null">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+
+							<div class="modal-header">
+								<h5 class="modal-title">Buat Pemakaian Kamar Rawat Inap Baru</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<i class="fa fa-times" aria-hidden="true"></i>
+								</button>
+							</div>
+
+							<div class="modal-body">
+
+								<div class="form-group">
+									<label for="id_transaksi">Nama Pasien *</label>
+									<div class="input-group">
+									<input type="text" class="form-control" id="nama_pasien" required name="nama_pasien" [(ngModel)]="pemakaianKamarModal.nama_pasien"> 
+									<span class="form-group-btn">
+										<button class="btn btn-success" (click)="getNoTransaksi(namaPasien)">Cari</button>
+									</span>
+									</div>                    
+								</div>
+
+								<div class="form-group">
+									<label for="id_pasien">ID Transaksi</label>
+									<input type="text" class="form-control" id="id_pasien" disabled name="id_pasien" [(ngModel)]="pemakaianKamarModal.no_transaksi">
+								</div>
+
+								<div class="form-group">
+									<label for="nama_pasien">No. Kamar</label>
+									<input type="text" class="form-control" id="nama_pasien" disabled name="no_kamar" value="{{rawatinap.no_kamar}}" [(ngModel)]="pemakaianKamarModal.no_kamar">
+								</div>
+
+								<div class="form-group">
+									<label for="nama_pasien">No. Tempat Tidur</label>
+									<input type="text" class="form-control" id="no_tempat_tidur" disabled name="no_tempat_tidur" value="{{getSelectedTempatTidur()}}" [(ngModel)]="pemakaianKamarModal.no_tempat_tidur">
+								</div>
+
+								<div class="form-group">
+									<label for="nama_pasien">Harga</label>
+									<input type="text" class="form-control" id="harga" disabled name="harga" value="{{rawatinap.harga_per_hari}}" [(ngModel)]="pemakaianKamarModal.harga">
+								</div>
+
+								<div class="form-group">
+									<label for="nama_pasien">Nama Dokter Rawat</label>
+									<select class="form-control" id="no_pegawai">
+										<option *ngFor="let tenagaMedis of allTenagaMedis" [value]="tenagaMedis.no_pegawai" [(ngModel)]="pemakaianKamarModal.no_pegawai">
+											{{tenagaMedis.nama}}
+										</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+								<button type="button" class="btn btn-success" (click)="createPemakaianKamar(rawatinap.no_kamar)">Simpan</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+			</div>
 		</div>
 	</div>
+	
 </html>

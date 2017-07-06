@@ -12,6 +12,10 @@ import { TenagaMedisService }		from './tenaga-medis.service';
 
 export class JadwalDokterListComponent implements OnInit {
 	allJadwalDokter: JadwalDokter[];
+  jadwalDokterModal: JadwalDokter = null;
+  JadwalDokterModalNamaPoli: string = null;
+  jadwalDokterModalNpDokter: string = null;
+  jadwalDokterModalTanggal: string = null;
 
 	public filterQuery = "";
   public rowsOnPage = 10;
@@ -19,12 +23,41 @@ export class JadwalDokterListComponent implements OnInit {
   public sortOrder = "asc";
 
 	constructor(
-		private tenagaMedisService: TenagaMedisService
+		private jadwalDokterService: TenagaMedisService
 	) {}
 
 	ngOnInit() {
-		this.tenagaMedisService.getAllJadwalDokter().subscribe(
+		this.jadwalDokterService.getAllJadwalDokter().subscribe(
       data => { this.allJadwalDokter = data }
     )
 	}
+
+  newJadwalDokter() {
+    this.jadwalDokterModal = new JadwalDokter();
+  }
+
+  createJadwalDokter() {
+    this.jadwalDokterService.createJadwalDokter(this.jadwalDokterModal).subscribe(
+      data => { window.location.reload() }
+    );
+  }
+
+  editJadwalDokter(nama_poli: string, np_dokter: string, tanggal: string, jadwalDokter: JadwalDokter) {
+    this.JadwalDokterModalNamaPoli = nama_poli;
+    this.jadwalDokterModalNpDokter = np_dokter;
+    this.jadwalDokterModalTanggal = tanggal;
+    this.jadwalDokterModal = Object.assign({}, jadwalDokter);
+  }
+
+  updateJadwalDokter() {
+    this.jadwalDokterService.updateJadwalDokter(this.JadwalDokterModalNamaPoli, this.jadwalDokterModalNpDokter, this.jadwalDokterModalTanggal, this.jadwalDokterModal).subscribe(
+      data => { window.location.reload() }
+    );
+  }
+
+  destroyJadwalDokter(nama_poli: string, np_dokter: string, tanggal: string) {
+    this.jadwalDokterService.destroyJadwalDokter(nama_poli, np_dokter, tanggal).subscribe(
+      data => { window.location.reload() }
+    );
+  }
 }

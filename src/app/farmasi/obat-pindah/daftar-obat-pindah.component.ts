@@ -3,14 +3,18 @@ import { Component } from '@angular/core';
 import { ObatPindah }			from './obat-pindah';
 import { ObatPindahService }		from './obat-pindah.service';
 
+import { LokasiObat }	from '../lokasi-obat/lokasi-obat';
+import { LokasiObatService }		from '../lokasi-obat/lokasi-obat.service';
+
 @Component({
  	selector: 'daftar-obat-pindah-page',
  	templateUrl: './daftar-obat-pindah.component.html',
- 	providers: [ObatPindahService]
+ 	providers: [ObatPindahService, LokasiObatService]
 })
 
 export class DaftarObatPindahComponent {
 	public allObatPindah: ObatPindah[];
+	public allLokasiObat: LokasiObat[];
 
 	public filterQuery = "";
     public rowsOnPage = 5;
@@ -18,12 +22,16 @@ export class DaftarObatPindahComponent {
     public sortOrder = "asc";
 
 	constructor(
-		private ObatPindahService: ObatPindahService
+		private obatPindahService: ObatPindahService,		
+		private lokasiObatService: LokasiObatService
 	) {}
 
 	ngOnInit(): void {
-		this.ObatPindahService.getAllObatPindah().subscribe(
+		this.obatPindahService.getAllObatPindah().subscribe(
 			data => { this.allObatPindah = data }
+		);
+		this.lokasiObatService.getAllLokasiObat().subscribe(
+			data => { this.allLokasiObat = data }
 		);
 	}
 

@@ -3,11 +3,13 @@ import { Headers, Http, Response, RequestOptions }	from '@angular/http';
 import { Observable }			from 'rxjs/Rx';
 
 import { ENV }						from '../environment';
-import { Rawatinap }			from './rawatinap';
+import { PemakaianKamar }			from './pemakaian-kamar';
+import { Transaksi }			from '../transaksi/transaksi';
 
 @Injectable()
-export class RawatinapService {
+export class PemakaianKamarService {
 	rawatinapUrl = ENV.rawatinapUrl;
+	transaksiUrl = ENV.transaksiUrl;
 
 	constructor(private http:Http) { }
 
@@ -16,35 +18,40 @@ export class RawatinapService {
 		return Promise.reject(error.message || error);
 	}
 
-	getAllRawatinap(): Observable<Rawatinap[]> {
+	getAllPemakaianKamar(): Observable<PemakaianKamar[]> {
 		return this.http.get(this.rawatinapUrl)
 			.map((res: Response) => res.json());
 	}
 
-	getRawatinap(no_kamar: string): Observable<Rawatinap> {
-		return this.getAllRawatinap()
+	getPemakaianKamar(no_kamar: string): Observable<PemakaianKamar> {
+		return this.getAllPemakaianKamar()
 			.map(allRawatinap => allRawatinap.find(Rawatinap => Rawatinap.no_kamar == no_kamar));
 	}
 
-	createRawatinap(Rawatinap: Rawatinap) {
-		let headers = new Headers({ 'Content-Type': 'application/json' });
-		let options = new RequestOptions({headers: headers});
-		let body = JSON.stringify(Rawatinap);
-
-		return this.http.post(this.rawatinapUrl, body, options)
+	getNoTransaksi(nama_pasien: string, no_kamar : string): Observable<Transaksi> {
+		return this.http.get(this.transaksiUrl + '/' + no_kamar)
 			.map((res: Response) => res.json());
 	}
 
-	updateRawatinap(no_kamar: string, Rawatinap: Rawatinap) {
+	createPemakaianKamar(no_kamar : string, PemakaianKamar: PemakaianKamar) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
-		let body = JSON.stringify(Rawatinap);
+		let body = JSON.stringify(PemakaianKamar);
+
+		return this.http.post(this.rawatinapUrl + '/' + no_kamar, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	updatePemakaianKamar(no_kamar: string, PemakaianKamar: PemakaianKamar) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(PemakaianKamar);
 
 		return this.http.put(this.rawatinapUrl + '/' + no_kamar, body, options)
 			.map((res: Response) => res.json());
 	}
 
-	destroyRawatinap(no_kamar: string) {
+	destroyPemakaianKamar(no_kamar: string) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 

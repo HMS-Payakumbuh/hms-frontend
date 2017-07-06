@@ -1,5 +1,4 @@
 import { Component, OnInit }		from '@angular/core';
-import * as _ from "lodash";
 
 import { Rawatinap } 				from './rawatinap';
 import { RawatinapService }		    from './rawatinap.service';
@@ -18,9 +17,37 @@ export class RawatinapListComponent implements OnInit {
 	constructor(
 		private rawatinapService: RawatinapService
 	) {}
-	
+
 	ngOnInit() {
-		this.rawatinapService.getAllRawatinap()
-			.then(allRawatinap => this.allRawatinap = allRawatinap);
+		this.rawatinapService.getAllRawatinap().subscribe(
+     		data => { this.allRawatinap = data }
+    	);
 	}
+
+//   newPoliklinik() {
+//     this.poliklinikModal = new Poliklinik();
+//   }
+
+//   createPoliklinik() {
+//     this.poliklinikService.createPoliklinik(this.poliklinikModal).subscribe(
+//       data => { window.location.reload() }
+//     );
+//   }
+
+//   editPoliklinik(nama: string, poliklinik: Poliklinik) {
+//     this.poliklinikModalNama = nama;
+//     this.poliklinikModal = Object.assign({}, poliklinik);
+//   }
+
+//   updatePoliklinik() {
+//     this.poliklinikService.updatePoliklinik(this.poliklinikModalNama, this.poliklinikModal).subscribe(
+//       data => { window.location.reload() }
+//     );
+//   }
+
+//   destroyPoliklinik(nama: string) {
+//     this.poliklinikService.destroyPoliklinik(nama).subscribe(
+//       data => { window.location.reload() }
+//     );
+//   }
 }

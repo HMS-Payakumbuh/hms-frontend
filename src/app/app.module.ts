@@ -14,6 +14,7 @@ import { FilterNamaPasienPipe }         from './pipe/filter-nama-pasien.pipe';
 import { FilterTanggalPipe }            from './pipe/filter-tanggal.pipe';
 import { FilterWaktuMasukPipe }            from './pipe/filter-waktu-masuk.pipe';
 import { FilterWaktuKeluarPipe }            from './pipe/filter-waktu-keluar.pipe';
+import { FilterWaktuPindahPipe }            from './pipe/filter-waktu-pindah.pipe';
 import { FilterNamaAsuransiPipe }       from './pipe/filter-nama-asuransi.pipe';
 import { FilterJenisPasienPipe }       from './pipe/filter-jenis-pasien.pipe';
 import { FilterJenisObatPipe }     from './pipe/filter-jenis-obat.pipe';
@@ -51,7 +52,6 @@ import { LaboratoriumPemeriksaanComponent }    from './layanan/laboratorium-peme
 
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent } 	from './layanan/rawatinap-detail.component';
-import { RawatinapFormComponent }	    from './layanan/rawatinap-form.component';
 
 import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-operasi-list.component';
 import { PemakaianKamarOperasiFormComponent }	    from './layanan/pemakaian-kamar-operasi-form.component';
@@ -63,6 +63,8 @@ import { TindakanReferenceListComponent }    from './layanan/tindakan-reference-
 
 import { DaftarStokObatComponent }            from './farmasi/stok-obat/daftar-stok-obat.component';
 import { DetailStokObatComponent }            from './farmasi/stok-obat/detail-stok-obat.component';
+
+import { DaftarLokasiObatComponent }            from './farmasi/lokasi-obat/daftar-lokasi-obat.component';
 
 import { DaftarObatMasukComponent }     from './farmasi/obat-masuk/daftar-obat-masuk.component';
 import { DetailObatMasukComponent }     from './farmasi/obat-masuk/detail-obat-masuk.component';
@@ -110,6 +112,7 @@ import { AppComponent }             from './app.component';
         FilterTanggalPipe,
         FilterWaktuMasukPipe,
         FilterWaktuKeluarPipe,
+        FilterWaktuPindahPipe,
         FilterNamaAsuransiPipe,
         FilterJenisPasienPipe,
         FilterJenisObatPipe,
@@ -141,7 +144,6 @@ import { AppComponent }             from './app.component';
 
         RawatinapListComponent,
         RawatinapDetailComponent,
-        RawatinapFormComponent,
         PemakaianKamarOperasiListComponent,
         PemakaianKamarOperasiFormComponent,
 
@@ -158,6 +160,8 @@ import { AppComponent }             from './app.component';
 
         DaftarStokObatComponent,
         DetailStokObatComponent,
+
+        DaftarLokasiObatComponent,
 
         DaftarObatMasukComponent,
         DetailObatMasukComponent,
