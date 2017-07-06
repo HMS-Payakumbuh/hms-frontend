@@ -58,7 +58,7 @@ import { PemakaianKamarOperasiFormComponent }	    from './layanan/pemakaian-kama
 
 import { TenagaMedisListComponent }     from './tenaga-medis/tenaga-medis-list.component';
 import { JadwalDokterListComponent }    from './tenaga-medis/jadwal-dokter-list.component';
-
+import { DiagnosisReferenceListComponent }	from './layanan/diagnosis-reference-list.component';
 import { TindakanReferenceListComponent }    from './layanan/tindakan-reference-list.component';
 
 import { DaftarStokObatComponent }            from './farmasi/stok-obat/daftar-stok-obat.component';
@@ -149,7 +149,7 @@ import { AppComponent }             from './app.component';
 
         TenagaMedisListComponent,
         JadwalDokterListComponent,
-
+        DiagnosisReferenceListComponent,
         TindakanReferenceListComponent,
 
         MatchesStatusPipe,
