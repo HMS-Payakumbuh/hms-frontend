@@ -5,7 +5,7 @@
 
 	  	<div class="card card-outline-info mb-3">
 	  		<div class="card-block">
-		  		<h3>{{poliklinik?.nama}} - Transaksi #{{transaksi?.id}}</h3>
+		  		<h3>{{poliklinik?.nama}} - Transaksi #{{transaksi?.transaksi.id}}</h3>
 	  		</div>
 	  	</div>
 
@@ -20,15 +20,15 @@
 						<tbody>
 							<tr>
 								<td><b>Nama</b></td>
-								<td>{{transaksi?.nama_pasien}}</td>
+								<td>{{transaksi?.transaksi.pasien.nama_pasien}}</td>
 							</tr>
 							<tr>
 								<td><b>Jenis kelamin</b></td>
-								<td>Laki-laki</td>
+								<td>{{transaksi?.transaksi.pasien.jender == 0 && 'Laki-laki' || 'Perempuan'}}</td>
 							</tr>
 							<tr>
-								<td><b>Usia</b></td>
-								<td>26 tahun</td>
+								<td><b>Tanggal Lahir</b></td>
+								<td>{{transaksi?.transaksi.pasien.tanggal_lahir}}</td>
 							</tr>
 							<tr>
 								<td colspan="2">
@@ -125,7 +125,7 @@
 									<th></th>
 								</thead>
 								<tbody>
-									<tr *ngFor="let diagnosis of selectedDiagnosis; index as i">
+									<tr *ngFor="let diagnosis of selectedDiagnosisReference; index as i">
 										<td style="vertical-align: middle;">{{i + 1}}</td>
 										<td style="vertical-align: middle;">{{diagnosis.kode}}</td>
 										<td style="vertical-align: middle;">{{diagnosis.nama}}</td>
@@ -159,10 +159,10 @@
 								<tbody>
 									<tr *ngFor="let tindakan of selectedTindakan; index as i">
 										<td style="vertical-align: middle;">{{i + 1}}</td>
-										<td style="vertical-align: middle;">{{tindakan.kode}}</td>
-										<td style="vertical-align: middle;">{{tindakan.nama}}</td>
+										<td style="vertical-align: middle;">{{tindakan.kode_tindakan}}</td>
+										<td style="vertical-align: middle;">{{selectedTindakanReference[i].nama}}</td>
 										<td style="vertical-align: middle;">
-											<textarea class="form-control" rows="2" [(ngModel)]="keteranganTindakan[i]"></textarea>
+											<textarea class="form-control" rows="2" [(ngModel)]="tindakan.keterangan"></textarea>
 										</td>
 										<td style="vertical-align: middle;">
 											<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#obatTindakanModal' + i">

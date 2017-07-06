@@ -36,7 +36,7 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 
 	pemakaianKamarOperasiModal: PemakaianKamarOperasi = null;
     pemakaianKamarOperasiModalNama: string = null;
-	
+
 	constructor(
 		private pemakaianKamarOperasiService: PemakaianKamarOperasiService,
 		private tenagaMedisService: TenagaMedisService,
@@ -44,7 +44,7 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 		private transaksiService: TransaksiService,
 		private kamarOperasiService: KamarOperasiService
 	) {}
-	
+
 	ngOnInit() {
 		this.pemakaianKamarOperasiService.getAllPemakaianKamarOperasi().subscribe(
      		data => { this.allPemakaianKamarOperasi = data }

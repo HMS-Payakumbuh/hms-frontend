@@ -29,13 +29,13 @@
                 <form #pasienBaruForm="ngForm">
                   <div class="form-group">
                     <label for="name">Nama *</label>
-                    <input type="text" class="form-control" id="name" required [(ngModel)]="pasien.nama" name="name">
+                    <input type="text" class="form-control" id="name" required [(ngModel)]="pasien.nama_pasien" name="name">
                   </div>
 
                   <div class="form-group">
                     <label for="gender">Jenis Kelamin</label>
                     <select class="form-control" id="gender" [(ngModel)]="pasien.jender" name="gender">
-                      <option *ngFor="let gender of genders" [value]="gender">{{gender}}</option>
+                      <option *ngFor="let gender of genders" [value]="gender.id">{{gender.nama}}</option>
                     </select>
                   </div>
 
@@ -71,7 +71,7 @@
                     <div class="form-inline">
                       <div class="input-group mb-0 mr-sm-2 mb-sm-0">
                         <div class="input-group-addon">Nomor</div>
-                        <input type="string" class="form-control" id="no_asuransi" [(ngModel)]="asuransi.no_kartu_asuransi" name="no_asuransi" required>
+                        <input type="string" class="form-control" id="no_asuransi" [(ngModel)]="asuransi.no_kartu" name="no_asuransi" required>
                       </div>
                       <div class="input-group mb-0 mr-sm-2 mb-sm-0">
                         <div class="input-group-addon">Nama</div>
@@ -89,7 +89,7 @@
 
                   <div *ngIf="tipe === 'Poliklinik'" class="form-group">
                     <label for="poliklinik">Poliklinik</label>
-                    <select class="form-control" id="poliklinik" [(ngModel)]="layanan" (ngModelChange)="selectLayanan()" name="poliklinik" required>
+                    <select class="form-control" id="poliklinik" [(ngModel)]="layanan" (ngModelChange)="selectLayanan()" name="poliklinik">
                       <ng-container *ngFor="let poliklinik of allLayanan">
                         <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}}</option>
                       </ng-container>
@@ -98,7 +98,7 @@
 
                   <div *ngIf="tipe === 'Laboratorium'" class="form-group">
                     <label for="laboratorium">Laboratorium</label>
-                    <select class="form-control" id="laboratorium" [(ngModel)]="layanan" name="laboratorium" required>
+                    <select class="form-control" id="laboratorium" [(ngModel)]="layanan" name="laboratorium">
                       <ng-container *ngFor="let laboratorium of allLayanan">
                         <option [value]="laboratorium.nama">{{laboratorium.nama}}</option>
                       </ng-container>
@@ -107,7 +107,7 @@
 
                   <div *ngIf="layanan && (tipe === 'Poliklinik')" class="form-group">
                     <label for="dokter">Dokter</label>
-                    <select class="form-control" id="dokter" [(ngModel)]="dokter" name="dokter" required>
+                    <select class="form-control" id="dokter" [(ngModel)]="dokter" name="dokter">
                       <option *ngFor="let dokter of allJadwalDokter" [value]="dokter">{{dokter.nama_dokter}}</option>
                     </select>
                   </div>
@@ -126,7 +126,7 @@
                     </label>
                   </div>
 
-                  <button type="button" class="btn btn-success" (click) = "save()" [disabled]="!pasienBaruForm.form.valid">Simpan</button>
+                  <button type="button" class="btn btn-success" (click) = "createPasien()" [disabled]="!pasienBaruForm.form.valid">Simpan</button>
                 </form>
             </div>
           </div>
@@ -146,7 +146,7 @@
                 <div class="form-group">
                     <label for="pasien">Pilih Pasien</label>
                     <select class="form-control" id="pasien" name="pasien" [(ngModel)]="pasien" (ngModelChange)= "selectPasien()">
-                      <option *ngFor="let pasien of allPasien" [ngValue]="pasien">{{pasien.id}} - {{pasien.nama}}</option>
+                      <option *ngFor="let pasien of allPasien" [ngValue]="pasien">{{pasien.id}} - {{pasien.nama_pasien}}</option>
                     </select>
                   </div>
 
@@ -161,13 +161,13 @@
                 <form *ngIf="searchDone" #pasienLamaForm="ngForm">
                   <div class="form-group">
                     <label for="name">Nama</label>
-                    <input type="text" class="form-control" [disabled]="!update"  id="name" required [(ngModel)]="pasien.nama" name="name">
+                    <input type="text" class="form-control" [disabled]="!update"  id="name" required [(ngModel)]="pasien.nama_pasien" name="name">
                   </div>
 
                   <div class="form-group">
                     <label for="gender">Jenis Kelamin</label>
                     <select class="form-control" [disabled]="!update" id="gender" value="{{pasien.jender}}" [(ngModel)]="pasien.jender" name="gender">
-                      <option *ngFor="let gender of genders" [value]="gender">{{gender}}</option>
+                      <option *ngFor="let gender of genders" [value]="gender.id">{{gender.nama}}</option>
                     </select>
                   </div>
 
@@ -200,7 +200,7 @@
                         <div *ngIf="update" class="input-group mb-2 mr-sm-2 mb-sm-0">
                           <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon">Nomor</div>
-                            <input type="text" class="form-control" [disabled]="!update" name="no_asuransi" [(ngModel)]= "allAsuransi[i].no_kartu_asuransi" value="{{asuransi.no_kartu_asuransi}}">
+                            <input type="text" class="form-control" [disabled]="!update" name="no_asuransi" [(ngModel)]= "allAsuransi[i].no_kartu" value="{{asuransi.no_kartu}}">
                           </div>
                           <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon">Nama</div>
@@ -210,7 +210,7 @@
                         <div *ngIf="!update" class="input-group mb-2 mr-sm-2 mb-sm-0">
                           <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon">Nomor</div>
-                            <input type="text" class="form-control" name="no_asuransi" value="{{asuransi.no_kartu_asuransi}}" disabled>
+                            <input type="text" class="form-control" name="no_asuransi" value="{{asuransi.no_kartu}}" disabled>
                           </div>
                           <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon">Nama</div>
@@ -229,7 +229,7 @@
                     <div class="form-inline">
                       <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                         <div class="input-group-addon">Nomor</div>
-                        <input type="string" class="form-control" id="no_asuransi" [(ngModel)]="asuransi.no_kartu_asuransi" name="no_asuransi" required>
+                        <input type="string" class="form-control" id="no_asuransi" [(ngModel)]="asuransi.no_kartu" name="no_asuransi" required>
                       </div>
                       <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                         <div class="input-group-addon">Nama</div>
@@ -289,7 +289,7 @@
                     </label>
                   </div>
 
-                  <button type="button" class="btn btn-success" (click)="save()" [disabled]="!pasienLamaForm.form.valid">Simpan</button>
+                  <button type="button" class="btn btn-success" (click)="createPasien()" [disabled]="!pasienLamaForm.form.valid">Simpan</button>
                 </form>
             </div>
           </div>
