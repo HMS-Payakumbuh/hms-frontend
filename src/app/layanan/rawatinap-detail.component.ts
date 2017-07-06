@@ -66,7 +66,7 @@ export class RawatinapDetailComponent implements OnInit {
 			subscribe(data => {
 				this.transaksi = data;
 				this.pemakaianKamarModal.id_transaksi = this.transaksi.id;
-			} 		
+			})
 	}
 
 	selectTempatTidur(noTempatTidur:number) : void {
