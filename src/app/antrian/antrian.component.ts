@@ -46,7 +46,7 @@ export class AntrianComponent implements OnInit {
       this.poliklinikService.getAllPoliklinik().subscribe(
         data => { this.allKategori = _.uniqBy(data, 'kategori_antrian') }
       );
-      
+
       this.isfrontoffice = true;
     }
     else {
@@ -76,7 +76,7 @@ export class AntrianComponent implements OnInit {
         this.antrianService.destroyAntrian(antrian.id_transaksi, antrian.no_antrian).subscribe();
       }
     }
-    
+
     this.active = this.nextAntrian(this.umum);
     if (!this.active)
       this.active = this.nextAntrian(!this.umum);

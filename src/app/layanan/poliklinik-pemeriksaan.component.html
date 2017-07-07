@@ -76,32 +76,32 @@
 									<div class="row mb-3">
 										<div class="col-4">
 											<label for="tekananDarah">TD (mmHg)</label>
-											<ng-template #tekananDarahTooltip>Tekanan Darah (optional)</ng-template>
-											<i class="fa fa-question-circle" [ngbTooltip]="tekananDarahTooltip"></i>
-											<input type="text" class="form-control" id="inputTekananDarah">
+											<!-- <ng-template #tekananDarahTooltip>Tekanan Darah (optional)</ng-template>
+											<i class="fa fa-question-circle" [ngbTooltip]="tekananDarahTooltip"></i> -->
+											<input type="text" class="form-control" id="inputTekananDarah" [(ngModel)]="hasilPemeriksaan.tekanan_darah" name="tekanan_darah">
 										</div>
 										<div class="col-4">
 											<label for="nadi">Nadi (x/min)</label>
-											<input type="text" class="form-control" id="inputNadi">
+											<input type="text" class="form-control" id="inputNadi" [(ngModel)]="hasilPemeriksaan.nadi" name="nadi">
 										</div>
 										<div class="col-4">
 											<label for="frekuensiNapas">Frekuensi Napas (x/min)</label>
-											<input type="text" class="form-control" id="frekuensiNapas">
+											<input type="text" class="form-control" id="frekuensiNapas" [(ngModel)]="hasilPemeriksaan.frekuensi_napas" name="frekuensi_napas">
 										</div>
 									</div>
 
 									<div class="row">
 										<div class="col-4">
 											<label for="temperatur">Temperatur (C)</label>
-											<input type="text" class="form-control" id="temperatur">
+											<input type="text" class="form-control" id="temperatur" [(ngModel)]="hasilPemeriksaan.temperatur" name="temperatur">
 										</div>
 										<div class="col-4">
 											<label for="beratBedan">Berat Badan (kg)</label>
-											<input type="text" class="form-control" id="beratBadan">
+											<input type="text" class="form-control" id="beratBadan" [(ngModel)]="hasilPemeriksaan.berat_badan" name="berat_badan">
 										</div>
 										<div class="col-4">
 											<label for="tinggiBadan">Tinggi Badan (cm)</label>
-											<input type="text" class="form-control" id="tinggiBadan">
+											<input type="text" class="form-control" id="tinggiBadan" [(ngModel)]="hasilPemeriksaan.tinggi_badan" name="tinggi_badan">
 										</div>
 									</div>
 
