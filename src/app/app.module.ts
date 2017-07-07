@@ -16,12 +16,14 @@ import { FilterCreatedAtPipe }            from './pipe/filter-created-at.pipe';
 import { FilterWaktuMasukPipe }            from './pipe/filter-waktu-masuk.pipe';
 import { FilterWaktuKeluarPipe }            from './pipe/filter-waktu-keluar.pipe';
 import { FilterWaktuPindahPipe }            from './pipe/filter-waktu-pindah.pipe';
+import { FilterWaktuTransaksiPipe }            from './pipe/filter-waktu-transaksi.pipe';
 import { FilterNamaAsuransiPipe }       from './pipe/filter-nama-asuransi.pipe';
 import { FilterJenisPasienPipe }       from './pipe/filter-jenis-pasien.pipe';
 import { FilterJenisObatPipe }     from './pipe/filter-jenis-obat.pipe';
 import { FilterStokObatPipe }     from './pipe/filter-stok-obat.pipe';
 import { FilterObatMasukPipe }     from './pipe/filter-obat-masuk.pipe';
 import { FilterObatTebusPipe }     from './pipe/filter-obat-tebus.pipe';
+import { FilterObatEceranPipe }     from './pipe/filter-obat-eceran.pipe';
 import { FilterObatRusakPipe }     from './pipe/filter-obat-rusak.pipe';
 import { FilterObatPindahPipe }     from './pipe/filter-obat-pindah.pipe';
 import { FilterJenisAntrianPipe }     from './pipe/filter-jenis-antrian.pipe';
@@ -88,6 +90,10 @@ import { DaftarObatRusakComponent }      from './farmasi/obat-rusak/daftar-obat-
 import { DetailObatRusakComponent }      from './farmasi/obat-rusak/detail-obat-rusak.component';
 import { ObatRusakFormComponent }      from './farmasi/obat-rusak/obat-rusak-form.component';
 
+import { DaftarObatEceranComponent }      from './farmasi/obat-eceran/daftar-obat-eceran.component';
+import { DetailObatEceranComponent }      from './farmasi/obat-eceran/detail-obat-eceran.component';
+import { ObatEceranFormComponent }      from './farmasi/obat-eceran/obat-eceran-form.component';
+
 import { SettingsComponent }        from './settings/settings.component';
 
 import { AppRoutingModule }         from './app-routing.module';
@@ -115,12 +121,14 @@ import { AppComponent }             from './app.component';
         FilterWaktuMasukPipe,
         FilterWaktuKeluarPipe,
         FilterWaktuPindahPipe,
+        FilterWaktuTransaksiPipe,
         FilterNamaAsuransiPipe,
         FilterJenisPasienPipe,
         FilterJenisObatPipe,
         FilterStokObatPipe,
         FilterObatMasukPipe,
         FilterObatTebusPipe,
+        FilterObatEceranPipe,
         FilterObatRusakPipe,
         FilterObatPindahPipe,
         FilterJenisAntrianPipe,
@@ -185,6 +193,10 @@ import { AppComponent }             from './app.component';
         DaftarObatRusakComponent,
         DetailObatRusakComponent,
         ObatRusakFormComponent,
+
+        DaftarObatEceranComponent,
+        DetailObatEceranComponent,
+        ObatEceranFormComponent,
 
         SettingsComponent,
     ],
