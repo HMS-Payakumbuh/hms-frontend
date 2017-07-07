@@ -78,7 +78,6 @@ export class PasienFormComponent implements OnInit {
         this.selectTipeLayanan();
         this.selectLayanan();
     }
-
   }
 
   private searchPasien() {
@@ -125,25 +124,23 @@ export class PasienFormComponent implements OnInit {
     this.asuransi = asuransi;
   }
 
-  //jenis still hardcoded
   private createAntrian(id: number) {
     let request: any = null;
     if (this.tipe === 'Poliklinik') {
       request = {
         id_transaksi: id,
         nama_layanan_poli: this.layanan,
-        jenis: 0,
       };
     }
     else if (this.tipe === 'Laboratorium') {
       request = {
         id_transaksi: id,
         nama_layanan_lab: this.layanan,
-        jenis: 0,
       };
     }
+
     this.antrianService.createAntrian(request).subscribe(
-      data => {window.location.reload()}
+      data => {}
     );
   }
 
@@ -169,17 +166,35 @@ export class PasienFormComponent implements OnInit {
     );
   }
 
+  private createAsuransi(id: number) {
+    this.asuransi.id_pasien = id;
+    let asuransi:any = { asuransi: this.asuransi };  
+    this.asuransiService.createAsuransi(asuransi).subscribe(
+      data => {this.createTransaksi(id)}
+    );
+  }
+
   private createPasien() {
     alert(JSON.stringify(this.pasien));
-    this.pasienService.createPasien(this.pasien).subscribe(
-      data => {
-        this.asuransi.id_pasien = data.id;
-        let asuransi:any = { asuransi: this.asuransi };  
-        this.asuransiService.createAsuransi(asuransi).subscribe(
-          data => {}
-        );
-        this.createTransaksi(data.id);
-      }
-    );
+
+    if (this.update) {
+      this.pasienService.updatePasien(this.pasien.id, this.pasien).subscribe(
+        data => {
+          if (this.asuransiChecked)
+            this.createAsuransi(data.id);
+          else
+            this.createTransaksi(data.id);  
+        }
+      );
+    } else {
+      this.pasienService.createPasien(this.pasien).subscribe(
+        data => {
+          if (this.asuransiChecked)
+            this.createAsuransi(data.id);
+          else
+            this.createTransaksi(data.id);  
+        }
+      );
+    }
   }
 }
