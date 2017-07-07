@@ -38,5 +38,6 @@ export var ENV = {
 	obatTebusUrl: baseUrl + "/api/obat_tebus",
 	obatTindakanUrl: baseUrl + "/api/obat_tindakan",
 	obatPindahUrl: baseUrl + "/api/obat_pindah",
-	obatRusakUrl: baseUrl + "/api/obat_rusak"
+	obatRusakUrl: baseUrl + "/api/obat_rusak",	
+	obatEceranUrl: baseUrl + "/api/obat_eceran",
 }
