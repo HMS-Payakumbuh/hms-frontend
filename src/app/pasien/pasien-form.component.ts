@@ -140,7 +140,7 @@ export class PasienFormComponent implements OnInit {
     }
 
     this.antrianService.createAntrian(request).subscribe(
-      data => {}
+      data => {window.location.reload()}
     );
   }
 
@@ -168,7 +168,7 @@ export class PasienFormComponent implements OnInit {
 
   private createAsuransi(id: number) {
     this.asuransi.id_pasien = id;
-    let asuransi:any = { asuransi: this.asuransi };  
+    let asuransi:any = { asuransi: this.asuransi };
     this.asuransiService.createAsuransi(asuransi).subscribe(
       data => {this.createTransaksi(id)}
     );
@@ -183,7 +183,7 @@ export class PasienFormComponent implements OnInit {
           if (this.asuransiChecked)
             this.createAsuransi(data.id);
           else
-            this.createTransaksi(data.id);  
+            this.createTransaksi(data.id);
         }
       );
     } else {
@@ -192,7 +192,7 @@ export class PasienFormComponent implements OnInit {
           if (this.asuransiChecked)
             this.createAsuransi(data.id);
           else
-            this.createTransaksi(data.id);  
+            this.createTransaksi(data.id);
         }
       );
     }
