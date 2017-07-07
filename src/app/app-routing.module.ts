@@ -61,6 +61,10 @@ import { DaftarObatRusakComponent }      from './farmasi/obat-rusak/daftar-obat-
 import { DetailObatRusakComponent }      from './farmasi/obat-rusak/detail-obat-rusak.component';
 import { ObatRusakFormComponent }      from './farmasi/obat-rusak/obat-rusak-form.component';
 
+import { DaftarObatEceranComponent }      from './farmasi/obat-eceran/daftar-obat-eceran.component';
+import { DetailObatEceranComponent }      from './farmasi/obat-eceran/detail-obat-eceran.component';
+import { ObatEceranFormComponent }      from './farmasi/obat-eceran/obat-eceran-form.component';
+
 import { SettingsComponent }        from './settings/settings.component';
 
 const routes: Routes = [
@@ -115,7 +119,10 @@ const routes: Routes = [
 	{ path: 'obat-pindah-form', component: ObatPindahFormComponent },
 	{ path: 'obat-rusak', component: DaftarObatRusakComponent },
 	{ path: 'obat-rusak/:id', component: DetailObatRusakComponent },
-	{ path: 'obat-rusak-form', component: ObatRusakFormComponent },
+	{ path: 'obat-rusak-form', component: ObatRusakFormComponent },	
+	{ path: 'obat-eceran', component: DaftarObatEceranComponent },
+	{ path: 'obat-eceran/:id', component: DetailObatEceranComponent },
+	{ path: 'obat-eceran-form', component: ObatEceranFormComponent },
 	{ path: 'settings', component: SettingsComponent }
 ];
 

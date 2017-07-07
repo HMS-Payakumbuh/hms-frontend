@@ -1,0 +1,56 @@
+  <div class="col-md-12">
+    <div class="card mb-3">
+      <div class="card-header card-info">
+        <h4>
+          <i class="fa fa-newspaper-o" aria-hidden="true"></i> Pembelian Obat Eceran
+        </h4>
+      </div>
+
+      <div class="card-block">
+        <div class="card-text">
+            <form #obatEceranForm="ngForm">
+            
+              <div class="form-group">
+                <label for="nama_pembeli">Nama Pembeli</label>
+                <input type="text" class="form-control" id="nama_pembeli" required [(ngModel)]="obatEceran.nama_pembeli" name="nama_pembeli">
+              </div>
+
+              <div class="form-group">
+                <label for="kode_obat">Kode Obat</label>           
+                <div class="input-group">
+                  <input type="text" class="form-control" id="kode_obat" [(ngModel)]="kode_obat" name="kode_obat">
+                    <span class="form-group-btn">
+                      <button class="btn btn-info" (click)="addObatItem(kode_obat)">Tambah</button>
+                    </span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Merek Obat</th>
+                      <th>Jumlah</th>
+                      <th>Harga Satuan</th>
+                      <th>Harga Total</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let obat_eceran_item of obatEceranItems; index as i">
+                      <td><input type="text" class="form-control" id="merek" disabled [value]="this.stokObat.jenis_obat.merek_obat" name="merek"></td>
+                      <td><input type="text" class="form-control" id="jumlah" [(ngModel)]="obat_eceran_item.jumlah" name="jumlah"></td>
+                      <td><input type="text" class="form-control" id="harga" [(ngModel)]="obat_eceran_item.harga_jual_realisasi" name="harga"></td>
+                      <td><input type="text" class="form-control" id="harga_total" disabled [value]="obat_eceran_item.jumlah*obat_eceran_item.harga_jual_realisasi" name="harga_total"></td> 
+                      <td><button class="btn btn-danger" (click)="removeObatItem(index)">Hapus</button></td>
+                    </tr>
+                  </tbody>    
+                </table>
+              </div>
+
+              <button type="submit" class="btn btn-success" (click)="save()">Simpan</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>

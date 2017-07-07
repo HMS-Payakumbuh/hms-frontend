@@ -45,6 +45,7 @@ export class ObatRusakFormComponent {
 		this.obatRusak = new ObatRusak();		
 		this.obatMasuk = new ObatMasuk();		
 		this.stokObat = new StokObat();
+		this.kode = '';
 	}
 
 	private save() {
