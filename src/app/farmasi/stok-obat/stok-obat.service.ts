@@ -29,6 +29,17 @@ export class StokObatService {
 			.map(allStokObat => allStokObat.find(stok_obat => stok_obat.id == id));
 	}
 
+	getStokObatByLocation(lokasi: number): Observable<StokObat[]> {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('lokasi', ''+lokasi);
+
+		let requestOptions = new RequestOptions();
+		requestOptions.params = params;
+
+		return this.http.get(this.stokObatUrl+'/search_by_location', requestOptions)
+		    .map((res: Response) => res.json());			
+	}
+
 	createStokObat(stokObat: StokObat) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });
@@ -47,4 +58,5 @@ export class StokObatService {
 		return this.http.get(this.stokObatUrl+'/search', requestOptions)
 		    .map((res: Response) => res.json());			
 	}
+	
 }

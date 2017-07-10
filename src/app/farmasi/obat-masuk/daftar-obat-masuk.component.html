@@ -36,7 +36,7 @@
 								<td>Rp. {{obatMasuk.harga_beli_satuan}}</td>	
 								<td>{{obatMasuk.kadaluarsa | date:'d MMM y'}}</td>	
 								<td>{{obatMasuk.jumlah}} {{obatMasuk.jenis_obat.satuan}}</td>			
-								<td><button type="button" class="btn btn-primary" [routerLink] = "['/obat-masuk', obatMasuk.id]">Detail</button></td>
+								<td><button type="button" class="btn btn-info" [routerLink] = "['/obat-masuk', obatMasuk.id]">Detail</button></td>
 							</tr>						
 						</tbody>	
 						<tfoot>
@@ -48,7 +48,7 @@
 					</table>
 
 					<div class="pull-left">
-						<a routerLink="/obat-masuk-form"><button type="button" class="btn btn-primary">Catat obat masuk</button></a>
+						<a routerLink="/obat-masuk-form"><button type="button" class="btn btn-info">Tambah obat masuk</button></a>
 					</div>
 				</div>
 			</div>	

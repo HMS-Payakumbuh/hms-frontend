@@ -32,7 +32,7 @@
 								<td>{{obatTebus.id_pasien}}</td>
 								<td>{{obatTebus.nama_pasien}}</td>
 								<td>{{obatTebus.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>
-								<td><button type="button" class="btn btn-primary" [routerLink] = "['/obat-tebus', obatTebus.id]">Detail</button></td>
+								<td><button type="button" class="btn btn-info" [routerLink] = "['/obat-tebus', obatTebus.id]">Detail</button></td>
 							</tr>						
 						</tbody>	
 						<tfoot>
@@ -44,7 +44,7 @@
 					</table>
 
 					<div class="pull-left">
-						<a routerLink="/obat-tebus-form"><button type="button" class="btn btn-primary">Tambah obat tebus</button></a>
+						<a routerLink="/obat-tebus-form"><button type="button" class="btn btn-info">Tambah obat tebus</button></a>
 					</div>
 				</div>
 			</div>	
