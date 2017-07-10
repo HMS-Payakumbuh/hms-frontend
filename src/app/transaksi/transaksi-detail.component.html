@@ -18,7 +18,7 @@
 									<p *ngIf="transaksi.pasien.jender === 1">Perempuan</p>
 									<p>{{umur}} Tahun</p>
 									<p>No. Sep: {{transaksi.no_sep}}</p>
-									<p>Asuransi Pasien: {{transaksi.asuransi_pasien.toUpperCase()}}</p>
+									<p>Metode Bayar: {{transaksi.asuransi_pasien.toUpperCase()}}</p>
 									<p>Waktu Masuk: {{transaksi.waktu_masuk_pasien}}</p>
 									<p *ngIf="transaksi.status === 'closed'">Waktu Keluar: {{transaksi.waktu_perubahan_terakhir}}</p>
 								</div>
@@ -65,9 +65,10 @@
 						<div class="offset-md-6 col-md-6">
 							<button class="btn btn-danger" (click)="goBack()">Kembali</button>
 							<button *ngIf="transaksi.status === 'open'" class="btn btn-success" (click)="close()">Tutup Transaksi</button>
-							<button *ngIf="transaksi.status === 'open'" class="btn btn-success" (click)="bayar()">Bayar</button>
-							<button *ngIf="transaksi.status === 'closed'" class="btn btn-success" (click)="close()" disabled>Tutup Transaksi</button>
-							<button *ngIf="transaksi.status === 'closed'" class="btn btn-success" (click)="bayar()" disabled>Bayar</button>
+							<button *ngIf="transaksi.status === 'open'" data-toggle="modal"
+							[attr.data-target]="'#pilihMetodeBayarModal'" class="btn btn-success">Bayar</button>
+							<button *ngIf="transaksi.status === 'closed'" class="btn btn-success" disabled>Tutup Transaksi</button>
+							<button *ngIf="transaksi.status === 'closed'" class="btn btn-success" disabled>Bayar</button>
 						</div>
 					</div>
 					<div *ngIf="transaksi.pembayaran?.length > 0" class="row">
@@ -87,6 +88,35 @@
 								<a *ngFor="let pembayaran of transaksi.pembayaran" [routerLink] = "['/pembayaran', pembayaran.id]">Pembayaran {{pembayaran.metode_bayar.toUpperCase()}} : {{pembayaran.created_at}}</a>
 							</ul>
 						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" tabindex="-1" role="dialog" id="pilihMetodeBayarModal" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+
+						<div class="modal-header">
+							<h5 class="modal-title">Pilih Metode Bayar</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<i class="fa fa-times" aria-hidden="true"></i>
+							</button>
+						</div>
+
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="kode">Metode Bayar:</label>
+								<select class="form-control" id="metode" [(ngModel)]="status">
+									<option selected>TUNAI</option>
+			                    	<option *ngFor="let metode of allMetode">{{metode.toUpperCase()}}</option>
+			                    </select>
+							</div>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+							<button type="button" class="btn btn-success" (click)="bayar(this.status)">Bayar</button>
+						</div>
+
 					</div>
 				</div>
 			</div>
