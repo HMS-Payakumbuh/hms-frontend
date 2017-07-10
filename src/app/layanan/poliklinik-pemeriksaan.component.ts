@@ -147,7 +147,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 
     let temp = new Diagnosis();
     temp.id_pasien = this.transaksi.transaksi.id_pasien;
-    temp.tanggal_waktu = '2017-07-06 10:00:00';
+    temp.tanggal_waktu = '';
     temp.kode_diagnosis = diagnosisReference.kode;
     this.selectedDiagnosis.push(temp);
 	}
@@ -243,14 +243,16 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 
         for (let tindakan of this.selectedTindakan) {
           tindakan.tanggal_waktu = this.rekamMedis.tanggal_waktu.date;
-          console.log(tindakan);
+        }
+        for (let diagnosis of this.selectedDiagnosis) {
+          diagnosis.tanggal_waktu = this.rekamMedis.tanggal_waktu.date;
         }
 
         this.tindakanService.saveTindakan(this.transaksi.transaksi.tindakan.length, this.selectedTindakan).subscribe(
           data2 => {
             this.diagnosisService.saveDiagnosis(this.selectedDiagnosis).subscribe(
               data3 => {
-                // this.goBack();
+                this.goBack();
               }
             );
           }
