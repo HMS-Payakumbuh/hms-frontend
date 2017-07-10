@@ -11,24 +11,18 @@
 					<table class="table" [mfData]="allLokasiObat" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<thead>
 							<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
-							<!--
 							<th></th>
 							<th></th>
-							-->
 						</thead>
 						<tbody *ngFor="let lokasiObat of mf.data">
 							<tr>
-								<td>{{lokasiObat?.nama}}</td>
-								<!--
+								<td>{{lokasiObat?.nama}}</td>								
 								<td>
-									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#editLokasiObatModal'" (click)="editLokasiObat(lokasiObat.nama, lokasiObat)">Edit</button>
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#editLokasiObatModal'" (click)="editLokasiObat(lokasiObat.id, lokasiObat)">Edit</button>
 								</td>
 								<td>
-									<button type="button" class="btn btn-sm btn-danger" (click)="destroyLokasiObat(lokasiObat.nama)">
-										<i class="fa fa-trash"></i>
-									</button>
-								</td>
-								-->
+									<button type="button" class="btn btn-sm btn-danger" (click)="destroyLokasiObat(lokasiObat.id)">Hapus</button>
+								</td>								
 							</tr>
 						</tbody>
 						<tfoot>
@@ -50,7 +44,7 @@
 						<div class="modal-content">
 
 							<div class="modal-header">
-								<h5 class="modal-title">Editing {{lokasiObatModalNama}}</h5>
+								<h5 class="modal-title">Lokasi Obat {{lokasiObatModal.nama}}</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<i class="fa fa-times" aria-hidden="true"></i>
 								</button>
