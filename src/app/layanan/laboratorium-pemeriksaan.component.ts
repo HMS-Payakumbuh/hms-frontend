@@ -95,7 +95,6 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 
     let temp = new Tindakan();
     temp.id_transaksi = this.transaksi.transaksi.id;
-    temp.no_tindakan = this.selectedTindakan.length + 1;
     temp.harga = tindakanReference.harga;
     temp.dokumen_penunjang = null;
     temp.keterangan = '';
@@ -125,7 +124,9 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 
   save() {
 		this.tindakanService.saveTindakan(this.transaksi.transaksi.tindakan.length, this.selectedTindakan).subscribe(
-      data => {}
+      data => {
+        this.goBack();
+      }
     );
 	}
 }

@@ -38,11 +38,6 @@
 			<div class="card mb-3">
 				<div class="card-header card-info">
 					<ul class="nav nav-tabs card-header-tabs">
-						<!-- <li class="nav-item">
-							<a class="nav-link active" data-toggle="tab" href="#pengecekan" role="tab" style="color: black;">
-								<i class="fa fa-clipboard" aria-hidden="true"></i> Pengecekan
-							</a>
-						</li> -->
 						<li class="nav-item">
 							<a class="nav-link" data-toggle="tab" href="#tindakan" role="tab" style="color: black;">
 								<i class="fa fa-medkit" aria-hidden="true"></i> Tindakan
@@ -53,46 +48,6 @@
 
 				<div class="card-block">
 					<div class="tab-content">
-						<!-- <div class="tab-pane fade show active" id="pengecekan" role="tabpanel">
-
-							<form>
-								<div class="form-group">
-
-									<div class="row mb-3">
-										<div class="col-4">
-											<label for="tekananDarah">TD (mmHg)</label>
-											<input type="text" class="form-control" id="inputTekananDarah">
-										</div>
-										<div class="col-4">
-											<label for="nadi">Nadi (x/min)</label>
-											<input type="text" class="form-control" id="inputNadi">
-										</div>
-										<div class="col-4">
-											<label for="frekuensiNapas">Frekuensi Napas (x/min)</label>
-											<input type="text" class="form-control" id="frekuensiNapas">
-										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-4">
-											<label for="temperatur">Temperatur (C)</label>
-											<input type="text" class="form-control" id="temperatur">
-										</div>
-										<div class="col-4">
-											<label for="beratBedan">Berat Badan (kg)</label>
-											<input type="text" class="form-control" id="beratBadan">
-										</div>
-										<div class="col-4">
-											<label for="tinggiBadan">Tinggi Badan (cm)</label>
-											<input type="text" class="form-control" id="tinggiBadan">
-										</div>
-									</div>
-
-								</div>
-							</form>
-
-						</div> -->
-
 						<div class="tab-pane fade show active" id="tindakan" role="tabpanel">
 
 							<div class="form-group">
@@ -108,7 +63,6 @@
 									<th>Keterangan</th>
 									<th>Tenaga Medis</th>
 									<th></th>
-									<th></th>
 								</thead>
 								<tbody>
 									<tr *ngFor="let tindakan of selectedTindakan; index as i">
@@ -122,9 +76,6 @@
 											<input class="form-control" [ngbTypeahead]="searchTenagaMedis"
 											[inputFormatter]="tenagaMedisFormatter" [resultFormatter]="tenagaMedisFormatter"
 											(selectItem)="selectTenagaMedis(tindakan, $event.item)">
-										</td>
-										<td style="vertical-align: middle;">
-											<button type="button" class="btn btn-sm btn-info">Upload Hasil</button>
 										</td>
 										<td style="vertical-align: middle;">
 											<button type="button" class="btn btn-sm btn-outline-danger" (click)="removeSelectedTindakan(i)">
