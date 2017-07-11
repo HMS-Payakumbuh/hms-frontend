@@ -21,11 +21,13 @@ export class AntrianComponent implements OnInit {
   allKategori: Poliklinik[];
   allAntrian: any[];
   kategori: string;
-
-  nomor: number;
+  total: number = 0;
+  //socket:any = null;
+  antrian: any = { no_antrian: null };
   active: number;
   umum: boolean = true;
   isfrontoffice: boolean;
+  ispoli: boolean;
   sub: any;
   layanan: string;
 
@@ -36,14 +38,18 @@ export class AntrianComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+/*    this.socket = io.connect('http://localhost:8000');
+    this.socket.on('message', function (data) {
+        if (data)
+          alert(data);
+      });*/
     this.sub = this.route.params
       .subscribe(params => {
         this.layanan = params['namaLayanan'];
     });
     if (this.layanan === undefined) {
       this.layanan = 'Front Office';
-
-      this.poliklinikService.getAllPoliklinik().subscribe(
+      this.antrianService.getAllAntrianFrontOffice().subscribe(
         data => { this.allKategori = _.uniqBy(data, 'kategori_antrian') }
       );
 
@@ -54,26 +60,30 @@ export class AntrianComponent implements OnInit {
         .switchMap((params: Params) => this.antrianService.getAntrian(params['namaLayanan']))
         .subscribe(allAntrian => {
             this.allAntrian = allAntrian;
-            this.active = allAntrian[0].no_antrian;
+            this.total = allAntrian.length;
+            this.antrian = allAntrian[0];
           });
       this.isfrontoffice = false;
+      if (this.layanan.substring(0, 4) === 'Poli')
+        this.ispoli = true;
+      else
+        this.ispoli = false;  
     }
   }
 
-  private proses(jenis:string, antrian: any) {
-    this.nomor = antrian.no_antrian;
-    this.allAntrian.splice(this.allAntrian.indexOf(antrian), 1);
+  private proses(jenis:string) {
+    this.allAntrian.splice(this.allAntrian.indexOf(this.antrian), 1);
     if (jenis === 'undur') {
       if (this.isfrontoffice) {
-        this.antrianService.updateAntrianFrontOffice(antrian.nama_layanan, antrian.no_antrian).subscribe();
+        this.antrianService.updateAntrianFrontOffice(this.antrian.nama_layanan, this.antrian.no_antrian).subscribe();
       } else {
-        this.antrianService.updateAntrian(antrian.id_transaksi, antrian.no_antrian).subscribe();
+        this.antrianService.updateAntrian(this.antrian.id_transaksi, this.antrian.no_antrian).subscribe();
       }
     } else {
       if (this.isfrontoffice) {
-        this.antrianService.destroyAntrianFrontOffice(antrian.nama_layanan, antrian.no_antrian).subscribe();
+        this.antrianService.destroyAntrianFrontOffice(this.antrian.nama_layanan, this.antrian.no_antrian).subscribe();
       } else {
-        this.antrianService.destroyAntrian(antrian.id_transaksi, antrian.no_antrian).subscribe();
+        this.antrianService.destroyAntrian(this.antrian.id_transaksi, this.antrian.no_antrian).subscribe();
       }
     }
 
@@ -96,7 +106,8 @@ export class AntrianComponent implements OnInit {
     this.antrianService.getAntrianFrontOffice(this.kategori)
       .subscribe(allAntrian => {
         this.allAntrian = allAntrian;
-        this.active = allAntrian[0].no_antrian;
+        this.total = allAntrian.length;
+        this.antrian = allAntrian[0];
       });
   }
 
