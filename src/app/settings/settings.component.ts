@@ -18,10 +18,13 @@ export class SettingsComponent {
 	) {}
 
 	ngOnInit(): void {
+		this.settings = new Settings('', '', '', '');
 		this.settingsService.getSettings()
 			.subscribe(data => {
 				this.response = data;
-				this.settings = this.response.setting_bpjs;
+				if (this.response.setting_bpjs != null) {
+					this.settings = this.response.setting_bpjs;
+				}
 				console.log(this.settings);
 			});
 	}

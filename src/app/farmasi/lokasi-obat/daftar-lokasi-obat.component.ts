@@ -12,7 +12,7 @@ import { LokasiObatService }		from './lokasi-obat.service';
 export class DaftarLokasiObatComponent implements OnInit {
 	allLokasiObat: LokasiObat[];
 	lokasiObatModal: LokasiObat = null;
-  lokasiObatModalNama: string = null;
+  lokasiObatModalId: number = null;
 
 	public filterQuery = "";
   public rowsOnPage = 10;
@@ -38,23 +38,21 @@ export class DaftarLokasiObatComponent implements OnInit {
       data => { window.location.reload() }
     );
   }
-
-  /*
-	editLokasiObat(nama: string, lokasiObat: LokasiObat) {
-    this.lokasiObatModalNama = nama;
+  
+	editLokasiObat(id: number, lokasiObat: LokasiObat) {
+    this.lokasiObatModalId = id;
     this.lokasiObatModal = Object.assign({}, lokasiObat);
 	}
   
   updateLokasiObat() {
-    this.lokasiObatService.updateLokasiObat(this.lokasiObatModalNama, this.lokasiObatModal).subscribe(
+    this.lokasiObatService.updateLokasiObat(this.lokasiObatModalId, this.lokasiObatModal).subscribe(
       data => { window.location.reload() }
     );
   }
 
-  destroyLokasiObat(nama: string) {
-    this.lokasiObatService.destroyLokasiObat(nama).subscribe(
+  destroyLokasiObat(id: number) {
+    this.lokasiObatService.destroyLokasiObat(id).subscribe(
       data => { window.location.reload() }
     );
   }
-  */
 }

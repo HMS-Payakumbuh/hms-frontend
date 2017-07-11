@@ -30,7 +30,7 @@
 								<td>{{obatEceran.id}}</td>
 								<td>{{obatEceran.nama_pembeli}}</td>
 								<td>{{obatEceran.waktu_transaksi | date:'d MMM y H:mm:ss'}}</td>
-								<td><button type="button" class="btn btn-primary" [routerLink] = "['/obat-eceran', obatEceran.id]">Detail</button></td>
+								<td><button type="button" class="btn btn-info" [routerLink] = "['/obat-eceran', obatEceran.id]">Detail</button></td>
 							</tr>						
 						</tbody>	
 						<tfoot>
@@ -42,7 +42,7 @@
 					</table>
 
 					<div class="pull-left">
-						<a routerLink="/obat-eceran-form"><button type="button" class="btn btn-primary">Tambah pembelian obat eceran</button></a>
+						<a routerLink="/obat-eceran-form"><button type="button" class="btn btn-info">Tambah pembelian obat eceran</button></a>
 					</div>
 				</div>
 			</div>	
