@@ -20,7 +20,7 @@ export class PasienListComponent {
 	public sortBy = "id";
 	public sortOrder = "asc";
 
-	public allJender = [{id: 0, nama: 'Laki-laki'}, {id: 1, nama:'Perempuan'}];
+	public allJender = [{id: 1, nama: 'Laki-laki'}, {id: 2, nama:'Perempuan'}];
 
   	public allAgama = ['Islam', 'Protestan', 'Katolik', 'Buddha', 'Hindu', 'Konghucu'];
 

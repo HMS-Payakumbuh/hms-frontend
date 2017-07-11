@@ -30,12 +30,21 @@ export class AntrianService {
 			.map((res: Response) => res.json());
 	}
 
-	getAntrianFrontOffice(kategori: string): Observable<AntrianFrontOffice[]> {
-		return this.getAllAntrianFrontOffice()
+	getAllAntrianFrontOfficeByKategori(kategori_antrian:string): Observable<AntrianFrontOffice[]> {
+		return this.http.get(this.antrianFrontOfficeUrl + '/' + kategori_antrian)
+			.map((res: Response) => res.json());
+	}
+
+	getAntrianFrontOffice(kategori_antrian: string): Observable<AntrianFrontOffice[]> {
+		return this.getAllAntrianFrontOfficeByKategori(kategori_antrian)
 			.map(allAntrianFrontOffice => 
-				_.filter(allAntrianFrontOffice, {kategori_antrian: kategori})
-			)
-			.catch(this.handleError);
+				_.each(allAntrianFrontOffice, antrian => {
+					if (antrian.nama_layanan_poli)
+						_.set(antrian, 'nama_layanan', antrian.nama_layanan_poli);
+					else if (antrian.nama_layanan_lab)	
+						_.set(antrian, 'nama_layanan', antrian.nama_layanan_lab);
+				})
+			);
 	}
 
 	getAntrian(nama_layanan:string): Observable<Antrian[]> {
@@ -47,8 +56,7 @@ export class AntrianService {
 					else if (antrian.nama_layanan_lab)	
 						_.set(antrian, 'nama_layanan', antrian.nama_layanan_lab);
 				})
-			)
-			.catch(this.handleError);
+			);
 	}
 
 	createAntrianFrontOffice(antrianFrontOffice: AntrianFrontOffice) {
