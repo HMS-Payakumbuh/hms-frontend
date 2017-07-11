@@ -162,7 +162,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 
     let temp = new Tindakan();
     temp.id_transaksi = this.transaksi.transaksi.id;
-    temp.no_tindakan = this.selectedTindakan.length + 1;
     temp.harga = tindakanReference.harga;
     temp.dokumen_penunjang = null;
     temp.keterangan = '';
@@ -252,7 +251,12 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
           data2 => {
             this.diagnosisService.saveDiagnosis(this.selectedDiagnosis).subscribe(
               data3 => {
-                this.goBack();
+                this.poliklinik.sisa_pelayanan -= 1;
+                this.poliklinikService.updatePoliklinik(this.poliklinik.nama, this.poliklinik).subscribe(
+                  data4 => {
+                    this.goBack();
+                  }
+                )
               }
             );
           }
