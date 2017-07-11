@@ -15,14 +15,37 @@
 	                    </select>
 	                </div>
 	                <div class="form-group" *ngIf="kategori || !isfrontoffice">
-	                  	<label for="nomor">Sedang Melayani Nomor Antrian</label>
-	                  	<input type="text" class="form-control" id="nomor" value={{nomor}} name="nomor" disabled>
-	              	</div>
+	                    <label for="total">Panjang Antrian</label>
+	                    <input type="text" class="form-control" id="total" [value]="total" name="total" disabled>
+	                </div>
+	                <div class="form-group">
+		                <label *ngIf="kategori || !isfrontoffice" for="nomor">Nomor Antrian</label>
+		                <div class="form-inline">
+			                <div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="kategori || !isfrontoffice">
+
+			                  	<input type="text" class="form-control" id="nomor" value="{{kategori}}{{antrian.no_antrian}}" name="nomor" disabled>
+			              	</div>
+			              	<div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="kategori || !isfrontoffice">
+				              	<div>
+					              	<button type="button" class="btn btn-sm btn-danger" (click)="proses('undur')">Undur</button>
+				              	</div>
+				              	<div *ngIf="isfrontoffice">
+									<button type="button" class="btn btn-sm btn-warning" [routerLink] = "['/pendaftaran', antrian.nama_layanan]" (click)="proses('proses')">Proses</button>
+								</div>
+								<div *ngIf="!isfrontoffice && ispoli">
+									<button type="button" class="btn btn-sm btn-warning" [routerLink] = "['/poliklinik', antrian.nama_layanan, antrian.id_transaksi]" (click)="proses('proses')">Proses</button>
+								</div>
+								<div *ngIf="!isfrontoffice && !ispoli">
+									<button type="button" class="btn btn-sm btn-warning" [routerLink] = "['/laboratorium', antrian.nama_layanan, antrian.id_transaksi]" (click)="proses('proses')">Proses</button>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 
-		<div *ngIf="kategori || !isfrontoffice">
+		<!--<div *ngIf="kategori || !isfrontoffice">
 			<div class="card-header card-info">
 			    <ul class="nav nav-tabs card-header-tabs">
 		      <li class="nav-item">
@@ -101,6 +124,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>-->
 	</div>
 </div>
