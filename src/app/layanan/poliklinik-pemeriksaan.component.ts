@@ -30,6 +30,7 @@ import { ObatTindakanService }  from '../farmasi/obat-tindakan/obat-tindakan.ser
 
 import { Resep }                from '../farmasi/resep/resep';
 import { ResepItem }            from '../farmasi/resep/resep-item';
+import { RacikanItem }          from '../farmasi/resep/racikan-item';
 import { ResepService }         from '../farmasi/resep/resep.service';
 
 import { StokObat }	            from '../farmasi/stok-obat/stok-obat';
@@ -72,6 +73,8 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 
 	selectedTindakan: Tindakan[] = [];
   selectedTindakanReference: TindakanReference[] = [];
+
+  allResep: Resep[] = [];
 
 	inputFormatter = (value : any) => value.nama;
 	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
@@ -215,6 +218,17 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 
   removeObatTindakanForm(i: number, tindakan: Tindakan) {
     tindakan.obat_tindakan.splice(i, 1);
+  }
+
+  addResep() {
+    let resep = new Resep();
+    resep.id_transaksi = this.transaksi.transaksi.id;
+    resep.no_resep = this.allResep.length + 1;
+    this.allResep.push(resep);
+  }
+
+  removeResep(i: number) {
+    this.allResep.splice(i, 1);
   }
 
   goBack(): void {
