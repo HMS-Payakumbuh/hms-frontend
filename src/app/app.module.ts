@@ -53,6 +53,8 @@ import { PoliklinikPemeriksaanComponent }   from './layanan/poliklinik-pemeriksa
 import { LaboratoriumListComponent }      from './layanan/laboratorium-list.component';
 import { LaboratoriumPemeriksaanComponent }    from './layanan/laboratorium-pemeriksaan.component';
 
+import { AmbulansListComponent }    from './layanan/ambulans-list.component';
+
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent } 	from './layanan/rawatinap-detail.component';
 
@@ -151,6 +153,8 @@ import { AppComponent }             from './app.component';
 
         LaboratoriumListComponent,
         LaboratoriumPemeriksaanComponent,
+
+        AmbulansListComponent,
 
         RawatinapListComponent,
         RawatinapDetailComponent,

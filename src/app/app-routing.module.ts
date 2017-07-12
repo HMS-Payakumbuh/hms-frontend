@@ -21,6 +21,8 @@ import { PoliklinikPemeriksaanComponent }	from './layanan/poliklinik-pemeriksaan
 import { LaboratoriumListComponent }		from './layanan/laboratorium-list.component';
 import { LaboratoriumPemeriksaanComponent }	from './layanan/laboratorium-pemeriksaan.component';
 
+import { AmbulansListComponent }		from './layanan/ambulans-list.component';
+
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent }	    from './layanan/rawatinap-detail.component';
 import { KamarOperasiListComponent }		from './layanan/kamar-operasi-list.component';
@@ -90,9 +92,11 @@ const routes: Routes = [
 	{ path: 'laboratorium', component: LaboratoriumListComponent },
 	{ path: 'laboratorium/:namaLaboratorium/:idTransaksi', component: LaboratoriumPemeriksaanComponent },
 
+	{ path: 'ambulans', component: AmbulansListComponent },
+
 	{ path: 'rawatinap', component: RawatinapListComponent },
 	{ path: 'rawatinap/:noKamar', component: RawatinapDetailComponent },
-	
+
 	{ path: 'pemakaiankamaroperasi', component: PemakaianKamarOperasiListComponent },
 	{ path: 'pemakaiankamarjenazah', component: PemakaianKamarJenazahListComponent },
 
@@ -119,7 +123,7 @@ const routes: Routes = [
 	{ path: 'obat-pindah-form', component: ObatPindahFormComponent },
 	{ path: 'obat-rusak', component: DaftarObatRusakComponent },
 	{ path: 'obat-rusak/:id', component: DetailObatRusakComponent },
-	{ path: 'obat-rusak-form', component: ObatRusakFormComponent },	
+	{ path: 'obat-rusak-form', component: ObatRusakFormComponent },
 	{ path: 'obat-eceran', component: DaftarObatEceranComponent },
 	{ path: 'obat-eceran/:id', component: DetailObatEceranComponent },
 	{ path: 'obat-eceran-form', component: ObatEceranFormComponent },
