@@ -1,49 +1,38 @@
 import { Injectable }		from '@angular/core';
-import { Headers, Http }		from '@angular/http';
+import { Headers, Http, Response, RequestOptions }		from '@angular/http';
+import { Observable }		from 'rxjs/Rx';
 
 import 'rxjs/add/operator/toPromise';
 
 import { ObatTebus }		from './obat-tebus';
-// import { ENV }				from '.../environment';
+import { ENV }				from '../../environment';
 
 @Injectable()
 export class ObatTebusService {
-	// private obatTebusUrl = ENV.obatTebusUrl;
-
-	allObatTebus: ObatTebus[] = [
-		{id: 1, id_transaksi: 1, id_pasien: 1, nama_pasien: 'Octavianus Markus', waktu_keluar: new Date('2016-09-11T16:16+07:00'), obat:[{id: 1, kode_obat: 213817061901 , merek: 'Cefixim syr kering 100mg/5ml' , nomor_batch: '085G610NV', satuan: 'Botol', harga_jual_referensi: 10100, harga_jual_realisasi: 10000, kadaluarsa: new Date('2018-04-18'), jumlah: 1}, {id: 2, kode_obat: 213817061902 , merek: 'Cefixim syr kering 100mg/5ml' , nomor_batch: '085G611NV', satuan: 'Botol', harga_jual_referensi: 10100, harga_jual_realisasi: 10000, kadaluarsa: new Date('2018-04-19'), jumlah: 1}]}
-	]; // Mock-up
+	private obatTebusUrl = ENV.obatTebusUrl;
 
 	constructor(private http:Http) { }
 
+	// TO-DO: Convert into Observable?
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
 		return Promise.reject(error.message || error);
 	}
 
-	getAllObatTebus(): Promise<ObatTebus[]> {
-		return Promise.resolve(this.allObatTebus)
-			.catch(this.handleError);
+	getAllObatTebus(): Observable<ObatTebus[]> {
+		return this.http.get(this.obatTebusUrl)
+			.map((res: Response) => res.json());
 	}
 
-	getObatTebus(id: number): Promise<ObatTebus> {
+	getObatTebus(id: number): Observable<ObatTebus> {
 		return this.getAllObatTebus()
-			.then(allObatTebus => allObatTebus.find(ObatTebus => ObatTebus.id === id))
-			.catch(this.handleError);
+			.map(allObatTebus => allObatTebus.find(obat_tebus => obat_tebus.id == id));
 	}
 
-//	getAllObatTebus(): Promise<ObatTebus[]> {
-//		return this.http.get(this.ObatTebusUrl)
-//			.toPromise()
-//			.then(response => response.json().data as ObatTebus[])
-//			.catch(this.handleError);
-//	}
-
-//	getObatTebus(id: number): Promise<ObatTebus> {
-//		const url = `${this.ObatTebusUrl}/${id}`;
-//		return this.http.get(url)
-//			.toPromise()
-//			.then(response => response.json().data as ObatTebus)
-//			.catch(this.handleError);
-//	}
+	createObatTebus(obatTebus: ObatTebus) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+    	let options = new RequestOptions({ headers: headers });
+    	let body = JSON.stringify(obatTebus);
+    	return this.http.post(this.obatTebusUrl, body, options ).map((res: Response) => res.json());
+	}
 }
