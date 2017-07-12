@@ -10,45 +10,28 @@
         <div class="card-text">
             <form #obatTebusForm="ngForm">
               <div class="form-group">
-                <label for="id_transaksi">ID Transaksi *</label>
+                <label for="nama_pasien">Nama Pasien *</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" id="id_transaksi" required name="id_transaksi"> 
-                  <span class="form-group-btn">
-                    <a href="#"><button class="btn btn-success">Cari</button></a>
-                  </span>
+                  <input type="text" class="form-control" id="nama_pasien" required [ngbTypeahead]="searchNamaPasien" [inputFormatter]="inputPasienFormatter" [resultFormatter]="resultPasienFormatter" (selectItem)="addPasien($event.item)" [(ngModel)]="nama_pasien" name="nama_pasien"> 
                 </div>                    
               </div>
 
               <div class="form-group">
-                <label for="id_pasien">ID Pasien</label>
-                <input type="text" class="form-control" id="id_pasien" disabled name="id_pasien">
+                <label for="no_transaksi">No. Transaksi *</label>
+                <input type="text" class="form-control" id="no_transaksi" required [ngbTypeahead]="searchNoTransaksi" [inputFormatter]="inputTransaksiFormatter" [resultFormatter]="resultTransaksiFormatter" (selectItem)="addTransaksi($event.item)" [(ngModel)]="no_transaksi" name="no_transaksi">
               </div>
 
               <div class="form-group">
-                <label for="nama_pasien">Nama Pasien</label>
-                <input type="text" class="form-control" id="nama_pasien" disabled name="nama_pasien">
-              </div>
-
-              <div class="form-group">
-                <label for="kode_obat">Kode Obat</label>           
-                <div class="input-group">
-                  <input type="text" class="form-control" id="kode_obat"> 
-                    <span class="form-group-btn">
-                      <a href="#"><button class="btn btn-success">Cari</button></a>
-                    </span>
-                    <span class="form-group-btn">
-                      <button class="btn btn-info" (click)="addObatEntry()">Tambah</button>
-                    </span>
-                </div>
+                <label for="no_resep">No. Resep *</label>
+                <input type="text" class="form-control" id="no_resep" [ngbTypeahead]="searchNoResep" [inputFormatter]="inputResepFormatter" [resultFormatter]="resultResepFormatter" (selectItem)="addResep($event.item)" [(ngModel)]="no_resep" required name="no_resep">
               </div>
 
               <div class="form-group">
                 <table class="table">
                   <thead>
                     <tr>
-                      <th>Kode Obat</th>
                       <th>Merek Obat</th>
-                      <th>Kadaluarsa</th>
+                      <th>No. Batch</th>
                       <th>Jumlah</th>
                       <th>Harga Satuan</th>
                       <th>Harga Total</th>
