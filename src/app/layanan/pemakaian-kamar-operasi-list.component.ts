@@ -25,8 +25,8 @@ import { PoliklinikService }		from './poliklinik.service';
 @Component({
  	selector: 'pemakaian-kamar-operasi-list-page',
  	templateUrl: './pemakaian-kamar-operasi-list.component.html',
- 	providers: [PemakaianKamarOperasiService, 
-	 			TenagaMedisService, 
+ 	providers: [PemakaianKamarOperasiService,
+	 			TenagaMedisService,
 				TindakanService,
 				TransaksiService,
 				KamarOperasiService]
@@ -58,7 +58,7 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 
 	inputFormatter = (value : any) => value.nama;
 	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
-	
+
 	searchTindakan = (text$: Observable<string>) =>
 		text$
 			.debounceTime(200)
@@ -124,15 +124,13 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 					.subscribe(transaksi => this.transaksi2 = transaksi);
 			})
 	}
-	
+
 	addSelectedTindakan(tindakanReference: TindakanReference) {
 		this.selectedTindakanReference.push(tindakanReference);
 
 		let temp = new Tindakan();
 		temp.id_transaksi = this.transaksi2.transaksi.id;
-		temp.no_tindakan = this.selectedTindakan.length + 1;
 		temp.harga = tindakanReference.harga;
-		temp.dokumen_penunjang = null;
 		temp.keterangan = '';
 		temp.id_pembayaran = null;
 		temp.kode_tindakan = tindakanReference.kode;
@@ -174,11 +172,11 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 
 	createPemakaianKamarOperasi() {
 		this.pemakaianKamarOperasiService.createPemakaianKamarOperasi(this.pemakaianKamarOperasiModal).subscribe(
-			data => { 
-				this.tindakanService.saveTindakan(this.transaksi2.transaksi.tindakan.length, this.selectedTindakan).subscribe(
+			data => {
+				this.tindakanService.saveTindakan(this.selectedTindakan).subscribe(
 				data => { console.log(data) }
 				);
-				window.location.reload() 
+				window.location.reload()
 			}
 		);
 	}
