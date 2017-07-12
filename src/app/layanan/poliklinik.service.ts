@@ -22,8 +22,8 @@ export class PoliklinikService {
 	}
 
 	getPoliklinik(nama: string): Observable<Poliklinik> {
-		return this.getAllPoliklinik()
-			.map(allPoliklinik => allPoliklinik.find(poliklinik => poliklinik.nama == nama));
+		return this.http.get(this.poliklinikUrl + '/' + nama)
+			.map((res: Response) => res.json());
 	}
 
 	createPoliklinik(poliklinik: Poliklinik) {

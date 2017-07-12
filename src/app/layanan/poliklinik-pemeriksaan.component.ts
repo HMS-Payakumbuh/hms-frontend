@@ -1,6 +1,5 @@
 import { Component, OnInit }															from '@angular/core';
 import { ActivatedRoute, Params }													from '@angular/router';
-import { FormGroup, FormArray, FormBuilder, Validators }	from '@angular/forms';
 import { Location }																				from '@angular/common';
 import { Observable }																			from 'rxjs/Observable';
 import { NgbTypeaheadConfig } 														from '@ng-bootstrap/ng-bootstrap';
@@ -29,11 +28,15 @@ import { TindakanService }			from './tindakan.service';
 import { ObatTindakan }         from '../farmasi/obat-tindakan/obat-tindakan';
 import { ObatTindakanService }  from '../farmasi/obat-tindakan/obat-tindakan.service';
 
-import { StokObat }	from '../farmasi/stok-obat/stok-obat';
-import { StokObatService }		from '../farmasi/stok-obat/stok-obat.service';
+import { Resep }                from '../farmasi/resep/resep';
+import { ResepItem }            from '../farmasi/resep/resep-item';
+import { ResepService }         from '../farmasi/resep/resep.service';
 
-import { ObatMasuk }	from '../farmasi/obat-masuk/obat-masuk';
-import { ObatMasukService }		from '../farmasi/obat-masuk/obat-masuk.service';
+import { StokObat }	            from '../farmasi/stok-obat/stok-obat';
+import { StokObatService }		  from '../farmasi/stok-obat/stok-obat.service';
+
+import { ObatMasuk }	          from '../farmasi/obat-masuk/obat-masuk';
+import { ObatMasukService }		  from '../farmasi/obat-masuk/obat-masuk.service';
 
 @Component({
  	selector: 'poliklinik-pemeriksaan-page',
@@ -46,6 +49,7 @@ import { ObatMasukService }		from '../farmasi/obat-masuk/obat-masuk.service';
  		DiagnosisService,
  		TindakanService,
     ObatTindakanService,
+    ResepService,
     StokObatService,
     ObatMasukService,
  		NgbTypeaheadConfig
@@ -53,8 +57,6 @@ import { ObatMasukService }		from '../farmasi/obat-masuk/obat-masuk.service';
 })
 
 export class PoliklinikPemeriksaanComponent implements OnInit {
-
-	addForm: FormGroup;
 	transaksi: any = null;
 	poliklinik: Poliklinik;
   rekamMedis: RekamMedis;
@@ -63,6 +65,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	allDiagnosisReference: DiagnosisReference[];
 	allTindakanReference: TindakanReference[];
   allTenagaMedis: TenagaMedis[];
+  allStokObatAtLocation: StokObat[];
 
 	selectedDiagnosis: Diagnosis[] = [];
   selectedDiagnosisReference: DiagnosisReference[] = [];
@@ -72,6 +75,9 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 
 	inputFormatter = (value : any) => value.nama;
 	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
+
+  inputObatTindakanFormatter = (value : StokObat) => value.jenis_obat.merek_obat;
+  resultObatTindakanFormatter = (value: StokObat)	=> value.jenis_obat.merek_obat  + ' - ' + value.obat_masuk.nomor_batch;
 
   tenagaMedisFormatter = (value : any) => value.nama + ' - ' + value.jabatan;
 
@@ -96,10 +102,16 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
       .map(term => term.length < 2 ? []
         : this.allTenagaMedis.filter(tenagaMedis => tenagaMedis.nama.toLowerCase().indexOf(term.toLowerCase()) > -1));
 
+  searchStokObat = (text$: Observable<string>) =>
+		text$
+			.debounceTime(200)
+			.distinctUntilChanged()
+			.map(term => term.length < 2 ? []
+				: this.allStokObatAtLocation.filter(stokObat => stokObat.jenis_obat.merek_obat.toLowerCase().indexOf(term.toLowerCase()) > -1));
+
 	constructor(
 		private route: ActivatedRoute,
 		private location: Location,
-		private formBuilder: FormBuilder,
 		private transaksiService: TransaksiService,
     private rekamMedisService: RekamMedisService,
 		private poliklinikService: PoliklinikService,
@@ -107,6 +119,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 		private diagnosisService: DiagnosisService,
 		private tindakanService: TindakanService,
     private obatTindakanService: ObatTindakanService,
+    private resepService: ResepService,
     private obatMasukService: ObatMasukService,
     private stokObatService: StokObatService,
 		private config: NgbTypeaheadConfig
@@ -115,13 +128,16 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.addForm = this.formBuilder.group({
-			resepEntry: this.formBuilder.array([this.initResepEntry()])
-		});
-
 		this.route.params
 			.switchMap((params: Params) => this.poliklinikService.getPoliklinik(params['namaPoliklinik']))
-			.subscribe(poliklinik => this.poliklinik = poliklinik);
+			.subscribe(
+        poliklinik => {
+          this.poliklinik = poliklinik;
+          this.stokObatService.getStokObatByLocation(this.poliklinik.id_lokasi).subscribe(
+            allStokObatAtLocation => this.allStokObatAtLocation = allStokObatAtLocation
+          )
+        }
+      );
 
 		this.route.params
 			.switchMap((params: Params) => this.transaksiService.getTransaksi(params['idTransaksi']))
@@ -163,13 +179,12 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     let temp = new Tindakan();
     temp.id_transaksi = this.transaksi.transaksi.id;
     temp.harga = tindakanReference.harga;
-    temp.dokumen_penunjang = null;
     temp.keterangan = '';
     temp.id_pembayaran = null;
     temp.kode_tindakan = tindakanReference.kode;
     temp.id_pasien = this.transaksi.transaksi.id_pasien;
-    temp.tanggal_waktu = '';
-    temp.np_tenaga_medis = '101';
+    temp.tanggal_waktu = null;
+    temp.np_tenaga_medis = null;
     temp.nama_poli = this.poliklinik.nama;
     temp.nama_lab = null;
     temp.nama_ambulans = null;
@@ -185,45 +200,51 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     tindakan.np_tenaga_medis = tenagaMedis.no_pegawai;
   }
 
-	initResepEntry() {
-		return this.formBuilder.group({
-			obatResep: ['', Validators.required]
-		});
-	}
-
-	addResepEntry() {
-    const control = < FormArray > this.addForm.controls['resepEntry'];
-    control.push(this.initResepEntry());
-	}
-
-	removeResepEntry(i: number) {
-    const control = < FormArray > this.addForm.controls['resepEntry'];
-    control.removeAt(i);
-	}
+  addSelectedStokObat(obatTindakan: ObatTindakan, stokObat: StokObat) {
+    obatTindakan.stokObat = stokObat;
+    obatTindakan.id_jenis_obat = stokObat.id_jenis_obat;
+    obatTindakan.id_obat_masuk = stokObat.id_obat_masuk;
+  }
 
   addObatTindakanForm(tindakan: Tindakan) {
-    tindakan.obat_tindakan.push(new ObatTindakan());
+    let obatTindakan = new ObatTindakan();
+    obatTindakan.id_transaksi = this.transaksi.transaksi.id;
+    obatTindakan.asal = this.poliklinik.id_lokasi;
+    tindakan.obat_tindakan.push(obatTindakan);
   }
 
   removeObatTindakanForm(i: number, tindakan: Tindakan) {
     tindakan.obat_tindakan.splice(i, 1);
   }
 
-  searchObat(obatTindakan: ObatTindakan, lokasi: number) {
-    let obatMasuk = new ObatMasuk();
-    this.obatMasukService.searchObatMasuk(obatTindakan.id_jenis_obat.toString()).subscribe(
-			data1 => {
-				obatMasuk = data1;
-				this.stokObatService.searchStokObat(obatMasuk.id, lokasi).subscribe(
-					data2 => { obatTindakan.stokObat = data2 }
-				);
-			}
-		);
-	}
+  goBack(): void {
+    this.location.back();
+  }
 
-	goBack(): void {
-		this.location.back();
-	}
+  saveDiagnosis() {
+
+  }
+
+  saveObatTindakan(data: Tindakan[]) {
+    let observables = [];
+    let i = 0;
+
+    for (let tindakan of this.selectedTindakan) {
+      for (let obatTindakan of tindakan.obat_tindakan) {
+        obatTindakan.id_tindakan = data[i].id;
+      }
+      observables.push(
+        this.obatTindakanService.createObatTindakan(tindakan.obat_tindakan)
+      )
+      i++;
+    }
+
+    Observable.forkJoin(observables).subscribe(
+      data => {
+        this.goBack();
+      }
+    )
+  }
 
 	save() {
     let rekamMedis: RekamMedis = new RekamMedis(
@@ -239,7 +260,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     this.rekamMedisService.createRekamMedis(rekamMedis).subscribe(
       data1 => {
         this.rekamMedis = data1;
-
         for (let tindakan of this.selectedTindakan) {
           tindakan.tanggal_waktu = this.rekamMedis.tanggal_waktu.date;
         }
@@ -247,16 +267,11 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
           diagnosis.tanggal_waktu = this.rekamMedis.tanggal_waktu.date;
         }
 
-        this.tindakanService.saveTindakan(this.transaksi.transaksi.tindakan.length, this.selectedTindakan).subscribe(
+        this.diagnosisService.saveDiagnosis(this.selectedDiagnosis).subscribe(
           data2 => {
-            this.diagnosisService.saveDiagnosis(this.selectedDiagnosis).subscribe(
+            this.tindakanService.saveTindakan(this.selectedTindakan).subscribe(
               data3 => {
-                this.poliklinik.sisa_pelayanan -= 1;
-                this.poliklinikService.updatePoliklinik(this.poliklinik.nama, this.poliklinik).subscribe(
-                  data4 => {
-                    this.goBack();
-                  }
-                )
+                this.saveObatTindakan(data3);
               }
             );
           }
