@@ -22,7 +22,6 @@ export class AntrianComponent implements OnInit {
   allAntrian: any[];
   kategori: string;
   total: number = 0;
-  //socket:any = null;
   antrian: any = { no_antrian: null };
   active: number;
   umum: boolean = true;
@@ -38,11 +37,6 @@ export class AntrianComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-/*    this.socket = io.connect('http://localhost:8000');
-    this.socket.on('message', function (data) {
-        if (data)
-          alert(data);
-      });*/
     this.sub = this.route.params
       .subscribe(params => {
         this.layanan = params['namaLayanan'];
@@ -56,19 +50,32 @@ export class AntrianComponent implements OnInit {
       this.isfrontoffice = true;
     }
     else {
-      this.route.params
-        .switchMap((params: Params) => this.antrianService.getAntrian(params['namaLayanan']))
-        .subscribe(allAntrian => {
-            this.allAntrian = allAntrian;
-            this.total = allAntrian.length;
-            this.antrian = allAntrian[0];
-          });
+      this.updateAntrian();
       this.isfrontoffice = false;
       if (this.layanan.substring(0, 4) === 'Poli')
         this.ispoli = true;
       else
         this.ispoli = false;  
     }
+  }
+
+  private updateAntrian() {
+    this.route.params
+        .switchMap((params: Params) => this.antrianService.getAntrian(params['namaLayanan']))
+        .subscribe(allAntrian => {
+            this.allAntrian = allAntrian;
+            this.total = allAntrian.length;
+            this.antrian = allAntrian[0];
+          });
+  }
+
+  private updateAntrianFrontOffice() {
+    this.antrianService.getAntrianFrontOffice(this.kategori)
+      .subscribe(allAntrian => {
+        this.allAntrian = allAntrian;
+        this.total = allAntrian.length;
+        this.antrian = allAntrian[0];
+      });
   }
 
   private proses(jenis:string) {
@@ -87,6 +94,12 @@ export class AntrianComponent implements OnInit {
       }
     }
 
+    if (this.isfrontoffice) {
+      this.updateAntrianFrontOffice();
+    } else {
+      this.updateAntrian();
+    }
+
     this.active = this.nextAntrian(this.umum);
     if (!this.active)
       this.active = this.nextAntrian(!this.umum);
@@ -103,12 +116,7 @@ export class AntrianComponent implements OnInit {
   }
 
   private changeKategori() {
-    this.antrianService.getAntrianFrontOffice(this.kategori)
-      .subscribe(allAntrian => {
-        this.allAntrian = allAntrian;
-        this.total = allAntrian.length;
-        this.antrian = allAntrian[0];
-      });
+    this.updateAntrianFrontOffice();
   }
 
   submitted = false;

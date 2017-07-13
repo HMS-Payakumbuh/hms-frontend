@@ -91,7 +91,7 @@
                     <label for="poliklinik">Poliklinik</label>
                     <select class="form-control" id="poliklinik" [disabled]="fromAntrian" [(ngModel)]="layanan" (ngModelChange)="selectLayanan()" name="poliklinik" required>
                       <ng-container *ngFor="let poliklinik of allLayanan">
-                        <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}}</option>
+                        <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}} ({{dokter}})</option>
                       </ng-container>
                     </select>
                   </div>
@@ -102,13 +102,6 @@
                       <ng-container *ngFor="let laboratorium of allLayanan">
                         <option [value]="laboratorium.nama">{{laboratorium.nama}}</option>
                       </ng-container>
-                    </select>
-                  </div>
-
-                  <div *ngIf="layanan && (tipe === 'Poliklinik')" class="form-group">
-                    <label for="dokter">Dokter</label>
-                    <select class="form-control" id="dokter" [(ngModel)]="dokter" name="dokter" required>
-                      <option *ngFor="let dokter of allJadwalDokter" [value]="dokter">{{dokter.nama_dokter}}</option>
                     </select>
                   </div>
                   
@@ -254,7 +247,7 @@
                     <label for="poliklinik">Poliklinik</label>
                     <select class="form-control" id="poliklinik" [disabled]="fromAntrian" [(ngModel)]="layanan" (ngModelChange)="selectLayanan()" name="poliklinik" required>
                       <ng-container *ngFor="let poliklinik of allLayanan">
-                        <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}}</option>
+                        <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}} - ({{dokter}})</option>
                       </ng-container>
                     </select>
                   </div>
@@ -265,13 +258,6 @@
                       <ng-container *ngFor="let laboratorium of allLayanan">
                         <option [value]="laboratorium.nama">{{laboratorium.nama}}</option>
                       </ng-container>
-                    </select>
-                  </div>
-
-                  <div *ngIf="layanan && (tipe === 'Poliklinik')" class="form-group">
-                    <label for="dokter">Dokter</label>
-                    <select class="form-control" id="dokter" [(ngModel)]="dokter" name="dokter" required>
-                      <option *ngFor="let dokter of allJadwalDokter" [value]="dokter">{{dokter.nama_dokter}}</option>
                     </select>
                   </div>
                   
@@ -289,7 +275,7 @@
                     </label>
                   </div>
 
-                  <button type="button" class="btn btn-success" (click)="createPasien()" [disabled]="!pasienLamaForm.valid">Simpan</button>
+                  <button type="button" class="btn btn-success" (click)="createPasien()" [disabled]="!pasienLamaForm.valid && !searchDone">Simpan</button>
                 </form>
             </div>
           </div>
