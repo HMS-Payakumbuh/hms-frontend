@@ -41,7 +41,6 @@ export class PasienFormComponent implements OnInit {
   allAsuransi: Asuransi[];
   allLayanan: any[];
   allPasien: Pasien[] = [];
-  allJadwalDokter: JadwalDokter[];
 
   constructor(
     private route: ActivatedRoute,
@@ -82,7 +81,7 @@ export class PasienFormComponent implements OnInit {
       this.selectTipeLayanan();
       if (this.tipe === 'Poliklinik') {
         this.tenagaMedisService.getAllAvailableJadwalDokter(this.layanan).subscribe(
-          data => { 
+          data => {
             this.dokter = data.nama_dokter;
           }
         )
