@@ -54,6 +54,7 @@ import { LaboratoriumPemeriksaanComponent }    from './layanan/laboratorium-peme
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent } 	from './layanan/rawatinap-detail.component';
 
+import { PemakaianKamarListComponent }		from './layanan/pemakaian-kamar.component';
 import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-operasi-list.component';
 import { PemakaianKamarJenazahListComponent }		from './layanan/pemakaian-kamar-jenazah-list.component';
 
@@ -146,6 +147,7 @@ import { AppComponent }             from './app.component';
 
         RawatinapListComponent,
         RawatinapDetailComponent,
+        PemakaianKamarListComponent,
         PemakaianKamarOperasiListComponent,
         PemakaianKamarJenazahListComponent,
 

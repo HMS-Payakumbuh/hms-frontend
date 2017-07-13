@@ -26,6 +26,7 @@ import { RawatinapDetailComponent }	    from './layanan/rawatinap-detail.compone
 import { KamarOperasiListComponent }		from './layanan/kamar-operasi-list.component';
 // import { KamarJenazahListComponent }		from './layanan/kamar-jenazah-list.component';
 
+import { PemakaianKamarListComponent }		from './layanan/pemakaian-kamar.component';
 import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-operasi-list.component';
 import { PemakaianKamarJenazahListComponent }		from './layanan/pemakaian-kamar-jenazah-list.component';
 
@@ -89,6 +90,7 @@ const routes: Routes = [
 	{ path: 'rawatinap', component: RawatinapListComponent },
 	{ path: 'rawatinap/:noKamar', component: RawatinapDetailComponent },
 	
+	{ path: 'pemakaiankamarrawatinap', component: PemakaianKamarListComponent },
 	{ path: 'pemakaiankamaroperasi', component: PemakaianKamarOperasiListComponent },
 	{ path: 'pemakaiankamarjenazah', component: PemakaianKamarJenazahListComponent },
 

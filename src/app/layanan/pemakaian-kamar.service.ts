@@ -9,6 +9,7 @@ import { Transaksi }			from '../transaksi/transaksi';
 @Injectable()
 export class PemakaianKamarService {
 	rawatinapUrl = ENV.rawatinapUrl;
+	pemakaianKamarRawatinapUrl = ENV.pemakaianKamarRawatinapUrl;
 	transaksiUrl = ENV.transaksiUrl;
 
 	constructor(private http:Http) { }
@@ -19,7 +20,7 @@ export class PemakaianKamarService {
 	}
 
 	getAllPemakaianKamar(): Observable<PemakaianKamar[]> {
-		return this.http.get(this.rawatinapUrl)
+		return this.http.get(this.pemakaianKamarRawatinapUrl)
 			.map((res: Response) => res.json());
 	}
 
@@ -42,12 +43,12 @@ export class PemakaianKamarService {
 			.map((res: Response) => res.json());
 	}
 
-	updatePemakaianKamar(no_kamar: string, PemakaianKamar: PemakaianKamar) {
+	updatePemakaianKamar(PemakaianKamar: PemakaianKamar) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(PemakaianKamar);
 
-		return this.http.put(this.rawatinapUrl + '/' + no_kamar, body, options)
+		return this.http.put(this.pemakaianKamarRawatinapUrl, body, options)
 			.map((res: Response) => res.json());
 	}
 
