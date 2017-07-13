@@ -33,6 +33,9 @@ import { ResepItem }            from '../farmasi/resep/resep-item';
 import { RacikanItem }          from '../farmasi/resep/racikan-item';
 import { ResepService }         from '../farmasi/resep/resep.service';
 
+import { JenisObat }            from '../farmasi/jenis-obat/jenis-obat';
+import { JenisObatService }     from '../farmasi/jenis-obat/jenis-obat.service';
+
 import { StokObat }	            from '../farmasi/stok-obat/stok-obat';
 import { StokObatService }		  from '../farmasi/stok-obat/stok-obat.service';
 
@@ -51,6 +54,7 @@ import { ObatMasukService }		  from '../farmasi/obat-masuk/obat-masuk.service';
  		TindakanService,
     ObatTindakanService,
     ResepService,
+    JenisObatService,
     StokObatService,
     ObatMasukService,
  		NgbTypeaheadConfig
@@ -67,6 +71,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	allTindakanReference: TindakanReference[];
   allTenagaMedis: TenagaMedis[];
   allStokObatAtLocation: StokObat[];
+  allJenisObat: JenisObat[];
 
 	selectedDiagnosis: Diagnosis[] = [];
   selectedDiagnosisReference: DiagnosisReference[] = [];
@@ -81,6 +86,9 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 
   inputObatFormatter = (value : StokObat) => value.jenis_obat.merek_obat;
   resultObatFormatter = (value: StokObat)	=> value.jenis_obat.merek_obat  + ' - ' + value.obat_masuk.nomor_batch;
+
+  inputJenisObatFormatter = (value : JenisObat) => value.merek_obat;
+  resultJenisObatFormatter = (value: JenisObat)	=> value.merek_obat;
 
   tenagaMedisFormatter = (value : any) => value.nama + ' - ' + value.jabatan;
 
@@ -112,6 +120,13 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 			.map(term => term.length < 2 ? []
 				: this.allStokObatAtLocation.filter(stokObat => stokObat.jenis_obat.merek_obat.toLowerCase().indexOf(term.toLowerCase()) > -1));
 
+  searchJenisObat = (text$: Observable<string>) =>
+    text$
+      .debounceTime(200)
+      .distinctUntilChanged()
+      .map(term => term.length < 2 ? []
+        : this.allJenisObat.filter(jenisObat => jenisObat.merek_obat.toLowerCase().indexOf(term.toLowerCase()) > -1));
+
 	constructor(
 		private route: ActivatedRoute,
 		private location: Location,
@@ -123,6 +138,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 		private tindakanService: TindakanService,
     private obatTindakanService: ObatTindakanService,
     private resepService: ResepService,
+    private jenisObatService: JenisObatService,
     private obatMasukService: ObatMasukService,
     private stokObatService: StokObatService,
 		private config: NgbTypeaheadConfig
@@ -158,6 +174,10 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 
 		this.diagnosisService.getAllDiagnosisReference().subscribe(
       data => { this.allDiagnosisReference = data }
+    )
+
+    this.jenisObatService.getAllJenisObat().subscribe(
+      data => { this.allJenisObat = data }
     )
 	}
 
@@ -249,16 +269,17 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     resepItem.racikan_item.splice(i, 1);
   }
 
+  addSelectedJenisObat(racikanItem: RacikanItem, jenisObat: JenisObat) {
+    racikanItem.id_jenis_obat = jenisObat.id;
+    racikanItem.jenis_obat = jenisObat;
+  }
+
   showResep() {
     console.log(this.allResep);
   }
 
   goBack(): void {
     this.location.back();
-  }
-
-  saveDiagnosis() {
-
   }
 
   saveObatTindakan(data: Tindakan[]) {
@@ -276,6 +297,14 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     }
 
     Observable.forkJoin(observables).subscribe(
+      data => {
+        this.saveResep();
+      }
+    )
+  }
+
+  saveResep() {
+    this.resepService.createResep(this.allResep).subscribe(
       data => {
         this.goBack();
       }
