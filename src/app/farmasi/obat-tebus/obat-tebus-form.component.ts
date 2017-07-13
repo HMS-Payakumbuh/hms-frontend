@@ -21,27 +21,39 @@ import { ResepService } from '../resep/resep.service';
 @Component({
   selector: 'obat-tebus-form-page',
   templateUrl: './obat-tebus-form.component.html',
-  providers: [ObatTebusService, PasienService, TransaksiService, ResepService]
+  providers: [ObatTebusService, PasienService, TransaksiService, ResepService, StokObatService]
 })
 
 export class ObatTebusFormComponent {	
 
 	public allPasien: Pasien[];
-	public allTransaksiOfPasien: Transaksi[];	
-	public allResepOfTransaksi: Resep[];
+	// public allTransaksiOfPasien: Transaksi[];	
+	public allResepOfTanggal: Resep[];
 
 	public pasien: Pasien;
-	public transaksi: Transaksi;
 	public resep: Resep;
+
+	public obatTebus: ObatTebus;
+	public obatTebusItems: ObatTebusItem[];
+
+	public allStokObatAtLocation: StokObat[];
+
+	public no_batch: string[][];
+	public jumlah: number[][];
 
 	inputPasienFormatter = (value : Pasien) => value.nama_pasien;
 	resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.id;	
 
-	inputTransaksiFormatter = (value : Transaksi) => value.no_transaksi;
-	resultTransaksiFormatter = (value: Transaksi)	=> value.no_transaksi	
+	inputStokFormatter = (value : StokObat) => value.obat_masuk.nomor_batch;
+	resultStokFormatter = (value: StokObat)	=> value.obat_masuk.nomor_batch;	
 
-	inputResepFormatter = (value : Resep) => value.no_resep;
-	resultResepFormatter = (value: Resep)	=> value.no_resep;	
+	searchStokObat = (text$: Observable<string>) =>
+		text$
+			.debounceTime(200)
+			.distinctUntilChanged()
+			.map(term => term.length < 2 ? []
+				: this.allStokObatAtLocation.filter(stokObat => stokObat.jenis_obat.merek_obat.toLowerCase().indexOf(term.toLowerCase()) > -1));
+
 
 	searchNamaPasien = (text$: Observable<string>) =>
 		text$
@@ -50,23 +62,19 @@ export class ObatTebusFormComponent {
 			.map(term => term.length < 2 ? []
 				: this.allPasien.filter(pasien => pasien.nama_pasien.toLowerCase().indexOf(term.toLowerCase()) > -1));
 
-	searchNoTransaksi = (text$: Observable<string>) =>
+	/*
+	// TO-DO: Input batch numbers
+	searchNoBatch = (text$: Observable<string>) =>
 		text$
 			.debounceTime(200)
 			.distinctUntilChanged()
 			.map(term => term.length < 2 ? []
-				: this.allTransaksiOfPasien.filter(transaksi => transaksi.no_transaksi.toLowerCase().indexOf(term.toLowerCase()) > -1));
-
-	searchNoResep = (text$: Observable<string>) =>
-		text$
-			.debounceTime(200)
-			.distinctUntilChanged()
-			.map(term => term.length < 2 ? []
-				: this.allResepOfTransaksi.filter(resep => resep.no_resep.toString().toLowerCase().indexOf(term.toLowerCase()) > -1));
-
+				: this.allResepOfTanggal.filter(resep => resep.no_resep.toString().toLowerCase().indexOf(term.toLowerCase()) > -1));
+	*/
 
 	constructor (		
-		private changeDetectorRef: ChangeDetectorRef,
+		private changeDetectorRef: ChangeDetectorRef,	
+		private stokObatService: StokObatService,	
 		private pasienService: PasienService,
 		private transaksiService: TransaksiService,
 		private resepService: ResepService,
@@ -76,40 +84,54 @@ export class ObatTebusFormComponent {
 		this.pasienService.getAllPasien().subscribe(
 			data => { this.allPasien = data }
 		);
+
+		// TO-DO: Change Location ID to dynamic based on which is the Apotek
+		this.stokObatService.getStokObatByLocation(2).subscribe(
+			data => { this.allStokObatAtLocation = data }
+		);
+
+		this.pasien = new Pasien();
+		this.resep = new Resep();		
+		this.obatTebus = new ObatTebus();
+
+		this.allPasien = [];
+		this.allResepOfTanggal =  [];
+		this.obatTebusItems = [];
+		
+		this.no_batch = [];
+		for (let i = 0; i < 50; i++) {
+			this.no_batch[i] = []
+		}
+
+		this.jumlah = [];
+		for (let i = 0; i < 50; i++) {  
+			this.jumlah[i] = []
+		}
 	}
 
-	addPasien(pasien: Pasien) {	
+	private addPasien(pasien: Pasien) {	
 		this.pasien = pasien;
-
-		this.transaksiService.getTransaksiByPasien(this.pasien.id).subscribe(
-			data => { this.allTransaksiOfPasien = data }
-		)
 	}
 
-	addTransaksi(transaksi: Transaksi) {
-		this.transaksi = transaksi;
-
-		this.resepService.getResepByTransaksi(this.transaksi.id).subscribe(
-			data => { this.allResepOfTransaksi = data }
-		)
+	private onTanggalResepChange(tanggal_resep: Date) {
+		this.resepService.getResepByPasienAndTanggal(this.pasien.id, tanggal_resep).subscribe(
+			data => { this.allResepOfTanggal = data }
+		);
 	}
 
-	addResep(resep: Resep) {
-		this.resep = resep;
-
-		this.resepService.getResepByTransaksi(this.transaksi.id).subscribe(
-			data => { this.allResepOfTransaksi = data }
-		)
+	private onResepChange(id_resep: number) {
+		this.resepService.getResep(id_resep).subscribe(
+			data => { this.resep = data }
+		);
 	}
 
-	addObatEntry() {
-	    /* this.rowData.push({
-	    	kode_obat: 1,
-	    }) */
-	}
-
-	removeObatEntry(rowNumber: number) {
-	    /* this.rowData.splice(rowNumber, 1);
-    	this.changeDetectorRef.detectChanges(); */
+	private onTebusChange(e, i: number, j: number) {
+		console.log(e);
+		var isChecked = e.target.checked;
+		if (isChecked) {
+			// add ObatItem
+		} else {			
+			// remove ObatItem
+		}
 	}
 }

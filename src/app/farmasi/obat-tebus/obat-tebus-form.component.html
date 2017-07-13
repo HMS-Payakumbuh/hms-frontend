@@ -17,40 +17,55 @@
               </div>
 
               <div class="form-group">
-                <label for="no_transaksi">No. Transaksi *</label>
-                <input type="text" class="form-control" id="no_transaksi" required [ngbTypeahead]="searchNoTransaksi" [inputFormatter]="inputTransaksiFormatter" [resultFormatter]="resultTransaksiFormatter" (selectItem)="addTransaksi($event.item)" [(ngModel)]="no_transaksi" name="no_transaksi">
+                <label for="tanggal_resep">Tanggal Resep</label>
+                <input type="date" class="form-control" id="tanggal_resep" [(ngModel)] = "tanggal_resep" (ngModelChange)="onTanggalResepChange($event)" name="tanggal_resep">
               </div>
 
               <div class="form-group">
-                <label for="no_resep">No. Resep *</label>
-                <input type="text" class="form-control" id="no_resep" [ngbTypeahead]="searchNoResep" [inputFormatter]="inputResepFormatter" [resultFormatter]="resultResepFormatter" (selectItem)="addResep($event.item)" [(ngModel)]="no_resep" required name="no_resep">
+                <label for="resep">Resep *</label>
+                <select class="form-control" id="resep" required (ngModelChange)="onResepChange($event)" [(ngModel)] = "id_resep" name="resep">   
+                  <option *ngFor="let resep of allResepOfTanggal" [value]="resep.id">{{resep.created_at}}</option>
+                </select>
               </div>
 
-              <div class="form-group">
-                <table class="table">
-                  <thead>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th colspan="2">Aturan pemakaian</th>
+                    <th></th>
+                    <th colspan="2">Petunjuk peracikan</th>                      
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-template ngFor let-resep_item [ngForOf]="resep.resep_item" let-i="index">
+                    <tr>                        
+                      <td><strong>Item {{i+1}}</strong></td>
+                      <td colspan="2">{{resep_item.aturan_pemakaian}}</td>
+                      <td></td>
+                      <td colspan="2">{{resep_item.petunjuk_peracikan}}</td>
+                      <td></td>
+                    </tr>
                     <tr>
-                      <th>Merek Obat</th>
-                      <th>No. Batch</th>
-                      <th>Jumlah</th>
-                      <th>Harga Satuan</th>
-                      <th>Harga Total</th>
-                      <th></th>
+                        <td><strong>Merek Obat</strong></td>
+                        <td><strong>No. Batch</strong></td>
+                        <td><strong>Jumlah</strong></td>
+                        <td><strong>Harga Satuan</strong></td>
+                        <td><strong>Harga Total</strong></td>
+                        <td><strong>Tebus</strong></td>                        
                     </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let row of rowData">
-                      <td><input type="text" class="form-control" id="kode_obat" disabled name="kode_obat" value="{{row.kode_obat}}"></td>
-                      <td><input type="text" class="form-control" id="merek" disabled name="merek"></td>
-                      <td><input type="text" class="form-control" id="kadaluarsa" disabled name="kadaluarsa"></td>
-                      <td><input type="text" class="form-control" id="jumlah" name="jumlah"></td>
-                      <td><input type="text" class="form-control" id="harga" name="harga"></td>
-                      <td><input type="text" class="form-control" id="harga_total" disabled name="harga_total"></td> 
-                      <td><button class="btn btn-danger" (click)="removeObatEntry(index)">Hapus</button></td>
+                    <tr *ngFor="let racikan_item of resep_item.racikan_item; let j = index" class="form-group">
+                      <td><input type="text" class="form-control" id="merek_obat" disabled [(ngModel)]="racikan_item.jenis_obat.merek_obat" name="merek_obat"></td>
+                      <td><input type="text" class="form-control" id="no_batch" [(ngModel)]="no_batch[i][j]" required name="no_batch"></td>
+                      <td><input type="text" class="form-control" id="jumlah" [(ngModel)]="jumlah[i][j]" required name="jumlah"></td>
+                      <td><input type="text" class="form-control" id="harga_jual_realisasi" required name="harga_jual_realisasi" [(ngModel)]="racikan_item.jenis_obat.harga_jual_satuan"></td>
+                      <td><input type="text" class="form-control" id="harga_total" disabled [(value)]="racikan_item.jenis_obat.harga_jual_satuan*jumlah[i][j]" name="harga_total"></td>
+                      <td><input type="checkbox" class="form-control" id="tebus" (change)="onTebusChange($event, j)" name="tebus"></td>
                     </tr>
-                  </tbody>    
-                </table>
-              </div>
+                  </ng-template>
+                </tbody>    
+              </table>
 
               <button type="submit" class="btn btn-success">Simpan</button>
             </form>
