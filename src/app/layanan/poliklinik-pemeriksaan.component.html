@@ -128,8 +128,8 @@
 										<td style="vertical-align: middle;">{{diagnosis.kode}}</td>
 										<td style="vertical-align: middle;">{{diagnosis.nama}}</td>
 										<td style="vertical-align: middle;">
-											<button type="button" class="btn btn-sm btn-outline-danger" (click)="removeSelectedDiagnosis(i)">
-												<i class="fa fa-window-close"></i>
+											<button type="button" class="btn btn-sm btn-danger" (click)="removeSelectedDiagnosis(i)">
+												Hapus
 											</button>
 										</td>
 									</tr>
@@ -170,13 +170,13 @@
 										</td>
 										<td style="vertical-align: middle;">
 											<button type="button" class="btn btn-sm btn-info" data-toggle="modal"
-											[attr.data-target]="'#obatTindakanModal' + i">
+											[attr.data-target]="'#obatTindakanModal-' + i">
 												Pemakaian Obat
 											</button>
 										</td>
 										<td style="vertical-align: middle;">
-											<button type="button" class="btn btn-sm btn-outline-danger" (click)="removeSelectedTindakan(i)">
-												<i class="fa fa-window-close"></i>
+											<button type="button" class="btn btn-sm btn-danger" (click)="removeSelectedTindakan(i)">
+												Hapus
 											</button>
 										</td>
 									</tr>
@@ -186,32 +186,117 @@
 						</div>
 
 						<div class="tab-pane fade" id="resep" role="tabpanel">
-							<table *ngIf="allResep.length > 0" class="table">
-								<thead>
-									<th></th>
-									<th></th>
-									<th></th>
-								</thead>
-								<tbody>
-									<tr *ngFor="let resep of allResep; index as i">
-										<td>
-											Resep {{i + 1}}
-										</td>
-										<td>
-											<button type="button" class="btn btn-sm btn-info">
-												Edit Obat Resep
-											</button>
-										</td>
-										<td>
-											<button type="button" class="btn btn-sm btn-danger" (click)="removeResep(i)">
-												<i class="fa fa-close"></i>
-											</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+							<div *ngFor="let resep of allResep; index as i">
+
+								<div class="card mb-3">
+									<div class="card-header">
+										<div class="row">
+											<div class="col-sm-4 text-left">
+												Resep {{i + 1}}
+											</div>
+											<div class="col-sm-8 text-right">
+												<button type="button" class="btn btn-sm btn-info" data-toggle="collapse" [attr.data-target]="'#resep-collapse-' + i">
+													Edit Resep
+												</button>
+												<button type="button" class="btn btn-sm btn-danger" (click)="removeResep(i)">
+													Hapus Resep
+												</button>
+											</div>
+										</div>
+									</div>
+
+									<div class="collapse" id="resep-collapse-{{i}}">
+										<div class="card-block">
+											<table class="table table-sm borderless">
+												<thead *ngIf="resep.resep_item.length > 0">
+													<th></th>
+													<th>Aturan Pemakaian</th>
+													<th>Petunjuk Peracikan</th>
+												</thead>
+												<tbody>
+													<tr *ngFor="let resepItem of resep.resep_item; index as j">
+														<th scope="row" style="vertical-align: middle;">
+															Obat {{j + 1}}
+														</th>
+														<td style="vertical-align: middle;">
+															<input type="text" class="form-control" [(ngModel)]="resepItem.aturan_pemakaian">
+														</td>
+														<td style="vertical-align: middle;">
+															<input type="text" class="form-control" [(ngModel)]="resepItem.petunjuk_peracikan">
+														</td>
+														<td style="vertical-align: middle; text-align: right;">
+															<button type=button class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#resep-item-' + i + '-' + j">
+																Edit Obat
+															</button>
+															<button type=button class="btn btn-sm btn-danger" (click)="removeResepItem(j, resep)">
+																Hapus Obat
+															</button>
+														</td>
+													</tr>
+													<tr>
+														<td colspan="3">
+															<button type="button" class="btn btn-sm btn-info pull-left" (click)="addResepItem(resep)">
+																Tambah Obat
+															</button>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+
+								<div *ngFor="let resepItem of resep.resep_item; index as j" class="modal fade" tabindex="-1" role="dialog" id="resep-item-{{i}}-{{j}}" aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+
+											<div class="modal-header">
+												<h5 class="modal-title">
+													Edit Obat Resep
+												</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<i class="fa fa-times" aria-hidden="true"></i>
+												</button>
+											</div>
+
+											<div class="modal-body">
+												<div *ngFor="let racikanItem of resepItem.racikan_item; index as k">
+													<div class="input-group mb-2">
+														<div class="input-group-addon">Bahan Racikan {{k + 1}}</div>
+														<input type="text" class="form-control" placeholder="Input merek obat">
+													</div>
+													<div *ngIf="racikanItem.jenis_obat != null" class="row mb-2">
+														<div class="col-sm-6 input-group">
+															<div class="input-group-addon bg-success text-white">Nama</div>
+															<input type="text" class="form-control" disabled [(ngModel)]="racikanItem.jenis_obat.nama_generik">
+														</div>
+														<div class="col-sm-6 input-group">
+															<div class="input-group-addon">Jumlah</div>
+															<input type="number" class="form-control" [(ngModel)]="racikanItem.jumlah">
+														</div>
+													</div>
+													<button type="button" class="btn btn-sm btn-danger mb-3" (click)="removeRacikanItem(k, resepItem)">
+														Hapus Bahan Racikan
+													</button>
+												</div>
+												<div>
+													<button type="button" class="btn btn-sm btn-info" (click)="addRacikanItem(resepItem)">
+														Tambah Bahan Racikan
+													</button>
+												</div>
+											</div>
+
+											<div class="modal-footer">
+												<button type="button" class="btn btn-success" data-dismiss="modal">Simpan</button>
+											</div>
+
+										</div>
+									</div>
+								</div>
+
+							</div>
 							<button type="button" class="btn btn-sm btn-info" (click)="addResep()">
-								<i class="fa fa-plus"></i>
+								Tambah Resep
 							</button>
 						</div>
 
@@ -220,18 +305,19 @@
 			</div>
 
 			<div class="pull-right">
+				<button type="button" class="btn btn-inverse" (click)="showResep()">Log</button>
 				<button type="button" class="btn btn-warning" (click)="goBack()">Kembali</button>
 				<button type="button" class="btn btn-success" (click)="save()">Selesai</button>
 			</div>
 
 		</div>
 
-		<div *ngFor="let tindakan of selectedTindakan; index as i" class="modal fade" tabindex="-1" role="dialog" id="obatTindakanModal{{i}}" aria-hidden="true">
+		<div *ngFor="let tindakan of selectedTindakan; index as i" class="modal fade" tabindex="-1" role="dialog" id="obatTindakanModal-{{i}}" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 
 					<div class="modal-header">
-						<h5 class="modal-title" id="obatTindakanModal{{i}}">
+						<h5 class="modal-title">
 							Pemakaian Obat untuk Tindakan {{tindakan.kode_tindakan}}
 						</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -243,18 +329,18 @@
 						<div *ngFor="let obatTindakan of tindakan.obat_tindakan; index as j">
 							<div class="input-group mb-2">
 								<div class="input-group-addon">Obat {{j + 1}}</div>
-								<input type="text" class="form-control" id="obat-{{j}}" placeholder="Input merek obat"
+								<input type="text" class="form-control" placeholder="Input merek obat"
 								[ngbTypeahead]="searchStokObat" (selectItem)="addSelectedStokObat(obatTindakan, $event.item)"
-								[inputFormatter]="inputObatTindakanFormatter" [resultFormatter]="resultObatTindakanFormatter">
+								[inputFormatter]="inputObatFormatter" [resultFormatter]="resultObatFormatter">
 							</div>
 							<div *ngIf="obatTindakan.stokObat != null" class="row mb-2">
 								<div class="col-sm-6 input-group">
-									<div class="input-group-addon">Nama</div>
-									<input type="text" class="form-control" id="nama-obat-{{j}}" disabled [(ngModel)]="obatTindakan.stokObat.jenis_obat.nama_generik">
+									<div class="input-group-addon bg-success text-white">Nama</div>
+									<input type="text" class="form-control" disabled [(ngModel)]="obatTindakan.stokObat.jenis_obat.nama_generik">
 								</div>
 								<div class="col-sm-6 input-group">
 									<div class="input-group-addon">Jumlah</div>
-									<input type="number" class="form-control" id="jumlah-obat-{{j}}" [(ngModel)]="obatTindakan.jumlah">
+									<input type="number" class="form-control" [(ngModel)]="obatTindakan.jumlah">
 								</div>
 							</div>
 							<button type="button" class="btn btn-sm btn-danger mb-3" (click)="removeObatTindakanForm(j, tindakan)">
@@ -263,7 +349,7 @@
 						</div>
 						<div>
 							<button type="button" class="btn btn-sm btn-info" (click)="addObatTindakanForm(tindakan)">
-								Tambah
+								Tambah Pemakaian Obat
 							</button>
 						</div>
 					</div>
@@ -274,7 +360,6 @@
 
 				</div>
 			</div>
-
 		</div>
 
 	</div>

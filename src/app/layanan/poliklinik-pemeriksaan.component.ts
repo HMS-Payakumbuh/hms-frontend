@@ -79,8 +79,8 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	inputFormatter = (value : any) => value.nama;
 	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
 
-  inputObatTindakanFormatter = (value : StokObat) => value.jenis_obat.merek_obat;
-  resultObatTindakanFormatter = (value: StokObat)	=> value.jenis_obat.merek_obat  + ' - ' + value.obat_masuk.nomor_batch;
+  inputObatFormatter = (value : StokObat) => value.jenis_obat.merek_obat;
+  resultObatFormatter = (value: StokObat)	=> value.jenis_obat.merek_obat  + ' - ' + value.obat_masuk.nomor_batch;
 
   tenagaMedisFormatter = (value : any) => value.nama + ' - ' + value.jabatan;
 
@@ -229,6 +229,28 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 
   removeResep(i: number) {
     this.allResep.splice(i, 1);
+  }
+
+  addResepItem(resep: Resep) {
+    let resepItem = new ResepItem();
+    resep.resep_item.push(resepItem);
+  }
+
+  removeResepItem(i: number, resep: Resep) {
+    resep.resep_item.splice(i, 1);
+  }
+
+  addRacikanItem(resepItem: ResepItem) {
+    let racikanItem = new RacikanItem();
+    resepItem.racikan_item.push(racikanItem);
+  }
+
+  removeRacikanItem(i: number, resepItem: ResepItem) {
+    resepItem.racikan_item.splice(i, 1);
+  }
+
+  showResep() {
+    console.log(this.allResep);
   }
 
   goBack(): void {
