@@ -5,7 +5,7 @@ export class RacikanItem {
 	public id: number = null,
 	public resep_item_id: number = null,
 	public id_jenis_obat: string = '',
-	public jumlah: string = '',
+	public jumlah: number = 0,
 	public jenis_obat: JenisObat = new JenisObat()
 	) {}
 }
