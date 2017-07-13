@@ -24,7 +24,7 @@
 							</tr>
 							<tr>
 								<td><b>Jenis kelamin</b></td>
-								<td>{{transaksi?.transaksi.pasien.jender == 0 && 'Laki-laki' || 'Perempuan'}}</td>
+								<td>{{transaksi?.transaksi.pasien.jender == 1 && 'Laki-laki' || 'Perempuan'}}</td>
 							</tr>
 							<tr>
 								<td><b>Tanggal Lahir</b></td>
@@ -76,32 +76,30 @@
 									<div class="row mb-3">
 										<div class="col-4">
 											<label for="tekananDarah">TD (mmHg)</label>
-											<ng-template #tekananDarahTooltip>Tekanan Darah (optional)</ng-template>
-											<i class="fa fa-question-circle" [ngbTooltip]="tekananDarahTooltip"></i>
-											<input type="text" class="form-control" id="inputTekananDarah">
+											<input type="text" class="form-control" id="inputTekananDarah" [(ngModel)]="hasilPemeriksaan.tekanan_darah" name="tekanan_darah">
 										</div>
 										<div class="col-4">
 											<label for="nadi">Nadi (x/min)</label>
-											<input type="text" class="form-control" id="inputNadi">
+											<input type="text" class="form-control" id="inputNadi" [(ngModel)]="hasilPemeriksaan.nadi" name="nadi">
 										</div>
 										<div class="col-4">
 											<label for="frekuensiNapas">Frekuensi Napas (x/min)</label>
-											<input type="text" class="form-control" id="frekuensiNapas">
+											<input type="text" class="form-control" id="frekuensiNapas" [(ngModel)]="hasilPemeriksaan.frekuensi_napas" name="frekuensi_napas">
 										</div>
 									</div>
 
 									<div class="row">
 										<div class="col-4">
 											<label for="temperatur">Temperatur (C)</label>
-											<input type="text" class="form-control" id="temperatur">
+											<input type="text" class="form-control" id="temperatur" [(ngModel)]="hasilPemeriksaan.temperatur" name="temperatur">
 										</div>
 										<div class="col-4">
 											<label for="beratBedan">Berat Badan (kg)</label>
-											<input type="text" class="form-control" id="beratBadan">
+											<input type="text" class="form-control" id="beratBadan" [(ngModel)]="hasilPemeriksaan.berat_badan" name="berat_badan">
 										</div>
 										<div class="col-4">
 											<label for="tinggiBadan">Tinggi Badan (cm)</label>
-											<input type="text" class="form-control" id="tinggiBadan">
+											<input type="text" class="form-control" id="tinggiBadan" [(ngModel)]="hasilPemeriksaan.tinggi_badan" name="tinggi_badan">
 										</div>
 									</div>
 
@@ -188,29 +186,33 @@
 						</div>
 
 						<div class="tab-pane fade" id="resep" role="tabpanel">
-
-							<div class="form-group" [formGroup]="addForm">
-								<div formArrayName="resepEntry">
-
-									<div *ngFor="let obat of addForm.controls.resepEntry.controls; index as i">
-										<div [formGroupName]="i">
-											<label for="obatResep">Obat {{i + 1}}</label>
-											<input type="text" class="form-control mb-3" formControlName="obatResep">
-										</div>
-									</div>
-
-								</div>
-							</div>
-
-							<div>
-								<button type="button" class="btn btn-sm btn-outline-info" (click)="addResepEntry()">
-									<i class="fa fa-plus-square"></i>
-								</button>
-								<button *ngIf="addForm.controls.resepEntry.controls.length > 1" type="button" class="btn btn-sm btn-outline-danger" (click)="removeResepEntry(addForm.controls.resepEntry.controls.length-1)">
-									<i class="fa fa-minus-square"></i>
-								</button>
-							</div>
-
+							<table *ngIf="allResep.length > 0" class="table">
+								<thead>
+									<th></th>
+									<th></th>
+									<th></th>
+								</thead>
+								<tbody>
+									<tr *ngFor="let resep of allResep; index as i">
+										<td>
+											Resep {{i + 1}}
+										</td>
+										<td>
+											<button type="button" class="btn btn-sm btn-info">
+												Edit Obat Resep
+											</button>
+										</td>
+										<td>
+											<button type="button" class="btn btn-sm btn-danger" (click)="removeResep(i)">
+												<i class="fa fa-close"></i>
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<button type="button" class="btn btn-sm btn-info" (click)="addResep()">
+								<i class="fa fa-plus"></i>
+							</button>
 						</div>
 
 					</div>
@@ -219,7 +221,7 @@
 
 			<div class="pull-right">
 				<button type="button" class="btn btn-warning" (click)="goBack()">Kembali</button>
-				<button type="button" class="btn btn-success" (click)="save()">Simpan</button>
+				<button type="button" class="btn btn-success" (click)="save()">Selesai</button>
 			</div>
 
 		</div>
@@ -238,36 +240,36 @@
 					</div>
 
 					<div class="modal-body">
-
 						<div *ngFor="let obatTindakan of tindakan.obat_tindakan; index as j">
-
-							<label for="obat-{{j}}">Obat {{j + 1}}</label>
-							<div class="input-group">
-								<input type="text" class="form-control" id="obat-{{j}}" [(ngModel)]="obatTindakan.id_jenis_obat">
-								<span class="form-group-btn">
-									<button class="btn btn-success" (click)="searchObat(obatTindakan, poliklinik.id_lokasi)">Cari</button>
-								</span>
+							<div class="input-group mb-2">
+								<div class="input-group-addon">Obat {{j + 1}}</div>
+								<input type="text" class="form-control" id="obat-{{j}}" placeholder="Input merek obat"
+								[ngbTypeahead]="searchStokObat" (selectItem)="addSelectedStokObat(obatTindakan, $event.item)"
+								[inputFormatter]="inputObatTindakanFormatter" [resultFormatter]="resultObatTindakanFormatter">
 							</div>
-							<div class="input-group" *ngIf="obatTindakan.stokObat != null">
-								<input type="text" class="form-control" id="nama-obat-{{j}}" [(ngModel)]="obatTindakan.stokObat.jenis_obat.nama_generik">
+							<div *ngIf="obatTindakan.stokObat != null" class="row mb-2">
+								<div class="col-sm-6 input-group">
+									<div class="input-group-addon">Nama</div>
+									<input type="text" class="form-control" id="nama-obat-{{j}}" disabled [(ngModel)]="obatTindakan.stokObat.jenis_obat.nama_generik">
+								</div>
+								<div class="col-sm-6 input-group">
+									<div class="input-group-addon">Jumlah</div>
+									<input type="number" class="form-control" id="jumlah-obat-{{j}}" [(ngModel)]="obatTindakan.jumlah">
+								</div>
 							</div>
-
-							<button type="button" class="btn btn-sm btn-outline-danger mb-3" (click)="removeObatTindakanForm(j, tindakan)">
-								<i class="fa fa-minus-square"></i>
+							<button type="button" class="btn btn-sm btn-danger mb-3" (click)="removeObatTindakanForm(j, tindakan)">
+								Hapus
 							</button>
-
 						</div>
-
 						<div>
-							<button type="button" class="btn btn-sm btn-outline-info" (click)="addObatTindakanForm(tindakan)">
-								<i class="fa fa-plus-square"></i>
+							<button type="button" class="btn btn-sm btn-info" (click)="addObatTindakanForm(tindakan)">
+								Tambah
 							</button>
 						</div>
 					</div>
 
 					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-						<button type="button" class="btn btn-success" (click)="saveObatTindakan(tindakan)">Simpan</button>
+						<button type="button" class="btn btn-success" data-dismiss="modal">Simpan</button>
 					</div>
 
 				</div>

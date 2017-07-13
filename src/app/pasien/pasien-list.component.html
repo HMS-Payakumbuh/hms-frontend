@@ -35,8 +35,7 @@
 								<td>{{pasien.id}}</td>
 								<td>{{pasien.nama_pasien}}</td>
 								<td>{{pasien.tanggal_lahir}}</td>
-								<td *ngIf="pasien.jender === 0">Laki-laki</td>
-								<td *ngIf="pasien.jender === 1">Perempuan</td>
+								<td>{{pasien.jender == 1 && 'Laki-laki' || 'Perempuan'}}</td>
 								<td>{{pasien.agama}}</td>
 								<td>{{pasien.alamat}}</td>
 								<td>{{pasien.kontak}}</td>

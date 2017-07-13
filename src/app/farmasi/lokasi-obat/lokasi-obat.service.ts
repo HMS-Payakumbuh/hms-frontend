@@ -35,4 +35,21 @@ export class LokasiObatService {
     	let body = JSON.stringify(lokasiObat);
     	return this.http.post(this.lokasiObatUrl, body, options ).map((res: Response) => res.json());
 	}
+
+	updateLokasiObat(id: number, lokasiObat: LokasiObat) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(lokasiObat);
+
+		return this.http.put(this.lokasiObatUrl + '/' + id, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	destroyLokasiObat(id: number) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+
+		return this.http.delete(this.lokasiObatUrl + '/' + id, options)
+			.map((res: Response) => res.json());
+	}
 }

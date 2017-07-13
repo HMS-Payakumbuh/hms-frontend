@@ -7,6 +7,7 @@ export var ENV = {
 	settingsUrl: baseUrl + "/api/setting_bpjs",
 
 	pasienUrl: baseUrl + "/api/pasien",
+	rekamMedisUrl: baseUrl + "/api/rekam_medis",
 	antrianUrl: baseUrl + "/api/antrian",
 	antrianFrontOfficeUrl: baseUrl + "/api/antrian_front_office",
 	asuransiUrl: baseUrl + "/api/asuransi",
@@ -31,7 +32,7 @@ export var ENV = {
 	kamarOperasiUrl : baseUrl + "/api/kamaroperasi",
 	kamarJenazahUrl : baseUrl + "/api/kamarjenazah",
 
-
+	resepUrl: baseUrl + "/api/resep",
 	lokasiObatUrl: baseUrl + "/api/lokasi_obat",
 	jenisObatUrl: baseUrl + "/api/jenis_obat",
 	stokObatUrl: baseUrl + "/api/stok_obat",
@@ -39,5 +40,6 @@ export var ENV = {
 	obatTebusUrl: baseUrl + "/api/obat_tebus",
 	obatTindakanUrl: baseUrl + "/api/obat_tindakan",
 	obatPindahUrl: baseUrl + "/api/obat_pindah",
-	obatRusakUrl: baseUrl + "/api/obat_rusak"
+	obatRusakUrl: baseUrl + "/api/obat_rusak",	
+	obatEceranUrl: baseUrl + "/api/obat_eceran",
 }

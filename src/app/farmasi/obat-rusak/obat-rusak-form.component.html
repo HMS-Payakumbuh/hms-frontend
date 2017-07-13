@@ -11,7 +11,7 @@
             <form #obatRusakForm="ngForm">
               <div class="form-group">
                 <label for="asal">Asal *</label>
-                <select class="form-control" id="asal" required [(ngModel)] = "obatRusak.asal" name="asal">   
+                <select class="form-control" id="asal" required (ngModelChange)="onChange($event)" [(ngModel)] = "obatRusak.asal" name="asal">   
                   <option *ngFor="let lokasiObat of allLokasiObat" [value]="lokasiObat.id">{{lokasiObat.nama}}</option>
                 </select>
               </div>
@@ -25,6 +25,7 @@
                 </select>
               </div>    
 
+              <!--
               <div class="form-group">
                 <label for="kode">Kode Obat *</label>
                 <div class="input-group">
@@ -39,10 +40,16 @@
                 <label for="id">ID Jenis Obat</label>
                 <input type="text" class="form-control" id="id" disabled [(ngModel)] = "obatRusak.id_jenis_obat" [(value)] = "stokObat.jenis_obat.id" name="id">
               </div>
+              -->
 
               <div class="form-group">
                 <label for="merek">Merek Obat</label>
-                <input type="text" class="form-control" id="merek" disabled [(ngModel)] = "stokObat.jenis_obat.merek_obat" name="merek">
+                <input type="text" class="form-control" id="merek" required [ngbTypeahead]="searchStokObat" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addSelectedStokObat($event.item)" [(ngModel)] = "stokObat.jenis_obat.merek_obat" name="merek">
+              </div>
+
+              <div class="form-group">
+                <label for="nomor_batch">Nomor Batch</label>
+                <input type="text" class="form-control" id="nomor_batch" disabled [(ngModel)] = "stokObat.obat_masuk.nomor_batch" name="nomor_batch">
               </div>
 
               <div class="form-group">
@@ -58,11 +65,6 @@
               <div class="form-group">
                 <label for="golongan">Golongan</label>
                 <input type="text" class="form-control" id="golongan" disabled [(ngModel)] = "stokObat.jenis_obat.golongan" name="golongan">
-              </div>
-
-              <div class="form-group">
-                <label for="nomor_batch">Nomor Batch</label>
-                <input type="text" class="form-control" id="nomor_batch" disabled [(ngModel)] = "obatMasuk.nomor_batch" name="nomor_batch">
               </div>
 
               <div class="form-group">

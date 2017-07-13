@@ -3,14 +3,17 @@ import { Component, Input, OnInit }	from '@angular/core';
 import { ActivatedRoute, Params }	from '@angular/router';
 import { Location }					from '@angular/common';
 
+import * as _ from "lodash";
 import { PembayaranService }		from '../pembayaran/pembayaran.service';
 import { TransaksiService }			from './transaksi.service';
 import { Transaksi }				from './transaksi';
+import { Asuransi }				from '../pasien/asuransi';
+import { AsuransiService }		from '../pasien/asuransi.service';
 
 @Component({
  	selector: 'transaksi-detail-page',
  	templateUrl: './transaksi-detail.component.html',
- 	providers: [TransaksiService, PembayaranService]
+ 	providers: [TransaksiService, PembayaranService, AsuransiService]
 })
 
 export class TransaksiDetailComponent implements OnInit {
@@ -18,10 +21,12 @@ export class TransaksiDetailComponent implements OnInit {
 	transaksi: any;
 	umur: number = 0;
 	listOfTindakan: number[] = [];
+	allMetode = [];
 
 	constructor(
 		private transaksiService: TransaksiService,
 		private pembayaranService: PembayaranService,
+		private asuransiService: AsuransiService,
 		private route: ActivatedRoute,
 		private location: Location
 	) {}
@@ -34,11 +39,20 @@ export class TransaksiDetailComponent implements OnInit {
 				this.transaksi = this.response.transaksi;
 				console.log(this.transaksi);
 				this.calculateAge(this.transaksi.pasien.tanggal_lahir);
+
+				this.asuransiService.getAsuransi(this.transaksi.pasien.id)
+					.subscribe(listAsuransi => this.initMetodeList(listAsuransi));
 			});
 	}
 
 	goBack(): void {
 		this.location.back();
+	}
+
+	private initMetodeList(items: Asuransi[]): void {
+		for (let item of _.uniqBy(items, 'nama_asuransi')) {
+			this.allMetode.push(item.nama_asuransi);
+		}
 	}
 
 	updateCheckedTindakan(value): void {
@@ -89,7 +103,7 @@ export class TransaksiDetailComponent implements OnInit {
 		this.createPembayaran(total_harga, this.transaksi.asuransi_pasien, listOfTindakan);
 	}
 
-	bayar(): void {
+	bayar(metode: string = 'tunai'): void {
 		if (this.listOfTindakan.length > 0) {
 			let total_harga: number = 0;
 			for (let i of this.listOfTindakan) {
@@ -99,8 +113,9 @@ export class TransaksiDetailComponent implements OnInit {
 					}
 				}
 			}
-			this.createPembayaran(total_harga, 'tunai', this.listOfTindakan);
+			this.createPembayaran(total_harga, metode.toLowerCase(), this.listOfTindakan);
 		}
+		console.log(metode.toLowerCase());
 	}
 
 	createPembayaran(harga: number, metode: string, listOfTindakan: number[] = null): void {

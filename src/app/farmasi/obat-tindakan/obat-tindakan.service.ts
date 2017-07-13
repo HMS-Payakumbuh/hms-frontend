@@ -9,7 +9,7 @@ import { ENV }				from '../../environment';
 
 @Injectable()
 export class ObatTindakanService {
-	private obatTindakanUrl = ENV.obatTindakanUrl;	
+	private obatTindakanUrl = ENV.obatTindakanUrl;
 
 	constructor(private http:Http) { }
 
@@ -29,10 +29,10 @@ export class ObatTindakanService {
 			.map(allObatTindakan => allObatTindakan.find(obat_tindakan => obat_tindakan.id == id));
 	}
 
-	createObatTindakan(obatTindakan: ObatTindakan) {
+	createObatTindakan(obatTindakan: ObatTindakan[]) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
-    	let options = new RequestOptions({ headers: headers });
-    	let body = JSON.stringify(obatTindakan);
-    	return this.http.post(this.obatTindakanUrl, body, options ).map((res: Response) => res.json());
+  	let options = new RequestOptions({ headers: headers });
+  	let body = JSON.stringify(obatTindakan);
+  	return this.http.post(this.obatTindakanUrl, body, options ).map((res: Response) => res.json());
 	}
 }

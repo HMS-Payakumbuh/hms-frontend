@@ -1,10 +1,9 @@
 import { ObatTindakan }		from '../farmasi/obat-tindakan/obat-tindakan';
 
 export class Tindakan {
+	id: number;
 	id_transaksi: number;
-	no_tindakan: number;
 	harga: number;
-	dokumen_penunjang: number;
 	keterangan: string;
 	id_pembayaran: number;
 	kode_tindakan: string;

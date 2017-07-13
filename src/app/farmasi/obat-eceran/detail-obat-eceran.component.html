@@ -1,0 +1,67 @@
+  <div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-newspaper-o" aria-hidden="true"></i> Detail Obat Eceran
+				</h4>
+			</div>
+			<div *ngIf="obatEceran" class="card-block">
+				<div class="card-text">
+
+					<div class="row">
+						<table class="table">
+							<tbody>
+								<tr>
+									<td><b>Nama Pembeli</b></td>
+									<td>{{obatEceran.nama_pembeli}}</td>	
+								</tr>
+								<tr>
+									<td><b>Alamat</b></td>
+									<td>{{obatEceran.alamat}}</td>	
+								</tr>
+								<tr>
+									<td><b>Waktu Pembelian</b></td>
+									<td>{{obatEceran.waktu_transaksi | date:'d MMM y H:mm:ss'}}</td>	
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="row">
+						<table class="table" [mfData]="obatEceran.obat_eceran_item" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+							<tbody>
+								<tr>
+									<th><mfDefaultSorter by="kode_obat">Kode Obat</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="merek">Merek Obat</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="kadaluarsa">Kadaluarsa</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="jumlah">Jumlah</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="harga_jual_realisasi">Harga Jual Satuan</mfDefaultSorter></th>
+									<th></th>
+								</tr>
+								<tr *ngFor="let obatEceranItem of mf.data">
+									<td>{{obatEceranItem.obat_masuk.barcode}}</td>
+									<td>{{obatEceranItem.jenis_obat.merek_obat}}</td>
+									<td>{{obatEceranItem.obat_masuk.kadaluarsa | date:'d MMM y'}}</td>
+									<td>{{obatEceranItem.jumlah}} {{obatEceranItem.jenis_obat.satuan}}</td>
+									<td>Rp. {{obatEceranItem.harga_jual_realisasi}}</td>	
+								</tr>						
+							</tbody>	
+							<tfoot>
+				                <tr>
+				                    <td colspan="7">
+				                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+				                    </td>
+				                </tr>
+				            </tfoot>			
+						</table>
+					</div>
+
+					<div class="row">
+						<div class="offset-md-10 col-md-2">
+							<button class="btn btn-danger" (click)="goBack()">Kembali</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

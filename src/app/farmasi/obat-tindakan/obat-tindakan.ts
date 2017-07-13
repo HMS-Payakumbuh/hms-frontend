@@ -7,7 +7,7 @@ export class ObatTindakan {
     public id_jenis_obat: number = null,
     public id_obat_masuk: number = null,
     public waktu_keluar: Date = null,
-    public jumlah: number = null,
+    public jumlah: number = 0,
     public keterangan: string = '',
     public asal: number = null,
     public harga_jual_realisasi: number = null,

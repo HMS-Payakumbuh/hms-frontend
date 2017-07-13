@@ -22,7 +22,8 @@ export class DaftarObatTebusComponent {
 	) {}
 
 	ngOnInit(): void {
-		this.ObatTebusService.getAllObatTebus()
-			.then(allObatTebus => this.allObatTebus = allObatTebus);
+		this.ObatTebusService.getAllObatTebus().subscribe(
+			data => { this.allObatTebus = data }
+		);
 	}
 }

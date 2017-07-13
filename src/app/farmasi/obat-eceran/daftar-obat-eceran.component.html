@@ -1,0 +1,50 @@
+  <div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-list-alt" aria-hidden="true"></i> Daftar Pembelian Obat Eceran
+				</h4>
+			</div>
+			<div class="card-block">
+				<div class="card-text">
+					<div class="row">
+						<div class="col-md-6 pull-left">
+							<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal pembelian">
+						</div>
+						<div class="col-md-6 pull-right">
+							<div class="input-group">							
+							    <input type="text" class="form-control" [(ngModel)]="param" placeholder="Cari ID transaksi/nama pembeli"/>
+							</div>
+						</div>
+					</div>
+
+					<table class="table" [mfData]="allObatEceran | filterWaktuKeluar: selectedDate | filterObatEceran: param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+						<tbody>
+							<tr>
+								<th><mfDefaultSorter by="id">ID Transaksi</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="nama_pembeli">ID Pasien</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="waktu_transaksi">Nama Pasien</mfDefaultSorter></th>
+								<th></th>
+							</tr>
+							<tr *ngFor="let obatEceran of mf.data">
+								<td>{{obatEceran.id}}</td>
+								<td>{{obatEceran.nama_pembeli}}</td>
+								<td>{{obatEceran.waktu_transaksi | date:'d MMM y H:mm:ss'}}</td>
+								<td><button type="button" class="btn btn-info" [routerLink] = "['/obat-eceran', obatEceran.id]">Detail</button></td>
+							</tr>						
+						</tbody>	
+						<tfoot>
+			                <tr>
+			                    <td colspan="5">
+			                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+			                    </td>
+			                </tr>			
+					</table>
+
+					<div class="pull-left">
+						<a routerLink="/obat-eceran-form"><button type="button" class="btn btn-info">Tambah pembelian obat eceran</button></a>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>
