@@ -64,8 +64,8 @@ export class TenagaMedisService {
 	}
 
 	getAllAvailableJadwalDokter(nama_poli: string): Observable<JadwalDokter[]> {
-		return this.getAllJadwalDokter()
-			.map(allJadwalDokter => _.filter(_.uniqBy(allJadwalDokter, 'nama_poli'), {nama_poli: nama_poli}));
+		return this.http.get(this.jadwalDokterUrl + '/' + nama_poli)
+			.map((res: Response) => res.json());
 	}
 
 	createJadwalDokter(jadwalDokter: JadwalDokter) {
