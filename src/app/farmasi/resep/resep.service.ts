@@ -36,7 +36,7 @@ export class ResepService {
     	return this.http.post(this.resepUrl, body, options ).map((res: Response) => res.json());
 	}
 
-	getResepByTransaksi(id_transaksi: number): Observable<Resep[]> {
+	/* getResepByTransaksi(id_transaksi: number): Observable<Resep[]> {
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('id_transaksi', ''+id_transaksi);
 
@@ -44,6 +44,19 @@ export class ResepService {
 		requestOptions.params = params;
 
 		return this.http.get(this.resepUrl+'/search_by_transaksi', requestOptions)
-		    .map((res: Response) => res.json());
+		    .map((res: Response) => res.json());			
+	} */
+
+	getResepByPasienAndTanggal(id_pasien: number, tanggal_resep: Date) {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('id_pasien', ''+id_pasien);
+		params.set('tanggal_resep', tanggal_resep);
+
+		let requestOptions = new RequestOptions();
+		requestOptions.params = params;
+
+		return this.http.get(this.resepUrl+'/search_by_pasien_and_tanggal', requestOptions)
+		    .map((res: Response) => res.json());		
+
 	}
 }
