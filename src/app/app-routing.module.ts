@@ -14,6 +14,7 @@ import { PasienListComponent }			from './pasien/pasien-list.component';
 import { CatatanKematianFormComponent } from './pasien/catatan-kematian-form.component';
 import { AntrianComponent }				from './antrian/antrian.component';
 import { DaftarAntrianComponent }	    from './antrian/daftar-antrian.component';
+import { RekamMedisDetailComponent }	from './pasien/rekam-medis-detail.component';
 
 import { PoliklinikListComponent }		from './layanan/poliklinik-list.component';
 import { PoliklinikPemeriksaanComponent }	from './layanan/poliklinik-pemeriksaan.component';
@@ -85,6 +86,7 @@ const routes: Routes = [
 	{ path: 'daftar-pasien', component: PasienListComponent },
 	{ path: 'pendaftaran', component: PasienFormComponent},
 	{ path: 'daftar-pasien/catatan-kematian-form', component: CatatanKematianFormComponent},
+	{ path: 'rekam_medis/:idPasien', component: RekamMedisDetailComponent},
 
 	{ path: 'poliklinik', component: PoliklinikListComponent },
 	{ path: 'poliklinik/:namaPoliklinik/:idTransaksi', component: PoliklinikPemeriksaanComponent },

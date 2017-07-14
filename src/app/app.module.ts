@@ -44,8 +44,8 @@ import { AntrianComponent }         		from './antrian/antrian.component';
 import { DaftarAntrianComponent }         	from './antrian/daftar-antrian.component';
 import { PasienFormComponent }      		from './pasien/pasien-form.component';
 import { PasienListComponent }              from './pasien/pasien-list.component';
-import { CatatanKematianFormComponent }              from './pasien/catatan-kematian-form.component';
-
+import { CatatanKematianFormComponent }     from './pasien/catatan-kematian-form.component';
+import { RekamMedisDetailComponent }        from './pasien/rekam-medis-detail.component';
 
 import { PoliklinikListComponent }          from './layanan/poliklinik-list.component';
 import { PoliklinikPemeriksaanComponent }   from './layanan/poliklinik-pemeriksaan.component';
@@ -147,6 +147,7 @@ import { AppComponent }             from './app.component';
         PasienFormComponent,
         PasienListComponent,
         CatatanKematianFormComponent,
+        RekamMedisDetailComponent,
 
         PoliklinikListComponent,
         PoliklinikPemeriksaanComponent,

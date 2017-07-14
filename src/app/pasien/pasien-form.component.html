@@ -89,9 +89,9 @@
 
                   <div *ngIf="tipe === 'Poliklinik'" class="form-group">
                     <label for="poliklinik">Poliklinik</label>
-                    <select class="form-control" id="poliklinik" [disabled]="fromAntrian" [(ngModel)]="layanan" (ngModelChange)="selectLayanan()" name="poliklinik" required>
+                    <select class="form-control" id="poliklinik" [disabled]="fromAntrian" [(ngModel)]="layanan" name="poliklinik" required>
                       <ng-container *ngFor="let poliklinik of allLayanan">
-                        <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}} ({{dokter}})</option>
+                        <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}} ({{poliklinik.nama_dokter}})</option>
                       </ng-container>
                     </select>
                   </div>
@@ -245,9 +245,9 @@
 
                   <div *ngIf="tipe === 'Poliklinik'" class="form-group">
                     <label for="poliklinik">Poliklinik</label>
-                    <select class="form-control" id="poliklinik" [disabled]="fromAntrian" [(ngModel)]="layanan" (ngModelChange)="selectLayanan()" name="poliklinik" required>
+                    <select class="form-control" id="poliklinik" [disabled]="fromAntrian" [(ngModel)]="layanan" name="poliklinik" required>
                       <ng-container *ngFor="let poliklinik of allLayanan">
-                        <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}} - ({{dokter}})</option>
+                        <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}} - ({{poliklinik.nama_dokter}})</option>
                       </ng-container>
                     </select>
                   </div>

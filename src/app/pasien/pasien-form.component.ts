@@ -79,13 +79,6 @@ export class PasienFormComponent implements OnInit {
         else
           this.tipe = "Laboratorium";
       this.selectTipeLayanan();
-      if (this.tipe === 'Poliklinik') {
-        this.tenagaMedisService.getAllAvailableJadwalDokter(this.layanan).subscribe(
-          data => {
-            this.dokter = data.nama_dokter;
-          }
-        )
-      }
     }
   }
 
@@ -110,14 +103,23 @@ export class PasienFormComponent implements OnInit {
   private selectTipeLayanan() {
     if (this.tipe === 'Poliklinik') {
       this.poliklinikService.getAllPoliklinik().subscribe(
-        data => { this.allLayanan = data }
+        data => { 
+          this.allLayanan = data;
+          for (let layanan of this.allLayanan) {
+            this.tenagaMedisService.getAllAvailableJadwalDokter(layanan.nama).subscribe(
+              data => {
+                layanan.nama_dokter = data.nama_dokter;
+              }
+            )
+          } 
+        }
       )
+      
     } else if (this.tipe === 'Laboratorium') {
       this.laboratoriumService.getAllLaboratorium().subscribe(
         data => { this.allLayanan = data }
       )
     }
-
   }
 
   private customTrackBy(index: number, obj: any): any {
