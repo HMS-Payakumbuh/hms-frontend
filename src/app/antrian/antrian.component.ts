@@ -23,8 +23,8 @@ export class AntrianComponent implements OnInit {
   kategori: string;
   total: number = 0;
   antrian: any = { no_antrian: null };
-  active: number;
   umum: boolean = true;
+  antrianEmpty:boolean;
   isfrontoffice: boolean;
   ispoli: boolean;
   sub: any;
@@ -63,10 +63,17 @@ export class AntrianComponent implements OnInit {
     this.route.params
         .switchMap((params: Params) => this.antrianService.getAntrian(params['namaLayanan']))
         .subscribe(allAntrian => {
-            this.allAntrian = allAntrian;
-            this.total = allAntrian.length;
-            this.antrian = allAntrian[0];
-          });
+          this.allAntrian = allAntrian;
+          this.total = allAntrian.length;
+          this.antrian = this.nextAntrian(this.umum);
+          if (!this.antrian)
+            this.antrian = this.nextAntrian(!this.umum);
+          else
+            this.umum = !this.umum;
+          if (allAntrian.length == 0) {
+            this.antrianEmpty = true;
+          }
+        });
   }
 
   private updateAntrianFrontOffice() {
@@ -74,44 +81,46 @@ export class AntrianComponent implements OnInit {
       .subscribe(allAntrian => {
         this.allAntrian = allAntrian;
         this.total = allAntrian.length;
-        this.antrian = allAntrian[0];
+        this.antrian = this.nextAntrian(this.umum);
+        if (!this.antrian)
+          this.antrian = this.nextAntrian(!this.umum);
+        else
+          this.umum = !this.umum;
+        if (allAntrian.length == 0) {
+          this.antrianEmpty = true;
+        }
       });
   }
 
   private proses(jenis:string) {
-    this.allAntrian.splice(this.allAntrian.indexOf(this.antrian), 1);
     if (jenis === 'undur') {
       if (this.isfrontoffice) {
-        this.antrianService.updateAntrianFrontOffice(this.antrian.nama_layanan, this.antrian.no_antrian).subscribe();
+        this.antrianService.updateAntrianFrontOffice(this.antrian.nama_layanan, this.antrian.no_antrian).subscribe(data => {
+          this.updateAntrianFrontOffice();
+        });
       } else {
-        this.antrianService.updateAntrian(this.antrian.id_transaksi, this.antrian.no_antrian).subscribe();
+        this.antrianService.updateAntrian(this.antrian.id_transaksi, this.antrian.no_antrian).subscribe(data => {
+          this.updateAntrian();
+        });
       }
     } else {
       if (this.isfrontoffice) {
-        this.antrianService.destroyAntrianFrontOffice(this.antrian.nama_layanan, this.antrian.no_antrian).subscribe();
+        this.antrianService.destroyAntrianFrontOffice(this.antrian.nama_layanan, this.antrian.no_antrian).subscribe(data => {
+          this.updateAntrianFrontOffice();
+        });
       } else {
-        this.antrianService.destroyAntrian(this.antrian.id_transaksi, this.antrian.no_antrian).subscribe();
+        this.antrianService.destroyAntrian(this.antrian.id_transaksi, this.antrian.no_antrian).subscribe(data => {
+          this.updateAntrian();
+        });
       }
     }
-
-    if (this.isfrontoffice) {
-      this.updateAntrianFrontOffice();
-    } else {
-      this.updateAntrian();
-    }
-
-    this.active = this.nextAntrian(this.umum);
-    if (!this.active)
-      this.active = this.nextAntrian(!this.umum);
-    else
-      this.umum = !this.umum;
   }
 
   private nextAntrian(umum: boolean) {
     if (umum) {
-      return _.find(this.allAntrian, {jenis: 1}) ? _.find(this.allAntrian, {jenis: 1}).no_antrian: null;
+      return _.find(this.allAntrian, {jenis: 1}) ? _.find(this.allAntrian, {jenis: 1}): null;
     } else {
-      return _.find(this.allAntrian, {jenis: 0}) ? _.find(this.allAntrian, {jenis: 0}).no_antrian: null;
+      return _.find(this.allAntrian, {jenis: 0}) ? _.find(this.allAntrian, {jenis: 0}): null;
     }
   }
 
