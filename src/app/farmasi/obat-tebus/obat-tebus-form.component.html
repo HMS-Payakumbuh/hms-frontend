@@ -59,9 +59,9 @@
                       <td><input type="text" class="form-control" id="merek_obat" disabled [(ngModel)]="racikan_item.jenis_obat.merek_obat" name="merek_obat"></td>
                       <td><input type="text" class="form-control" id="no_batch" [(ngModel)]="no_batch[i][j]" required name="no_batch"></td>
                       <td><input type="text" class="form-control" id="jumlah" [(ngModel)]="jumlah[i][j]" required name="jumlah"></td>
-                      <td><input type="text" class="form-control" id="harga_jual_realisasi" required name="harga_jual_realisasi" [(ngModel)]="racikan_item.jenis_obat.harga_jual_satuan"></td>
+                      <td><input type="text" class="form-control" id="harga_jual_realisasi" required name="harga_jual_realisasi" [(ngModel)]="harga_jual_realisasi[i][j]"></td>
                       <td><input type="text" class="form-control" id="harga_total" disabled [(value)]="racikan_item.jenis_obat.harga_jual_satuan*jumlah[i][j]" name="harga_total"></td>
-                      <td><input type="checkbox" class="form-control" id="tebus" (change)="onTebusChange($event, j)" name="tebus"></td>
+                      <td><input type="checkbox" class="form-control" id="tebus" (change)="onTebusChange($event, i, j)" name="tebus"></td>
                     </tr>
                   </ng-template>
                 </tbody>    

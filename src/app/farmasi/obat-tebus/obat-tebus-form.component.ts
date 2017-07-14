@@ -38,8 +38,11 @@ export class ObatTebusFormComponent {
 
 	public allStokObatAtLocation: StokObat[];
 
+	public id_jenis_obat: number[][];
 	public no_batch: string[][];
 	public jumlah: number[][];
+	public harga_jual_realisasi: number[][];
+	public tebus: boolean[][];
 
 	inputPasienFormatter = (value : Pasien) => value.nama_pasien;
 	resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.id;	
@@ -98,14 +101,31 @@ export class ObatTebusFormComponent {
 		this.allResepOfTanggal =  [];
 		this.obatTebusItems = [];
 		
+		this.id_jenis_obat = [];
+		for (let i = 0; i < 50; i++) {
+			this.id_jenis_obat[i] = [];
+		}
 		this.no_batch = [];
 		for (let i = 0; i < 50; i++) {
-			this.no_batch[i] = []
+			this.no_batch[i] = [];
 		}
 
 		this.jumlah = [];
 		for (let i = 0; i < 50; i++) {  
-			this.jumlah[i] = []
+			this.jumlah[i] = [];
+		}
+
+		this.harga_jual_realisasi = [];
+		for (let i = 0; i < 50; i++) {  
+			this.harga_jual_realisasi[i] = [];
+		}
+
+		this.tebus = [];
+		for (let i = 0; i < 50; i++) {  
+			this.tebus[i] = [];
+			/* for (let j = 1; j < 50; i++) {  
+				this.tebus[i][j] = false;
+			} */
 		}
 	}
 
@@ -119,19 +139,30 @@ export class ObatTebusFormComponent {
 		);
 	}
 
-	private onResepChange(id_resep: number) {
+	onResepChange(id_resep: number) {
 		this.resepService.getResep(id_resep).subscribe(
 			data => { this.resep = data }
 		);
+
+		let i = 0;
+		let j = 0;
+		for (let resep_item of this.resep.resep_item) {  
+			console.log(resep_item);
+			i = i + 1;
+			for (let racikan_item of this.resep.resep_item.racikan_item) {  
+				j = j + 1;
+				this.id_jenis_obat[i][j] = this.resep.resep_item.racikan_item.id_jenis_obat;
+				this.harga_jual_realisasi[i][j] = this.resep.resep_item.racikan_item.jenis_obat.harga_jual_satuan;
+			}
+		}
 	}
 
-	private onTebusChange(e, i: number, j: number) {
-		console.log(e);
+	private onTebusChange(e, i : number, j: number, ) {
 		var isChecked = e.target.checked;
 		if (isChecked) {
-			// add ObatItem
+			tebus[i][j] = true;
 		} else {			
-			// remove ObatItem
+			tebus[i][j] = false;
 		}
 	}
 }
