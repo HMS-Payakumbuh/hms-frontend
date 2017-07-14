@@ -4,5 +4,5 @@ export class Antrian {
 	waktu_masuk_antrian: string;
 	jenis: number;
 	no_antrian: number;
-	status: string
+	status: string;
 }

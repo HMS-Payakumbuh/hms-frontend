@@ -10,9 +10,11 @@ import { TransaksiService }			from '../transaksi/transaksi.service';
 import { RekamMedis }           from '../pasien/rekam-medis';
 import { RekamMedisService }    from '../pasien/rekam-medis.service';
 import { HasilPemeriksaan }     from './hasil-pemeriksaan';
+import { AntrianService }       from '../antrian/antrian.service';
 
 import { Poliklinik }						from './poliklinik';
 import { PoliklinikService }		from './poliklinik.service';
+import { LaboratoriumService }  from './laboratorium.service';
 
 import { TenagaMedis }          from '../tenaga-medis/tenaga-medis';
 import { TenagaMedisService }   from '../tenaga-medis/tenaga-medis.service';
@@ -46,7 +48,9 @@ import { ObatMasukService }		  from '../farmasi/obat-masuk/obat-masuk.service';
  	selector: 'poliklinik-pemeriksaan-page',
  	templateUrl: './poliklinik-pemeriksaan.component.html',
  	providers: [
+    AntrianService,
     PoliklinikService,
+    LaboratoriumService,
     RekamMedisService,
     TenagaMedisService,
  		TransaksiService,
@@ -66,12 +70,19 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	poliklinik: Poliklinik;
   rekamMedis: RekamMedis;
   hasilPemeriksaan: HasilPemeriksaan = new HasilPemeriksaan();
+  rujuk: boolean = false;
 
 	allDiagnosisReference: DiagnosisReference[];
 	allTindakanReference: TindakanReference[];
   allTenagaMedis: TenagaMedis[];
   allStokObatAtLocation: StokObat[];
   allJenisObat: JenisObat[];
+
+  layanan: any = [];
+  tipeLayanan: string = '';
+  allTipeLayanan: string[] = ['Poliklinik', 'Laboratorium'];
+  namaPoliRujuk: string = null;
+  namaLabRujuk: string = null;
 
 	selectedDiagnosis: Diagnosis[] = [];
   selectedDiagnosisReference: DiagnosisReference[] = [];
@@ -130,9 +141,11 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private location: Location,
+    private antrianService: AntrianService,
 		private transaksiService: TransaksiService,
     private rekamMedisService: RekamMedisService,
 		private poliklinikService: PoliklinikService,
+    private laboratoriumService: LaboratoriumService,
     private tenagaMedisService: TenagaMedisService,
 		private diagnosisService: DiagnosisService,
 		private tindakanService: TindakanService,
@@ -274,8 +287,23 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     racikanItem.jenis_obat = jenisObat;
   }
 
-  showResep() {
-    console.log(this.allResep);
+  setRujuk(value: boolean) {
+    this.rujuk = value;
+  }
+
+  selectTipeLayanan() {
+    this.namaPoliRujuk = null;
+    this.namaLabRujuk = null;
+    if (this.tipeLayanan === 'Poliklinik') {
+      this.poliklinikService.getAllPoliklinik().subscribe(
+        data => { this.layanan = data }
+      )
+    }
+    else if (this.tipeLayanan === 'Laboratorium') {
+      this.laboratoriumService.getAllLaboratorium().subscribe(
+        data => { this.layanan = data }
+      )
+    }
   }
 
   goBack(): void {
@@ -294,6 +322,15 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
         this.obatTindakanService.createObatTindakan(tindakan.obat_tindakan)
       )
       i++;
+    }
+
+    if (this.rujuk) {
+      let antrian: any = {};
+      antrian.id_transaksi = this.transaksi.transaksi.id;
+      antrian.nama_layanan_poli = this.namaPoliRujuk;
+      antrian.nama_layanan_lab = this.namaLabRujuk;
+      antrian.kesempatan = 3;
+      observables.push(this.antrianService.createAntrian(antrian));
     }
 
     Observable.forkJoin(observables).subscribe(
