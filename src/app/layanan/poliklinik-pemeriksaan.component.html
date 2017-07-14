@@ -263,7 +263,9 @@
 												<div *ngFor="let racikanItem of resepItem.racikan_item; index as k">
 													<div class="input-group mb-2">
 														<div class="input-group-addon">Bahan Racikan {{k + 1}}</div>
-														<input type="text" class="form-control" placeholder="Input merek obat">
+														<input type="text" class="form-control" placeholder="Input merek obat"
+														 [ngbTypeahead]="searchJenisObat" (selectItem)="addSelectedJenisObat(racikanItem, $event.item)"
+														 [inputFormatter]="inputJenisObatFormatter" [resultFormatter]="resultJenisObatFormatter">
 													</div>
 													<div *ngIf="racikanItem.jenis_obat != null" class="row mb-2">
 														<div class="col-sm-6 input-group">
@@ -305,7 +307,6 @@
 			</div>
 
 			<div class="pull-right">
-				<button type="button" class="btn btn-inverse" (click)="showResep()">Log</button>
 				<button type="button" class="btn btn-warning" (click)="goBack()">Kembali</button>
 				<button type="button" class="btn btn-success" (click)="save()">Selesai</button>
 			</div>

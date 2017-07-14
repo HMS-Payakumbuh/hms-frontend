@@ -63,7 +63,7 @@ export class TenagaMedisService {
 			.map((res: Response) => res.json());
 	}
 
-	getAllAvailableJadwalDokter(nama_poli: string): Observable<JadwalDokter[]> {
+	getAllAvailableJadwalDokter(nama_poli: string): Observable<JadwalDokter> {
 		return this.http.get(this.jadwalDokterUrl + '/' + nama_poli)
 			.map((res: Response) => res.json());
 	}

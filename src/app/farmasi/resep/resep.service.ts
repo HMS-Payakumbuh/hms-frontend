@@ -10,7 +10,7 @@ import { ENV }				from '../../environment';
 @Injectable()
 export class ResepService {
 	private resepUrl = ENV.resepUrl;
-	
+
 	constructor(private http:Http) { }
 
 	// TO-DO: Convert into Observable?
@@ -29,7 +29,7 @@ export class ResepService {
 			.map(allResep => allResep.find(resep => resep.id == id));
 	}
 
-	createResep(resep: Resep) {
+	createResep(resep: Resep[]) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });
     	let body = JSON.stringify(resep);
@@ -57,5 +57,6 @@ export class ResepService {
 
 		return this.http.get(this.resepUrl+'/search_by_pasien_and_tanggal', requestOptions)
 		    .map((res: Response) => res.json());		
+
 	}
 }
