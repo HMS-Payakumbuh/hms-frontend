@@ -10,7 +10,7 @@ import { ENV }				from '../../environment';
 @Injectable()
 export class ResepService {
 	private resepUrl = ENV.resepUrl;
-	
+
 	constructor(private http:Http) { }
 
 	// TO-DO: Convert into Observable?
@@ -29,14 +29,14 @@ export class ResepService {
 			.map(allResep => allResep.find(resep => resep.id == id));
 	}
 
-	createResep(resep: Resep) {
+	createResep(resep: Resep[]) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });
     	let body = JSON.stringify(resep);
     	return this.http.post(this.resepUrl, body, options ).map((res: Response) => res.json());
 	}
 
-	getResepByTransaksi(id_transaksi: number): Observable<Resep[]> {
+	/* getResepByTransaksi(id_transaksi: number): Observable<Resep[]> {
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('id_transaksi', ''+id_transaksi);
 
@@ -45,5 +45,18 @@ export class ResepService {
 
 		return this.http.get(this.resepUrl+'/search_by_transaksi', requestOptions)
 		    .map((res: Response) => res.json());			
+	} */
+
+	getResepByPasienAndTanggal(id_pasien: number, tanggal_resep: Date) {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('id_pasien', ''+id_pasien);
+		params.set('tanggal_resep', tanggal_resep);
+
+		let requestOptions = new RequestOptions();
+		requestOptions.params = params;
+
+		return this.http.get(this.resepUrl+'/search_by_pasien_and_tanggal', requestOptions)
+		    .map((res: Response) => res.json());		
+
 	}
 }
