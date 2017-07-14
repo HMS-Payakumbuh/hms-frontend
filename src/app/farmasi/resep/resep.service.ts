@@ -50,7 +50,7 @@ export class ResepService {
 	getResepByPasienAndTanggal(id_pasien: number, tanggal_resep: Date) {
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('id_pasien', ''+id_pasien);
-		params.set('tanggal_resep', tanggal_resep);
+		params.set('tanggal_resep', tanggal_resep.toString());
 
 		let requestOptions = new RequestOptions();
 		requestOptions.params = params;

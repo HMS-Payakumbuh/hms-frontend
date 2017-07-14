@@ -43,6 +43,11 @@ export class ObatTebusFormComponent {
 	public jumlah: number[][];
 	public harga_jual_realisasi: number[][];
 	public tebus: boolean[][];
+	public id_resep_item: number[][];
+	public id_racikan_item: number[][];
+
+	public resepItemCount: number;	
+	public racikanItemCount: number[];
 
 	inputPasienFormatter = (value : Pasien) => value.nama_pasien;
 	resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.id;	
@@ -77,10 +82,12 @@ export class ObatTebusFormComponent {
 
 	constructor (		
 		private changeDetectorRef: ChangeDetectorRef,	
+		private obatTebusService: ObatTebusService,	
 		private stokObatService: StokObatService,	
 		private pasienService: PasienService,
 		private transaksiService: TransaksiService,
-		private resepService: ResepService,
+		private resepService: ResepService,		
+		private location: Location
 	) {}
 
 	ngOnInit(): void {
@@ -120,13 +127,28 @@ export class ObatTebusFormComponent {
 			this.harga_jual_realisasi[i] = [];
 		}
 
+		this.id_resep_item = [];
+		for (let i = 0; i < 50; i++) {  
+			this.id_resep_item[i] = [];
+		}
+
+		this.id_racikan_item = [];
+		for (let i = 0; i < 50; i++) {  
+			this.id_racikan_item[i] = [];
+		}
+
 		this.tebus = [];
 		for (let i = 0; i < 50; i++) {  
 			this.tebus[i] = [];
-			/* for (let j = 1; j < 50; i++) {  
-				this.tebus[i][j] = false;
-			} */
 		}
+
+		this.resepItemCount = 0;
+
+		this.racikanItemCount = [];
+		for (let i = 0; i < 50; i++) {  
+			this.racikanItemCount[i] = 0;
+		}
+
 	}
 
 	private addPasien(pasien: Pasien) {	
@@ -139,30 +161,106 @@ export class ObatTebusFormComponent {
 		);
 	}
 
-	onResepChange(id_resep: number) {
+	private onResepChange(id_resep: number) {
 		this.resepService.getResep(id_resep).subscribe(
-			data => { this.resep = data }
-		);
+			data => { 
+				this.resep = data; 
 
-		let i = 0;
-		let j = 0;
-		for (let resep_item of this.resep.resep_item) {  
-			console.log(resep_item);
-			i = i + 1;
-			for (let racikan_item of this.resep.resep_item.racikan_item) {  
-				j = j + 1;
-				this.id_jenis_obat[i][j] = this.resep.resep_item.racikan_item.id_jenis_obat;
-				this.harga_jual_realisasi[i][j] = this.resep.resep_item.racikan_item.jenis_obat.harga_jual_satuan;
-			}
-		}
+				let i = 0;
+				let j = 0;
+				for (let resep_item of this.resep.resep_item) {  					
+					j = 0;	
+					for (let racikan_item of resep_item.racikan_item) {  						
+						this.id_jenis_obat[i][j] = racikan_item.id_jenis_obat;
+						this.harga_jual_realisasi[i][j] = racikan_item.jenis_obat.harga_jual_satuan;
+						this.jumlah[i][j] = racikan_item.jumlah;		
+						this.id_resep_item[i][j] = resep_item.id;
+						this.id_racikan_item[i][j] = racikan_item.id;
+						j = j + 1;
+					}			
+					this.racikanItemCount[i] = j;				
+					i = i + 1;	
+				}
+				this.resepItemCount = i;
+			}					
+		);		
 	}
 
 	private onTebusChange(e, i : number, j: number, ) {
 		var isChecked = e.target.checked;
 		if (isChecked) {
-			tebus[i][j] = true;
+			this.tebus[i][j] = true
+			console.log(i + " " + j + " " + this.tebus[i][j]);
 		} else {			
-			tebus[i][j] = false;
+			this.tebus[i][j] = false;				
+			console.log(this.tebus[i][j]);	
 		}
+	}
+
+	private save() {
+		let observables = [];
+
+		for (let i = 0; i < this.resepItemCount; i++) {  
+			for (let j = 0; j < this.racikanItemCount[i] ; j++) {  				
+				console.log(this.tebus[i][j]);
+				if (this.tebus[i][j]) {
+					console.log(this.tebus[i][j]);
+					let temp = new ObatTebusItem();
+				    let stokObat = new StokObat();
+					
+					/*
+						Dalam observable gaboleh ada subscribe
+						Subscribe setelah forkjoin
+						Data berupa array dari semua hasil observablesnya
+					*/
+					
+					observables.push(
+				   		this.stokObatService.getStokObatByJenisObatAndBatch(this.id_jenis_obat[i][j], this.no_batch[i][j], 2).subscribe(
+							data1 => { 	
+								console.log(data1);
+								
+								stokObat = data1;
+
+								temp.jumlah = this.jumlah[i][j];
+							    temp.keterangan = '';
+
+								temp.id_jenis_obat = stokObat.id_jenis_obat;
+						    	temp.id_obat_masuk = stokObat.id_obat_masuk;
+						    	temp.harga_jual_realisasi = this.harga_jual_realisasi[i][j];
+						    	temp.asal = 2;
+						    	temp.id_resep_item = this.id_resep_item[i][j];
+						    	temp.id_racikan_item = this.id_racikan_item[i][j];	
+
+								console.log(temp);    
+
+						    	this.obatTebusItems.push(temp);
+							}
+						)
+					);
+				}
+			}
+		}
+
+		Observable.forkJoin(observables).subscribe(
+		    data => {
+		    	console.log(this.resep.id_transaksi);
+		        this.obatTebus.id_transaksi = this.resep.id_transaksi;
+				this.obatTebus.id_resep = this.resep.id;
+				this.obatTebus.obat_tebus_item = this.obatTebusItems;
+
+				alert(JSON.stringify(this.obatTebus)); 
+
+				this.obatTebusService.createObatTebus(this.obatTebus).subscribe(
+			       	data => {
+			         	this.location.back();
+			         	return true;
+			       	},
+			       	error => {
+				         console.error("Error saving!");
+				         return Observable.throw(error);
+			       	}
+			    )
+	    	}
+		);
 	}
 }
