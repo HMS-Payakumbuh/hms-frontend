@@ -250,8 +250,8 @@
 									<div class="modal-dialog" role="document">
 										<div class="modal-content">
 
-											<div class="modal-header">
-												<h5 class="modal-title">
+											<div class="modal-header bg-info text-white">
+												<h5 class="modal-title mb-0">
 													Edit Obat Resep
 												</h5>
 												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -316,26 +316,29 @@
 		<div class="modal fade" tabindex="-1" role="dialog" id="rujukanModal" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
-					<div class="modal-header">
+					<div class="modal-header bg-info text-white">
+						<h5 class="modal-title mb-0">
+							Rujukan
+						</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<i class="fa fa-times" aria-hidden="true"></i>
 						</button>
 					</div>
 					<div class="modal-body">
-						Apakah pasien perlu rujukan ke layanan lain?
-						<div class="mt-3 mb-3">
-							<button type="button" class="btn btn-sm btn-success" (click)="setRujuk(true)">Ya</button>
-							<button type="button" class="btn btn-sm btn-danger" (click)="setRujuk(false)">Tidak</button>
-						</div>
+						<label for="selectRujuk">Apakah pasien perlu rujukan ke layanan lain?</label>
+						<select class="form-control mb-3" id="selectRujuk" [(ngModel)]="rujuk" name="selectRujuk">
+							<option [ngValue]="false">Tidak</option>
+							<option [ngValue]="true">Ya</option>
+						</select>
 
-						<div class="form-group" *ngIf="rujuk == true">
+						<div class="form-group" *ngIf="rujuk">
 							<label for="tipeLayanan">Tipe Layanan</label>
 							<select class="form-control" id="tipeLayanan" [(ngModel)]="tipeLayanan" (ngModelChange)="selectTipeLayanan()" name="tipeLayanan">
 								<option *ngFor="let layanan of allTipeLayanan" [value]="layanan">{{layanan}}</option>
 							</select>
 						</div>
 
-						<div *ngIf="tipeLayanan === 'Poliklinik'" class="form-group">
+						<div *ngIf="tipeLayanan === 'Poliklinik' && rujuk" class="form-group">
 							<label for="selectPoliklinik">Poliklinik</label>
 							<select class="form-control" id="selectPoliklinik" [(ngModel)]="namaPoliRujuk" name="poliklinikRujuk">
 								<ng-container *ngFor="let poliklinik of layanan">
@@ -344,7 +347,7 @@
 							</select>
 						</div>
 
-						<div *ngIf="tipeLayanan === 'Laboratorium'" class="form-group">
+						<div *ngIf="tipeLayanan === 'Laboratorium' && rujuk" class="form-group">
 							<label for="selectLaboratorium">Laboratorium</label>
 							<select class="form-control" id="selectLaboratorium" [(ngModel)]="namaLabRujuk" name="laboratoriumRujuk">
 								<ng-container *ngFor="let laboratorium of layanan">
@@ -364,8 +367,8 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 
-					<div class="modal-header">
-						<h5 class="modal-title">
+					<div class="modal-header bg-info text-white">
+						<h5 class="modal-title mb-0">
 							Pemakaian Obat untuk Tindakan {{tindakan.kode_tindakan}}
 						</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
