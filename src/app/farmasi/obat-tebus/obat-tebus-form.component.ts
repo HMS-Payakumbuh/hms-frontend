@@ -197,52 +197,55 @@ export class ObatTebusFormComponent {
 		}
 	}
 
-	private save() {
+	private save() { // STILL NEEDS REPAIR
 		let observables = [];
+		let temp = new ObatTebusItem();
+		let stokObat = new StokObat();
 
 		for (let i = 0; i < this.resepItemCount; i++) {  
 			for (let j = 0; j < this.racikanItemCount[i] ; j++) {  				
 				console.log(this.tebus[i][j]);
 				if (this.tebus[i][j]) {
-					console.log(this.tebus[i][j]);
-					let temp = new ObatTebusItem();
-				    let stokObat = new StokObat();
-					
-					/*
-						Dalam observable gaboleh ada subscribe
-						Subscribe setelah forkjoin
-						Data berupa array dari semua hasil observablesnya
-					*/
-					
+					console.log(this.tebus[i][j]);											
 					observables.push(
-				   		this.stokObatService.getStokObatByJenisObatAndBatch(this.id_jenis_obat[i][j], this.no_batch[i][j], 2).subscribe(
-							data1 => { 	
-								console.log(data1);
-								
-								stokObat = data1;
-
-								temp.jumlah = this.jumlah[i][j];
-							    temp.keterangan = '';
-
-								temp.id_jenis_obat = stokObat.id_jenis_obat;
-						    	temp.id_obat_masuk = stokObat.id_obat_masuk;
-						    	temp.harga_jual_realisasi = this.harga_jual_realisasi[i][j];
-						    	temp.asal = 2;
-						    	temp.id_resep_item = this.id_resep_item[i][j];
-						    	temp.id_racikan_item = this.id_racikan_item[i][j];	
-
-								console.log(temp);    
-
-						    	this.obatTebusItems.push(temp);
-							}
-						)
-					);
+				   		this.stokObatService.getStokObatByJenisObatAndBatch(this.id_jenis_obat[i][j], this.no_batch[i][j], 2)
+				   	)
 				}
 			}
 		}
 
 		Observable.forkJoin(observables).subscribe(
-		    data => {
+		    data => {	
+		    	// Output isi data
+				console.log(data);
+				
+				let k = 0;
+				for (let i = 0; i < this.resepItemCount; i++) {  
+					for (let j = 0; j < this.racikanItemCount[i] ; j++) {  	
+						if (this.tebus[i][j]) {
+							let dataTemp: any = {};
+							dataTemp = data[k];
+							stokObat = dataTemp;
+
+							temp.jumlah = this.jumlah[i][j];
+						    temp.keterangan = '';
+
+							temp.id_jenis_obat = stokObat.id_jenis_obat;
+					    	temp.id_obat_masuk = stokObat.id_obat_masuk;
+					    	temp.harga_jual_realisasi = this.harga_jual_realisasi[i][j];
+					    	temp.asal = 2;
+					    	temp.id_resep_item = this.id_resep_item[i][j];
+					    	temp.id_racikan_item = this.id_racikan_item[i][j];	
+
+							console.log(temp);    
+
+					    	this.obatTebusItems.push(temp);
+
+					    	k = k + 1;
+						}
+					}
+				}
+
 		    	console.log(this.resep.id_transaksi);
 		        this.obatTebus.id_transaksi = this.resep.id_transaksi;
 				this.obatTebus.id_resep = this.resep.id;
