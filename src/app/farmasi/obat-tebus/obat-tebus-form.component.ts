@@ -189,11 +189,9 @@ export class ObatTebusFormComponent {
 	private onTebusChange(e, i : number, j: number, ) {
 		var isChecked = e.target.checked;
 		if (isChecked) {
-			this.tebus[i][j] = true
-			console.log(i + " " + j + " " + this.tebus[i][j]);
+			this.tebus[i][j] = true;
 		} else {			
-			this.tebus[i][j] = false;				
-			console.log(this.tebus[i][j]);	
+			this.tebus[i][j] = false;		
 		}
 	}
 
@@ -215,10 +213,7 @@ export class ObatTebusFormComponent {
 		}
 
 		Observable.forkJoin(observables).subscribe(
-		    data => {	
-		    	// Output isi data
-				console.log(data);
-				
+		    data => {					
 				let k = 0;
 				for (let i = 0; i < this.resepItemCount; i++) {  
 					for (let j = 0; j < this.racikanItemCount[i] ; j++) {  	
@@ -235,9 +230,7 @@ export class ObatTebusFormComponent {
 					    	temp.harga_jual_realisasi = this.harga_jual_realisasi[i][j];
 					    	temp.asal = 2;
 					    	temp.id_resep_item = this.id_resep_item[i][j];
-					    	temp.id_racikan_item = this.id_racikan_item[i][j];	
-
-							console.log(temp);    
+					    	temp.id_racikan_item = this.id_racikan_item[i][j];	  
 
 					    	this.obatTebusItems.push(temp);
 
@@ -251,7 +244,7 @@ export class ObatTebusFormComponent {
 				this.obatTebus.id_resep = this.resep.id;
 				this.obatTebus.obat_tebus_item = this.obatTebusItems;
 
-				alert(JSON.stringify(this.obatTebus)); 
+				// alert(JSON.stringify(this.obatTebus)); 
 
 				this.obatTebusService.createObatTebus(this.obatTebus).subscribe(
 			       	data => {
@@ -259,8 +252,9 @@ export class ObatTebusFormComponent {
 			         	return true;
 			       	},
 			       	error => {
-				         console.error("Error saving!");
-				         return Observable.throw(error);
+				        console.error("Error saving!");
+				        this.obatTebusItems = [];
+				        return Observable.throw(error);
 			       	}
 			    )
 	    	}

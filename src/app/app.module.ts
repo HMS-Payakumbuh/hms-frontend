@@ -17,6 +17,7 @@ import { FilterWaktuMasukPipe }            from './pipe/filter-waktu-masuk.pipe'
 import { FilterWaktuKeluarPipe }            from './pipe/filter-waktu-keluar.pipe';
 import { FilterWaktuPindahPipe }            from './pipe/filter-waktu-pindah.pipe';
 import { FilterWaktuTransaksiPipe }            from './pipe/filter-waktu-transaksi.pipe';
+import { FilterWaktuResepPipe }            from './pipe/filter-waktu-resep.pipe';
 import { FilterNamaAsuransiPipe }       from './pipe/filter-nama-asuransi.pipe';
 import { FilterJenisPasienPipe }       from './pipe/filter-jenis-pasien.pipe';
 import { FilterJenisObatPipe }     from './pipe/filter-jenis-obat.pipe';
@@ -124,6 +125,7 @@ import { AppComponent }             from './app.component';
         FilterWaktuKeluarPipe,
         FilterWaktuPindahPipe,
         FilterWaktuTransaksiPipe,
+        FilterWaktuResepPipe,
         FilterNamaAsuransiPipe,
         FilterJenisPasienPipe,
         FilterJenisObatPipe,
