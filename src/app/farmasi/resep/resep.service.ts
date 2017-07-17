@@ -36,6 +36,13 @@ export class ResepService {
     	return this.http.post(this.resepUrl, body, options ).map((res: Response) => res.json());
 	}
 
+	createSingleResep(resep: Resep) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+    	let options = new RequestOptions({ headers: headers });
+    	let body = JSON.stringify(resep);
+    	return this.http.post(this.resepUrl, body, options ).map((res: Response) => res.json());
+	}
+
 	/* getResepByTransaksi(id_transaksi: number): Observable<Resep[]> {
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('id_transaksi', ''+id_transaksi);

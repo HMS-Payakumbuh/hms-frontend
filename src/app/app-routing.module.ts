@@ -56,6 +56,8 @@ import { EditJenisObatComponent }		from './farmasi/jenis-obat/edit-jenis-obat.co
 import { DaftarObatTebusComponent }			from './farmasi/obat-tebus/daftar-obat-tebus.component';
 import { DetailObatTebusComponent }			from './farmasi/obat-tebus/detail-obat-tebus.component';
 import { ObatTebusFormComponent }			from './farmasi/obat-tebus/obat-tebus-form.component';
+import { ResepEksternalFormComponent }           from './farmasi/obat-tebus/resep-eksternal-form.component';
+import { ObatTebusEksternalFormComponent }           from './farmasi/obat-tebus/obat-tebus-eksternal-form.component';
 
 import { DaftarObatPindahComponent }      from './farmasi/obat-pindah/daftar-obat-pindah.component';
 import { DetailObatPindahComponent }      from './farmasi/obat-pindah/detail-obat-pindah.component';
@@ -123,6 +125,8 @@ const routes: Routes = [
 	{ path: 'obat-tebus', component: DaftarObatTebusComponent },
 	{ path: 'obat-tebus/:id', component: DetailObatTebusComponent },
 	{ path: 'obat-tebus-form', component: ObatTebusFormComponent },
+	{ path: 'resep-eksternal-form', component: ResepEksternalFormComponent },
+	{ path: 'obat-tebus-eksternal-form/:id', component: ObatTebusEksternalFormComponent },
 	{ path: 'obat-pindah', component: DaftarObatPindahComponent },
 	{ path: 'obat-pindah/:id', component: DetailObatPindahComponent },
 	{ path: 'obat-pindah-form', component: ObatPindahFormComponent },
