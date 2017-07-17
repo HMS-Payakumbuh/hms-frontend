@@ -24,7 +24,7 @@ export class TindakanService {
 	}
 
 	getTindakanOfRekamMedis(id_pasien: number, tanggal_waktu: string): Observable<Tindakan[]> {
-		return this.http.get(this.tindakanUrl + '/' + id_pasien + '/' + tanggal_waktu)
+		return this.http.get(this.tindakanUrl + '/rekam_medis/' + id_pasien + '/' + tanggal_waktu)
 			.map((res: Response) => res.json());
 	}
 

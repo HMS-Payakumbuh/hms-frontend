@@ -1,7 +1,7 @@
 import { Component, Input, ChangeDetectorRef } from '@angular/core';
 import { Observable } 	from 'rxjs/Observable';
-import { Location }					from '@angular/common';
-import { ActivatedRoute, Params }	from '@angular/router';
+// import { Location }					from '@angular/common';
+import { ActivatedRoute, Params, Router }	from '@angular/router';
 
 import { ObatTebus } from './obat-tebus';
 import { ObatTebusItem } from './obat-tebus-item';
@@ -80,8 +80,9 @@ export class ObatTebusEksternalFormComponent {
 		private pasienService: PasienService,
 		private transaksiService: TransaksiService,
 		private resepService: ResepService,		
-		private location: Location,
+		// private location: Location,
 		private route: ActivatedRoute,
+		private router: Router,
 	) {}
 
 	ngOnInit(): void {		
@@ -254,8 +255,8 @@ export class ObatTebusEksternalFormComponent {
 				// alert(JSON.stringify(this.obatTebus)); 
 
 				this.obatTebusService.createObatTebus(this.obatTebus).subscribe(
-			       	data => {
-			         	this.location.back();
+			       	data => {			         	
+		     			this.router.navigateByUrl('/obat-tebus');
 			         	return true;
 			       	},
 			       	error => {
