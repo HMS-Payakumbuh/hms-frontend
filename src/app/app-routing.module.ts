@@ -34,9 +34,10 @@ import { PemakaianKamarJenazahListComponent }		from './layanan/pemakaian-kamar-j
 
 import { TenagaMedisListComponent } 	from './tenaga-medis/tenaga-medis-list.component';
 import { JadwalDokterListComponent }	from './tenaga-medis/jadwal-dokter-list.component';
-
 import { DiagnosisReferenceListComponent }	from './layanan/diagnosis-reference-list.component';
 import { TindakanReferenceListComponent }		from './layanan/tindakan-reference-list.component';
+
+import { DokterDashboardComponent }			from './tenaga-medis/dokter-dashboard.component';
 
 import { DaftarStokObatComponent }			from './farmasi/stok-obat/daftar-stok-obat.component';
 import { DetailStokObatComponent }			from './farmasi/stok-obat/detail-stok-obat.component';
@@ -106,6 +107,8 @@ const routes: Routes = [
 	{ path: 'jadwal-dokter', component: JadwalDokterListComponent },
 	{ path: 'daftar-diagnosis', component: DiagnosisReferenceListComponent },
 	{ path: 'daftar-tindakan', component: TindakanReferenceListComponent },
+
+	{ path: 'dokter-dashboard/:noPegawai', component: DokterDashboardComponent },
 
 	{ path: 'stok-obat', component: DaftarStokObatComponent },
 	{ path: 'stok-obat/:id', component: DetailStokObatComponent },

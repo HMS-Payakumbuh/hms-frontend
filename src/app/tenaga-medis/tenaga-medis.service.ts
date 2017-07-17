@@ -58,6 +58,11 @@ export class TenagaMedisService {
 			.map((res: Response) => res.json());
 	}
 
+	getDokter(noPegawai: string): Observable<Dokter> {
+		return this.http.get(this.dokterUrl + '/' + noPegawai)
+			.map((res: Response) => res.json());
+	}
+
 	getAllJadwalDokter(): Observable<JadwalDokter[]> {
 		return this.http.get(this.jadwalDokterUrl)
 			.map((res: Response) => res.json());
