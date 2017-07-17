@@ -7,36 +7,58 @@ import * as _ from "lodash";
 import { Pasien }					from './pasien';		
 import { PasienService }			from './pasien.service';
 import { RekamMedisService }		from './rekam-medis.service';
+import { DiagnosisService }			from '../layanan/diagnosis.service';
 
 @Component({
  	selector: 'rekam-medis-detail-page',
  	templateUrl: './rekam-medis-detail.component.html',
  	providers: [RekamMedisService,
+ 				DiagnosisService,
  				PasienService]
 })
 
 export class RekamMedisDetailComponent implements OnInit {
 	response: any;
+	sub: any;
 	transaksi: any;
 	pasien: Pasien;
 	umur: number = 0;
+	noEntry: number;
+	end: boolean;
 	listOfTindakan: number[] = [];
-	allMetode = [];
+	allDiagnosis: any[];
+	hasilPemeriksaan: any;
 
 	constructor(
 		private rekamMedisService: RekamMedisService,
-		private pasienService: PasienService,
+		private diagnosisService: DiagnosisService,
 		private route: ActivatedRoute,
 		private location: Location
 	) {}
 
 	ngOnInit(): void {
+		this.sub = this.route.params
+		      .subscribe(params => {
+		        this.noEntry = parseInt(params['noEntry']) + 1;
+		    });
 		this.route.params
-			.switchMap((params: Params) => this.pasienService.getPasien(+params['idPasien']))
+			.switchMap((params: Params) => this.rekamMedisService.getRekamMedisOfPasien(+params['idPasien'], +params['noEntry']))
 			.subscribe(data => {
-				this.pasien = data;
-				console.log(this.pasien);
-			});
+				if (data) {
+					this.pasien = data.pasien;
+					this.hasilPemeriksaan = JSON.parse(data.hasil_pemeriksaan);
+					
+					if (this.noEntry < data.num_entries)
+						this.end = false;
+					else
+						this.end = true;
+
+					this.diagnosisService.getDiagnosisOfRekamMedis(data.id_pasien, data.tanggal_waktu)
+						.subscribe(data => {
+							this.allDiagnosis = data;
+						});
+				}
+			});	
 	}
 
 	goBack(): void {
