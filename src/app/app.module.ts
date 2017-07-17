@@ -62,10 +62,12 @@ import { RawatinapDetailComponent } 	from './layanan/rawatinap-detail.component'
 import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-operasi-list.component';
 import { PemakaianKamarJenazahListComponent }		from './layanan/pemakaian-kamar-jenazah-list.component';
 
-import { TenagaMedisListComponent }     from './tenaga-medis/tenaga-medis-list.component';
-import { JadwalDokterListComponent }    from './tenaga-medis/jadwal-dokter-list.component';
-import { DiagnosisReferenceListComponent }	from './layanan/diagnosis-reference-list.component';
-import { TindakanReferenceListComponent }    from './layanan/tindakan-reference-list.component';
+import { TenagaMedisListComponent }       from './tenaga-medis/tenaga-medis-list.component';
+import { JadwalDokterListComponent }      from './tenaga-medis/jadwal-dokter-list.component';
+import { DiagnosisReferenceListComponent }from './layanan/diagnosis-reference-list.component';
+import { TindakanReferenceListComponent } from './layanan/tindakan-reference-list.component';
+
+import { DokterDashboardComponent }   from './tenaga-medis/dokter-dashboard.component';
 
 import { DaftarStokObatComponent }            from './farmasi/stok-obat/daftar-stok-obat.component';
 import { DetailStokObatComponent }            from './farmasi/stok-obat/detail-stok-obat.component';
@@ -84,6 +86,8 @@ import { EditJenisObatComponent }       from './farmasi/jenis-obat/edit-jenis-ob
 import { DaftarObatTebusComponent }         from './farmasi/obat-tebus/daftar-obat-tebus.component';
 import { DetailObatTebusComponent }         from './farmasi/obat-tebus/detail-obat-tebus.component';
 import { ObatTebusFormComponent }           from './farmasi/obat-tebus/obat-tebus-form.component';
+import { ResepEksternalFormComponent }           from './farmasi/obat-tebus/resep-eksternal-form.component';
+import { ObatTebusEksternalFormComponent }           from './farmasi/obat-tebus/obat-tebus-eksternal-form.component';
 
 import { DaftarObatPindahComponent }      from './farmasi/obat-pindah/daftar-obat-pindah.component';
 import { DetailObatPindahComponent }      from './farmasi/obat-pindah/detail-obat-pindah.component';
@@ -169,6 +173,8 @@ import { AppComponent }             from './app.component';
         DiagnosisReferenceListComponent,
         TindakanReferenceListComponent,
 
+        DokterDashboardComponent,
+
         MatchesStatusPipe,
         FilterNamaPasienPipe,
         FilterTanggalPipe,
@@ -192,6 +198,8 @@ import { AppComponent }             from './app.component';
         DaftarObatTebusComponent,
         DetailObatTebusComponent,
         ObatTebusFormComponent,
+        ResepEksternalFormComponent,
+        ObatTebusEksternalFormComponent,
 
         DaftarObatPindahComponent,
         DetailObatPindahComponent,
