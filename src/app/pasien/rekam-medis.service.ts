@@ -5,7 +5,8 @@ import { Observable }			from 'rxjs/Rx';
 import { ENV }						from '../environment';
 import { Pasien }	        from './pasien';
 import { RekamMedis }     from './rekam-medis';
-import * as _ 						from "lodash";
+
+import * as _ from "lodash";
 
 @Injectable()
 export class RekamMedisService {
