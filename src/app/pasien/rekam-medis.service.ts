@@ -23,10 +23,14 @@ export class RekamMedisService {
 			.map((res: Response) => res.json());
 	}
 
-	getRekamMedisOfPasien(id_pasien: number): Observable<RekamMedis> {
-		return this.getAllRekamMedis()
-			.map(allRekamMedis => allRekamMedis.find(rekamMedis => rekamMedis.id_pasien === id_pasien))
-			.catch(this.handleError);
+	getAllRekamMedisOfPasien(id_pasien: number): Observable<RekamMedis[]> {
+		return this.http.get(this.rekamMedisUrl + '/' + id_pasien)
+			.map((res: Response) => res.json());
+	}
+
+	getRekamMedisOfPasien(id_pasien: number, no_entry: number): Observable<any> {
+		return this.getAllRekamMedisOfPasien(id_pasien)
+			.map(allRekamMedis => _.set(allRekamMedis[no_entry], 'num_entries', allRekamMedis.length));
 	}
 
 	createRekamMedis(rekamMedis: RekamMedis) {

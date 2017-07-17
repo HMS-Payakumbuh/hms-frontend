@@ -9,7 +9,7 @@
 			<div class="card mb-3">
 				<div class="card-header card-info">
 					<h4>
-						<i class="fa fa-id-card-o" aria-hidden="true"></i> Informasi Pribadi Pasien
+						<i class="fa fa-id-card-o" aria-hidden="true"></i> Data Pribadi Pasien
 					</h4>
 				</div>
 				<div class="card-block">
@@ -37,118 +37,56 @@
 					</table>
 				</div>
 			</div>
-			<!--<div class="card-block">
-				<div class="row">
-					<div class="col-md-6">
-						<div class="row">
-							<div class="col-md-12">
-								<h3>Transaksi {{transaksi.no_transaksi}}</h3>
-								<b>{{transaksi.pasien.nama_pasien}}</b>
-								<p *ngIf="transaksi.pasien.jender === 0">Laki-laki</p>
-								<p *ngIf="transaksi.pasien.jender === 1">Perempuan</p>
-								<p>{{umur}} Tahun</p>
-								<p>No. Sep: {{transaksi.no_sep}}</p>
-								<p>Metode Bayar: {{transaksi.asuransi_pasien.toUpperCase()}}</p>
-								<p>Waktu Masuk: {{transaksi.waktu_masuk_pasien}}</p>
-								<p *ngIf="transaksi.status === 'closed'">Waktu Keluar: {{transaksi.waktu_perubahan_terakhir}}</p>
-							</div>
-						</div>
-					</div>
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-id-card-o" aria-hidden="true"></i> Hasil Pemeriksaan Awal
+					</h4>
 				</div>
-				<div class="row">
+				<div class="card-block">
 					<table class="table">
 						<tbody>
 							<tr>
-								<th>Tindakan</th>
-								<th></th>
-								<th>Harga</th>
-								<th></th>
-							</tr>
-							<tr *ngFor="let tindakan of transaksi.tindakan">
-								<td>{{tindakan.daftar_tindakan.nama}}</td>
-								<td></td>
-								<td>Rp. {{tindakan.harga | number: '.2-2'}}</td>
-								<td><input *ngIf="transaksi.asuransi_pasien === 'tunai' && tindakan.id_pembayaran === null" type="checkbox" [id]="'tindakan' + tindakan.id" (change)="updateCheckedTindakan(tindakan.id)"></td>
+								<td><b>Tekanan Darah</b></td>
+								<td>{{hasilPemeriksaan?.tekanan_darah}} mmHg</td>
+								<td><b>Nadi</b></td>
+								<td>{{hasilPemeriksaan?.nadi}} x/min</td>
+								<td><b>Frekuensi Napas</b></td>
+								<td>{{hasilPemeriksaan?.frekuensi_napas}} x/min</td>
 							</tr>
 							<tr>
-								<th>Obat</th>
-								<th></th>
-								<th></th>
-								<th></th>
-							</tr>
-							<tr *ngFor="let obat of transaksi.obat">
-								<td>{{obat.nama}}</td>
-								<td>{{obat.jumlah}} {{obat.satuan}}</td>
-								<td>Rp. {{obat.jumlah * obat.harga_satuan | number: '.2-2'}}</td>
-								<td><input *ngIf="transaksi.asuransi_pasien === 'tunai' && obat.id_pembayaran === null" type="checkbox" value="obat.id"></td>
-							</tr>
-							<tr>
-								<td></td>
-								<td><b>Total Harga</b></td>
-								<td>Rp. {{transaksi.harga_total | number: '.2-2'}}</td>
-								<td></td>
+								<td><b>Temperatur</b></td>
+								<td>{{hasilPemeriksaan?.temperatur}} C</td>
+								<td><b>Berat Badan</b></td>
+								<td>{{hasilPemeriksaan?.berat_badan}} kg</td>
+								<td><b>Tinggi Badan</b></td>
+								<td>{{hasilPemeriksaan?.tinggi_badan}} cm</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-				<div class="row">
-					<div class="offset-md-6 col-md-6">
-						<button class="btn btn-danger" (click)="goBack()">Kembali</button>
-						<button *ngIf="transaksi.status === 'open'" class="btn btn-success" (click)="close()">Tutup Transaksi</button>
-						<button *ngIf="transaksi.status === 'open'" data-toggle="modal"
-						[attr.data-target]="'#pilihMetodeBayarModal'" class="btn btn-success">Bayar</button>
-						<button *ngIf="transaksi.status === 'closed'" class="btn btn-success" disabled>Tutup Transaksi</button>
-						<button *ngIf="transaksi.status === 'closed'" class="btn btn-success" disabled>Bayar</button>
-					</div>
+			</div>
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-id-card-o" aria-hidden="true"></i> Diagnosis
+					</h4>
 				</div>
-				<div *ngIf="transaksi.pembayaran?.length > 0" class="row">
-					<div class="col-md-12">
-						<div class="form-group">
-		                    <label class="custom-control custom-checkbox">
-		                    	<input type="checkbox" class="custom-control-input" [checked]="showPembayaran" (change)="showPembayaran = !showPembayaran">
-		                    	<span class="custom-control-indicator"></span>
-		                    	<span class="custom-control-description">Tampilkan Pembayaran</span>
-		                    </label>
-	                	</div>
-					</div>
-				</div>
-				<div *ngIf="showPembayaran" class="row">
-					<div class="col-md-12">
-						<ul class='list-group'>
-							<a *ngFor="let pembayaran of transaksi.pembayaran" [routerLink] = "['/pembayaran', pembayaran.id]">Pembayaran {{pembayaran.metode_bayar.toUpperCase()}} : {{pembayaran.created_at}}</a>
-						</ul>
-					</div>
+				<div class="card-block">
+					<table class="table">
+						<tbody>
+							<tr *ngFor="let diagnosis of allDiagnosis">
+								<td>{{diagnosis?.daftar_diagnosis.kode}}</td>
+								<td>{{diagnosis?.daftar_diagnosis.nama}}</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
-		<div class="modal fade" tabindex="-1" role="dialog" id="pilihMetodeBayarModal" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-
-					<div class="modal-header">
-						<h5 class="modal-title">Pilih Metode Bayar</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<i class="fa fa-times" aria-hidden="true"></i>
-						</button>
-					</div>
-
-					<div class="modal-body">
-						<div class="form-group">
-							<label for="kode">Metode Bayar:</label>
-							<select class="form-control" id="metode" [(ngModel)]="status">
-								<option selected>TUNAI</option>
-		                    	<option *ngFor="let metode of allMetode">{{metode.toUpperCase()}}</option>
-		                    </select>
-						</div>
-					</div>
-
-					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-						<button type="button" class="btn btn-success" (click)="bayar(this.status)">Bayar</button>
-					</div>
-
-				</div>
-			</div>-->
+		<div class="pull-right">
+			<button type="button" class="btn btn-warning" (click)="goBack()">Kembali</button>
+			<button type="button" class="btn btn-success" *ngIf="!end" [routerLink]="['/rekam_medis', pasien?.id, noEntry]">Berikutnya</button>
 		</div>
 	</div>
 </div>
