@@ -256,7 +256,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
   addResep() {
     let resep = new Resep();
     resep.id_transaksi = this.transaksi.transaksi.id;
-    resep.no_resep = this.allResep.length + 1;
+    // resep.no_resep = this.allResep.length + 1;
     this.allResep.push(resep);
   }
 

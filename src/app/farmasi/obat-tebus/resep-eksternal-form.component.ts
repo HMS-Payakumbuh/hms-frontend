@@ -1,6 +1,7 @@
 import { Component, Input, ChangeDetectorRef } from '@angular/core';
 import { Observable } 	from 'rxjs/Observable';
 import { Location }					from '@angular/common';
+import { Router } from '@angular/router';
 
 import { Resep }                from '../resep/resep';
 import { ResepItem }            from '../resep/resep-item';
@@ -36,6 +37,7 @@ export class ResepEksternalFormComponent {
 		private location: Location,
    		private resepService: ResepService,   		
    		private jenisObatService: JenisObatService,
+   		private router: Router,
 	) { }
 
 	ngOnInit() {
@@ -78,7 +80,7 @@ export class ResepEksternalFormComponent {
 	    this.resepService.createResep(this.allResep).subscribe(
 	     	data => {
 	     		console.log(data);
-		     	this.location.go('/obat-tebus-eksternal-form/' + data.id);
+		     	this.router.navigateByUrl('/obat-tebus-eksternal-form/' + data.id);
 		     	return true;
 	   		},
 		   	error => {
