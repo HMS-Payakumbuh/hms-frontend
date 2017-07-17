@@ -1,0 +1,84 @@
+  <div class="col-md-12">
+    <div class="card mb-3">
+      <div class="card-header card-info">
+        <h4>
+          <i class="fa fa-newspaper-o" aria-hidden="true"></i> Obat Tebus Baru
+        </h4>
+      </div>
+
+      <div class="card-block">
+        <div class="card-text">
+            <form #obatTebusEksternalForm="ngForm">
+              <div class="form-group">
+                <label for="nama">Nama</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="nama" disabled  [(ngModel)]="resep.nama" name="nama"> 
+                </div>                    
+              </div>
+
+              <div class="form-group">
+                <label for="alamat">Alamat</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="alamat" disabled  [(ngModel)]="resep.alamat" name="alamat"> 
+                </div>                    
+              </div>
+
+              <!--
+              <div class="form-group">
+                <label for="tanggal_resep">Tanggal Resep</label>
+                <input type="date" class="form-control" id="tanggal_resep" [(ngModel)] = "tanggal_resep" (ngModelChange)="onTanggalResepChange($event)" name="tanggal_resep">
+              </div>
+
+              <div class="form-group">
+                <label for="resep">Resep *</label>
+                <select class="form-control" id="resep" required (ngModelChange)="onResepChange($event)" [(ngModel)] = "id_resep" name="resep">   
+                  <option *ngFor="let resep of allResepOfTanggal" [value]="resep.id">{{resep.created_at}}</option>
+                </select>
+              </div>
+              -->
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th colspan="2">Aturan pemakaian</th>
+                    <th></th>
+                    <th colspan="2">Petunjuk peracikan</th>                      
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-template ngFor let-resep_item [ngForOf]="resep.resep_item" let-i="index">
+                    <tr>                        
+                      <td><strong>Item {{i+1}}</strong></td>
+                      <td colspan="2">{{resep_item.aturan_pemakaian}}</td>
+                      <td></td>
+                      <td colspan="2">{{resep_item.petunjuk_peracikan}}</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Merek Obat</strong></td>
+                        <td><strong>No. Batch</strong></td>
+                        <td><strong>Jumlah</strong></td>
+                        <td><strong>Harga Satuan</strong></td>
+                        <td><strong>Harga Total</strong></td>
+                        <td><strong>Tebus</strong></td>                        
+                    </tr>
+                    <tr *ngFor="let racikan_item of resep_item.racikan_item; let j = index" class="form-group">
+                      <td><input type="text" class="form-control" id="merek_obat" disabled [(ngModel)]="racikan_item.jenis_obat.merek_obat" name="merek_obat"></td>
+                      <td><input type="text" class="form-control" id="no_batch" [(ngModel)]="no_batch[i][j]" required name="no_batch"></td>
+                      <td><input type="text" class="form-control" id="jumlah" [(value)]="jumlah[i][j]" disabled name="jumlah"></td>
+                      <td><input type="text" class="form-control" id="harga_jual_realisasi" required name="harga_jual_realisasi" [(ngModel)]="harga_jual_realisasi[i][j]"></td>
+                      <td><input type="text" class="form-control" id="harga_total" disabled [(value)]="racikan_item.jenis_obat.harga_jual_satuan*jumlah[i][j]" name="harga_total"></td>
+                      <td><input type="checkbox" class="form-control" id="tebus" (change)="onTebusChange($event, i, j)" name="tebus"></td>
+                    </tr>
+                  </ng-template>
+                </tbody>    
+              </table>
+
+              <button class="btn btn-success" (click)="save()">Simpan</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>

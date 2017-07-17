@@ -84,6 +84,8 @@ import { EditJenisObatComponent }       from './farmasi/jenis-obat/edit-jenis-ob
 import { DaftarObatTebusComponent }         from './farmasi/obat-tebus/daftar-obat-tebus.component';
 import { DetailObatTebusComponent }         from './farmasi/obat-tebus/detail-obat-tebus.component';
 import { ObatTebusFormComponent }           from './farmasi/obat-tebus/obat-tebus-form.component';
+import { ResepEksternalFormComponent }           from './farmasi/obat-tebus/resep-eksternal-form.component';
+import { ObatTebusEksternalFormComponent }           from './farmasi/obat-tebus/obat-tebus-eksternal-form.component';
 
 import { DaftarObatPindahComponent }      from './farmasi/obat-pindah/daftar-obat-pindah.component';
 import { DetailObatPindahComponent }      from './farmasi/obat-pindah/detail-obat-pindah.component';
@@ -192,6 +194,8 @@ import { AppComponent }             from './app.component';
         DaftarObatTebusComponent,
         DetailObatTebusComponent,
         ObatTebusFormComponent,
+        ResepEksternalFormComponent,
+        ObatTebusEksternalFormComponent,
 
         DaftarObatPindahComponent,
         DetailObatPindahComponent,
