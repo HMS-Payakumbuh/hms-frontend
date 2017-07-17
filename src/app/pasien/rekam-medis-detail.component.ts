@@ -8,12 +8,14 @@ import { Pasien }					from './pasien';
 import { PasienService }			from './pasien.service';
 import { RekamMedisService }		from './rekam-medis.service';
 import { DiagnosisService }			from '../layanan/diagnosis.service';
+import { TindakanService }			from '../layanan/tindakan.service';
 
 @Component({
  	selector: 'rekam-medis-detail-page',
  	templateUrl: './rekam-medis-detail.component.html',
  	providers: [RekamMedisService,
  				DiagnosisService,
+ 				TindakanService,
  				PasienService]
 })
 
@@ -27,11 +29,13 @@ export class RekamMedisDetailComponent implements OnInit {
 	end: boolean;
 	listOfTindakan: number[] = [];
 	allDiagnosis: any[];
+	allTindakan: any[];
 	hasilPemeriksaan: any;
 
 	constructor(
 		private rekamMedisService: RekamMedisService,
 		private diagnosisService: DiagnosisService,
+		private tindakanService: TindakanService,
 		private route: ActivatedRoute,
 		private location: Location
 	) {}
@@ -57,6 +61,10 @@ export class RekamMedisDetailComponent implements OnInit {
 						.subscribe(data => {
 							this.allDiagnosis = data;
 						});
+					this.tindakanService.getTindakanOfRekamMedis(data.id_pasien, data.tanggal_waktu)
+						.subscribe(data => {
+							this.allTindakan = data;
+						});	
 				}
 			});	
 	}

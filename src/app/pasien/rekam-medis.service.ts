@@ -6,6 +6,8 @@ import { ENV }						from '../environment';
 import { Pasien }	        from './pasien';
 import { RekamMedis }     from './rekam-medis';
 
+import * as _ from "lodash";
+
 @Injectable()
 export class RekamMedisService {
 	private pasienUrl = ENV.pasienUrl;
