@@ -35,8 +35,15 @@
 							<tr *ngFor="let obatTebus of mf.data">
 								<td>{{obatTebus.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>
 								<td>{{obatTebus.resep.created_at | date:'d MMM y H:mm:ss'}}</td>
-								<td>{{obatTebus.transaksi.pasien.id}}</td>
-								<td>{{obatTebus.transaksi.pasien.nama_pasien}}</td>
+								<div *ngIf="obatTebus.resep.eksternal; then thenBlock else elseBlock"> </div>
+								<ng-template #thenBlock>
+									<td>EKSTERNAL</td>
+									<td>{{obatTebus.resep.nama}}</td>
+								</ng-template>
+								<ng-template #elseBlock>
+									<td>{{obatTebus.transaksi.pasien.id}}</td>
+									<td>{{obatTebus.transaksi.pasien.nama_pasien}}</td>
+								</ng-template> 
 								<td><button type="button" class="btn btn-info" [routerLink] = "['/obat-tebus', obatTebus.id]">Detail</button></td>
 							</tr>						
 						</tbody>	
