@@ -36,10 +36,10 @@
 
             <div class="form-group">
               <label for="harga_jual_satuan">Harga jual satuan</label>
-              <input type="text" class="form-control" id="harga_jual_satuan" name="harga_jual_satuan" value={{jenisObat.harga_jual_satuan}}>
+              <input type="text" class="form-control" id="harga_jual_satuan" name="harga_jual_satuan" [(ngModel)] = "jenisObat.harga_jual_satuan">
             </div>
 
-            <button type="submit" class="btn btn-success">Simpan</button>
+            <button type="submit" class="btn btn-success" (click)="save()">Simpan</button>
           </form>
         </div>
       </div>
