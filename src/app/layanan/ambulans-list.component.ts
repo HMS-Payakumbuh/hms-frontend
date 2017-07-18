@@ -36,7 +36,7 @@ export class AmbulansListComponent implements OnInit {
 
   createAmbulans() {
     this.ambulansService.createAmbulans(this.ambulansModal).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 
@@ -47,13 +47,13 @@ export class AmbulansListComponent implements OnInit {
 
   updateAmbulans() {
     this.ambulansService.updateAmbulans(this.ambulansModalNama, this.ambulansModal).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 
   destroyAmbulans(nama: string) {
     this.ambulansService.destroyAmbulans(nama).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 }

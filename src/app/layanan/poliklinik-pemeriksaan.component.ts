@@ -368,15 +368,24 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
           diagnosis.tanggal_waktu = this.rekamMedis.tanggal_waktu.date;
         }
 
-        this.diagnosisService.saveDiagnosis(this.selectedDiagnosis).subscribe(
-          data2 => {
-            this.tindakanService.saveTindakan(this.selectedTindakan).subscribe(
-              data3 => {
-                this.saveObatTindakan(data3);
-              }
-            );
-          }
-        );
+        if (this.selectedDiagnosis.length > 0) {
+          this.diagnosisService.saveDiagnosis(this.selectedDiagnosis).subscribe(
+            data2 => {
+              this.tindakanService.saveTindakan(this.selectedTindakan).subscribe(
+                data3 => {
+                  this.saveObatTindakan(data3);
+                }
+              );
+            }
+          );
+        }
+        else {
+          this.tindakanService.saveTindakan(this.selectedTindakan).subscribe(
+            data3 => {
+              this.saveObatTindakan(data3);
+            }
+          );
+        }
       }
     )
 	}

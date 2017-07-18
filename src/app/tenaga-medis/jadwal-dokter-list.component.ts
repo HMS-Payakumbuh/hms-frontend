@@ -38,7 +38,7 @@ export class JadwalDokterListComponent implements OnInit {
 
   createJadwalDokter() {
     this.jadwalDokterService.createJadwalDokter(this.jadwalDokterModal).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 
@@ -51,13 +51,13 @@ export class JadwalDokterListComponent implements OnInit {
 
   updateJadwalDokter() {
     this.jadwalDokterService.updateJadwalDokter(this.JadwalDokterModalNamaPoli, this.jadwalDokterModalNpDokter, this.jadwalDokterModalTanggal, this.jadwalDokterModal).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 
   destroyJadwalDokter(nama_poli: string, np_dokter: string, tanggal: string) {
     this.jadwalDokterService.destroyJadwalDokter(nama_poli, np_dokter, tanggal).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 }
