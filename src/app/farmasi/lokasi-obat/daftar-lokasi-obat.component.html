@@ -57,6 +57,17 @@
 								</div>
 							</div>
 
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="jenis">Jenis</label>
+						  			<select class="form-control" [(ngModel)]="lokasiObatModal.jenis">
+							  			<option value="2">Poliklinik</option>
+							  			<option value="0">Gudang Utama</option>
+							  			<option value="1">Apotek</option>
+						  			</select>
+						  		</div>
+							</div>
+
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
 								<button type="button" class="btn btn-success" (click)="updateLokasiObat()">Simpan</button>
@@ -82,6 +93,17 @@
 									<label for="nama">Nama</label>
 									<input type="text" class="form-control" id="nama" required [(ngModel)]="lokasiObatModal.nama" name="nama">
 								</div>
+							</div>
+
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="jenis">Jenis</label>
+						  			<select class="form-control" [(ngModel)]="lokasiObatModal.jenis">
+							  			<option value="2">Poliklinik</option>
+							  			<option value="0">Gudang Utama</option>
+							  			<option value="1">Apotek</option>
+						  			</select>
+						  		</div>
 							</div>
 
 							<div class="modal-footer">
