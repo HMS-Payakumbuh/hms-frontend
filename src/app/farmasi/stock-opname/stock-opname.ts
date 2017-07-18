@@ -8,3 +8,4 @@ export class StockOpname {
     public lokasi_data: LokasiObat = new LokasiObat(),
     public stock_opname_item: StockOpnameItem[] = []
   ) {  }
+}

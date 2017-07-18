@@ -15,3 +15,4 @@ export class StockOpnameItem {
     public jenis_obat: JenisObat = new JenisObat(),
     public stok_obat: StokObat = new StokObat()
   ) {  }
+}
