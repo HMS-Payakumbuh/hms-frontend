@@ -9,6 +9,7 @@ import { Transaksi }			from '../transaksi/transaksi';
 @Injectable()
 export class PemakaianKamarService {
 	rawatinapUrl = ENV.rawatinapUrl;
+	pemakaianKamarRawatinapUrl = ENV.pemakaianKamarRawatinapUrl;
 	transaksiUrl = ENV.transaksiUrl;
 
 	constructor(private http:Http) { }
@@ -19,7 +20,7 @@ export class PemakaianKamarService {
 	}
 
 	getAllPemakaianKamar(): Observable<PemakaianKamar[]> {
-		return this.http.get(this.rawatinapUrl)
+		return this.http.get(this.pemakaianKamarRawatinapUrl)
 			.map((res: Response) => res.json());
 	}
 
@@ -42,20 +43,20 @@ export class PemakaianKamarService {
 			.map((res: Response) => res.json());
 	}
 
-	updatePemakaianKamar(no_kamar: string, PemakaianKamar: PemakaianKamar) {
+	updatePemakaianKamar(id: number, no_kamar:string, no_tempat_tidur:number, PemakaianKamar: PemakaianKamar) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(PemakaianKamar);
 
-		return this.http.put(this.rawatinapUrl + '/' + no_kamar, body, options)
+		return this.http.put(this.pemakaianKamarRawatinapUrl+ '/' + id + '/' + no_kamar + '/' + no_tempat_tidur, body, options)
 			.map((res: Response) => res.json());
 	}
 
-	destroyPemakaianKamar(no_kamar: string) {
+	destroyPemakaianKamar(id: number, no_kamar:string, no_tempat_tidur:number) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 
-		return this.http.delete(this.rawatinapUrl + '/' + no_kamar, options)
+		return this.http.delete(this.pemakaianKamarRawatinapUrl + '/' + id + '/' + no_kamar + '/' + no_tempat_tidur, options)
 			.map((res: Response) => res.json());
 	}
 }

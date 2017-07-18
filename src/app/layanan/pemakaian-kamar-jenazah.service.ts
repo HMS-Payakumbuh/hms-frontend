@@ -35,20 +35,20 @@ export class PemakaianKamarJenazahService {
 			.map((res: Response) => res.json());
 	}
 
-	updatePemakaianKamarJenazah(no_kamar: string, PemakaianKamarJenazah: PemakaianKamarJenazah) {
+	updatePemakaianKamarJenazah(id: number, PemakaianKamarJenazah: PemakaianKamarJenazah) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(PemakaianKamarJenazah);
 
-		return this.http.put(this.pemakaianKamarJenazahUrl + '/' + no_kamar, body, options)
+		return this.http.put(this.pemakaianKamarJenazahUrl + '/' + id, body, options)
 			.map((res: Response) => res.json());
 	}
 
-	destroyPemakaianKamarJenazah(no_kamar: string) {
+	destroyPemakaianKamarJenazah(id: number) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 
-		return this.http.delete(this.pemakaianKamarJenazahUrl + '/' + no_kamar, options)
+		return this.http.delete(this.pemakaianKamarJenazahUrl + '/' + id, options)
 			.map((res: Response) => res.json());
 	}
 

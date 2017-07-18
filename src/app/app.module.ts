@@ -59,6 +59,11 @@ import { AmbulansListComponent }    from './layanan/ambulans-list.component';
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent } 	from './layanan/rawatinap-detail.component';
 
+import { KamarRawatinapListComponent } 	from './layanan/kamar-rawatinap-list.component';
+import { KamarJenazahListComponent } 	from './layanan/kamar-jenazah-list.component';
+import { KamarOperasiListComponent }		from './layanan/kamar-operasi-list.component';
+
+import { PemakaianKamarListComponent }		from './layanan/pemakaian-kamar.component';
 import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-operasi-list.component';
 import { PemakaianKamarJenazahListComponent }		from './layanan/pemakaian-kamar-jenazah-list.component';
 
@@ -165,8 +170,12 @@ import { AppComponent }             from './app.component';
 
         RawatinapListComponent,
         RawatinapDetailComponent,
+        PemakaianKamarListComponent,
         PemakaianKamarOperasiListComponent,
         PemakaianKamarJenazahListComponent,
+        KamarRawatinapListComponent,
+        KamarOperasiListComponent,
+        KamarJenazahListComponent,
 
         TenagaMedisListComponent,
         JadwalDokterListComponent,
