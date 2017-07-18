@@ -42,7 +42,7 @@ export class PemakaianKamarListComponent implements OnInit {
 	no_pegawai: string;
 
 	PemakaianKamarModal: PemakaianKamar = null;
-    PemakaianKamarModalNama: string = null;
+    PemakaianKamarModalId: number = null;
 
 	transaksi2 : any = null;
 	poliklinik: Poliklinik;
@@ -71,26 +71,19 @@ export class PemakaianKamarListComponent implements OnInit {
     	this.PemakaianKamarModal = new PemakaianKamar();
  	}
 
-	editPemakaianKamarRawatinap(nama: string, PemakaianKamarRawatinap: PemakaianKamar) {
-		this.PemakaianKamarModalNama = nama;
+	editPemakaianKamarRawatinap(id : number, PemakaianKamarRawatinap: PemakaianKamar) {
+		this.PemakaianKamarModalId = id;
 		this.PemakaianKamarModal = Object.assign({}, PemakaianKamarRawatinap);
-	}
-
-	updatePemakaianKamarRawatinap(PemakaianKamar: PemakaianKamar) {
-		this.pemakaianKamarService.updatePemakaianKamar(PemakaianKamar).subscribe(
+		this.pemakaianKamarService.updatePemakaianKamar(this.PemakaianKamarModalId, this.PemakaianKamarModal.no_kamar, this.PemakaianKamarModal.no_tempat_tidur, this.PemakaianKamarModal).subscribe(
 			data => { window.location.reload() }
 		);
 	}
 
-	// checkout(PemakaianKamar: PemakaianKamar) {
-	// 	this.pemakaianKamarService.updatePemakaianKamar(this.PemakaianKamarModal).subscribe(
-	// 		data => { window.location.reload() }
-	// 	);
-	// }
-
-	destroyPemakaianKamarRawatinap(nama: string) {
-		this.pemakaianKamarService.destroyPemakaianKamar(nama).subscribe(
-		data => { window.location.reload() }
+	destroyPemakaianKamarRawatinap(id: number, PemakaianKamarRawatinap: PemakaianKamar) {
+		this.PemakaianKamarModalId = id;
+		this.PemakaianKamarModal = Object.assign({}, PemakaianKamarRawatinap);
+		this.pemakaianKamarService.destroyPemakaianKamar(id, this.PemakaianKamarModal.no_kamar, this.PemakaianKamarModal.no_tempat_tidur).subscribe(
+			data => { window.location.reload() }
 		);
 	}
 

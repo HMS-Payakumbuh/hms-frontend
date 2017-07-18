@@ -33,7 +33,7 @@ export class PemakaianKamarJenazahListComponent implements OnInit {
 	waktuKeluar: Date;
 
 	pemakaianKamarJenazahModal: PemakaianKamarJenazah = null;
-    pemakaianKamarJenazahModalNama: string = null;
+    pemakaianKamarJenazahModalId: number = null;
 	
 	constructor(
 		private PemakaianKamarJenazahService: PemakaianKamarJenazahService,
@@ -63,6 +63,20 @@ export class PemakaianKamarJenazahListComponent implements OnInit {
       		data => { window.location.reload() }
     	);
   	}
+
+	editPemakaianKamarJenazah(id : number, PemakaianKamarJenazah: PemakaianKamarJenazah) {
+		this.pemakaianKamarJenazahModalId = id;
+		this.pemakaianKamarJenazahModal = Object.assign({}, PemakaianKamarJenazah);
+		this.PemakaianKamarJenazahService.updatePemakaianKamarJenazah(this.pemakaianKamarJenazahModalId, this.pemakaianKamarJenazahModal).subscribe(
+			data => { window.location.reload() }
+		);
+	}
+
+	destroyPemakaianKamarJenazah(id: number) {		
+		this.PemakaianKamarJenazahService.destroyPemakaianKamarJenazah(id).subscribe(
+			data => { window.location.reload() }
+		);
+	}
 
 	getRecentTransaksi(nama_pasien: string) {
 		this.transaksiService.getRecentTransaksi(nama_pasien).
