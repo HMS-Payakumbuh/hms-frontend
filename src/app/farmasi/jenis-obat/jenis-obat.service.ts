@@ -35,4 +35,11 @@ export class JenisObatService {
     	let body = JSON.stringify(jenisObat);
     	return this.http.post(this.jenisObatUrl, body, options ).map((res: Response) => res.json());
 	}
+
+	updateJenisObat(id: number, jenisObat: JenisObat) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+    	let options = new RequestOptions({ headers: headers });
+    	let body = JSON.stringify(jenisObat);
+    	return this.http.put(this.jenisObatUrl + '/' + id, body, options ).map((res: Response) => res.json());
+	}
 }
