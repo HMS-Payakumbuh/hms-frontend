@@ -1,6 +1,7 @@
 import { Component, Input, ChangeDetectorRef } from '@angular/core';
 import { Observable } 	from 'rxjs/Observable';
-import { Location }					from '@angular/common';
+// import { Location }					from '@angular/common';
+import { ActivatedRoute, Params, Router }	from '@angular/router';
 
 import { ObatTebus } from './obat-tebus';
 import { ObatTebusItem } from './obat-tebus-item';
@@ -19,12 +20,12 @@ import { Resep } from '../resep/resep';
 import { ResepService } from '../resep/resep.service';
 
 @Component({
-  selector: 'obat-tebus-form-page',
-  templateUrl: './obat-tebus-form.component.html',
+  selector: 'obat-tebus-eksternal-form-page',
+  templateUrl: './obat-tebus-eksternal-form.component.html',
   providers: [ObatTebusService, PasienService, TransaksiService, ResepService, StokObatService]
 })
 
-export class ObatTebusFormComponent {	
+export class ObatTebusEksternalFormComponent {	
 
 	public allPasien: Pasien[];
 	// public allTransaksiOfPasien: Transaksi[];	
@@ -62,14 +63,6 @@ export class ObatTebusFormComponent {
 			.map(term => term.length < 2 ? []
 				: this.allStokObatAtLocation.filter(stokObat => stokObat.jenis_obat.merek_obat.toLowerCase().indexOf(term.toLowerCase()) > -1));
 
-
-	searchNamaPasien = (text$: Observable<string>) =>
-		text$
-			.debounceTime(200)
-			.distinctUntilChanged()
-			.map(term => term.length < 2 ? []
-				: this.allPasien.filter(pasien => pasien.nama_pasien.toLowerCase().indexOf(term.toLowerCase()) > -1));
-
 	/*
 	// TO-DO: Input batch numbers
 	searchNoBatch = (text$: Observable<string>) =>
@@ -87,25 +80,44 @@ export class ObatTebusFormComponent {
 		private pasienService: PasienService,
 		private transaksiService: TransaksiService,
 		private resepService: ResepService,		
-		private location: Location
+		// private location: Location,
+		private route: ActivatedRoute,
+		private router: Router,
 	) {}
 
-	ngOnInit(): void {
-		this.pasienService.getAllPasien().subscribe(
-			data => { this.allPasien = data }
-		);
-
+	ngOnInit(): void {		
 		// TO-DO: Change Location ID to dynamic based on which is the Apotek
 		this.stokObatService.getStokObatByLocation(2).subscribe(
-			data => { this.allStokObatAtLocation = data }
+			data => { 
+				this.allStokObatAtLocation = data;
+				this.route.params
+					.switchMap((params: Params) => this.resepService.getResep(+params['id']))
+					.subscribe(
+						resep => {
+							this.resep = resep;
+
+							let i = 0;
+							let j = 0;
+							for (let resep_item of this.resep.resep_item) {  					
+								j = 0;	
+								for (let racikan_item of resep_item.racikan_item) {  						
+									this.id_jenis_obat[i][j] = racikan_item.id_jenis_obat;
+									this.harga_jual_realisasi[i][j] = racikan_item.jenis_obat.harga_jual_satuan;
+									this.jumlah[i][j] = racikan_item.jumlah;		
+									this.id_resep_item[i][j] = resep_item.id;
+									this.id_racikan_item[i][j] = racikan_item.id;
+									j = j + 1;
+								}			
+								this.racikanItemCount[i] = j;				
+								i = i + 1;	
+							}
+							this.resepItemCount = i; 
+						}
+					)
+			}
 		);
-
-		this.pasien = new Pasien();
-		this.resep = new Resep();		
-		this.obatTebus = new ObatTebus();
-
-		this.allPasien = [];
-		this.allResepOfTanggal =  [];
+	
+		this.obatTebus = new ObatTebus();	
 		this.obatTebusItems = [];
 		
 		this.id_jenis_obat = [];
@@ -149,10 +161,6 @@ export class ObatTebusFormComponent {
 			this.racikanItemCount[i] = 0;
 		}
 
-	}
-
-	private addPasien(pasien: Pasien) {	
-		this.pasien = pasien;
 	}
 
 	private onTanggalResepChange(tanggal_resep: Date) {
@@ -247,8 +255,8 @@ export class ObatTebusFormComponent {
 				// alert(JSON.stringify(this.obatTebus)); 
 
 				this.obatTebusService.createObatTebus(this.obatTebus).subscribe(
-			       	data => {
-			         	this.location.back();
+			       	data => {			         	
+		     			this.router.navigateByUrl('/obat-tebus');
 			         	return true;
 			       	},
 			       	error => {

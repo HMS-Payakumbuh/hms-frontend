@@ -4,8 +4,9 @@ export class Resep {
 	constructor(
 	public id: number = null,
 	public id_transaksi: number = null,
-	public id_tindakan: number = null,
-	public no_resep: number = null,
+	public nama: string = "",
+	public alamat: string = "",
+	public eksternal: boolean = false,
 	public resep_item: ResepItem[] = []
 	) {}
 }

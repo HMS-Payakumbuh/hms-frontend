@@ -35,7 +35,7 @@ export class PoliklinikListComponent implements OnInit {
 
   createPoliklinik() {
     this.poliklinikService.createPoliklinik(this.poliklinikModal).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 
@@ -46,13 +46,13 @@ export class PoliklinikListComponent implements OnInit {
 
   updatePoliklinik() {
     this.poliklinikService.updatePoliklinik(this.poliklinikModalNama, this.poliklinikModal).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 
   destroyPoliklinik(nama: string) {
     this.poliklinikService.destroyPoliklinik(nama).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 }

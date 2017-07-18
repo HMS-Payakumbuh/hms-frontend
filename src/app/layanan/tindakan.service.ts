@@ -23,6 +23,11 @@ export class TindakanService {
 		return Promise.reject(error.message || error);
 	}
 
+	getTindakanOfRekamMedis(id_pasien: number, tanggal_waktu: string): Observable<Tindakan[]> {
+		return this.http.get(this.tindakanUrl + '/rekam_medis/' + id_pasien + '/' + tanggal_waktu)
+			.map((res: Response) => res.json());
+	}
+
 	getAllTindakanReference(): Observable<TindakanReference[]> {
 		return this.http.get(this.tindakanReferenceUrl)
 			.map((res: Response) => res.json());

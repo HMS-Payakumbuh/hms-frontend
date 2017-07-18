@@ -14,13 +14,22 @@
 							<th><mfDefaultSorter by="kategori_antrian">Kategori Antrian</mfDefaultSorter></th>
 							<th></th>
 							<th></th>
+							<th></th>
 						</thead>
 						<tbody *ngFor="let laboratorium of mf.data">
 							<tr>
 								<td>{{laboratorium?.nama}}</td>
 								<td>{{laboratorium?.kategori_antrian}}</td>
 								<td>
-									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#editLaboratoriumModal'" (click)="editLaboratorium(laboratorium.nama, laboratorium)">Edit</button>
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal"
+									 [attr.data-target]="'#editLaboratoriumModal'" (click)="editLaboratorium(laboratorium.nama, laboratorium)">
+										Edit
+									</button>
+								</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-info" [routerLink]="['/antrian', laboratorium.nama]">
+										Lihat Antrian
+									</button>
 								</td>
 								<td>
 									<button type="button" class="btn btn-sm btn-danger" (click)="destroyLaboratorium(laboratorium.nama)">
@@ -67,8 +76,8 @@
 							</div>
 
 							<div class="modal-footer">
-								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-								<button type="button" class="btn btn-success" (click)="updateLaboratorium()">Simpan</button>
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+								<button type="button" class="btn btn-success" data-dismiss="modal" (click)="updateLaboratorium()">Simpan</button>
 							</div>
 
 						</div>
@@ -99,8 +108,8 @@
 							</div>
 
 							<div class="modal-footer">
-								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-								<button type="button" class="btn btn-success" (click)="createLaboratorium()">Simpan</button>
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+								<button type="button" class="btn btn-success" data-dismiss="modal" (click)="createLaboratorium()">Simpan</button>
 							</div>
 
 						</div>

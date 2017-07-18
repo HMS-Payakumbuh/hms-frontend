@@ -1,0 +1,124 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-plus-square" aria-hidden="true"></i> Informasi Rekam Medis
+					</h4>
+				</div>
+				<div class="card-block">
+					<b>Tercatat pada tanggal : </b>{{tanggal}}
+				</div>
+			</div>
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-id-card-o" aria-hidden="true"></i> Data Pribadi Pasien
+					</h4>
+				</div>
+				<div class="card-block">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td><b>Nama</b></td>
+								<td>{{pasien?.nama_pasien}}</td>
+								<td><b>Jenis kelamin</b></td>
+								<td>{{pasien?.jender == 1 && 'Laki-laki' || 'Perempuan'}}</td>
+							</tr>
+							<tr>
+								<td><b>Tanggal Lahir</b></td>
+								<td>{{pasien?.tanggal_lahir}}</td>
+								<td><b>Kontak</b></td>
+								<td>{{pasien?.kontak}}</td>
+							</tr>
+							<tr>
+								<td><b>Alamat</b></td>
+								<td>{{pasien?.alamat}}</td>
+								<td></td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-stethoscope" aria-hidden="true"></i> Hasil Pemeriksaan Awal
+					</h4>
+				</div>
+				<div class="card-block">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td><b>Tekanan Darah</b></td>
+								<td>{{hasilPemeriksaan?.tekanan_darah}} mmHg</td>
+								<td><b>Nadi</b></td>
+								<td>{{hasilPemeriksaan?.nadi}} x/min</td>
+								<td><b>Frekuensi Napas</b></td>
+								<td>{{hasilPemeriksaan?.frekuensi_napas}} x/min</td>
+							</tr>
+							<tr>
+								<td><b>Temperatur</b></td>
+								<td>{{hasilPemeriksaan?.temperatur}} C</td>
+								<td><b>Berat Badan</b></td>
+								<td>{{hasilPemeriksaan?.berat_badan}} kg</td>
+								<td><b>Tinggi Badan</b></td>
+								<td>{{hasilPemeriksaan?.tinggi_badan}} cm</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-medkit" aria-hidden="true"></i> Diagnosis
+					</h4>
+				</div>
+				<div class="card-block">
+					<table class="table">
+						<thead>
+							<th><b>Kode</b></th>
+							<th><b>Nama</b></th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let diagnosis of allDiagnosis">
+								<td>{{diagnosis?.daftar_diagnosis.kode}}</td>
+								<td>{{diagnosis?.daftar_diagnosis.nama}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-file-text-o" aria-hidden="true"></i> Tindakan
+					</h4>
+				</div>
+				<div class="card-block">
+					<table class="table">
+						<thead>
+							<th><b>Kode</b></th>
+							<th><b>Nama</b></th>
+							<th><b>Dokter Penanggungjawab</b></th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let tindakan of allTindakan">
+								<td>{{tindakan?.daftar_tindakan.kode}}</td>
+								<td>{{tindakan?.daftar_tindakan.nama}}</td>
+								<td>{{tindakan?.tenaga_medis.nama}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="pull-right">
+			<button type="button" class="btn btn-warning" (click)="goBack()">Kembali</button>
+			<button type="button" class="btn btn-success" *ngIf="!end" [routerLink]="['/rekam_medis', pasien?.id, noEntry]">Berikutnya</button>
+		</div>
+	</div>
+</div>

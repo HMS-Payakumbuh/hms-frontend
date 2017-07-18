@@ -22,10 +22,9 @@ export class AntrianComponent implements OnInit {
   allAntrian: any[];
   kategori: string;
   total: number = 0;
-  //socket:any = null;
   antrian: any = { no_antrian: null };
-  active: number;
   umum: boolean = true;
+  antrianEmpty:boolean;
   isfrontoffice: boolean;
   ispoli: boolean;
   sub: any;
@@ -38,11 +37,6 @@ export class AntrianComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-/*    this.socket = io.connect('http://localhost:8000');
-    this.socket.on('message', function (data) {
-        if (data)
-          alert(data);
-      });*/
     this.sub = this.route.params
       .subscribe(params => {
         this.layanan = params['namaLayanan'];
@@ -56,13 +50,7 @@ export class AntrianComponent implements OnInit {
       this.isfrontoffice = true;
     }
     else {
-      this.route.params
-        .switchMap((params: Params) => this.antrianService.getAntrian(params['namaLayanan']))
-        .subscribe(allAntrian => {
-            this.allAntrian = allAntrian;
-            this.total = allAntrian.length;
-            this.antrian = allAntrian[0];
-          });
+      this.updateAntrian();
       this.isfrontoffice = false;
       if (this.layanan.substring(0, 4) === 'Poli')
         this.ispoli = true;
@@ -71,44 +59,73 @@ export class AntrianComponent implements OnInit {
     }
   }
 
-  private proses(jenis:string) {
-    this.allAntrian.splice(this.allAntrian.indexOf(this.antrian), 1);
-    if (jenis === 'undur') {
-      if (this.isfrontoffice) {
-        this.antrianService.updateAntrianFrontOffice(this.antrian.nama_layanan, this.antrian.no_antrian).subscribe();
-      } else {
-        this.antrianService.updateAntrian(this.antrian.id_transaksi, this.antrian.no_antrian).subscribe();
-      }
-    } else {
-      if (this.isfrontoffice) {
-        this.antrianService.destroyAntrianFrontOffice(this.antrian.nama_layanan, this.antrian.no_antrian).subscribe();
-      } else {
-        this.antrianService.destroyAntrian(this.antrian.id_transaksi, this.antrian.no_antrian).subscribe();
-      }
-    }
-
-    this.active = this.nextAntrian(this.umum);
-    if (!this.active)
-      this.active = this.nextAntrian(!this.umum);
-    else
-      this.umum = !this.umum;
+  private updateAntrian() {
+    this.route.params
+        .switchMap((params: Params) => this.antrianService.getAntrian(params['namaLayanan']))
+        .subscribe(allAntrian => {
+          this.allAntrian = allAntrian;
+          this.total = allAntrian.length;
+          this.antrian = this.nextAntrian(this.umum);
+          if (!this.antrian)
+            this.antrian = this.nextAntrian(!this.umum);
+          else
+            this.umum = !this.umum;
+          if (allAntrian.length == 0) {
+            this.antrianEmpty = true;
+          }
+        });
   }
 
-  private nextAntrian(umum: boolean) {
-    if (umum) {
-      return _.find(this.allAntrian, {jenis: 1}) ? _.find(this.allAntrian, {jenis: 1}).no_antrian: null;
-    } else {
-      return _.find(this.allAntrian, {jenis: 0}) ? _.find(this.allAntrian, {jenis: 0}).no_antrian: null;
-    }
-  }
-
-  private changeKategori() {
+  private updateAntrianFrontOffice() {
     this.antrianService.getAntrianFrontOffice(this.kategori)
       .subscribe(allAntrian => {
         this.allAntrian = allAntrian;
         this.total = allAntrian.length;
-        this.antrian = allAntrian[0];
+        this.antrian = this.nextAntrian(this.umum);
+        if (!this.antrian)
+          this.antrian = this.nextAntrian(!this.umum);
+        else
+          this.umum = !this.umum;
+        if (allAntrian.length == 0) {
+          this.antrianEmpty = true;
+        }
       });
+  }
+
+  private proses(jenis:string) {
+    if (jenis === 'undur') {
+      if (this.isfrontoffice) {
+        this.antrianService.updateAntrianFrontOffice(this.antrian.nama_layanan, this.antrian.no_antrian).subscribe(data => {
+          this.updateAntrianFrontOffice();
+        });
+      } else {
+        this.antrianService.updateAntrian(this.antrian.id_transaksi, this.antrian.no_antrian).subscribe(data => {
+          this.updateAntrian();
+        });
+      }
+    } else {
+      if (this.isfrontoffice) {
+        this.antrianService.destroyAntrianFrontOffice(this.antrian.nama_layanan, this.antrian.no_antrian).subscribe(data => {
+          this.updateAntrianFrontOffice();
+        });
+      } else {
+        this.antrianService.destroyAntrian(this.antrian.id_transaksi, this.antrian.no_antrian).subscribe(data => {
+          this.updateAntrian();
+        });
+      }
+    }
+  }
+
+  private nextAntrian(umum: boolean) {
+    if (umum) {
+      return _.find(this.allAntrian, {jenis: 1}) ? _.find(this.allAntrian, {jenis: 1}): null;
+    } else {
+      return _.find(this.allAntrian, {jenis: 0}) ? _.find(this.allAntrian, {jenis: 0}): null;
+    }
+  }
+
+  private changeKategori() {
+    this.updateAntrianFrontOffice();
   }
 
   submitted = false;

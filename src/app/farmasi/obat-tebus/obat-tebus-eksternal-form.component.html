@@ -8,14 +8,22 @@
 
       <div class="card-block">
         <div class="card-text">
-            <form #obatTebusForm="ngForm">
+            <form #obatTebusEksternalForm="ngForm">
               <div class="form-group">
-                <label for="nama_pasien">Nama Pasien *</label>
+                <label for="nama">Nama</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" id="nama_pasien" required [ngbTypeahead]="searchNamaPasien" [inputFormatter]="inputPasienFormatter" [resultFormatter]="resultPasienFormatter" (selectItem)="addPasien($event.item)" [(ngModel)]="nama_pasien" name="nama_pasien"> 
+                  <input type="text" class="form-control" id="nama" disabled  [(ngModel)]="resep.nama" name="nama"> 
                 </div>                    
               </div>
 
+              <div class="form-group">
+                <label for="alamat">Alamat</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="alamat" disabled  [(ngModel)]="resep.alamat" name="alamat"> 
+                </div>                    
+              </div>
+
+              <!--
               <div class="form-group">
                 <label for="tanggal_resep">Tanggal Resep</label>
                 <input type="date" class="form-control" id="tanggal_resep" [(ngModel)] = "tanggal_resep" (ngModelChange)="onTanggalResepChange($event)" name="tanggal_resep">
@@ -27,6 +35,7 @@
                   <option *ngFor="let resep of allResepOfTanggal" [value]="resep.id">{{resep.created_at}}</option>
                 </select>
               </div>
+              -->
 
               <table class="table">
                 <thead>

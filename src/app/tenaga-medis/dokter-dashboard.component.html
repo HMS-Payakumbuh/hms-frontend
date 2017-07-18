@@ -1,0 +1,29 @@
+<html>
+  <div class="row">
+    <div class="col-md-12">
+
+      <div class="card mb-3">
+        <div class="card-header card-info">
+          <h4 class="mb-0">Welcome, {{dokter?.tenaga_medis.nama}}</h4>
+        </div>
+        <div class="card-block">
+          <label for="selectPoli">Pilih poliklinik</label>
+          <select class="form-control mb-3" id="selectPoli" [(ngModel)]="selectedPoliklinik" name="selectPoli">
+            <option *ngFor="let poliklinik of allPoliklinik" [ngValue]="poliklinik">{{poliklinik.nama}}</option>
+          </select>
+
+          <div *ngIf="selectedPoliklinik != null">
+            <button type="button mr-3" class="btn btn-info" [routerLink]="['/antrian', selectedPoliklinik.nama]">
+              Lihat Antrian ke {{selectedPoliklinik.nama}}
+            </button>
+
+            <button type="button" class="btn btn-info">
+              Buat resep
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</html>

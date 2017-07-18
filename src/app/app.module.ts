@@ -17,6 +17,7 @@ import { FilterWaktuMasukPipe }            from './pipe/filter-waktu-masuk.pipe'
 import { FilterWaktuKeluarPipe }            from './pipe/filter-waktu-keluar.pipe';
 import { FilterWaktuPindahPipe }            from './pipe/filter-waktu-pindah.pipe';
 import { FilterWaktuTransaksiPipe }            from './pipe/filter-waktu-transaksi.pipe';
+import { FilterWaktuResepPipe }            from './pipe/filter-waktu-resep.pipe';
 import { FilterNamaAsuransiPipe }       from './pipe/filter-nama-asuransi.pipe';
 import { FilterJenisPasienPipe }       from './pipe/filter-jenis-pasien.pipe';
 import { FilterJenisObatPipe }     from './pipe/filter-jenis-obat.pipe';
@@ -44,8 +45,8 @@ import { AntrianComponent }         		from './antrian/antrian.component';
 import { DaftarAntrianComponent }         	from './antrian/daftar-antrian.component';
 import { PasienFormComponent }      		from './pasien/pasien-form.component';
 import { PasienListComponent }              from './pasien/pasien-list.component';
-import { CatatanKematianFormComponent }              from './pasien/catatan-kematian-form.component';
-
+import { CatatanKematianFormComponent }     from './pasien/catatan-kematian-form.component';
+import { RekamMedisDetailComponent }        from './pasien/rekam-medis-detail.component';
 
 import { PoliklinikListComponent }          from './layanan/poliklinik-list.component';
 import { PoliklinikPemeriksaanComponent }   from './layanan/poliklinik-pemeriksaan.component';
@@ -66,10 +67,12 @@ import { PemakaianKamarListComponent }		from './layanan/pemakaian-kamar.componen
 import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-operasi-list.component';
 import { PemakaianKamarJenazahListComponent }		from './layanan/pemakaian-kamar-jenazah-list.component';
 
-import { TenagaMedisListComponent }     from './tenaga-medis/tenaga-medis-list.component';
-import { JadwalDokterListComponent }    from './tenaga-medis/jadwal-dokter-list.component';
-import { DiagnosisReferenceListComponent }	from './layanan/diagnosis-reference-list.component';
-import { TindakanReferenceListComponent }    from './layanan/tindakan-reference-list.component';
+import { TenagaMedisListComponent }       from './tenaga-medis/tenaga-medis-list.component';
+import { JadwalDokterListComponent }      from './tenaga-medis/jadwal-dokter-list.component';
+import { DiagnosisReferenceListComponent }from './layanan/diagnosis-reference-list.component';
+import { TindakanReferenceListComponent } from './layanan/tindakan-reference-list.component';
+
+import { DokterDashboardComponent }   from './tenaga-medis/dokter-dashboard.component';
 
 import { DaftarStokObatComponent }            from './farmasi/stok-obat/daftar-stok-obat.component';
 import { DetailStokObatComponent }            from './farmasi/stok-obat/detail-stok-obat.component';
@@ -88,6 +91,8 @@ import { EditJenisObatComponent }       from './farmasi/jenis-obat/edit-jenis-ob
 import { DaftarObatTebusComponent }         from './farmasi/obat-tebus/daftar-obat-tebus.component';
 import { DetailObatTebusComponent }         from './farmasi/obat-tebus/detail-obat-tebus.component';
 import { ObatTebusFormComponent }           from './farmasi/obat-tebus/obat-tebus-form.component';
+import { ResepEksternalFormComponent }           from './farmasi/obat-tebus/resep-eksternal-form.component';
+import { ObatTebusEksternalFormComponent }           from './farmasi/obat-tebus/obat-tebus-eksternal-form.component';
 
 import { DaftarObatPindahComponent }      from './farmasi/obat-pindah/daftar-obat-pindah.component';
 import { DetailObatPindahComponent }      from './farmasi/obat-pindah/detail-obat-pindah.component';
@@ -129,6 +134,7 @@ import { AppComponent }             from './app.component';
         FilterWaktuKeluarPipe,
         FilterWaktuPindahPipe,
         FilterWaktuTransaksiPipe,
+        FilterWaktuResepPipe,
         FilterNamaAsuransiPipe,
         FilterJenisPasienPipe,
         FilterJenisObatPipe,
@@ -152,6 +158,7 @@ import { AppComponent }             from './app.component';
         PasienFormComponent,
         PasienListComponent,
         CatatanKematianFormComponent,
+        RekamMedisDetailComponent,
 
         PoliklinikListComponent,
         PoliklinikPemeriksaanComponent,
@@ -174,6 +181,8 @@ import { AppComponent }             from './app.component';
         JadwalDokterListComponent,
         DiagnosisReferenceListComponent,
         TindakanReferenceListComponent,
+
+        DokterDashboardComponent,
 
         MatchesStatusPipe,
         FilterNamaPasienPipe,
@@ -198,6 +207,8 @@ import { AppComponent }             from './app.component';
         DaftarObatTebusComponent,
         DetailObatTebusComponent,
         ObatTebusFormComponent,
+        ResepEksternalFormComponent,
+        ObatTebusEksternalFormComponent,
 
         DaftarObatPindahComponent,
         DetailObatPindahComponent,
