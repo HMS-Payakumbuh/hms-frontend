@@ -1,4 +1,5 @@
 import 'rxjs/add/operator/switchMap';
+import * as _ from "lodash";
 import { Component, Input, OnInit }	from '@angular/core';
 import { ActivatedRoute, Params }	from '@angular/router';
 import { Location }					from '@angular/common';
@@ -18,6 +19,8 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 export class TransaksiDetailComponent implements OnInit {
 	response: any;
 	transaksi: any;
+	asuransi: Asuransi;
+	allAsuransi: Asuransi[];
 	umur: number = 0;
 	listOfTindakan: number[] = [];
 	allMetode = [];
@@ -31,6 +34,7 @@ export class TransaksiDetailComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
+		this.asuransi = new Asuransi(null,'',null);
 		this.route.params
 			.switchMap((params: Params) => this.transaksiService.getTransaksi(+params['id']))
 			.subscribe(data => {
@@ -40,12 +44,30 @@ export class TransaksiDetailComponent implements OnInit {
 				this.calculateAge(this.transaksi.pasien.tanggal_lahir);
 
 				this.asuransiService.getAsuransi(this.transaksi.pasien.id)
-					.subscribe(listAsuransi => this.initMetodeList(listAsuransi));
+					.subscribe(listAsuransi => {
+						this.allAsuransi = listAsuransi;
+						this.initMetodeList(listAsuransi);
+					});
 			});
 	}
 
 	goBack(): void {
 		this.location.back();
+	}
+
+	gantiAsuransi(value): void {
+		if (value == 'tunai') {
+			this.asuransi = new Asuransi(null, value, null);
+		}
+		else {
+			for (let asuransi of this.allAsuransi) {
+				if (asuransi.nama_asuransi == value) {
+					this.asuransi = asuransi;
+				}
+			}
+		}
+		console.log(value);
+		console.log(this.asuransi);
 	}
 
 	private initMetodeList(items: Asuransi[]): void {
@@ -102,7 +124,16 @@ export class TransaksiDetailComponent implements OnInit {
 		this.createPembayaran(total_harga, this.transaksi.asuransi_pasien, listOfTindakan);
 	}
 
+	private createAsuransi(id: number) {
+		this.asuransi.id_pasien = id;
+		let asuransi:any = { asuransi: this.asuransi };
+		this.asuransiService.createAsuransi(asuransi).subscribe();
+	}
+
 	bayar(metode: string = 'tunai'): void {
+		if (metode != 'tunai') {
+			this.createAsuransi(this.transaksi.id_pasien);
+		}
 		if (this.listOfTindakan.length > 0) {
 			let total_harga: number = 0;
 			for (let i of this.listOfTindakan) {

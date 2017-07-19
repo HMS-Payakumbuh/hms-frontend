@@ -38,7 +38,7 @@
 									<td>{{tindakan.daftar_tindakan.nama}}</td>
 									<td></td>
 									<td>Rp. {{tindakan.harga | number: '.2-2'}}</td>
-									<td><input *ngIf="transaksi.asuransi_pasien === 'tunai' && tindakan.id_pembayaran === null" type="checkbox" [id]="'tindakan' + tindakan.id" (change)="updateCheckedTindakan(tindakan.id)"></td>
+									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs' && tindakan.id_pembayaran === null" type="checkbox" [id]="'tindakan' + tindakan.id" (change)="updateCheckedTindakan(tindakan.id)"></td>
 								</tr>
 								<tr>
 									<th>Obat</th>
@@ -50,7 +50,7 @@
 									<td>{{obat.nama}}</td>
 									<td>{{obat.jumlah}} {{obat.satuan}}</td>
 									<td>Rp. {{obat.jumlah * obat.harga_satuan | number: '.2-2'}}</td>
-									<td><input *ngIf="transaksi.asuransi_pasien === 'tunai' && obat.id_pembayaran === null" type="checkbox" value="obat.id"></td>
+									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs' && obat.id_pembayaran === null" type="checkbox" value="obat.id"></td>
 								</tr>
 								<tr>
 									<td></td>
@@ -104,17 +104,27 @@
 
 						<div class="modal-body">
 							<div class="form-group">
-								<label for="kode">Metode Bayar:</label>
-								<select class="form-control" id="metode" [(ngModel)]="status">
-									<option selected>TUNAI</option>
-			                    	<option *ngFor="let metode of allMetode">{{metode.toUpperCase()}}</option>
+								<label>Metode Bayar:</label>
+								<select class="form-control" id="metode" [(ngModel)]="status" (ngModelChange)="gantiAsuransi($event)">
+									<option [value]="'tunai'" selected>TUNAI</option>
+			                    	<option [value]="metode" *ngFor="let metode of allMetode">{{metode.toUpperCase()}}</option>
 			                    </select>
+			                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+									<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+										<div class="input-group-addon">Nomor</div>
+										<input [(ngModel)]="this.asuransi.no_kartu" type="text" class="form-control" name="no_asuransi" value="{{this.asuransi.no_kartu}}">
+									</div>
+									<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+										<div class="input-group-addon">Nama</div>
+										<input [(ngModel)]="this.asuransi.nama_asuransi" type="text" class="form-control" name="nama_asuransi" value="{{this.asuransi.nama_asuransi}}">
+									</div>
+								</div>
 							</div>
 						</div>
 
 						<div class="modal-footer">
 							<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-							<button type="button" class="btn btn-success" (click)="bayar(this.status)">Bayar</button>
+							<button type="button" class="btn btn-success" (click)="bayar(this.asuransi.nama_asuransi)">Bayar</button>
 						</div>
 
 					</div>
