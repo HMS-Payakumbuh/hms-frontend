@@ -1,0 +1,62 @@
+  <div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-newspaper-o" aria-hidden="true"></i> Detail Stock Opname
+				</h4>
+			</div>
+			<div *ngIf="stockOpname" class="card-block">
+				<div class="card-text">
+
+					<div class="row">
+						<table class="table">
+							<tbody>		
+								<tr>
+									<td><b>Lokasi</b></td>
+									<td>{{stockOpname.lokasi_data.nama}}</td>	
+								</tr>						
+								<tr>
+									<td><b>Waktu Stock Opname</b></td>
+									<td>{{stockOpname.created_at | date:'d MMM y H:mm:ss'}}</td>
+								</tr>	
+							</tbody>
+						</table>
+					</div>
+
+					<div class="row">
+						<table class="table" [mfData]="stockOpname.stock_opname_item" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+							<tbody>
+								<tr>
+									<th><mfDefaultSorter by="obat_masuk.barcode">Kode Obat</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="jenis_obat.merek_obat">Merek Obat</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="obat_masuk.kadaluarsa">Kadaluarsa</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="jumlah_tercatat">Jumlah Tercatat</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="jumlah_sebenarnya">Jumlah Sebenarnya</mfDefaultSorter></th>
+								</tr>
+								<tr *ngFor="let stockOpnameItem of mf.data">
+									<td>{{stockOpnameItem.obat_masuk.barcode}}</td>
+									<td>{{stockOpnameItem.jenis_obat.merek_obat}}</td>
+									<td>{{stockOpnameItem.obat_masuk.kadaluarsa | date:'d MMM y'}}</td>
+									<td>{{stockOpnameItem.jumlah_tercatat}} {{stockOpnameItem.jenis_obat.satuan}}</td>
+									<td>{{stockOpnameItem.jumlah_sebenarnya}} {{stockOpnameItem.jenis_obat.satuan}}</td>
+								</tr>						
+							</tbody>	
+							<tfoot>
+				                <tr>
+				                    <td colspan="7">
+				                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+				                    </td>
+				                </tr>
+				            </tfoot>			
+						</table>
+					</div>
+
+					<div class="row">
+						<div class="offset-md-10 col-md-2">
+							<button class="btn btn-danger" (click)="goBack()">Kembali</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
