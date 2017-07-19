@@ -170,7 +170,7 @@ export class PasienFormComponent implements OnInit {
     }
     let payload: any = {
       id_pasien: id_pasien,
-      no_sep: "00990099",
+      no_sep: Math.random().toString(36).substring(7),
       kode_jenis_pasien: kode_jenis_pasien,
       asuransi_pasien: this.asuransi.nama_asuransi,
       jenis_rawat: 2,
