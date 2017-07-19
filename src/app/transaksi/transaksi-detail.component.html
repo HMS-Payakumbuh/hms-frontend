@@ -14,8 +14,8 @@
 								<div class="col-md-12">
 									<h3>Transaksi {{transaksi.no_transaksi}}</h3>
 									<b>{{transaksi.pasien.nama_pasien}}</b>
-									<p *ngIf="transaksi.pasien.jender === 0">Laki-laki</p>
-									<p *ngIf="transaksi.pasien.jender === 1">Perempuan</p>
+									<p *ngIf="transaksi.pasien.jender === 1">Laki-laki</p>
+									<p *ngIf="transaksi.pasien.jender === 2">Perempuan</p>
 									<p>{{umur}} Tahun</p>
 									<p>No. Sep: {{transaksi.no_sep}}</p>
 									<p>Metode Bayar: {{transaksi.asuransi_pasien.toUpperCase()}}</p>
@@ -28,7 +28,7 @@
 					<div class="row">
 						<table class="table">
 							<tbody>
-								<tr>
+								<tr *ngIf="transaksi.tindakan?.length > 0">
 									<th>Tindakan</th>
 									<th></th>
 									<th>Harga</th>
@@ -40,17 +40,29 @@
 									<td>Rp. {{tindakan.harga | number: '.2-2'}}</td>
 									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs' && tindakan.id_pembayaran === null" type="checkbox" [id]="'tindakan' + tindakan.id" (change)="updateCheckedTindakan(tindakan.id)"></td>
 								</tr>
-								<tr>
+								<tr *ngIf="listOfObatTebus?.length > 0">
 									<th>Obat</th>
 									<th></th>
 									<th></th>
 									<th></th>
 								</tr>
-								<tr *ngFor="let obat of transaksi.obat">
-									<td>{{obat.nama}}</td>
-									<td>{{obat.jumlah}} {{obat.satuan}}</td>
-									<td>Rp. {{obat.jumlah * obat.harga_satuan | number: '.2-2'}}</td>
-									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs' && obat.id_pembayaran === null" type="checkbox" value="obat.id"></td>
+								<tr *ngFor="let obat of listOfObatTebus">
+									<td>{{obat.jenis_obat.merek_obat}}</td>
+									<td>{{obat.jumlah}} {{obat.jenis_obat.satuan}} @ Rp. {{obat.harga_jual_realisasi | number: '.2-2'}}</td>
+									<td>Rp. {{obat.jumlah * obat.harga_jual_realisasi | number: '.2-2'}}</td>
+									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs'" type="checkbox" value="obat.id"></td>
+								</tr>
+								<tr *ngIf="listOfKamarRawatInap?.length > 0">
+									<th>Kamar Rawat Inap</th>
+									<th></th>
+									<th></th>
+									<th></th>
+								</tr>
+								<tr *ngFor="let kamar of listOfKamarRawatInap">
+									<td></td>
+									<td></td>
+									<td>Rp. </td>
+									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs'" type="checkbox"></td>
 								</tr>
 								<tr>
 									<td></td>

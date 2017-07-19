@@ -4,7 +4,6 @@ import { Component, Input, OnInit }	from '@angular/core';
 import { ActivatedRoute, Params }	from '@angular/router';
 import { Location }					from '@angular/common';
 
-import * as _ from "lodash";
 import { PembayaranService }		from '../pembayaran/pembayaran.service';
 import { TransaksiService }			from './transaksi.service';
 import { Transaksi }				from './transaksi';
@@ -20,6 +19,8 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 export class TransaksiDetailComponent implements OnInit {
 	response: any;
 	transaksi: any;
+	listOfObatTebus: any[] = [];
+	listOfKamarRawatInap: any[] = [];
 	asuransi: Asuransi;
 	allAsuransi: Asuransi[];
 	umur: number = 0;
@@ -41,6 +42,14 @@ export class TransaksiDetailComponent implements OnInit {
 			.subscribe(data => {
 				this.response = data;
 				this.transaksi = this.response.transaksi;
+				
+				if (this.transaksi.obat_tebus.length > 0) {
+					this.initObatTebus(this.transaksi.obat_tebus);
+				}
+
+				if (this.transaksi.pemakaian_kamar_rawat_inap.length > 0) {
+					this.initObatTebus(this.transaksi.pemakaian_kamar_rawat_inap);
+				}
 				console.log(this.transaksi);
 				this.calculateAge(this.transaksi.pasien.tanggal_lahir);
 
@@ -54,6 +63,22 @@ export class TransaksiDetailComponent implements OnInit {
 
 	goBack(): void {
 		this.location.back();
+	}
+
+	initObatTebus(value): void {
+		for (let obatTebus of value) {
+			for (let item of obatTebus.obat_tebus_item) {
+				this.listOfObatTebus.push(item);
+			}
+		}
+	}
+
+	initRawatInap(value): void {
+		for (let item of value) {
+			if (item.waktu_keluar != null) {
+				this.listOfKamarRawatInap.push(item);
+			}
+		}
 	}
 
 	gantiAsuransi(value): void {
@@ -164,6 +189,7 @@ export class TransaksiDetailComponent implements OnInit {
 		this.pembayaranService.createPembayaran(request)
 		.subscribe(data => {
 			console.log(data);
+			this.ngOnInit();
 		});
 	}
 }
