@@ -4,6 +4,7 @@ import { Component, Input, OnInit }	from '@angular/core';
 import { ActivatedRoute, Params }	from '@angular/router';
 import { Location }					from '@angular/common';
 
+import * as _ from "lodash";
 import { PembayaranService }		from '../pembayaran/pembayaran.service';
 import { TransaksiService }			from './transaksi.service';
 import { Transaksi }				from './transaksi';

@@ -10,10 +10,17 @@ export class FilterObatTebusPipe implements PipeTransform {
   		return items;
   	}
     return items.filter(function(item){
-              var paramInIdTransasksi = item.id_transaksi.toString().toLowerCase().indexOf(param.toLowerCase()) > -1;
-              var paramInIdPasien = item.id_pasien.toString().toLowerCase().indexOf(param.toLowerCase()) > -1;              
-              var paramInNamaPasien = item.nama_pasien.toLowerCase().indexOf(param.toLowerCase()) > -1;
-              return paramInIdTransasksi || paramInIdPasien || paramInNamaPasien;
+              var paramInIdPasien;
+              var paramInNamaPasien;
+
+              if (item.resep.eksternal) {
+                paramInIdPasien = "EKSTERNAL".toString().toLowerCase().indexOf(param.toLowerCase()) > -1;              
+                paramInNamaPasien = item.resep.nama.toLowerCase().indexOf(param.toLowerCase()) > -1;             
+              } else {                
+                paramInIdPasien = item.transaksi.pasien.id.toString().toLowerCase().indexOf(param.toLowerCase()) > -1;              
+                paramInNamaPasien = item.transaksi.pasien.nama_pasien.toLowerCase().indexOf(param.toLowerCase()) > -1;
+              }
+              return paramInIdPasien || paramInNamaPasien;
   	});
   }
 }

@@ -2,6 +2,7 @@ import 'rxjs/add/operator/switchMap';
 import { Component, Input, OnInit }	from '@angular/core';
 import { ActivatedRoute, Params }	from '@angular/router';
 import { Location }					from '@angular/common';
+import { Observable }		from 'rxjs/Rx';
 
 import { JenisObat }			from './jenis-obat';
 import { JenisObatService }		from './jenis-obat.service';
@@ -29,5 +30,19 @@ export class EditJenisObatComponent {
 
 	goBack(): void {
 		this.location.back();
+	}
+
+	private save() {
+		// alert(JSON.stringify(this.jenisObat)); 
+		this.jenisObatService.updateJenisObat(this.jenisObat.id, this.jenisObat).subscribe(
+	       	data => {
+	         	this.location.back();
+	         	return true;
+	       	},
+	       	error => {
+		         console.error("Error saving!");
+		         return Observable.throw(error);
+	       	}
+    	);
 	}
 }

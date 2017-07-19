@@ -1,0 +1,41 @@
+  <div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-list-alt" aria-hidden="true"></i> Daftar Stock Opname {{lokasiData.nama}}
+				</h4>
+			</div>
+			<div class="card-block">
+				<div class="card-text">												
+					<!-- To-do: Time filter -->
+					<table class="table" [mfData]="allStockOpname" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+						<thead>
+							<tr>
+								<th><mfDefaultSorter by="stockOpname.created_at">Waktu</mfDefaultSorter></th>
+								<!-- <th><mfDefaultSorter by="stockOpname.lokasi_data.nama">Lokasi</mfDefaultSorter></th> -->
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let stockOpname of mf.data">
+								<td>{{stockOpname.created_at}}</td>	
+								<!-- <td>{{stockOpname.lokasi_data.nama}}</td>	-->						
+								<td><button type="button" class="btn btn-info" [routerLink] = "['/detail-stock-opname', stockOpname.id]">Detail</button></td>
+							</tr>
+						</tbody>		
+						<tfoot>
+			                <tr>
+			                    <td colspan="8">
+			                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+			                    </td>
+			                </tr>
+		                </tfoot>		
+					</table>
+				
+					<div class="pull-left">
+						<button type="button" class="btn btn-info" [routerLink] = "['/stock-opname-form', lokasi]">Tambah stock opname</button>
+					</div>					  	
+				</div>
+			</div>	
+		</div>
+	</div>

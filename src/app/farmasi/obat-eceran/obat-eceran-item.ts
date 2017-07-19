@@ -9,7 +9,7 @@ export class ObatEceranItem {
     public jumlah: number = null,
     public harga_jual_realisasi: number = null,
     public keterangan: string = '',
-	public jenis_obat: JenisObat[] = [],
-	public obat_masuk: ObatMasuk[] = []
+	public jenis_obat: JenisObat = new JenisObat(),
+	public obat_masuk: ObatMasuk = new ObatMasuk()
 	) {}
 }

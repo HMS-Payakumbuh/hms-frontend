@@ -36,7 +36,7 @@ export class TenagaMedisListComponent implements OnInit {
 
   createTenagaMedis() {
     this.tenagaMedisService.createTenagaMedis(this.tenagaMedisModal).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 
@@ -47,13 +47,13 @@ export class TenagaMedisListComponent implements OnInit {
 
   updateTenagaMedis() {
     this.tenagaMedisService.updateTenagaMedis(this.tenagaMedisModalNoPegawai, this.tenagaMedisModal).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 
   destroyTenagaMedis(no_pegawai: string) {
     this.tenagaMedisService.destroyTenagaMedis(no_pegawai).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 }

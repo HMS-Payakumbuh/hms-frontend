@@ -14,6 +14,7 @@ import { PasienListComponent }			from './pasien/pasien-list.component';
 import { CatatanKematianFormComponent } from './pasien/catatan-kematian-form.component';
 import { AntrianComponent }				from './antrian/antrian.component';
 import { DaftarAntrianComponent }	    from './antrian/daftar-antrian.component';
+import { RekamMedisDetailComponent }	from './pasien/rekam-medis-detail.component';
 
 import { PoliklinikListComponent }		from './layanan/poliklinik-list.component';
 import { PoliklinikPemeriksaanComponent }	from './layanan/poliklinik-pemeriksaan.component';
@@ -21,19 +22,25 @@ import { PoliklinikPemeriksaanComponent }	from './layanan/poliklinik-pemeriksaan
 import { LaboratoriumListComponent }		from './layanan/laboratorium-list.component';
 import { LaboratoriumPemeriksaanComponent }	from './layanan/laboratorium-pemeriksaan.component';
 
+import { AmbulansListComponent }		from './layanan/ambulans-list.component';
+
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent }	    from './layanan/rawatinap-detail.component';
 import { KamarOperasiListComponent }		from './layanan/kamar-operasi-list.component';
-// import { KamarJenazahListComponent }		from './layanan/kamar-jenazah-list.component';
+import { KamarJenazahListComponent }		from './layanan/kamar-jenazah-list.component';
+import { KamarRawatinapListComponent }		from './layanan/kamar-rawatinap-list.component';
 
+
+import { PemakaianKamarListComponent }		from './layanan/pemakaian-kamar.component';
 import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-operasi-list.component';
 import { PemakaianKamarJenazahListComponent }		from './layanan/pemakaian-kamar-jenazah-list.component';
 
 import { TenagaMedisListComponent } 	from './tenaga-medis/tenaga-medis-list.component';
 import { JadwalDokterListComponent }	from './tenaga-medis/jadwal-dokter-list.component';
-
 import { DiagnosisReferenceListComponent }	from './layanan/diagnosis-reference-list.component';
 import { TindakanReferenceListComponent }		from './layanan/tindakan-reference-list.component';
+
+import { DokterDashboardComponent }			from './tenaga-medis/dokter-dashboard.component';
 
 import { DaftarStokObatComponent }			from './farmasi/stok-obat/daftar-stok-obat.component';
 import { DetailStokObatComponent }			from './farmasi/stok-obat/detail-stok-obat.component';
@@ -52,6 +59,8 @@ import { EditJenisObatComponent }		from './farmasi/jenis-obat/edit-jenis-obat.co
 import { DaftarObatTebusComponent }			from './farmasi/obat-tebus/daftar-obat-tebus.component';
 import { DetailObatTebusComponent }			from './farmasi/obat-tebus/detail-obat-tebus.component';
 import { ObatTebusFormComponent }			from './farmasi/obat-tebus/obat-tebus-form.component';
+import { ResepEksternalFormComponent }           from './farmasi/obat-tebus/resep-eksternal-form.component';
+import { ObatTebusEksternalFormComponent }           from './farmasi/obat-tebus/obat-tebus-eksternal-form.component';
 
 import { DaftarObatPindahComponent }      from './farmasi/obat-pindah/daftar-obat-pindah.component';
 import { DetailObatPindahComponent }      from './farmasi/obat-pindah/detail-obat-pindah.component';
@@ -64,6 +73,11 @@ import { ObatRusakFormComponent }      from './farmasi/obat-rusak/obat-rusak-for
 import { DaftarObatEceranComponent }      from './farmasi/obat-eceran/daftar-obat-eceran.component';
 import { DetailObatEceranComponent }      from './farmasi/obat-eceran/detail-obat-eceran.component';
 import { ObatEceranFormComponent }      from './farmasi/obat-eceran/obat-eceran-form.component';
+
+import { SelectorStockOpnameComponent }      from './farmasi/stock-opname/selector-stock-opname.component';
+import { DaftarStockOpnameComponent }      from './farmasi/stock-opname/daftar-stock-opname.component';
+import { DetailStockOpnameComponent }      from './farmasi/stock-opname/detail-stock-opname.component';
+import { StockOpnameFormComponent }      from './farmasi/stock-opname/stock-opname-form.component';
 
 import { SettingsComponent }        from './settings/settings.component';
 
@@ -83,6 +97,7 @@ const routes: Routes = [
 	{ path: 'daftar-pasien', component: PasienListComponent },
 	{ path: 'pendaftaran', component: PasienFormComponent},
 	{ path: 'daftar-pasien/catatan-kematian-form', component: CatatanKematianFormComponent},
+	{ path: 'rekam_medis/:idPasien/:noEntry', component: RekamMedisDetailComponent},
 
 	{ path: 'poliklinik', component: PoliklinikListComponent },
 	{ path: 'poliklinik/:namaPoliklinik/:idTransaksi', component: PoliklinikPemeriksaanComponent },
@@ -90,9 +105,17 @@ const routes: Routes = [
 	{ path: 'laboratorium', component: LaboratoriumListComponent },
 	{ path: 'laboratorium/:namaLaboratorium/:idTransaksi', component: LaboratoriumPemeriksaanComponent },
 
+	{ path: 'ambulans', component: AmbulansListComponent },
+
 	{ path: 'rawatinap', component: RawatinapListComponent },
 	{ path: 'rawatinap/:noKamar', component: RawatinapDetailComponent },
+
+	{ path: 'kamar-rawatinap', component: KamarRawatinapListComponent },
+	{ path: 'kamar-operasi', component: KamarOperasiListComponent },
+	{ path: 'kamar-jenazah', component: KamarJenazahListComponent },
 	
+	{ path: 'pemakaiankamarrawatinap', component: PemakaianKamarListComponent },
+
 	{ path: 'pemakaiankamaroperasi', component: PemakaianKamarOperasiListComponent },
 	{ path: 'pemakaiankamarjenazah', component: PemakaianKamarJenazahListComponent },
 
@@ -100,6 +123,8 @@ const routes: Routes = [
 	{ path: 'jadwal-dokter', component: JadwalDokterListComponent },
 	{ path: 'daftar-diagnosis', component: DiagnosisReferenceListComponent },
 	{ path: 'daftar-tindakan', component: TindakanReferenceListComponent },
+
+	{ path: 'dokter-dashboard/:noPegawai', component: DokterDashboardComponent },
 
 	{ path: 'stok-obat', component: DaftarStokObatComponent },
 	{ path: 'stok-obat/:id', component: DetailStokObatComponent },
@@ -114,15 +139,21 @@ const routes: Routes = [
 	{ path: 'obat-tebus', component: DaftarObatTebusComponent },
 	{ path: 'obat-tebus/:id', component: DetailObatTebusComponent },
 	{ path: 'obat-tebus-form', component: ObatTebusFormComponent },
+	{ path: 'resep-eksternal-form', component: ResepEksternalFormComponent },
+	{ path: 'obat-tebus-eksternal-form/:id', component: ObatTebusEksternalFormComponent },
 	{ path: 'obat-pindah', component: DaftarObatPindahComponent },
 	{ path: 'obat-pindah/:id', component: DetailObatPindahComponent },
 	{ path: 'obat-pindah-form', component: ObatPindahFormComponent },
 	{ path: 'obat-rusak', component: DaftarObatRusakComponent },
 	{ path: 'obat-rusak/:id', component: DetailObatRusakComponent },
-	{ path: 'obat-rusak-form', component: ObatRusakFormComponent },	
+	{ path: 'obat-rusak-form', component: ObatRusakFormComponent },
 	{ path: 'obat-eceran', component: DaftarObatEceranComponent },
 	{ path: 'obat-eceran/:id', component: DetailObatEceranComponent },
 	{ path: 'obat-eceran-form', component: ObatEceranFormComponent },
+	{ path: 'stock-opname', component: SelectorStockOpnameComponent },	
+	{ path: 'stock-opname/:lokasi', component: DaftarStockOpnameComponent },	
+	{ path: 'detail-stock-opname/:id', component: DetailStockOpnameComponent },
+	{ path: 'stock-opname-form/:lokasi', component: StockOpnameFormComponent },
 	{ path: 'settings', component: SettingsComponent }
 ];
 

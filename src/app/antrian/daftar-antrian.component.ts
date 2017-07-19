@@ -43,22 +43,39 @@ export class DaftarAntrianComponent {
 
   public daftar() {
     let request: any = null;
-    if (this.umur >= 65 || this.disabilitas) {
+    if (this.tipe === 'Poliklinik') {
+      request = {
+        nama_layanan_poli : this.layanan.nama,
+        jenis : 0,
+        kesempatan: 3,
+        kategori_antrian: this.layanan.kategori_antrian
+      };
+    } else if (this.tipe === 'Laboratorium') {
+      request = {
+        nama_layanan_lab : this.layanan.nama,
+        jenis : 0,
+        kesempatan: 3,
+        kategori_antrian: this.layanan.kategori_antrian
+      };
+    }
+    
+    /*if (this.umur >= 65 || this.disabilitas) {
       request = {
         nama_layanan : this.layanan.nama,
         jenis : 1,
+        kesempatan: 3,
         kategori_antrian: this.layanan.kategori_antrian,
       }
     } else {
       request = {
         nama_layanan : this.layanan.nama,
         jenis : 0,
+        kesempatan: 3,
         kategori_antrian: this.layanan.kategori_antrian,
       }
-    }
+    }*/
     this.antrianService.createAntrianFrontOffice(request).subscribe(
         data => {window.location.reload()}
       );
-      alert('Anda akan mendaftar ke layanan : '+this.layanan.nama);
   }
 }

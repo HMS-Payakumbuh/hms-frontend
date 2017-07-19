@@ -10,28 +10,40 @@
 					<div class="row">
 						<div class="col-md-6 pull-left">
 							<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal tebus">
-						</div>
+						</div>						
 						<div class="col-md-6 pull-right">
+							<input [dpDayPicker]="config" [(ngModel)]="selectedDate2" class="form-control" theme="dp-material" placeholder="Tanggal resep">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
 							<div class="input-group">							
-							    <input type="text" class="form-control" [(ngModel)]="param" placeholder="Cari ID transaksi/ID pasien/nama pasien"/>
+							    <input type="text" class="form-control" [(ngModel)]="param" placeholder="Cari ID pasien/nama pasien"/>
 							</div>
 						</div>
 					</div>
 
-					<table class="table" [mfData]="allObatTebus | filterWaktuKeluar: selectedDate | filterObatTebus: param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+					<table class="table" [mfData]="allObatTebus | filterWaktuKeluar : selectedDate | filterWaktuResep : selectedDate2 | filterObatTebus : param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<tbody>
 							<tr>
-								<th><mfDefaultSorter by="id_transaksi">ID Transaksi</mfDefaultSorter></th>
-								<th><mfDefaultSorter by="id_pasien">ID Pasien</mfDefaultSorter></th>
-								<th><mfDefaultSorter by="nama_pasien">Nama Pasien</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="waktu_keluar">Waktu Tebus</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="id_transaksi">Waktu Resep</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="pasien.id">ID Pasien</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="pasien.nama_pasien">Nama Pasien</mfDefaultSorter></th>
 								<th></th>
 							</tr>
 							<tr *ngFor="let obatTebus of mf.data">
-								<td>{{obatTebus.id_transaksi}}</td>
-								<td>{{obatTebus.id_pasien}}</td>
-								<td>{{obatTebus.nama_pasien}}</td>
 								<td>{{obatTebus.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>
+								<td>{{obatTebus.resep.created_at | date:'d MMM y H:mm:ss'}}</td>
+								<div *ngIf="obatTebus.resep.eksternal; then thenBlock else elseBlock"> </div>
+								<ng-template #thenBlock>
+									<td>EKSTERNAL</td>
+									<td>{{obatTebus.resep.nama}}</td>
+								</ng-template>
+								<ng-template #elseBlock>
+									<td>{{obatTebus.transaksi.pasien.id}}</td>
+									<td>{{obatTebus.transaksi.pasien.nama_pasien}}</td>
+								</ng-template> 
 								<td><button type="button" class="btn btn-info" [routerLink] = "['/obat-tebus', obatTebus.id]">Detail</button></td>
 							</tr>						
 						</tbody>	
@@ -45,6 +57,7 @@
 
 					<div class="pull-left">
 						<a routerLink="/obat-tebus-form"><button type="button" class="btn btn-info">Tambah obat tebus</button></a>
+						<a routerLink="/resep-eksternal-form"><button type="button" class="btn btn-info">Tambah resep dan obat tebus dari luar RS</button></a>
 					</div>
 				</div>
 			</div>	

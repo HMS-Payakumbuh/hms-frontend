@@ -58,14 +58,19 @@ export class TenagaMedisService {
 			.map((res: Response) => res.json());
 	}
 
+	getDokter(noPegawai: string): Observable<Dokter> {
+		return this.http.get(this.dokterUrl + '/' + noPegawai)
+			.map((res: Response) => res.json());
+	}
+
 	getAllJadwalDokter(): Observable<JadwalDokter[]> {
 		return this.http.get(this.jadwalDokterUrl)
 			.map((res: Response) => res.json());
 	}
 
-	getAllAvailableJadwalDokter(nama_poli: string): Observable<JadwalDokter[]> {
-		return this.getAllJadwalDokter()
-			.map(allJadwalDokter => _.filter(_.uniqBy(allJadwalDokter, 'nama_poli'), {nama_poli: nama_poli}));
+	getAllAvailableJadwalDokter(nama_poli: string): Observable<JadwalDokter> {
+		return this.http.get(this.jadwalDokterUrl + '/' + nama_poli)
+			.map((res: Response) => res.json());
 	}
 
 	createJadwalDokter(jadwalDokter: JadwalDokter) {

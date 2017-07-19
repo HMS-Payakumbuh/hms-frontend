@@ -22,8 +22,8 @@ export class LaboratoriumService {
 	}
 
 	getLaboratorium(nama: string): Observable<Laboratorium> {
-		return this.getAllLaboratorium()
-			.map(allLaboratorium => allLaboratorium.find(laboratorium => laboratorium.nama == nama));
+		return this.http.get(this.laboratoriumUrl + '/' + nama)
+			.map((res: Response) => res.json());
 	}
 
 	createLaboratorium(laboratorium: Laboratorium) {

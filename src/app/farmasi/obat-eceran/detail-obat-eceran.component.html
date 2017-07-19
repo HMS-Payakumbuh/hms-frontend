@@ -16,7 +16,7 @@
 									<td>{{obatEceran.nama_pembeli}}</td>	
 								</tr>
 								<tr>
-									<td><b>Nama Pembeli</b></td>
+									<td><b>Alamat</b></td>
 									<td>{{obatEceran.alamat}}</td>	
 								</tr>
 								<tr>
@@ -35,7 +35,6 @@
 									<th><mfDefaultSorter by="merek">Merek Obat</mfDefaultSorter></th>
 									<th><mfDefaultSorter by="kadaluarsa">Kadaluarsa</mfDefaultSorter></th>
 									<th><mfDefaultSorter by="jumlah">Jumlah</mfDefaultSorter></th>
-									<th><mfDefaultSorter by="satuan">Satuan</mfDefaultSorter></th>
 									<th><mfDefaultSorter by="harga_jual_realisasi">Harga Jual Satuan</mfDefaultSorter></th>
 									<th></th>
 								</tr>
@@ -43,8 +42,7 @@
 									<td>{{obatEceranItem.obat_masuk.barcode}}</td>
 									<td>{{obatEceranItem.jenis_obat.merek_obat}}</td>
 									<td>{{obatEceranItem.obat_masuk.kadaluarsa | date:'d MMM y'}}</td>
-									<td>{{obatEceranItem.jumlah}}</td>
-									<td>{{obatEceranItem.jenis_obat.satuan}}</td>
+									<td>{{obatEceranItem.jumlah}} {{obatEceranItem.jenis_obat.satuan}}</td>
 									<td>Rp. {{obatEceranItem.harga_jual_realisasi}}</td>	
 								</tr>						
 							</tbody>	

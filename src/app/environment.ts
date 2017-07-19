@@ -26,12 +26,13 @@ export var ENV = {
 	tempattidurUrl : baseUrl + "/api/tempattidur",
 	rawatinapUrl : baseUrl + "/api/rawatinap",
 
+	pemakaianKamarRawatinapUrl : baseUrl + "/api/pemakaiankamarrawatinap",
 	pemakaianKamarOperasiUrl : baseUrl + "/api/pemakaiankamaroperasi",
 	pemakaianKamarJenazahUrl : baseUrl + "/api/pemakaiankamarjenazah",
 	kamarOperasiUrl : baseUrl + "/api/kamaroperasi",
 	kamarJenazahUrl : baseUrl + "/api/kamarjenazah",
 
-
+	resepUrl: baseUrl + "/api/resep",
 	lokasiObatUrl: baseUrl + "/api/lokasi_obat",
 	jenisObatUrl: baseUrl + "/api/jenis_obat",
 	stokObatUrl: baseUrl + "/api/stok_obat",
@@ -41,4 +42,5 @@ export var ENV = {
 	obatPindahUrl: baseUrl + "/api/obat_pindah",
 	obatRusakUrl: baseUrl + "/api/obat_rusak",	
 	obatEceranUrl: baseUrl + "/api/obat_eceran",
+	stockOpnameUrl: baseUrl + "/api/stock_opname",
 }

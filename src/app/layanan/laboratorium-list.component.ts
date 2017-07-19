@@ -35,7 +35,7 @@ export class LaboratoriumListComponent implements OnInit {
 
   createLaboratorium() {
     this.laboratoriumService.createLaboratorium(this.laboratoriumModal).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 
@@ -46,13 +46,13 @@ export class LaboratoriumListComponent implements OnInit {
 
   updateLaboratorium() {
     this.laboratoriumService.updateLaboratorium(this.laboratoriumModalNama, this.laboratoriumModal).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 
   destroyLaboratorium(nama: string) {
     this.laboratoriumService.destroyLaboratorium(nama).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 }

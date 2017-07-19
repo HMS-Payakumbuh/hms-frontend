@@ -47,15 +47,16 @@ export class StokObatService {
     	return this.http.post(this.stokObatUrl, body, options ).map((res: Response) => res.json());
 	}
 	
-	searchStokObat(id_obat_masuk: number, lokasi: number): Observable<StokObat> {
+	getStokObatByJenisObatAndBatch(id_jenis_obat: number, nomor_batch: string, lokasi: number): Observable<StokObat> {
 		let params: URLSearchParams = new URLSearchParams();
-		params.set('id_obat_masuk', ''+id_obat_masuk);		
+		params.set('id_jenis_obat', ''+id_jenis_obat);		
+		params.set('nomor_batch', nomor_batch);	
 		params.set('lokasi', ''+lokasi);
 
 		let requestOptions = new RequestOptions();
 		requestOptions.params = params;
 
-		return this.http.get(this.stokObatUrl+'/search', requestOptions)
+		return this.http.get(this.stokObatUrl+'/search_by_jenis_obat_and_batch', requestOptions)
 		    .map((res: Response) => res.json());			
 	}
 	

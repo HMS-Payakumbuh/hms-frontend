@@ -1,11 +1,19 @@
+import { JenisObat }	from '../jenis-obat/jenis-obat';
+import { ObatMasuk }	from '../obat-masuk/obat-masuk';
+
 export class ObatTebusItem {
-	id: number;
-	kode_obat: number;	
-	merek: string;	
-	nomor_batch: string;
-	satuan: string;
-	harga_jual_referensi: number;
-	harga_jual_realisasi: number;
-	kadaluarsa: Date;
-	jumlah: number;
+	constructor(
+	public id: number = null,
+	public id_obat_tebus: number = null,
+	public id_jenis_obat: number = null,
+	public id_obat_masuk: number = null,
+	public jumlah: number = null,
+	public keterangan: string = '',
+	public asal: number = null,
+	public id_resep_item: number = null,
+	public id_racikan_item: number = null,
+	public harga_jual_realisasi: number = null,
+	public jenis_obat: JenisObat = new JenisObat(),	
+	public obat_masuk: ObatMasuk = new ObatMasuk()
+	) { }
 }

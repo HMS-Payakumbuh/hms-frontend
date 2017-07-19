@@ -23,14 +23,19 @@ export class TindakanService {
 		return Promise.reject(error.message || error);
 	}
 
+	getTindakanOfRekamMedis(id_pasien: number, tanggal_waktu: string): Observable<Tindakan[]> {
+		return this.http.get(this.tindakanUrl + '/rekam_medis/' + id_pasien + '/' + tanggal_waktu)
+			.map((res: Response) => res.json());
+	}
+
 	getAllTindakanReference(): Observable<TindakanReference[]> {
 		return this.http.get(this.tindakanReferenceUrl)
 			.map((res: Response) => res.json());
 	}
 
 	getTindakanReference(kode: string): Observable<TindakanReference> {
-		return this.getAllTindakanReference()
-			.map(allTindakanReference => allTindakanReference.find(tindakanReference => tindakanReference.kode == kode));
+		return this.http.get(this.tindakanReferenceUrl + '/' + kode)
+			.map((res: Response) => res.json());
 	}
 
 	createTindakanReference(tindakanReference: TindakanReference) {
@@ -56,14 +61,9 @@ export class TindakanService {
 			.map((res: Response) => res.json());
 	}
 
-	saveTindakan (previousNoTindakan: number, selectedTindakan: Tindakan[]) {
+	saveTindakan (selectedTindakan: Tindakan[]) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers});
-
-		for (let tindakan of selectedTindakan) {
-			tindakan.no_tindakan = tindakan.no_tindakan + previousNoTindakan;
-		}
-		
 		let body = JSON.stringify(selectedTindakan);
 		return this.http.post(this.tindakanUrl, body, options)
 			.map((res: Response) => res.json());

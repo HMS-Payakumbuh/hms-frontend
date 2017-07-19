@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Location }               from '@angular/common';
 import { Pasien }    from './pasien';
 import { PasienService }    from './pasien.service';
 import { AntrianService }    from '../antrian/antrian.service';
@@ -27,11 +28,12 @@ import { TransaksiService}  from '../transaksi/transaksi.service';
 export class PasienFormComponent implements OnInit {
 	tipe: string;
   layanan: string;
-  doktor: string;
+  dokter: string;
 	search: string;
   no_rujukan: string;
   searchDone: boolean;
   update: boolean;
+  fromAntrian: boolean = false;
   sub: any;
   asuransi: Asuransi;
   pasien: Pasien;
@@ -39,10 +41,10 @@ export class PasienFormComponent implements OnInit {
   allAsuransi: Asuransi[];
   allLayanan: any[];
   allPasien: Pasien[] = [];
-  allJadwalDokter: JadwalDokter[];
 
   constructor(
     private route: ActivatedRoute,
+    private location: Location,
     private poliklinikService: PoliklinikService,
     private laboratoriumService: LaboratoriumService,
     private pasienService: PasienService,
@@ -56,7 +58,7 @@ export class PasienFormComponent implements OnInit {
 
   allTipeLayanan = ['Poliklinik', 'Laboratorium'];
 
-  genders = [{id: 0, nama: 'Laki-laki'}, {id: 1, nama: 'Perempuan'}];
+  genders = [{id: 1, nama: 'Laki-laki'}, {id: 2, nama: 'Perempuan'}];
 
   religions = ['Islam', 'Protestan', 'Katolik', 'Buddha', 'Hindu', 'Konghucu'];
 
@@ -71,12 +73,12 @@ export class PasienFormComponent implements OnInit {
     if (this.layanan === undefined) {
 
     } else {
+      this.fromAntrian = true;
       if (this.layanan.indexOf("Poli") >= 0)
           this.tipe = "Poliklinik";
         else
           this.tipe = "Laboratorium";
-        this.selectTipeLayanan();
-        this.selectLayanan();
+      this.selectTipeLayanan();
     }
   }
 
@@ -101,19 +103,23 @@ export class PasienFormComponent implements OnInit {
   private selectTipeLayanan() {
     if (this.tipe === 'Poliklinik') {
       this.poliklinikService.getAllPoliklinik().subscribe(
-        data => { this.allLayanan = data }
+        data => { 
+          this.allLayanan = data;
+          for (let layanan of this.allLayanan) {
+            this.tenagaMedisService.getAllAvailableJadwalDokter(layanan.nama).subscribe(
+              data => {
+                layanan.nama_dokter = data.nama_dokter;
+              }
+            )
+          } 
+        }
       )
+      
     } else if (this.tipe === 'Laboratorium') {
       this.laboratoriumService.getAllLaboratorium().subscribe(
         data => { this.allLayanan = data }
       )
     }
-  }
-
-  private selectLayanan() {
-    this.tenagaMedisService.getAllAvailableJadwalDokter(this.layanan).subscribe(
-      data => { this.allJadwalDokter = data }
-    )
   }
 
   private customTrackBy(index: number, obj: any): any {
@@ -124,33 +130,46 @@ export class PasienFormComponent implements OnInit {
     this.asuransi = asuransi;
   }
 
-  private createAntrian(id: number) {
+  private createAntrian(id_transaksi: number, id_pasien: number, id_asuransi:number) {
     let request: any = null;
     if (this.tipe === 'Poliklinik') {
       request = {
-        id_transaksi: id,
+        id_transaksi: id_transaksi,
         nama_layanan_poli: this.layanan,
+        kesempatan: 3,
+        id_pasien: id_pasien,
+        id_asuransi: id_asuransi
       };
     }
     else if (this.tipe === 'Laboratorium') {
       request = {
-        id_transaksi: id,
+        id_transaksi: id_transaksi,
         nama_layanan_lab: this.layanan,
+        kesempatan: 3,
+        id_pasien: id_pasien,
+        id_asuransi: id_asuransi
       };
     }
 
     this.antrianService.createAntrian(request).subscribe(
-      data => {window.location.reload()}
+      data => {
+        if(data.error) {
+          alert(data.error);
+          window.location.reload();
+        } else {
+          this.location.back();
+        }
+      }
     );
   }
 
-  private createTransaksi(id: number) {
+  private createTransaksi(id_pasien: number, id_asuransi:number) {
     let kode_jenis_pasien:number = 1;
     if (this.asuransiChecked) {
       kode_jenis_pasien = 2;
     }
     let payload: any = {
-      id_pasien: id,
+      id_pasien: id_pasien,
       no_sep: Math.random().toString(36).substring(7),
       kode_jenis_pasien: kode_jenis_pasien,
       asuransi_pasien: this.asuransi.nama_asuransi,
@@ -161,16 +180,16 @@ export class PasienFormComponent implements OnInit {
     }
     this.transaksiService.createTransaksi(request).subscribe(
       data => {
-        this.createAntrian(data.transaksi.id)
+        this.createAntrian(data.transaksi.id, id_pasien, id_asuransi)
       }
     );
   }
 
-  private createAsuransi(id: number) {
-    this.asuransi.id_pasien = id;
+  private createAsuransi(id_pasien: number) {
+    this.asuransi.id_pasien = id_pasien;
     let asuransi:any = { asuransi: this.asuransi };
     this.asuransiService.createAsuransi(asuransi).subscribe(
-      data => {this.createTransaksi(id)}
+      data => {this.createTransaksi(id_pasien, data.id)}
     );
   }
 
@@ -183,7 +202,7 @@ export class PasienFormComponent implements OnInit {
           if (this.asuransiChecked)
             this.createAsuransi(data.id);
           else
-            this.createTransaksi(data.id);
+            this.createTransaksi(data.id, null);
         }
       );
     } else {
@@ -192,7 +211,7 @@ export class PasienFormComponent implements OnInit {
           if (this.asuransiChecked)
             this.createAsuransi(data.id);
           else
-            this.createTransaksi(data.id);
+            this.createTransaksi(data.id, null);
         }
       );
     }

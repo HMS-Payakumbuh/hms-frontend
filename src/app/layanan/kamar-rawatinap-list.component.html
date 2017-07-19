@@ -1,0 +1,188 @@
+<html>
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>Daftar Kamar Rawat Inap</h4>
+				</div>
+
+				<div class="card-block">
+                    <div class="row">
+						<div class="col-md-6 pull-left">
+							<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal Operasi">
+						</div>
+						<div class="col-md-6 pull-right">
+							<div class="input-group">							
+							    <input type="text" class="form-control" [(ngModel)]="param" placeholder="No.Kamar/Nama Pasien/Nama Dokter"/>
+							</div>
+						</div>
+					</div>
+
+					<table class="table">
+                        
+						<thead>
+							<th>No. Kamar</th>
+                            <th>Jenis Kamar</th>
+							<th>Kelas</th>
+							<th>Harga Per Hari (Rp.)</th>
+							<th></th>
+							<th></th>
+							<tr>
+						</thead>
+						
+						<tbody *ngFor="let kamarrawatinap of allKamarRawatinap | filterWaktuKeluar: selectedDate">
+							<tr>
+								<td>{{kamarrawatinap?.no_kamar}}</td>
+                                <td>{{kamarrawatinap?.jenis_kamar}}</td>
+                                <td>{{kamarrawatinap?.kelas}}</td>
+								<td>{{kamarrawatinap?.harga_per_hari}}</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#editKamarRawatinapModal'" (click)="editKamarRawatinap(kamarrawatinap.no_kamar, kamarrawatinap)">
+										Edit
+									</button>
+								</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-danger" (click)="destroyKamarRawatinap(kamarrawatinap.no_kamar)">
+										<i class="fa fa-trash"></i>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+                    <div class="pull-left">
+						<button type="button" class="btn btn-info" data-toggle="modal" [attr.data-target]="'#createKamarRawatinapModal'" (click)="newKamarRawatinap()">
+							Buat Kamar Rawat Inap Baru
+						</button>
+					</div>
+
+					<div class="modal fade" tabindex="-1" role="dialog" id="createKamarRawatinapModal" aria-hidden="true" *ngIf="kamarRawatinapModal != null">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+
+							<div class="modal-header">
+								<h5 class="modal-title">Buat Kamar Rawat Inap Baru</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<i class="fa fa-times" aria-hidden="true"></i>
+								</button>
+							</div>
+
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="nama_pasien">No. Kamar</label>
+									<input type="text" class="form-control" id="noKamar" required [(ngModel)]="kamarRawatinapModal.no_kamar" name="noKamar">
+								</div>
+                                
+                                <div class="form-group">
+									<label for="nama_pasien">Jenis Kamar</label>
+                                    <select class="form-control" id="jenis_kamar" [(ngModel)]="kamarRawatinapModal.jenis_kamar">
+										<option value="Rawat Inap">
+											Rawat Inap
+										</option>
+                                        <option value="ICU">
+											ICU
+										</option>
+									</select>
+								</div>
+
+                                <div class="form-group">
+									<label for="nama_pasien">Kelas</label>
+									<select class="form-control" id="kelas" [(ngModel)]="kamarRawatinapModal.kelas">
+										<option value="VIP">
+											VIP
+										</option>
+                                        <option value="1">
+											1
+										</option>
+                                        <option value="2">
+											2
+										</option>
+                                        <option value="3">
+											3
+										</option>
+									</select>
+								</div>
+
+								<div class="form-group">
+									<label for="nama_pasien">Harga Per Hari</label>
+									<input type="text" class="form-control" id="harga" required [(ngModel)]="kamarRawatinapModal.harga_per_hari" name="harga">
+								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+									<button type="button" class="btn btn-success" (click)="createKamarRawatinap()">Simpan</button>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					</div>
+					
+
+					<div class="modal fade" tabindex="-1" role="dialog" id="editKamarRawatinapModal" aria-hidden="true" *ngIf="kamarRawatinapModal != null">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+
+							<div class="modal-header">
+								<h5 class="modal-title">Editing {{kamarRawatinapModal.no_kamar}}</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<i class="fa fa-times" aria-hidden="true"></i>
+								</button>
+							</div>
+
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="nama_pasien">No. Kamar</label>
+									<input type="text" class="form-control" id="noKamar" required [(ngModel)]="kamarRawatinapModal.no_kamar" name="noKamar">
+								</div>
+                                
+                                <div class="form-group">
+									<label for="nama_pasien">Jenis Kamar</label>
+                                    <select class="form-control" id="jenis_kamar" [(ngModel)]="kamarRawatinapModal.jenis_kamar">
+										<option value="Rawat Inap">
+											Rawat Inap
+										</option>
+                                        <option value="ICU">
+											ICU
+										</option>
+									</select>
+								</div>
+
+                                <div class="form-group">
+									<label for="nama_pasien">Kelas</label>
+									<select class="form-control" disabled id="kelas" [(ngModel)]="kamarRawatinapModal.kelas">
+										<option value="VIP">
+											VIP
+										</option>
+                                        <option value="1">
+											1
+										</option>
+                                        <option value="2">
+											2
+										</option>
+                                        <option value="3">
+											3
+										</option>
+									</select>
+								</div>
+
+								<div class="form-group">
+									<label for="nama_pasien">Harga Per Hari</label>
+									<input type="text" class="form-control" id="harga" required [(ngModel)]="kamarRawatinapModal.harga_per_hari" name="harga">
+								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+									<button type="button" class="btn btn-success" (click)="updateKamarRawatinap()">Simpan</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
+
+			</div>
+		</div>
+	</div>
+    </div>
+</html>

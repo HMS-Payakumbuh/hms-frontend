@@ -3,7 +3,7 @@
 		<div class="card mb-3">
 			<div class="card-header card-info">
 				<h4>
-					<i class="fa fa-gear" aria-hidden="true"> Antrian {{layanan}}</i> 
+					<i class="fa fa-gear" aria-hidden="true"></i> Antrian {{layanan}}
 				</h4>
 			</div>
 			<div class="card-block">
@@ -15,21 +15,43 @@
 	                    </select>
 	                </div>
 	                <div class="form-group" *ngIf="kategori || !isfrontoffice">
-	                  	<label for="nomor">Sedang Melayani Nomor Antrian</label> 
-	                  	<input type="text" class="form-control" id="nomor" value={{nomor}} name="nomor" disabled>
-	              	</div>
+	                    <label for="total">Panjang Antrian</label>
+	                    <input type="text" class="form-control" id="total" [value]="total" name="total" disabled>
+	                </div>
+	                <div class="form-group" *ngIf="!antrianEmpty">
+		                <label *ngIf="kategori || !isfrontoffice" for="nomor">Nomor Antrian</label>
+		                <div class="form-inline">
+			                <div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="kategori || !isfrontoffice">
+			                  	<input type="text" class="form-control" id="nomor" value="{{kategori}}{{antrian?.no_antrian}}" name="nomor" disabled>
+			              	</div>
+			              	<div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="kategori || !isfrontoffice">
+				              	<div>
+					              	<button type="button" class="btn btn-sm btn-danger" (click)="proses('undur')">Undur</button>
+				              	</div>
+				              	<div *ngIf="isfrontoffice">
+									<button type="button" class="btn btn-sm btn-warning" [routerLink] = "['/pendaftaran', antrian.nama_layanan]" (click)="proses('proses')">Proses</button>
+								</div>
+								<div *ngIf="!isfrontoffice && ispoli">
+									<button type="button" class="btn btn-sm btn-warning" [routerLink] = "['/poliklinik', antrian.nama_layanan, antrian.id_transaksi]" (click)="proses('proses')">Proses</button>
+								</div>
+								<div *ngIf="!isfrontoffice && !ispoli">
+									<button type="button" class="btn btn-sm btn-warning" [routerLink] = "['/laboratorium', antrian.nama_layanan, antrian.id_transaksi]" (click)="proses('proses')">Proses</button>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 
-		<div *ngIf="kategori || !isfrontoffice">
+		<!--<div *ngIf="kategori || !isfrontoffice">
 			<div class="card-header card-info">
 			    <ul class="nav nav-tabs card-header-tabs">
 		      <li class="nav-item">
 		        <a class="nav-link active" [ngClass]="{ 'active': umum, '': !umum }" data-toggle="tab" href="#umum" role="tab" style="color: black;">
 		          <i class="fa fa-drivers-license" aria-hidden="true"></i> Antrian Umum
 		        </a>
-		      </li>             
+		      </li>
 		      <li class="nav-item">
 		        <a class="nav-link" [ngClass]="{ 'active': !umum, '': umum }" data-toggle="tab" href="#khusus" role="tab" style="color: black;">
 		          <i class="fa fa-drivers-license-o" aria-hidden="true"></i> Antrian Khusus
@@ -53,7 +75,7 @@
 									</tr>
 									<tr *ngFor="let antrian of allAntrian | filterJenisAntrian : &quot;0&quot;">
 										<td>{{kategori}}{{antrian.no_antrian}}</td>
-										<td *ngIf="isfrontoffice">{{antrian.nama_layanan}}</td>	
+										<td *ngIf="isfrontoffice">{{antrian.nama_layanan}}</td>
 										<td>{{antrian.waktu_perubahan_antrian}}</td>
 										<td>
 											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-danger': (active == antrian.no_antrian), 'btn-warning': (active != antrian.no_antrian) }" [disabled]= "(active != antrian.no_antrian)" (click)="proses('undur',antrian)">Undur</button>
@@ -69,7 +91,7 @@
 							</table>
 						</div>
 					</div>
-					
+
 					<div [ngClass]="{ 'active': !umum, '': umum }" class="tab-pane fade show active" id="khusus" role="tabpanel">
 						<div class="card-text">
 							<table class="table">
@@ -83,7 +105,7 @@
 									</tr>
 									<tr *ngFor="let antrian of allAntrian | filterJenisAntrian : &quot;1&quot;">
 										<td>{{kategori}}{{antrian.no_antrian}}</td>
-										<td *ngIf="isfrontoffice">{{antrian.nama_layanan}}</td>		
+										<td *ngIf="isfrontoffice">{{antrian.nama_layanan}}</td>
 										<td>{{antrian.waktu_perubahan_antrian}}</td>
 										<td>
 											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-danger': (active == antrian.no_antrian), 'btn-warning': (active != antrian.no_antrian) }" [disabled]= "(active != antrian.no_antrian)" (click)="proses('undur',antrian)">Undur</button>
@@ -101,6 +123,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>-->
 	</div>
 </div>
