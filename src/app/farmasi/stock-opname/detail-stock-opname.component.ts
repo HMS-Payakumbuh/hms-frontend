@@ -29,7 +29,7 @@ export class DetailStockOpnameComponent {
 	ngOnInit(): void {
 		this.route.params
 			.switchMap((params: Params) => this.stockOpnameService.getStockOpname(+params['id']))
-			.subscribe(StockOpname => this.stockOpname = StockOpname);
+			.subscribe(stockOpname => this.stockOpname = stockOpname);
 	}
 
 	goBack(): void {
