@@ -1,5 +1,5 @@
 import { Injectable }		from '@angular/core';
-import { Headers, Http, Response, RequestOptions }		from '@angular/http';
+import { Headers, Http, Response, RequestOptions, URLSearchParams }		from '@angular/http';
 import { Observable }		from 'rxjs/Rx';
 
 import 'rxjs/add/operator/toPromise';
@@ -27,6 +27,17 @@ export class StockOpnameService {
 	getStockOpname(id: number): Observable<StockOpname> {
 		return this.getAllStockOpname()
 			.map(allStockOpname => allStockOpname.find(stock_opname => stock_opname.id == id));
+	}
+
+	getStockOpnameByLocation(lokasi: number): Observable<StockOpname[]> {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('lokasi', ''+lokasi);
+
+		let requestOptions = new RequestOptions();
+		requestOptions.params = params;
+
+		return this.http.get(this.stockOpnameUrl+'/search_by_location', requestOptions)
+		    .map((res: Response) => res.json());			
 	}
 
 	createStockOpname(stockOpname: StockOpname) {
