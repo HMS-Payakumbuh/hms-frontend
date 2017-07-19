@@ -70,6 +70,11 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	poliklinik: Poliklinik;
   rekamMedis: RekamMedis;
   hasilPemeriksaan: HasilPemeriksaan = new HasilPemeriksaan();
+  keluhan: string;
+  allRiwayat: string[] = [];
+  allAlergi: string[] = [];
+  riwayatBaru: string;
+  alergiBaru: string;
   rujuk: boolean = false;
 
 	allDiagnosisReference: DiagnosisReference[];
@@ -175,6 +180,14 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 			.switchMap((params: Params) => this.transaksiService.getTransaksi(params['idTransaksi']))
 			.subscribe(transaksi => {
         this.transaksi = transaksi;
+        this.rekamMedisService.getRekamMedisOfPasien(transaksi.transaksi.pasien.id, 0)
+          .subscribe(rekamMedis => {
+            let anamnesis: any = JSON.parse(rekamMedis.anamnesis);
+            if (anamnesis.riwayat_penyakit)
+              this.allRiwayat = anamnesis.riwayat_penyakit.split(',');
+            if (anamnesis.alergi) 
+              this.allAlergi = anamnesis.alergi.split(',');
+          });
       });
 
     this.tenagaMedisService.getAllTenagaMedis().subscribe(
@@ -192,6 +205,8 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     this.jenisObatService.getAllJenisObat().subscribe(
       data => { this.allJenisObat = data }
     )
+
+
 	}
 
 	addSelectedDiagnosis(diagnosisReference: DiagnosisReference) {
@@ -305,6 +320,24 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     }
   }
 
+  addRiwayat() {
+    this.allRiwayat.push(this.riwayatBaru);
+    this.riwayatBaru = '';
+  }
+
+  removeRiwayat(i: number) {
+    this.allRiwayat.splice(i, 1);
+  }
+
+  addAlergi() {
+    this.allAlergi.push(this.alergiBaru);
+    this.alergiBaru = '';
+  }
+
+  removeAlergi(i: number) {
+    this.allAlergi.splice(i, 1);
+  }
+
   goBack(): void {
     this.location.back();
   }
@@ -348,12 +381,18 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
   }
 
 	save() {
+    let anamnesis: any = {
+      keluhan: this.keluhan,
+      riwayat_penyakit: this.allRiwayat.toString(),
+      alergi: this.allAlergi.toString()
+    };
+
     let rekamMedis: RekamMedis = new RekamMedis(
       this.transaksi.transaksi.id_pasien,
       '',
       null,
       JSON.stringify(this.hasilPemeriksaan),
-      '',
+      JSON.stringify(anamnesis),
       '',
       ''
     );

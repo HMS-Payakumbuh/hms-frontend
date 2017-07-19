@@ -49,6 +49,11 @@
 							</a>
 						</li>
 						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#anamnesis" role="tab" style="color: black;">
+								<i class="fa fa-files-o" aria-hidden="true"></i> Anamnesis
+							</a>
+						</li>
+						<li class="nav-item">
 							<a class="nav-link" data-toggle="tab" href="#diagnosis" role="tab" style="color: black;">
 								<i class="fa fa-stethoscope" aria-hidden="true"></i> Diagnosis
 							</a>
@@ -72,7 +77,6 @@
 
 							<form>
 								<div class="form-group">
-
 									<div class="row mb-3">
 										<div class="col-4">
 											<label for="tekananDarah">TD (mmHg)</label>
@@ -102,7 +106,57 @@
 											<input type="text" class="form-control" id="tinggiBadan" [(ngModel)]="hasilPemeriksaan.tinggi_badan" name="tinggi_badan">
 										</div>
 									</div>
+								</div>
+							</form>
 
+						</div>
+
+						<div class="tab-pane fade" id="anamnesis" role="tabpanel">
+
+							<form>
+								<div class="form-group">	
+									<label for="keluhan">Keluhan Utama</label>
+									<input type="text" class="form-control" id="keluhan" [(ngModel)]="keluhan" name="keluhan">
+								</div>
+								<div class="form-group">
+									<label for="riwayat">Riwayat Penyakit</label>
+										<div class="row" *ngFor="let riwayat of allRiwayat; index as i">
+											<div class="col-sm-4 text-left">
+												<div class="input-group">
+													<div class="input-group-addon">{{i + 1}}. </div>
+													 <input type="text" class="form-control" id="riwayat" [value]="riwayat" name="riwayat" disabled>
+												 </div>
+											</div>
+											<div class="col-sm-8">
+												<button type="button" class="btn btn-sm btn-danger" (click)="removeRiwayat(i)">
+													Hapus
+												</button>
+											</div>
+										</div>
+									<input type="text" class="form-control" id="riwayat" [(ngModel)]="riwayatBaru" name="riwayat">
+									<button type="button" class="btn btn-sm btn-info" (click)="addRiwayat()">
+										Tambah
+									</button>
+								</div>	
+								<div class="form-group">
+									<label for="alergi">Alergi</label>
+									<div class="row" *ngFor="let alergi of allAlergi; index as i">
+										<div class="col-sm-4 text-left">
+												<div class="input-group">
+													<div class="input-group-addon">{{i + 1}}. </div>
+													 <input type="text" class="form-control" id="alergi" [value]="alergi" name="alergi" disabled>
+												 </div>
+											</div>
+											<div class="col-sm-8">
+												<button type="button" class="btn btn-sm btn-danger" (click)="removeAlergi(i)">
+													Hapus
+												</button>
+											</div>
+										</div>
+									<input type="text" class="form-control" id="alergi" [(ngModel)]="alergiBaru" name="alergi">
+									<button type="button" class="btn btn-sm btn-info" (click)="addAlergi()">
+										Tambah
+									</button>
 								</div>
 							</form>
 
