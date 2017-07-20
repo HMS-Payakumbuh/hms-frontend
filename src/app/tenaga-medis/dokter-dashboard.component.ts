@@ -8,24 +8,33 @@ import { TenagaMedisService }     from './tenaga-medis.service';
 import { Poliklinik }             from '../layanan/poliklinik';
 import { PoliklinikService }      from '../layanan/poliklinik.service';
 
+import { Ambulans }               from '../layanan/ambulans';
+import { AmbulansService }        from '../layanan/ambulans.service';
+
 @Component({
   selector: 'dokter-dashboard-page',
   templateUrl: './dokter-dashboard.component.html',
   providers: [
     TenagaMedisService,
-    PoliklinikService
+    PoliklinikService,
+    AmbulansService
   ]
 })
 
 export class DokterDashboardComponent implements OnInit {
   dokter: Dokter = null;
+
   allPoliklinik: Poliklinik[] = [];
+  allAmbulans: Ambulans[] = [];
+
   selectedPoliklinik: Poliklinik = null;
+  selectedAmbulans: Ambulans = null;
 
   constructor(
     private route: ActivatedRoute,
     private tenagaMedisService: TenagaMedisService,
-		private poliklinikService: PoliklinikService
+		private poliklinikService: PoliklinikService,
+    private ambulansService: AmbulansService
 	) {}
 
   ngOnInit() {
@@ -36,9 +45,9 @@ export class DokterDashboardComponent implements OnInit {
     this.poliklinikService.getAllPoliklinik().subscribe(
       data => { this.allPoliklinik = data }
     );
-  }
 
-  setPoliklinik(poliklinik: Poliklinik) {
-    this.selectedPoliklinik = poliklinik;
+    this.ambulansService.getAllAmbulans().subscribe(
+      data => { this.allAmbulans = data }
+    );
   }
 }
