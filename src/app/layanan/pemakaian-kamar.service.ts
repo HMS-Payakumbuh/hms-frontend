@@ -23,6 +23,21 @@ export class PemakaianKamarService {
 		return this.http.get(this.pemakaianKamarRawatinapUrl)
 			.map((res: Response) => res.json());
 	}
+	
+	getDaftarPemakaianKamarBooked(): Observable<PemakaianKamar[]> {
+		return this.http.get(this.pemakaianKamarRawatinapUrl + '/search' + '/booked')
+			.map((res: Response) => res.json());
+	}
+
+	getAllPemakaianKamarBooked(no_kamar: string): Observable<PemakaianKamar[]> {
+		return this.http.get(this.pemakaianKamarRawatinapUrl + '/search' + '/booked/' + no_kamar)
+			.map((res: Response) => res.json());
+	}
+
+	getAllPemakaianKamarBookedWithTanggal(tanggal: string, no_kamar: string): Observable<PemakaianKamar[]> {
+		return this.http.get(this.pemakaianKamarRawatinapUrl + '/search' + '/booked/' + tanggal + '/' + no_kamar)
+			.map((res: Response) => res.json());
+	}
 
 	getPemakaianKamar(id: number): Observable<PemakaianKamar> {
 		return this.http.get(this.pemakaianKamarRawatinapUrl + '/' + id)
@@ -43,12 +58,30 @@ export class PemakaianKamarService {
 			.map((res: Response) => res.json());
 	}
 
+	createBookedKamar(tanggal: string, PemakaianKamar: PemakaianKamar) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(PemakaianKamar);
+
+		return this.http.post(this.pemakaianKamarRawatinapUrl + '/booking/' +  tanggal, body, options)
+			.map((res: Response) => res.json());
+	}
+
 	updatePemakaianKamar(id: number, no_kamar:string, no_tempat_tidur:number, PemakaianKamar: PemakaianKamar) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(PemakaianKamar);
 
 		return this.http.put(this.pemakaianKamarRawatinapUrl+ '/' + id + '/' + no_kamar + '/' + no_tempat_tidur, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	masukBookingKamar(id:number, PemakaianKamar:PemakaianKamar) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(PemakaianKamar);
+
+		return this.http.put(this.rawatinapUrl+ '/booking/' + id, body, options)
 			.map((res: Response) => res.json());
 	}
 
@@ -65,6 +98,14 @@ export class PemakaianKamarService {
 		let options = new RequestOptions({headers: headers});
 
 		return this.http.delete(this.pemakaianKamarRawatinapUrl + '/' + id + '/' + no_kamar + '/' + no_tempat_tidur, options)
+			.map((res: Response) => res.json());
+	}
+
+	destroyBookingKamar(id: number) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+
+		return this.http.delete(this.pemakaianKamarRawatinapUrl + '/booking/' + id, options)
 			.map((res: Response) => res.json());
 	}
 }

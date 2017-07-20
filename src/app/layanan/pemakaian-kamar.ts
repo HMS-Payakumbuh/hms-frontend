@@ -6,6 +6,7 @@ export class PemakaianKamar {
     no_tempat_tidur: number;
 	waktu_masuk : Date;
     waktu_keluar : Date;
+    tanggal_booking : Date;
     harga: number;
     no_pegawai: number;
 }

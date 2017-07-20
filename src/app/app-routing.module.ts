@@ -24,6 +24,9 @@ import { LaboratoriumPemeriksaanComponent }	from './layanan/laboratorium-pemerik
 
 import { AmbulansListComponent }		from './layanan/ambulans-list.component';
 
+import { BookingRawatinapComponent }		from './layanan/booking-rawatinap.component';
+import { BookingRawatinapListComponent }		from './layanan/booking-rawatinap-list.component';
+import { BookingRawatinapDetailComponent }		from './layanan/booking-rawatinap-detail.component';
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent }	    from './layanan/rawatinap-detail.component';
 import { PindahKamarListComponent }		from './layanan/pindahkamar-list.component';
@@ -112,6 +115,11 @@ const routes: Routes = [
 	{ path: 'rawatinap', component: RawatinapListComponent },
 	{ path: 'rawatinap/:noKamar', component: RawatinapDetailComponent },
 
+	{ path: 'rawatinap/booking/kamar', component: BookingRawatinapListComponent },
+	{ path: 'rawatinap/booking/kamar/:tanggal/:noKamar', component: BookingRawatinapDetailComponent },
+
+	{ path: 'daftarbookingrawatinap', component: BookingRawatinapComponent },
+	
 	{ path: 'rawatinap/pindah/:idPemakaian', component: PindahKamarListComponent },
 	{ path: 'rawatinap/pindah/:idPemakaian/:noKamar', component: PindahKamarDetailComponent },
 
