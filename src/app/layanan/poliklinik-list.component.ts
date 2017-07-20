@@ -1,16 +1,23 @@
 import { Component, OnInit }		from '@angular/core';
 
+import { LokasiObat }           from '../farmasi/lokasi-obat/lokasi-obat';
+import { LokasiObatService }    from '../farmasi/lokasi-obat/lokasi-obat.service';
+
 import { Poliklinik } 					from './poliklinik';
 import { PoliklinikService }		from './poliklinik.service';
 
 @Component({
  	selector: 'poliklinik-list-page',
  	templateUrl: './poliklinik-list.component.html',
- 	providers: [PoliklinikService]
+ 	providers: [
+    LokasiObatService,
+    PoliklinikService
+  ]
 })
 
 export class PoliklinikListComponent implements OnInit {
-	allPoliklinik: Poliklinik[];
+  allLokasiObat: LokasiObat[];
+  allPoliklinik: Poliklinik[];
 	poliklinikModal: Poliklinik = null;
   poliklinikModalNama: string = null;
 
@@ -20,13 +27,18 @@ export class PoliklinikListComponent implements OnInit {
   public sortOrder = "asc";
 
 	constructor(
-		private poliklinikService: PoliklinikService
+    private lokasiObatService: LokasiObatService,
+    private poliklinikService: PoliklinikService
 	) {}
 
 	ngOnInit() {
 		this.poliklinikService.getAllPoliklinik().subscribe(
       data => { this.allPoliklinik = data }
     );
+
+    this.lokasiObatService.getAllLokasiObat().subscribe(
+      data => { this.allLokasiObat = data }
+    )
 	}
 
   newPoliklinik() {
@@ -34,9 +46,14 @@ export class PoliklinikListComponent implements OnInit {
   }
 
   createPoliklinik() {
-    this.poliklinikService.createPoliklinik(this.poliklinikModal).subscribe(
-      data => { this.ngOnInit() }
-    );
+    for (let lokasiObat of this.allLokasiObat) {
+      if (lokasiObat.nama == this.poliklinikModal.nama) {
+        this.poliklinikModal.id_lokasi = lokasiObat.id;
+        this.poliklinikService.createPoliklinik(this.poliklinikModal).subscribe(
+          data => { this.ngOnInit() }
+        );
+      }
+    }
   }
 
   editPoliklinik(nama: string, poliklinik: Poliklinik) {
@@ -45,9 +62,14 @@ export class PoliklinikListComponent implements OnInit {
   }
 
   updatePoliklinik() {
-    this.poliklinikService.updatePoliklinik(this.poliklinikModalNama, this.poliklinikModal).subscribe(
-      data => { this.ngOnInit() }
-    );
+    for (let lokasiObat of this.allLokasiObat) {
+      if (lokasiObat.nama == this.poliklinikModal.nama) {
+        this.poliklinikModal.id_lokasi = lokasiObat.id;
+        this.poliklinikService.updatePoliklinik(this.poliklinikModalNama, this.poliklinikModal).subscribe(
+          data => { this.ngOnInit() }
+        );
+      }
+    }
   }
 
   destroyPoliklinik(nama: string) {
