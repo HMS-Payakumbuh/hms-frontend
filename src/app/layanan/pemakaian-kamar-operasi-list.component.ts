@@ -38,7 +38,7 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 	allTenagaMedis: TenagaMedis[];
 	allTindakanReference: TindakanReference[];
 
-	transaksi: Transaksi;
+	transaksi: Transaksi[];
 
 	tanggalOperasi: Date;
 	waktuMasuk: string;
@@ -119,7 +119,6 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 		this.transaksiService.getRecentTransaksi(nama_pasien).
 			subscribe(data => {
 				this.transaksi = data;
-				this.pemakaianKamarOperasiModal.id_transaksi = this.transaksi.id;
 				this.transaksiService.getTransaksi(this.pemakaianKamarOperasiModal.id_transaksi)
 					.subscribe(transaksi => this.transaksi2 = transaksi);
 			})

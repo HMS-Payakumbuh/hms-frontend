@@ -24,9 +24,9 @@ export class PemakaianKamarService {
 			.map((res: Response) => res.json());
 	}
 
-	getPemakaianKamar(no_kamar: string): Observable<PemakaianKamar> {
-		return this.getAllPemakaianKamar()
-			.map(allRawatinap => allRawatinap.find(Rawatinap => Rawatinap.no_kamar == no_kamar));
+	getPemakaianKamar(id: number): Observable<PemakaianKamar> {
+		return this.http.get(this.pemakaianKamarRawatinapUrl + '/' + id)
+			.map((res: Response) => res.json());
 	}
 
 	getNoTransaksi(nama_pasien: string, no_kamar : string): Observable<Transaksi> {
@@ -50,6 +50,14 @@ export class PemakaianKamarService {
 
 		return this.http.put(this.pemakaianKamarRawatinapUrl+ '/' + id + '/' + no_kamar + '/' + no_tempat_tidur, body, options)
 			.map((res: Response) => res.json());
+	}
+
+	pindahPemakaianKamar(id: number, PemakaianKamar: PemakaianKamar) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(PemakaianKamar);
+
+		return this.http.put(this.pemakaianKamarRawatinapUrl+ '/pindah/' + id, body, options)
 	}
 
 	destroyPemakaianKamar(id: number, no_kamar:string, no_tempat_tidur:number) {

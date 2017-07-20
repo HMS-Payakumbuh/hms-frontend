@@ -29,7 +29,7 @@ export class TransaksiService {
 			.map((res: Response) => res.json());
 	}
 
-	getRecentTransaksi(nama_pasien : string): Observable<any> {
+	getRecentTransaksi(nama_pasien : string): Observable<any[]> {
 		const url = `${this.transaksiUrl}` + '/' + "search" + '/' + nama_pasien;
 		return this.http.get(url)
 			.map((res: Response) => res.json());
