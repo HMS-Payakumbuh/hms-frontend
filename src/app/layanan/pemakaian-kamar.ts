@@ -1,4 +1,5 @@
 export class PemakaianKamar {
+    id : number;
     id_transaksi : number;
     id_pembayaran : number;
 	no_kamar: string;

@@ -16,8 +16,8 @@ import { TenagaMedisService }		from '../tenaga-medis/tenaga-medis.service';
 
 
 @Component({
- 	selector: 'rawatinap-detail-page',
- 	templateUrl: './rawatinap-detail.component.html',
+ 	selector: 'pindahkamar-detail-page',
+ 	templateUrl: './pindahkamar-detail.component.html',
  	providers: [
          RawatinapService,
          TempattidurService,
@@ -27,16 +27,16 @@ import { TenagaMedisService }		from '../tenaga-medis/tenaga-medis.service';
     ]
 })
 
-export class RawatinapDetailComponent implements OnInit {
+export class PindahKamarDetailComponent implements OnInit {
 	rawatinap: Rawatinap;
     allTempatTidur: Tempattidur[];
 	allTenagaMedis: TenagaMedis[];
     transaksi: Transaksi[];
 	noKamar: string;
 	selectedTempatTidur: number;
-	pemakaianKamarModal: PemakaianKamar = null;
+	pemakaianKamar: PemakaianKamar;
+	pemakaianKamarModal : PemakaianKamar = null;
 	tempatTidurModal : Tempattidur = null;
-    pemakaianKamarModalNama: string = null;
 
 	constructor(
 		private transaksiService: TransaksiService,
@@ -50,6 +50,10 @@ export class RawatinapDetailComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.route.params
+			.switchMap((params: Params) => this.pemakaianKamarService.getPemakaianKamar(params['idPemakaian']))
+			.subscribe( data =>  this.pemakaianKamar = data);
+		
+		this.route.params
 			.switchMap((params: Params) => this.rawatinapService.getRawatinap(params['noKamar']))
 			.subscribe(rawatinap => this.rawatinap = rawatinap);
 	
@@ -57,8 +61,8 @@ export class RawatinapDetailComponent implements OnInit {
 			.switchMap((params: Params) => this.tempattidurService.getAllTempattidur(params['noKamar']))
 			.subscribe(data => this.allTempatTidur = data);
 		
-		this.tenagaMedisService.getAllTenagaMedis().
-			subscribe(data => this.allTenagaMedis = data);
+		this.tenagaMedisService.getAllTenagaMedis()
+			.subscribe(data => this.allTenagaMedis = data);
 	}
 
 	getRecentTransaksi(nama_pasien: string) {
@@ -89,9 +93,9 @@ export class RawatinapDetailComponent implements OnInit {
 
 	newPemakaianKamar() {
     	this.pemakaianKamarModal = new PemakaianKamar();
-		this.pemakaianKamarModal.no_kamar = this.rawatinap.no_kamar;
-		this.pemakaianKamarModal.harga = this.rawatinap.harga_per_hari;
-		this.pemakaianKamarModal.no_tempat_tidur = this.tempattidurService.selectedTempatTidur;
+		this.pemakaianKamar.no_kamar = this.rawatinap.no_kamar;
+		this.pemakaianKamar.harga = this.rawatinap.harga_per_hari;
+		this.pemakaianKamar.no_tempat_tidur = this.tempattidurService.selectedTempatTidur;
 
 		this.tempatTidurModal = new Tempattidur();
 		this.tempatTidurModal.no_kamar = this.rawatinap.no_kamar;
@@ -99,11 +103,13 @@ export class RawatinapDetailComponent implements OnInit {
 		this.tempatTidurModal.status = 0;
  	}
 
-    createPemakaianKamar(noKamar: string, noTempatTidur: number) {
-    	this.pemakaianKamarService.createPemakaianKamar(noKamar,this.pemakaianKamarModal).subscribe(
+    pindahPemakaianKamar(noKamar: string, noTempatTidur: number) {
+    	this.pemakaianKamarService.pindahPemakaianKamar(this.pemakaianKamar.id, this.pemakaianKamar).subscribe(
       		data => { 
 				this.tempattidurService.updateTempatTidur(this.tempatTidurModal, noKamar, noTempatTidur).subscribe(
-					data => { window.location.reload() }
+					data => {
+ 						window.location.reload();
+					}
 				);
 			}
     	);

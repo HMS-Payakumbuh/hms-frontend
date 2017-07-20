@@ -184,7 +184,7 @@
 						<div class="modal-content">
 
 							<div class="modal-header">
-								<h5 class="modal-title">Buat Pemakaian Kamar Rawat Inap Baru</h5>
+								<h5 class="modal-title">Pindah Kamar</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<i class="fa fa-times" aria-hidden="true"></i>
 								</button>
@@ -193,44 +193,37 @@
 							<div class="modal-body">
 
 								<div class="form-group">
-									<label for="id_transaksi">Nama Pasien *</label>
+									<label for="id_transaksi">Nama Pasien</label>
 									<div class="input-group">
-									<input type="text" class="form-control" id="nama_pasien" required name="nama_pasien" [(ngModel)]="pemakaianKamarModal.nama_pasien"> 
-									<span class="form-group-btn">
-										<button class="btn btn-success" (click)="getRecentTransaksi(pemakaianKamarModal.nama_pasien)">Cari</button>
-									</span>
+									<input type="text" class="form-control" id="nama_pasien" disabled required name="nama_pasien" [(ngModel)]="pemakaianKamar.nama_pasien">
 									</div>                    
 								</div>
 
 								<div class="form-group">
 									<label for="id_pasien">ID Transaksi</label>
-									<select class="form-control" required id="id_transaksi" [(ngModel)]="pemakaianKamarModal.id_transaksi">
-										<option *ngFor="let transaksi of transaksi" [value]="transaksi.id">
-											{{transaksi.id}}
-										</option>
-									</select>
+									<input type="text" class="form-control" id="id_transaksi" disabled required name="id_transaksi" [(ngModel)]="pemakaianKamar.id_transaksi">
 								</div>
 
 								<div class="form-group">
 									<label for="nama_pasien">No. Kamar</label>
-									<input type="text" class="form-control" id="nama_pasien" disabled name="no_kamar" [(ngModel)]="pemakaianKamarModal.no_kamar">
+									<input type="text" class="form-control" id="nama_pasien" disabled name="no_kamar" [(ngModel)]="pemakaianKamar.no_kamar">
 								</div>
 
 								<div class="form-group">
 									<label for="nama_pasien">No. Tempat Tidur</label>
-									<input type="text" class="form-control" id="no_tempat_tidur" disabled name="no_tempat_tidur" [(ngModel)]="pemakaianKamarModal.no_tempat_tidur">
+									<input type="text" class="form-control" id="no_tempat_tidur" disabled name="no_tempat_tidur" [(ngModel)]="pemakaianKamar.no_tempat_tidur">
 								</div>
 
 								<div class="form-group">
 									<label for="nama_pasien">Harga</label>
-									<input type="text" class="form-control" id="harga" disabled name="harga" [(ngModel)]="pemakaianKamarModal.harga">
+									<input type="text" class="form-control" id="harga" disabled name="harga" [(ngModel)]="pemakaianKamar.harga">
 								</div>
 
 								<div class="form-group">
 									<label for="nama_pasien">Nama Dokter Rawat</label>
-									<select class="form-control" required id="no_pegawai" [(ngModel)]="pemakaianKamarModal.no_pegawai">
-										<option *ngFor="let tenagaMedis of allTenagaMedis" [value]="tenagaMedis.no_pegawai">
-											{{tenagaMedis.nama}}
+									<select class="form-control" disabled required id="no_pegawai" [(ngModel)]="pemakaianKamar.no_pegawai">
+										<option [value]="pemakaianKamar.no_pegawai">
+											{{pemakaianKamar.nama}}
 										</option>
 									</select>
 								</div>
@@ -238,7 +231,7 @@
 
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-								<button type="button" class="btn btn-success" (click)="createPemakaianKamar(rawatinap.no_kamar, selectedTempatTidur)">Simpan</button>
+								<button type="button" class="btn btn-success" (click)="pindahPemakaianKamar(rawatinap.no_kamar, selectedTempatTidur)">Simpan</button>
 							</div>
 						</div>
 					</div>

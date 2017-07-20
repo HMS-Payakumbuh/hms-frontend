@@ -26,7 +26,7 @@ export class PemakaianKamarJenazahListComponent implements OnInit {
 	allPemakaianKamarJenazah: PemakaianKamarJenazah[];
 	allKamarJenazah: KamarJenazah[];
 
-	transaksi: Transaksi;
+	transaksi: Transaksi[];
 
 	tanggalOperasi: Date;
 	waktuMasuk: Date;
@@ -82,7 +82,6 @@ export class PemakaianKamarJenazahListComponent implements OnInit {
 		this.transaksiService.getRecentTransaksi(nama_pasien).
 			subscribe(data => {
 				this.transaksi = data;
-				this.pemakaianKamarJenazahModal.id_transaksi = this.transaksi.id;
 			})
 	}
 }

@@ -86,7 +86,11 @@
 
 								<div class="form-group">
 									<label for="id_pasien">ID Transaksi</label>
-									<input type="text" class="form-control" id="id_pasien" disabled name="id_pasien" [(ngModel)]="pemakaianKamarOperasiModal.id_transaksi">
+									<select class="form-control" required id="id_transaksi" [(ngModel)]="pemakaianKamarOperasiModal.id_transaksi">
+										<option *ngFor="let transaksi of transaksi" [value]="transaksi.id">
+											{{transaksi.id}}
+										</option>
+									</select>
 								</div>
 								
 								<div class="form-group">
