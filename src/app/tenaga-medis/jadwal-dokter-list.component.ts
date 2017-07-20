@@ -1,17 +1,26 @@
 import { Component, OnInit }		from '@angular/core';
 
 import { Dokter }								from './dokter';
+import { Poliklinik }           from '../layanan/poliklinik';
 import { JadwalDokter }					from './jadwal-dokter';
+
 import { TenagaMedisService }		from './tenaga-medis.service';
+import { PoliklinikService }    from '../layanan/poliklinik.service';
 
 @Component({
  	selector: 'jadwal-dokter-list-page',
  	templateUrl: './jadwal-dokter-list.component.html',
- 	providers: [TenagaMedisService]
+ 	providers: [
+    TenagaMedisService,
+    PoliklinikService
+  ]
 })
 
 export class JadwalDokterListComponent implements OnInit {
-	allJadwalDokter: JadwalDokter[];
+  allDokter: Dokter[];
+  allJadwalDokter: JadwalDokter[];
+  allPoliklinik: Poliklinik[];
+
   jadwalDokterModal: JadwalDokter = null;
   JadwalDokterModalNamaPoli: string = null;
   jadwalDokterModalNpDokter: string = null;
@@ -23,12 +32,21 @@ export class JadwalDokterListComponent implements OnInit {
   public sortOrder = "asc";
 
 	constructor(
-		private jadwalDokterService: TenagaMedisService
+		private jadwalDokterService: TenagaMedisService,
+    private poliklinikService: PoliklinikService
 	) {}
 
 	ngOnInit() {
 		this.jadwalDokterService.getAllJadwalDokter().subscribe(
       data => { this.allJadwalDokter = data }
+    )
+
+    this.jadwalDokterService.getAllDokter().subscribe(
+      data => { this.allDokter = data }
+    )
+
+    this.poliklinikService.getAllPoliklinik().subscribe(
+      data => { this.allPoliklinik = data }
     )
 	}
 

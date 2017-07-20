@@ -56,7 +56,7 @@
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 
-						<div class="modal-header">
+						<div class="modal-header bg-info text-white">
 							<h5 class="modal-title">Editing {{tenagaMedisModalNoPegawai}}</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<i class="fa fa-times" aria-hidden="true"></i>
@@ -76,7 +76,12 @@
 
 							<div class="form-group">
 								<label for="jabatan">Jabatan</label>
-								<input type="text" class="form-control" id="jabatan" required [(ngModel)]="tenagaMedisModal.jabatan">
+								<select class="form-control" id="jabatan" required [(ngModel)]="tenagaMedisModal.jabatan">
+									<option value="Dokter">Dokter</option>
+									<option value="Petugas Lab">Petugas Lab</option>
+									<option value="Perawat">Perawat</option>
+									<option value="Bidan">Bidan</option>
+								</select>
 							</div>
 						</div>
 
@@ -93,7 +98,7 @@
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 
-						<div class="modal-header">
+						<div class="modal-header bg-info text-white">
 							<h5 class="modal-title">Tenaga Medis Baru</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<i class="fa fa-times" aria-hidden="true"></i>
@@ -113,7 +118,12 @@
 
 							<div class="form-group">
 								<label for="jabatan">Jabatan</label>
-								<input type="text" class="form-control" id="jabatan" required [(ngModel)]="tenagaMedisModal.jabatan">
+								<select class="form-control" id="jabatan" required [(ngModel)]="tenagaMedisModal.jabatan">
+									<option value="Dokter">Dokter</option>
+									<option value="Petugas Lab">Petugas Lab</option>
+									<option value="Perawat">Perawat</option>
+									<option value="Bidan">Bidan</option>
+								</select>
 							</div>
 						</div>
 

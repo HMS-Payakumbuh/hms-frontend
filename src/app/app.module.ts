@@ -108,6 +108,11 @@ import { DaftarObatEceranComponent }      from './farmasi/obat-eceran/daftar-oba
 import { DetailObatEceranComponent }      from './farmasi/obat-eceran/detail-obat-eceran.component';
 import { ObatEceranFormComponent }      from './farmasi/obat-eceran/obat-eceran-form.component';
 
+import { SelectorStockOpnameComponent }      from './farmasi/stock-opname/selector-stock-opname.component';
+import { DaftarStockOpnameComponent }      from './farmasi/stock-opname/daftar-stock-opname.component';
+import { DetailStockOpnameComponent }      from './farmasi/stock-opname/detail-stock-opname.component';
+import { StockOpnameFormComponent }      from './farmasi/stock-opname/stock-opname-form.component';
+
 import { SettingsComponent }        from './settings/settings.component';
 
 import { AppRoutingModule }         from './app-routing.module';
@@ -225,6 +230,11 @@ import { AppComponent }             from './app.component';
         DaftarObatEceranComponent,
         DetailObatEceranComponent,
         ObatEceranFormComponent,
+
+        SelectorStockOpnameComponent,
+        DaftarStockOpnameComponent,
+        DetailStockOpnameComponent,
+        StockOpnameFormComponent,
 
         SettingsComponent,
     ],

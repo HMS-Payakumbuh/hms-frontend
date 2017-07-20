@@ -63,7 +63,7 @@
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 
-						<div class="modal-header">
+						<div class="modal-header bg-info text-white">
 							<h5 class="modal-title">Editing Jadwal Dokter</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<i class="fa fa-times" aria-hidden="true"></i>
@@ -73,12 +73,16 @@
 						<div class="modal-body">
 							<div class="form-group">
 								<label for="nama_poli">Nama Poli</label>
-								<input type="text" class="form-control" id="nama_poli" required [(ngModel)]="jadwalDokterModal.nama_poli">
+								<select class="form-control" id="nama_poli" [(ngModel)]="jadwalDokterModal.nama_poli" name="nama_poli" required>
+									<option *ngFor="let poliklinik of allPoliklinik" [value]="poliklinik.nama">{{poliklinik.nama}}</option>
+								</select>
 							</div>
 
 							<div class="form-group">
 								<label for="np_dokter">No Pegawai Dokter</label>
-								<input type="text" class="form-control" id="np_dokter" required [(ngModel)]="jadwalDokterModal.np_dokter">
+								<select class="form-control" id="np_dokter" [(ngModel)]="jadwalDokterModal.np_dokter" name="np_dokter" required>
+									<option *ngFor="let dokter of allDokter" [value]="dokter.no_pegawai">{{dokter.no_pegawai}} - {{dokter.tenaga_medis.nama}}</option>
+								</select>
 							</div>
 
 							<div class="form-group">
@@ -110,7 +114,7 @@
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 
-						<div class="modal-header">
+						<div class="modal-header bg-info text-white">
 							<h5 class="modal-title">Jadwal Praktik Baru</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<i class="fa fa-times" aria-hidden="true"></i>
@@ -120,12 +124,16 @@
 						<div class="modal-body">
 							<div class="form-group">
 								<label for="nama_poli">Nama Poli</label>
-								<input type="text" class="form-control" id="nama_poli" required [(ngModel)]="jadwalDokterModal.nama_poli">
+								<select class="form-control" id="nama_poli" [(ngModel)]="jadwalDokterModal.nama_poli" name="nama_poli" required>
+									<option *ngFor="let poliklinik of allPoliklinik" [value]="poliklinik.nama">{{poliklinik.nama}}</option>
+								</select>
 							</div>
 
 							<div class="form-group">
 								<label for="np_dokter">No Pegawai Dokter</label>
-								<input type="text" class="form-control" id="np_dokter" required [(ngModel)]="jadwalDokterModal.np_dokter">
+								<select class="form-control" id="np_dokter" [(ngModel)]="jadwalDokterModal.np_dokter" name="np_dokter" required>
+									<option *ngFor="let dokter of allDokter" [value]="dokter.no_pegawai">{{dokter.no_pegawai}} - {{dokter.tenaga_medis.nama}}</option>
+								</select>
 							</div>
 
 							<div class="form-group">

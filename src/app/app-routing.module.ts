@@ -76,6 +76,11 @@ import { DaftarObatEceranComponent }      from './farmasi/obat-eceran/daftar-oba
 import { DetailObatEceranComponent }      from './farmasi/obat-eceran/detail-obat-eceran.component';
 import { ObatEceranFormComponent }      from './farmasi/obat-eceran/obat-eceran-form.component';
 
+import { SelectorStockOpnameComponent }      from './farmasi/stock-opname/selector-stock-opname.component';
+import { DaftarStockOpnameComponent }      from './farmasi/stock-opname/daftar-stock-opname.component';
+import { DetailStockOpnameComponent }      from './farmasi/stock-opname/detail-stock-opname.component';
+import { StockOpnameFormComponent }      from './farmasi/stock-opname/stock-opname-form.component';
+
 import { SettingsComponent }        from './settings/settings.component';
 
 const routes: Routes = [
@@ -150,6 +155,10 @@ const routes: Routes = [
 	{ path: 'obat-eceran', component: DaftarObatEceranComponent },
 	{ path: 'obat-eceran/:id', component: DetailObatEceranComponent },
 	{ path: 'obat-eceran-form', component: ObatEceranFormComponent },
+	{ path: 'stock-opname', component: SelectorStockOpnameComponent },	
+	{ path: 'stock-opname/:lokasi', component: DaftarStockOpnameComponent },	
+	{ path: 'detail-stock-opname/:id', component: DetailStockOpnameComponent },
+	{ path: 'stock-opname-form/:lokasi', component: StockOpnameFormComponent },
 	{ path: 'settings', component: SettingsComponent }
 ];
 

@@ -4,7 +4,7 @@
 
       <div class="card mb-3">
         <div class="card-header card-info">
-          <h4 class="mb-0">Welcome, {{dokter?.tenaga_medis.nama}}</h4>
+          <h4 class="mb-0">Poliklinik</h4>
         </div>
         <div class="card-block">
           <label for="selectPoli">Pilih poliklinik</label>
@@ -16,14 +16,49 @@
             <button type="button mr-3" class="btn btn-info" [routerLink]="['/antrian', selectedPoliklinik.nama]">
               Lihat Antrian ke {{selectedPoliklinik.nama}}
             </button>
-
-            <button type="button" class="btn btn-info">
-              Buat resep
-            </button>
           </div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header card-info">
+          <h5 class="mb-0">Ambulans</h5>
+        </div>
+        <div class="card-block">
+          <button type="button" class="btn btn-info" data-toggle="modal" [attr.data-target]="'#panggilAmbulansModal'">
+            Panggil Ambulans
+          </button>
         </div>
       </div>
 
     </div>
   </div>
+
+  <div class="modal fade" tabindex="-1" role="dialog" id="panggilAmbulansModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title">Pemakaian Ambulans</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <label for="selectAmbulans">Pilih Ambulans</label>
+          <select class="form-control mb-3" id="selectAmbulans" [(ngModel)]="selectedAmbulans" name="selectAmbulans">
+            <option *ngFor="let ambulans of allAmbulans" [ngValue]="ambulans">{{ambulans.nama}}</option>
+          </select>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+          <button type="button" class="btn btn-success" data-dismiss="modal">Panggil</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 </html>

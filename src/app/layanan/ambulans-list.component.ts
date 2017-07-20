@@ -31,7 +31,7 @@ export class AmbulansListComponent implements OnInit {
 
   newAmbulans() {
     this.ambulansModal = new Ambulans();
-    this.ambulansModal.status = "available";
+    this.ambulansModal.status = "Available";
   }
 
   createAmbulans() {

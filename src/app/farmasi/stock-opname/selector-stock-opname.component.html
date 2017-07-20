@@ -1,0 +1,28 @@
+  <div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-list-alt" aria-hidden="true"></i> Stock Opname
+				</h4>
+			</div>
+			<div class="card-block">
+				<div class="card-text">												
+					<div class="row">
+						<div class="col-md-12 pull-left">
+							<div class="input-group">
+							  	<label for="lokasi"><b>Lokasi</b></label>
+						  		<select class="form-control" [(ngModel)]="lokasi">
+						  			<option *ngFor="let lokasiObat of allLokasiObat" [value]="lokasiObat.id">{{lokasiObat.nama}}</option>
+						  		</select>						  		
+							</div>							
+						</div>
+					</div>	
+					<div class="row">
+						<div class="col-md-5 pull-left">
+							<button type="button" class="btn btn-info" [routerLink] = "['/stock-opname', lokasi]">Lihat stock opname</button> 
+						</div>
+					</div>							
+				</div>
+			</div>	
+		</div>
+	</div>
