@@ -1,0 +1,61 @@
+<html>
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>Daftar Booking Kamar Rawat Inap</h4>
+				</div>
+
+				<div class="card-block">
+                    <div class="row">
+						<div class="col-md-6 pull-left">
+							<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal Masuk/Keluar">
+						</div>
+						<div class="col-md-6 pull-right">
+							<div class="input-group">							
+							    <input type="text" class="form-control" [(ngModel)]="param" placeholder="No.Kamar/Nama Pasien/Nama Dokter"/>
+							</div>
+						</div>
+					</div>
+
+					<table class="table">
+                        
+						<thead>
+							<th>No. Kamar</th>
+							<th>No. Tempat Tidur</th>
+                            <th>Nama Pasien</th>
+                            <th>Dokter Rawat</th>
+							<th>Tanggal Booking</th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<tr>
+						</thead>
+						
+				
+						<tbody *ngFor="let pemakaiankamar of allPemakaianKamar | filterWaktuKeluar: selectedDate">
+							<tr>
+								<td>{{pemakaiankamar.no_kamar}}</td>
+								<td>{{pemakaiankamar.no_tempat_tidur}}</td>
+                                <td>{{pemakaiankamar.nama_pasien}}</td>
+                                <td>{{pemakaiankamar.nama}}</td>
+								<td>{{pemakaiankamar.tanggal_booking | date:'d MMM y'}}</td>
+								<td>
+									<button type="button"  class="btn btn-sm btn-info" (click)="editPemakaianKamarRawatinap(pemakaiankamar.id, pemakaiankamar)">
+										Masuk
+									</button>
+								</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-danger" (click)="destroyPemakaianKamarRawatinap(pemakaiankamar.id)">
+										<i class="fa fa-trash"></i>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+			</div>
+		</div>
+	</div>
+	</div>
+</html>

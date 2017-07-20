@@ -56,6 +56,9 @@ import { LaboratoriumPemeriksaanComponent }    from './layanan/laboratorium-peme
 
 import { AmbulansListComponent }    from './layanan/ambulans-list.component';
 
+import { BookingRawatinapComponent }		from './layanan/booking-rawatinap.component';
+import { BookingRawatinapListComponent }		from './layanan/booking-rawatinap-list.component';
+import { BookingRawatinapDetailComponent }		from './layanan/booking-rawatinap-detail.component';
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent } 	from './layanan/rawatinap-detail.component';
 import { PindahKamarListComponent }		from './layanan/pindahkamar-list.component';
@@ -175,6 +178,9 @@ import { AppComponent }             from './app.component';
 
         AmbulansListComponent,
 
+        BookingRawatinapComponent,
+        BookingRawatinapListComponent,
+        BookingRawatinapDetailComponent,
         RawatinapListComponent,
         RawatinapDetailComponent,
         PindahKamarListComponent,

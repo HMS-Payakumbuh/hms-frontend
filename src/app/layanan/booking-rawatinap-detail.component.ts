@@ -16,8 +16,8 @@ import { TenagaMedisService }		from '../tenaga-medis/tenaga-medis.service';
 
 
 @Component({
- 	selector: 'rawatinap-detail-page',
- 	templateUrl: './rawatinap-detail.component.html',
+ 	selector: 'booking-rawatinap-detail-page',
+ 	templateUrl: './booking-rawatinap-detail.component.html',
  	providers: [
          RawatinapService,
          TempattidurService,
@@ -27,7 +27,7 @@ import { TenagaMedisService }		from '../tenaga-medis/tenaga-medis.service';
     ]
 })
 
-export class RawatinapDetailComponent implements OnInit {
+export class BookingRawatinapDetailComponent implements OnInit {
 	rawatinap: Rawatinap;
     allTempatTidur: Tempattidur[];
 	allTenagaMedis: TenagaMedis[];
@@ -54,20 +54,27 @@ export class RawatinapDetailComponent implements OnInit {
 			.switchMap((params: Params) => this.rawatinapService.getRawatinap(params['noKamar']))
 			.subscribe(rawatinap => this.rawatinap = rawatinap);
 	
-		this.route.params
-			.switchMap((params: Params) => this.tempattidurService.getAllTempattidur(params['noKamar']))
-			.subscribe(data => this.allTempatTidur = data);
-
-		this.route.params
-			.switchMap((params: Params) => this.pemakaianKamarService.getAllPemakaianKamarBooked(params['noKamar']))
+        this.route.params
+			.switchMap((params: Params) => this.pemakaianKamarService.getAllPemakaianKamarBookedWithTanggal(params['tanggal'], params['noKamar']))
 			.subscribe(data => this.allPemakaianKamarBooked = data);
 
-		if(this.allPemakaianKamarBooked.length != 0) {
-			this.allPemakaianKamarBooked.forEach(element => {
-				this.allTempatTidur[element.no_tempat_tidur-1].status = 0;
-			});
-		}
-		
+		this.route.params
+			.switchMap((params: Params) => this.tempattidurService.getAllTempattidur(params['noKamar']))
+			.subscribe(data => {
+                this.allTempatTidur = data;
+
+                this.allTempatTidur.forEach(element => {
+                    element.status = 1;
+                })
+
+                if(this.allPemakaianKamarBooked.length != 0) {
+                    this.allPemakaianKamarBooked.forEach(element => {
+                        this.allTempatTidur[element.no_tempat_tidur-1].status = 0;
+                    });
+                }
+            }
+            );
+
 		this.tenagaMedisService.getAllTenagaMedis().
 			subscribe(data => this.allTenagaMedis = data);
 	}
@@ -110,14 +117,14 @@ export class RawatinapDetailComponent implements OnInit {
 		this.tempatTidurModal.status = 0;
  	}
 
-    createPemakaianKamar(noKamar: string, noTempatTidur: number) {
-    	this.pemakaianKamarService.createPemakaianKamar(noKamar,this.pemakaianKamarModal).subscribe(
-      		data => { 
-				this.tempattidurService.updateTempatTidur(this.tempatTidurModal, noKamar, noTempatTidur).subscribe(
-					data => { window.location.reload() }
-				);
-			}
-    	);
+    createPemakaianKamar(noKamar: string) {
+        this.route.params
+			.switchMap((params: Params) => this.pemakaianKamarService.createBookedKamar(params['tanggal'], this.pemakaianKamarModal))
+            .subscribe(
+                data => { 
+                    window.location.reload
+                }
+    	    );
   	}
 
 	goBack(): void {
