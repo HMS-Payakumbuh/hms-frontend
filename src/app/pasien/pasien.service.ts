@@ -43,7 +43,6 @@ export class PasienService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(pasien);
-		console.log(body);
 
 		return this.http.post(this.pasienUrl, body, options)
 			.map((res: Response) => res.json());
@@ -53,7 +52,6 @@ export class PasienService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(pasien);
-		console.log(body);
 
 		return this.http.put(this.pasienUrl + '/' + id, body, options)
 			.map((res: Response) => res.json());

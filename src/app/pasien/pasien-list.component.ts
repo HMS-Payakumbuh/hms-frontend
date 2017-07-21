@@ -24,6 +24,8 @@ export class PasienListComponent {
 
   	public allAgama = ['Islam', 'Protestan', 'Katolik', 'Buddha', 'Hindu', 'Konghucu'];
 
+  	public bloodTypes = ['A', 'B', 'O', 'AB'];
+
 	constructor(
 		private pasienService: PasienService
 	) {}
