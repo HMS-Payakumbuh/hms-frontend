@@ -53,7 +53,7 @@ export class RawatinapDetailComponent implements OnInit {
 		this.route.params
 			.switchMap((params: Params) => this.rawatinapService.getRawatinap(params['noKamar']))
 			.subscribe(rawatinap => this.rawatinap = rawatinap);
-	
+
 		this.route.params
 			.switchMap((params: Params) => this.tempattidurService.getAllTempattidur(params['noKamar']))
 			.subscribe(data => this.allTempatTidur = data);
@@ -95,7 +95,7 @@ export class RawatinapDetailComponent implements OnInit {
 	}
 
 	checkStatus(noTempatTidur:number) {
-		return (this.allTempatTidur[noTempatTidur-1].status == 1); 
+		return (this.allTempatTidur[noTempatTidur-1].status == 1);
 	}
 
 	newPemakaianKamar() {
@@ -112,7 +112,7 @@ export class RawatinapDetailComponent implements OnInit {
 
     createPemakaianKamar(noKamar: string, noTempatTidur: number) {
     	this.pemakaianKamarService.createPemakaianKamar(noKamar,this.pemakaianKamarModal).subscribe(
-      		data => { 
+      		data => {
 				this.tempattidurService.updateTempatTidur(this.tempatTidurModal, noKamar, noTempatTidur).subscribe(
 					data => { window.location.reload() }
 				);
