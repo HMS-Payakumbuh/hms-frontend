@@ -9,6 +9,9 @@ import { Transaksi }						from '../transaksi/transaksi';
 import { TransaksiService }			from '../transaksi/transaksi.service';
 import { AntrianService }       from '../antrian/antrian.service';
 
+import { RekamMedis }           from '../pasien/rekam-medis';
+import { RekamMedisService }    from '../pasien/rekam-medis.service';
+
 import { TenagaMedis }          from '../tenaga-medis/tenaga-medis';
 import { TenagaMedisService }   from '../tenaga-medis/tenaga-medis.service';
 
@@ -16,8 +19,10 @@ import { Laboratorium }						from './laboratorium';
 import { LaboratoriumService }		from './laboratorium.service';
 import { PoliklinikService }      from './poliklinik.service';
 
+import { HasilLab }             from './hasil-lab';
 import { Tindakan }             from './tindakan';
 import { TindakanReference }		from './tindakan-reference';
+import { HasilLabService }      from './hasil-lab.service';
 import { TindakanService }			from './tindakan.service';
 
 @Component({
@@ -25,11 +30,13 @@ import { TindakanService }			from './tindakan.service';
  	templateUrl: './laboratorium-pemeriksaan.component.html',
  	providers: [
     AntrianService,
+    RekamMedisService,
     LaboratoriumService,
     PoliklinikService,
  		TransaksiService,
     TenagaMedisService,
- 		TindakanService
+ 		TindakanService,
+    HasilLabService
 	]
 })
 
@@ -39,11 +46,15 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 	transaksi: any = null;
 	laboratorium: Laboratorium;
   rujuk: boolean = false;
+  rekamMedis: RekamMedis = null;
   layanan: any = [];
   tipeLayanan: string = '';
   allTipeLayanan: string[] = ['Poliklinik', 'Laboratorium'];
   namaPoliRujuk: string = null;
   namaLabRujuk: string = null;
+
+  allRiwayat: string[] = [];
+  allAlergi: string[] = [];
 
 	allTindakanReference: TindakanReference[];
   allTenagaMedis: TenagaMedis[];
@@ -75,10 +86,12 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private transaksiService: TransaksiService,
     private antrianService: AntrianService,
+    private rekamMedisService: RekamMedisService,
     private tenagaMedisService: TenagaMedisService,
 		private laboratoriumService: LaboratoriumService,
     private poliklinikService: PoliklinikService,
 		private tindakanService: TindakanService,
+    private hasilLabService: HasilLabService,
 		private config: NgbTypeaheadConfig
 	) {
 		config.editable = false;
@@ -91,7 +104,12 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 
 		this.route.params
 			.switchMap((params: Params) => this.transaksiService.getTransaksi(+params['idTransaksi']))
-			.subscribe(transaksi => this.transaksi = transaksi);
+			.subscribe(
+        transaksi => {
+          this.transaksi = transaksi;
+          this.checkRekamMedis();
+        }
+      );
 
     this.tenagaMedisService.getAllTenagaMedis().subscribe(
       data => { this.allTenagaMedis = data }
@@ -101,6 +119,51 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
       data => { this.allTindakanReference = data }
     );
 	}
+
+  checkRekamMedis() {
+    this.rekamMedisService.getRekamMedisOfPasien(this.transaksi.transaksi.id_pasien, 0).subscribe(
+      data => {
+        if (data != null) {
+          if (data.tanggal_waktu == this.transaksi.transaksi.waktu_masuk_pasien) {
+            this.rekamMedis = data;
+          }
+          else {
+            if (data.anamnesis != null) {
+              this.rekamMedis = new RekamMedis(
+                this.transaksi.transaksi.id_pasien,
+                this.transaksi.transaksi.waktu_masuk_pasien,
+                'D001',
+                '',
+                data.anamnesis,
+                '',
+                ''
+              );
+
+              this.rekamMedisService.createRekamMedis(this.rekamMedis).subscribe(
+                data => {}
+              );
+            }
+          }
+        }
+
+        if (this.rekamMedis == null) {
+          this.rekamMedis = new RekamMedis(
+            this.transaksi.transaksi.id_pasien,
+            this.transaksi.transaksi.waktu_masuk_pasien,
+            'D001',
+            '',
+            '',
+            '',
+            ''
+          );
+
+          this.rekamMedisService.createRekamMedis(this.rekamMedis).subscribe(
+            data => {}
+          );
+        }
+      }
+    )
+  }
 
 	addSelectedTindakan(tindakanReference: TindakanReference) {
 		this.selectedTindakanReference.push(tindakanReference);
@@ -112,8 +175,8 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
     temp.id_pembayaran = null;
     temp.kode_tindakan = tindakanReference.kode;
     temp.id_pasien = this.transaksi.transaksi.id_pasien;
-    temp.tanggal_waktu = '2017-07-06 10:00:00';
-    temp.np_tenaga_medis = '101';
+    temp.tanggal_waktu = this.rekamMedis.tanggal_waktu;
+    temp.np_tenaga_medis = 'D001';
     temp.nama_poli = null;
     temp.nama_lab = this.laboratorium.nama;
     temp.nama_ambulans = null;
@@ -167,6 +230,8 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
             }
           )
         }
+        else
+          this.goBack();
       }
     );
 	}

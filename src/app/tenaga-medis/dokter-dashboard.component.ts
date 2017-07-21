@@ -50,4 +50,11 @@ export class DokterDashboardComponent implements OnInit {
       data => { this.allAmbulans = data }
     );
   }
+
+  panggilAmbulans() {
+    this.selectedAmbulans.status = "In Use";
+    this.ambulansService.updateAmbulans(this.selectedAmbulans.nama, this.selectedAmbulans).subscribe(
+      data => {}
+    )
+  }
 }
