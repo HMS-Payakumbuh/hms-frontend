@@ -70,7 +70,6 @@ export class RawatinapDetailComponent implements OnInit {
 				this.allTempatTidur[element.no_tempat_tidur-1].status = 0;
 			});
 		}
-		
 	}
 
 	getRecentTransaksi(nama_pasien: string) {

@@ -46,11 +46,11 @@
 									<th></th>
 									<th></th>
 								</tr>
-								<tr *ngFor="let obat of listOfObatTebus">
-									<td>{{obat.jenis_obat.merek_obat}}</td>
-									<td>{{obat.jumlah}} {{obat.jenis_obat.satuan}} @ Rp. {{obat.harga_jual_realisasi | number: '.2-2'}}</td>
-									<td>Rp. {{obat.jumlah * obat.harga_jual_realisasi | number: '.2-2'}}</td>
-									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs'" type="checkbox" value="obat.id"></td>
+								<tr *ngFor="let obatTebus of listOfObatTebus">
+									<td>{{obatTebus.jenis_obat.merek_obat}}</td>
+									<td>{{obatTebus.jumlah}} {{obatTebus.jenis_obat.satuan}} @ Rp. {{obatTebus.harga_jual_realisasi | number: '.2-2'}}</td>
+									<td>Rp. {{obatTebus.jumlah * obatTebus.harga_jual_realisasi | number: '.2-2'}}</td>
+									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs'" type="checkbox" value="obat.id"  [id]="'obatTebus' + obatTebus.id" (change)="updateCheckedObatTebus(obatTebus.id)"></td>
 								</tr>
 								<tr *ngIf="listOfKamarRawatInap?.length > 0">
 									<th>Kamar Rawat Inap</th>
@@ -59,9 +59,9 @@
 									<th></th>
 								</tr>
 								<tr *ngFor="let kamar of listOfKamarRawatInap">
+									<td>{{kamar.kamar_rawatinap.jenis_kamar}} Kelas {{kamar.kamar_rawatinap.kelas}}</td>
 									<td></td>
-									<td></td>
-									<td>Rp. </td>
+									<td>Rp. {{kamar.harga | number: '.2-2'}}</td>
 									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs'" type="checkbox"></td>
 								</tr>
 								<tr>
