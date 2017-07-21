@@ -40,7 +40,7 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let obat_eceran_item of obatEceranItems; index as i">
-                      <td><input type="text" class="form-control" id="merek" disabled [value]="this.stokObat.jenis_obat.merek_obat" name="merek"></td>
+                      <td><input type="text" class="form-control" id="merek" disabled [value]="obat_eceran_item.jenis_obat.merek_obat" name="merek"></td>
                       <td><input type="text" class="form-control" id="jumlah" [(ngModel)]="obat_eceran_item.jumlah" name="jumlah"></td>
                       <td><input type="text" class="form-control" id="harga" [(ngModel)]="obat_eceran_item.harga_jual_realisasi" name="harga"></td>
                       <td><input type="text" class="form-control" id="harga_total" disabled [value]="obat_eceran_item.jumlah*obat_eceran_item.harga_jual_realisasi" name="harga_total"></td> 
