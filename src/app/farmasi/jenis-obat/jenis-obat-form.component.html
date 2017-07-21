@@ -42,7 +42,7 @@
             <div class="form-group">
               <div class="input-group">
                 <label for="dicover_bpjs">Dicover BPJS? *</label>
-                <input type="checkbox" class="form-control" id="dicover_bpjs" required [(ngModel)] = "jenisObat.dicover_bpjs" name="dicover_bpjs">
+                <input type="checkbox" class="form-control" id="dicover_bpjs" [checked]="jenisObat.dicover_bpjs" (change)="jenisObat.dicover_bpjs = !jenisObat.dicover_bpjs" name="dicover_bpjs">
               </div>
             </div>
 

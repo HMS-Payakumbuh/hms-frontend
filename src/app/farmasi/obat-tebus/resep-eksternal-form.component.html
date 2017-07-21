@@ -2,13 +2,23 @@
 	<div class="card mb-3">
 		<div class="card-header card-info">
 			<h4>
-				<i class="fa fa-list-alt" aria-hidden="true"></i> Resep Eksternal
+				<i class="fa fa-list-alt" aria-hidden="true"></i> Resep
 			</h4>
 		</div>
 		<div class="card-block">
 			<div class= "card-text">
+				<div class="form-group">
+                    <label>Pasien Internal?</label>
+                  	<input type="checkbox" [checked]="!resep.eksternal" (change)="resep.eksternal = !resep.eksternal">
+                </div>
+
+				<div *ngIf="!resep.eksternal" class="form-group">					
+            		<label for="no_pasien">Nomor Pasien</label>
+            		<input type="text" class="form-control" id="no_pasien" required [(ngModel)]="noPasien" name="no_pasien">
+				</div>
+
 	            <div class="form-group">
-            		<label for="nama_pembeli">Nama Pasien</label>
+            		<label for="nama">Nama Pasien</label>
             		<input type="text" class="form-control" id="nama" required [(ngModel)]="resep.nama" name="nama">
           		</div>
 

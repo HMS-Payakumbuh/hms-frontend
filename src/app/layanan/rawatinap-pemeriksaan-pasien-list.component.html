@@ -1,0 +1,143 @@
+<html>
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>Daftar Pemakaian Kamar Rawat Inap</h4>
+				</div>
+
+				<div class="card-block">
+                    <div class="row">
+						<div class="col-md-6 pull-left">
+							<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal Masuk/Keluar">
+						</div>
+						<div class="col-md-6 pull-right">
+							<div class="input-group">							
+							    <input type="text" class="form-control" [(ngModel)]="param" placeholder="No.Kamar/Nama Pasien/Nama Dokter"/>
+							</div>
+						</div>
+					</div>
+
+					<table class="table">
+                        
+						<thead>
+							<th>No. Kamar</th>
+							<th>No. Tempat Tidur</th>
+                            <th>Nama Pasien</th>
+                            <th>Dokter Rawat</th>
+							<th>Waktu Masuk</th>
+							<th>Waktu Keluar</th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<tr>
+						</thead>
+						
+				
+						<tbody *ngFor="let pemakaiankamar of allPemakaianKamar | filterWaktuKeluar: selectedDate">
+							<tr>
+								<td>{{pemakaiankamar.no_kamar}}</td>
+								<td>{{pemakaiankamar.no_tempat_tidur}}</td>
+                                <td>{{pemakaiankamar.nama_pasien}}</td>
+                                <td>{{pemakaiankamar.nama}}</td>
+								<td>{{pemakaiankamar.waktu_masuk | date:'d MMM y H:mm:ss'}}</td>
+                                <td>{{pemakaiankamar.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>
+								<td>
+									<button type="button" *ngIf="pemakaiankamar.waktu_keluar == null" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#checkoutModal'" (click)="editPemakaianKamarRawatinap(pemakaiankamar.id, pemakaiankamar)">
+										Checkout
+									</button>
+								</td>
+								<td>
+									<button type="button" *ngIf="pemakaiankamar.waktu_keluar == null" class="btn btn-sm btn-info" routerLink="/rawatinap/pindah/{{pemakaiankamar.id}}">
+										Pindah
+									</button>
+								</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-danger" (click)="destroyPemakaianKamarRawatinap(pemakaiankamar.id, pemakaiankamar)">
+										<i class="fa fa-trash"></i>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+
+					<div class="modal fade" tabindex="-1" role="dialog" id="pindahModal" aria-hidden="true" *ngIf="pemakaianKamarModal != null">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+
+							<div class="modal-header">
+								<h5 class="modal-title">Pindah Kamar</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<i class="fa fa-times" aria-hidden="true"></i>
+								</button>
+							</div>
+
+							<div class="modal-body">
+
+								<div class="form-group">
+									<label for="id_transaksi">Nama Pasien</label>
+									<div class="input-group">
+									<input type="text" class="form-control" id="nama_pasien" required name="nama_pasien" [(ngModel)]="pemakaianKamarModal.nama_pasien"> 
+									<span class="form-group-btn">
+										<button class="btn btn-success" (click)="getRecentTransaksi(pemakaianKamarModal.nama_pasien)">Cari</button>
+									</span>
+									</div>                    
+								</div>
+
+								<div class="form-group">
+									<label for="id_pasien">ID Transaksi</label>
+									<input type="text" class="form-control" disabled id="id_transaksi" required name="id_transaksi" [(ngModel)]="pemakaianKamarModal.id_transaksi"> 
+								</div>
+
+								<div class="form-group">
+									<label for="nama_pasien">No. Kamar</label>
+									<input type="text" class="form-control" id="nama_pasien" disabled name="no_kamar" [(ngModel)]="pemakaianKamarModal.no_kamar">
+								</div>
+
+								<div class="form-group">
+									<label for="nama_pasien">No. Tempat Tidur</label>
+									<input type="text" class="form-control" id="no_tempat_tidur" disabled name="no_tempat_tidur" [(ngModel)]="pemakaianKamarModal.no_tempat_tidur">
+								</div>
+
+								<div class="form-group">
+									<label for="nama_pasien">Harga</label>
+									<input type="text" class="form-control" id="harga" disabled name="harga" [(ngModel)]="pemakaianKamarModal.harga">
+								</div>
+
+								<div class="form-group">
+									<label for="nama_pasien">Nama Dokter Rawat</label>
+									<input type="text" class="form-control" disabled id="nama_dokter" required name="nama_dokter" [(ngModel)]="pemakaianKamarModal.nama">
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+								<button type="button" class="btn btn-success" (click)="createPemakaianKamar(rawatinap.no_kamar, selectedTempatTidur)">Simpan</button>
+							</div>
+						</div>
+					</div>
+					</div>
+
+
+					<!--<div class="modal fade" tabindex="-1" role="dialog" id="checkoutModal" aria-hidden="true" *ngIf="PemakaianKamarModal != null">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-body text-center">
+								Apakah anda yakin ?
+							</div>
+							
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger text-center" data-dismiss="modal">Tutup</button>
+								<button type="button" class="btn btn-success text-center" (click)="updatePemakaianKamarRawatinap()">Ya</button>
+							</div>
+
+						</div>
+					</div>
+					</div>-->
+			</div>
+		</div>
+	</div>
+	</div>
+</html>
