@@ -81,6 +81,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
   alergiBaru: string;
   pelayananBaru: string;
   rencana: any = {};
+  normalChecked: boolean = false;
   rujuk: boolean = false;
 
 	allDiagnosisReference: DiagnosisReference[];
@@ -305,6 +306,21 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     resepItem.racikan_item.splice(i, 1);
   }
 
+  assignNormalValue() {
+    this.normalChecked = !this.normalChecked;
+    if (this.normalChecked) {
+      this.hasilPemeriksaan.tekanan_darah = '120/80';
+      this.hasilPemeriksaan.nadi = '80';
+      this.hasilPemeriksaan.frekuensi_napas = '20';
+      this.hasilPemeriksaan.temperatur = '36';
+    } else {
+      this.hasilPemeriksaan.tekanan_darah = '';
+      this.hasilPemeriksaan.nadi = '';
+      this.hasilPemeriksaan.frekuensi_napas = '';
+      this.hasilPemeriksaan.temperatur = '';
+    }
+  }
+
   addSelectedJenisObat(racikanItem: RacikanItem, jenisObat: JenisObat) {
     racikanItem.id_jenis_obat = jenisObat.id;
     racikanItem.jenis_obat = jenisObat;
@@ -384,6 +400,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
       if (this.namaLabRujuk) {
         this.pelayananLain.push(this.namaLabRujuk);
         this.rekamMedis.pelayanan_lain = JSON.stringify(this.pelayananLain);
+        this.rekamMedis.tanggal_waktu = this.rekamMedis.tanggal_waktu.date;
         observables.push(this.rekamMedisService.updateRekamMedis(this.rekamMedis));
       }
     }

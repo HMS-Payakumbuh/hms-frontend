@@ -137,7 +137,7 @@
                 <div class="form-group">
                   <label for="search">Cari Pasien</label> <br>
                     <div class="input-group">
-                      <input type="text" class="form-control" id="search" [(ngModel)]="search" placeholder="Cari ID/nama pasien">
+                      <input type="text" class="form-control" id="search" [(ngModel)]="search" placeholder="Cari dengan kode pasien / nama pasien" (keyup.enter)="searchPasien()">
                       <span class="input-group-btn">
                         <button class="btn btn-secondary" type="button" (click)="searchPasien()">Mulai</button>
                       </span>
@@ -146,7 +146,7 @@
                 <div class="form-group">
                     <label for="pasien">Pilih Pasien</label>
                     <select class="form-control" id="pasien" name="pasien" [(ngModel)]="pasien" (ngModelChange)= "selectPasien()">
-                      <option *ngFor="let pasien of allPasien" [ngValue]="pasien">{{pasien.id}} - {{pasien.nama_pasien}}</option>
+                      <option *ngFor="let pasien of allPasien" [ngValue]="pasien">{{pasien.nama_pasien}} ({{pasien.kode_pasien}})</option>
                     </select>
                   </div>
 

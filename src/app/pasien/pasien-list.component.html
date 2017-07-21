@@ -12,7 +12,7 @@
 					<div class="form-group">
 	                  <label for="search">Cari Pasien</label> <br>
 	                    <div class="input-group">
-	                      <input type="text" class="form-control" id="search" [(ngModel)]="search" placeholder="Cari ID/nama pasien">
+	                      <input type="text" class="form-control" id="search" [(ngModel)]="search" (keyup.enter)="searchPasien()" placeholder="Cari dengan kode pasien / nama pasien">
 	                      <span class="input-group-btn">
 	                        <button class="btn btn-secondary" type="button" (click)="searchPasien()">Mulai</button>
 	                      </span>
@@ -20,7 +20,6 @@
 	                </div>
 					<table *ngIf="allPasien" class="table" [mfData]="allPasien | filterPasien : param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<thead>
-							<th><mfDefaultSorter by="id">ID</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="nama_pasien">Nama</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="tanggal_lahir">Tanggal Lahir</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="jender">Jender</mfDefaultSorter></th>
@@ -29,14 +28,13 @@
 							<th><mfDefaultSorter by="alamat">Alamat</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="kontak">Kontak</mfDefaultSorter></th>
 							<th></th>
-							<th></th>
+							<!-- <th></th> -->
 						</thead>
 						<tbody>
 							<tr *ngFor="let pasien of mf.data">
-								<td>{{pasien.id}}</td>
 								<td>{{pasien.nama_pasien}}</td>
 								<td>{{pasien.tanggal_lahir}}</td>
-								<td>{{pasien.jender == 1 && 'Laki-laki' || 'Perempuan'}}</td>
+								<td>{{pasien.jender == 1 && 'L' || 'P'}}</td>
 								<td>{{pasien.agama}}</td>
 								<td>{{pasien.gol_darah}}</td>
 								<td>{{pasien.alamat}}</td>
@@ -44,11 +42,11 @@
 								<td>
 									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#editPasienModal" [attr.data-target]="'#editPasienModal'" (click)="editPasien(pasien.id, pasien)">Edit</button>
 								</td>
-								<td>
+<!-- 								<td>
 									<button type="button" class="btn btn-sm btn-danger" (click)="destroyPasien(pasien.id)">
 										<i class="fa fa-trash"></i>
 									</button>
-								</td>
+								</td> -->
 							</tr>
 						</tbody>
 						<tfoot>
