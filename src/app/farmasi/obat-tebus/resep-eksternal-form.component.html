@@ -9,7 +9,7 @@
 			<div class= "card-text">
 				<div class="form-group">
                     <label>Pasien Internal?</label>
-                  	<input type="checkbox" [(ngModel)]="noPasien" [checked]="!resep.eksternal" (change)="resep.eksternal = !resep.eksternal">
+                  	<input type="checkbox" [checked]="!resep.eksternal" (change)="resep.eksternal = !resep.eksternal">
                 </div>
 
 				<div *ngIf="!resep.eksternal" class="form-group">					
