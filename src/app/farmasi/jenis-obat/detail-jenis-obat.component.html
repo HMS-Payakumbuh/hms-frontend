@@ -38,8 +38,9 @@
 								<td>Rp. {{jenisObat.harga_jual_satuan}}</td>
 							</tr>
 							<tr>
-								<td><b>Keterangan</b></td>								
-								<td>{{jenisObat.keterangan}}</td>
+								<td><b>Dicover BPJS?</b></td>								
+								<td *ngIf="jenisObat.dicover_bpjs">Ya</td>		
+								<td *ngIf="!jenisObat.dicover_bpjs">Tidak</td>
 							</tr>
 						</tbody>
 					</table>

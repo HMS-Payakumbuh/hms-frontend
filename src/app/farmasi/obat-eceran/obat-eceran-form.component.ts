@@ -56,14 +56,14 @@ export class ObatEceranFormComponent {
 	addObatItem(stokObat: StokObat) {
 	    let temp = new ObatEceranItem();
 
-	    this.stokObat = stokObat;
-
 	    temp.jumlah = null;
 	    temp.keterangan = '';
 
 		temp.id_jenis_obat = stokObat.id_jenis_obat;
     	temp.id_obat_masuk = stokObat.id_obat_masuk;
-    	temp.harga_jual_realisasi = stokObat.jenis_obat.harga_jual_satuan;		    
+    	temp.obat_masuk = stokObat.obat_masuk;
+    	temp.jenis_obat = stokObat.jenis_obat;
+    	temp.harga_jual_realisasi = temp.jenis_obat.harga_jual_satuan;
 
     	this.obatEceranItems.push(temp);
 	}

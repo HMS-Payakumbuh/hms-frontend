@@ -8,7 +8,13 @@
 					</h4>
 				</div>
 				<div class="card-block">
-					<b>Tercatat pada tanggal : </b>{{tanggal}}
+					<div>
+						<b>Tercatat pada tanggal/waktu : </b>{{tanggal}}
+					</div>
+					<br>
+					<div>
+						<b>Dokter Penanggungjawab : </b>{{dokter?.nama}}
+					</div>
 				</div>
 			</div>
 			<div class="card mb-3">
@@ -31,6 +37,12 @@
 								<td>{{pasien?.tanggal_lahir}}</td>
 								<td><b>Kontak</b></td>
 								<td>{{pasien?.kontak}}</td>
+							</tr>
+							<tr>
+								<td><b>Agama</b></td>
+								<td>{{pasien?.agama}}</td>
+								<td><b>Golongan Darah</b></td>
+								<td>{{pasien?.gol_darah}}</td>
 							</tr>
 							<tr>
 								<td><b>Alamat</b></td>

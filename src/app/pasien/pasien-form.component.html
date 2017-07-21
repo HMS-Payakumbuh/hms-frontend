@@ -61,6 +61,13 @@
                     <input type="tel" class="form-control" id="phone" [(ngModel)]="pasien.kontak" name="phone">
                   </div>
 
+                  <div class="form-group">
+                    <label for="blood">Golongan Darah</label>
+                    <select class="form-control" id="blood" [(ngModel)]="pasien.gol_darah" name="blood">
+                      <option *ngFor="let blood of bloodTypes" [value]="blood">{{blood}}</option>
+                    </select>
+                  </div>
+
                   <div *ngIf="rujukanChecked" class="form-group">
                     <label for="no_rujukan">Nomor Rujukan</label>
                     <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="no_rujukan" name="no_rujukan" required>
@@ -184,6 +191,13 @@
                   <div class="form-group">
                     <label for="phone">Kontak</label>
                     <input type="tel" class="form-control" [disabled]="!update" id="phone" [(ngModel)]="pasien.kontak" name="phone">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="blood">Golongan Darah</label>
+                    <select class="form-control" id="blood" [disabled]="!update" [(ngModel)]="pasien.gol_darah" name="blood">
+                      <option *ngFor="let blood of bloodTypes" [value]="blood">{{blood}}</option>
+                    </select>
                   </div>
 
                   <div *ngIf="asuransiChecked">

@@ -6,8 +6,8 @@ export class JenisObat {
     public pembuat: string = '',
     public golongan: string = '',
     public satuan: string = '',
-    public harga_jual_satuan: number = null ,
-    public keterangan: string = ''
+    public harga_jual_satuan: number = null,
+    public dicover_bpjs: boolean = false
   ) {  }
 }
 

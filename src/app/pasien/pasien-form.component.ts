@@ -62,9 +62,11 @@ export class PasienFormComponent implements OnInit {
 
   religions = ['Islam', 'Protestan', 'Katolik', 'Buddha', 'Hindu', 'Konghucu'];
 
+  bloodTypes = ['A', 'B', 'O', 'AB'];
+
   ngOnInit() {
-    this.pasien = new Pasien(null,'','',null,null,'','','');
-    this.asuransi = new Asuransi(null,'',null);
+    this.pasien = new Pasien();
+    this.asuransi = new Asuransi();
 
     this.sub = this.route.params
       .subscribe(params => {
