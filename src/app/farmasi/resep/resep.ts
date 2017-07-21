@@ -9,7 +9,7 @@ export class Resep {
 	public nama_dokter: string = "",
 	public umur: number = null,
 	public no_telp: string = "",
-	public eksternal: boolean = false,
+	public eksternal: boolean = true,
 	public resep_item: ResepItem[] = []
 	) {}
 }

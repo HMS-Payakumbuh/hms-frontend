@@ -23,6 +23,8 @@ export class ResepEksternalFormComponent {
 	resep: Resep = new Resep();
   	allJenisObat: JenisObat[];
 
+  	noPasien: number;
+
     inputJenisObatFormatter = (value : JenisObat) => value.merek_obat;
   	resultJenisObatFormatter = (value: JenisObat)	=> value.merek_obat;
 
@@ -71,9 +73,7 @@ export class ResepEksternalFormComponent {
 	    racikanItem.jenis_obat = jenisObat;
 	}
 
-	save() {
-		this.resep.eksternal = true;
-		
+	save() {		
 		console.log(this.resep);
 		
 		this.allResep.push(this.resep);

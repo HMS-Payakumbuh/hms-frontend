@@ -237,7 +237,6 @@ export class ObatTebusFormComponent {
 					}
 				}
 
-		    	console.log(this.resep.id_transaksi);
 		        this.obatTebus.id_transaksi = this.resep.id_transaksi;
 				this.obatTebus.id_resep = this.resep.id;
 				this.obatTebus.obat_tebus_item = this.obatTebusItems;
