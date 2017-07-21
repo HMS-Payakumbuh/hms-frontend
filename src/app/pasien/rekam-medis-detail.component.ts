@@ -25,6 +25,7 @@ export class RekamMedisDetailComponent implements OnInit {
 	response: any;
 	sub: any;
 	transaksi: any;
+	dokter: any;
 	pasien: Pasien;
 	umur: number = 0;
 	noEntry: number;
@@ -57,7 +58,8 @@ export class RekamMedisDetailComponent implements OnInit {
 					this.pasien = data.pasien;
 					this.hasilPemeriksaan = JSON.parse(data.hasil_pemeriksaan);
 					this.anamnesis = JSON.parse(data.anamnesis);
-					this.tanggal = data.tanggal_waktu.substring(0, 10);
+					this.tanggal = data.tanggal_waktu;
+					this.dokter = data.tenaga_medis;
 					if (this.noEntry < data.num_entries)
 						this.end = false;
 					else

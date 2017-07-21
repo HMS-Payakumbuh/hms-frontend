@@ -25,6 +25,7 @@
 							<th><mfDefaultSorter by="tanggal_lahir">Tanggal Lahir</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="jender">Jender</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="agama">Agama</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="gol_darah">Golongan Darah</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="alamat">Alamat</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="kontak">Kontak</mfDefaultSorter></th>
 							<th></th>
@@ -37,6 +38,7 @@
 								<td>{{pasien.tanggal_lahir}}</td>
 								<td>{{pasien.jender == 1 && 'Laki-laki' || 'Perempuan'}}</td>
 								<td>{{pasien.agama}}</td>
+								<td>{{pasien.gol_darah}}</td>
 								<td>{{pasien.alamat}}</td>
 								<td>{{pasien.kontak}}</td>
 								<td>
@@ -101,6 +103,13 @@
 		                  <div class="form-group">
 		                    <label for="phone">Kontak</label>
 		                    <input type="tel" class="form-control" id="phone" [(ngModel)]="pasien.kontak" name="phone" required>
+		                  </div>
+
+		                  <div class="form-group">
+		                    <label for="blood">Golongan Darah</label>
+		                    <select class="form-control" id="blood" [(ngModel)]="pasien.gol_darah" name="blood">
+		                      <option *ngFor="let blood of bloodTypes" [value]="blood">{{blood}}</option>
+		                    </select>
 		                  </div>
 	                    </form>
 				      </div>

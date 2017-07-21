@@ -73,8 +73,11 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
   keluhan: string;
   allRiwayat: string[] = [];
   allAlergi: string[] = [];
+  pelayananLain: string[] = [];
   riwayatBaru: string;
   alergiBaru: string;
+  pelayananBaru: string;
+  rencana: any = {};
   rujuk: boolean = false;
 
 	allDiagnosisReference: DiagnosisReference[];
@@ -338,6 +341,15 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     this.allAlergi.splice(i, 1);
   }
 
+  addPelayanan() {
+    this.pelayananLain.push(this.pelayananBaru);
+    this.pelayananBaru = '';
+  }
+
+  removePelayanan(i: number) {
+    this.pelayananLain.splice(i, 1);
+  }
+
   goBack(): void {
     this.location.back();
   }
@@ -363,6 +375,11 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
       antrian.nama_layanan_lab = this.namaLabRujuk;
       antrian.kesempatan = 3;
       observables.push(this.antrianService.createAntrian(antrian));
+      if (this.namaLabRujuk) {
+        this.pelayananLain.push(this.namaLabRujuk);
+        this.rekamMedis.pelayanan_lain = JSON.stringify(this.pelayananLain);
+        observables.push(this.rekamMedisService.updateRekamMedis(this.rekamMedis));
+      }
     }
 
     Observable.forkJoin(observables).subscribe(
@@ -393,8 +410,8 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
       null,
       JSON.stringify(this.hasilPemeriksaan),
       JSON.stringify(anamnesis),
-      '',
-      ''
+      JSON.stringify(this.rencana),
+      JSON.stringify(this.pelayananLain)
     );
 
     this.rekamMedisService.createRekamMedis(rekamMedis).subscribe(
