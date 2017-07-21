@@ -36,7 +36,7 @@ export class TindakanReferenceListComponent {
 
   createTindakanReference() {
     this.tindakanService.createTindakanReference(this.tindakanReferenceModal).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 
@@ -47,13 +47,13 @@ export class TindakanReferenceListComponent {
 
   updateTindakanReference() {
     this.tindakanService.updateTindakanReference(this.tindakanReferenceModalKode, this.tindakanReferenceModal).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 
   destroyTindakanReference(kode: string) {
     this.tindakanService.destroyTindakanReference(kode).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 }

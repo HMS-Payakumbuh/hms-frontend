@@ -37,7 +37,7 @@ export class DiagnosisReferenceListComponent {
 
   createDiagnosisReference() {
     this.diagnosisService.createDiagnosisReference(this.diagnosisReferenceModal).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 
@@ -48,13 +48,13 @@ export class DiagnosisReferenceListComponent {
 
   updateDiagnosisReference() {
     this.diagnosisService.updateDiagnosisReference(this.diagnosisReferenceModalKode, this.diagnosisReferenceModal).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 
   destroyDiagnosisReference(kode: string) {
     this.diagnosisService.destroyDiagnosisReference(kode).subscribe(
-      data => { window.location.reload() }
+      data => { this.ngOnInit() }
     );
   }
 }
