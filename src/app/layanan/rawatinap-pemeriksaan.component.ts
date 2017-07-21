@@ -19,8 +19,6 @@ import { LaboratoriumService }  from './laboratorium.service';
 import { TenagaMedis }          from '../tenaga-medis/tenaga-medis';
 import { TenagaMedisService }   from '../tenaga-medis/tenaga-medis.service';
 
-import { JadwalDokter }         from '../tenaga-medis/jadwal-dokter';
-
 import { Diagnosis }            from './diagnosis';
 import { DiagnosisReference }		from './diagnosis-reference';
 import { DiagnosisService }			from './diagnosis.service';
@@ -47,8 +45,8 @@ import { ObatMasuk }	          from '../farmasi/obat-masuk/obat-masuk';
 import { ObatMasukService }		  from '../farmasi/obat-masuk/obat-masuk.service';
 
 @Component({
- 	selector: 'poliklinik-pemeriksaan-page',
- 	templateUrl: './poliklinik-pemeriksaan.component.html',
+ 	selector: 'rawatinap-pemeriksaan-page',
+ 	templateUrl: './rawatinap-pemeriksaan.component.html',
  	providers: [
     AntrianService,
     PoliklinikService,
@@ -67,21 +65,16 @@ import { ObatMasukService }		  from '../farmasi/obat-masuk/obat-masuk.service';
 	]
 })
 
-export class PoliklinikPemeriksaanComponent implements OnInit {
+export class RawatinapPemeriksaanComponent implements OnInit {
 	transaksi: any = null;
 	poliklinik: Poliklinik;
-  jadwalDokter: JadwalDokter;
-  rekamMedis: RekamMedis = null;
+  rekamMedis: RekamMedis;
   hasilPemeriksaan: HasilPemeriksaan = new HasilPemeriksaan();
   keluhan: string;
   allRiwayat: string[] = [];
   allAlergi: string[] = [];
-  pelayananLain: string[] = [];
   riwayatBaru: string;
   alergiBaru: string;
-  pelayananBaru: string;
-  rencana: any = {};
-  normalChecked: boolean = false;
   rujuk: boolean = false;
 
 	allDiagnosisReference: DiagnosisReference[];
@@ -180,9 +173,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
           this.stokObatService.getStokObatByLocation(this.poliklinik.id_lokasi).subscribe(
             allStokObatAtLocation => this.allStokObatAtLocation = allStokObatAtLocation
           )
-          this.tenagaMedisService.getAllAvailableJadwalDokter(this.poliklinik.nama).subscribe(
-            data => this.jadwalDokter = data
-          )
         }
       );
 
@@ -190,7 +180,14 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 			.switchMap((params: Params) => this.transaksiService.getTransaksi(params['idTransaksi']))
 			.subscribe(transaksi => {
         this.transaksi = transaksi;
-        this.checkRekamMedis();
+        this.rekamMedisService.getRekamMedisOfPasien(transaksi.transaksi.pasien.id, 0)
+          .subscribe(rekamMedis => {
+            let anamnesis: any = JSON.parse(rekamMedis.anamnesis);
+            if (anamnesis.riwayat_penyakit)
+              this.allRiwayat = anamnesis.riwayat_penyakit.split(',');
+            if (anamnesis.alergi) 
+              this.allAlergi = anamnesis.alergi.split(',');
+          });
       });
 
     this.tenagaMedisService.getAllTenagaMedis().subscribe(
@@ -208,61 +205,16 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     this.jenisObatService.getAllJenisObat().subscribe(
       data => { this.allJenisObat = data }
     )
+
+
 	}
-
-  checkRekamMedis() {
-    this.rekamMedisService.getRekamMedisOfPasien(this.transaksi.transaksi.id_pasien, 0).subscribe(
-      data => {
-        if (data != null) {
-          if (data.tanggal_waktu == this.transaksi.transaksi.waktu_masuk_pasien) {
-            this.rekamMedis = data;
-            this.rekamMedisService.getRekamMedisOfPasien(this.transaksi.transaksi.id_pasien, 1).subscribe(
-              data => {
-                if (data.anamnesis != null) {
-                  let anamnesis: any = JSON.parse(data.anamnesis);
-                  if (anamnesis.riwayat_penyakit)
-                  this.allRiwayat = anamnesis.riwayat_penyakit.split(',');
-                  if (anamnesis.alergi)
-                  this.allAlergi = anamnesis.alergi.split(',');
-                }
-              }
-            )
-          }
-
-          if (data.anamnesis != null) {
-            let anamnesis: any = JSON.parse(data.anamnesis);
-            if (anamnesis.riwayat_penyakit)
-            this.allRiwayat = anamnesis.riwayat_penyakit.split(',');
-            if (anamnesis.alergi)
-            this.allAlergi = anamnesis.alergi.split(',');
-          }
-        }
-
-        if (this.rekamMedis == null) {
-          this.rekamMedis = new RekamMedis(
-            this.transaksi.transaksi.id_pasien,
-            this.transaksi.transaksi.waktu_masuk_pasien,
-            this.jadwalDokter.np_dokter,
-            '',
-            '',
-            '',
-            ''
-          );
-
-          this.rekamMedisService.createRekamMedis(this.rekamMedis).subscribe(
-            data => {}
-          );
-        }
-      }
-    )
-  }
 
 	addSelectedDiagnosis(diagnosisReference: DiagnosisReference) {
 		this.selectedDiagnosisReference.push(diagnosisReference);
 
     let temp = new Diagnosis();
     temp.id_pasien = this.transaksi.transaksi.id_pasien;
-    temp.tanggal_waktu = this.rekamMedis.tanggal_waktu;
+    temp.tanggal_waktu = '';
     temp.kode_diagnosis = diagnosisReference.kode;
     this.selectedDiagnosis.push(temp);
 	}
@@ -282,8 +234,8 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     temp.id_pembayaran = null;
     temp.kode_tindakan = tindakanReference.kode;
     temp.id_pasien = this.transaksi.transaksi.id_pasien;
-    temp.tanggal_waktu = this.rekamMedis.tanggal_waktu;
-    temp.np_tenaga_medis = this.jadwalDokter.np_dokter;
+    temp.tanggal_waktu = null;
+    temp.np_tenaga_medis = null;
     temp.nama_poli = this.poliklinik.nama;
     temp.nama_lab = null;
     temp.nama_ambulans = null;
@@ -344,21 +296,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     resepItem.racikan_item.splice(i, 1);
   }
 
-  assignNormalValue() {
-    this.normalChecked = !this.normalChecked;
-    if (this.normalChecked) {
-      this.hasilPemeriksaan.tekanan_darah = '120/80';
-      this.hasilPemeriksaan.nadi = '80';
-      this.hasilPemeriksaan.frekuensi_napas = '20';
-      this.hasilPemeriksaan.temperatur = '36';
-    } else {
-      this.hasilPemeriksaan.tekanan_darah = '';
-      this.hasilPemeriksaan.nadi = '';
-      this.hasilPemeriksaan.frekuensi_napas = '';
-      this.hasilPemeriksaan.temperatur = '';
-    }
-  }
-
   addSelectedJenisObat(racikanItem: RacikanItem, jenisObat: JenisObat) {
     racikanItem.id_jenis_obat = jenisObat.id;
     racikanItem.jenis_obat = jenisObat;
@@ -401,15 +338,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     this.allAlergi.splice(i, 1);
   }
 
-  addPelayanan() {
-    this.pelayananLain.push(this.pelayananBaru);
-    this.pelayananBaru = '';
-  }
-
-  removePelayanan(i: number) {
-    this.pelayananLain.splice(i, 1);
-  }
-
   goBack(): void {
     this.location.back();
   }
@@ -435,12 +363,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
       antrian.nama_layanan_lab = this.namaLabRujuk;
       antrian.kesempatan = 3;
       observables.push(this.antrianService.createAntrian(antrian));
-      if (this.namaLabRujuk) {
-        this.pelayananLain.push(this.namaLabRujuk);
-        this.rekamMedis.pelayanan_lain = JSON.stringify(this.pelayananLain);
-        this.rekamMedis.tanggal_waktu = this.rekamMedis.tanggal_waktu.date;
-        observables.push(this.rekamMedisService.updateRekamMedis(this.rekamMedis));
-      }
     }
 
     Observable.forkJoin(observables).subscribe(
@@ -465,12 +387,26 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
       alergi: this.allAlergi.toString()
     };
 
-    this.rekamMedis.hasil_pemeriksaan = JSON.stringify(this.hasilPemeriksaan);
-    this.rekamMedis.anamnesis = JSON.stringify(anamnesis);
-    this.rekamMedis.rencana_penatalaksanaan = JSON.stringify(this.rencana);
-    this.rekamMedis.pelayanan_lain = JSON.stringify(this.pelayananLain);
-    this.rekamMedisService.updateRekamMedis(this.rekamMedis).subscribe(
+    let rekamMedis: RekamMedis = new RekamMedis(
+      this.transaksi.transaksi.id_pasien,
+      '',
+      null,
+      JSON.stringify(this.hasilPemeriksaan),
+      JSON.stringify(anamnesis),
+      '',
+      ''
+    );
+
+    this.rekamMedisService.createRekamMedis(rekamMedis).subscribe(
       data1 => {
+        this.rekamMedis = data1;
+        for (let tindakan of this.selectedTindakan) {
+          tindakan.tanggal_waktu = this.rekamMedis.tanggal_waktu.date;
+        }
+        for (let diagnosis of this.selectedDiagnosis) {
+          diagnosis.tanggal_waktu = this.rekamMedis.tanggal_waktu.date;
+        }
+
         if (this.selectedDiagnosis.length > 0) {
           this.diagnosisService.saveDiagnosis(this.selectedDiagnosis).subscribe(
             data2 => {

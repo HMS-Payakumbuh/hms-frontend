@@ -21,7 +21,7 @@ export class JenisObatFormComponent {
 	) {}
 
 	ngOnInit(): void {
-		this.jenisObat = new JenisObat(null, '', '', '', '', '', null, '');
+		this.jenisObat = new JenisObat();
 	}
 
 	private save() {

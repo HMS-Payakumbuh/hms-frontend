@@ -31,13 +31,13 @@ export class ObatMasukFormComponent {
 
 	constructor(
 		private obatMasukService: ObatMasukService,
-		private jenisObatService: JenisObatService,		
+		private jenisObatService: JenisObatService,
 		private location: Location
 	) {}
 
 	ngOnInit(): void {
-		this.obatMasuk = new ObatMasuk(null, null, '', null, null, null, null, '', null);		
-		this.jenisObat = new JenisObat(null, '', '', '', '', '', null, '');
+		this.obatMasuk = new ObatMasuk();
+		this.jenisObat = new JenisObat();
 
 		this.jenisObatService.getAllJenisObat().subscribe(
       		data => { this.allJenisObat = data }
@@ -45,7 +45,7 @@ export class ObatMasukFormComponent {
 	}
 
 	private save() {
-		// alert(JSON.stringify(this.obatMasuk)); 
+		// alert(JSON.stringify(this.obatMasuk));
 		this.obatMasuk.id_jenis_obat = this.jenisObat.id;
 
 		this.obatMasukService.createObatMasuk(this.obatMasuk).subscribe(
@@ -65,7 +65,7 @@ export class ObatMasukFormComponent {
 		this.jenisObatService.getJenisObat(id).subscribe(
 			data => { this.jenisObat = data }
 		);
-	} 
+	}
 	*/
 
 	private addSelectedJenisObat(jenisObat: JenisObat) {
