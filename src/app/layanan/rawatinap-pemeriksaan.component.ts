@@ -16,6 +16,7 @@ import { Poliklinik }						from './poliklinik';
 import { PoliklinikService }		from './poliklinik.service';
 import { LaboratoriumService }  from './laboratorium.service';
 
+
 import { TenagaMedis }          from '../tenaga-medis/tenaga-medis';
 import { TenagaMedisService }   from '../tenaga-medis/tenaga-medis.service';
 
@@ -44,6 +45,9 @@ import { StokObatService }		  from '../farmasi/stok-obat/stok-obat.service';
 import { ObatMasuk }	          from '../farmasi/obat-masuk/obat-masuk';
 import { ObatMasukService }		  from '../farmasi/obat-masuk/obat-masuk.service';
 
+import { PemakaianKamar }          from '../layanan/pemakaian-kamar';
+import { PemakaianKamarService }          from '../layanan/pemakaian-kamar.service';
+
 @Component({
  	selector: 'rawatinap-pemeriksaan-page',
  	templateUrl: './rawatinap-pemeriksaan.component.html',
@@ -61,11 +65,12 @@ import { ObatMasukService }		  from '../farmasi/obat-masuk/obat-masuk.service';
     JenisObatService,
     StokObatService,
     ObatMasukService,
+    PemakaianKamarService,
  		NgbTypeaheadConfig
 	]
 })
 
-export class RawatinapPemeriksaanComponent implements OnInit {
+export class PemeriksaanRawatinapComponent implements OnInit {
 	transaksi: any = null;
 	poliklinik: Poliklinik;
   rekamMedis: RekamMedis;
@@ -96,6 +101,8 @@ export class RawatinapPemeriksaanComponent implements OnInit {
   selectedTindakanReference: TindakanReference[] = [];
 
   allResep: Resep[] = [];
+
+  pemakaianKamar : PemakaianKamar;
 
 	inputFormatter = (value : any) => value.nama;
 	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
@@ -159,6 +166,7 @@ export class RawatinapPemeriksaanComponent implements OnInit {
     private jenisObatService: JenisObatService,
     private obatMasukService: ObatMasukService,
     private stokObatService: StokObatService,
+    private pemakaianKamarService : PemakaianKamarService,
 		private config: NgbTypeaheadConfig
 	) {
 		config.editable = false;
@@ -166,13 +174,10 @@ export class RawatinapPemeriksaanComponent implements OnInit {
 
 	ngOnInit() {
 		this.route.params
-			.switchMap((params: Params) => this.poliklinikService.getPoliklinik(params['namaPoliklinik']))
+			.switchMap((params: Params) => this.pemakaianKamarService.getPemakaianKamar(params['idPemakaian']))
 			.subscribe(
-        poliklinik => {
-          this.poliklinik = poliklinik;
-          this.stokObatService.getStokObatByLocation(this.poliklinik.id_lokasi).subscribe(
-            allStokObatAtLocation => this.allStokObatAtLocation = allStokObatAtLocation
-          )
+          data => {
+            this.pemakaianKamar = data;
         }
       );
 

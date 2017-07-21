@@ -23,6 +23,11 @@ export class PemakaianKamarService {
 		return this.http.get(this.pemakaianKamarRawatinapUrl)
 			.map((res: Response) => res.json());
 	}
+
+	getAllPemakaianKamarByNoKamar(no_kamar:string): Observable<PemakaianKamar[]> {
+		return this.http.get(this.pemakaianKamarRawatinapUrl + "/now/" + no_kamar)
+			.map((res: Response) => res.json());
+	}
 	
 	getDaftarPemakaianKamarBooked(): Observable<PemakaianKamar[]> {
 		return this.http.get(this.pemakaianKamarRawatinapUrl + '/search' + '/booked')
