@@ -79,8 +79,8 @@ export class ResepEksternalFormComponent {
 		this.allResep.push(this.resep);
 	    this.resepService.createResep(this.allResep).subscribe(
 	     	data => {
-	     		console.log(data);
-		     	this.router.navigateByUrl('/obat-tebus-eksternal-form/' + data.id);
+	     		console.log(data[0]);
+		     	this.router.navigateByUrl('/obat-tebus-eksternal-form/' + data[0].id);
 		     	return true;
 	   		},
 		   	error => {

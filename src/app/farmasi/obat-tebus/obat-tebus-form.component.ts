@@ -201,14 +201,12 @@ export class ObatTebusFormComponent {
 		let stokObat = new StokObat();
 
 		for (let i = 0; i < this.resepItemCount; i++) {  
-			for (let j = 0; j < this.racikanItemCount[i] ; j++) {  				
-				console.log(this.tebus[i][j]);
-				if (this.tebus[i][j]) {
-					console.log(this.tebus[i][j]);											
+			for (let j = 0; j < this.racikanItemCount[i] ; j++) {  		
+				// if (this.tebus[i][j]) {										
 					observables.push(
 				   		this.stokObatService.getStokObatByJenisObatAndBatch(this.id_jenis_obat[i][j], this.no_batch[i][j], 2)
 				   	)
-				}
+				// }
 			}
 		}
 
@@ -217,7 +215,7 @@ export class ObatTebusFormComponent {
 				let k = 0;
 				for (let i = 0; i < this.resepItemCount; i++) {  
 					for (let j = 0; j < this.racikanItemCount[i] ; j++) {  	
-						if (this.tebus[i][j]) {
+						// if (this.tebus[i][j]) {
 							let dataTemp: any = {};
 							dataTemp = data[k];
 							stokObat = dataTemp;
@@ -235,7 +233,7 @@ export class ObatTebusFormComponent {
 					    	this.obatTebusItems.push(temp);
 
 					    	k = k + 1;
-						}
+						// }
 					}
 				}
 
