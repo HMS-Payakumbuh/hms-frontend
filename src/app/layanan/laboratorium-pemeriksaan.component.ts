@@ -19,11 +19,12 @@ import { Laboratorium }						from './laboratorium';
 import { LaboratoriumService }		from './laboratorium.service';
 import { PoliklinikService }      from './poliklinik.service';
 
-import { HasilLab }             from './hasil-lab';
 import { Tindakan }             from './tindakan';
 import { TindakanReference }		from './tindakan-reference';
-import { HasilLabService }      from './hasil-lab.service';
 import { TindakanService }			from './tindakan.service';
+
+import { HasilLab }             from './hasil-lab';
+import { HasilLabService }      from './hasil-lab.service';
 
 @Component({
  	selector: 'laboratorium-pemeriksaan-page',
@@ -218,20 +219,31 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
   save() {
 		this.tindakanService.saveTindakan(this.selectedTindakan).subscribe(
       data => {
-        if (this.rujuk) {
-          let antrian: any = {};
-          antrian.id_transaksi = this.transaksi.transaksi.id;
-          antrian.nama_layanan_poli = this.namaPoliRujuk;
-          antrian.nama_layanan_lab = this.namaLabRujuk;
-          antrian.kesempatan = 3;
-          this.antrianService.createAntrian(antrian).subscribe(
-            data1 => {
-              this.goBack();
-            }
-          )
+        let observables = [];
+        for (let tindakan of data) {
+          let hasilLab: HasilLab = new HasilLab();
+          hasilLab.id_transaksi = this.transaksi.transaksi.id;
+          hasilLab.id_tindakan = tindakan.id;
+          observables.push(this.hasilLabService.createHasilLab(hasilLab));
         }
-        else
-          this.goBack();
+
+        Observable.forkJoin(observables).subscribe(
+          data => {
+            if (this.rujuk) {
+              let antrian: any = {};
+              antrian.id_transaksi = this.transaksi.transaksi.id;
+              antrian.nama_layanan_poli = this.namaPoliRujuk;
+              antrian.nama_layanan_lab = this.namaLabRujuk;
+              antrian.kesempatan = 3;
+              this.antrianService.createAntrian(antrian).subscribe(
+                data1 => {
+                  this.goBack();
+                }
+              )
+            }
+            else this.goBack();
+          }
+        )
       }
     );
 	}

@@ -19,6 +19,7 @@ export var ENV = {
 	poliklinikUrl: baseUrl + "/api/poliklinik",
 	laboratoriumUrl: baseUrl + "/api/laboratorium",
 	ambulansUrl: baseUrl + "/api/ambulans",
+	hasilLabUrl: baseUrl + "/api/hasil_lab",
 	tenagaMedisUrl: baseUrl + "/api/tenaga_medis",
 	dokterUrl: baseUrl + "/api/dokter",
 	jadwalDokterUrl: baseUrl + "/api/jadwal_dokter",
@@ -40,7 +41,7 @@ export var ENV = {
 	obatTebusUrl: baseUrl + "/api/obat_tebus",
 	obatTindakanUrl: baseUrl + "/api/obat_tindakan",
 	obatPindahUrl: baseUrl + "/api/obat_pindah",
-	obatRusakUrl: baseUrl + "/api/obat_rusak",	
+	obatRusakUrl: baseUrl + "/api/obat_rusak",
 	obatEceranUrl: baseUrl + "/api/obat_eceran",
 	stockOpnameUrl: baseUrl + "/api/stock_opname",
 }

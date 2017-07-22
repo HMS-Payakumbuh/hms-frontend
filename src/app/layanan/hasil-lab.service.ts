@@ -8,7 +8,7 @@ import { HasilLab }							from './hasil-lab';
 @Injectable()
 export class HasilLabService {
 
-	private hasilLabUrl = ENV.diagnosisUrl;
+	private hasilLabUrl = ENV.hasilLabUrl;
 
 	constructor(private http:Http) { }
 
@@ -25,6 +25,11 @@ export class HasilLabService {
 	getHasilLab(id: number): Observable<HasilLab> {
 		return this.http.get(this.hasilLabUrl + '/' + id)
       .map((res: Response) => res.json());
+	}
+
+	getEmptyHasilLab(no_pegawai: string): Observable<HasilLab[]> {
+		return this.http.get(this.hasilLabUrl + '/empty/' + no_pegawai)
+			.map((res: Response) => res.json());
 	}
 
 	createHasilLab(hasilLab: HasilLab) {
