@@ -50,7 +50,7 @@ export class TransaksiDetailComponent implements OnInit {
 				this.transaksi = this.response.transaksi;
 				if (this.transaksi.pasien !== null) {
 					this.nama_pasien = this.transaksi.pasien.nama_pasien;
-					this.jender = this.transaksi.pasien.jender;
+					this.jender_pasien = this.transaksi.pasien.jender;
 					this.calculateAge(this.transaksi.pasien.tanggal_lahir);
 					this.asuransiService.getAsuransi(this.transaksi.pasien.id)
 						.subscribe(listAsuransi => {
@@ -231,7 +231,7 @@ export class TransaksiDetailComponent implements OnInit {
 			}
 		}
 
-		for (let i of this.listOfKamarRawatInapId) {
+		for (let i of this.listOfKamarRawatInap) {
 			if (i.id_pembayaran === null) {
 				total_harga += i.harga;
 				listOfKamarRawatInapId.push(i.id);

@@ -8,6 +8,8 @@ import * as _ from "lodash";
 
 import { PemakaianKamar } 				from './pemakaian-kamar';
 import { PemakaianKamarService }		    from './pemakaian-kamar.service';
+import { Rawatinap }                from './rawatinap';
+import { RawatinapService }                from './rawatinap.service';
 import { TenagaMedis } 				from '../tenaga-medis/tenaga-medis';
 import { TenagaMedisService }		    from '../tenaga-medis/tenaga-medis.service';
 import { TindakanReference } 				from './tindakan-reference';
@@ -48,23 +50,22 @@ export class PemeriksaanRawatinapPasienListComponent implements OnInit {
 	poliklinik: Poliklinik;
 	addForm: FormGroup;
 
-
 	constructor(
 		private pemakaianKamarService: PemakaianKamarService,
 		private tenagaMedisService: TenagaMedisService,
 		private formBuilder: FormBuilder,
 		private tindakanService: TindakanService,
-		private transaksiService: TransaksiService
+		private transaksiService: TransaksiService,
+        private route: ActivatedRoute
 	) {}
 
 	ngOnInit() {
-		this.pemakaianKamarService.getAllPemakaianKamar().subscribe(
-     		data => { this.allPemakaianKamar = data }
-    	);
-
+        this.route.params
+			.switchMap((params: Params) => this.pemakaianKamarService.getAllPemakaianKamarByNoKamar(params['noKamar']))
+			.subscribe(data => this.allPemakaianKamar = data);
+        
 		this.tenagaMedisService.getAllTenagaMedis().
 			subscribe(data => this.allTenagaMedis = data);
-
 	}
 
 	newPemakaianKamarRawatinap() {

@@ -24,7 +24,6 @@
 						<thead>
 							<th>No. Kamar</th>
                             <th>Nama Pasien</th>
-                            <th>Dokter Operasi</th>
 							<th>Nama Tindakan</th>
 							<th>Waktu Masuk</th>
 							<th>Waktu Keluar</th>
@@ -37,17 +36,16 @@
 							<tr>
 								<td>{{kamaroperasi?.no_kamar}}</td>
                                 <td>{{kamaroperasi?.nama_pasien}}</td>
-                                <td>{{kamaroperasi?.nama}}</td>
 								<td>{{kamaroperasi?.nama_tindakan}}</td>
-								<td>{{kamaroperasi?.waktu_masuk | date:'d MMM y H:mm:ss'}}</td>
-                                <td>{{kamaroperasi?.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>
+								<td>{{kamaroperasi?.waktu_masuk | date:'d MMM y H:mm'}}</td>
+                                <td>{{kamaroperasi?.waktu_keluar | date:'d MMM y H:mm'}}</td>
 								<td>
-									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#editPoliklinikModal'" (click)="editPemakaianKamarOperasi(poliklinik.nama, poliklinik)">
-										Edit
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#detailModal'" (click)="showDetailPemakaianKamarOperasi(kamaroperasi.id, kamaroperasi)">
+										Detail
 									</button>
 								</td>
 								<td>
-									<button type="button" class="btn btn-sm btn-danger" (click)="destroyPemakaianKamarOperasi(kamaroperasi.nama)">
+									<button type="button" class="btn btn-sm btn-danger" (click)="destroyPemakaianKamarOperasi(kamaroperasi.id)">
 										<i class="fa fa-trash"></i>
 									</button>
 								</td>
@@ -86,7 +84,7 @@
 
 								<div class="form-group">
 									<label for="id_pasien">ID Transaksi</label>
-									<select class="form-control" required id="id_transaksi" [(ngModel)]="pemakaianKamarOperasiModal.id_transaksi">
+									<select class="form-control" required id="id_transaksi" [(ngModel)]="pemakaianKamarOperasiModal.id_transaksi" (ngModelChange)="getTransaksi2()">
 										<option *ngFor="let transaksi of transaksi" [value]="transaksi.id">
 											{{transaksi.id}}
 										</option>
@@ -101,14 +99,15 @@
 										</option>
 									</select>
 								</div>
-
+								
 								<div class="form-group">
 									<label for="nama_pasien">Nama Dokter Operasi</label>
-									<select class="form-control" id="no_pegawai" [(ngModel)]="no_pegawai">
+									<select class="form-control" id="no_pegawai" [(ngModel)]="no_pegawai"  multiple="multiple" (ngModelChange)="getTenagaMedis()">
 										<option *ngFor="let tenagaMedis of allTenagaMedis" [value]="tenagaMedis.no_pegawai">
 											{{tenagaMedis.nama}}
 										</option>
 									</select>
+									{{no_pegawai}}
 								</div>
 								
 								<div class="form-group">
@@ -118,7 +117,6 @@
 
 								<table class="table" *ngIf="selectedTindakan.length > 0">
 									<thead>
-										<th>Kode</th>
 										<th>Nama</th>
 										<th>Keterangan</th>
 										<th></th>
@@ -126,7 +124,6 @@
 									</thead>
 									<tbody>
 										<tr *ngFor="let tindakan of selectedTindakan; index as i">
-											<td style="vertical-align: middle;">{{tindakan.kode_tindakan}}</td>
 											<td style="vertical-align: middle;">{{selectedTindakanReference[i].nama}}</td>
 											<td style="vertical-align: middle;">
 												<textarea class="form-control" rows="2" [(ngModel)]="tindakan.keterangan"></textarea>
@@ -147,17 +144,17 @@
 
 								<div class="form-group">
 									<label for="tanggal">Tanggal Operasi</label>       
-									<input type="date" class="form-control" id="tanggal" name="tanggal" >
+									<input type="date" class="form-control" id="tanggal" name="tanggal" [(ngModel)]="tanggalOperasi">
 								</div>
 
 								<div class="form-group">
 									<label for="waktu_masuk">Waktu Masuk</label>           
-									<input type="time" class="form-control" id="waktu_masuk" name="waktu_masuk" placeholder="HH:mm" required />
+									<input type="time" class="form-control" id="waktu_masuk" name="waktu_masuk" placeholder="HH:mm" required [(ngModel)]="waktuMasuk"/>
 								</div>
 
 								<div class="form-group">
 									<label for="waktu_keluar">Waktu Keluar</label>           
-									<input type="time" class="form-control" id="waktu_keluar" name="waktu_keluar" placeholder="HH:mm" required />
+									<input type="time" class="form-control" id="waktu_keluar" name="waktu_keluar" placeholder="HH:mm" required [(ngModel)]="waktuKeluar" (ngModelChange)="getTanggalOperasi()"/>
 								</div>
 							</div>
 
@@ -169,32 +166,82 @@
 						</div>
 					</div>
 				</div>
-					<!--<div class="modal fade" tabindex="-1" role="dialog" id="createPemakaianKamarOperasiModal" aria-hidden="true" *ngIf="pemakaianOperasiModal != null">
+
+				<div class="modal fade" tabindex="-1" role="dialog" id="detailModal" aria-hidden="true" *ngIf="pemakaianKamarOperasiModal != null">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 
 							<div class="modal-header">
-								<h5 class="modal-title">Buat Pemakaian Kamar Operasi Baru</h5>
+								<h5 class="modal-title">Detail Pemakaian Kamar Operasi</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<i class="fa fa-times" aria-hidden="true"></i>
 								</button>
 							</div>
 
 							<div class="modal-body">
+								<div class="form-group">
+									<label for="id_transaksi">Nama Pasien</label>
+									<span class="form-control" id="nama_pasien" required name="nama_pasien">
+										<b>{{pemakaianKamarOperasiModal.nama_pasien}}</b>
+									</span>                  
+								</div>
 
+								<div class="form-group">
+									<label for="id_pasien">ID Transaksi</label>
+									<span class="form-control" required id="id_transaksi">
+										<b>{{pemakaianKamarOperasiModal.id_transaksi}}</b>
+									</span>
+								</div>
 								
+								<div class="form-group">
+									<label for="nama_pasien">No. Kamar</label>
+									<span class="form-control" id="no_kamar">
+										<b>{{pemakaianKamarOperasiModal.no_kamar}}</b>
+									</span>
+								</div>
+								
+								<div class="form-group">
+									<label for="nama_pasien">Tim Dokter Operasi</label>
+									<span class="form-control" id="no_kamar">
+										<span *ngFor="let tindakanoperasi of tindakanOperasi" >
+										<b>{{tindakanoperasi.nama}}</b>
+										<span *ngIf="tindakanOperasi.length > 1"><br></span>
+										</span>
+									</span>
+								</div>
+								
+								<div class="form-group">
+									<label for="inputTindakan">Nama Tindakan (ICD-9-CM)</label>
+									<span class="form-control" id="inputTindakan">
+										<b>{{pemakaianKamarOperasiModal.nama_tindakan}}</b>
+									</span>
+								</div>
+
+								<div class="form-group">
+									<label for="waktu_masuk">Waktu Masuk</label>           
+									<span class="form-control" id="waktu_masuk" name="waktu_masuk">
+										<b>{{pemakaianKamarOperasiModal.waktu_masuk | date:'d MMM y H:mm'}}</b>
+									</span>
+								</div>
+
+								<div class="form-group">
+									<label for="waktu_keluar">Waktu Keluar</label>           
+									<span class="form-control" id="waktu_keluar" name="waktu_keluar">
+										<b>{{pemakaianKamarOperasiModal.waktu_keluar | date:'d MMM y H:mm'}}</b>
+									</span>
+								</div>
 							</div>
 
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-								<button type="button" class="btn btn-success" (click)="createPemakaianKamar(rawatinap.no_kamar)">Simpan</button>
+								<button type="button" class="btn btn-success" (click)="createPemakaianKamarOperasi()">Simpan</button>
 							</div>
+
 						</div>
 					</div>
-					</div>-->
-					
 				</div>
-
+				
+				</div>
 			</div>
 		</div>
 	</div>

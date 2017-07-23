@@ -25,3 +25,4 @@ Datepicker module:
 Dependencies:
 - npm install angular2-datatable --save
 - npm install ng2-input-autocomplete --save
+- 
