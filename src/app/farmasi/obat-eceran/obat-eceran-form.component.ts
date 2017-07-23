@@ -75,7 +75,7 @@ export class ObatEceranFormComponent {
 	private save() {
 		this.obatEceran.obat_eceran_item = this.obatEceranItems;
 
-		alert(JSON.stringify(this.obatEceran)); 
+		// alert(JSON.stringify(this.obatEceran)); 
 		this.obatEceranService.createObatEceran(this.obatEceran).subscribe(
 	       	data => {
 	         	this.location.back();

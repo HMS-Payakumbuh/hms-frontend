@@ -1,4 +1,5 @@
 import { ResepItem } from './resep-item';
+import { Transaksi } from '../../transaksi/transaksi';
 
 export class Resep {
 	constructor(
@@ -10,6 +11,7 @@ export class Resep {
 	public umur: number = null,
 	public no_telp: string = "",
 	public eksternal: boolean = false,
-	public resep_item: ResepItem[] = []
+	public resep_item: ResepItem[] = [],
+	public transaksi: Transaksi = null
 	) {}
 }
