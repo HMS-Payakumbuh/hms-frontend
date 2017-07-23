@@ -43,6 +43,18 @@ export class PembayaranDetailComponent implements OnInit {
 			});
 	}
 
+	howLong(tanggal: string): number {
+		let date: Date = new Date(tanggal);
+		let today: Date = new Date();
+		let days = 1;
+		if (today.getDate() != date.getDate()) {
+		 	days = today.getDate() - date.getDate();
+		}
+
+		return days;
+		console.log(days);
+	}
+
 	goBack(): void {
 		this.location.back();
 	}
