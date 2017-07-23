@@ -67,9 +67,9 @@
 								</tr>
 								<tr *ngFor="let kamar of listOfKamarRawatInap">
 									<td>{{kamar.kamar_rawatinap.jenis_kamar}} Kelas {{kamar.kamar_rawatinap.kelas}}</td>
-									<td></td>
+									<td>{{howLong(kamar.waktu_masuk)}} Hari @ Rp. {{kamar.kamar_rawatinap.harga_per_hari | number: '.2-2'}}</td>
 									<td>Rp. {{kamar.harga | number: '.2-2'}}</td>
-									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs' && kamar.id_pembayaran === null" type="checkbox"></td>
+									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs' && kamar.id_pembayaran === null" type="checkbox" value="kamar.id"  [id]="'kamarRawatInap' + kamar.id" (change)="updateCheckedKamarRawatInap(kamar.id)"></td>
 								</tr>
 								<tr>
 									<td></td>

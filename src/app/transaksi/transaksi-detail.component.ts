@@ -192,6 +192,18 @@ export class TransaksiDetailComponent implements OnInit {
 		console.log(this.umur_pasien);
 	}
 
+	howLong(tanggal: string): number {
+		let date: Date = new Date(tanggal);
+		let today: Date = new Date();
+		let days = 1;
+		if (today.getDate() != date.getDate()) {
+		 	days = today.getDate() - date.getDate();
+		}
+
+		return days;
+		console.log(days);
+	}
+
 	close(): void {
 		let payload: any = {
 			status: 'closed'
@@ -249,12 +261,8 @@ export class TransaksiDetailComponent implements OnInit {
 
 	bayar(metode: string = 'tunai'): void {
 		let bayar: boolean = false;
-
-		if (metode != 'tunai') {
-			this.createAsuransi(this.transaksi.id_pasien);
-		}
-
 		let total_harga: number = 0;
+
 		if (this.listOfTindakan.length > 0) {
 			bayar = true;
 			for (let i of this.listOfTindakan) {
@@ -297,6 +305,10 @@ export class TransaksiDetailComponent implements OnInit {
 					}
 				}
 			}
+		}
+
+		if (metode != 'tunai') {
+			this.createAsuransi(this.transaksi.id_pasien);
 		}
 
 		if (bayar) {

@@ -24,7 +24,7 @@
 					<div class="row">
 						<table class="table">
 							<tbody>
-								<tr>
+								<tr *ngIf="pembayaran.tindakan?.length > 0">
 									<th>Tindakan</th>
 									<th></th>
 									<th>Harga</th>
@@ -34,7 +34,7 @@
 									<td></td>
 									<td>Rp. {{tindakan.harga | number: '.2-2'}}</td>
 								</tr>
-								<tr>
+								<tr *ngIf="pembayaran.obat_tebus_item?.length > 0 || pembayaran.obat_eceran_item?.length > 0">
 									<th>Obat</th>
 									<th></th>
 									<th></th>
@@ -48,6 +48,17 @@
 									<td>{{obat.jenis_obat.merek_obat}}</td>
 									<td>{{obat.jumlah}} {{obat.jenis_obat.satuan}} @ Rp. {{obat.harga_jual_realisasi | number: '.2-2'}}</td>
 									<td>Rp. {{obat.jumlah * obat.harga_jual_realisasi | number: '.2-2'}}</td>
+								</tr>
+								<tr *ngIf="pembayaran.pemakaian_kamar_rawat_inap?.length > 0">
+									<th>Kamar Rawat Inap</th>
+									<th></th>
+									<th></th>
+									<th></th>
+								</tr>
+								<tr *ngFor="let kamar of pembayaran.pemakaian_kamar_rawat_inap">
+									<td>{{kamar.kamar_rawatinap.jenis_kamar}} Kelas {{kamar.kamar_rawatinap.kelas}}</td>
+									<td>{{howLong(kamar.waktu_masuk)}} Hari @ Rp. {{kamar.kamar_rawatinap.harga_per_hari | number: '.2-2'}}</td>
+									<td>Rp. {{kamar.harga | number: '.2-2'}}</td>
 								</tr>
 								<tr>
 									<td></td>
