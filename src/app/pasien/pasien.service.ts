@@ -23,9 +23,9 @@ export class PasienService {
 			.map((res: Response) => res.json());
 	}
 
-	getPasien(id: number): Observable<Pasien> {
+	getPasien(kode_pasien: string): Observable<Pasien> {
 		return this.getAllPasien()
-			.map(allPasien => allPasien.find(pasien => pasien.id === id))
+			.map(allPasien => allPasien.find(pasien => pasien.kode_pasien === kode_pasien))
 			.catch(this.handleError);
 	}
 

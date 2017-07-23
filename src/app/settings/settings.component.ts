@@ -38,5 +38,6 @@ export class SettingsComponent {
 				console.log(data);
 			});
 		console.log(this.settings);
+		window.location.reload();
 	}
 }

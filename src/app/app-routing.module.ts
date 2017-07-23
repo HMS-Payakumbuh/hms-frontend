@@ -48,6 +48,7 @@ import { DiagnosisReferenceListComponent }	from './layanan/diagnosis-reference-l
 import { TindakanReferenceListComponent }		from './layanan/tindakan-reference-list.component';
 
 import { DokterDashboardComponent }			from './tenaga-medis/dokter-dashboard.component';
+import { PetugasLabDashboardComponent }	from './tenaga-medis/petugas-lab-dashboard.component';
 
 import { DaftarStokObatComponent }			from './farmasi/stok-obat/daftar-stok-obat.component';
 import { DetailStokObatComponent }			from './farmasi/stok-obat/detail-stok-obat.component';
@@ -125,14 +126,14 @@ const routes: Routes = [
 	{ path: 'rawatinap/booking/kamar/:tanggal/:noKamar', component: BookingRawatinapDetailComponent },
 
 	{ path: 'daftarbookingrawatinap', component: BookingRawatinapComponent },
-	
+
 	{ path: 'rawatinap/pindah/:idPemakaian', component: PindahKamarListComponent },
 	{ path: 'rawatinap/pindah/:idPemakaian/:noKamar', component: PindahKamarDetailComponent },
 
 	{ path: 'kamar-rawatinap', component: KamarRawatinapListComponent },
 	{ path: 'kamar-operasi', component: KamarOperasiListComponent },
 	{ path: 'kamar-jenazah', component: KamarJenazahListComponent },
-	
+
 	{ path: 'pemakaiankamarrawatinap', component: PemakaianKamarListComponent },
 
 	{ path: 'pemakaiankamaroperasi', component: PemakaianKamarOperasiListComponent },
@@ -144,6 +145,7 @@ const routes: Routes = [
 	{ path: 'daftar-tindakan', component: TindakanReferenceListComponent },
 
 	{ path: 'dokter-dashboard/:noPegawai', component: DokterDashboardComponent },
+	{ path: 'petugas-lab-dashboard/:noPegawai', component: PetugasLabDashboardComponent },
 
 	{ path: 'stok-obat', component: DaftarStokObatComponent },
 	{ path: 'stok-obat/:id', component: DetailStokObatComponent },
@@ -169,8 +171,8 @@ const routes: Routes = [
 	{ path: 'obat-eceran', component: DaftarObatEceranComponent },
 	{ path: 'obat-eceran/:id', component: DetailObatEceranComponent },
 	{ path: 'obat-eceran-form', component: ObatEceranFormComponent },
-	{ path: 'stock-opname', component: SelectorStockOpnameComponent },	
-	{ path: 'stock-opname/:lokasi', component: DaftarStockOpnameComponent },	
+	{ path: 'stock-opname', component: SelectorStockOpnameComponent },
+	{ path: 'stock-opname/:lokasi', component: DaftarStockOpnameComponent },
 	{ path: 'detail-stock-opname/:id', component: DetailStockOpnameComponent },
 	{ path: 'stock-opname-form/:lokasi', component: StockOpnameFormComponent },
 	{ path: 'settings', component: SettingsComponent }

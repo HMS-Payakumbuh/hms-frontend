@@ -81,6 +81,7 @@ import { DiagnosisReferenceListComponent }from './layanan/diagnosis-reference-li
 import { TindakanReferenceListComponent } from './layanan/tindakan-reference-list.component';
 
 import { DokterDashboardComponent }   from './tenaga-medis/dokter-dashboard.component';
+import { PetugasLabDashboardComponent }   from './tenaga-medis/petugas-lab-dashboard.component';
 
 import { DaftarStokObatComponent }            from './farmasi/stok-obat/daftar-stok-obat.component';
 import { DetailStokObatComponent }            from './farmasi/stok-obat/detail-stok-obat.component';
@@ -209,6 +210,7 @@ import { AppComponent }             from './app.component';
         TindakanReferenceListComponent,
 
         DokterDashboardComponent,
+        PetugasLabDashboardComponent,
 
         MatchesStatusPipe,
         FilterNamaPasienPipe,

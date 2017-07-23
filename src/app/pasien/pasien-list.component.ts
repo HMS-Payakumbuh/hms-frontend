@@ -48,15 +48,18 @@ export class PasienListComponent {
 	}
 
 	private searchPasien() {
-    if (this.search.match(/([1-9][0-9]*)/)) {
-      this.allPasien = [];
-      this.pasienService.getPasien(parseInt(this.search))
-        .subscribe(allPasien => {
-          this.allPasien.push(allPasien);
-        });
-    } else {
-       this.pasienService.getPasienByName(this.search)
-        .subscribe(allPasien => this.allPasien = allPasien);
-    }
+	if (this.search) {
+		if (this.search.match(/\d/)) {
+	      this.allPasien = [];
+	      this.pasienService.getPasien(this.search)
+	        .subscribe(allPasien => {
+	        	if (allPasien)
+		          this.allPasien.push(allPasien);
+	        });
+	    } else {
+	       this.pasienService.getPasienByName(this.search)
+	        .subscribe(allPasien => this.allPasien = allPasien);
+	    }
+	}
   }
 }

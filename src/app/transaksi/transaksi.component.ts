@@ -17,8 +17,7 @@ export class TransaksiComponent {
 	allTransaksi: any[];
 	allJenis = ['', 'tunai'];
 	config = {
-		"format": "YYYY-MM-DD",
-		"type": "'daytime'"
+		"format": "YYYY-MM-DD"
 	};
 
     public rowsOnPage = 10;

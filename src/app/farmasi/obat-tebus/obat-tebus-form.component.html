@@ -56,12 +56,12 @@
                         <td><strong>Tebus</strong></td>                        
                     </tr>
                     <tr *ngFor="let racikan_item of resep_item.racikan_item; let j = index" class="form-group">
-                      <td><input type="text" class="form-control" id="merek_obat" disabled [(ngModel)]="racikan_item.jenis_obat.merek_obat" name="merek_obat"></td>
-                      <td><input type="text" class="form-control" id="no_batch" [(ngModel)]="no_batch[i][j]" required name="no_batch"></td>
-                      <td><input type="text" class="form-control" id="jumlah" [(value)]="jumlah[i][j]" disabled name="jumlah"></td>
-                      <td><input type="text" class="form-control" id="harga_jual_realisasi" required name="harga_jual_realisasi" [(ngModel)]="harga_jual_realisasi[i][j]"></td>
-                      <td><input type="text" class="form-control" id="harga_total" disabled [(value)]="racikan_item.jenis_obat.harga_jual_satuan*jumlah[i][j]" name="harga_total"></td>
-                      <td><input type="checkbox" class="form-control" id="tebus" (change)="onTebusChange($event, i, j)" name="tebus"></td>
+                      <td><input type="text" class="form-control" id="merek_obat-{{i}}-{{j}}" disabled [(ngModel)]="racikan_item.jenis_obat.merek_obat" name="merek_obat-{{i}}-{{j}}"></td>
+                      <td><input type="text" class="form-control" id="no_batch-{{i}}-{{j}}" [(ngModel)]="no_batch[i][j]" required name="no_batch-{{i}}-{{j}}"></td>
+                      <td><input type="text" class="form-control" id="jumlah-{{i}}-{{j}}" [(value)]="jumlah[i][j]" disabled name="jumlah-{{i}}-{{j}}"></td>
+                      <td><input type="text" class="form-control" id="harga_jual_realisasi-{{i}}-{{j}}" required name="harga_jual_realisasi-{{i}}-{{j}}" [(ngModel)]="harga_jual_realisasi[i][j]"></td>
+                      <td><input type="text" class="form-control" id="harga_total-{{i}}-{{j}}" disabled [(value)]="racikan_item.jenis_obat.harga_jual_satuan*jumlah[i][j]" name="harga_total-{{i}}-{{j}}"></td>
+                      <td><input type="checkbox" class="form-control" id="tebus-{{i}}-{{j}}" (change)="onTebusChange($event, i, j)" name="tebus-{{i}}-{{j}}"></td>
                     </tr>
                   </ng-template>
                 </tbody>    

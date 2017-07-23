@@ -9,7 +9,7 @@
 				</div>
 				<div class="card-block">
 					<div>
-						<b>Tercatat pada tanggal/waktu : </b>{{tanggal}}
+						<b>Tanggal Periksa : </b>{{tanggal}}
 					</div>
 					<br>
 					<div>
@@ -93,7 +93,7 @@
 					<table class="table">
 						<tbody>
 							<tr>
-								<td><b>Keluhan</b></td>
+								<td><b>Keluhan Utama</b></td>
 								<td>{{anamnesis?.keluhan}}</td>
 							</tr>
 							<tr *ngIf="anamnesis?.riwayat_penyakit">
@@ -147,7 +147,7 @@
 							<tr *ngFor="let tindakan of allTindakan">
 								<td>{{tindakan?.daftar_tindakan.kode}}</td>
 								<td>{{tindakan?.daftar_tindakan.nama}}</td>
-								<td>{{tindakan?.keterangan}}</td>
+								<td>{{tindakan?.keterangan && tindakan?.keterangan || '-'}}</td>
 								<td>{{tindakan?.tenaga_medis.nama}}</td>
 							</tr>
 						</tbody>
