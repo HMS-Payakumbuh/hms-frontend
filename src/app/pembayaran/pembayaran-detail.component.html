@@ -13,7 +13,7 @@
 							<div class="row">
 								<div class="col-md-12">
 									<b>Transaksi: {{pembayaran.transaksi.no_transaksi}}</b>
-									<p>Nama Pasien: {{pembayaran.transaksi.pasien.nama_pasien}}</p>
+									<p>Nama Pasien: {{nama_pasien}}</p>
 									<p>No. Sep: {{pembayaran.transaksi.no_sep}}</p>
 									<p>Tipe Pembayaran: {{pembayaran.metode_bayar.toUpperCase()}}</p>
 									<p>Waktu Pembayaran: {{pembayaran.created_at}}</p>
@@ -32,22 +32,27 @@
 								<tr *ngFor="let tindakan of pembayaran.tindakan">
 									<td>{{tindakan.daftar_tindakan.nama}}</td>
 									<td></td>
-									<td>Rp {{tindakan.harga | number: '.2-2'}}</td>
+									<td>Rp. {{tindakan.harga | number: '.2-2'}}</td>
 								</tr>
 								<tr>
 									<th>Obat</th>
 									<th></th>
 									<th></th>
 								</tr>
-								<tr *ngFor="let obat of pembayaran.obat">
-									<td>{{obat.nama}}</td>
-									<td>{{obat.jumlah}} {{obat.satuan}}</td>
-									<td>Rp {{obat.jumlah * obat.harga_satuan | number: '.2-2'}}</td>
+								<tr *ngFor="let obat of pembayaran.obat_tebus_item">
+									<td>{{obat.jenis_obat.merek_obat}}</td>
+									<td>{{obat.jumlah}} {{obat.jenis_obat.satuan}} @ Rp. {{obat.harga_jual_realisasi | number: '.2-2'}}</td>
+									<td>Rp. {{obat.jumlah * obat.harga_jual_realisasi | number: '.2-2'}}</td>
+								</tr>
+								<tr *ngFor="let obat of pembayaran.obat_eceran_item">
+									<td>{{obat.jenis_obat.merek_obat}}</td>
+									<td>{{obat.jumlah}} {{obat.jenis_obat.satuan}} @ Rp. {{obat.harga_jual_realisasi | number: '.2-2'}}</td>
+									<td>Rp. {{obat.jumlah * obat.harga_jual_realisasi | number: '.2-2'}}</td>
 								</tr>
 								<tr>
 									<td></td>
 									<td><b>Total Pembayaran</b></td>
-									<td>Rp {{pembayaran.harga_bayar | number: '.2-2'}}</td>
+									<td>Rp. {{pembayaran.harga_bayar | number: '.2-2'}}</td>
 								</tr>
 							</tbody>
 						</table>

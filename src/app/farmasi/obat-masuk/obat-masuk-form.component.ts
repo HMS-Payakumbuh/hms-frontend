@@ -38,7 +38,6 @@ export class ObatMasukFormComponent {
 	ngOnInit(): void {
 		this.obatMasuk = new ObatMasuk();
 		this.jenisObat = new JenisObat();
-
 		this.jenisObatService.getAllJenisObat().subscribe(
       		data => { this.allJenisObat = data }
     	)
