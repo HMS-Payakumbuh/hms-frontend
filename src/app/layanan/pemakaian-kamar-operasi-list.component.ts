@@ -159,7 +159,7 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 		temp.id_pembayaran = null;
 		temp.kode_tindakan = tindakanReference.kode;
 		temp.id_pasien = this.transaksi2.transaksi.id_pasien;
-		temp.tanggal_waktu = '2017-07-06 10:00:00';
+		temp.tanggal_waktu = this.transaksi2.transaksi.waktu_masuk;
 		temp.np_tenaga_medis = null;
 		temp.nama_poli = null;
 		temp.nama_lab = null;
