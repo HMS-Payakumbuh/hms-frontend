@@ -205,14 +205,12 @@ export class ObatTebusEksternalFormComponent {
 
 	private save() { // STILL NEEDS REPAIR
 		let observables = [];
-		let temp = new ObatTebusItem();
 		let stokObat = new StokObat();
 
 		for (let i = 0; i < this.resepItemCount; i++) {  
 			for (let j = 0; j < this.racikanItemCount[i] ; j++) {  				
 				// console.log(this.tebus[i][j]);
-				// if (this.tebus[i][j]) {
-					console.log(this.tebus[i][j]);											
+				// if (this.tebus[i][j]) {									
 					observables.push(
 				   		this.stokObatService.getStokObatByJenisObatAndBatch(this.id_jenis_obat[i][j], this.no_batch[i][j], 2)
 				   	)
@@ -226,9 +224,13 @@ export class ObatTebusEksternalFormComponent {
 				for (let i = 0; i < this.resepItemCount; i++) {  
 					for (let j = 0; j < this.racikanItemCount[i] ; j++) {  	
 						// if (this.tebus[i][j]) {
+							let temp = new ObatTebusItem();
+
 							let dataTemp: any = {};
 							dataTemp = data[k];
 							stokObat = dataTemp;
+
+							console.log(stokObat);
 
 							temp.jumlah = this.jumlah[i][j];
 						    temp.keterangan = '';
@@ -247,7 +249,6 @@ export class ObatTebusEksternalFormComponent {
 					}
 				}
 
-		    	console.log(this.resep.id_transaksi);
 		        this.obatTebus.id_transaksi = this.resep.id_transaksi;
 				this.obatTebus.id_resep = this.resep.id;
 				this.obatTebus.obat_tebus_item = this.obatTebusItems;

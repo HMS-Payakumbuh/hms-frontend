@@ -197,7 +197,6 @@ export class ObatTebusFormComponent {
 
 	private save() { // STILL NEEDS REPAIR
 		let observables = [];
-		let temp = new ObatTebusItem();
 		let stokObat = new StokObat();
 
 		for (let i = 0; i < this.resepItemCount; i++) {  
@@ -216,6 +215,8 @@ export class ObatTebusFormComponent {
 				for (let i = 0; i < this.resepItemCount; i++) {  
 					for (let j = 0; j < this.racikanItemCount[i] ; j++) {  	
 						// if (this.tebus[i][j]) {
+							let temp = new ObatTebusItem();
+
 							let dataTemp: any = {};
 							dataTemp = data[k];
 							stokObat = dataTemp;
