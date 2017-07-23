@@ -71,7 +71,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	transaksi: any = null;
 	poliklinik: Poliklinik;
   jadwalDokter: JadwalDokter;
-  rekamMedis: RekamMedis;
+  rekamMedis: RekamMedis = null;
   hasilPemeriksaan: HasilPemeriksaan = new HasilPemeriksaan();
   keluhan: string;
   allRiwayat: string[] = [];
@@ -81,6 +81,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
   alergiBaru: string;
   pelayananBaru: string;
   rencana: any = {};
+  normalChecked: boolean = false;
   rujuk: boolean = false;
 
 	allDiagnosisReference: DiagnosisReference[];
@@ -189,16 +190,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 			.switchMap((params: Params) => this.transaksiService.getTransaksi(params['idTransaksi']))
 			.subscribe(transaksi => {
         this.transaksi = transaksi;
-        this.rekamMedisService.getRekamMedisOfPasien(transaksi.transaksi.pasien.id, 0)
-          .subscribe(rekamMedis => {
-            if (rekamMedis != null && rekamMedis.anamnesis != null) {
-              let anamnesis: any = JSON.parse(rekamMedis.anamnesis);
-              if (anamnesis.riwayat_penyakit)
-              this.allRiwayat = anamnesis.riwayat_penyakit.split(',');
-              if (anamnesis.alergi)
-              this.allAlergi = anamnesis.alergi.split(',');
-            }
-          });
+        this.checkRekamMedis();
       });
 
     this.tenagaMedisService.getAllTenagaMedis().subscribe(
@@ -218,12 +210,59 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     )
 	}
 
+  checkRekamMedis() {
+    this.rekamMedisService.getRekamMedisOfPasien(this.transaksi.transaksi.id_pasien, 0).subscribe(
+      data => {
+        if (data != null) {
+          if (data.tanggal_waktu == this.transaksi.transaksi.waktu_masuk_pasien) {
+            this.rekamMedis = data;
+            this.rekamMedisService.getRekamMedisOfPasien(this.transaksi.transaksi.id_pasien, 1).subscribe(
+              data => {
+                if (data.anamnesis != null) {
+                  let anamnesis: any = JSON.parse(data.anamnesis);
+                  if (anamnesis.riwayat_penyakit)
+                  this.allRiwayat = anamnesis.riwayat_penyakit.split(',');
+                  if (anamnesis.alergi)
+                  this.allAlergi = anamnesis.alergi.split(',');
+                }
+              }
+            )
+          }
+
+          if (data.anamnesis != null) {
+            let anamnesis: any = JSON.parse(data.anamnesis);
+            if (anamnesis.riwayat_penyakit)
+            this.allRiwayat = anamnesis.riwayat_penyakit.split(',');
+            if (anamnesis.alergi)
+            this.allAlergi = anamnesis.alergi.split(',');
+          }
+        }
+
+        if (this.rekamMedis == null) {
+          this.rekamMedis = new RekamMedis(
+            this.transaksi.transaksi.id_pasien,
+            this.transaksi.transaksi.waktu_masuk_pasien,
+            this.jadwalDokter.np_dokter,
+            '',
+            '',
+            '',
+            ''
+          );
+
+          this.rekamMedisService.createRekamMedis(this.rekamMedis).subscribe(
+            data => {}
+          );
+        }
+      }
+    )
+  }
+
 	addSelectedDiagnosis(diagnosisReference: DiagnosisReference) {
 		this.selectedDiagnosisReference.push(diagnosisReference);
 
     let temp = new Diagnosis();
     temp.id_pasien = this.transaksi.transaksi.id_pasien;
-    temp.tanggal_waktu = '';
+    temp.tanggal_waktu = this.rekamMedis.tanggal_waktu;
     temp.kode_diagnosis = diagnosisReference.kode;
     this.selectedDiagnosis.push(temp);
 	}
@@ -243,7 +282,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     temp.id_pembayaran = null;
     temp.kode_tindakan = tindakanReference.kode;
     temp.id_pasien = this.transaksi.transaksi.id_pasien;
-    temp.tanggal_waktu = null;
+    temp.tanggal_waktu = this.rekamMedis.tanggal_waktu;
     temp.np_tenaga_medis = this.jadwalDokter.np_dokter;
     temp.nama_poli = this.poliklinik.nama;
     temp.nama_lab = null;
@@ -303,6 +342,21 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 
   removeRacikanItem(i: number, resepItem: ResepItem) {
     resepItem.racikan_item.splice(i, 1);
+  }
+
+  assignNormalValue() {
+    this.normalChecked = !this.normalChecked;
+    if (this.normalChecked) {
+      this.hasilPemeriksaan.tekanan_darah = '120/80';
+      this.hasilPemeriksaan.nadi = '80';
+      this.hasilPemeriksaan.frekuensi_napas = '20';
+      this.hasilPemeriksaan.temperatur = '36';
+    } else {
+      this.hasilPemeriksaan.tekanan_darah = '';
+      this.hasilPemeriksaan.nadi = '';
+      this.hasilPemeriksaan.frekuensi_napas = '';
+      this.hasilPemeriksaan.temperatur = '';
+    }
   }
 
   addSelectedJenisObat(racikanItem: RacikanItem, jenisObat: JenisObat) {
@@ -384,6 +438,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
       if (this.namaLabRujuk) {
         this.pelayananLain.push(this.namaLabRujuk);
         this.rekamMedis.pelayanan_lain = JSON.stringify(this.pelayananLain);
+        this.rekamMedis.tanggal_waktu = this.rekamMedis.tanggal_waktu.date;
         observables.push(this.rekamMedisService.updateRekamMedis(this.rekamMedis));
       }
     }
@@ -410,26 +465,12 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
       alergi: this.allAlergi.toString()
     };
 
-    let rekamMedis: RekamMedis = new RekamMedis(
-      this.transaksi.transaksi.id_pasien,
-      '',
-      this.jadwalDokter.np_dokter,
-      JSON.stringify(this.hasilPemeriksaan),
-      JSON.stringify(anamnesis),
-      JSON.stringify(this.rencana),
-      JSON.stringify(this.pelayananLain)
-    );
-
-    this.rekamMedisService.createRekamMedis(rekamMedis).subscribe(
+    this.rekamMedis.hasil_pemeriksaan = JSON.stringify(this.hasilPemeriksaan);
+    this.rekamMedis.anamnesis = JSON.stringify(anamnesis);
+    this.rekamMedis.rencana_penatalaksanaan = JSON.stringify(this.rencana);
+    this.rekamMedis.pelayanan_lain = JSON.stringify(this.pelayananLain);
+    this.rekamMedisService.updateRekamMedis(this.rekamMedis).subscribe(
       data1 => {
-        this.rekamMedis = data1;
-        for (let tindakan of this.selectedTindakan) {
-          tindakan.tanggal_waktu = this.rekamMedis.tanggal_waktu.date;
-        }
-        for (let diagnosis of this.selectedDiagnosis) {
-          diagnosis.tanggal_waktu = this.rekamMedis.tanggal_waktu.date;
-        }
-
         if (this.selectedDiagnosis.length > 0) {
           this.diagnosisService.saveDiagnosis(this.selectedDiagnosis).subscribe(
             data2 => {

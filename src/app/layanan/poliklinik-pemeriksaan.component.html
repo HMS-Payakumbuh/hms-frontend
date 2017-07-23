@@ -82,25 +82,30 @@
 
 							<form>
 								<div class="form-group">
+									<label class="custom-control custom-checkbox">
+				                      <input type="checkbox" class="custom-control-input" [checked]="normalChecked" (change)="assignNormalValue()">
+				                      <span class="custom-control-indicator"></span>
+				                      <span class="custom-control-description">Nilai Normal</span>
+				                    </label>
 									<div class="row mb-3">
 										<div class="col-4">
 											<label for="tekananDarah">TD (mmHg)</label>
-											<input type="text" class="form-control" id="inputTekananDarah" [(ngModel)]="hasilPemeriksaan.tekanan_darah" name="tekanan_darah">
+											<input type="text" class="form-control" id="inputTekananDarah" [disabled]="normalChecked" [(ngModel)]="hasilPemeriksaan.tekanan_darah" name="tekanan_darah">
 										</div>
 										<div class="col-4">
 											<label for="nadi">Nadi (x/min)</label>
-											<input type="text" class="form-control" id="inputNadi" [(ngModel)]="hasilPemeriksaan.nadi" name="nadi">
+											<input type="text" class="form-control" id="inputNadi" [disabled]="normalChecked" [(ngModel)]="hasilPemeriksaan.nadi" name="nadi">
 										</div>
 										<div class="col-4">
 											<label for="frekuensiNapas">Frekuensi Napas (x/min)</label>
-											<input type="text" class="form-control" id="frekuensiNapas" [(ngModel)]="hasilPemeriksaan.frekuensi_napas" name="frekuensi_napas">
+											<input type="text" class="form-control" id="frekuensiNapas" [disabled]="normalChecked" [(ngModel)]="hasilPemeriksaan.frekuensi_napas" name="frekuensi_napas">
 										</div>
 									</div>
 
 									<div class="row">
 										<div class="col-4">
 											<label for="temperatur">Temperatur (C)</label>
-											<input type="text" class="form-control" id="temperatur" [(ngModel)]="hasilPemeriksaan.temperatur" name="temperatur">
+											<input type="text" class="form-control" id="temperatur" [disabled]="normalChecked" [(ngModel)]="hasilPemeriksaan.temperatur" name="temperatur">
 										</div>
 										<div class="col-4">
 											<label for="beratBedan">Berat Badan (kg)</label>
@@ -125,43 +130,55 @@
 								</div>
 								<div class="form-group">
 									<label for="riwayat">Riwayat Penyakit</label>
-										<div class="row" *ngFor="let riwayat of allRiwayat; index as i">
-											<div class="col-sm-4 text-left">
-												<div class="input-group">
-													<div class="input-group-addon">{{i + 1}}. </div>
-													 <input type="text" class="form-control" id="riwayat" [value]="riwayat" name="riwayat" disabled>
-												 </div>
-											</div>
-											<div class="col-sm-8">
-												<button type="button" class="btn btn-sm btn-danger" (click)="removeRiwayat(i)">
-													Hapus
-												</button>
-											</div>
+									<div class="row" *ngFor="let riwayat of allRiwayat; index as i">
+										<div class="col-sm-11 text-left">
+											<div class="input-group">
+												<div class="input-group-addon">{{i + 1}}. </div>
+												 <input type="text" class="form-control" id="riwayat" [value]="riwayat" name="riwayat" disabled>
+											 </div>
 										</div>
-									<input type="text" class="form-control" id="riwayat" [(ngModel)]="riwayatBaru" name="riwayat">
-									<button type="button" class="btn btn-sm btn-info" (click)="addRiwayat()">
-										Tambah
-									</button>
+										<div class="col-sm-1">
+											<button type="button" class="btn btn-sq-sm btn-danger" (click)="removeRiwayat(i)">
+												<i class="fa fa-minus" aria-hidden="true"></i>
+											</button>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-11 text-left">
+											<input type="text" class="form-control" id="riwayat" [(ngModel)]="riwayatBaru" name="riwayat" (keyup.enter) = "addRiwayat()">
+										</div>
+										<div class="col-sm-1">
+											<button type="button" class="btn btn-sq-sm btn-info" (click)="addRiwayat()">
+												<i class="fa fa-plus" aria-hidden="true"></i>
+											</button>
+										</div>
+									</div>
 								</div>
 								<div class="form-group">
 									<label for="alergi">Alergi</label>
 									<div class="row" *ngFor="let alergi of allAlergi; index as i">
-										<div class="col-sm-4 text-left">
-												<div class="input-group">
-													<div class="input-group-addon">{{i + 1}}. </div>
-													 <input type="text" class="form-control" id="alergi" [value]="alergi" name="alergi" disabled>
-												 </div>
-											</div>
-											<div class="col-sm-8">
-												<button type="button" class="btn btn-sm btn-danger" (click)="removeAlergi(i)">
-													Hapus
-												</button>
-											</div>
+										<div class="col-sm-11 text-left">
+											<div class="input-group">
+												<div class="input-group-addon">{{i + 1}}. </div>
+												 <input type="text" class="form-control" id="alergi" [value]="alergi" name="alergi" disabled>
+											 </div>
 										</div>
-									<input type="text" class="form-control" id="alergi" [(ngModel)]="alergiBaru" name="alergi">
-									<button type="button" class="btn btn-sm btn-info" (click)="addAlergi()">
-										Tambah
-									</button>
+										<div class="col-sm-1">
+											<button type="button" class="btn btn-sq-sm btn-danger" (click)="removeAlergi(i)">
+												<i class="fa fa-minus" aria-hidden="true"></i>
+											</button>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-11 text-left">
+											<input type="text" class="form-control" id="alergi" [(ngModel)]="alergiBaru" name="alergi" (keyup.enter) = "addAlergi()">
+										</div>
+										<div class="col-sm-1">
+											<button type="button" class="btn btn-sq-sm btn-info" (click)="addAlergi()">
+												<i class="fa fa-plus" aria-hidden="true"></i>
+											</button>
+										</div>
+									</div>
 								</div>
 							</form>
 
@@ -363,39 +380,55 @@
 
 						<div class="tab-pane fade" id="lain" role="tabpanel">
 							<form>
-								<div class="form-group">	
-									<label for="nama">Pertemuan Berikutnya</label>
-									<input type="text" class="form-control" id="nama" [(ngModel)]="rencana.nama" name="nama">
-								</div>
-								<div *ngIf="rencana.nama">
-									<div>	
-										<label for="tanggal">Tanggal Pertemuan</label>
-										<input [dpDayPicker]="config" theme="dp-material" class="form-control" id="tanggal" [(ngModel)]="rencana.tanggal" name="tanggal">
+								<div class="form-group">
+						  			<h3 class="btn btn-info" data-toggle="collapse" data-target="#kunjungan"><i class="fa fa-calendar" aria-hidden="true"></i> Kunjungan Berikutnya</h3>
+					  			</div>
+					  			<div id="kunjungan" class="collapse">
+							  		<div class="form-group">	
+										<label for="nama">Agenda Kunjungan</label>
+										<input type="text" class="form-control" id="nama" [(ngModel)]="rencana.nama" name="nama">
+									</div>
+									<div class="row">
+										<div class="col md-6">	
+											<label for="tanggal">Tanggal Kunjungan</label>
+											<input [dpDayPicker]="config" theme="dp-material" class="form-control" id="tanggal" [(ngModel)]="rencana.tanggal" name="tanggal">
+										</div>
+										<div class="col-md-6">	
+											<label for="waktu">Waktu Kunjungan</label>
+											<input type="text" class="form-control" id="waktu" [(ngModel)]="rencana.waktu" name="waktu">
+										</div>
 									</div>
 									<div class="form-group">	
-										<label for="waktu">Waktu Pertemuan</label>
-										<input type="text" class="form-control" id="waktu" [(ngModel)]="rencana.waktu" name="waktu">
+										<label for="keterangan">Keterangan Tambahan</label>
+										<textarea class="form-control" id="keterangan" [(ngModel)]="rencana.keterangan" name="keterangan"></textarea>
 									</div>
 								</div>
+								
 								<div class="form-group">	
 									<label for="pelayanan">Pelayanan Lainnya</label>
 									<div class="row" *ngFor="let pelayanan of pelayananLain; index as i">
-											<div class="col-sm-4 text-left">
-												<div class="input-group">
-													<div class="input-group-addon">{{i + 1}}. </div>
-													 <input type="text" class="form-control" id="pelayanan" [value]="pelayanan" name="pelayanan" disabled>
-												 </div>
-											</div>
-											<div class="col-sm-8">
-												<button type="button" class="btn btn-sm btn-danger" (click)="removePelayanan(i)">
-													Hapus
-												</button>
-											</div>
+										<div class="col-sm-11 text-left">
+											<div class="input-group">
+												<div class="input-group-addon">{{i + 1}}. </div>
+												 <input type="text" class="form-control" id="pelayanan" [value]="pelayanan" name="pelayanan" disabled>
+											 </div>
 										</div>
-									<input type="text" class="form-control" id="pelayanan" [(ngModel)]="pelayananBaru" name="pelayanan">
-									<button type="button" class="btn btn-sm btn-info" (click)="addPelayanan()">
-										Tambah
-									</button>
+										<div class="col-sm-1">
+											<button type="button" class="btn btn-sq-sm btn-danger" (click)="removePelayanan(i)">
+												<i class="fa fa-minus" aria-hidden="true"></i>
+											</button>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-11 text-left">
+											<input type="text" class="form-control" id="pelayanan" [(ngModel)]="pelayananBaru" name="pelayanan" (keyup.enter)="addPelayanan()">
+										</div>
+										<div class="col-sm-1">
+											<button type="button" class="btn btn-sq-sm btn-info" (click)="addPelayanan()">
+												<i class="fa fa-plus" aria-hidden="true"></i>
+											</button>
+										</div>
+									</div>
 								</div>
 							</form>
 						</div>
