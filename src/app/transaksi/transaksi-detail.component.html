@@ -13,10 +13,11 @@
 							<div class="row">
 								<div class="col-md-12">
 									<h3>Transaksi {{transaksi.no_transaksi}}</h3>
-									<b>{{transaksi.pasien.nama_pasien}}</b>
-									<p *ngIf="transaksi.pasien.jender === 1">Laki-laki</p>
-									<p *ngIf="transaksi.pasien.jender === 2">Perempuan</p>
-									<p>{{umur}} Tahun</p>
+									<b>{{nama_pasien}}</b>
+									<p *ngIf="jender_pasien === 0"> </p>
+									<p *ngIf="jender_pasien === 1">Laki-laki</p>
+									<p *ngIf="jender_pasien === 2">Perempuan</p>
+									<p>{{umur_pasien}} Tahun</p>
 									<p>No. Sep: {{transaksi.no_sep}}</p>
 									<p>Metode Bayar: {{transaksi.asuransi_pasien.toUpperCase()}}</p>
 									<p>Waktu Masuk: {{transaksi.waktu_masuk_pasien}}</p>
@@ -50,7 +51,13 @@
 									<td>{{obatTebus.jenis_obat.merek_obat}}</td>
 									<td>{{obatTebus.jumlah}} {{obatTebus.jenis_obat.satuan}} @ Rp. {{obatTebus.harga_jual_realisasi | number: '.2-2'}}</td>
 									<td>Rp. {{obatTebus.jumlah * obatTebus.harga_jual_realisasi | number: '.2-2'}}</td>
-									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs'" type="checkbox" value="obat.id"  [id]="'obatTebus' + obatTebus.id" (change)="updateCheckedObatTebus(obatTebus.id)"></td>
+									<td><input *ngIf="(transaksi.asuransi_pasien !== 'bpjs' || obatTebus.jenis_obat.dicover_bpjs !== true) && obatTebus.id_pembayaran === null" type="checkbox" value="obatTebus.id"  [id]="'obatTebus' + obatTebus.id" (change)="updateCheckedObatTebus(obatTebus.id)"></td>
+								</tr>
+								<tr *ngFor="let obatEceran of listOfObatEceran">
+									<td>{{obatEceran.jenis_obat.merek_obat}}</td>
+									<td>{{obatEceran.jumlah}} {{obatEceran.jenis_obat.satuan}} @ Rp. {{obatEceran.harga_jual_realisasi | number: '.2-2'}}</td>
+									<td>Rp. {{obatEceran.jumlah * obatEceran.harga_jual_realisasi | number: '.2-2'}}</td>
+									<td><input *ngIf="(transaksi.asuransi_pasien !== 'bpjs' || obatTebus.jenis_obat.dicover_bpjs !== true) && obatEceran.id_pembayaran === null" type="checkbox" value="obatEceran.id"  [id]="'obatEceran' + obatEceran.id" (change)="updateCheckedObatEceran(obatEceran.id)"></td>
 								</tr>
 								<tr *ngIf="listOfKamarRawatInap?.length > 0">
 									<th>Kamar Rawat Inap</th>
@@ -62,7 +69,7 @@
 									<td>{{kamar.kamar_rawatinap.jenis_kamar}} Kelas {{kamar.kamar_rawatinap.kelas}}</td>
 									<td></td>
 									<td>Rp. {{kamar.harga | number: '.2-2'}}</td>
-									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs'" type="checkbox"></td>
+									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs' && kamar.id_pembayaran === null" type="checkbox"></td>
 								</tr>
 								<tr>
 									<td></td>

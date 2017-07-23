@@ -50,7 +50,9 @@
 									<td></td>
 								</tr>
 								<tr *ngFor="let transaksi of mf.data | matchesStatus: status | filterNamaPasien: searchParam | filterTanggal: selectedDate | filterJenisPasien: jenis">
-									<td>{{transaksi.pasien.nama_pasien}}</td>
+									<td *ngIf="transaksi.pasien !== null">{{transaksi.pasien.nama_pasien}}</td>
+									<td *ngIf="transaksi.pasien === null && transaksi.obat_tebus.length > 0">{{transaksi.obat_tebus[0].resep.nama}}</td>
+									<td *ngIf="transaksi.pasien === null && transaksi.obat_eceran.length > 0">{{transaksi.obat_eceran[0].nama_pembeli}}</td>
 									<td>{{transaksi.waktu_masuk_pasien | date: 'dd/MM/y HH:mm'}}</td>
 									<td>{{transaksi.status.toUpperCase()}}</td>	
 									<td>{{transaksi.asuransi_pasien.toUpperCase()}}</td>
