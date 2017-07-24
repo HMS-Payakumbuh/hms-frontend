@@ -438,7 +438,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
       if (this.namaLabRujuk) {
         this.pelayananLain.push(this.namaLabRujuk);
         this.rekamMedis.pelayanan_lain = JSON.stringify(this.pelayananLain);
-        this.rekamMedis.tanggal_waktu = this.rekamMedis.tanggal_waktu.date;
         observables.push(this.rekamMedisService.updateRekamMedis(this.rekamMedis));
       }
     }

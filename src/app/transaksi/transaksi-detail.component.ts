@@ -200,8 +200,8 @@ export class TransaksiDetailComponent implements OnInit {
 		 	days = today.getDate() - date.getDate();
 		}
 
+    console.log(days);
 		return days;
-		console.log(days);
 	}
 
 	close(): void {

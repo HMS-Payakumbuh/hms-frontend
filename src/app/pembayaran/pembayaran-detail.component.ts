@@ -51,8 +51,8 @@ export class PembayaranDetailComponent implements OnInit {
 		 	days = today.getDate() - date.getDate();
 		}
 
+    console.log(days);
 		return days;
-		console.log(days);
 	}
 
 	goBack(): void {
