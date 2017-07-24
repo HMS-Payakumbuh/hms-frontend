@@ -46,14 +46,16 @@ export class PoliklinikListComponent implements OnInit {
   }
 
   createPoliklinik() {
-    for (let lokasiObat of this.allLokasiObat) {
-      if (lokasiObat.nama == this.poliklinikModal.nama) {
-        this.poliklinikModal.id_lokasi = lokasiObat.id;
+    let lokasiObat = new LokasiObat(null, this.poliklinikModal.nama, 2);
+    this.lokasiObatService.createLokasiObat(lokasiObat).subscribe(
+      data => {
+        this.poliklinikModal.sisa_pelayanan = this.poliklinikModal.kapasitas_pelayanan;
+        this.poliklinikModal.id_lokasi = data.id;
         this.poliklinikService.createPoliklinik(this.poliklinikModal).subscribe(
           data => { this.ngOnInit() }
         );
       }
-    }
+    )
   }
 
   editPoliklinik(nama: string, poliklinik: Poliklinik) {
@@ -62,19 +64,18 @@ export class PoliklinikListComponent implements OnInit {
   }
 
   updatePoliklinik() {
-    for (let lokasiObat of this.allLokasiObat) {
-      if (lokasiObat.nama == this.poliklinikModal.nama) {
-        this.poliklinikModal.id_lokasi = lokasiObat.id;
-        this.poliklinikService.updatePoliklinik(this.poliklinikModalNama, this.poliklinikModal).subscribe(
-          data => { this.ngOnInit() }
-        );
-      }
-    }
+    this.poliklinikService.updatePoliklinik(this.poliklinikModalNama, this.poliklinikModal).subscribe(
+      data => { this.ngOnInit() }
+    );
   }
 
   destroyPoliklinik(nama: string) {
     this.poliklinikService.destroyPoliklinik(nama).subscribe(
-      data => { this.ngOnInit() }
+      data => {
+        this.lokasiObatService.destroyLokasiObat(data.id_lokasi).subscribe(
+          data => this.ngOnInit()
+        )
+      }
     );
   }
 }
