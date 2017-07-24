@@ -275,19 +275,30 @@
 											<table class="table table-sm borderless">
 												<thead *ngIf="resep.resep_item.length > 0">
 													<th></th>
-													<th>Aturan Pemakaian</th>
-													<th>Petunjuk Peracikan</th>
+													<th></th>
+													<th></th>
+													<th></th>
 												</thead>
 												<tbody>
 													<tr *ngFor="let resepItem of resep.resep_item; index as j">
-														<th scope="row" style="vertical-align: middle;">
-															Obat {{j + 1}}
+														<th scope="row" style="vertical-align: middle; text-align: left;">
+															<div *ngIf="resepItem.racikan_item.length == 0">
+																--
+															</div>
+															<div *ngIf="resepItem.racikan_item.length > 0">
+																<div *ngFor="let racikanItem of resepItem.racikan_item">
+																	{{racikanItem.jenis_obat.merek_obat}}
+																</div>
+															</div>
 														</th>
-														<td style="vertical-align: middle;">
-															<input type="text" class="form-control" [(ngModel)]="resepItem.aturan_pemakaian">
+														<td *ngIf="resepItem.racikan_item.length < 2" colspan="2" style="vertical-align: middle;">
+															<input type="text" class="form-control" placeholder="Aturan Pemakaian" [(ngModel)]="resepItem.aturan_pemakaian">
 														</td>
 														<td *ngIf="resepItem.racikan_item.length > 1" style="vertical-align: middle;">
-															<input type="text" class="form-control" [(ngModel)]="resepItem.petunjuk_peracikan">
+															<input type="text" class="form-control" placeholder="Aturan Pemakaian" [(ngModel)]="resepItem.aturan_pemakaian">
+														</td>
+														<td *ngIf="resepItem.racikan_item.length > 1" style="vertical-align: middle;">
+															<input  type="text" class="form-control" placeholder="Petunjuk Peracikan" [(ngModel)]="resepItem.petunjuk_peracikan">
 														</td>
 														<td style="vertical-align: middle; text-align: right;">
 															<button type=button class="btn btn-sm btn-info"
@@ -299,8 +310,8 @@
 															</button>
 														</td>
 													</tr>
-													<tr>
-														<td colspan="3">
+													<tr class="mt-3">
+														<td colspan="4">
 															<button type="button" class="btn btn-sm btn-info pull-left"
 															 data-toggle="modal" [attr.data-target]="'#create-resep-item-modal-' + i" (click)="createResepItem()">
 																Tambah Obat
@@ -330,7 +341,7 @@
 												<div *ngFor="let racikanItem of resepItemModal.racikan_item; index as j">
 													<div class="input-group mb-2">
 														<div class="input-group-addon">Bahan Racikan {{j + 1}}</div>
-														<input type="text" class="form-control" placeholder="Input merek obat"
+														<input type="text" class="form-control" placeholder="{{racikanItem.jenis_obat.merek_obat}}"
 														 [ngbTypeahead]="searchJenisObat" (selectItem)="addSelectedJenisObat(racikanItem, $event.item)"
 														 [inputFormatter]="inputJenisObatFormatter" [resultFormatter]="resultJenisObatFormatter">
 													</div>
@@ -377,7 +388,7 @@
 												<div *ngFor="let racikanItem of resepItemModal.racikan_item; index as j">
 													<div class="input-group mb-2">
 														<div class="input-group-addon">Bahan Racikan {{j + 1}}</div>
-														<input type="text" class="form-control" placeholder="Input merek obat"
+														<input type="text" class="form-control" placeholder="{{racikanItem.jenis_obat.merek_obat}}"
 														 [ngbTypeahead]="searchJenisObat" (selectItem)="addSelectedJenisObat(racikanItem, $event.item)"
 														 [inputFormatter]="inputJenisObatFormatter" [resultFormatter]="resultJenisObatFormatter">
 													</div>
