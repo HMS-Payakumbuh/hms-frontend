@@ -176,13 +176,23 @@ export class PasienFormComponent implements OnInit {
     if (this.asuransiChecked) {
       kode_jenis_pasien = 2;
     }
-    let payload: any = {
-      id_pasien: id_pasien,
-      no_sep: Math.random().toString(36).substring(7),
-      kode_jenis_pasien: kode_jenis_pasien,
-      asuransi_pasien: this.asuransi.nama_asuransi,
-      jenis_rawat: 2,
-    };
+    if (this.asuransi.nama_asuransi == 'bpjs') {
+      let payload: any = {
+        id_pasien: id_pasien,
+        no_sep: Math.random().toString(36).substring(7),
+        kode_jenis_pasien: kode_jenis_pasien,
+        asuransi_pasien: this.asuransi.nama_asuransi,
+        jenis_rawat: 2,
+      };
+    }
+    else {
+      let payload: any = {
+        id_pasien: id_pasien,
+        kode_jenis_pasien: kode_jenis_pasien,
+        asuransi_pasien: this.asuransi.nama_asuransi,
+        jenis_rawat: 2,
+      };
+    }
     let request: any = {
       transaksi : payload
     }
