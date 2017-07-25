@@ -71,4 +71,10 @@ export class TransaksiService {
 		return this.http.get(this.transaksiUrl+'/search_by_pasien', requestOptions)
 		    .map((res: Response) => res.json());			
 	}
+
+	getStatusBpjs(id: number): Observable<any> {
+		const url = `${this.transaksiUrl}/${id}/bpjs`;
+		return this.http.get(url)
+			.map((res: Response) => res.json());
+	}
 }

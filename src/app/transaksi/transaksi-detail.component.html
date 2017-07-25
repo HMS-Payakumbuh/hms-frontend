@@ -39,7 +39,7 @@
 									<td>{{tindakan.daftar_tindakan.nama}}</td>
 									<td></td>
 									<td>Rp. {{tindakan.harga | number: '.2-2'}}</td>
-									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs' && tindakan.id_pembayaran === null" type="checkbox" [id]="'tindakan' + tindakan.id" (change)="updateCheckedTindakan(tindakan.id)"></td>
+									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs' && tindakan.id_pembayaran === null" type="checkbox" [id]="'tindakan' + tindakan.id" (change)="updateCheckedTindakan(tindakan.id, tindakan.harga)"></td>
 								</tr>
 								<tr *ngIf="listOfObatTebus?.length > 0">
 									<th>Obat</th>
@@ -67,14 +67,20 @@
 								</tr>
 								<tr *ngFor="let kamar of listOfKamarRawatInap">
 									<td>{{kamar.kamar_rawatinap.jenis_kamar}} Kelas {{kamar.kamar_rawatinap.kelas}}</td>
-									<td>{{howLong(kamar.waktu_masuk)}} Hari @ Rp. {{kamar.kamar_rawatinap.harga_per_hari | number: '.2-2'}}</td>
+									<td>{{howLong(kamar.waktu_masuk, kamar.waktu_keluar)}} Hari @ Rp. {{kamar.kamar_rawatinap.harga_per_hari | number: '.2-2'}}</td>
 									<td>Rp. {{kamar.harga | number: '.2-2'}}</td>
 									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs' && kamar.id_pembayaran === null" type="checkbox" value="kamar.id"  [id]="'kamarRawatInap' + kamar.id" (change)="updateCheckedKamarRawatInap(kamar.id)"></td>
 								</tr>
+								<tr *ngIf = "harga_tambahan !== 0">
+									<td>Tambahan Biaya Naik Kelas</td>
+									<td></td>
+									<td>Rp. {{harga_tambahan | number: '.2-2'}}</td>
+									<td><input *ngIf="transaksi.asuransi_pasien === 'bpjs' && perlu_bayar_tambahan" value="1"  [id]="'bayarTambahan'" (change)="updateCheckedBayarTambahan()" type="checkbox"></td>
+								</tr>
 								<tr>
 									<td></td>
-									<td><b>Total Harga</b></td>
-									<td>Rp. {{transaksi.harga_total | number: '.2-2'}}</td>
+									<td><b>Total Harga Yang Perlu Dibayar</b></td>
+									<td>Rp. {{harga_total | number: '.2-2'}}</td>
 									<td></td>
 								</tr>
 							</tbody>
@@ -123,6 +129,8 @@
 
 						<div class="modal-body">
 							<div class="form-group">
+								<label><b>Total: </b>Rp. {{total_bayar | number: '.2-2'}}</label>
+								<br>
 								<label>Metode Bayar:</label>
 								<select class="form-control" id="metode" [(ngModel)]="status" (ngModelChange)="gantiAsuransi($event)">
 									<option [value]="'tunai'" selected>TUNAI</option>
@@ -148,6 +156,47 @@
 
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="invoice" class="row">
+		<div class="col-md-12">
+			<div class="row">
+				<table class="table">
+					<tbody>
+						<tr *ngIf="printListOfTindakan?.length > 0">
+							<th>Tindakan</th>
+							<th></th>
+							<th>Harga</th>
+							<th></th>
+						</tr>
+						<tr *ngFor="let tindakan of printListOfTindakan">
+							<td>{{tindakan.daftar_tindakan.nama}}</td>
+							<td></td>
+							<td>Rp. {{tindakan.harga | number: '.2-2'}}</td>
+							<td></td>
+						</tr>
+						<tr *ngIf="printListOfKamarRawatInap?.length > 0">
+							<th>Kamar Rawat Inap</th>
+							<th></th>
+							<th></th>
+							<th></th>
+						</tr>
+						<tr *ngFor="let kamar of printlistOfKamarRawatInap">
+							<td>{{kamar.kamar_rawatinap.jenis_kamar}} Kelas {{kamar.kamar_rawatinap.kelas}}</td>
+							<td>{{howLong(kamar.waktu_masuk, kamar.waktu_keluar)}} Hari @ Rp. {{kamar.kamar_rawatinap.harga_per_hari | number: '.2-2'}}</td>
+							<td>Rp. {{kamar.harga | number: '.2-2'}}</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><b>Total: </b></td>
+							<td>Rp. {{total_bayar | number: '.2-2'}}</td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>

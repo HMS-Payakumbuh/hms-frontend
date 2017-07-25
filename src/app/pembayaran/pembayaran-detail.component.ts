@@ -43,12 +43,18 @@ export class PembayaranDetailComponent implements OnInit {
 			});
 	}
 
-	howLong(tanggal: string): number {
-		let date: Date = new Date(tanggal);
-		let today: Date = new Date();
-		let days = 1;
-		if (today.getDate() != date.getDate()) {
-		 	days = today.getDate() - date.getDate();
+	howLong(tanggal1: string, tanggal2: string): number {
+		let one_day = 1000*60*60*24;
+		let masuk: Date = new Date(tanggal1);
+		let keluar: Date = new Date(tanggal2);
+
+		let masuk_ms = masuk.getTime();
+		let keluar_ms = keluar.getTime();
+
+		let days = Math.round((keluar_ms - masuk_ms)/one_day);
+
+		if (days <= 0) {
+			days = 1;
 		}
 
 		console.log(days);
