@@ -32,6 +32,7 @@
               <th>Nomor Transaksi</th>
               <th>Tanggal</th>
               <th></th>
+              <th></th>
             </thead>
             <tbody>
               <tr *ngFor="let hasilLab of allHasilLab; index as i">
@@ -40,8 +41,11 @@
                 <td>{{hasilLab.transaksi.no_transaksi}}</td>
                 <td>{{hasilLab.tindakan.tanggal_waktu | date: 'dd-MMM-yyyy'}}</td>
                 <td>
-                  <button type="button" class="btn btn-sm btn-info">
-                    Upload hasil lab
+                    <input type="file" id="upload-dokumen-{{i}}" class="form-control-file" [(ngModel)]="hasilLab.dokumen">
+                </td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-success" (click)="upload(hasilLab)">
+                    Upload
                   </button>
                 </td>
               </tr>

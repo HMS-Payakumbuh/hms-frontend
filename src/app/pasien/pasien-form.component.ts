@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location }               from '@angular/common';
+import { Observable }             from 'rxjs/Observable';
 import { NgbTypeaheadConfig }   from '@ng-bootstrap/ng-bootstrap';
 
 import { Pasien }    from './pasien';
@@ -46,6 +47,7 @@ export class PasienFormComponent implements OnInit {
   asuransi: Asuransi;
   pasien: Pasien;
   rujukan: Rujukan;
+  rujukanChecked: boolean;
   asuransiChecked:boolean;
   allAsuransi: Asuransi[];
   allLayanan: any[];
@@ -149,7 +151,7 @@ export class PasienFormComponent implements OnInit {
   private selectTipeLayanan() {
     if (this.tipe === 'Poliklinik') {
       this.poliklinikService.getAllPoliklinik().subscribe(
-        data => { 
+        data => {
           this.allLayanan = data;
         })
     } else if (this.tipe === 'Laboratorium') {
