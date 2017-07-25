@@ -238,6 +238,7 @@ export class ObatTebusEksternalFormComponent {
 
 							temp.id_jenis_obat = stokObat.id_jenis_obat;
 					    	temp.id_obat_masuk = stokObat.id_obat_masuk;
+					    	temp.id_stok_obat = stokObat.id;
 					    	temp.harga_jual_realisasi = this.harga_jual_realisasi[i][j];
 					    	temp.asal = 2;
 					    	temp.id_resep_item = this.id_resep_item[i][j];

@@ -36,6 +36,8 @@ export class ResepEksternalFormComponent {
 
 	public transaksi: Transaksi;
 
+  	public resepItemModal: ResepItem = null;
+
   	inputPasienFormatter = (value : Pasien) => value.nama_pasien;
 	resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.id;	
 
@@ -66,8 +68,6 @@ export class ResepEksternalFormComponent {
 	) { }
 
 	ngOnInit() {
-		this.addResepItem(this.resep);
-
 		this.pasienService.getAllPasien().subscribe(
 			data => { this.allPasien = data }
 		);
@@ -91,10 +91,17 @@ export class ResepEksternalFormComponent {
 		);
 	}
 
+	createResepItem() {
+		this.resepItemModal = new ResepItem();
+	}
+
+	editResepItem(resepItem: ResepItem) {
+		this.resepItemModal = Object.assign({}, resepItem);
+	}
+
 	addResepItem(resep: Resep) {
-	    let resepItem = new ResepItem();
-	    resep.resep_item.push(resepItem);
-  	}
+		resep.resep_item.push(this.resepItemModal);
+	}
 
 	removeResepItem(i: number, resep: Resep) {
 		resep.resep_item.splice(i, 1);
@@ -103,11 +110,11 @@ export class ResepEksternalFormComponent {
 	addRacikanItem(resepItem: ResepItem) {
 	    let racikanItem = new RacikanItem();
 	    resepItem.racikan_item.push(racikanItem);
-  	}
+	}
 
-  	removeRacikanItem(i: number, resepItem: ResepItem) {
-    	resepItem.racikan_item.splice(i, 1);
-  	}
+	removeRacikanItem(i: number, resepItem: ResepItem) {
+	    resepItem.racikan_item.splice(i, 1);
+	}
 
 	addSelectedJenisObat(racikanItem: RacikanItem, jenisObat: JenisObat) {
 	    racikanItem.id_jenis_obat = jenisObat.id;
