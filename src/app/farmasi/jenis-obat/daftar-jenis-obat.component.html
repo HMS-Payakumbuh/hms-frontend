@@ -2,16 +2,16 @@
 		<div class="card mb-3">
 			<div class="card-header card-info">
 				<h4>
-					<i class="fa fa-list-alt" aria-hidden="true"></i> Daftar Jenis Obat
+					<i class="fa fa-list-alt" aria-hidden="true"></i> Daftar Merek Obat
 				</h4>
 			</div>
 			<div class="card-block">
 				<div class="card-text">												
-					<input class="form-control"  [(ngModel)]="param" placeholder="Cari ID jenis/merek/nama generik obat"/>
+					<input class="form-control"  [(ngModel)]="param" placeholder="Cari ID/merek/nama generik obat"/>
 					<table class="table" [mfData]="allJenisObat | filterJenisObat : param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<thead>
 							<tr>
-								<th><mfDefaultSorter by="id">ID Jenis Obat</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="id">ID Merek Obat</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="merek_obat">Merek Obat</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="nama_generik">Nama Generik</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="pembuat">Pembuat</mfDefaultSorter></th>
@@ -43,7 +43,7 @@
 					</table>
 				
 					<div class="pull-left">
-						<a routerLink="/jenis-obat-form"><button type="button" class="btn btn-info">Tambah jenis obat</button></a>
+						<a routerLink="/jenis-obat-form"><button type="button" class="btn btn-info">Tambah merek obat</button></a>
 					</div>					  	
 				</div>
 			</div>	
