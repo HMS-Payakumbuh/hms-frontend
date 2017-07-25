@@ -58,24 +58,8 @@ export class DaftarAntrianComponent {
         kategori_antrian: this.layanan.kategori_antrian
       };
     }
-    
-    /*if (this.umur >= 65 || this.disabilitas) {
-      request = {
-        nama_layanan : this.layanan.nama,
-        jenis : 1,
-        kesempatan: 3,
-        kategori_antrian: this.layanan.kategori_antrian,
-      }
-    } else {
-      request = {
-        nama_layanan : this.layanan.nama,
-        jenis : 0,
-        kesempatan: 3,
-        kategori_antrian: this.layanan.kategori_antrian,
-      }
-    }*/
     this.antrianService.createAntrianFrontOffice(request).subscribe(
-        data => {window.location.reload()}
+        data => {}
       );
   }
 }

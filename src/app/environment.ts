@@ -5,6 +5,7 @@ export var ENV = {
 	pembayaranUrl: baseUrl + "/api/pembayaran",
 	klaimUrl: baseUrl + "/api/klaim",
 	settingsUrl: baseUrl + "/api/setting_bpjs",
+	rujukanUrl: baseUrl + "/api/rujukan",
 
 	pasienUrl: baseUrl + "/api/pasien",
 	rekamMedisUrl: baseUrl + "/api/rekam_medis",

@@ -15,11 +15,11 @@
 	                    </select>
 	                </div>
 	                <div class="form-group" *ngIf="kategori || !isfrontoffice">
-	                    <label for="total">Panjang Antrian</label>
+	                    <label for="total">Panjang Antrian Kategori {{kategori}}</label>
 	                    <input type="text" class="form-control" id="total" [value]="total" name="total" disabled>
 	                </div>
 	                <div class="form-group" *ngIf="!antrianEmpty">
-		                <label *ngIf="kategori || !isfrontoffice" for="nomor">Nomor Antrian</label>
+		                <label *ngIf="kategori || !isfrontoffice" for="nomor">Nomor Antrian yang Dilayani</label>
 		                <div class="form-inline">
 			                <div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="kategori || !isfrontoffice">
 			                  	<input type="text" class="form-control" id="nomor" value="{{kategori}}{{antrian?.no_antrian}}" name="nomor" disabled>
