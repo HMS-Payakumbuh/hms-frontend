@@ -11,5 +11,9 @@ export class CatatanKematianFormComponent {
 		private changeDetectorRef: ChangeDetectorRef
 	) {}
 
-	
+	// createCatatanKematian() {
+  //   	this.PemakaianKamarJenazahService.createPemakaianKamarJenazah(this.pemakaianKamarJenazahModal).subscribe(
+  //     		data => { window.location.reload() }
+  //   	);
+  // 	}
 }

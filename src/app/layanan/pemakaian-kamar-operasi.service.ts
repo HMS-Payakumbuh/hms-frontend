@@ -44,11 +44,11 @@ export class PemakaianKamarOperasiService {
 			.map((res: Response) => res.json());
 	}
 
-	destroyPemakaianKamarOperasi(no_kamar: string) {
+	destroyPemakaianKamarOperasi(id: number) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 
-		return this.http.delete(this.pemakaianKamarOperasiUrl + '/' + no_kamar, options)
+		return this.http.delete(this.pemakaianKamarOperasiUrl + '/' + id, options)
 			.map((res: Response) => res.json());
 	}
 

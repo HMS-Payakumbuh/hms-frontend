@@ -15,6 +15,8 @@ import { TenagaMedisService }		    from '../tenaga-medis/tenaga-medis.service';
 import { TindakanReference } 				from './tindakan-reference';
 import { Tindakan } 				from './tindakan';
 import { TindakanService }		    from './tindakan.service';
+import { TindakanOperasi }			from './tindakan-operasi';
+import { TindakanOperasiService }			from './tindakan-operasi.service';
 import { Transaksi } 				from '../transaksi/transaksi';
 import { TransaksiService }		    from '../transaksi/transaksi.service';
 
@@ -28,6 +30,7 @@ import { PoliklinikService }		from './poliklinik.service';
  	providers: [PemakaianKamarOperasiService,
 	 			TenagaMedisService,
 				TindakanService,
+				TindakanOperasiService,
 				TransaksiService,
 				KamarOperasiService]
 })
@@ -45,16 +48,21 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 	waktuKeluar: string;
 
 	no_pegawai: string;
+	noTenagaMedis: string[];
 
 	pemakaianKamarOperasiModal: PemakaianKamarOperasi = null;
     pemakaianKamarOperasiModalNama: string = null;
 
 	selectedTindakan: Tindakan[] = [];
+	savedTindakan: Tindakan[] = [];
+	savedTindakanOperasi: TindakanOperasi[] = [];
  	selectedTindakanReference: TindakanReference[] = [];
 
 	transaksi2 : any = null;
 	poliklinik: Poliklinik;
 	addForm: FormGroup;
+
+	tindakanOperasi : TindakanOperasi[];
 
 	inputFormatter = (value : any) => value.nama;
 	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
@@ -66,19 +74,23 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 			.map(term => term.length < 2 ? []
 				: this.allTindakanReference.filter(tindakanReference => tindakanReference.nama.toLowerCase().indexOf(term.toLowerCase()) > -1));
 
+
+
 	constructor(
 		private pemakaianKamarOperasiService: PemakaianKamarOperasiService,
 		private tenagaMedisService: TenagaMedisService,
 		private formBuilder: FormBuilder,
 		private tindakanService: TindakanService,
 		private transaksiService: TransaksiService,
-		private kamarOperasiService: KamarOperasiService
+		private kamarOperasiService: KamarOperasiService,
+		private tindakanOperasiService : TindakanOperasiService
 	) {}
 
 	ngOnInit() {
 		this.pemakaianKamarOperasiService.getAllPemakaianKamarOperasi().subscribe(
      		data => { this.allPemakaianKamarOperasi = data }
     	);
+		
 
 		this.kamarOperasiService.getAllKamarOperasi().subscribe(
 			data =>  { this.allKamarOperasi = data }
@@ -94,13 +106,15 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 
 	newPemakaianKamarOperasi() {
     	this.pemakaianKamarOperasiModal = new PemakaianKamarOperasi();
-		this.pemakaianKamarOperasiModal.waktu_masuk = "2017-07-07 07:00:00";
-		this.pemakaianKamarOperasiModal.waktu_keluar = "2017-07-07 12:00:00";
+		// this.pemakaianKamarOperasiModal.waktu_masuk = "2017-07-07 07:00:00";
+		// this.pemakaianKamarOperasiModal.waktu_keluar = "2017-07-07 12:00:00";
  	}
 
-	editPemakaianKamarOperasi(nama: string, pemakaianKamarOperasi: PemakaianKamarOperasi) {
-		this.pemakaianKamarOperasiModalNama = nama;
+	showDetailPemakaianKamarOperasi(pemakaianKamarOperasiId: number, pemakaianKamarOperasi: PemakaianKamarOperasi) {
 		this.pemakaianKamarOperasiModal = Object.assign({}, pemakaianKamarOperasi);
+		this.tindakanOperasiService.getTenagaMedisByTindakanOperasi(pemakaianKamarOperasiId).subscribe(
+			data => {	this.tindakanOperasi = data   }
+		);
 	}
 
 	updatePemakaianKamarOperasi() {
@@ -109,9 +123,9 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 		);
 	}
 
-	destroyPemakaianKamarOperasi(nama: string) {
-		this.pemakaianKamarOperasiService.destroyPemakaianKamarOperasi(nama).subscribe(
-		data => { window.location.reload() }
+	destroyPemakaianKamarOperasi(id: number) {
+		this.pemakaianKamarOperasiService.destroyPemakaianKamarOperasi(id).subscribe(
+			data => { window.location.reload() }
 		);
 	}
 
@@ -119,14 +133,25 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 		this.transaksiService.getRecentTransaksi(nama_pasien).
 			subscribe(data => {
 				this.transaksi = data;
-				this.transaksiService.getTransaksi(this.pemakaianKamarOperasiModal.id_transaksi)
-					.subscribe(transaksi => this.transaksi2 = transaksi);
 			})
+	}
+
+	getTransaksi2() {
+		this.transaksiService.getTransaksi(this.pemakaianKamarOperasiModal.id_transaksi)
+			.subscribe(transaksi => this.transaksi2 = transaksi);
+	}
+
+	getTanggalOperasi() {
+		this.pemakaianKamarOperasiModal.waktu_masuk = this.tanggalOperasi + " " +  this.waktuMasuk;
+		this.pemakaianKamarOperasiModal.waktu_keluar = this.tanggalOperasi + " " +  this.waktuKeluar;
+	}
+
+	getTenagaMedis() {
+		this.noTenagaMedis = this.no_pegawai.toString().split(",");
 	}
 
 	addSelectedTindakan(tindakanReference: TindakanReference) {
 		this.selectedTindakanReference.push(tindakanReference);
-
 		let temp = new Tindakan();
 		temp.id_transaksi = this.transaksi2.transaksi.id;
 		temp.harga = tindakanReference.harga;
@@ -134,14 +159,20 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 		temp.id_pembayaran = null;
 		temp.kode_tindakan = tindakanReference.kode;
 		temp.id_pasien = this.transaksi2.transaksi.id_pasien;
-		temp.tanggal_waktu = '2017-07-06 10:00:00';
-		temp.np_tenaga_medis = this.no_pegawai;
+		temp.tanggal_waktu = this.transaksi2.transaksi.waktu_masuk;
+		temp.np_tenaga_medis = null;
 		temp.nama_poli = null;
 		temp.nama_lab = null;
 		temp.nama_ambulans = null;
 		this.selectedTindakan.push(temp);
-
-		this.pemakaianKamarOperasiModal.no_tindakan = this.transaksi2.transaksi.tindakan.length + 1;
+		
+		this.noTenagaMedis.forEach(element => {
+			let temp2 = new TindakanOperasi();
+			temp2.id_tindakan = null;
+			temp2.id_transaksi = this.transaksi2.transaksi.id;
+			temp2.np_tenaga_medis = element;
+			this.savedTindakanOperasi.push(temp2);
+		});
 	}
 
 	isTindakanAlreadySelected() {
@@ -170,12 +201,20 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 	}
 
 	createPemakaianKamarOperasi() {
-		this.pemakaianKamarOperasiService.createPemakaianKamarOperasi(this.pemakaianKamarOperasiModal).subscribe(
-			data => {
-				this.tindakanService.saveTindakan(this.selectedTindakan).subscribe(
-				data => { console.log(data) }
+		this.tindakanService.saveTindakan(this.selectedTindakan).subscribe(
+			data => { 
+				console.log(data);
+				this.tindakanOperasiService.createTindakanOperasi(this.savedTindakanOperasi).subscribe(
+					data => { 
+						console.log(data);
+						this.pemakaianKamarOperasiService.createPemakaianKamarOperasi(this.pemakaianKamarOperasiModal).subscribe(
+							data => {
+								console.log(data);
+								// window.location.reload();
+							}
+						);
+					}	
 				);
-				window.location.reload()
 			}
 		);
 	}

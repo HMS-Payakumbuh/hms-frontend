@@ -60,16 +60,20 @@ export class RawatinapDetailComponent implements OnInit {
 
 		this.route.params
 			.switchMap((params: Params) => this.pemakaianKamarService.getAllPemakaianKamarBooked(params['noKamar']))
-			.subscribe(data => this.allPemakaianKamarBooked = data);
+			.subscribe(data => { 
+				this.allPemakaianKamarBooked = data;
+				if(this.allPemakaianKamarBooked.length != 0) {
+					this.allPemakaianKamarBooked.forEach(element => {
+						this.allTempatTidur[element.no_tempat_tidur-1].status = 0;
+					});
+				}
+			}
+			);
 
 		this.tenagaMedisService.getAllTenagaMedis().
 			subscribe(data => this.allTenagaMedis = data);
 
-		if(this.allPemakaianKamarBooked.length != 0) {
-			this.allPemakaianKamarBooked.forEach(element => {
-				this.allTempatTidur[element.no_tempat_tidur-1].status = 0;
-			});
-		}
+		
 	}
 
 	getRecentTransaksi(nama_pasien: string) {
