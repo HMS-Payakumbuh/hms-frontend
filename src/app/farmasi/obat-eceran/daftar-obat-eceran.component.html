@@ -21,15 +21,13 @@
 					<table class="table" [mfData]="allObatEceran | filterWaktuKeluar: selectedDate | filterObatEceran: param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<tbody>
 							<tr>
-								<th><mfDefaultSorter by="id">ID Transaksi</mfDefaultSorter></th>
-								<th><mfDefaultSorter by="nama_pembeli">ID Pasien</mfDefaultSorter></th>
-								<th><mfDefaultSorter by="waktu_transaksi">Nama Pasien</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="waktu_transaksi">Waktu Transaksi</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="nama_pembeli">Nama Pembeli</mfDefaultSorter></th>
 								<th></th>
 							</tr>
 							<tr *ngFor="let obatEceran of mf.data">
-								<td>{{obatEceran.id}}</td>
-								<td>{{obatEceran.nama_pembeli}}</td>
 								<td>{{obatEceran.waktu_transaksi | date:'d MMM y H:mm:ss'}}</td>
+								<td>{{obatEceran.nama_pembeli}}</td>
 								<td><button type="button" class="btn btn-info" [routerLink] = "['/obat-eceran', obatEceran.id]">Detail</button></td>
 							</tr>						
 						</tbody>	
