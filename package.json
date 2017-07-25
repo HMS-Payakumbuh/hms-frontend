@@ -38,10 +38,12 @@
     "angular2-datatable": "^0.6.0",
     "angularjs-datepicker": "^2.1.21",
     "core-js": "^2.4.1",
+    "ng-socket-io": "^0.1.10",
     "ng2-date-picker": "^1.4.3",
     "ng2-input-autocomplete": "0.0.11",
     "ng2-typeahead": "^1.2.0",
     "rxjs": "5.4.1",
+    "socket.io-client": "^2.0.3",
     "systemjs": "0.20.14",
     "zone.js": "^0.8.12"
   },
