@@ -74,7 +74,6 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private location: Location,
-		private formBuilder: FormBuilder,
 		private transaksiService: TransaksiService,
     private rekamMedisService: RekamMedisService,
     private tenagaMedisService: TenagaMedisService,
