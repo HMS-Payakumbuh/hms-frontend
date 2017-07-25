@@ -42,7 +42,9 @@ export class StockOpnameFormComponent {
 			.subscribe((params: Params) => {
 				this.lokasi = +params['lokasi'];
 				this.stokObatService.getStokObatByLocation(this.lokasi).subscribe(
-					data => this.allStokObat = data					
+					data => {
+						this.allStokObat = data;						
+					}			
 				);
 			}
 		);	

@@ -14,24 +14,75 @@
 								<th><mfDefaultSorter by="jenis_obat.merek_obat">Merek Obat</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="obat_masuk.nomor_batch">No. Batch</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="obat_masuk.kadaluarsa">Kadaluarsa</mfDefaultSorter></th>
-								<th>Jumlah Tercatat</th>
+								<th>Jumlah Awal</th>
+								<th>Jumlah Akhir</th>
 								<th>Jumlah Sebenarnya</th>
+								<th></th>
 							</tr>
-							<tr *ngFor="let stokObat of mf.data">
-								<td>{{stokObat.obat_masuk.barcode}}</td>
-								<td>{{stokObat.jenis_obat.merek_obat}}</td>
-								<td>{{stokObat.obat_masuk.nomor_batch}}</td>	
-								<td>{{stokObat.obat_masuk.kadaluarsa | date:'d MMM y'}}</td>	
-								<td><input type="text" class="form-control" id="jumlah_tercatat" disabled [(ngModel)] = "stokObat.jumlah" name="jumlah_tercatat"></td>
-								<td><input type="text" class="form-control" id="jumlah_sebenarnya" required [(value)] = "stokObat.jumlah" name="jumlah_sebenarnya"></td>
-							</tr>						
-						</tbody>	
+							<ng-template ngFor let-stokObat [ngForOf]="mf.data" let-i="index">
+								<tr>
+									<td>{{stokObat.obat_masuk.barcode}}</td>
+									<td>{{stokObat.jenis_obat.merek_obat}}</td>
+									<td>{{stokObat.obat_masuk.nomor_batch}}</td>	
+									<td>{{stokObat.obat_masuk.kadaluarsa | date:'d MMM y'}}</td>
+									<td><input type="text" class="form-control" id="jumlah_awal" disabled [(value)] = "stokObat.jumlah" name="jumlah_tercatat"></td>	
+									<td><input type="text" class="form-control" id="jumlah_tercatat" disabled [(value)] = "stokObat.jumlah" name="jumlah_tercatat"></td>
+									<td><input type="text" class="form-control" id="jumlah_sebenarnya" required [(ngModel)] = "stokObat.jumlah" name="jumlah_sebenarnya"></td>
+									<td><a href="" data-toggle="collapse" [attr.data-target]="'#pemakaian-collapse-' + i"><button type="button" class="btn btn-info">Detail Pemakaian</button></a></td>
+								</tr>		
+								<tr>
+									<td colspan="7">
+										<div class="collapse" id="pemakaian-collapse-{{i}}">
+											<table class="table">
+												<div *ngIf="stokObat.obat_pindah.length > 0">	
+													<tr>												
+														<td colspan="3"><strong>Obat Pindah</strong></td>
+													</tr>	
+													<tr>
+														<td><strong>Waktu Pindah</strong></td>
+														<td><strong>Jumlah</strong></td>
+														<td><strong>Tujuan</strong></td>	
+													</tr>
+													<ng-template ngFor let-obatPindah [ngForOf]="stokObat.obat_pindah" let-j="index">
+														<tr>
+															<td>{{obatPindah.waktu_pindah | date:'d MMM y H:mm:ss'}}</td>
+															<td>{{obatPindah.jumlah}} {{stokObat.jenis_obat.satuan}}</td>
+															<td>{{obatPindah.lokasi_tujuan.nama}}</td>	
+														</tr>
+													</ng-template>										
+												</div>
+												<div *ngIf="stokObat.obat_rusak.length > 0">
+													<tr>
+														<td colspan="4"><strong>Obat Rusak</strong></td>
+													</tr>	
+													<tr>
+														<td><strong>Waktu Keluar</strong></td>
+														<td><strong>Jumlah</strong></td>
+														<td><strong>Alasan</strong></td>
+														<td><strong>Keterangan</strong></td>	
+													</tr>
+													<ng-template ngFor let-obatRusak [ngForOf]="stokObat.obat_rusak" let-j="index">
+														<tr>
+															<td>{{obatRusak.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>
+															<td>{{obatRusak.jumlah}} {{stokObat.jenis_obat.satuan}}</td>
+															<td>{{obatRusak.alasan}}</td>	
+															<td>{{obatRusak.keterangan}}</td>	
+														</tr>
+													</ng-template>
+												</div>
+											</table>
+										</div>
+									</td>
+								</tr>
+							</ng-template>	
+						</tbody>
 						<tfoot>
 			                <tr>
 			                    <td colspan="8">
 			                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
 			                    </td>
-			                </tr>			
+			                </tr>	
+			            </tfoot>		
 					</table>
 
 					<div class="pull-right">
