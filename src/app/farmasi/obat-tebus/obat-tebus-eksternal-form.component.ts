@@ -163,7 +163,7 @@ export class ObatTebusEksternalFormComponent {
 
 	}
 
-	private onTanggalResepChange(tanggal_resep: Date) {
+	/* private onTanggalResepChange(tanggal_resep: Date) {
 		this.resepService.getResepByPasienAndTanggal(this.pasien.id, tanggal_resep).subscribe(
 			data => { this.allResepOfTanggal = data }
 		);
@@ -193,6 +193,7 @@ export class ObatTebusEksternalFormComponent {
 			}					
 		);		
 	}
+	*/
 
 	private onTebusChange(e, i : number, j: number, ) {
 		var isChecked = e.target.checked;
