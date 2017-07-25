@@ -11,9 +11,6 @@ import { TransaksiService }			from '../transaksi/transaksi.service';
 import { RekamMedis }           from '../pasien/rekam-medis';
 import { RekamMedisService }    from '../pasien/rekam-medis.service';
 
-import { TenagaMedis }          from '../tenaga-medis/tenaga-medis';
-import { TenagaMedisService }   from '../tenaga-medis/tenaga-medis.service';
-
 import { Laboratorium }						from './laboratorium';
 import { LaboratoriumService }		from './laboratorium.service';
 
@@ -31,7 +28,6 @@ import { HasilLabService }      from './hasil-lab.service';
     RekamMedisService,
     LaboratoriumService,
  		TransaksiService,
-    TenagaMedisService,
  		TindakanService,
     HasilLabService
 	]
@@ -48,14 +44,12 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
   allAlergi: string[] = [];
 
 	allTindakanReference: TindakanReference[];
-  allTenagaMedis: TenagaMedis[];
 
 	selectedTindakan: Tindakan[] = [];
   selectedTindakanReference: TindakanReference[] = [];
 
 	inputFormatter = (value : any) => value.nama;
 	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
-  tenagaMedisFormatter = (value : any) => value.nama + ' - ' + value.jabatan;
 
 	searchTindakan = (text$: Observable<string>) =>
 		text$
@@ -64,19 +58,11 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 			.map(term => term.length < 2 ? []
 				: this.allTindakanReference.filter(tindakanReference => tindakanReference.nama.toLowerCase().indexOf(term.toLowerCase()) > -1));
 
-  searchTenagaMedis = (text$: Observable<string>) =>
-    text$
-      .debounceTime(200)
-      .distinctUntilChanged()
-      .map(term => term.length < 2 ? []
-        : this.allTenagaMedis.filter(tenagaMedis => tenagaMedis.nama.toLowerCase().indexOf(term.toLowerCase()) > -1));
-
 	constructor(
 		private route: ActivatedRoute,
 		private location: Location,
 		private transaksiService: TransaksiService,
     private rekamMedisService: RekamMedisService,
-    private tenagaMedisService: TenagaMedisService,
 		private laboratoriumService: LaboratoriumService,
 		private tindakanService: TindakanService,
     private hasilLabService: HasilLabService,
@@ -99,10 +85,6 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
         }
       );
 
-    this.tenagaMedisService.getAllTenagaMedis().subscribe(
-      data => { this.allTenagaMedis = data }
-    )
-
     this.tindakanService.getAllTindakanReference().subscribe(
       data => { this.allTindakanReference = data }
     );
@@ -120,7 +102,7 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
               this.rekamMedis = new RekamMedis(
                 this.transaksi.transaksi.id_pasien,
                 this.transaksi.transaksi.waktu_masuk_pasien,
-                'D001',
+                '',
                 '',
                 data.anamnesis,
                 '',
@@ -138,7 +120,7 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
           this.rekamMedis = new RekamMedis(
             this.transaksi.transaksi.id_pasien,
             this.transaksi.transaksi.waktu_masuk_pasien,
-            'D001',
+            '',
             '',
             '',
             '',
@@ -164,7 +146,7 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
     temp.kode_tindakan = tindakanReference.kode;
     temp.id_pasien = this.transaksi.transaksi.id_pasien;
     temp.tanggal_waktu = this.rekamMedis.tanggal_waktu;
-    temp.np_tenaga_medis = 'D001';
+    temp.np_tenaga_medis = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
     temp.nama_poli = null;
     temp.nama_lab = this.laboratorium.nama;
     temp.nama_ambulans = null;
@@ -175,10 +157,6 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
     this.selectedTindakan.splice(i, 1);
 		this.selectedTindakanReference.splice(i, 1);
 	}
-
-  selectTenagaMedis(tindakan: Tindakan, tenagaMedis: TenagaMedis) {
-    tindakan.np_tenaga_medis = tenagaMedis.no_pegawai;
-  }
 
 	goBack(): void {
 		this.location.back();
