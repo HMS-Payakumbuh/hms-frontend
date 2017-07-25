@@ -1,6 +1,6 @@
 export class User {
+  no_pegawai: string
   name: string;
   role: string;
-  email: string;
   password: string;
 }

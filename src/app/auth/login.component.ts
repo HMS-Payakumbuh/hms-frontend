@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 	}
 
   login() {
-    if(this.authenticationService.login(this.data.email, this.data.password)) {
+    if(this.authenticationService.login(this.data.no_pegawai, this.data.password)) {
       localStorage.getItem('currentUser');
       window.location.assign('/pendaftaran');
     }

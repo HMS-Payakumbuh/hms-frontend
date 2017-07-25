@@ -4,10 +4,10 @@
 			<h1>{{title}}</h1>
 		</div>
 		<div *ngIf="user != null" class="col-md-3 text-right">
-			<span class="">
-				Logged in as {{user?.name}}
+			<span>
+				Logged in as <b>{{user?.name}}</b>&nbsp;
 			</span>
-			<button type="button" class="btn btn-sm btn-warning" (click)="logout()">
+			<button type="button" class="btn btn btn-warning" (click)="logout()">
 				Logout
 			</button>
 		</div>
@@ -19,8 +19,11 @@
 					<a routerLink="/register" class="list-group-item list-group-item-info">Register</a>
 					<a routerLink="/login" class="list-group-item list-group-item-info">Login</a>
 				</div>
-				
+
 				<div *ngIf="user != null" class="list-group list-group-flush">
+					<a *ngIf="user.role == 'dokter'" [routerLink]="['/dokter-dashboard', user.no_pegawai]" class="list-group-item list-group-item-info">Home</a>
+					<a *ngIf="user.role == 'petugaslab'" [routerLink]="['/petugas-lab-dashboard', user.no_pegawai]" class="list-group-item list-group-item-info">Home</a>
+
 					<a routerLink="/daftar-antrian" class="list-group-item list-group-item-info">Pendaftaran Antrian</a>
 					<a routerLink="/daftar-pasien" class="list-group-item list-group-item-info">List Pasien</a>
 					<a routerLink="/pendaftaran" class="list-group-item list-group-item-info">Registrasi</a>

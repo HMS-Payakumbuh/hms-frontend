@@ -9,9 +9,10 @@ import { User } from './user';
 @Injectable()
 export class AuthenticationService {
   private users: User[] = [
-    {name: 'dokter', role: 'dokter', email: 'dokter@gmail.com', password: 'dokter'},
-    {name: 'perawat', role: 'perawat', email: 'perawat@gmail.com', password: 'perawat'},
-    {name: 'petugaslab', role: 'petugaslab', email: 'petugaslab@gmail.com', password: 'petugaslab'}
+    {no_pegawai: 'D001', name: 'Dokter', role: 'dokter', password: 'dokter'},
+    {no_pegawai: 'P001', name: 'Perawat', role: 'perawat', password: 'perawat'},
+    {no_pegawai: 'L001', name: 'PetugasLab', role: 'petugaslab', password: 'petugaslab'},
+    {no_pegawai: 'A001', name: 'Admin', role: 'admin', password: 'admin'}
   ]
 
   public token: string;
@@ -22,8 +23,8 @@ export class AuthenticationService {
     this.token = currentUser && currentUser.token;
   }
 
-  login(email: string, password: string): boolean {
-    let user = this.users.find(user => user.email == email && user.password == password);
+  login(no_pegawai: string, password: string): boolean {
+    let user = this.users.find(user => user.no_pegawai == no_pegawai && user.password == password);
     if (user != null) {
       localStorage.setItem('currentUser', JSON.stringify(user));
       return true;

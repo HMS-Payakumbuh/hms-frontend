@@ -10,17 +10,19 @@
         </div>
         <div class="card-block">
           <div class="col-md-6">
-            <div class="input-group mb-3">
-              <div class="input-group-addon">Email</div>
-              <input type="email" class="form-control" [(ngModel)]="data.email">
-            </div>
-            <div class="input-group mb-3">
-              <div class="input-group-addon">Password</div>
-              <input type="password" class="form-control" [(ngModel)]="data.password">
-            </div>
-            <button type="button" class="btn btn-success" (click)="login()">
-              Login
-            </button>
+            <form>
+              <div class="input-group mb-3">
+                <div class="input-group-addon">No Pegawai</div>
+                <input type="text" class="form-control" [(ngModel)]="data.no_pegawai" name="no_pegawai">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-addon">Password</div>
+                <input type="password" class="form-control" [(ngModel)]="data.password" name="password">
+              </div>
+              <button type="submit" class="btn btn-success" (click)="login()">
+                Login
+              </button>
+            </form>
         </div>
         </div>
       </div>
