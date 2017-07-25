@@ -115,6 +115,7 @@ export class ResepEksternalFormComponent {
 	}
 
 	save() {		
+		this.resep.tebus = true;
 		console.log(this.resep);
 		
 		this.allResep.push(this.resep);

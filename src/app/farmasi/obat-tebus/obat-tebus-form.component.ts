@@ -28,7 +28,7 @@ export class ObatTebusFormComponent {
 
 	public allPasien: Pasien[];
 	// public allTransaksiOfPasien: Transaksi[];	
-	public allResepOfTanggal: Resep[];
+	public allResep: Resep[];
 
 	public pasien: Pasien;
 	public resep: Resep;
@@ -105,7 +105,7 @@ export class ObatTebusFormComponent {
 		this.obatTebus = new ObatTebus();
 
 		this.allPasien = [];
-		this.allResepOfTanggal =  [];
+		this.allResep =  [];
 		this.obatTebusItems = [];
 		
 		this.id_jenis_obat = [];
@@ -153,13 +153,17 @@ export class ObatTebusFormComponent {
 
 	private addPasien(pasien: Pasien) {	
 		this.pasien = pasien;
+
+		this.resepService.getResepByPasien(this.pasien.id).subscribe(
+			data => { this.allResep = data }
+		);
 	}
 
-	private onTanggalResepChange(tanggal_resep: Date) {
+	/* private onTanggalResepChange(tanggal_resep: Date) {
 		this.resepService.getResepByPasienAndTanggal(this.pasien.id, tanggal_resep).subscribe(
 			data => { this.allResepOfTanggal = data }
 		);
-	}
+	} */
 
 	private onResepChange(id_resep: number) {
 		this.resepService.getResep(id_resep).subscribe(
@@ -226,6 +230,7 @@ export class ObatTebusFormComponent {
 
 							temp.id_jenis_obat = stokObat.id_jenis_obat;
 					    	temp.id_obat_masuk = stokObat.id_obat_masuk;
+					    	temp.id_stok_obat = stokObat.id;
 					    	temp.harga_jual_realisasi = this.harga_jual_realisasi[i][j];
 					    	temp.asal = 2;
 					    	temp.id_resep_item = this.id_resep_item[i][j];

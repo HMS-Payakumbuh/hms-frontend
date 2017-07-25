@@ -12,6 +12,7 @@ export class Resep {
 	public no_telp: string = "",
 	public eksternal: boolean = false,
 	public resep_item: ResepItem[] = [],
-	public transaksi: Transaksi = null
+	public transaksi: Transaksi = null,
+	public tebus: boolean = false,
 	) {}
 }
