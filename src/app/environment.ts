@@ -1,6 +1,8 @@
 const baseUrl = "http://127.0.0.1:8000";
 
 export var ENV = {
+	registerUrl: baseUrl + "/register",
+
 	transaksiUrl: baseUrl + "/api/transaksi",
 	pembayaranUrl: baseUrl + "/api/pembayaran",
 	klaimUrl: baseUrl + "/api/klaim",
