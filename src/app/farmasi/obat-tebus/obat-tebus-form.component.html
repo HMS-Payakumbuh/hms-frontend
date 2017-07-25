@@ -16,15 +16,15 @@
                 </div>                    
               </div>
 
-              <div class="form-group">
+              <!-- div class="form-group">
                 <label for="tanggal_resep">Tanggal Resep</label>
                 <input type="date" class="form-control" id="tanggal_resep" [(ngModel)] = "tanggal_resep" (ngModelChange)="onTanggalResepChange($event)" name="tanggal_resep">
-              </div>
+              </div -->
 
               <div class="form-group">
                 <label for="resep">Resep *</label>
                 <select class="form-control" id="resep" required (ngModelChange)="onResepChange($event)" [(ngModel)] = "id_resep" name="resep">   
-                  <option *ngFor="let resep of allResepOfTanggal" [value]="resep.id">{{resep.created_at}}</option>
+                  <option *ngFor="let resep of allResep" [value]="resep.id">{{resep.created_at}}</option>
                 </select>
               </div>
 
@@ -58,7 +58,7 @@
                     <tr *ngFor="let racikan_item of resep_item.racikan_item; let j = index" class="form-group">
                       <td><input type="text" class="form-control" id="merek_obat-{{i}}-{{j}}" disabled [(ngModel)]="racikan_item.jenis_obat.merek_obat" name="merek_obat-{{i}}-{{j}}"></td>
                       <td><input type="text" class="form-control" id="no_batch-{{i}}-{{j}}" [(ngModel)]="no_batch[i][j]" required name="no_batch-{{i}}-{{j}}"></td>
-                      <td><input type="text" class="form-control" id="jumlah-{{i}}-{{j}}" [(value)]="jumlah[i][j]" disabled name="jumlah-{{i}}-{{j}}"></td>
+                      <td><input type="text" class="form-control" id="jumlah-{{i}}-{{j}}" [(ngModel)]="jumlah[i][j]" required name="jumlah-{{i}}-{{j}}"></td>
                       <td><input type="text" class="form-control" id="harga_jual_realisasi-{{i}}-{{j}}" required name="harga_jual_realisasi-{{i}}-{{j}}" [(ngModel)]="harga_jual_realisasi[i][j]"></td>
                       <td><input type="text" class="form-control" id="harga_total-{{i}}-{{j}}" disabled [(value)]="racikan_item.jenis_obat.harga_jual_satuan*jumlah[i][j]" name="harga_total-{{i}}-{{j}}"></td>
                       <!-- td><input type="checkbox" class="form-control" id="tebus-{{i}}-{{j}}" (change)="onTebusChange($event, i, j)" name="tebus-{{i}}-{{j}}"></td -->

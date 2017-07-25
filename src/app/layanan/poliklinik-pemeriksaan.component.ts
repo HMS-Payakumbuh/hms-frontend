@@ -1,8 +1,8 @@
-import { Component, OnInit }															from '@angular/core';
-import { ActivatedRoute, Params }													from '@angular/router';
-import { Location }																				from '@angular/common';
-import { Observable }																			from 'rxjs/Observable';
-import { NgbTypeaheadConfig } 														from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit }              from '@angular/core';
+import { ActivatedRoute, Params }					from '@angular/router';
+import { Location }												from '@angular/common';
+import { Observable }											from 'rxjs/Observable';
+import { NgbTypeaheadConfig, NgbModal }   from '@ng-bootstrap/ng-bootstrap';
 
 import { Transaksi }						from '../transaksi/transaksi';
 import { TransaksiService }			from '../transaksi/transaksi.service';
@@ -14,7 +14,6 @@ import { AntrianService }       from '../antrian/antrian.service';
 
 import { Poliklinik }						from './poliklinik';
 import { PoliklinikService }		from './poliklinik.service';
-import { LaboratoriumService }  from './laboratorium.service';
 
 import { TenagaMedis }          from '../tenaga-medis/tenaga-medis';
 import { TenagaMedisService }   from '../tenaga-medis/tenaga-medis.service';
@@ -52,7 +51,6 @@ import { ObatMasukService }		  from '../farmasi/obat-masuk/obat-masuk.service';
  	providers: [
     AntrianService,
     PoliklinikService,
-    LaboratoriumService,
     RekamMedisService,
     TenagaMedisService,
  		TransaksiService,
@@ -81,27 +79,22 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
   alergiBaru: string;
   pelayananBaru: string;
   rencana: any = {};
-  normalChecked: boolean = false;
   rujuk: boolean = false;
+  namaPoliRujuk: string = null;
 
 	allDiagnosisReference: DiagnosisReference[];
 	allTindakanReference: TindakanReference[];
-  allTenagaMedis: TenagaMedis[];
   allStokObatAtLocation: StokObat[];
   allJenisObat: JenisObat[];
+  allPoliklinik: Poliklinik[] = [];
 
-  layanan: any = [];
-  tipeLayanan: string = '';
-  allTipeLayanan: string[] = ['Poliklinik', 'Laboratorium'];
-  namaPoliRujuk: string = null;
-  namaLabRujuk: string = null;
-
-	selectedDiagnosis: Diagnosis[] = [];
+  selectedDiagnosis: Diagnosis[] = [];
   selectedDiagnosisReference: DiagnosisReference[] = [];
 
-	selectedTindakan: Tindakan[] = [];
+  selectedTindakan: Tindakan[] = [];
   selectedTindakanReference: TindakanReference[] = [];
 
+  resepItemModal: ResepItem = null;
   allResep: Resep[] = [];
 
 	inputFormatter = (value : any) => value.nama;
@@ -112,8 +105,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 
   inputJenisObatFormatter = (value : JenisObat) => value.merek_obat;
   resultJenisObatFormatter = (value: JenisObat)	=> value.merek_obat;
-
-  tenagaMedisFormatter = (value : any) => value.nama + ' - ' + value.jabatan;
 
 	searchTindakan = (text$: Observable<string>) =>
 		text$
@@ -128,13 +119,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 			.distinctUntilChanged()
 			.map(term => term.length < 2 ? []
 				: this.allDiagnosisReference.filter(diagnosisReference => diagnosisReference.nama.toLowerCase().indexOf(term.toLowerCase()) > -1));
-
-  searchTenagaMedis = (text$: Observable<string>) =>
-    text$
-      .debounceTime(200)
-      .distinctUntilChanged()
-      .map(term => term.length < 2 ? []
-        : this.allTenagaMedis.filter(tenagaMedis => tenagaMedis.nama.toLowerCase().indexOf(term.toLowerCase()) > -1));
 
   searchStokObat = (text$: Observable<string>) =>
 		text$
@@ -157,7 +141,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 		private transaksiService: TransaksiService,
     private rekamMedisService: RekamMedisService,
 		private poliklinikService: PoliklinikService,
-    private laboratoriumService: LaboratoriumService,
     private tenagaMedisService: TenagaMedisService,
 		private diagnosisService: DiagnosisService,
 		private tindakanService: TindakanService,
@@ -166,7 +149,8 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     private jenisObatService: JenisObatService,
     private obatMasukService: ObatMasukService,
     private stokObatService: StokObatService,
-		private config: NgbTypeaheadConfig
+		private config: NgbTypeaheadConfig,
+    private modalService: NgbModal
 	) {
 		config.editable = false;
 	}
@@ -184,17 +168,17 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
             data => this.jadwalDokter = data
           )
         }
-      );
+    );
 
 		this.route.params
 			.switchMap((params: Params) => this.transaksiService.getTransaksi(params['idTransaksi']))
 			.subscribe(transaksi => {
         this.transaksi = transaksi;
         this.checkRekamMedis();
-      });
+    });
 
-    this.tenagaMedisService.getAllTenagaMedis().subscribe(
-      data => { this.allTenagaMedis = data }
+    this.poliklinikService.getAllPoliklinik().subscribe(
+      data => { this.allPoliklinik = data }
     );
 
 		this.tindakanService.getAllTindakanReference().subscribe(
@@ -295,10 +279,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     this.selectedTindakanReference.splice(i, 1);
 	}
 
-  selectTenagaMedis(tindakan: Tindakan, tenagaMedis: TenagaMedis) {
-    tindakan.np_tenaga_medis = tenagaMedis.no_pegawai;
-  }
-
   addSelectedStokObat(obatTindakan: ObatTindakan, stokObat: StokObat) {
     obatTindakan.stokObat = stokObat;
     obatTindakan.id_jenis_obat = stokObat.id_jenis_obat;
@@ -326,9 +306,16 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     this.allResep.splice(i, 1);
   }
 
+  createResepItem() {
+    this.resepItemModal = new ResepItem();
+  }
+
+  editResepItem(resepItem: ResepItem) {
+    this.resepItemModal = Object.assign({}, resepItem);
+  }
+
   addResepItem(resep: Resep) {
-    let resepItem = new ResepItem();
-    resep.resep_item.push(resepItem);
+    resep.resep_item.push(this.resepItemModal);
   }
 
   removeResepItem(i: number, resep: Resep) {
@@ -344,43 +331,9 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     resepItem.racikan_item.splice(i, 1);
   }
 
-  assignNormalValue() {
-    this.normalChecked = !this.normalChecked;
-    if (this.normalChecked) {
-      this.hasilPemeriksaan.tekanan_darah = '120/80';
-      this.hasilPemeriksaan.nadi = '80';
-      this.hasilPemeriksaan.frekuensi_napas = '20';
-      this.hasilPemeriksaan.temperatur = '36';
-    } else {
-      this.hasilPemeriksaan.tekanan_darah = '';
-      this.hasilPemeriksaan.nadi = '';
-      this.hasilPemeriksaan.frekuensi_napas = '';
-      this.hasilPemeriksaan.temperatur = '';
-    }
-  }
-
   addSelectedJenisObat(racikanItem: RacikanItem, jenisObat: JenisObat) {
     racikanItem.id_jenis_obat = jenisObat.id;
     racikanItem.jenis_obat = jenisObat;
-  }
-
-  setRujuk(value: boolean) {
-    this.rujuk = value;
-  }
-
-  selectTipeLayanan() {
-    this.namaPoliRujuk = null;
-    this.namaLabRujuk = null;
-    if (this.tipeLayanan === 'Poliklinik') {
-      this.poliklinikService.getAllPoliklinik().subscribe(
-        data => { this.layanan = data }
-      )
-    }
-    else if (this.tipeLayanan === 'Laboratorium') {
-      this.laboratoriumService.getAllLaboratorium().subscribe(
-        data => { this.layanan = data }
-      )
-    }
   }
 
   addRiwayat() {
@@ -432,14 +385,8 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
       let antrian: any = {};
       antrian.id_transaksi = this.transaksi.transaksi.id;
       antrian.nama_layanan_poli = this.namaPoliRujuk;
-      antrian.nama_layanan_lab = this.namaLabRujuk;
       antrian.kesempatan = 3;
       observables.push(this.antrianService.createAntrian(antrian));
-      if (this.namaLabRujuk) {
-        this.pelayananLain.push(this.namaLabRujuk);
-        this.rekamMedis.pelayanan_lain = JSON.stringify(this.pelayananLain);
-        observables.push(this.rekamMedisService.updateRekamMedis(this.rekamMedis));
-      }
     }
 
     Observable.forkJoin(observables).subscribe(

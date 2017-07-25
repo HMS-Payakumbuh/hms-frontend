@@ -54,7 +54,7 @@ export class ResepService {
 		    .map((res: Response) => res.json());			
 	} */
 
-	getResepByPasienAndTanggal(id_pasien: number, tanggal_resep: Date) {
+	/* getResepByPasienAndTanggal(id_pasien: number, tanggal_resep: Date) {
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('id_pasien', ''+id_pasien);
 		params.set('tanggal_resep', tanggal_resep.toString());
@@ -63,6 +63,18 @@ export class ResepService {
 		requestOptions.params = params;
 
 		return this.http.get(this.resepUrl+'/search_by_pasien_and_tanggal', requestOptions)
+		    .map((res: Response) => res.json());		
+
+	} */
+
+	getResepByPasien(id_pasien: number) {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('id_pasien', ''+id_pasien);
+
+		let requestOptions = new RequestOptions();
+		requestOptions.params = params;
+
+		return this.http.get(this.resepUrl+'/search_by_pasien', requestOptions)
 		    .map((res: Response) => res.json());		
 
 	}

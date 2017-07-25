@@ -7,7 +7,6 @@ import { NgbTypeaheadConfig } 														from '@ng-bootstrap/ng-bootstrap';
 
 import { Transaksi }						from '../transaksi/transaksi';
 import { TransaksiService }			from '../transaksi/transaksi.service';
-import { AntrianService }       from '../antrian/antrian.service';
 
 import { RekamMedis }           from '../pasien/rekam-medis';
 import { RekamMedisService }    from '../pasien/rekam-medis.service';
@@ -17,7 +16,6 @@ import { TenagaMedisService }   from '../tenaga-medis/tenaga-medis.service';
 
 import { Laboratorium }						from './laboratorium';
 import { LaboratoriumService }		from './laboratorium.service';
-import { PoliklinikService }      from './poliklinik.service';
 
 import { Tindakan }             from './tindakan';
 import { TindakanReference }		from './tindakan-reference';
@@ -30,10 +28,8 @@ import { HasilLabService }      from './hasil-lab.service';
  	selector: 'laboratorium-pemeriksaan-page',
  	templateUrl: './laboratorium-pemeriksaan.component.html',
  	providers: [
-    AntrianService,
     RekamMedisService,
     LaboratoriumService,
-    PoliklinikService,
  		TransaksiService,
     TenagaMedisService,
  		TindakanService,
@@ -46,13 +42,7 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 	addForm: FormGroup;
 	transaksi: any = null;
 	laboratorium: Laboratorium;
-  rujuk: boolean = false;
   rekamMedis: RekamMedis = null;
-  layanan: any = [];
-  tipeLayanan: string = '';
-  allTipeLayanan: string[] = ['Poliklinik', 'Laboratorium'];
-  namaPoliRujuk: string = null;
-  namaLabRujuk: string = null;
 
   allRiwayat: string[] = [];
   allAlergi: string[] = [];
@@ -86,11 +76,9 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 		private location: Location,
 		private formBuilder: FormBuilder,
 		private transaksiService: TransaksiService,
-    private antrianService: AntrianService,
     private rekamMedisService: RekamMedisService,
     private tenagaMedisService: TenagaMedisService,
 		private laboratoriumService: LaboratoriumService,
-    private poliklinikService: PoliklinikService,
 		private tindakanService: TindakanService,
     private hasilLabService: HasilLabService,
 		private config: NgbTypeaheadConfig
@@ -193,25 +181,6 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
     tindakan.np_tenaga_medis = tenagaMedis.no_pegawai;
   }
 
-  setRujuk(value: boolean) {
-    this.rujuk = value;
-  }
-
-  selectTipeLayanan() {
-    this.namaPoliRujuk = null;
-    this.namaLabRujuk = null;
-    if (this.tipeLayanan === 'Poliklinik') {
-      this.poliklinikService.getAllPoliklinik().subscribe(
-        data => { this.layanan = data }
-      )
-    }
-    else if (this.tipeLayanan === 'Laboratorium') {
-      this.laboratoriumService.getAllLaboratorium().subscribe(
-        data => { this.layanan = data }
-      )
-    }
-  }
-
 	goBack(): void {
 		this.location.back();
 	}
@@ -228,21 +197,7 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
         }
 
         Observable.forkJoin(observables).subscribe(
-          data => {
-            if (this.rujuk) {
-              let antrian: any = {};
-              antrian.id_transaksi = this.transaksi.transaksi.id;
-              antrian.nama_layanan_poli = this.namaPoliRujuk;
-              antrian.nama_layanan_lab = this.namaLabRujuk;
-              antrian.kesempatan = 3;
-              this.antrianService.createAntrian(antrian).subscribe(
-                data1 => {
-                  this.goBack();
-                }
-              )
-            }
-            else this.goBack();
-          }
+          data => this.goBack()
         )
       }
     );

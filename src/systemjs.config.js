@@ -42,7 +42,11 @@
       'ng2-input-autocomplete': 'npm:ng2-input-autocomplete/bundles/',
 
       // angular2-datatable
-      'angular2-datatable':'npm:angular2-datatable'
+      'angular2-datatable':'npm:angular2-datatable',
+
+      //socket.io
+      "socket.io-client": 'npm:socket.io-client'
+
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -84,6 +88,9 @@
       'angular2-datatable': {
         main: './index.js',
         defaultExtension: 'js'
+      },
+      "socket.io-client": {
+        main: './dist/socket.io.js'
       }
     }
   });

@@ -7,6 +7,7 @@ import { Poliklinik }    from '../layanan/poliklinik';
 import { PoliklinikService }    from '../layanan/poliklinik.service';
 
 import * as _ from "lodash";
+import * as io from "socket.io-client";
 
 @Component({
   selector: 'antrian',
@@ -29,17 +30,19 @@ export class AntrianComponent implements OnInit {
   ispoli: boolean;
   sub: any;
   layanan: string;
+  socket: any = null;
 
   constructor(
     private route: ActivatedRoute,
     private poliklinikService: PoliklinikService,
     private antrianService : AntrianService
-  ) {}
+  ) { this.socket = io('http://localhost'); }
 
   ngOnInit() {
     this.sub = this.route.params
       .subscribe(params => {
         this.layanan = params['namaLayanan'];
+
     });
     if (this.layanan === undefined) {
       this.layanan = 'Front Office';
@@ -48,6 +51,7 @@ export class AntrianComponent implements OnInit {
       );
 
       this.isfrontoffice = true;
+      
     }
     else {
       this.updateAntrian();
@@ -55,7 +59,8 @@ export class AntrianComponent implements OnInit {
       if (this.layanan.substring(0, 4) === 'Poli')
         this.ispoli = true;
       else
-        this.ispoli = false;  
+        this.ispoli = false;
+      this.socket.on('antrianLayanan', this.updateAntrian.bind(this));    
     }
   }
 
@@ -125,6 +130,7 @@ export class AntrianComponent implements OnInit {
   }
 
   private changeKategori() {
+    this.socket.on('antrianFrontOffice'+this.kategori, this.updateAntrianFrontOffice.bind(this));
     this.updateAntrianFrontOffice();
   }
 
