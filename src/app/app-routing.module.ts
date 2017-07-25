@@ -1,12 +1,15 @@
 import { NgModule }      		from '@angular/core';
 import { RouterModule, Routes }	from '@angular/router';
 
-import { TransaksiComponent }   		from './transaksi/transaksi.component';
+import { RegisterComponent }					from './auth/register.component';
+import { LoginComponent }							from './auth/login.component';
+
+import { TransaksiComponent }   			from './transaksi/transaksi.component';
 import { TransaksiDetailComponent }		from './transaksi/transaksi-detail.component';
 
-import { PembayaranComponent }   		from './pembayaran/pembayaran.component';
-import { PembayaranDetailComponent }   	from './pembayaran/pembayaran-detail.component';
-import { KlaimComponent }   			from './pembayaran/klaim/klaim.component';
+import { PembayaranComponent }   			from './pembayaran/pembayaran.component';
+import { PembayaranDetailComponent }  from './pembayaran/pembayaran-detail.component';
+import { KlaimComponent }   					from './pembayaran/klaim/klaim.component';
 import { KlaimDetailComponent }   		from './pembayaran/klaim/klaim-detail.component';
 
 import { PasienFormComponent }			from './pasien/pasien-form.component';
@@ -90,7 +93,11 @@ import { StockOpnameFormComponent }      from './farmasi/stock-opname/stock-opna
 import { SettingsComponent }        from './settings/settings.component';
 
 const routes: Routes = [
-	{ path: '', redirectTo: '/pendaftaran', pathMatch: 'full' },
+	{ path: '', redirectTo: '/login', pathMatch: 'full' },
+
+	{ path: 'register', component: RegisterComponent },
+	{ path: 'login', component: LoginComponent },
+
 	{ path: 'transaksi', component: TransaksiComponent },
 	{ path: 'transaksi/:id', component: TransaksiDetailComponent },
 	{ path: 'pembayaran', component: PembayaranComponent },

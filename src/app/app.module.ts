@@ -33,6 +33,9 @@ import { FilterJenisKamarPipe }     from './pipe/filter-jenis-kamar.pipe';
 import { FilterKelasKamarPipe }     from './pipe/filter-kelas-kamar.pipe';
 import { FilterPemakaianKamarOperasiPipe }     from './pipe/filter-pemakaian-kamar-operasi.pipe';
 
+import { RegisterComponent }        from './auth/register.component';
+import { LoginComponent }           from './auth/login.component';
+
 import { TransaksiComponent }       from './transaksi/transaksi.component';
 import { TransaksiDetailComponent } from './transaksi/transaksi-detail.component';
 
@@ -163,6 +166,10 @@ import { AppComponent }             from './app.component';
         FilterNomorKamarPipe,
         FilterKelasKamarPipe,
         FilterPemakaianKamarOperasiPipe,
+
+        RegisterComponent,
+        LoginComponent,
+
         TransaksiComponent,
         TransaksiDetailComponent,
         PembayaranComponent,
