@@ -42,7 +42,6 @@ export class AntrianComponent implements OnInit {
     this.sub = this.route.params
       .subscribe(params => {
         this.layanan = params['namaLayanan'];
-
     });
     if (this.layanan === undefined) {
       this.layanan = 'Front Office';

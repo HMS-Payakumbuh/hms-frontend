@@ -10,7 +10,7 @@
         </div>
         <div class="card-block">
           <div class="col-md-6">
-            <form>
+            <form class="mb-3">
               <div class="input-group mb-3">
                 <div class="input-group-addon">No Pegawai</div>
                 <input type="text" class="form-control" [(ngModel)]="data.no_pegawai" name="no_pegawai">
@@ -23,6 +23,9 @@
                 Login
               </button>
             </form>
+            <p *ngFor="let alert of alerts">
+              <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+            </p>
         </div>
         </div>
       </div>
