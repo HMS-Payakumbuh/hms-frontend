@@ -22,35 +22,32 @@
 
       <div class="card mb-3">
         <div class="card-header card-info">
-          <h5 class="mb-0">Hasil Lab</h5>
+          <h5 class="mb-0">Hasil label yang perlu diunggah</h5>
         </div>
         <div class="card-block">
-          <table class="table" *ngIf="allHasilLab.length > 0">
+          <table class="table" *ngIf="allTindakan.length > 0">
             <thead>
               <th>Nama Tindakan</th>
               <th>Nama Pasien</th>
               <th>Nomor Transaksi</th>
               <th>Tanggal</th>
               <th></th>
-              <th></th>
             </thead>
             <tbody>
-              <tr *ngFor="let hasilLab of allHasilLab; index as i">
-                <td>{{hasilLab.tindakan.daftar_tindakan.nama}}</td>
-                <td>{{hasilLab.tindakan.pasien.nama_pasien}}</td>
-                <td>{{hasilLab.transaksi.no_transaksi}}</td>
-                <td>{{hasilLab.tindakan.tanggal_waktu | date: 'dd-MMM-yyyy'}}</td>
+              <tr *ngFor="let tindakan of allTindakan; index as i">
+                <td>{{tindakan.daftar_tindakan.nama}}</td>
+                <td>{{tindakan.pasien.nama_pasien}}</td>
+                <td>{{tindakan.transaksi.no_transaksi}}</td>
+                <td>{{tindakan.tanggal_waktu | date: 'dd-MMM-yyyy'}}</td>
                 <td>
-                    <input type="file" id="upload-dokumen-{{i}}" class="form-control-file" [(ngModel)]="hasilLab.dokumen">
-                </td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-success" (click)="upload(hasilLab)">
-                    Upload
-                  </button>
+                    <input type="file" (change)="upload($event, tindakan.transaksi.id, tindakan.id)" class="form-control-file" name="dokumen">
                 </td>
               </tr>
             </tbody>
           </table>
+          <span *ngIf="allTindakan.length == 0">
+            Tidak ada hasil lab yang perlu diunggah
+          </span>
         </div>
       </div>
 
