@@ -10,7 +10,7 @@
 				<div class="card-block">
 					<table class="table" [mfData]="allTenagaMedis" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<thead>
-							<th><mfDefaultSorter by="id">No Pegawai</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="no_pegawai">No Pegawai</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="jabatan">Jabatan</mfDefaultSorter></th>
 							<th></th>
@@ -29,7 +29,7 @@
 								</td>
 								<td>
 									<button type="button" class="btn btn-sm btn-danger" (click)="destroyTenagaMedis(tenagaMedis.no_pegawai)">
-										<i class="fa fa-trash"></i>
+										Hapus
 									</button>
 								</td>
 							</tr>
@@ -83,6 +83,12 @@
 									<option value="Bidan">Bidan</option>
 								</select>
 							</div>
+
+							<div *ngIf="tenagaMedisModal.jabatan == 'Dokter'" class="form-group">
+								<label for="spesialis">Spesialis</label>
+								<input type="text" class="form-control" id="spesialis"
+								 [(ngModel)]="tenagaMedisModal.spesialis" required>
+							</div>
 						</div>
 
 						<div class="modal-footer">
@@ -124,6 +130,11 @@
 									<option value="Perawat">Perawat</option>
 									<option value="Bidan">Bidan</option>
 								</select>
+							</div>
+
+							<div *ngIf="tenagaMedisModal.jabatan == 'Dokter'" class="form-group">
+								<label for="spesialis">Spesialis</label>
+								<input type="text" class="form-control" id="spesialis" required [(ngModel)]="tenagaMedisModal.spesialis">
 							</div>
 						</div>
 

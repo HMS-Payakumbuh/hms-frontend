@@ -17,7 +17,7 @@ export class TenagaMedisListComponent implements OnInit {
 
 	public filterQuery = "";
   public rowsOnPage = 10;
-  public sortBy = "id";
+  public sortBy = "no_pegawai";
   public sortOrder = "asc";
 
 	constructor(

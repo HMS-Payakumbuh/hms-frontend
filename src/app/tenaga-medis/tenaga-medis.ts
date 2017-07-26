@@ -1,5 +1,8 @@
 export class TenagaMedis {
-	no_pegawai: string;
-	nama: string;
-	jabatan: string;
+	constructor(
+		no_pegawai: string = '',
+		nama: string = '',
+		jabatan: string = '',
+		spesialis: string = ''
+	) { }
 }
