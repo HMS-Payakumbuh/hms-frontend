@@ -41,7 +41,6 @@ import { TransaksiDetailComponent }    from './transaksi/transaksi-detail.compon
 
 import { PembayaranComponent }                from './pembayaran/pembayaran.component';
 import { PembayaranDetailComponent }        from './pembayaran/pembayaran-detail.component';
-import { PembayaranPrintComponent }     from './pembayaran/pembayaran-print.component';
 import { KlaimComponent }        			from './pembayaran/klaim/klaim.component';
 import { KlaimDetailComponent }        		from './pembayaran/klaim/klaim-detail.component';
 
@@ -176,7 +175,6 @@ import { AppComponent }             from './app.component';
         TransaksiDetailComponent,
         PembayaranComponent,
         PembayaranDetailComponent,
-        PembayaranPrintComponent,
         KlaimComponent,
         KlaimDetailComponent,
         PasienFormComponent,

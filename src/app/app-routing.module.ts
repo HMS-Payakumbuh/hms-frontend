@@ -9,7 +9,6 @@ import { TransaksiDetailComponent }		from './transaksi/transaksi-detail.componen
 
 import { PembayaranComponent }   			from './pembayaran/pembayaran.component';
 import { PembayaranDetailComponent }  from './pembayaran/pembayaran-detail.component';
-import { PembayaranPrintComponent }		from './pembayaran/pembayaran-print.component';
 
 import { KlaimComponent }   					from './pembayaran/klaim/klaim.component';
 import { KlaimDetailComponent }   		from './pembayaran/klaim/klaim-detail.component';
@@ -105,7 +104,6 @@ const routes: Routes = [
 	{ path: 'transaksi/:id', component: TransaksiDetailComponent },
 	{ path: 'pembayaran', component: PembayaranComponent },
 	{ path: 'pembayaran/:id', component: PembayaranDetailComponent },
-	{ path: 'pembayaran/:id/print', component: PembayaranPrintComponent },
 	{ path: 'klaim', component: KlaimComponent },
 	{ path: 'klaim/:id', component: KlaimDetailComponent },
 	{ path: 'pendaftaran', component: PasienFormComponent },
