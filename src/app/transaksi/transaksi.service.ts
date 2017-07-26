@@ -10,8 +10,11 @@ import { ENV }				from '../environment';
 @Injectable()
 export class TransaksiService {
 	private transaksiUrl = ENV.transaksiUrl;
+	private storedData: any = null;
 
-	constructor(private http:Http) { }
+	constructor(private http:Http) {
+		this.storedData = null;
+	}
 
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);

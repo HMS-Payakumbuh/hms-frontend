@@ -218,7 +218,7 @@ export class PasienFormComponent implements OnInit {
     }
     if (this.asuransi.nama_asuransi == 'bpjs') {
       payload = {
-        id_pasien: id_pasien,
+        id_pasien: this.pasien.id,
         no_sep: Math.random().toString(36).substring(7),
         kode_jenis_pasien: kode_jenis_pasien,
         asuransi_pasien: this.asuransi.nama_asuransi,
@@ -227,7 +227,7 @@ export class PasienFormComponent implements OnInit {
     }
     else {
       payload = {
-        id_pasien: id_pasien,
+        id_pasien: this.pasien.id,
         kode_jenis_pasien: kode_jenis_pasien,
         asuransi_pasien: this.asuransi.nama_asuransi,
         jenis_rawat: 2,
