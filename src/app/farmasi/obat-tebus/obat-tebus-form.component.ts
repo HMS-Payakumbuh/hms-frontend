@@ -218,7 +218,7 @@ export class ObatTebusFormComponent {
 				let k = 0;
 				for (let i = 0; i < this.resepItemCount; i++) {  
 					for (let j = 0; j < this.racikanItemCount[i] ; j++) {  	
-						// if (this.tebus[i][j]) {
+						if (this.tebus[i][j]) {
 							let temp = new ObatTebusItem();
 
 							let dataTemp: any = {};
@@ -239,7 +239,7 @@ export class ObatTebusFormComponent {
 					    	this.obatTebusItems.push(temp);
 
 					    	k = k + 1;
-						// }
+						}
 					}
 				}
 

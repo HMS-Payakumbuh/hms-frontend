@@ -75,6 +75,57 @@
 														</ng-template>
 													</div>
 												</div>
+												<div *ngIf="item.stok_obat.obat_tindakan">
+													<div *ngIf="item.stok_obat.obat_tindakan.length > 0">
+														<tr>
+															<td colspan="4"><strong>Obat Tindakan</strong></td>
+														</tr>	
+														<tr>
+															<td><strong>Waktu Keluar</strong></td>
+															<td><strong>Jumlah</strong></td>	
+														</tr>
+														<ng-template ngFor let-obatTindakan [ngForOf]="item.stok_obat.obat_tindakan" let-j="index">
+															<tr>
+																<td>{{obatTindakan.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>
+																<td>{{obatTindakan.jumlah}} {{item.stok_obat.jenis_obat.satuan}}</td>
+															</tr>
+														</ng-template>
+													</div>
+												</div>
+												<div *ngIf="item.stok_obat.obat_tebus_item">
+													<div *ngIf="item.stok_obat.obat_tebus_item.length > 0">
+														<tr>
+															<td colspan="4"><strong>Obat Tebus</strong></td>
+														</tr>	
+														<tr>
+															<td><strong>Waktu Keluar</strong></td>
+															<td><strong>Jumlah</strong></td>	
+														</tr>
+														<ng-template ngFor let-obatTebusItem [ngForOf]="item.stok_obat.obat_tebus_item" let-j="index">
+															<tr>
+																<td>{{obatTebusItem.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>
+																<td>{{obatTebusItem.jumlah}} {{item.stok_obat.jenis_obat.satuan}}</td>
+															</tr>
+														</ng-template>
+													</div>
+												</div>
+												<div *ngIf="item.stok_obat.obat_eceran_item">
+													<div *ngIf="item.stok_obat.obat_eceran_item.length > 0">
+														<tr>
+															<td colspan="4"><strong>Obat Eceran</strong></td>
+														</tr>	
+														<tr>
+															<td><strong>Waktu Keluar</strong></td>
+															<td><strong>Jumlah</strong></td>	
+														</tr>
+														<ng-template ngFor let-obatEceranItem [ngForOf]="item.stok_obat.obat_eceran_item" let-j="index">
+															<tr>
+																<td>{{obatEceranItem.waktu_transaksi | date:'d MMM y H:mm:ss'}}</td>
+																<td>{{obatEceranItem.jumlah}} {{item.stok_obat.jenis_obat.satuan}}</td>
+															</tr>
+														</ng-template>
+													</div>
+												</div>
 											</table>
 										</div>
 									</td>

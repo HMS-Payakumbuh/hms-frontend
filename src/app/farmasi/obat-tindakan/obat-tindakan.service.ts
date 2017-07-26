@@ -29,10 +29,15 @@ export class ObatTindakanService {
 			.map(allObatTindakan => allObatTindakan.find(obat_tindakan => obat_tindakan.id == id));
 	}
 
+	getTodayObatTindakan(id_stok_obat: number): Observable<ObatTindakan[]> {
+		return this.http.get(this.obatTindakanUrl + '/today/' + id_stok_obat)
+			.map((res: Response) => res.json());
+	}
+
 	createObatTindakan(obatTindakan: ObatTindakan[]) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
-  	let options = new RequestOptions({ headers: headers });
-  	let body = JSON.stringify(obatTindakan);
-  	return this.http.post(this.obatTindakanUrl, body, options ).map((res: Response) => res.json());
+	  	let options = new RequestOptions({ headers: headers });
+	  	let body = JSON.stringify(obatTindakan);
+	  	return this.http.post(this.obatTindakanUrl, body, options ).map((res: Response) => res.json());
 	}
 }
