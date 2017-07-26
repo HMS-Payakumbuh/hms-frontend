@@ -36,10 +36,10 @@ import { FilterPemakaianKamarOperasiPipe }     from './pipe/filter-pemakaian-kam
 import { RegisterComponent }        from './auth/register.component';
 import { LoginComponent }           from './auth/login.component';
 
-import { TransaksiComponent }       from './transaksi/transaksi.component';
-import { TransaksiDetailComponent } from './transaksi/transaksi-detail.component';
+import { TransaksiComponent }          from './transaksi/transaksi.component';
+import { TransaksiDetailComponent }    from './transaksi/transaksi-detail.component';
 
-import { PembayaranComponent }				from './pembayaran/pembayaran.component';
+import { PembayaranComponent }                from './pembayaran/pembayaran.component';
 import { PembayaranDetailComponent }        from './pembayaran/pembayaran-detail.component';
 import { KlaimComponent }        			from './pembayaran/klaim/klaim.component';
 import { KlaimDetailComponent }        		from './pembayaran/klaim/klaim-detail.component';

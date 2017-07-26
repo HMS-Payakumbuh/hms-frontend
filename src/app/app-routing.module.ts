@@ -9,6 +9,7 @@ import { TransaksiDetailComponent }		from './transaksi/transaksi-detail.componen
 
 import { PembayaranComponent }   			from './pembayaran/pembayaran.component';
 import { PembayaranDetailComponent }  from './pembayaran/pembayaran-detail.component';
+
 import { KlaimComponent }   					from './pembayaran/klaim/klaim.component';
 import { KlaimDetailComponent }   		from './pembayaran/klaim/klaim-detail.component';
 
