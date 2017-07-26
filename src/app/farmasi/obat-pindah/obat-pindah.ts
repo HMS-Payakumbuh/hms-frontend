@@ -9,7 +9,7 @@ export class ObatPindah {
     public id_obat_masuk: number = null,
     public id_stok_obat: number = null,    
     public waktu_pindah: Date = null,
-    public jumlah: string = '', 
+    public jumlah: number = null, 
     public asal: number = null, 
     public tujuan: number = null,
     public keterangan: string = '',    
