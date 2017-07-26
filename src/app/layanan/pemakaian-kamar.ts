@@ -8,5 +8,5 @@ export class PemakaianKamar {
     waktu_keluar : Date;
     tanggal_booking : Date;
     harga: number;
-    no_pegawai: number;
+    no_pegawai: string;
 }

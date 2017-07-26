@@ -21,6 +21,16 @@ export class RawatinapService {
 			.map((res: Response) => res.json());
 	}
 
+	getAllAvailableRawatinap() : Observable<Rawatinap[]> {
+		return this.getAllRawatinap()
+		.map(allRawatinap => allRawatinap.filter(rawatinap => rawatinap.available_kamar != 0 && rawatinap.jenis_kamar == "Rawat Inap"));
+	}
+
+	getAllAvailableICU() : Observable<Rawatinap[]> {
+		return this.getAllRawatinap()
+		.map(allRawatinap => allRawatinap.filter(rawatinap => rawatinap.available_kamar != 0 && rawatinap.jenis_kamar == "ICU"));
+	}
+
 	getRawatinap(no_kamar: string): Observable<Rawatinap> {
 		return this.getAllRawatinap()
 			.map(allRawatinap => allRawatinap.find(Rawatinap => Rawatinap.no_kamar == no_kamar));

@@ -65,6 +65,7 @@ import { PemeriksaanRawatinapComponent }		from './layanan/rawatinap-pemeriksaan.
 import { BookingRawatinapComponent }		from './layanan/booking-rawatinap.component';
 import { BookingRawatinapListComponent }		from './layanan/booking-rawatinap-list.component';
 import { BookingRawatinapDetailComponent }		from './layanan/booking-rawatinap-detail.component';
+import { ICUListComponent }		from './layanan/icu-list.component';
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { RawatinapDetailComponent } 	from './layanan/rawatinap-detail.component';
 import { PindahKamarListComponent }		from './layanan/pindahkamar-list.component';
@@ -198,6 +199,7 @@ import { AppComponent }             from './app.component';
         BookingRawatinapDetailComponent,
 
         RawatinapListComponent,
+        ICUListComponent,
         RawatinapDetailComponent,
 
         PindahKamarListComponent,

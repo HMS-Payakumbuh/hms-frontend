@@ -4,7 +4,7 @@
 
 			<div class="card mb-3">
 				<div class="card-header card-info">
-					<h4>Pendaftaran Rawat Inap</h4>
+					<h4>Pendaftaran ICU</h4>
 				</div>
 
 				<div class="card-block">
@@ -14,16 +14,7 @@
 								<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="No. Kamar">
 							</div>
 						</div>
-						<div class="col-md-4 pull-right">				
-							<div class="col-md-12 input-group">
-								<span class="pt-2 pr-2"><b>Jenis :  </b></span>	
-								<select class="form-control" [(ngModel)]="jenis" id="statusDropdown">
-									<option *ngFor="let jenis of allJenis">
-										{{jenis}}
-									</option>
-								</select>
-							</div>
-						</div>
+						
 						<div class="col-md-4 pull-right">
 							<div class="col-md-12 input-group">
 								<span class="pt-2 pr-2"><b>Kelas :  </b></span>
@@ -39,17 +30,15 @@
 					<table class="table">
 						<thead>
 							<th>No. Kamar</th>
-							<th>Jenis Kamar</th>
 							<th>Kelas</th>
 							<th>Harga Per Hari (Rp.)</th>
 							<th>Tempat Tidur Tersedia</th>
 							<th></th>
 						</thead>
 						
-						<tbody *ngFor="let rawatinap of allRawatinap | filterKelasKamar: kelas | filterNoKamar: searchParam | filterJenisKamar: jenis">
+						<tbody *ngFor="let rawatinap of allRawatinap | filterKelasKamar: kelas | filterNoKamar: searchParam">
 							<tr>
 								<td>{{rawatinap?.no_kamar}}</td>
-								<td>{{rawatinap?.jenis_kamar}}</td>
 								<td>{{rawatinap?.kelas}}</td>
 								<td>{{rawatinap?.harga_per_hari}}</td>
 								<td>{{rawatinap?.available_kamar}} / {{rawatinap?.kapasitas_kamar}}</td>
@@ -69,7 +58,7 @@
 						<div class="modal-content">
 
 							<div class="modal-header bg-info text-white">
-								<h5 class="modal-title">Pendaftaran Rawat Inap</h5>
+								<h5 class="modal-title">Pendaftaran ICU</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<i class="fa fa-times" aria-hidden="true"></i>
 								</button>
