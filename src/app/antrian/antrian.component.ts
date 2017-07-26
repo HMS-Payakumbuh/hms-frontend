@@ -5,6 +5,8 @@ import { Antrian }    from './antrian';
 import { AntrianService } from './antrian.service';
 import { Poliklinik }    from '../layanan/poliklinik';
 import { PoliklinikService }    from '../layanan/poliklinik.service';
+import { User }           from '../auth/user';
+import { AuthenticationService }  from '../auth/authentication.service';
 
 import * as _ from "lodash";
 import * as io from "socket.io-client";
@@ -15,6 +17,7 @@ import * as io from "socket.io-client";
   changeDetection: ChangeDetectionStrategy.Default,
   providers: [
     AntrianService,
+    AuthenticationService,
     PoliklinikService
   ]
 })
@@ -31,10 +34,12 @@ export class AntrianComponent implements OnInit {
   sub: any;
   layanan: string;
   socket: any = null;
+  user: any;
 
   constructor(
     private route: ActivatedRoute,
     private poliklinikService: PoliklinikService,
+    private authenticationService: AuthenticationService,
     private antrianService : AntrianService
   ) { this.socket = io('http://localhost'); }
 
@@ -50,7 +55,11 @@ export class AntrianComponent implements OnInit {
       );
 
       this.isfrontoffice = true;
-      
+      this.user = JSON.parse(localStorage.getItem('currentUser'));
+      this.kategori = this.user.kategori_antrian;
+      this.selectedKategori = this.kategori; 
+      this.socket.on('antrianFrontOffice'+this.kategori, this.updateAntrianFrontOffice.bind(this));
+      this.updateAntrianFrontOffice();
     }
     else {
       this.updateAntrian();
@@ -131,6 +140,11 @@ export class AntrianComponent implements OnInit {
   private changeKategori() {
     this.socket.on('antrianFrontOffice'+this.kategori, this.updateAntrianFrontOffice.bind(this));
     this.updateAntrianFrontOffice();
+  }
+
+  private setKategori() {
+    this.authenticationService.setKategori(this.user.no_pegawai, this.kategori);
+    this.ngOnInit();
   }
 
   submitted = false;

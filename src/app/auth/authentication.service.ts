@@ -2,6 +2,7 @@ import { Injectable }              from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Observable }              from 'rxjs';
 import 'rxjs/add/operator/map';
+import * as _ from "lodash";
 
 import { ENV }  from '../environment';
 import { User } from './user';
@@ -12,7 +13,8 @@ export class AuthenticationService {
     {no_pegawai: 'D001', name: 'Dokter', role: 'dokter', password: 'dokter'},
     {no_pegawai: 'P001', name: 'Perawat', role: 'perawat', password: 'perawat'},
     {no_pegawai: 'L001', name: 'Petugas Lab', role: 'petugaslab', password: 'petugaslab'},
-    {no_pegawai: 'A001', name: 'Admin', role: 'admin', password: 'admin'}
+    {no_pegawai: 'A001', name: 'Admin', role: 'admin', password: 'admin'},
+    {no_pegawai: 'F001', name: 'Front Office', role: 'frontOffice', kategori_antrian: 'A', password: 'frontOffice'}
   ]
 
   public token: string;
@@ -37,5 +39,11 @@ export class AuthenticationService {
   logout(): void {
     this.token = null;
     localStorage.removeItem('currentUser');
+  }
+
+  setKategori(no_pegawai: string, kategori_antrian: string): void {
+    let user = _.find(this.users, { 'no_pegawai': no_pegawai });
+    user.kategori_antrian = kategori_antrian;
+    localStorage.setItem('currentUser', JSON.stringify(user));
   }
 }
