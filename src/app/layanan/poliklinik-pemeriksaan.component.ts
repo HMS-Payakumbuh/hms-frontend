@@ -68,7 +68,6 @@ import { ObatMasukService }		  from '../farmasi/obat-masuk/obat-masuk.service';
 export class PoliklinikPemeriksaanComponent implements OnInit {
 	transaksi: any = null;
 	poliklinik: Poliklinik;
-  jadwalDokter: JadwalDokter;
   rekamMedis: RekamMedis = null;
   hasilPemeriksaan: HasilPemeriksaan = new HasilPemeriksaan();
   keluhan: string;
@@ -163,10 +162,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
           this.poliklinik = poliklinik;
           this.stokObatService.getStokObatByLocation(this.poliklinik.id_lokasi).subscribe(
             allStokObatAtLocation => this.allStokObatAtLocation = allStokObatAtLocation
-          )
-          this.tenagaMedisService.getAllAvailableJadwalDokter(this.poliklinik.nama).subscribe(
-            data => this.jadwalDokter = data
-          )
+          );
         }
     );
 
@@ -226,7 +222,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
           this.rekamMedis = new RekamMedis(
             this.transaksi.transaksi.id_pasien,
             this.transaksi.transaksi.waktu_masuk_pasien,
-            this.jadwalDokter.np_dokter,
+            JSON.parse(localStorage.getItem('currentUser')).no_pegawai,
             '',
             '',
             '',
@@ -267,7 +263,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     temp.kode_tindakan = tindakanReference.kode;
     temp.id_pasien = this.transaksi.transaksi.id_pasien;
     temp.tanggal_waktu = this.rekamMedis.tanggal_waktu;
-    temp.np_tenaga_medis = this.jadwalDokter.np_dokter;
+    temp.np_tenaga_medis = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
     temp.nama_poli = this.poliklinik.nama;
     temp.nama_lab = null;
     temp.nama_ambulans = null;

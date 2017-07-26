@@ -27,17 +27,22 @@ export class HasilLabService {
       .map((res: Response) => res.json());
 	}
 
-	getEmptyHasilLab(no_pegawai: string): Observable<HasilLab[]> {
-		return this.http.get(this.hasilLabUrl + '/empty/' + no_pegawai)
-			.map((res: Response) => res.json());
-	}
+	createHasilLab(event: any, id_transaksi: number, id_tindakan: number) {
+		let fileList: FileList = event.target.files;
+    if(fileList.length > 0) {
+      let file: File = fileList[0];
+      let formData:FormData = new FormData();
+			formData.append('id_transaksi', id_transaksi.toString());
+			formData.append('id_tindakan', id_tindakan.toString());
+      formData.append('dokumen', file, file.name);
 
-	createHasilLab(hasilLab: HasilLab) {
-		let headers = new Headers({ 'Content-Type': 'application/json' });
-		let options = new RequestOptions({ headers: headers});
-		let body = JSON.stringify(hasilLab);
-		return this.http.post(this.hasilLabUrl, body, options)
-			.map((res: Response) => res.json());
+      let headers = new Headers();
+      headers.append('enctype', 'multipart/form-data');
+      headers.append('Accept', 'application/json');
+      let options = new RequestOptions({ headers: headers });
+      return this.http.post(this.hasilLabUrl, formData, options)
+        .map((res: Response) => res.json());
+    }
 	}
 
 	updateHasilLab(id: number, hasilLab: HasilLab) {
