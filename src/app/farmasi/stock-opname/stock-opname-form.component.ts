@@ -87,42 +87,50 @@ export class StockOpnameFormComponent {
     						temp.jumlah_akhir = stokObat.jumlah;
     						temp.jumlah_awal = stokObat.jumlah;
     						temp.jumlah_sebenarnya = stokObat.jumlah;
-
-							this.obatPindahService.getTodayObatPindah(stokObat.id).subscribe(
+							    
+							this.obatPindahService.getTodayObatPindahMasuk(stokObat.id).subscribe(
 								data1 => {
-									stokObat.obat_pindah = data1;
-									for (let obatPindah of stokObat.obat_pindah) {
-										temp.jumlah_awal = temp.jumlah_awal + obatPindah.jumlah;
+									stokObat.obat_pindah_masuk = data1;
+									for (let obatPindahMasuk of stokObat.obat_pindah_masuk) {
+										temp.jumlah_awal = temp.jumlah_awal - obatPindahMasuk.jumlah;
 									}
 								}
-							);    
-							this.obatRusakService.getTodayObatRusak(stokObat.id).subscribe(
+							);
+							this.obatPindahService.getTodayObatPindahKeluar(stokObat.id).subscribe(
 								data2 => {
-									stokObat.obat_rusak = data2;
+									stokObat.obat_pindah_keluar = data2;
+									for (let obatPindahKeluar of stokObat.obat_pindah_keluar) {
+										temp.jumlah_awal = temp.jumlah_awal + obatPindahKeluar.jumlah;
+									}
+								}
+							);   
+							this.obatRusakService.getTodayObatRusak(stokObat.id).subscribe(
+								data3 => {
+									stokObat.obat_rusak = data3;
 									for (let obatRusak of stokObat.obat_rusak) {
 										temp.jumlah_awal = temp.jumlah_awal + obatRusak.jumlah;
 									}
 								}
 							);
 							this.obatTindakanService.getTodayObatTindakan(stokObat.id).subscribe(
-								data3 => {
-									stokObat.obat_tindakan = data3;
+								data4 => {
+									stokObat.obat_tindakan = data4;
 									for (let obatTindakan of stokObat.obat_tindakan) {
 										temp.jumlah_awal = temp.jumlah_awal + obatTindakan.jumlah;
 									}
 								}
 							);
 							this.obatTebusService.getTodayObatTebus(stokObat.id).subscribe(
-								data4 => {
-									stokObat.obat_tebus_item = data4;
+								data5 => {
+									stokObat.obat_tebus_item = data5;
 									for (let obatTebusItem of stokObat.obat_tebus_item) {
 										temp.jumlah_awal = temp.jumlah_awal + obatTebusItem.jumlah;
 									}
 								}
 							);
 							this.obatEceranService.getTodayObatEceran(stokObat.id).subscribe(
-								data5 => {
-									stokObat.obat_eceran_item = data5;
+								data6 => {
+									stokObat.obat_eceran_item = data6;
 									for (let obatEceranItem of stokObat.obat_eceran_item) {
 										temp.jumlah_awal = temp.jumlah_awal + obatEceranItem.jumlah;
 									}

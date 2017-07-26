@@ -17,7 +17,7 @@
 								<th><mfDefaultSorter by="obat_masuk.kadaluarsa">Kadaluarsa</mfDefaultSorter></th>
 								<th>Jumlah Awal</th>
 								<th>Jumlah Akhir</th>
-								<th>Jumlah Sebenarnya</th>
+								<th>Jumlah Fisik</th>
 								<th></th>
 							</tr>
 							<ng-template ngFor let-item [ngForOf]="mf.data" let-i="index">
@@ -35,21 +35,40 @@
 									<td colspan="7">
 										<div class="collapse" id="pemakaian-collapse-{{i}}">
 											<table class="table">
-												<div *ngIf="item.stok_obat.obat_pindah">
-													<div *ngIf="item.stok_obat.obat_pindah.length > 0">	
+												<div *ngIf="item.stok_obat.obat_pindah_masuk">
+													<div *ngIf="item.stok_obat.obat_pindah_masuk.length > 0">	
 														<tr>												
-															<td colspan="3"><strong>Obat Pindah</strong></td>
+															<td colspan="3"><strong>Obat Pindah Masuk</strong></td>
 														</tr>	
 														<tr>
-															<td><strong>Waktu Pindah</strong></td>
+															<td><strong>Waktu Masuk</strong></td>
+															<td><strong>Jumlah</strong></td>
+															<td><strong>Asal</strong></td>	
+														</tr>
+														<ng-template ngFor let-obatPindahMasuk [ngForOf]="item.stok_obat.obat_pindah_masuk" let-j="index">
+															<tr>
+																<td>{{obatPindahMasuk.waktu_pindah | date:'d MMM y H:mm:ss'}}</td>
+																<td>{{obatPindahMasuk.jumlah}} {{item.stok_obat.jenis_obat.satuan}}</td>
+																<td>{{obatPindahMasuk.lokasi_asal.nama}}</td>	
+															</tr>
+														</ng-template>										
+													</div>
+												</div>
+												<div *ngIf="item.stok_obat.obat_pindah_keluar">
+													<div *ngIf="item.stok_obat.obat_pindah_keluar.length > 0">	
+														<tr>												
+															<td colspan="3"><strong>Obat Pindah Keluar</strong></td>
+														</tr>	
+														<tr>
+															<td><strong>Waktu Keluar</strong></td>
 															<td><strong>Jumlah</strong></td>
 															<td><strong>Tujuan</strong></td>	
 														</tr>
-														<ng-template ngFor let-obatPindah [ngForOf]="item.stok_obat.obat_pindah" let-j="index">
+														<ng-template ngFor let-obatPindahKeluar [ngForOf]="item.stok_obat.obat_pindah_keluar" let-j="index">
 															<tr>
-																<td>{{obatPindah.waktu_pindah | date:'d MMM y H:mm:ss'}}</td>
-																<td>{{obatPindah.jumlah}} {{item.stok_obat.jenis_obat.satuan}}</td>
-																<td>{{obatPindah.lokasi_tujuan.nama}}</td>	
+																<td>{{obatPindahKeluar.waktu_pindah | date:'d MMM y H:mm:ss'}}</td>
+																<td>{{obatPindahKeluar.jumlah}} {{item.stok_obat.jenis_obat.satuan}}</td>
+																<td>{{obatPindahKeluar.lokasi_tujuan.nama}}</td>	
 															</tr>
 														</ng-template>										
 													</div>

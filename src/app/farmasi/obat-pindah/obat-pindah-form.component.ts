@@ -63,7 +63,7 @@ export class ObatPindahFormComponent {
 	private save() {
 		this.obatPindah.id_jenis_obat = this.stokObat.jenis_obat.id;
 		this.obatPindah.id_obat_masuk = this.stokObat.obat_masuk.id;
-		this.obatPindah.id_stok_obat = this.stokObat.id;
+		this.obatPindah.id_stok_obat_asal = this.stokObat.id;
 
 		// alert(JSON.stringify(this.obatPindah)); 
 		this.obatPindahService.createObatPindah(this.obatPindah).subscribe(
