@@ -25,6 +25,7 @@ export class AntrianComponent implements OnInit {
   allKategori: Poliklinik[];
   allAntrian: any[];
   kategori: string;
+  selectedKategori: string;
   total: number = 0;
   antrian: any = { no_antrian: null };
   umum: boolean = true;
@@ -56,7 +57,7 @@ export class AntrianComponent implements OnInit {
 
       this.isfrontoffice = true;
       this.user = JSON.parse(localStorage.getItem('currentUser'));
-      this.kategori = this.user.kategori_antrian;
+      this.kategori = JSON.parse(this.user.other).kategori_antrian;
       this.selectedKategori = this.kategori; 
       this.socket.on('antrianFrontOffice'+this.kategori, this.updateAntrianFrontOffice.bind(this));
       this.updateAntrianFrontOffice();
