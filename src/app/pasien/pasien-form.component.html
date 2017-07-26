@@ -68,25 +68,6 @@
                     </select>
                   </div>
 
-                  <div *ngIf="rujukanChecked" class="form-group">
-                    <label for="no_rujukan">Nomor Rujukan</label>
-                    <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="no_rujukan" name="no_rujukan" required>
-                  </div>
-
-                  <div *ngIf="asuransiChecked" class="form-group">
-                    <label for="asuransi">Asuransi yang dipakai</label>
-                    <div class="form-inline">
-                      <div class="input-group mb-0 mr-sm-2 mb-sm-0">
-                        <div class="input-group-addon">Nomor</div>
-                        <input type="string" class="form-control" id="no_asuransi" [(ngModel)]="asuransi.no_kartu" name="no_asuransi" required>
-                      </div>
-                      <div class="input-group mb-0 mr-sm-2 mb-sm-0">
-                        <div class="input-group-addon">Nama</div>
-                        <input type="string" class="form-control" id="nama_asuransi" [(ngModel)]="asuransi.nama_asuransi" name="nama_asuransi" required>
-                      </div>
-                    </div>
-                  </div>
-
                   <div class="form-group">
                     <label for="layanan">Tipe Layanan</label>
                     <select class="form-control" id="layanan" [disabled]="fromAntrian" [(ngModel)]="tipe" (ngModelChange)="selectTipeLayanan()" name="layanan" required>
@@ -98,7 +79,7 @@
                     <label for="poliklinik">Poliklinik</label>
                     <select class="form-control" id="poliklinik" [disabled]="fromAntrian" [(ngModel)]="layanan" name="poliklinik" required>
                       <ng-container *ngFor="let poliklinik of allLayanan">
-                        <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}} ({{poliklinik.nama_dokter}})</option>
+                        <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}}</option>
                       </ng-container>
                     </select>
                   </div>
@@ -111,22 +92,61 @@
                       </ng-container>
                     </select>
                   </div>
-                  
-                  <div class="form-group">
-                    <label>Opsi Tambahan :   </label>
-                    <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" [checked]="rujukanChecked" (change)="rujukanChecked = !rujukanChecked">
-                      <span class="custom-control-indicator"></span>
-                      <span class="custom-control-description">Rujukan</span>
-                    </label>
-                    <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" [checked]="asuransiChecked" (change)="asuransiChecked = !asuransiChecked">
-                      <span class="custom-control-indicator"></span>
-                      <span class="custom-control-description">Asuransi</span>
-                    </label>
+
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" [checked]="rujukanChecked" (change)="rujukanChecked = !rujukanChecked">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Rujukan</span>
+                  </label>
+
+                  <div *ngIf="rujukanChecked">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col md-6">
+                          <label for="asal_rujukan">Asal Rujukan</label>
+                          <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="rujukan.asal_rujukan" name="asal_rujukan" required>
+                        </div>
+                        <div class="col md-6">
+                          <label for="no_rujukan">Nomor Rujukan</label>
+                          <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="rujukan.no_rujukan" name="no_rujukan" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="diagnosis">Diagnosis</label>
+                      <input type="string" class="form-control" id="diagnosis" [ngbTypeahead]="searchDiagnosis" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addDiagnosis($event.item)" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="keterangan">Keterangan</label>
+                      <textarea class="form-control" id="keterangan" [(ngModel)]="rujukan.keterangan" name="keterangan"></textarea> 
+                    </div>
                   </div>
 
-                  <button type="button" class="btn btn-success" (click) = "createPasien()" [disabled]="!pasienBaruForm.valid">Simpan</button>
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" [checked]="asuransiChecked" (change)="asuransiChecked = !asuransiChecked">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Asuransi</span>
+                  </label>
+
+                  <div *ngIf="asuransiChecked" class="form-group">
+                    <label for="asuransi">Asuransi yang dipakai</label>
+                    <div class="form-inline">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">Nama</div>
+                          <select class="form-control" id="nama_asuransi" [(ngModel)]="asuransi.nama_asuransi" name="nama_asuransi" required>
+                            <option *ngFor="let namaAsuransi of allNamaAsuransi" [value]="namaAsuransi">{{namaAsuransi}}</option>
+                          </select>
+                      </div>
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">Nomor</div>
+                        <input type="string" class="form-control" id="no_asuransi" [(ngModel)]="asuransi.no_kartu" name="no_asuransi" required>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <button type="button" class="btn btn-success" (click) = "createPasien()" [disabled]="!pasienBaruForm.valid">Daftarkan</button>
+                  </div>
                 </form>
             </div>
           </div>
@@ -200,56 +220,6 @@
                     </select>
                   </div>
 
-                  <div *ngIf="asuransiChecked">
-                    <div class="form-group" *ngFor="let asuransi of allAsuransi; let i = index; trackBy: customTrackBy ">
-                      <label for="asuransi">Asuransi {{i + 1}}</label>
-                      <div class="form-inline">
-                        <div *ngIf="update" class="input-group mb-2 mr-sm-2 mb-sm-0">
-                          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                            <div class="input-group-addon">Nomor</div>
-                            <input type="text" class="form-control" [disabled]="!update" name="no_asuransi" [(ngModel)]= "allAsuransi[i].no_kartu" value="{{asuransi.no_kartu}}">
-                          </div>
-                          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                            <div class="input-group-addon">Nama</div>
-                            <input type="text" class="form-control" [disabled]="!update" name="nama_asuransi" [(ngModel)]= "allAsuransi[i].nama_asuransi" value="{{asuransi.nama_asuransi}}">
-                          </div>
-                        </div>
-                        <div *ngIf="!update" class="input-group mb-2 mr-sm-2 mb-sm-0">
-                          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                            <div class="input-group-addon">Nomor</div>
-                            <input type="text" class="form-control" name="no_asuransi" value="{{asuransi.no_kartu}}" disabled>
-                          </div>
-                          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                            <div class="input-group-addon">Nama</div>
-                            <input type="text" class="form-control" name="nama_asuransi" value="{{asuransi.nama_asuransi}}" disabled>
-                          </div>
-                        </div>
-                        <span class="input-group-btn">
-                          <button class="btn btn-secondary" type="button" (click)="pakaiAsuransi(asuransi)">Pakai</button>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div *ngIf="asuransiChecked" class="form-group">
-                    <label for="asuransi">Asuransi yang dipakai</label>
-                    <div class="form-inline">
-                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <div class="input-group-addon">Nomor</div>
-                        <input type="string" class="form-control" id="no_asuransi" [(ngModel)]="asuransi.no_kartu" name="no_asuransi" required>
-                      </div>
-                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <div class="input-group-addon">Nama</div>
-                        <input type="string" class="form-control" id="nama_asuransi" [(ngModel)]="asuransi.nama_asuransi" name="nama_asuransi" required>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div *ngIf="rujukanChecked" class="form-group">
-                    <label for="no_rujukan">Nomor Rujukan</label>
-                    <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="no_rujukan" name="no_rujukan" required>
-                  </div>
-
                   <div class="form-group">
                     <label for="layanan">Tipe Layanan</label>
                     <select class="form-control" id="layanan" [disabled]="fromAntrian" [(ngModel)]="tipe" (ngModelChange)="selectTipeLayanan()" name="layanan" required>
@@ -261,7 +231,7 @@
                     <label for="poliklinik">Poliklinik</label>
                     <select class="form-control" id="poliklinik" [disabled]="fromAntrian" [(ngModel)]="layanan" name="poliklinik" required>
                       <ng-container *ngFor="let poliklinik of allLayanan">
-                        <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}} - ({{poliklinik.nama_dokter}})</option>
+                        <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}}</option>
                       </ng-container>
                     </select>
                   </div>
@@ -274,22 +244,92 @@
                       </ng-container>
                     </select>
                   </div>
-                  
-                  <div class="form-group">
-                    <label>Opsi Tambahan :  </label>
-                    <label class="custom-control custom-checkbox">
+
+                  <div *ngIf="asuransiChecked">
+                    <div class="form-group" *ngFor="let asuransi of allAsuransi; let i = index; trackBy: customTrackBy ">
+                      <label for="asuransi">Asuransi {{i + 1}}</label>
+                      <div class="form-inline">
+                        <div *ngIf="update" class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon">Nama</div>
+                            <input type="text" class="form-control" [disabled]="!update" name="nama_asuransi" [(ngModel)]= "allAsuransi[i].nama_asuransi" value="{{asuransi.nama_asuransi}}">
+                          </div>
+                          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon">Nomor</div>
+                            <input type="text" class="form-control" [disabled]="!update" name="no_asuransi" [(ngModel)]= "allAsuransi[i].no_kartu" value="{{asuransi.no_kartu}}">
+                          </div>
+                        </div>
+                        <div *ngIf="!update" class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon">Nama</div>
+                            <input type="text" class="form-control" name="nama_asuransi" value="{{allAsuransi[i].nama_asuransi}}" disabled>
+                          </div>
+                          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon">Nomor</div>
+                            <input type="text" class="form-control" name="no_asuransi" value="{{allAsuransi[i].no_kartu}}" disabled>
+                          </div>
+                        </div>
+                        <span class="input-group-btn">
+                          <button class="btn btn-secondary" type="button" (click)="pakaiAsuransi(asuransi)">Pakai</button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <label class="custom-control custom-checkbox">
                       <input type="checkbox" class="custom-control-input" [checked]="rujukanChecked" (change)="rujukanChecked = !rujukanChecked">
                       <span class="custom-control-indicator"></span>
                       <span class="custom-control-description">Rujukan</span>
-                    </label>
-                    <label class="custom-control custom-checkbox">
+                  </label>
+
+                  <div *ngIf="rujukanChecked">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col md-6">
+                          <label for="asal_rujukan">Asal Rujukan</label>
+                          <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="rujukan.asal_rujukan" name="asal_rujukan" required>
+                        </div>
+                        <div class="col md-6">
+                          <label for="no_rujukan">Nomor Rujukan</label>
+                          <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="rujukan.no_rujukan" name="no_rujukan" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="diagnosis">Diagnosis</label>
+                      <input type="string" class="form-control" id="diagnosis" [ngbTypeahead]="searchDiagnosis" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addDiagnosis($event.item)" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="keterangan">Keterangan</label>
+                      <textarea class="form-control" id="keterangan" [(ngModel)]="rujukan.keterangan" name="keterangan"></textarea> 
+                    </div>
+                  </div>
+
+                  <label class="custom-control custom-checkbox">
                       <input type="checkbox" class="custom-control-input" [checked]="asuransiChecked" (change)="asuransiChecked = !asuransiChecked">
                       <span class="custom-control-indicator"></span>
                       <span class="custom-control-description">Asuransi</span>
-                    </label>
+                  </label>
+
+                  <div *ngIf="asuransiChecked" class="form-group">
+                    <label for="asuransi_dipakai">Asuransi yang dipakai</label>
+                    <div class="form-inline">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">Nama</div>
+                        <select class="form-control" id="nama_asuransi" [(ngModel)]="asuransi.nama_asuransi" name="nama_asuransi_dipakai" required>
+                            <option *ngFor="let namaAsuransi of allNamaAsuransi" [value]="namaAsuransi">{{namaAsuransi}}</option>
+                        </select>
+                      </div>
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">Nomor</div>
+                        <input type="string" class="form-control" id="no_asuransi" [(ngModel)]="asuransi.no_kartu" name="no_asuransi_dipakai" required>
+                      </div>
+                    </div>
                   </div>
 
-                  <button type="button" class="btn btn-success" (click)="createPasien()" [disabled]="!pasienLamaForm.valid && !searchDone">Simpan</button>
+                  <div class="form-group">
+                    <button type="button" class="btn btn-success" (click)="createPasien()" [disabled]="!pasienLamaForm.valid && !searchDone">Daftarkan</button>
+                  </div>
                 </form>
             </div>
           </div>

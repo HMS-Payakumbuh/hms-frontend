@@ -52,4 +52,8 @@ export class PetugasLabDashboardComponent implements OnInit {
       data => { this.allLaboratorium = data }
     );
   }
+
+  upload(hasilLab: HasilLab) {
+    console.log(hasilLab.dokumen);
+  }
 }

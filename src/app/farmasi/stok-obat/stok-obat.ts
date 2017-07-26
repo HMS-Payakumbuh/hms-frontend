@@ -1,6 +1,8 @@
 import { ObatMasuk }	from '../obat-masuk/obat-masuk';
 import { JenisObat }	from '../jenis-obat/jenis-obat';
 import { LokasiObat }	from '../lokasi-obat/lokasi-obat';
+import { ObatPindah }    from '../obat-pindah/obat-pindah';
+import { ObatRusak }    from '../obat-rusak/obat-rusak';
 
 export class StokObat {	
 	constructor(
@@ -11,6 +13,8 @@ export class StokObat {
     public lokasi: number = null,
     public obat_masuk: ObatMasuk = new ObatMasuk(),
     public jenis_obat: JenisObat = new JenisObat(),
-    public lokasi_data: LokasiObat = new LokasiObat()
+    public lokasi_data: LokasiObat = new LokasiObat(),
+    public obat_pindah: ObatPindah[] = [],
+    public obat_rusak: ObatRusak[] = []
   ) {  }
 }

@@ -35,7 +35,7 @@ export class DaftarLokasiObatComponent implements OnInit {
 
   createLokasiObat() {
     this.lokasiObatService.createLokasiObat(this.lokasiObatModal).subscribe(
-      data => { window.location.reload() }
+      data => this.ngOnInit()
     );
   }
   
@@ -46,13 +46,13 @@ export class DaftarLokasiObatComponent implements OnInit {
   
   updateLokasiObat() {
     this.lokasiObatService.updateLokasiObat(this.lokasiObatModalId, this.lokasiObatModal).subscribe(
-      data => { window.location.reload() }
+      data => this.ngOnInit()
     );
   }
 
   destroyLokasiObat(id: number) {
     this.lokasiObatService.destroyLokasiObat(id).subscribe(
-      data => { window.location.reload() }
+      data => this.ngOnInit()
     );
   }
 }

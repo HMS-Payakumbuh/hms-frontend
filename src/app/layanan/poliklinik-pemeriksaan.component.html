@@ -32,7 +32,7 @@
 							</tr>
 							<tr>
 								<td colspan="2">
-									<button type="button" class="btn btn-outline-primary" [routerLink]="['/rekam_medis', transaksi?.transaksi.pasien.id, 0]">Lihat Rekam Medis</button>
+									<button type="button" class="btn btn-outline-primary" [routerLink]="['/rekam_medis', transaksi?.transaksi.pasien.id]">Lihat Rekam Medis</button>
 								</td>
 							</tr>
 						</tbody>
@@ -542,7 +542,7 @@
 						<div *ngFor="let obatTindakan of tindakan.obat_tindakan; index as j">
 							<div class="input-group mb-2">
 								<div class="input-group-addon">Obat {{j + 1}}</div>
-								<input type="text" class="form-control" placeholder="Input merek obat"
+								<input type="text" class="form-control" placeholder="{{obatTindakan.stokObat.jenis_obat.merek_obat}}"
 								[ngbTypeahead]="searchStokObat" (selectItem)="addSelectedStokObat(obatTindakan, $event.item)"
 								[inputFormatter]="inputObatFormatter" [resultFormatter]="resultObatFormatter">
 							</div>

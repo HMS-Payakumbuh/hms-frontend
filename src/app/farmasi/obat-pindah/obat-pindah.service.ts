@@ -29,6 +29,11 @@ export class ObatPindahService {
 			.map(allObatPindah => allObatPindah.find(obat_pindah => obat_pindah.id == id));
 	}
 
+	getTodayObatPindah(id_stok_obat: number): Observable<ObatPindah[]> {
+		return this.http.get(this.obatPindahUrl + '/today/' + id_stok_obat)
+			.map((res: Response) => res.json());
+	}
+
 	createObatPindah(obatPindah: ObatPindah) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });

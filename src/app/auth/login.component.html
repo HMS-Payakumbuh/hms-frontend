@@ -1,0 +1,35 @@
+<html>
+  <div class="row">
+    <div class="col-md-12">
+
+      <div class="card">
+        <div class="card-header card-info">
+          <h4 class="mb-0">
+            Login
+          </h4>
+        </div>
+        <div class="card-block">
+          <div class="col-md-6">
+            <form class="mb-3">
+              <div class="input-group mb-3">
+                <div class="input-group-addon">No Pegawai</div>
+                <input type="text" class="form-control" [(ngModel)]="data.no_pegawai" name="no_pegawai">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-addon">Password</div>
+                <input type="password" class="form-control" [(ngModel)]="data.password" name="password">
+              </div>
+              <button type="submit" class="btn btn-success" (click)="login()">
+                Login
+              </button>
+            </form>
+            <p *ngFor="let alert of alerts">
+              <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+            </p>
+        </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</html>

@@ -6,6 +6,7 @@ export class ObatEceranItem {
 	public id: number = null,
 	public id_jenis_obat: number = null,
     public id_obat_masuk: number = null,    
+    public id_stok_obat: number = null,    
     public jumlah: number = null,
     public harga_jual_realisasi: number = null,
     public keterangan: string = '',

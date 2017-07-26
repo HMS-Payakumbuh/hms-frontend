@@ -33,6 +33,9 @@ import { FilterJenisKamarPipe }     from './pipe/filter-jenis-kamar.pipe';
 import { FilterKelasKamarPipe }     from './pipe/filter-kelas-kamar.pipe';
 import { FilterPemakaianKamarOperasiPipe }     from './pipe/filter-pemakaian-kamar-operasi.pipe';
 
+import { RegisterComponent }        from './auth/register.component';
+import { LoginComponent }           from './auth/login.component';
+
 import { TransaksiComponent }       from './transaksi/transaksi.component';
 import { TransaksiDetailComponent } from './transaksi/transaksi-detail.component';
 
@@ -46,6 +49,7 @@ import { DaftarAntrianComponent }         	from './antrian/daftar-antrian.compon
 import { PasienFormComponent }      		from './pasien/pasien-form.component';
 import { PasienListComponent }              from './pasien/pasien-list.component';
 import { CatatanKematianFormComponent }     from './pasien/catatan-kematian-form.component';
+import { RekamMedisListComponent }          from './pasien/rekam-medis-list.component';
 import { RekamMedisDetailComponent }        from './pasien/rekam-medis-detail.component';
 
 import { PoliklinikListComponent }          from './layanan/poliklinik-list.component';
@@ -163,6 +167,10 @@ import { AppComponent }             from './app.component';
         FilterNomorKamarPipe,
         FilterKelasKamarPipe,
         FilterPemakaianKamarOperasiPipe,
+
+        RegisterComponent,
+        LoginComponent,
+
         TransaksiComponent,
         TransaksiDetailComponent,
         PembayaranComponent,
@@ -172,6 +180,7 @@ import { AppComponent }             from './app.component';
         PasienFormComponent,
         PasienListComponent,
         CatatanKematianFormComponent,
+        RekamMedisListComponent,
         RekamMedisDetailComponent,
 
         PoliklinikListComponent,
