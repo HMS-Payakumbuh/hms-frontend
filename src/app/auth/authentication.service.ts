@@ -10,11 +10,11 @@ import { User } from './user';
 @Injectable()
 export class AuthenticationService {
   private users: User[] = [
-    {no_pegawai: 'D001', name: 'Dokter', role: 'dokter', password: 'dokter'},
-    {no_pegawai: 'P001', name: 'Perawat', role: 'perawat', password: 'perawat'},
-    {no_pegawai: 'L001', name: 'Petugas Lab', role: 'petugaslab', password: 'petugaslab'},
-    {no_pegawai: 'A001', name: 'Admin', role: 'admin', password: 'admin'},
-    {no_pegawai: 'F001', name: 'Front Office', role: 'frontOffice', kategori_antrian: 'A', password: 'frontOffice'}
+    {no_pegawai: 'D001', name: 'Dokter', role: 'dokter', password: 'dokter', other: ''},
+    {no_pegawai: 'P001', name: 'Perawat', role: 'perawat', password: 'perawat', other: ''},
+    {no_pegawai: 'L001', name: 'Petugas Lab', role: 'petugaslab', password: 'petugaslab', other: ''},
+    {no_pegawai: 'A001', name: 'Admin', role: 'admin', password: 'admin', other: ''},
+    {no_pegawai: 'F001', name: 'Front Office', role: 'frontOffice', password: 'frontOffice', other: '{"kategori_antrian": "A"}'}
   ]
 
   public token: string;
@@ -43,7 +43,7 @@ export class AuthenticationService {
 
   setKategori(no_pegawai: string, kategori_antrian: string): void {
     let user = _.find(this.users, { 'no_pegawai': no_pegawai });
-    user.kategori_antrian = kategori_antrian;
+    user.other = '{"kategori_antrian": "' + kategori_antrian + '"}';
     localStorage.setItem('currentUser', JSON.stringify(user));
   }
 }
