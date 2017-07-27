@@ -1,11 +1,13 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { Antrian }    from './antrian';
-import { AntrianService } from './antrian.service';
-import { Poliklinik }    from '../layanan/poliklinik';
-import { PoliklinikService }    from '../layanan/poliklinik.service';
-import { User }           from '../auth/user';
+import { Antrian }                from './antrian';
+import { AntrianService }         from './antrian.service';
+import { Poliklinik }             from '../layanan/poliklinik';
+import { PoliklinikService }      from '../layanan/poliklinik.service';
+import { Transaksi }              from '../transaksi/transaksi';
+import { TransaksiService }       from '../transaksi/transaksi.service'
+import { User }                   from '../auth/user';
 import { AuthenticationService }  from '../auth/authentication.service';
 
 import * as _ from "lodash";
@@ -18,7 +20,8 @@ import * as io from "socket.io-client";
   providers: [
     AntrianService,
     AuthenticationService,
-    PoliklinikService
+    PoliklinikService,
+    TransaksiService
   ]
 })
 export class AntrianComponent implements OnInit {
@@ -36,12 +39,15 @@ export class AntrianComponent implements OnInit {
   layanan: string;
   socket: any = null;
   user: any;
+  searchTransaksiRujukanTerm: string = '';
+  transaksiRujukan: Transaksi = null;
 
   constructor(
     private route: ActivatedRoute,
-    private poliklinikService: PoliklinikService,
+    private antrianService : AntrianService,
     private authenticationService: AuthenticationService,
-    private antrianService : AntrianService
+    private poliklinikService: PoliklinikService,
+    private transaksiService: TransaksiService
   ) { this.socket = io('http://localhost'); }
 
   ngOnInit() {
@@ -51,14 +57,11 @@ export class AntrianComponent implements OnInit {
     });
     if (this.layanan === undefined) {
       this.layanan = 'Front Office';
-      this.antrianService.getAllAntrianFrontOffice().subscribe(
-        data => { this.allKategori = _.uniqBy(data, 'kategori_antrian') }
-      );
-
+      this.updateKategori();
       this.isfrontoffice = true;
       this.user = JSON.parse(localStorage.getItem('currentUser'));
       this.kategori = JSON.parse(this.user.other).kategori_antrian;
-      this.selectedKategori = this.kategori; 
+      this.selectedKategori = this.kategori;
       this.socket.on('antrianFrontOffice'+this.kategori, this.updateAntrianFrontOffice.bind(this));
       this.updateAntrianFrontOffice();
     }
@@ -69,14 +72,21 @@ export class AntrianComponent implements OnInit {
         this.ispoli = true;
       else
         this.ispoli = false;
-      this.socket.on('antrianLayanan', this.updateAntrian.bind(this));    
+      this.socket.on('antrianLayanan', this.updateAntrian.bind(this));
     }
+  }
+
+  private updateKategori() {
+    this.antrianService.getAllAntrianFrontOffice().subscribe(
+        data => { this.allKategori = _.sortBy(_.uniqBy(data, 'kategori_antrian'), 'kategori_antrian') }
+      );
   }
 
   private updateAntrian() {
     this.route.params
         .switchMap((params: Params) => this.antrianService.getAntrian(params['namaLayanan']))
         .subscribe(allAntrian => {
+          this.updateKategori();
           this.allAntrian = allAntrian;
           this.total = allAntrian.length;
           this.antrian = this.nextAntrian(this.umum);
@@ -146,6 +156,18 @@ export class AntrianComponent implements OnInit {
   private setKategori() {
     this.authenticationService.setKategori(this.user.no_pegawai, this.kategori);
     this.ngOnInit();
+  }
+
+  private onEnter(event) {
+    if (event.keyCode == 13) {
+      this.searchTransaksiRujukan();
+    }
+  }
+
+  private searchTransaksiRujukan() {
+    this.transaksiService.getTransaksiByKodePasien(this.searchTransaksiRujukanTerm).subscribe(
+      data => this.transaksiRujukan = data
+    )
   }
 
   submitted = false;

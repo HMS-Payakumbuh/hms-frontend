@@ -38,6 +38,7 @@ export class TransaksiService {
 			.map((res: Response) => res.json());
 	}
 
+
 	getLatestOpenTransaksi(id_pasien : number): Observable<Transaksi> {
 		const url = `${this.transaksiUrl}` + '/' + "latest" + '/' + id_pasien;
 		return this.http.get(url)
@@ -64,6 +65,11 @@ export class TransaksiService {
 			.map((res: Response) => res.json());
 	}
 
+	getTransaksiByKodePasien(kode_pasien: string): Observable<Transaksi> {
+		return this.http.get(this.transaksiUrl + '/' + kode_pasien + '/kode_pasien')
+			.map((res: Response) => res.json());
+	}
+
 	getTransaksiByPasien(id_pasien: number): Observable<Transaksi[]> {
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('id_pasien', ''+id_pasien);
@@ -72,7 +78,7 @@ export class TransaksiService {
 		requestOptions.params = params;
 
 		return this.http.get(this.transaksiUrl+'/search_by_pasien', requestOptions)
-		    .map((res: Response) => res.json());			
+		    .map((res: Response) => res.json());
 	}
 
 	getStatusBpjs(id: number): Observable<any> {

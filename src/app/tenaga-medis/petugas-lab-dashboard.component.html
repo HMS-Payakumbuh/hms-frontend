@@ -28,7 +28,7 @@
           <div class="form-group">
             <label for="search">Cari hasil lab dengan kode pasien</label>
             <div class="input-group">
-              <input type="text" class="form-control" id="search" [(ngModel)]="searchTerm">
+              <input type="text" class="form-control" id="search" [(ngModel)]="searchTerm" (keydown)="onEnter($event)">
               <span class="input-group-btn">
                 <button type="button" class="btn btn-success" (click)="searchHasilLab()">
                   Cari
