@@ -1,5 +1,5 @@
 import { Component, OnInit }															from '@angular/core';
-import { ActivatedRoute, Params }													from '@angular/router';
+import { ActivatedRoute, Params, Router }									from '@angular/router';
 import { FormGroup, FormArray, FormBuilder, Validators }	from '@angular/forms';
 import { Location }																				from '@angular/common';
 import { Observable }																			from 'rxjs/Observable';
@@ -60,7 +60,8 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
-		private location: Location,
+		private router: Router,
+    private location: Location,
 		private transaksiService: TransaksiService,
     private rekamMedisService: RekamMedisService,
 		private laboratoriumService: LaboratoriumService,
@@ -164,19 +165,7 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 
   save() {
 		this.tindakanService.saveTindakan(this.selectedTindakan).subscribe(
-      data => {
-        let observables = [];
-        for (let tindakan of data) {
-          let hasilLab: HasilLab = new HasilLab();
-          hasilLab.id_transaksi = this.transaksi.transaksi.id;
-          hasilLab.id_tindakan = tindakan.id;
-          observables.push(this.hasilLabService.createHasilLab(hasilLab));
-        }
-
-        Observable.forkJoin(observables).subscribe(
-          data => this.goBack()
-        )
-      }
+      data => this.router.navigate(['/antrian'], this.laboratorium.nama)
     );
 	}
 }
