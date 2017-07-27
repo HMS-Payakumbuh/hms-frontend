@@ -57,7 +57,6 @@ export class ObatEceranFormComponent {
 	    let temp = new ObatEceranItem();
 
 	    temp.jumlah = null;
-	    temp.keterangan = '';
 
 		temp.id_jenis_obat = stokObat.id_jenis_obat;
     	temp.id_stok_obat = stokObat.id;

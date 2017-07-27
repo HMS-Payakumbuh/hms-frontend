@@ -11,6 +11,6 @@ export class ObatEceranItem {
     public harga_jual_realisasi: number = null,
 	public waktu_keluar: Date = null,
 	public jenis_obat: JenisObat = new JenisObat(),
-	public obat_masuk: StokObat = new StokObat()
+	public stok_obat: StokObat = new StokObat()
 	) {}
 }
