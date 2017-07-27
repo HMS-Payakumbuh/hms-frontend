@@ -278,7 +278,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
   addSelectedStokObat(obatTindakan: ObatTindakan, stokObat: StokObat) {
     obatTindakan.stokObat = stokObat;
     obatTindakan.id_jenis_obat = stokObat.id_jenis_obat;
-    obatTindakan.id_obat_masuk = stokObat.id_obat_masuk;
     obatTindakan.id_stok_obat = stokObat.id;
   }
 

@@ -11,7 +11,7 @@ export class FilterObatRusakPipe implements PipeTransform {
   	}
     if ((!items || !param1)) {
       return items.filter(function(item){
-              var param2InKode = item.obat_masuk.barcode.toString().toLowerCase().indexOf(param2.toLowerCase()) > -1;
+              var param2InKode = item.stok_obat.barcode.toString().toLowerCase().indexOf(param2.toLowerCase()) > -1;
               var param2InMerek = item.jenis_obat.merek_obat.toLowerCase().indexOf(param2.toLowerCase()) > -1;            
               return (param2InKode || param2InMerek);
       });
@@ -21,7 +21,7 @@ export class FilterObatRusakPipe implements PipeTransform {
     }
     return items.filter(function(item){    
               var param1InAlasan = item.alasan.toLowerCase().indexOf(param1.toLowerCase()) > -1;
-              var param2InKode = item.obat_masuk.barcode.toString().toLowerCase().indexOf(param2.toLowerCase()) > -1;
+              var param2InKode = item.stok_obat.barcode.toString().toLowerCase().indexOf(param2.toLowerCase()) > -1;
               var param2InMerek = item.jenis_obat.merek_obat.toLowerCase().indexOf(param2.toLowerCase()) > -1;            
               return param1InAlasan && (param2InKode || param2InMerek);
   	})

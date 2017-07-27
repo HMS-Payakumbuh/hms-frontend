@@ -52,8 +52,8 @@ export class ObatTebusFormComponent {
 	inputPasienFormatter = (value : Pasien) => value.nama_pasien;
 	resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.id;	
 
-	inputStokFormatter = (value : StokObat) => value.obat_masuk.nomor_batch;
-	resultStokFormatter = (value: StokObat)	=> value.obat_masuk.nomor_batch;	
+	inputStokFormatter = (value : StokObat) => value.nomor_batch;
+	resultStokFormatter = (value: StokObat)	=> value.nomor_batch;	
 
 	searchStokObat = (text$: Observable<string>) =>
 		text$
@@ -229,7 +229,6 @@ export class ObatTebusFormComponent {
 						    temp.keterangan = '';
 
 							temp.id_jenis_obat = stokObat.id_jenis_obat;
-					    	temp.id_obat_masuk = stokObat.id_obat_masuk;
 					    	temp.id_stok_obat = stokObat.id;
 					    	temp.harga_jual_realisasi = this.harga_jual_realisasi[i][j];
 					    	temp.asal = 2;

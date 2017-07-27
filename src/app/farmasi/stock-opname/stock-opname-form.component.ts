@@ -6,6 +6,9 @@ import { Observable } 	from 'rxjs/Observable';
 import { StokObat }			from '../stok-obat/stok-obat';
 import { StokObatService }		from '../stok-obat/stok-obat.service';
 
+import { ObatMasuk }			from '../obat-masuk/obat-masuk';
+import { ObatMasukService }		from '../obat-masuk/obat-masuk.service';
+
 import { ObatPindah }			from '../obat-pindah/obat-pindah';
 import { ObatPindahService }		from '../obat-pindah/obat-pindah.service';
 
@@ -34,6 +37,7 @@ import { LokasiObatService }		from '../lokasi-obat/lokasi-obat.service';
  	providers: [StokObatService, 
  				StockOpnameService, 
  				LokasiObatService, 
+ 				ObatMasukService,
  				ObatPindahService, 
  				ObatRusakService,
  				ObatTindakanService,
@@ -57,6 +61,7 @@ export class StockOpnameFormComponent {
 		private stokObatService: StokObatService,
 		private stockOpnameService: StockOpnameService,
 		private lokasiObatService: LokasiObatService,
+		private obatMasukService: ObatMasukService,
 		private obatPindahService: ObatPindahService,
 		private obatRusakService: ObatRusakService,
 		private obatTindakanService: ObatTindakanService,
@@ -83,11 +88,18 @@ export class StockOpnameFormComponent {
 							let temp = new StockOpnameItem();
 							temp.id_stok_obat = stokObat.id;
 							temp.id_jenis_obat = stokObat.id_jenis_obat;
-    						temp.id_obat_masuk = stokObat.id_obat_masuk;
     						temp.jumlah_akhir = stokObat.jumlah;
     						temp.jumlah_awal = stokObat.jumlah;
-    						temp.jumlah_sebenarnya = stokObat.jumlah;
+    						temp.jumlah_fisik = stokObat.jumlah;
 							    
+							this.obatMasukService.getTodayObatMasuk(stokObat.id).subscribe(
+								data1 => {
+									stokObat.obat_masuk = data1;
+									for (let obatMasuk of stokObat.obat_masuk) {
+										temp.jumlah_awal = temp.jumlah_awal - obatMasuk.jumlah;
+									}
+								}
+							);
 							this.obatPindahService.getTodayObatPindahMasuk(stokObat.id).subscribe(
 								data1 => {
 									stokObat.obat_pindah_masuk = data1;

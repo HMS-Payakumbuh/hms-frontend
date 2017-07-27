@@ -10,7 +10,7 @@ export class FilterObatMasukPipe implements PipeTransform {
   		return items;
   	}
     return items.filter(function(item){
-              var paramInKode = item.barcode.toLowerCase().indexOf(param.toLowerCase()) > -1;
+              var paramInKode = item.stok_obat.barcode.toLowerCase().indexOf(param.toLowerCase()) > -1;
               var paramInMerek = item.jenis_obat.merek_obat.toLowerCase().indexOf(param.toLowerCase()) > -1;             
               return paramInKode || paramInMerek;
   	})

@@ -42,9 +42,9 @@
 						<tbody>
 							<tr>								
 								<th><mfDefaultSorter by="waktu_pindah">Waktu Pindah</mfDefaultSorter></th>
-								<th><mfDefaultSorter by="obat_masuk.barcode">Kode Obat</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="stok_obat_tujuan.barcode">Kode Obat</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="jenis_obat.merek_obat">Merek Obat</mfDefaultSorter></th>
-								<th><mfDefaultSorter by="obat_masuk.kadaluarsa">Kadaluarsa</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="stok_obat_tujuan.kadaluarsa">Kadaluarsa</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="jumlah">Jumlah</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="lokasi_asal.nama">Asal</mfDefaultSorter></th>								
 								<th><mfDefaultSorter by="lokasi_tujuan.namaS">Tujuan</mfDefaultSorter></th>
@@ -52,9 +52,9 @@
 							</tr>
 							<tr *ngFor="let obatPindah of mf.data">								
 								<td>{{obatPindah.waktu_pindah | date:'d MMM y H:mm:ss'}}</td>
-								<td>{{obatPindah.obat_masuk.barcode}}</td>
+								<td>{{obatPindah.stok_obat_tujuan.barcode}}</td>
 								<td>{{obatPindah.jenis_obat.merek_obat}}</td>	
-								<td>{{obatPindah.obat_masuk.kadaluarsa | date:'d MMM y'}}</td>	
+								<td>{{obatPindah.stok_obat_tujuan.kadaluarsa | date:'d MMM y'}}</td>	
 								<td>{{obatPindah.jumlah}}</td>
 								<td>{{obatPindah.lokasi_asal.nama}}</td>
 								<td>{{obatPindah.lokasi_tujuan.nama}}</td>						

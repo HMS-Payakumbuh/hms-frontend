@@ -29,7 +29,7 @@ export class ObatPindahFormComponent {
 	public allStokObatAtLocation: StokObat[];
 
 	inputFormatter = (value : StokObat) => value.jenis_obat.merek_obat;
-	resultFormatter = (value: StokObat)	=> value.jenis_obat.merek_obat  + ' - ' + value.obat_masuk.nomor_batch;	
+	resultFormatter = (value: StokObat)	=> value.jenis_obat.merek_obat  + ' - ' + value.nomor_batch;	
 
 	searchStokObat = (text$: Observable<string>) =>
 		text$
@@ -62,7 +62,6 @@ export class ObatPindahFormComponent {
 
 	private save() {
 		this.obatPindah.id_jenis_obat = this.stokObat.jenis_obat.id;
-		this.obatPindah.id_obat_masuk = this.stokObat.obat_masuk.id;
 		this.obatPindah.id_stok_obat_asal = this.stokObat.id;
 
 		// alert(JSON.stringify(this.obatPindah)); 
@@ -80,7 +79,7 @@ export class ObatPindahFormComponent {
 
 	private addSelectedStokObat(stokObat: StokObat) {
 	    this.stokObat = stokObat;
-	    this.tempKadaluarsa = new Date(this.stokObat.obat_masuk.kadaluarsa);
+	    this.tempKadaluarsa = new Date(this.stokObat.kadaluarsa);
 		this.formattedKadaluarsa = this.tempKadaluarsa.toISOString().split('T')[0];
 	}
 }

@@ -28,20 +28,20 @@
 					<table class="table" [mfData]="allStokObat | filterStokObat : lokasi : param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<tbody>
 							<tr>
-								<th><mfDefaultSorter by="obat_masuk.barcode">Kode Obat</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="barcode">Kode Obat</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="jenis_obat.merek_obat">Merek Obat</mfDefaultSorter></th>
-								<th><mfDefaultSorter by="obat_masuk.harga_beli_satuan">Harga Beli Satuan</mfDefaultSorter></th>
-								<th><mfDefaultSorter by="obat_masuk.kadaluarsa">Kadaluarsa</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="jenis_obat.harga_jual_satuan">Harga Jual Satuan</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="kadaluarsa">Kadaluarsa</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="jumlah">Jumlah</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="lokasi_data.nama">Lokasi</mfDefaultSorter></th>
 								<th></th>
 							</tr>
 							<tr *ngFor="let stokObat of mf.data">
-								<td>{{stokObat.obat_masuk.barcode}}</td>
+								<td>{{stokObat.barcode}}</td>
 								<td>{{stokObat.jenis_obat.merek_obat}}</td>
-								<td>Rp. {{stokObat.obat_masuk.harga_beli_satuan}}</td>	
-								<td>{{stokObat.obat_masuk.kadaluarsa | date:'d MMM y'}}</td>	
-								<td>{{stokObat.jumlah}}</td>						
+								<td>Rp. {{stokObat.jenis_obat.harga_jual_satuan}}</td>	
+								<td>{{stokObat.kadaluarsa | date:'d MMM y'}}</td>	
+								<td>{{stokObat.jumlah}} {{stokObat.jenis_obat.satuan}}</td>						
 								<td>{{stokObat.lokasi_data.nama}}</td>		
 								<td><button type="button" class="btn btn-info" [routerLink] = "['/stok-obat', stokObat.id]">Detail</button></td>
 							</tr>						

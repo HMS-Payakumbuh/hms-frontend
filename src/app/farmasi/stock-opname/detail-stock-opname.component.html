@@ -27,22 +27,22 @@
 						<table class="table" [mfData]="stockOpname.stock_opname_item" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 							<tbody>
 								<tr>
-									<th><mfDefaultSorter by="obat_masuk.barcode">Kode Obat</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="stok_obat.barcode">Kode Obat</mfDefaultSorter></th>
 									<th><mfDefaultSorter by="jenis_obat.merek_obat">Merek Obat</mfDefaultSorter></th>
-									<th><mfDefaultSorter by="obat_masuk.nomor_batch">No. Batch</mfDefaultSorter></th>
-									<th><mfDefaultSorter by="obat_masuk.kadaluarsa">Kadaluarsa</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="stok_obat.nomor_batch">No. Batch</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="stok_obat.kadaluarsa">Kadaluarsa</mfDefaultSorter></th>
 									<th><mfDefaultSorter by="jumlah_awal">Jumlah Awal</mfDefaultSorter></th>
 									<th><mfDefaultSorter by="jumlah_akhir">Jumlah Akhir</mfDefaultSorter></th>
-									<th><mfDefaultSorter by="jumlah_sebenarnya">Jumlah Fisik</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="jumlah_fisik">Jumlah Fisik</mfDefaultSorter></th>
 								</tr>
 								<tr *ngFor="let stockOpnameItem of mf.data">
-									<td>{{stockOpnameItem.obat_masuk.barcode}}</td>
+									<td>{{stockOpnameItem.stok_obat.barcode}}</td>
 									<td>{{stockOpnameItem.jenis_obat.merek_obat}}</td>
-									<td>{{stockOpnameItem.obat_masuk.nomor_batch}}</td>
-									<td>{{stockOpnameItem.obat_masuk.kadaluarsa | date:'d MMM y'}}</td>
+									<td>{{stockOpnameItem.stok_obat.nomor_batch}}</td>
+									<td>{{stockOpnameItem.stok_obat.kadaluarsa | date:'d MMM y'}}</td>
 									<td>{{stockOpnameItem.jumlah_awal}} {{stockOpnameItem.jenis_obat.satuan}}</td>
 									<td>{{stockOpnameItem.jumlah_akhir}} {{stockOpnameItem.jenis_obat.satuan}}</td>
-									<td>{{stockOpnameItem.jumlah_sebenarnya}} {{stockOpnameItem.jenis_obat.satuan}}</td>
+									<td>{{stockOpnameItem.jumlah_fisik}} {{stockOpnameItem.jenis_obat.satuan}}</td>
 								</tr>						
 							</tbody>	
 							<tfoot>
