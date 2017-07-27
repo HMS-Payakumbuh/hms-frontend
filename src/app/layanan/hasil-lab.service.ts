@@ -1,5 +1,5 @@
 import { Injectable }			from '@angular/core';
-import { Headers, Http, Response, RequestOptions }		from '@angular/http';
+import { Headers, Http, Response, RequestOptions, ResponseContentType }		from '@angular/http';
 import { Observable }			from 'rxjs/Rx';
 
 import { ENV }										from '../environment';
@@ -17,41 +17,33 @@ export class HasilLabService {
 		return Promise.reject(error.message || error);
 	}
 
-	getAllHasilLab(): Observable<HasilLab[]> {
-		return this.http.get(this.hasilLabUrl)
-			.map((res: Response) => res.json());
+	downloadHasilLab(id: number) {
+		return this.http.get(this.hasilLabUrl + '/download/' + id,  { responseType: ResponseContentType.Blob })
+			.map((res) => {
+				return new Blob([res.blob()], { type: res.headers.get('Content-Type') });
+			})
 	}
 
-	getHasilLab(id: number): Observable<HasilLab> {
-		return this.http.get(this.hasilLabUrl + '/' + id)
+	getHasilLab(kode_pasien: string): Observable<HasilLab[]> {
+		return this.http.get(this.hasilLabUrl + '/' + kode_pasien)
       .map((res: Response) => res.json());
 	}
 
-	getEmptyHasilLab(no_pegawai: string): Observable<HasilLab[]> {
-		return this.http.get(this.hasilLabUrl + '/empty/' + no_pegawai)
-			.map((res: Response) => res.json());
-	}
+	createHasilLab(event: any, id_transaksi: number, id_tindakan: number) {
+		let fileList: FileList = event.target.files;
+    if(fileList.length > 0) {
+      let file: File = fileList[0];
+      let formData:FormData = new FormData();
+			formData.append('id_transaksi', id_transaksi.toString());
+			formData.append('id_tindakan', id_tindakan.toString());
+      formData.append('dokumen', file, file.name);
 
-	createHasilLab(hasilLab: HasilLab) {
-		let headers = new Headers({ 'Content-Type': 'application/json' });
-		let options = new RequestOptions({ headers: headers});
-		let body = JSON.stringify(hasilLab);
-		return this.http.post(this.hasilLabUrl, body, options)
-			.map((res: Response) => res.json());
-	}
-
-	updateHasilLab(id: number, hasilLab: HasilLab) {
-		let headers = new Headers({ 'Content-Type': 'application/json' });
-		let options = new RequestOptions({ headers: headers});
-		let body = JSON.stringify(hasilLab);
-		return this.http.put(this.hasilLabUrl + '/' + id, body, options)
-			.map((res: Response) => res.json());
-	}
-
-	destroyHasilLab(id: number) {
-		let headers = new Headers({ 'Content-Type': 'application/json' });
-		let options = new RequestOptions({ headers: headers});
-		return this.http.delete(this.hasilLabUrl + '/' + id, options)
-			.map((res: Response) => res.json());
+      let headers = new Headers();
+      headers.append('enctype', 'multipart/form-data');
+      headers.append('Accept', 'application/json');
+      let options = new RequestOptions({ headers: headers });
+      return this.http.post(this.hasilLabUrl, formData, options)
+        .map((res: Response) => res.json());
+    }
 	}
 }

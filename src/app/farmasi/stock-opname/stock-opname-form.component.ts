@@ -12,6 +12,15 @@ import { ObatPindahService }		from '../obat-pindah/obat-pindah.service';
 import { ObatRusak }			from '../obat-rusak/obat-rusak';
 import { ObatRusakService }		from '../obat-rusak/obat-rusak.service';
 
+import { ObatTindakan }			from '../obat-tindakan/obat-tindakan';
+import { ObatTindakanService }		from '../obat-tindakan/obat-tindakan.service';
+
+import { ObatEceranItem }			from '../obat-eceran/obat-eceran-item';
+import { ObatEceranService }		from '../obat-eceran/obat-eceran.service';
+
+import { ObatTebusItem }			from '../obat-tebus/obat-tebus-item';
+import { ObatTebusService }		from '../obat-tebus/obat-tebus.service';
+
 import { StockOpname }			from './stock-opname';
 import { StockOpnameItem }			from './stock-opname-item';
 import { StockOpnameService }		from './stock-opname.service';
@@ -22,7 +31,14 @@ import { LokasiObatService }		from '../lokasi-obat/lokasi-obat.service';
 @Component({
  	selector: 'stock-opname-form-page',
  	templateUrl: './stock-opname-form.component.html',
- 	providers: [StokObatService, StockOpnameService, LokasiObatService, ObatPindahService, ObatRusakService]
+ 	providers: [StokObatService, 
+ 				StockOpnameService, 
+ 				LokasiObatService, 
+ 				ObatPindahService, 
+ 				ObatRusakService,
+ 				ObatTindakanService,
+ 				ObatEceranService,
+ 				ObatTebusService]
 })
 
 export class StockOpnameFormComponent {
@@ -43,6 +59,9 @@ export class StockOpnameFormComponent {
 		private lokasiObatService: LokasiObatService,
 		private obatPindahService: ObatPindahService,
 		private obatRusakService: ObatRusakService,
+		private obatTindakanService: ObatTindakanService,
+		private obatEceranService: ObatEceranService,
+ 		private	obatTebusService: ObatTebusService,
 		private route: ActivatedRoute,
 		private location: Location
 	) {}
@@ -82,6 +101,30 @@ export class StockOpnameFormComponent {
 									stokObat.obat_rusak = data2;
 									for (let obatRusak of stokObat.obat_rusak) {
 										temp.jumlah_awal = temp.jumlah_awal + obatRusak.jumlah;
+									}
+								}
+							);
+							this.obatTindakanService.getTodayObatTindakan(stokObat.id).subscribe(
+								data3 => {
+									stokObat.obat_tindakan = data3;
+									for (let obatTindakan of stokObat.obat_tindakan) {
+										temp.jumlah_awal = temp.jumlah_awal + obatTindakan.jumlah;
+									}
+								}
+							);
+							this.obatTebusService.getTodayObatTebus(stokObat.id).subscribe(
+								data4 => {
+									stokObat.obat_tebus_item = data4;
+									for (let obatTebusItem of stokObat.obat_tebus_item) {
+										temp.jumlah_awal = temp.jumlah_awal + obatTebusItem.jumlah;
+									}
+								}
+							);
+							this.obatEceranService.getTodayObatEceran(stokObat.id).subscribe(
+								data5 => {
+									stokObat.obat_eceran_item = data5;
+									for (let obatEceranItem of stokObat.obat_eceran_item) {
+										temp.jumlah_awal = temp.jumlah_awal + obatEceranItem.jumlah;
 									}
 								}
 							);

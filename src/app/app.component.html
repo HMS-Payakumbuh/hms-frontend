@@ -29,7 +29,7 @@
 					<a routerLink="/pendaftaran" class="list-group-item list-group-item-info">Registrasi</a>
 					<a routerLink="/antrian" class="list-group-item list-group-item-info">Antrian</a>
 
-					<a href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#RawatJalanSubMenu">Rawat Jalan</a>
+					<a *ngIf="user.role == 'admin'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#RawatJalanSubMenu">Rawat Jalan</a>
 					<div id="RawatJalanSubMenu" class="collapse">
 						<a routerLink="/poliklinik" class="list-group-item">Daftar Poliklinik</a>
 						<a routerLink="/laboratorium" class="list-group-item">Daftar Laboratorium</a>
@@ -49,7 +49,7 @@
 						<a routerLink="/pemakaiankamarjenazah" class="list-group-item">Pemakaian Kamar Jenazah</a>
 					</div>
 
-					<a href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#TenagaMedisSubMenu">Tenaga Medis</a>
+					<a *ngIf="user.role == 'admin'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#TenagaMedisSubMenu">Tenaga Medis</a>
 					<div id="TenagaMedisSubMenu" class="collapse">
 						<a routerLink="/tenaga-medis" class="list-group-item">Daftar Tenaga Medis</a>
 						<a routerLink="/jadwal-dokter" class="list-group-item">Daftar Jadwal Dokter</a>

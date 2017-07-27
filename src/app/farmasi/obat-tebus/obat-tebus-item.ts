@@ -10,6 +10,7 @@ export class ObatTebusItem {
     public id_stok_obat: number = null,    
 	public jumlah: number = null,
 	public keterangan: string = '',
+	public waktu_keluar: Date = null,
 	public asal: number = null,
 	public id_resep_item: number = null,
 	public id_racikan_item: number = null,

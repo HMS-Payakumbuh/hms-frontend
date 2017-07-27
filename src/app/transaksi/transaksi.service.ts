@@ -10,8 +10,11 @@ import { ENV }				from '../environment';
 @Injectable()
 export class TransaksiService {
 	private transaksiUrl = ENV.transaksiUrl;
+	private storedData: any = null;
 
-	constructor(private http:Http) { }
+	constructor(private http:Http) {
+		this.storedData = null;
+	}
 
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
@@ -70,5 +73,11 @@ export class TransaksiService {
 
 		return this.http.get(this.transaksiUrl+'/search_by_pasien', requestOptions)
 		    .map((res: Response) => res.json());			
+	}
+
+	getStatusBpjs(id: number): Observable<any> {
+		const url = `${this.transaksiUrl}/${id}/bpjs`;
+		return this.http.get(url)
+			.map((res: Response) => res.json());
 	}
 }

@@ -32,6 +32,14 @@ export class TransaksiDetailComponent implements OnInit {
 	nama_pasien: any;
 	jender_pasien: number = 0;
 	umur_pasien: number = 0;
+	harga_tambahan: number = 0;
+	harga_total: number = 0;
+	perlu_bayar_tambahan: boolean = true;
+	bayar_tambahan: boolean = false;
+	total_bayar: number = 0;
+
+	printListOfTindakan: any[] = [];
+	printListOfKamarRawatInap: any[] = [];
 
 	constructor(
 		private transaksiService: TransaksiService,
@@ -42,12 +50,19 @@ export class TransaksiDetailComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
+
+		this.harga_tambahan = 0;
+		this.harga_total = 0;
+		this.perlu_bayar_tambahan = true;
+		this.total_bayar = 0;
 		this.asuransi = new Asuransi(null,'',null);
+
 		this.route.params
 			.switchMap((params: Params) => this.transaksiService.getTransaksi(+params['id']))
 			.subscribe(data => {
 				this.response = data;
 				this.transaksi = this.response.transaksi;
+				this.harga_total = this.transaksi.harga_total;
 				if (this.transaksi.pasien !== null) {
 					this.nama_pasien = this.transaksi.pasien.nama_pasien;
 					this.jender_pasien = this.transaksi.pasien.jender;
@@ -65,6 +80,11 @@ export class TransaksiDetailComponent implements OnInit {
 						this.nama_pasien = this.transaksi.obat_eceran[0].nama_pembeli;
 					}
 				}
+
+				if (this.transaksi.tindakan.length > 0) {
+					this.initTotalHarga();
+				}
+
 				if (this.transaksi.obat_tebus.length > 0) {
 					this.initObatTebus(this.transaksi.obat_tebus);
 				}
@@ -83,6 +103,19 @@ export class TransaksiDetailComponent implements OnInit {
 
 	goBack(): void {
 		this.location.back();
+	}
+
+	initTotalHarga(): void {
+		for (let item of this.transaksi.tindakan) {
+			if (this.transaksi.no_sep !== null) {
+				this.harga_total -= item.harga;
+			}
+			else {
+				if (item.id_pembayaran !== null) {
+					this.harga_total -= item.harga;
+				}
+			}
+		}
 	}
 
 	initObatTebus(value): void {
@@ -104,10 +137,48 @@ export class TransaksiDetailComponent implements OnInit {
 	}
 
 	initRawatInap(value): void {
+		let count = 0;
+		let perlu_bayar = true;
 		for (let item of value) {
-			if (item.waktu_keluar != null) {
+			if (item.waktu_keluar !== null) {
 				console.log(item);
 				this.listOfKamarRawatInap.push(item);
+				
+				if (this.transaksi.no_sep !== null) {
+					this.harga_total -= item.harga;
+					if (item.id_pembayaran !== null) {
+						perlu_bayar = false;
+					}
+				} 
+				else {
+					if (item.id_pembayaran !== null) {
+						this.harga_total -= item.harga;
+					}
+				}
+
+				if (item.kamar_rawatinap.jenis_kamar == "Rawat Inap") {
+					count += 1;
+				}
+			}
+		}
+
+		if (this.transaksi.no_sep !== null) {
+			this.perlu_bayar_tambahan = perlu_bayar;
+			if (count > 1) {
+				this.route.params
+					.switchMap((params: Params) => this.transaksiService.getStatusBpjs(+params['id']))
+					.subscribe(data => {
+						let response = data;
+						let status_bpjs = data.status_bpjs;
+						if (status_bpjs.grouper.response !== null) {
+							this.harga_tambahan = status_bpjs.grouper.response.add_payment_amt;
+							this.harga_total += this.harga_tambahan;
+							console.log(this.harga_tambahan);
+						}
+						if (!perlu_bayar) {
+							this.harga_total -= this.harga_tambahan;
+						}
+					});
 			}
 		}
 	}
@@ -131,18 +202,40 @@ export class TransaksiDetailComponent implements OnInit {
 		for (let item of _.uniqBy(items, 'nama_asuransi')) {
 			this.allMetode.push(item.nama_asuransi);
 		}
+		let index = this.allMetode.indexOf('bpjs');
+		this.allMetode.splice(index, 1);
+	}
+
+	updateCheckedBayarTambahan(): void {
+		let html = <HTMLInputElement>document.getElementById('bayarTambahan');
+		if (html.checked == true) {
+			this.bayar_tambahan = true;
+			this.total_bayar += this.harga_tambahan;
+		}
+		else if (html.checked == false) {
+			this.bayar_tambahan = false;
+			this.total_bayar -= this.harga_tambahan;
+		}
+		console.log(this.total_bayar);
 	}
 
 	updateCheckedTindakan(value): void {
-		let html = <HTMLInputElement>document.getElementById('tindakan' + value);
+		let html = <HTMLInputElement>document.getElementById('tindakan' + value.id);
 		if (html.checked == true) {
-			this.listOfTindakan.push(value);
+			this.listOfTindakan.push(value.id);
+			this.printListOfTindakan.push(value);
+			this.total_bayar = this.total_bayar + parseInt(value.harga);
 		}
 		else if (html.checked == false) {
-			let index = this.listOfTindakan.indexOf(value);
-			this.listOfTindakan.splice(index, 1);
+			let index1 = this.listOfTindakan.indexOf(value.id);
+			let index2 = this.printListOfTindakan.indexOf(value);
+			this.listOfTindakan.splice(index1, 1);
+			this.printListOfTindakan.splice(index2, 1);
+			this.total_bayar = this.total_bayar - parseInt(value.harga);
 		}
 		console.log(this.listOfTindakan);
+		console.log(this.printListOfTindakan);
+		console.log(this.total_bayar);
 	}
 
 	updateCheckedObatTebus(value): void {
@@ -170,15 +263,22 @@ export class TransaksiDetailComponent implements OnInit {
 	}
 
 	updateCheckedKamarRawatInap(value): void {
-		let html = <HTMLInputElement>document.getElementById('kamarRawatInap' + value);
+		let html = <HTMLInputElement>document.getElementById('kamarRawatInap' + value.id);
 		if (html.checked == true) {
-			this.listOfKamarRawatInapId.push(value);
+			this.listOfKamarRawatInapId.push(value.id);
+			this.printListOfKamarRawatInap.push(value);
+			this.total_bayar = this.total_bayar + parseInt(value.harga);
 		}
 		else if (html.checked == false) {
-			let index = this.listOfKamarRawatInapId.indexOf(value);
-			this.listOfKamarRawatInapId.splice(index, 1);
+			let index1 = this.listOfKamarRawatInapId.indexOf(value.id);
+			let index2 = this.printListOfKamarRawatInap.indexOf(value);
+			this.listOfKamarRawatInapId.splice(index1, 1);
+			this.printListOfKamarRawatInap.splice(index2, 1);
+			this.total_bayar = this.total_bayar - parseInt(value.harga);
 		}
 		console.log(this.listOfKamarRawatInapId);
+		console.log(this.printListOfKamarRawatInap);
+		console.log(this.total_bayar);
 	}
 
 	calculateAge(tanggal: string): void {
@@ -192,15 +292,21 @@ export class TransaksiDetailComponent implements OnInit {
 		console.log(this.umur_pasien);
 	}
 
-	howLong(tanggal: string): number {
-		let date: Date = new Date(tanggal);
-		let today: Date = new Date();
-		let days = 1;
-		if (today.getDate() != date.getDate()) {
-		 	days = today.getDate() - date.getDate();
+	howLong(tanggal1: string, tanggal2: string): number {
+		let one_day = 1000*60*60*24;
+		let masuk: Date = new Date(tanggal1);
+		let keluar: Date = new Date(tanggal2);
+
+		let masuk_ms = masuk.getTime();
+		let keluar_ms = keluar.getTime();
+
+		let days = Math.round((keluar_ms - masuk_ms)/one_day);
+
+		if (days <= 0) {
+			days = 1;
 		}
 
-    console.log(days);
+		console.log(days);
 		return days;
 	}
 
@@ -250,7 +356,7 @@ export class TransaksiDetailComponent implements OnInit {
 			}
 		}
 
-		this.createPembayaran(total_harga, this.transaksi.asuransi_pasien, listOfTindakan, listOfObatTebusId, listOfObatEceranId, listOfKamarRawatInapId);
+		this.createPembayaran(total_harga, this.transaksi.asuransi_pasien, false, listOfTindakan, listOfObatTebusId, listOfObatEceranId, listOfKamarRawatInapId);
 	}
 
 	private createAsuransi(id: number) {
@@ -261,63 +367,45 @@ export class TransaksiDetailComponent implements OnInit {
 
 	bayar(metode: string = 'tunai'): void {
 		let bayar: boolean = false;
-		let total_harga: number = 0;
 
 		if (this.listOfTindakan.length > 0) {
 			bayar = true;
-			for (let i of this.listOfTindakan) {
-				for (let a of this.transaksi.tindakan) {
-					if (a.id === i) {
-						total_harga += a.harga;
-					}
-				}
-			}
 		}
 
 		if (this.listOfObatTebusId.length > 0) {
 			bayar = true;
-			for (let i of this.listOfObatTebusId) {
-				for (let a of this.listOfObatTebus) {
-					if (a.id === i) {
-						total_harga += a.jumlah * a.harga_jual_realisasi;
-					}
-				}
-			}
 		}
 
 		if (this.listOfObatEceranId.length > 0) {
 			bayar = true;
-			for (let i of this.listOfObatEceranId) {
-				for (let a of this.listOfObatEceran) {
-					if (a.id === i) {
-						total_harga += a.jumlah * a.harga_jual_realisasi;
-					}
-				}
-			}
 		}
 
 		if (this.listOfKamarRawatInapId.length > 0) {
 			bayar = true;
-			for (let i of this.listOfKamarRawatInapId) {
-				for (let a of this.listOfKamarRawatInap) {
-					if (a.id === i) {
-						total_harga += a.harga;
-					}
-				}
-			}
 		}
 
-		if (metode != 'tunai') {
-			this.createAsuransi(this.transaksi.id_pasien);
+		if (this.bayar_tambahan == true) {
+			this.createPembayaran(this.harga_tambahan, metode.toLowerCase(), true);
 		}
 
 		if (bayar) {
-			this.createPembayaran(total_harga, metode.toLowerCase(), this.listOfTindakan, this.listOfObatTebusId, this.listOfObatEceranId, this.listOfKamarRawatInapId);
+			if (metode != 'tunai') {
+				this.createAsuransi(this.transaksi.id_pasien);
+			}
+
+			if (this.bayar_tambahan == true) {
+				this.createPembayaran(this.total_bayar - this.harga_tambahan, metode.toLowerCase(), false, this.listOfTindakan, this.listOfObatTebusId, this.listOfObatEceranId, this.listOfKamarRawatInapId);
+			}
+			else {
+				this.createPembayaran(this.total_bayar, metode.toLowerCase(), false, this.listOfTindakan, this.listOfObatTebusId, this.listOfObatEceranId, this.listOfKamarRawatInapId);
+			}
 		}
+
+		this.print();
 		console.log(metode.toLowerCase());
 	}
 
-	createPembayaran(harga: number, metode: string, listOfTindakan: number[] = null, listOfObatTebusId: number[] = null, listOfObatEceranId: number[] = null, listOfKamarRawatInapId: number[] = null): void {
+	createPembayaran(harga: number, metode: string, tambahan: boolean = false, listOfTindakan: number[] = null, listOfObatTebusId: number[] = null, listOfObatEceranId: number[] = null, listOfKamarRawatInapId: number[] = null): void {
 		let payload: any = {
 			id_transaksi: this.transaksi.id,
 			harga_bayar: harga,
@@ -327,6 +415,14 @@ export class TransaksiDetailComponent implements OnInit {
 			obatEceran: listOfObatEceranId,
 			kamarRawatInap: listOfKamarRawatInapId
 		};
+
+		if (tambahan) {
+			payload['pembayaran_tambahan'] = 1;
+		}
+		else {
+			payload['pembayaran_tambahan'] = 0;
+		}
+
 		let request: any = {
 			pembayaran: payload
 		};
@@ -335,7 +431,38 @@ export class TransaksiDetailComponent implements OnInit {
 		this.pembayaranService.createPembayaran(request)
 		.subscribe(data => {
 			console.log(data);
-			this.ngOnInit();
 		});
+	}
+
+	print(): void {
+	    let printContents, popupWin;
+	    printContents = document.getElementById('invoice').innerHTML;
+	    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=100%');
+	    popupWin.document.open();
+	    popupWin.document.write(`
+			<html>
+				<head>
+				<title>${this.transaksi.no_transaksi}</title>
+				<script src="node_modules/core-js/client/shim.min.js"></script>
+
+				<script src="node_modules/zone.js/dist/zone.js"></script>
+				<script src="node_modules/systemjs/dist/system.src.js"></script>
+				<script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
+
+				<script src="systemjs.config.js"></script>
+				<script>
+				  System.import('main.js').catch(function(err){ console.error(err); });
+				</script>
+				<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+				<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+				<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+				<link rel="stylesheet" href="styles.css">
+				</head>
+				<body onload="window.print();window.close()">
+					${printContents}
+				</body>
+			</html>
+		`);
+	    popupWin.document.close();
 	}
 }

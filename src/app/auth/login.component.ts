@@ -13,7 +13,6 @@ export class LoginComponent implements OnInit {
 
   @Input()
   public alerts: Array<IAlert> = [];
-  private backup: Array<IAlert>;
 
 	constructor(
     private router: Router,
@@ -28,10 +27,6 @@ export class LoginComponent implements OnInit {
   public closeAlert(alert: IAlert) {
     const index: number = this.alerts.indexOf(alert);
     this.alerts.splice(index, 1);
-  }
-
-  public reset() {
-    this.alerts = this.backup.map((alert: IAlert) => Object.assign({}, alert));
   }
 
   login() {

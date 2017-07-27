@@ -28,8 +28,8 @@ export class TenagaMedisService {
 	}
 
 	getTenagaMedis(no_pegawai: string): Observable<TenagaMedis> {
-		return this.getAllTenagaMedis()
-			.map(allTenagaMedis => allTenagaMedis.find(tenagaMedis => tenagaMedis.no_pegawai === no_pegawai));
+		return this.http.get(this.tenagaMedisUrl + '/' + no_pegawai)
+			.map((res: Response) => res.json());
 	}
 
 	createTenagaMedis(tenagaMedis: TenagaMedis) {
