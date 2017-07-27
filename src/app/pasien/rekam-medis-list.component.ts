@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Location }					from '@angular/common';
 
 import { RekamMedis }	from './rekam-medis';
 import { RekamMedisService }		from './rekam-medis.service';
+
+import * as _ from "lodash";
 
 @Component({
  	selector: 'rekam-medis-list',
@@ -13,7 +16,9 @@ import { RekamMedisService }		from './rekam-medis.service';
 export class RekamMedisListComponent implements OnInit {
 	public allRekamMedis: RekamMedis[];
 	public rekamMedis: RekamMedis = null;
-	public pasienId: number= null;
+	public pasienId: number = null;
+	public layanan: string = '';
+	public transaksiId: number = null;
 	private sub: any;
 
 	public filterQuery = "";
@@ -23,6 +28,7 @@ export class RekamMedisListComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
+		private location: Location,
 		private rekamMedisService: RekamMedisService
 	) {}
 
@@ -30,9 +36,18 @@ export class RekamMedisListComponent implements OnInit {
 		this.sub = this.route.params
 	      .subscribe(params => {
 	        this.pasienId = params['idPasien'];
+	        this.layanan = params['namaLayanan'];
+	        this.transaksiId = params['idTransaksi'];
 	    });
 		this.rekamMedisService.getAllRekamMedisOfPasien(this.pasienId)
-			.subscribe(allRekamMedis => this.allRekamMedis = allRekamMedis);
+			.subscribe(allRekamMedis => {
+				this.allRekamMedis = _.each(allRekamMedis, rekamMedis => {
+					_.set(rekamMedis, 'keluhan', JSON.parse(rekamMedis.anamnesis).keluhan);
+				})
+			});
+	}
 
+	goBack() {
+		this.location.back();
 	}
 }

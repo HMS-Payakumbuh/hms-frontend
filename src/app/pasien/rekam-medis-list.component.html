@@ -16,24 +16,27 @@
 							<th></th>
 						</thead>
 						<tbody>
-							<tr *ngFor="let rekamMedis of mf.data">
+							<tr *ngFor="let rekamMedis of mf.data; let i = index; ">
 								<td>{{rekamMedis.tanggal_waktu}}</td>
-								<td>{{rekamMedis.anamnesis.keluhan}}</td>
+								<td>{{rekamMedis.keluhan}}</td>
 								<td>
-									<button type="button" class="btn btn-sm btn-info">Detail</button>
+									<button type="button" class="btn btn-sm btn-info" [routerLink]="['/rekam_medis', pasienId, i]">Detail</button>
 								</td>
 							</tr>
 						</tbody>
 						<tfoot>
-	            <tr>
-	              <td colspan="9">
-	                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
-	              </td>
-	            </tr>
-	          </tfoot>
+				            <tr>
+				              <td colspan="9">
+				                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+				              </td>
+				            </tr>
+			            </tfoot>
 					</table>
 				</div>
 			</div>
+		</div>
+		<div class="pull-right">
+			<button type="button" class="btn btn-warning" [routerLink]="['/poliklinik', layanan, transaksiId]">Kembali</button>
 		</div>
 	</div>
 </div>

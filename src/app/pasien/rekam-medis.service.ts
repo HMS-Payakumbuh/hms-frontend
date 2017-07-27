@@ -30,6 +30,19 @@ export class RekamMedisService {
 			.map((res: Response) => res.json());
 	}
 
+/*	getAllAnamnesisOfPasien(id_pasien: number): any {
+		this.getAllRekamMedisOfPasien(id_pasien)
+			.map(allRekamMedis => {
+				console.log(allRekamMedis);
+				let allAnamnesis: any[] = [];
+				_.each(allRekamMedis, rekamMedis => {
+					let anamnesis: any = JSON.parse(rekamMedis.anamnesis);
+					allAnamnesis.push(anamnesis);
+				});
+				return allAnamnesis;
+			});
+	}*/
+
 	getRekamMedisOfPasien(id_pasien: number, no_entry: number): Observable<any> {
 		return this.getAllRekamMedisOfPasien(id_pasien)
 			.map(allRekamMedis => _.set(allRekamMedis[no_entry], 'num_entries', allRekamMedis.length));
