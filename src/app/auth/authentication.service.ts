@@ -14,7 +14,9 @@ export class AuthenticationService {
     {no_pegawai: 'P001', name: 'Perawat', role: 'perawat', password: 'perawat', other: ''},
     {no_pegawai: 'L001', name: 'Petugas Lab', role: 'petugaslab', password: 'petugaslab', other: ''},
     {no_pegawai: 'A001', name: 'Admin', role: 'admin', password: 'admin', other: ''},
-    {no_pegawai: 'F001', name: 'Front Office', role: 'frontOffice', password: 'frontOffice', other: '{"kategori_antrian": "A"}'}
+    {no_pegawai: 'F001', name: 'Front Office', role: 'frontOffice', password: 'frontOffice', other: '{"kategori_antrian": "A"}'},
+    {no_pegawai: 'AP001', name: 'Staf Apotek', role: 'stafApotek', password: 'stafapotek', other: ''},
+    {no_pegawai: 'K001', name: 'Kasir', role: 'kasir', password: 'kasir', other: ''}
   ]
 
   public token: string;
