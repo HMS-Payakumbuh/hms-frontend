@@ -15,7 +15,7 @@ export class DaftarObatRusakComponent {
 	public filterQuery = "";
     public rowsOnPage = 5;
     public sortBy = "id";
-    public sortOrder = "asc";
+    public sortOrder = "desc";
 
 	constructor(
 		private ObatRusakService: ObatRusakService
