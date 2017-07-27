@@ -1,4 +1,4 @@
-import { Component, OnInit }		  from '@angular/core';
+import { Component, OnInit, Input }		  from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location }							  from '@angular/common';
 import { Headers, Http, Response, RequestOptions }		from '@angular/http';
@@ -29,10 +29,19 @@ import { ENV }										from '../environment';
 })
 
 export class PetugasLabDashboardComponent implements OnInit {
+  @Input()
+  public alerts: Array<IAlert> = [];
+
+  public filterQuery = "";
+  public rowsOnPage = 10;
+  public sortBy = "nama_pasien";
+  public sortOrder = "asc";
+
 	private hasilLabUrl = ENV.hasilLabUrl;
 
+  searchTerm: string = '';
   tenagaMedis: TenagaMedis = null;
-
+  allHasilLab: HasilLab[] = [];
   allLaboratorium: Laboratorium[] = [];
   allTindakan: Tindakan[] = [];
 
@@ -46,6 +55,11 @@ export class PetugasLabDashboardComponent implements OnInit {
 		private laboratoriumService: LaboratoriumService,
     private hasilLabService: HasilLabService
 	) {}
+
+  public closeAlert(alert: IAlert) {
+    const index: number = this.alerts.indexOf(alert);
+    this.alerts.splice(index, 1);
+  }
 
   ngOnInit() {
     this.route.params
@@ -64,9 +78,38 @@ export class PetugasLabDashboardComponent implements OnInit {
     );
   }
 
-  upload(event: any, id_transaksi: number, id_tindakan: number) {
+  searchHasilLab() {
+    this.hasilLabService.getHasilLab(this.searchTerm).subscribe(
+      data => this.allHasilLab = data
+    )
+  }
+
+  downloadHasilLab(id: number) {
+    this.hasilLabService.downloadHasilLab(id).subscribe(
+      data => {
+        let url = window.URL.createObjectURL(data);
+        window.location.assign(url);
+      }
+    )
+  }
+
+  uploadHasilLab(event: any, id_transaksi: number, id_tindakan: number) {
     this.hasilLabService.createHasilLab(event, id_transaksi, id_tindakan).subscribe(
-      data => this.ngOnInit()
+      data => {
+        this.ngOnInit();
+        this.alerts.pop();
+        this.alerts.push({id: 1, type: 'success', message: 'Upload berhasil'});
+      },
+      error => {
+        this.alerts.pop();
+        this.alerts.push({id: 1, type: 'warning', message: 'Upload gagal'});
+      }
     );
   }
+}
+
+export interface IAlert {
+  id: number;
+  type: string;
+  message: string;
 }
