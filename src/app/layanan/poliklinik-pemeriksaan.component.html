@@ -32,7 +32,7 @@
 							</tr>
 							<tr>
 								<td colspan="2">
-									<button type="button" class="btn btn-outline-primary" [routerLink]="['/rekam_medis', transaksi?.transaksi.pasien.id]">Lihat Rekam Medis</button>
+									<button type="button" class="btn btn-outline-primary" [routerLink]="['/rekam_medis', poliklinik?.nama, transaksi?.transaksi.id, transaksi?.transaksi.pasien.id]">Lihat Rekam Medis</button>
 								</td>
 							</tr>
 						</tbody>
@@ -125,6 +125,7 @@
 								</div>
 								<div class="form-group">
 									<label for="riwayat">Riwayat Penyakit</label>
+									<button type="button" class="btn btn-sm btn-info" (click)="loadRiwayat()" data-toggle="modal" data-target="#riwayatModal" [attr.data-target]="'#riwayatModal'">Detail</button>
 									<div class="row" *ngFor="let riwayat of allRiwayat; index as i">
 										<div class="col-sm-11 text-left">
 											<div class="input-group">
@@ -151,6 +152,7 @@
 								</div>
 								<div class="form-group">
 									<label for="alergi">Alergi</label>
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#alergiModal" [attr.data-target]="'#alergiModal'">Detail</button>
 									<div class="row" *ngFor="let alergi of allAlergi; index as i">
 										<div class="col-sm-11 text-left">
 											<div class="input-group">
@@ -435,15 +437,9 @@
 										<label for="nama">Agenda Kunjungan</label>
 										<input type="text" class="form-control" id="nama" [(ngModel)]="rencana.nama" name="nama">
 									</div>
-									<div class="row">
-										<div class="col md-6">
-											<label for="tanggal">Tanggal Kunjungan</label>
-											<input [dpDayPicker]="config" theme="dp-material" class="form-control" id="tanggal" [(ngModel)]="rencana.tanggal" name="tanggal">
-										</div>
-										<div class="col-md-6">
-											<label for="waktu">Waktu Kunjungan</label>
-											<input type="text" class="form-control" id="waktu" [(ngModel)]="rencana.waktu" name="waktu">
-										</div>
+									<div class="form-group">
+										<label for="tanggal">Tanggal Kunjungan</label>
+										<input [dpDayPicker]="config" theme="dp-material" class="form-control" id="tanggal" [(ngModel)]="rencana.tanggal" name="tanggal">
 									</div>
 									<div class="form-group">
 										<label for="keterangan">Keterangan Tambahan</label>
@@ -490,6 +486,58 @@
 			</div>
 
 		</div>
+
+		<div class="modal fade" id="riwayatModal" tabindex="-1" role="dialog" aria-labelledby="riwayatModal" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				    <div class="modal-header">
+				        <h5 class="modal-title" id="riwayatModal">Rekap Kesehatan {{transaksi?.transaksi.pasien.nama_pasien}}</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <i class="fa fa-times" aria-hidden="true"></i>
+				        </button>
+				    </div>
+				    <div class="modal-body">
+					    <div class="form-group">
+				  			<h6>Riwayat Penyakit :</h6>
+				  			<div *ngFor="let riwayat of allRiwayatPenyakit, let i = index; ">
+					  			<div class="form-group">{{i+1}}. {{riwayat}}</div>
+				  			</div>
+			  			</div>
+				    	<div *ngFor="let riwayat of allRiwayatLama">
+						    <div class="form-group">
+						  		<h5 class="btn btn-info">Tercatat pada {{riwayat.tanggal_waktu}}</h5>
+					  		</div>
+					  		<div class="form-group">
+					  			<h6>Diagnosis :</h6>
+						    	<div *ngFor="let diagnosis of riwayat.allDiagnosis, let i = index; ">
+					  				<div class="form-group">{{i+1}}. {{diagnosis.daftar_diagnosis.nama}}</div>
+						    	</div>
+					    	</div>
+				    	</div>
+				    </div>
+			    </div>
+		    </div>
+	    </div>
+
+	    <div class="modal fade" id="alergiModal" tabindex="-1" role="dialog" aria-labelledby="alergiModal" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				    <div class="modal-header">
+				        <h5 class="modal-title" id="alergiModal">Alergi yang diderita {{transaksi?.transaksi.pasien.nama_pasien}}</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <i class="fa fa-times" aria-hidden="true"></i>
+				        </button>
+				    </div>
+				    <div class="modal-body">
+				    	<div *ngFor="let alergi of allAlergiLama, let i = index; ">
+					  		<div class="form-group">
+				  				<div class="form-group">{{i+1}}. {{alergi}}</div>
+					    	</div>
+				    	</div>
+				    </div>
+			    </div>
+		    </div>
+	    </div>
 
 		<div class="modal fade" tabindex="-1" role="dialog" id="rujukanModal" aria-hidden="true">
 			<div class="modal-dialog" role="document">

@@ -3,6 +3,7 @@ import { ActivatedRoute, Params }					from '@angular/router';
 import { Location }												from '@angular/common';
 import { Observable }											from 'rxjs/Observable';
 import { NgbTypeaheadConfig, NgbModal }   from '@ng-bootstrap/ng-bootstrap';
+import * as _ from "lodash";
 
 import { Transaksi }						from '../transaksi/transaksi';
 import { TransaksiService }			from '../transaksi/transaksi.service';
@@ -17,8 +18,6 @@ import { PoliklinikService }		from './poliklinik.service';
 
 import { TenagaMedis }          from '../tenaga-medis/tenaga-medis';
 import { TenagaMedisService }   from '../tenaga-medis/tenaga-medis.service';
-
-import { JadwalDokter }         from '../tenaga-medis/jadwal-dokter';
 
 import { Diagnosis }            from './diagnosis';
 import { DiagnosisReference }		from './diagnosis-reference';
@@ -71,8 +70,13 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
   rekamMedis: RekamMedis = null;
   hasilPemeriksaan: HasilPemeriksaan = new HasilPemeriksaan();
   keluhan: string;
-  allRiwayat: string[] = [];
-  allAlergi: string[] = [];
+  allRiwayat: any[] = [];
+  allRiwayatLama: any;
+  anamnesis: any;
+  allPenyakit: any;
+  allAlergi: any[] = [];
+  allRiwayatPenyakit: any;
+  allAlergiLama: any;
   pelayananLain: string[] = [];
   riwayatBaru: string;
   alergiBaru: string;
@@ -196,25 +200,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
         if (data != null) {
           if (data.tanggal_waktu == this.transaksi.transaksi.waktu_masuk_pasien) {
             this.rekamMedis = data;
-            this.rekamMedisService.getRekamMedisOfPasien(this.transaksi.transaksi.id_pasien, 1).subscribe(
-              data => {
-                if (data.anamnesis != null) {
-                  let anamnesis: any = JSON.parse(data.anamnesis);
-                  if (anamnesis.riwayat_penyakit)
-                  this.allRiwayat = anamnesis.riwayat_penyakit.split(',');
-                  if (anamnesis.alergi)
-                  this.allAlergi = anamnesis.alergi.split(',');
-                }
-              }
-            )
-          }
-
-          if (data.anamnesis != null) {
-            let anamnesis: any = JSON.parse(data.anamnesis);
-            if (anamnesis.riwayat_penyakit)
-            this.allRiwayat = anamnesis.riwayat_penyakit.split(',');
-            if (anamnesis.alergi)
-            this.allAlergi = anamnesis.alergi.split(',');
           }
         }
 
@@ -235,6 +220,53 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
         }
       }
     )
+    this.rekamMedisService.getAllRekamMedisOfPasien(this.transaksi.transaksi.id_pasien)
+            .subscribe(allRekamMedis => {
+              let allAnamnesis: any[] = [];
+              for (let rekamMedis of allRekamMedis) {
+                let anamnesis: any = JSON.parse(rekamMedis.anamnesis);
+                allAnamnesis.push(anamnesis);
+              }
+              let allAlergi: any[] = [];
+              let allRiwayat: any[] = [];
+              for (let anamnesis of allAnamnesis) {
+                if (anamnesis) {
+                  if (_.includes(anamnesis.alergi, ',')) {
+                    let moreAlergi: any[] = anamnesis.alergi.split(',');
+                    allAlergi = allAlergi.concat(moreAlergi);
+                  } else if (anamnesis.alergi != '') {
+                    allAlergi.push(anamnesis.alergi);
+                  }
+
+                  if (_.includes(anamnesis.riwayat_penyakit, ',')) {
+                    let moreRiwayat: any[] = anamnesis.riwayat_penyakit.split(',');
+                    allRiwayat = allRiwayat.concat(moreRiwayat);
+                  } else if (anamnesis.riwayat_penyakit != '') {
+                    allRiwayat.push(anamnesis.riwayat_penyakit);
+                  }
+                }
+              }
+              this.allAlergiLama = _.uniq(allAlergi, true);
+              if (_.isEmpty(this.allAlergiLama))
+                this.allAlergiLama = ['Tidak ada alergi yang tercatat'];
+              this.allRiwayatPenyakit =  _.uniq(allRiwayat, true);
+              if (_.isEmpty(this.allRiwayatPenyakit))
+                this.allRiwayatPenyakit = ['Tidak ada penyakit yang tercatat'];
+            });
+  }
+
+  loadRiwayat(): void {
+    this.diagnosisService.getDiagnosisOfPasien(this.transaksi.transaksi.id_pasien)
+      .subscribe(data => {
+        let allTanggalDiagnosis: any[] =  _.uniqBy(data, 'tanggal_waktu');
+        this.allRiwayatLama = [];
+        for (let tanggalDiagnosis of allTanggalDiagnosis) {
+          let json: any = { tanggal_waktu: tanggalDiagnosis.tanggal_waktu };
+          let allDiagnosis: any = _.filter(data, {'tanggal_waktu': tanggalDiagnosis.tanggal_waktu});
+          json.allDiagnosis = allDiagnosis;
+          this.allRiwayatLama.push(json);
+        }
+      }); 
   }
 
 	addSelectedDiagnosis(diagnosisReference: DiagnosisReference) {

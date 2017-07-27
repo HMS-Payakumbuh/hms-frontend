@@ -114,7 +114,7 @@ const routes: Routes = [
 	{ path: 'daftar-pasien', component: PasienListComponent },
 	{ path: 'pendaftaran', component: PasienFormComponent},
 	{ path: 'daftar-pasien/catatan-kematian-form', component: CatatanKematianFormComponent},
-	{ path: 'rekam_medis/:idPasien', component: RekamMedisListComponent},
+	{ path: 'rekam_medis/:namaLayanan/:idTransaksi/:idPasien', component: RekamMedisListComponent},
 	{ path: 'rekam_medis/:idPasien/:noEntry', component: RekamMedisDetailComponent},
 
 	{ path: 'poliklinik', component: PoliklinikListComponent },

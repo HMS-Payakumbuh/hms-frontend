@@ -19,6 +19,11 @@ export class DiagnosisService {
 		return Promise.reject(error.message || error);
 	}
 
+	getDiagnosisOfPasien(id_pasien: number): Observable<Diagnosis[]> {
+		return this.http.get(this.diagnosisUrl + '/' + id_pasien)
+			.map((res: Response) => res.json());
+	}
+
 	getDiagnosisOfRekamMedis(id_pasien: number, tanggal_waktu: string): Observable<Diagnosis[]> {
 		return this.http.get(this.diagnosisUrl + '/' + id_pasien + '/' + tanggal_waktu)
 			.map((res: Response) => res.json());
