@@ -78,6 +78,12 @@ export class PetugasLabDashboardComponent implements OnInit {
     );
   }
 
+  onEnter(event) {
+    if (event.keyCode == 13) {
+      this.searchHasilLab();
+    }
+  }
+
   searchHasilLab() {
     this.hasilLabService.getHasilLab(this.searchTerm).subscribe(
       data => this.allHasilLab = data

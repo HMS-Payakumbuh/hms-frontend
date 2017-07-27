@@ -31,18 +31,71 @@
 			              	</div>
 			              	<div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="kategori || !isfrontoffice">
 				              	<div>
-					              	<button type="button" class="btn btn-sm btn-danger" (click)="proses('undur')">Undur</button>
+					              	<button type="button" class="btn btn-warning mr-2" (click)="proses('undur')">Undur</button>
 				              	</div>
 				              	<div *ngIf="isfrontoffice">
-									<button type="button" class="btn btn-sm btn-warning" [routerLink] = "['/pendaftaran', antrian.nama_layanan]" (click)="proses('proses')">Proses</button>
+									<button type="button" class="btn btn-success" [routerLink] = "['/pendaftaran', antrian.nama_layanan]" (click)="proses('proses')">Proses</button>
 								</div>
 								<div *ngIf="!isfrontoffice && ispoli">
-									<button type="button" class="btn btn-sm btn-warning" [routerLink] = "['/poliklinik', antrian.nama_layanan, antrian.id_transaksi]" (click)="proses('proses')">Proses</button>
+									<button type="button" class="btn btn-success" [routerLink] = "['/poliklinik', antrian.nama_layanan, antrian.id_transaksi]" (click)="proses('proses')">Proses</button>
 								</div>
 								<div *ngIf="!isfrontoffice && !ispoli">
-									<button type="button" class="btn btn-sm btn-warning" [routerLink] = "['/laboratorium', antrian.nama_layanan, antrian.id_transaksi]" (click)="proses('proses')">Proses</button>
+									<button type="button" class="btn btn-success" [routerLink] = "['/laboratorium', antrian.nama_layanan, antrian.id_transaksi]" (click)="proses('proses')">Proses</button>
 								</div>
 							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card mb-3" *ngIf="!isfrontoffice">
+			<div class="card-header card-info">
+				<h4 class="mb-0">Pasien Rujukan</h4>
+			</div>
+			<div class="card-block">
+				<div class="form-group">
+					<label for="searchTransaksiRujukan">Cari dengan kode pasien</label>
+					<div class="input-group">
+						<input type="text" class="form-control" id="searchTransaksiRujukan" [(ngModel)]="searchTransaksiRujukanTerm" (keydown)="onEnter($event)">
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-success" (click)="searchTransaksiRujukan()">
+								Cari
+							</button>
+						</span>
+					</div>
+				</div>
+				<div *ngIf="transaksiRujukan != null">
+					<div class="row">
+						<div class="col-md-12">
+							<table class="table">
+								<tr class="text-left">
+									<th scope="row">No Transaksi</th>
+									<td>{{transaksiRujukan.no_transaksi}}</td>
+								</tr>
+								<tr class="text-left">
+									<th scope="row">Nama</th>
+									<td>{{transaksiRujukan.pasien.nama_pasien}}</td>
+								</tr>
+								<tr class="text-left">
+									<th scope="row">Tanggal Lahir</th>
+									<td>{{transaksiRujukan.pasien.tanggal_lahir | date: 'dd-MMM-yyyy'}}</td>
+								</tr>
+								<tr class="text-left">
+									<th scope="row">Alamat</th>
+									<td>{{transaksiRujukan.pasien.alamat}}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<button *ngIf="isPoli" class="btn btn-success" [routerLink]="['/poliklinik', layanan, transaksiRujukan.id]">
+								Proses Pasien Rujukan
+							</button>
+							<button *ngIf="!isPoli" class="btn btn-success" [routerLink]="['/laboratorium', layanan, transaksiRujukan.id]">
+								Proses Pasien Rujukan
+							</button>
 						</div>
 					</div>
 				</div>
