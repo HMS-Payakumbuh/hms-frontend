@@ -5,7 +5,6 @@ export class ObatTindakan {
 	constructor(
     public id: number = null ,
     public id_jenis_obat: number = null,
-    public id_obat_masuk: number = null,
     public id_stok_obat: number = null,    
     public waktu_keluar: Date = null,
     public jumlah: number = 0,
@@ -14,6 +13,6 @@ export class ObatTindakan {
     public harga_jual_realisasi: number = null,
     public id_transaksi: number = null,
     public id_tindakan: number = null,
-		public stokObat: StokObat = null
+	public stok_obat: StokObat = null
   ) {  }
 }

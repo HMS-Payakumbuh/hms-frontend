@@ -11,16 +11,19 @@ export class StokObat {
 	constructor(
     public id: number = null,
     public id_jenis_obat: number = null,
-    public id_obat_masuk: number = null,
     public jumlah: number = null,
     public lokasi: number = null,
-    public obat_masuk: ObatMasuk = new ObatMasuk(),
+    public nomor_batch: string = '',
+    public kadaluarsa: Date = null,
+    public barcode: string = '',
     public jenis_obat: JenisObat = new JenisObat(),
     public lokasi_data: LokasiObat = new LokasiObat(),
-    public obat_pindah: ObatPindah[] = [],
+    public obat_masuk: ObatMasuk[] = [],
+    public obat_pindah_keluar: ObatPindah[] = [],
+    public obat_pindah_masuk: ObatPindah[] = [],
     public obat_rusak: ObatRusak[] = [],    
     public obat_tindakan: ObatTindakan[] = [],
     public obat_eceran_item: ObatEceranItem[] = [],
-    public obat_tebus_item: ObatTebusItem[] = []
+    public obat_tebus_item: ObatTebusItem[] = []    
   ) {  }
 }

@@ -104,7 +104,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
 
   inputObatFormatter = (value : StokObat) => value.jenis_obat.merek_obat;
-  resultObatFormatter = (value: StokObat)	=> value.jenis_obat.merek_obat  + ' - ' + value.obat_masuk.nomor_batch;
+  resultObatFormatter = (value: StokObat)	=> value.jenis_obat.merek_obat  + ' - ' + value.nomor_batch;
 
   inputJenisObatFormatter = (value : JenisObat) => value.merek_obat;
   resultJenisObatFormatter = (value: JenisObat)	=> value.merek_obat;
@@ -308,9 +308,8 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	}
 
   addSelectedStokObat(obatTindakan: ObatTindakan, stokObat: StokObat) {
-    obatTindakan.stokObat = stokObat;
+    obatTindakan.stok_obat = stokObat;
     obatTindakan.id_jenis_obat = stokObat.id_jenis_obat;
-    obatTindakan.id_obat_masuk = stokObat.id_obat_masuk;
     obatTindakan.id_stok_obat = stokObat.id;
   }
 
