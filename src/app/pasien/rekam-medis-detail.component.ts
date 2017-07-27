@@ -10,6 +10,7 @@ import { RekamMedisService }		from './rekam-medis.service';
 import { DiagnosisService }			from '../layanan/diagnosis.service';
 import { TindakanService }			from '../layanan/tindakan.service';
 import { TenagaMedisService }		from '../tenaga-medis/tenaga-medis.service';
+import { ResepService }				from '../farmasi/resep/resep.service';
 
 @Component({
  	selector: 'rekam-medis-detail-page',
@@ -18,12 +19,12 @@ import { TenagaMedisService }		from '../tenaga-medis/tenaga-medis.service';
  				DiagnosisService,
  				TindakanService,
  				TenagaMedisService,
+ 				ResepService,
  				PasienService]
 })
 
 export class RekamMedisDetailComponent implements OnInit {
 	response: any;
-	sub: any;
 	transaksi: any;
 	dokter: any;
 	pasien: Pasien;
@@ -41,9 +42,11 @@ export class RekamMedisDetailComponent implements OnInit {
 	allRiwayat: any;
 	allAlergi: any;
 	allRiwayatPenyakit: any;
+	allResep: any;
 
 	constructor(
 		private rekamMedisService: RekamMedisService,
+		private resepService: ResepService,
 		private diagnosisService: DiagnosisService,
 		private tindakanService: TindakanService,
 		private tenagaMedisService: TenagaMedisService,
@@ -52,11 +55,6 @@ export class RekamMedisDetailComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		this.sub = this.route.params
-		      .subscribe(params => {
-		      	this.noPrevEntry = parseInt(params['noEntry']) - 1;
-		        this.noNextEntry = parseInt(params['noEntry']) + 1;
-		    });
 		this.route.params
 			.switchMap((params: Params) => this.rekamMedisService.getRekamMedisOfPasien(+params['idPasien'], +params['noEntry']))
 			.subscribe(data => {
@@ -84,6 +82,10 @@ export class RekamMedisDetailComponent implements OnInit {
 						.subscribe(data => {
 							this.allTindakan = data;
 						});
+					this.resepService.getResepOfRekamMedis(data.id_pasien, data.tanggal_waktu)
+						.subscribe(data => {
+							this.allResep = data;
+						});	
 					this.rekamMedisService.getAllRekamMedisOfPasien(this.pasien.id)
 						.subscribe(allRekamMedis => {
 							let allAnamnesis: any[] = [];

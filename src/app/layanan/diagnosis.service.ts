@@ -25,7 +25,7 @@ export class DiagnosisService {
 	}
 
 	getDiagnosisOfRekamMedis(id_pasien: number, tanggal_waktu: string): Observable<Diagnosis[]> {
-		return this.http.get(this.diagnosisUrl + '/' + id_pasien + '/' + tanggal_waktu)
+		return this.http.get(this.diagnosisUrl + '/rekam_medis/' + id_pasien + '/' + tanggal_waktu)
 			.map((res: Response) => res.json());
 	}
 
