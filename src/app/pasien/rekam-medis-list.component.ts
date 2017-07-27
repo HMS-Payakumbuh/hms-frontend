@@ -24,7 +24,7 @@ export class RekamMedisListComponent implements OnInit {
 	public filterQuery = "";
  	public rowsOnPage = 10;
 	public sortBy = "id";
-	public sortOrder = "asc";
+	public sortOrder = "desc";
 
 	constructor(
 		private route: ActivatedRoute,

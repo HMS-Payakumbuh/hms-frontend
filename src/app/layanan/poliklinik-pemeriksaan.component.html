@@ -500,17 +500,23 @@
 					    <div class="form-group">
 				  			<h6>Riwayat Penyakit :</h6>
 				  			<div *ngFor="let riwayat of allRiwayatPenyakit, let i = index; ">
-					  			<div class="form-group">{{i+1}}. {{riwayat}}</div>
+					  			<div>{{i+1}}. {{riwayat}}</div>
 				  			</div>
 			  			</div>
-				    	<div *ngFor="let riwayat of allRiwayatLama">
-						    <div class="form-group">
-						  		<h5 class="btn btn-info">Tercatat pada {{riwayat.tanggal_waktu}}</h5>
-					  		</div>
-					  		<div class="form-group">
-					  			<h6>Diagnosis :</h6>
-						    	<div *ngFor="let diagnosis of riwayat.allDiagnosis, let i = index; ">
-					  				<div class="form-group">{{i+1}}. {{diagnosis.daftar_diagnosis.nama}}</div>
+				    	<div *ngFor="let riwayat of allRiwayatLama, let i = index; ">
+					    	<div class="card card-outline-info mb-3">
+						  		<div class="card-block">
+								    <div class="form-group">
+								  		<h5 class="btn btn-info form-control" data-toggle="collapse" [attr.data-target]="'#riwayat-collapse-' + i">Tercatat pada {{riwayat.tanggal_waktu}}</h5>
+							  		</div>
+							  		<div class="collapse" id="riwayat-collapse-{{i}}">
+								  		<div class="form-group">
+								  			<h6>Diagnosis :</h6>
+									    	<div *ngFor="let diagnosis of riwayat.allDiagnosis, let i = index; ">
+								  				<div>{{i+1}}. {{diagnosis.daftar_diagnosis.nama}}</div>
+									    	</div>
+								    	</div>
+							    	</div>
 						    	</div>
 					    	</div>
 				    	</div>
