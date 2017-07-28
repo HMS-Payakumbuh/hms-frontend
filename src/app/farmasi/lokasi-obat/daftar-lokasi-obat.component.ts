@@ -16,7 +16,7 @@ export class DaftarLokasiObatComponent implements OnInit {
 
 	public filterQuery = "";
   public rowsOnPage = 10;
-  public sortBy = "nama";
+  public sortBy = "id";
   public sortOrder = "asc";
 
 	constructor(

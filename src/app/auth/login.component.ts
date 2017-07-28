@@ -1,6 +1,7 @@
-import { Component, OnInit, Input }		  from '@angular/core';
-import { Router }                 from '@angular/router';
-import { AuthenticationService }  from './authentication.service';
+import { Component, OnInit, Input }		from '@angular/core';
+import { Router }                     from '@angular/router';
+import { AuthenticationService }      from './authentication.service';
+import { User }                       from './user';
 
 @Component({
  	selector: 'login-page',
@@ -31,8 +32,21 @@ export class LoginComponent implements OnInit {
 
   login() {
     if(this.authenticationService.login(this.data.no_pegawai, this.data.password)) {
-      localStorage.getItem('currentUser');
-      window.location.assign('/pendaftaran');
+      let user: User = JSON.parse(localStorage.getItem('currentUser'));
+      switch (user.role) {
+        case 'dokter': {
+          window.location.assign('/dokter-dashboard');
+          break;
+        }
+        case 'petugasLab': {
+          window.location.assign('/petugas-lab-dashboard')
+          break;
+        }
+        default: {
+          window.location.assign('/pendaftaran');
+          break;
+        }
+      }
     }
     else {
       this.alerts.pop();

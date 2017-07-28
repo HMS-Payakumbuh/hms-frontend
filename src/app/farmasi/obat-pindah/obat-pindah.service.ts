@@ -29,8 +29,13 @@ export class ObatPindahService {
 			.map(allObatPindah => allObatPindah.find(obat_pindah => obat_pindah.id == id));
 	}
 
-	getTodayObatPindah(id_stok_obat: number): Observable<ObatPindah[]> {
-		return this.http.get(this.obatPindahUrl + '/today/' + id_stok_obat)
+	getTodayObatPindahKeluar(id_stok_obat: number): Observable<ObatPindah[]> {
+		return this.http.get(this.obatPindahUrl + '/today/keluar/' + id_stok_obat)
+			.map((res: Response) => res.json());
+	}
+
+	getTodayObatPindahMasuk(id_stok_obat: number): Observable<ObatPindah[]> {
+		return this.http.get(this.obatPindahUrl + '/today/masuk/' + id_stok_obat)
 			.map((res: Response) => res.json());
 	}
 

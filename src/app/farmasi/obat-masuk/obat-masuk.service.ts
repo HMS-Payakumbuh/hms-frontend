@@ -30,6 +30,11 @@ export class ObatMasukService {
 			.map(allObatMasuk => allObatMasuk.find(obat_masuk => obat_masuk.id == id));
 	}
 
+	getTodayObatMasuk(id_stok_obat: number): Observable<ObatMasuk[]> {
+		return this.http.get(this.obatMasukUrl + '/today/' + id_stok_obat)
+			.map((res: Response) => res.json());
+	}
+
 	createObatMasuk(obatMasuk: ObatMasuk) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });

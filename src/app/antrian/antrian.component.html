@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-12">
-		<div class="card mb-3">
+		<div class="card mb-3" *ngIf="layanan != 'IGD'">
 			<div class="card-header card-info">
 				<h4>
 					<i class="fa fa-gear" aria-hidden="true"></i> Antrian {{layanan}}
@@ -51,7 +51,7 @@
 
 		<div class="card mb-3" *ngIf="!isfrontoffice">
 			<div class="card-header card-info">
-				<h4 class="mb-0">Pasien Rujukan</h4>
+				<h4 class="mb-0">{{layanan != 'IGD' && 'Pasien Rujukan' || 'Pasien IGD'}}</h4>
 			</div>
 			<div class="card-block">
 				<div class="form-group">
@@ -65,37 +65,44 @@
 						</span>
 					</div>
 				</div>
-				<div *ngIf="transaksiRujukan != null">
+				<p *ngFor="let alert of alerts">
+					<ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+				</p>
+				<div *ngIf="transaksiRujukan.length > 0">
 					<div class="row">
 						<div class="col-md-12">
-							<table class="table">
-								<tr class="text-left">
-									<th scope="row">No Transaksi</th>
-									<td>{{transaksiRujukan.no_transaksi}}</td>
-								</tr>
-								<tr class="text-left">
-									<th scope="row">Nama</th>
-									<td>{{transaksiRujukan.pasien.nama_pasien}}</td>
-								</tr>
-								<tr class="text-left">
-									<th scope="row">Tanggal Lahir</th>
-									<td>{{transaksiRujukan.pasien.tanggal_lahir | date: 'dd-MMM-yyyy'}}</td>
-								</tr>
-								<tr class="text-left">
-									<th scope="row">Alamat</th>
-									<td>{{transaksiRujukan.pasien.alamat}}</td>
-								</tr>
+							<table class="table" [mfData]="transaksiRujukan" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+								<thead>
+									<th><mfDefaultSorter by="kode_pasien">Kode Pasien</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="tanggal_lahir">Tanggal Lahir</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="alamat">Alamat</mfDefaultSorter></th>
+									<th></th>
+								</thead>
+								<tbody>
+									<tr *ngFor="let transaksi of mf.data">
+										<td>{{transaksi.pasien.kode_pasien}}</td>
+										<td class="text-left">{{transaksi.pasien.nama_pasien}}</td>
+										<td>{{transaksi.pasien.tanggal_lahir | date: 'dd-MMM-yyyy'}}</td>
+										<td class="text-left">{{transaksi.pasien.alamat}}</td>
+										<td>
+											<button *ngIf="isPoli" class="btn btn-success" [routerLink]="['/poliklinik', layanan, transaksi.id]">
+												Proses
+											</button>
+											<button *ngIf="!isPoli" class="btn btn-success" [routerLink]="['/laboratorium', layanan, transaksi.id]">
+												Proses
+											</button>
+										</td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="5">
+											<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+										</td>
+									</tr>
+								</tfoot>
 							</table>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12 text-center">
-							<button *ngIf="isPoli" class="btn btn-success" [routerLink]="['/poliklinik', layanan, transaksiRujukan.id]">
-								Proses Pasien Rujukan
-							</button>
-							<button *ngIf="!isPoli" class="btn btn-success" [routerLink]="['/laboratorium', layanan, transaksiRujukan.id]">
-								Proses Pasien Rujukan
-							</button>
 						</div>
 					</div>
 				</div>

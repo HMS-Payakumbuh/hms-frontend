@@ -18,8 +18,8 @@ export class DaftarObatPindahComponent {
 
 	public filterQuery = "";
     public rowsOnPage = 5;
-    public sortBy = "waktu_keluar";
-    public sortOrder = "asc";
+    public sortBy = "id";
+    public sortOrder = "desc";
 
 	constructor(
 		private obatPindahService: ObatPindahService,		

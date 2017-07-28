@@ -1,6 +1,4 @@
 import { Component, OnInit }		  from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Location }							  from '@angular/common';
 
 import { Dokter }                 from './dokter';
 import { TenagaMedisService }     from './tenaga-medis.service';
@@ -31,16 +29,16 @@ export class DokterDashboardComponent implements OnInit {
   selectedAmbulans: Ambulans = null;
 
   constructor(
-    private route: ActivatedRoute,
     private tenagaMedisService: TenagaMedisService,
 		private poliklinikService: PoliklinikService,
     private ambulansService: AmbulansService
 	) {}
 
   ngOnInit() {
-    this.route.params
-      .switchMap((params: Params) => this.tenagaMedisService.getDokter(params['noPegawai']))
-      .subscribe(dokter => { this.dokter = dokter });
+    let noPegawai: string = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
+    this.tenagaMedisService.getDokter(noPegawai).subscribe(
+      dokter => this.dokter = dokter
+    );
 
     this.poliklinikService.getAllPoliklinik().subscribe(
       data => { this.allPoliklinik = data }

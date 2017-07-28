@@ -12,7 +12,7 @@ export class AuthenticationService {
   private users: User[] = [
     {no_pegawai: 'D001', name: 'Dokter', role: 'dokter', password: 'dokter', other: ''},
     {no_pegawai: 'P001', name: 'Perawat', role: 'perawat', password: 'perawat', other: ''},
-    {no_pegawai: 'L001', name: 'Petugas Lab', role: 'petugaslab', password: 'petugaslab', other: ''},
+    {no_pegawai: 'L001', name: 'Petugas Lab', role: 'petugasLab', password: 'petugaslab', other: ''},
     {no_pegawai: 'A001', name: 'Admin', role: 'admin', password: 'admin', other: ''},
     {no_pegawai: 'F001', name: 'Front Office', role: 'frontOffice', password: 'frontOffice', other: '{"kategori_antrian": "A"}'},
     {no_pegawai: 'AP001', name: 'Staf Apotek', role: 'stafApotek', password: 'stafapotek', other: ''},
