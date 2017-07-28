@@ -38,7 +38,6 @@ export class TransaksiService {
 			.map((res: Response) => res.json());
 	}
 
-
 	getLatestOpenTransaksi(id_pasien : number): Observable<Transaksi> {
 		const url = `${this.transaksiUrl}` + '/' + "latest" + '/' + id_pasien;
 		return this.http.get(url)
@@ -65,7 +64,7 @@ export class TransaksiService {
 			.map((res: Response) => res.json());
 	}
 
-	getTransaksiByKodePasien(kode_pasien: string): Observable<Transaksi> {
+	getTransaksiByKodePasien(kode_pasien: string): Observable<Transaksi[]> {
 		return this.http.get(this.transaksiUrl + '/' + kode_pasien + '/kode_pasien')
 			.map((res: Response) => res.json());
 	}

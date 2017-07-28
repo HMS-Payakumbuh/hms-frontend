@@ -1,6 +1,4 @@
 import { Component, OnInit, Input }		  from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Location }							  from '@angular/common';
 import { Headers, Http, Response, RequestOptions }		from '@angular/http';
 
 import { TenagaMedis }            from './tenaga-medis';
@@ -48,8 +46,6 @@ export class PetugasLabDashboardComponent implements OnInit {
   selectedLaboratorium: Laboratorium = null;
 
   constructor(
-    private http: Http,
-    private route: ActivatedRoute,
     private tindakanService: TindakanService,
     private tenagaMedisService: TenagaMedisService,
 		private laboratoriumService: LaboratoriumService,
@@ -62,16 +58,15 @@ export class PetugasLabDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params
-      .switchMap((params: Params) => this.tenagaMedisService.getTenagaMedis(params['noPegawai']))
-      .subscribe(
-        tenagaMedis => {
-          this.tenagaMedis = tenagaMedis;
-          this.tindakanService.getTindakanWithoutHasilLab(this.tenagaMedis.no_pegawai).subscribe(
-            data => this.allTindakan = data
-          )
-        }
-      );
+    let noPegawai: string = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
+    this.tenagaMedisService.getTenagaMedis(noPegawai).subscribe(
+      tenagaMedis => {
+        this.tenagaMedis = tenagaMedis;
+        this.tindakanService.getTindakanWithoutHasilLab(this.tenagaMedis.no_pegawai).subscribe(
+          data => this.allTindakan = data
+        )
+      }
+    );
 
     this.laboratoriumService.getAllLaboratorium().subscribe(
       data => { this.allLaboratorium = data }

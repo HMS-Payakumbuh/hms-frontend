@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { Antrian }                from './antrian';
@@ -40,7 +40,15 @@ export class AntrianComponent implements OnInit {
   socket: any = null;
   user: any;
   searchTransaksiRujukanTerm: string = '';
-  transaksiRujukan: Transaksi = null;
+  transaksiRujukan: Transaksi[] = [];
+
+  @Input()
+  public alerts: Array<IAlert> = [];
+
+  public filterQuery = "";
+  public rowsOnPage = 4;
+  public sortBy = "no_transaksi";
+  public sortOrder = "asc";
 
   constructor(
     private route: ActivatedRoute,
@@ -162,11 +170,32 @@ export class AntrianComponent implements OnInit {
 
   private searchTransaksiRujukan() {
     this.transaksiService.getTransaksiByKodePasien(this.searchTransaksiRujukanTerm).subscribe(
-      data => this.transaksiRujukan = data
+      data => {
+        if (data.length == 0) {
+          this.transaksiRujukan = [];
+          this.alerts.pop();
+          this.alerts.push({id: 1, type: 'warning', message: 'Pasien tidak ditemukan'});
+        }
+        else {
+          this.alerts.pop();
+          this.transaksiRujukan = data;
+        }
+      }
     )
+  }
+
+  public closeAlert(alert: IAlert) {
+    const index: number = this.alerts.indexOf(alert);
+    this.alerts.splice(index, 1);
   }
 
   submitted = false;
 
   onSubmit() { this.submitted = true; }
+}
+
+export interface IAlert {
+  id: number;
+  type: string;
+  message: string;
 }
