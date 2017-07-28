@@ -83,6 +83,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
   pelayananBaru: string;
   rencana: any = {};
   rujuk: boolean = false;
+  firstRekamMedis: boolean = false;
   namaPoliRujuk: string = null;
 
 	allDiagnosisReference: DiagnosisReference[];
@@ -215,7 +216,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
           );
 
           this.rekamMedisService.createRekamMedis(this.rekamMedis).subscribe(
-            data => {}
+            data => { this.firstRekamMedis = true; }
           );
         }
       }

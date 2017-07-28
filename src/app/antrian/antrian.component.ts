@@ -65,10 +65,7 @@ export class AntrianComponent implements OnInit {
     });
     if (this.layanan === undefined) {
       this.layanan = 'Front Office';
-      this.antrianService.getAllAntrianFrontOffice().subscribe(
-        data => { this.allKategori = _.uniqBy(data, 'kategori_antrian') }
-      );
-
+      this.updateKategori();
       this.isfrontoffice = true;
       this.user = JSON.parse(localStorage.getItem('currentUser'));
       this.kategori = JSON.parse(this.user.other).kategori_antrian;
@@ -87,10 +84,17 @@ export class AntrianComponent implements OnInit {
     }
   }
 
+  private updateKategori() {
+    this.antrianService.getAllAntrianFrontOffice().subscribe(
+        data => { this.allKategori = _.sortBy(_.uniqBy(data, 'kategori_antrian'), 'kategori_antrian') }
+      );
+  }
+
   private updateAntrian() {
     this.route.params
         .switchMap((params: Params) => this.antrianService.getAntrian(params['namaLayanan']))
         .subscribe(allAntrian => {
+          this.updateKategori();
           this.allAntrian = allAntrian;
           this.total = allAntrian.length;
           this.antrian = this.nextAntrian(this.umum);
