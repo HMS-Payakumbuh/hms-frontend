@@ -14,6 +14,7 @@ import { KlaimComponent }   					from './pembayaran/klaim/klaim.component';
 import { KlaimDetailComponent }   		from './pembayaran/klaim/klaim-detail.component';
 
 import { PasienFormComponent }			from './pasien/pasien-form.component';
+import { PasienIGDFormComponent }		from './pasien/pasien-igd-form.component';
 import { PasienListComponent }			from './pasien/pasien-list.component';
 import { CatatanKematianFormComponent } from './pasien/catatan-kematian-form.component';
 import { AntrianComponent }				from './antrian/antrian.component';
@@ -107,6 +108,7 @@ const routes: Routes = [
 	{ path: 'klaim', component: KlaimComponent },
 	{ path: 'klaim/:id', component: KlaimDetailComponent },
 	{ path: 'pendaftaran', component: PasienFormComponent },
+	{ path: 'pendaftaran-igd', component: PasienIGDFormComponent },
 	{ path: 'pendaftaran/:namaLayanan', component: PasienFormComponent },
 	{ path: 'antrian', component: AntrianComponent },
 	{ path: 'antrian/:namaLayanan', component: AntrianComponent },
@@ -154,8 +156,8 @@ const routes: Routes = [
 	{ path: 'daftar-diagnosis', component: DiagnosisReferenceListComponent },
 	{ path: 'daftar-tindakan', component: TindakanReferenceListComponent },
 
-	{ path: 'dokter-dashboard/:noPegawai', component: DokterDashboardComponent },
-	{ path: 'petugas-lab-dashboard/:noPegawai', component: PetugasLabDashboardComponent },
+	{ path: 'dokter-dashboard', component: DokterDashboardComponent },
+	{ path: 'petugas-lab-dashboard', component: PetugasLabDashboardComponent },
 
 	{ path: 'stok-obat', component: DaftarStokObatComponent },
 	{ path: 'stok-obat/:id', component: DetailStokObatComponent },

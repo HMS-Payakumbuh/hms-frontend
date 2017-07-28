@@ -21,12 +21,13 @@
 				</div>
 
 				<div *ngIf="user != null" class="list-group list-group-flush">
-					<a *ngIf="user.role == 'dokter'" [routerLink]="['/dokter-dashboard', user.no_pegawai]" class="list-group-item list-group-item-info">Home</a>
-					<a *ngIf="user.role == 'petugaslab'" [routerLink]="['/petugas-lab-dashboard', user.no_pegawai]" class="list-group-item list-group-item-info">Home</a>
+					<a *ngIf="user.role == 'dokter'" [routerLink]="['/dokter-dashboard']" class="list-group-item list-group-item-info">Home</a>
+					<a *ngIf="user.role == 'petugasLab'" [routerLink]="['/petugas-lab-dashboard']" class="list-group-item list-group-item-info">Home</a>
 
 					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/daftar-antrian" class="list-group-item list-group-item-info">Pendaftaran Antrian</a>
 					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/daftar-pasien" class="list-group-item list-group-item-info">List Pasien</a>
 					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/pendaftaran" class="list-group-item list-group-item-info">Registrasi</a>
+					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/pendaftaran-igd" class="list-group-item list-group-item-info">Registrasi IGD</a>
 					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/antrian" class="list-group-item list-group-item-info">Antrian</a>
 
 					<a *ngIf="user.role == 'admin'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#RawatJalanSubMenu">Rawat Jalan</a>
