@@ -7,6 +7,8 @@ import { Poliklinik }             from '../layanan/poliklinik';
 import { PoliklinikService }      from '../layanan/poliklinik.service';
 import { Transaksi }              from '../transaksi/transaksi';
 import { TransaksiService }       from '../transaksi/transaksi.service'
+import { JadwalDokter }           from '../tenaga-medis/jadwal-dokter';
+import { TenagaMedisService }     from '../tenaga-medis/tenaga-medis.service';
 import { User }                   from '../auth/user';
 import { AuthenticationService }  from '../auth/authentication.service';
 
@@ -21,7 +23,8 @@ import * as io from "socket.io-client";
     AntrianService,
     AuthenticationService,
     PoliklinikService,
-    TransaksiService
+    TransaksiService,
+    TenagaMedisService
   ]
 })
 export class AntrianComponent implements OnInit {
@@ -40,7 +43,10 @@ export class AntrianComponent implements OnInit {
   socket: any = null;
   user: any;
   searchTransaksiRujukanTerm: string = '';
-  transaksiRujukan: Transaksi[] = [];
+  transaksiRujukan: any = null;
+  allAvailableDokter: JadwalDokter[] = [];
+  selectedDokter: JadwalDokter = null;
+  idTransaksi: number = null;
 
   @Input()
   public alerts: Array<IAlert> = [];
@@ -55,8 +61,9 @@ export class AntrianComponent implements OnInit {
     private antrianService : AntrianService,
     private authenticationService: AuthenticationService,
     private poliklinikService: PoliklinikService,
-    private transaksiService: TransaksiService
-  ) { this.socket = io('http://localhost'); }
+    private transaksiService: TransaksiService,
+    private tenagaMedisService: TenagaMedisService
+  ) { this.socket = io('http://localhost') }
 
   ngOnInit() {
     this.sub = this.route.params
@@ -83,8 +90,16 @@ export class AntrianComponent implements OnInit {
         this.ispoli = true;
       else
         this.ispoli = false;
+      this.tenagaMedisService.getAllAvailableJadwalDokter(this.layanan).subscribe(
+        data => { this.allAvailableDokter = data }
+      )
       this.socket.on('antrianLayanan', this.updateAntrian.bind(this));
     }
+  }
+
+  public closeAlert(alert: IAlert) {
+    const index: number = this.alerts.indexOf(alert);
+    this.alerts.splice(index, 1);
   }
 
   private updateAntrian() {
@@ -137,6 +152,7 @@ export class AntrianComponent implements OnInit {
           this.updateAntrianFrontOffice();
         });
       } else {
+        this.idTransaksi = this.antrian.id_transaksi;
         this.antrianService.destroyAntrian(this.antrian.id_transaksi, this.antrian.no_antrian).subscribe(data => {
           this.updateAntrian();
         });
@@ -172,21 +188,31 @@ export class AntrianComponent implements OnInit {
     this.transaksiService.getTransaksiByKodePasien(this.searchTransaksiRujukanTerm).subscribe(
       data => {
         if (data.length == 0) {
-          this.transaksiRujukan = [];
+          this.transaksiRujukan = null;
           this.alerts.pop();
           this.alerts.push({id: 1, type: 'warning', message: 'Pasien tidak ditemukan'});
         }
         else {
-          this.alerts.pop();
           this.transaksiRujukan = data;
+          this.alerts.pop();
         }
       }
     )
   }
 
-  public closeAlert(alert: IAlert) {
-    const index: number = this.alerts.indexOf(alert);
-    this.alerts.splice(index, 1);
+  private setIdTransaksi(id: number) {
+    this.idTransaksi = id;
+  }
+
+  private periksa(no_pegawai, nama_poli, id_transaksi) {
+    let request = {
+      no_pegawai: no_pegawai,
+      nama_poli: nama_poli,
+      id_transaksi: id_transaksi
+    }
+    this.tenagaMedisService.periksa(request).subscribe(
+      data => { }
+    )
   }
 
   submitted = false;

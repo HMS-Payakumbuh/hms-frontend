@@ -1,38 +1,57 @@
 import { Component, OnInit }		  from '@angular/core';
-
-import { Dokter }                 from './dokter';
-import { TenagaMedisService }     from './tenaga-medis.service';
-
-import { Poliklinik }             from '../layanan/poliklinik';
-import { PoliklinikService }      from '../layanan/poliklinik.service';
-
+import { Router }                 from '@angular/router';
 import { Ambulans }               from '../layanan/ambulans';
 import { AmbulansService }        from '../layanan/ambulans.service';
+import { Antrian }                from '../antrian/antrian';
+import { AntrianService }         from '../antrian/antrian.service';
+import { Dokter }                 from './dokter';
+import { Poliklinik }             from '../layanan/poliklinik';
+import { PoliklinikService }      from '../layanan/poliklinik.service';
+import { Transaksi }              from '../transaksi/transaksi';
+import { TransaksiService }       from '../transaksi/transaksi.service';
+import { TenagaMedisService }     from './tenaga-medis.service';
+
+import * as io from "socket.io-client";
 
 @Component({
   selector: 'dokter-dashboard-page',
   templateUrl: './dokter-dashboard.component.html',
   providers: [
-    TenagaMedisService,
+    AntrianService,
+    AmbulansService,
     PoliklinikService,
-    AmbulansService
+    TenagaMedisService,
+    TransaksiService
   ]
 })
 
 export class DokterDashboardComponent implements OnInit {
   dokter: Dokter = null;
+  socket: any = null;
 
-  allPoliklinik: Poliklinik[] = [];
   allAmbulans: Ambulans[] = [];
+  allAntrian: Antrian[] = [];
+  allPoliklinik: Poliklinik[] = [];
 
+  poliklinikSelected: boolean = false;
   selectedPoliklinik: Poliklinik = null;
   selectedAmbulans: Ambulans = null;
+  currentTransaksi: Transaksi = null;
+  nama_poli: string = null;
+
+  public filterQuery = "";
+  public rowsOnPage = 5;
+  public sortBy = "no_antrian";
+  public sortOrder = "asc";
 
   constructor(
-    private tenagaMedisService: TenagaMedisService,
+    private router: Router,
+    private ambulansService: AmbulansService,
+    private antrianService: AntrianService,
 		private poliklinikService: PoliklinikService,
-    private ambulansService: AmbulansService
-	) {}
+    private tenagaMedisService: TenagaMedisService,
+    private transaksiService: TransaksiService
+	) { this.socket = io('http://localhost') }
 
   ngOnInit() {
     let noPegawai: string = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
@@ -47,12 +66,32 @@ export class DokterDashboardComponent implements OnInit {
     this.ambulansService.getAllAmbulans().subscribe(
       data => { this.allAmbulans = data }
     );
+
+    this.socket.on(noPegawai, (message) => this.updateCurrentPasien(message));
   }
 
   panggilAmbulans() {
     this.selectedAmbulans.status = "In Use";
     this.ambulansService.updateAmbulans(this.selectedAmbulans.nama, this.selectedAmbulans).subscribe(
       data => {}
+    )
+  }
+
+  showDaftarPasien() {
+    this.antrianService.getAllAntrian(this.selectedPoliklinik.nama).subscribe(
+      data => {
+        this.allAntrian = data;
+        this.poliklinikSelected = true;
+      }
+    )
+  }
+
+  updateCurrentPasien(message: any) {
+    if (this.selectedPoliklinik != null)
+      this.showDaftarPasien()
+    this.nama_poli = message.nama_poli;
+    this.transaksiService.getTransaksi(message.id_transaksi).subscribe(
+      data => this.currentTransaksi = data
     )
   }
 }
