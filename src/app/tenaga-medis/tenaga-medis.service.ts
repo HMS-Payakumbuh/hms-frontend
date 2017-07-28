@@ -73,7 +73,7 @@ export class TenagaMedisService {
 			.map((res: Response) => res.json());
 	}
 
-	getAllAvailableJadwalDokter(nama_poli: string): Observable<JadwalDokter> {
+	getAllAvailableJadwalDokter(nama_poli: string): Observable<JadwalDokter[]> {
 		return this.http.get(this.jadwalDokterUrl + '/' + nama_poli)
 			.map((res: Response) => res.json());
 	}
@@ -101,6 +101,15 @@ export class TenagaMedisService {
 		let options = new RequestOptions({headers: headers});
 
 		return this.http.delete(this.jadwalDokterUrl + '/' + nama_poli + '/' + np_dokter + '/' + tanggal, options)
+			.map((res: Response) => res.json());
+	}
+
+	periksa(request: any) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(request);
+
+		return this.http.post(this.dokterUrl + '/periksa', body, options)
 			.map((res: Response) => res.json());
 	}
 }
