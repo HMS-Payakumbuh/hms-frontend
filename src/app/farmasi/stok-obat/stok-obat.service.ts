@@ -40,6 +40,17 @@ export class StokObatService {
 		    .map((res: Response) => res.json());			
 	}
 
+	getStokObatByLocationType(jenis_lokasi: number): Observable<StokObat[]> {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('jenis_lokasi', ''+jenis_lokasi);
+
+		let requestOptions = new RequestOptions();
+		requestOptions.params = params;
+
+		return this.http.get(this.stokObatUrl+'/search_by_location_type', requestOptions)
+		    .map((res: Response) => res.json());			
+	}
+
 	createStokObat(stokObat: StokObat) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });
