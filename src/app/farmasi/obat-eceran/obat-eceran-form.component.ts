@@ -47,8 +47,7 @@ export class ObatEceranFormComponent {
 		this.obatEceran = new ObatEceran();	
 		this.obatEceranItems = [];
 
-		// TO-DO: Change Location ID to dynamic based on which is the Apotek
-		this.stokObatService.getStokObatByLocation(2).subscribe(
+		this.stokObatService.getStokObatByLocationType(1).subscribe( // 1 adalah kode untuk jenis lokasi apotek
 			data => { this.allStokObatAtLocation = data }
 		);
 	}

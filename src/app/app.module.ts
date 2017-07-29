@@ -128,6 +128,8 @@ import { DaftarStockOpnameComponent }      from './farmasi/stock-opname/daftar-s
 import { DetailStockOpnameComponent }      from './farmasi/stock-opname/detail-stock-opname.component';
 import { StockOpnameFormComponent }      from './farmasi/stock-opname/stock-opname-form.component';
 
+import { LaporanComponent }        from './farmasi/laporan/laporan.component';
+
 import { SettingsComponent }        from './settings/settings.component';
 
 import { AppRoutingModule }         from './app-routing.module';
@@ -269,6 +271,8 @@ import { AppComponent }             from './app.component';
         DaftarStockOpnameComponent,
         DetailStockOpnameComponent,
         StockOpnameFormComponent,
+
+        LaporanComponent,
 
         SettingsComponent,
     ],
