@@ -54,18 +54,6 @@
                     <textarea class="form-control" id="address" [(ngModel)]="pasien.alamat" name="address"></textarea>
                   </div>
 
-                  <div class="form-group">
-                    <label for="phone">Kontak</label>
-                    <input type="tel" class="form-control" id="phone" [(ngModel)]="pasien.kontak" name="phone">
-                  </div>
-
-                  <div class="form-group">
-                    <label for="blood">Golongan Darah</label>
-                    <select class="form-control" id="blood" [(ngModel)]="pasien.gol_darah" name="blood">
-                      <option *ngFor="let blood of bloodTypes" [value]="blood">{{blood}}</option>
-                    </select>
-                  </div>
-
                   <label class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" [checked]="rujukanChecked" (change)="rujukanChecked = !rujukanChecked">
                     <span class="custom-control-indicator"></span>
@@ -181,18 +169,6 @@
                     <textarea class="form-control" [disabled]="!update" id="address" [(ngModel)]="pasien.alamat" name="address"></textarea>
                   </div>
 
-                  <div class="form-group">
-                    <label for="phone">Kontak</label>
-                    <input type="tel" class="form-control" [disabled]="!update" id="phone" [(ngModel)]="pasien.kontak" name="phone">
-                  </div>
-
-                  <div class="form-group">
-                    <label for="blood">Golongan Darah</label>
-                    <select class="form-control" id="blood" [disabled]="!update" [(ngModel)]="pasien.gol_darah" name="blood">
-                      <option *ngFor="let blood of bloodTypes" [value]="blood">{{blood}}</option>
-                    </select>
-                  </div>
-                  
                   <div *ngIf="asuransiChecked">
                     <div class="form-group" *ngFor="let asuransi of allAsuransi; let i = index; trackBy: customTrackBy ">
                       <label for="asuransi">Asuransi {{i + 1}}</label>

@@ -193,9 +193,8 @@ export class PasienFormComponent implements OnInit {
       data => {
         if(data.error) {
           alert(data.error);
-          this.ngOnInit();
         } else {
-          this.location.back();
+          this.ngOnInit();
         }
       }
     );

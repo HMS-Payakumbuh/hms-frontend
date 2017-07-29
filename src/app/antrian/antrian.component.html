@@ -40,7 +40,7 @@
 									<button type="button" class="btn btn-success" [routerLink] = "['/pendaftaran', antrian.nama_layanan]" (click)="proses('proses')">Proses</button>
 								</div>
 								<div *ngIf="!isfrontoffice && isPoli">
-									<button type="button" class="btn btn-success" [routerLink] = "['/poliklinik', antrian.nama_layanan, antrian.id_transaksi]" (click)="proses('proses')">Proses</button>
+									<button type="button" class="btn btn-success" data-toggle="modal" [attr.data-target]="'#assignDokterModal'" (click)="proses('proses')">Proses</button>
 								</div>
 								<div *ngIf="!isfrontoffice && !isPoli">
 									<button type="button" class="btn btn-success" [routerLink] = "['/laboratorium', antrian.nama_layanan, antrian.id_transaksi]" (click)="proses('proses')">Proses</button>
@@ -71,10 +71,10 @@
 				<p *ngFor="let alert of alerts">
 					<ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
 				</p>
-				<div *ngIf="transaksiRujukan.length > 0">
+				<div *ngIf="transaksiRujukan != null">
 					<div class="row">
 						<div class="col-md-12">
-							<table class="table" [mfData]="transaksiRujukan" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+							<table class="table" [mfData]="transaksiRujukan.transaksi" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 								<thead>
 									<th><mfDefaultSorter by="kode_pasien">Kode Pasien</mfDefaultSorter></th>
 									<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
@@ -89,10 +89,10 @@
 										<td>{{transaksi.pasien.tanggal_lahir | date: 'dd-MMM-yyyy'}}</td>
 										<td class="text-left">{{transaksi.pasien.alamat}}</td>
 										<td>
-											<button *ngIf="isPoli" class="btn btn-success" [routerLink]="['/poliklinik', layanan, transaksi.id]">
+											<button *ngIf="ispoli" class="btn btn-success" data-toggle="modal" [attr.data-target]="'#assignDokterModal'" (click)="setIdTransaksi(transaksi.id)">
 												Proses
 											</button>
-											<button *ngIf="!isPoli" class="btn btn-success" [routerLink]="['/laboratorium', layanan, transaksi.id]">
+											<button *ngIf="!ispoli" class="btn btn-success" [routerLink]="['/laboratorium', layanan, transaksi.id]">
 												Proses
 											</button>
 										</td>
@@ -111,6 +111,35 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="modal fade" tabindex="-1" role="dialog" id="assignDokterModal" aria-hidden="true">
+	    <div class="modal-dialog" role="document">
+	      <div class="modal-content">
+
+	        <div class="modal-header bg-info text-white">
+	          <h5 class="modal-title">Assign Dokter</h5>
+	          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	            <i class="fa fa-times" aria-hidden="true"></i>
+	          </button>
+	        </div>
+
+	        <div class="modal-body">
+	          <label for="selectAmbulans">Pilih Dokter</label>
+	          <select class="form-control mb-3" id="selectDokter" [(ngModel)]="selectedDokter" name="selectDokter">
+	            <option *ngFor="let jadwalDokter of allAvailableDokter" [ngValue]="jadwalDokter">
+								{{jadwalDokter.np_dokter}} - {{jadwalDokter.nama_dokter}}
+							</option>
+	          </select>
+	        </div>
+
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+	          <button type="button" class="btn btn-success" data-dismiss="modal" (click)="periksa(selectedDokter.np_dokter, layanan, idTransaksi)">Proses</button>
+	        </div>
+
+	      </div>
+	    </div>
+	  </div>
 
 		<!--<div *ngIf="kategori || !isfrontoffice">
 			<div class="card-header card-info">

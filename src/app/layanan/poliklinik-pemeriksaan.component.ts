@@ -269,7 +269,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
           json.allDiagnosis = allDiagnosis;
           this.allRiwayatLama.push(json);
         }
-      }); 
+      });
   }
 
 	addSelectedDiagnosis(diagnosisReference: DiagnosisReference) {
