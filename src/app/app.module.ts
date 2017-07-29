@@ -33,8 +33,11 @@ import { FilterJenisKamarPipe }     from './pipe/filter-jenis-kamar.pipe';
 import { FilterKelasKamarPipe }     from './pipe/filter-kelas-kamar.pipe';
 import { FilterPemakaianKamarOperasiPipe }     from './pipe/filter-pemakaian-kamar-operasi.pipe';
 
-import { RegisterComponent }        from './auth/register.component';
-import { LoginComponent }           from './auth/login.component';
+import { AuthGuard }              from './auth/auth-guard.service';
+import { AuthenticationService }  from './auth/authentication.service';
+import { HomeComponent }          from './home.component';
+import { RegisterComponent }      from './auth/register.component';
+import { LoginComponent }         from './auth/login.component';
 
 import { TransaksiComponent }          from './transaksi/transaksi.component';
 import { TransaksiDetailComponent }    from './transaksi/transaksi-detail.component';
@@ -171,6 +174,7 @@ import { AppComponent }             from './app.component';
         FilterKelasKamarPipe,
         FilterPemakaianKamarOperasiPipe,
 
+        HomeComponent,
         RegisterComponent,
         LoginComponent,
 
@@ -272,9 +276,8 @@ import { AppComponent }             from './app.component';
 
         SettingsComponent,
     ],
-    bootstrap:    [
-	   AppComponent
-    ]
+    providers: [AuthGuard, AuthenticationService],
+    bootstrap: [AppComponent]
 })
 
 export class AppModule { }

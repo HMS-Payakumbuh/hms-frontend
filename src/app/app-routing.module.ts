@@ -1,6 +1,8 @@
-import { NgModule }      		from '@angular/core';
+import { NgModule }      				from '@angular/core';
 import { RouterModule, Routes }	from '@angular/router';
+import { AuthGuard }						from './auth/auth-guard.service';
 
+import { HomeComponent }							from './home.component';
 import { RegisterComponent }					from './auth/register.component';
 import { LoginComponent }							from './auth/login.component';
 
@@ -98,11 +100,12 @@ import { LaporanComponent }        from './farmasi/laporan/laporan.component';
 import { SettingsComponent }        from './settings/settings.component';
 
 const routes: Routes = [
-	{ path: '', redirectTo: '/login', pathMatch: 'full' },
 
 	{ path: 'register', component: RegisterComponent },
 	{ path: 'login', component: LoginComponent },
 
+	{ path: '', canActivate: [AuthGuard], component: HomeComponent },
+    
 	{ path: 'transaksi', component: TransaksiComponent },
 	{ path: 'transaksi/:id', component: TransaksiDetailComponent },
 	{ path: 'pembayaran', component: PembayaranComponent },
