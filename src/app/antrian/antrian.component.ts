@@ -34,7 +34,7 @@ export class AntrianComponent implements OnInit {
   umum: boolean = true;
   antrianEmpty:boolean;
   isfrontoffice: boolean;
-  ispoli: boolean;
+  isPoli: boolean;
   sub: any;
   layanan: string;
   socket: any = null;
@@ -77,16 +77,18 @@ export class AntrianComponent implements OnInit {
       this.updateAntrian();
       this.isfrontoffice = false;
       if (this.layanan.substring(0, 4) === 'Poli')
-        this.ispoli = true;
+        this.isPoli = true;
       else
-        this.ispoli = false;
+        this.isPoli = false;
       this.socket.on('antrianLayanan', this.updateAntrian.bind(this));
     }
   }
 
   private updateKategori() {
     this.antrianService.getAllAntrianFrontOffice().subscribe(
-        data => { this.allKategori = _.sortBy(_.uniqBy(data, 'kategori_antrian'), 'kategori_antrian') }
+        data => {
+          this.allKategori = _.sortBy(_.uniqBy(data, 'kategori_antrian'), 'kategori_antrian'); 
+        }
       );
   }
 
@@ -94,7 +96,7 @@ export class AntrianComponent implements OnInit {
     this.route.params
         .switchMap((params: Params) => this.antrianService.getAntrian(params['namaLayanan']))
         .subscribe(allAntrian => {
-          this.updateKategori();
+          console.log(allAntrian);
           this.allAntrian = allAntrian;
           this.total = allAntrian.length;
           this.antrian = this.nextAntrian(this.umum);
@@ -104,6 +106,8 @@ export class AntrianComponent implements OnInit {
             this.umum = !this.umum;
           if (allAntrian.length == 0) {
             this.antrianEmpty = true;
+          } else {
+            this.antrianEmpty = false;
           }
         });
   }
@@ -111,6 +115,7 @@ export class AntrianComponent implements OnInit {
   private updateAntrianFrontOffice() {
     this.antrianService.getAntrianFrontOffice(this.kategori)
       .subscribe(allAntrian => {
+        this.updateKategori();
         this.allAntrian = allAntrian;
         this.total = allAntrian.length;
         this.antrian = this.nextAntrian(this.umum);
@@ -120,6 +125,8 @@ export class AntrianComponent implements OnInit {
           this.umum = !this.umum;
         if (allAntrian.length == 0) {
           this.antrianEmpty = true;
+        } else {
+          this.antrianEmpty = false;
         }
       });
   }

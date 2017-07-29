@@ -201,6 +201,8 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
         if (data != null) {
           if (data.tanggal_waktu == this.transaksi.transaksi.waktu_masuk_pasien) {
             this.rekamMedis = data;
+            this.hasilPemeriksaan = JSON.parse(data.hasil_pemeriksaan);
+            this.keluhan = JSON.parse(data.anamnesis).keluhan;
           }
         }
 
