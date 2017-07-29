@@ -1,0 +1,49 @@
+  <div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-list-alt" aria-hidden="true"></i> Laporan
+				</h4>
+			</div>
+			<div class="card-block">
+				<div class="card-text">												
+					<div class="row">
+						<div class="col-md-12 pull-left">
+							<div class="form-group">
+							  	<label for="jenis"><b>Jenis</b></label>
+						  		<select class="form-control" [(ngModel)]="jenis">
+						  			<option>Stok Obat</option>
+						  			<option>Obat Masuk</option>
+						  			<option>Obat Pindah</option>
+						  			<option>Obat Rusak</option>
+						  			<option>Obat Eceran</option>
+						  			<option>Obat Tebus</option>
+						  			<option>Obat Tindakan</option>
+						  		</select>						  		
+							</div>
+							<div *ngIf="jenis != 'Stok Obat'" class="form-group">
+				                <label for="tanggal_mulai"><b>Tanggal Mulai</b></label>
+				                <input type="date" class="form-control" id="tanggal_mulai" [(ngModel)] = "tanggal_mulai" name="tanggal_mulai">
+             				</div>
+             				<div *ngIf="jenis != 'Stok Obat'" class="form-group">
+				                <label for="tanggal_selesai"><b>Tanggal Selesai</b></label>
+				                <input type="date" class="form-control" id="tanggal_selesai" [(ngModel)] = "tanggal_selesai" name="tanggal_selesai">
+             				</div>
+             				<div *ngIf="jenis == 'Stok Obat'" class="form-group">
+							  	<label for="lokasi"><b>Lokasi</b></label>
+						  		<select class="form-control" [(ngModel)]="lokasi">
+						  			<option *ngFor="let lokasiObat of allLokasiObat" [value]="lokasiObat.id">{{lokasiObat.nama}}</option>
+						  		</select>						  		
+							</div>				
+						</div>
+
+					</div>	
+					<div class="row">
+						<div class="col-md-5 pull-left">
+							<button type="button" class="btn btn-info" (click)="downloadLaporan()">Unduh laporan</button> 
+						</div>
+					</div>							
+				</div>
+			</div>	
+		</div>
+	</div>

@@ -93,6 +93,8 @@ import { DaftarStockOpnameComponent }      from './farmasi/stock-opname/daftar-s
 import { DetailStockOpnameComponent }      from './farmasi/stock-opname/detail-stock-opname.component';
 import { StockOpnameFormComponent }      from './farmasi/stock-opname/stock-opname-form.component';
 
+import { LaporanComponent }        from './farmasi/laporan/laporan.component';
+
 import { SettingsComponent }        from './settings/settings.component';
 
 const routes: Routes = [
@@ -161,32 +163,43 @@ const routes: Routes = [
 
 	{ path: 'stok-obat', component: DaftarStokObatComponent },
 	{ path: 'stok-obat/:id', component: DetailStokObatComponent },
+
 	{ path: 'lokasi-obat', component: DaftarLokasiObatComponent },
+
 	{ path: 'obat-masuk', component: DaftarObatMasukComponent },
 	{ path: 'obat-masuk/:id', component: DetailObatMasukComponent },
 	{ path: 'obat-masuk-form', component: ObatMasukFormComponent },
+
 	{ path: 'jenis-obat', component: DaftarJenisObatComponent },
 	{ path: 'jenis-obat/:id', component: DetailJenisObatComponent },
 	{ path: 'jenis-obat/edit/:id', component: EditJenisObatComponent },
 	{ path: 'jenis-obat-form', component: JenisObatFormComponent },
+
 	{ path: 'obat-tebus', component: DaftarObatTebusComponent },
 	{ path: 'obat-tebus/:id', component: DetailObatTebusComponent },
-	{ path: 'obat-tebus-form', component: ObatTebusFormComponent },
+	{ path: 'obat-tebus-form', component: ObatTebusFormComponent },	
 	{ path: 'resep-eksternal-form', component: ResepEksternalFormComponent },
 	{ path: 'obat-tebus-eksternal-form/:id', component: ObatTebusEksternalFormComponent },
+
 	{ path: 'obat-pindah', component: DaftarObatPindahComponent },
 	{ path: 'obat-pindah/:id', component: DetailObatPindahComponent },
 	{ path: 'obat-pindah-form', component: ObatPindahFormComponent },
+
 	{ path: 'obat-rusak', component: DaftarObatRusakComponent },
 	{ path: 'obat-rusak/:id', component: DetailObatRusakComponent },
 	{ path: 'obat-rusak-form', component: ObatRusakFormComponent },
+
 	{ path: 'obat-eceran', component: DaftarObatEceranComponent },
 	{ path: 'obat-eceran/:id', component: DetailObatEceranComponent },
 	{ path: 'obat-eceran-form', component: ObatEceranFormComponent },
+
 	{ path: 'stock-opname', component: SelectorStockOpnameComponent },
 	{ path: 'stock-opname/:lokasi', component: DaftarStockOpnameComponent },
 	{ path: 'detail-stock-opname/:id', component: DetailStockOpnameComponent },
 	{ path: 'stock-opname-form/:lokasi', component: StockOpnameFormComponent },
+
+	{ path: 'laporan', component: LaporanComponent },
+
 	{ path: 'settings', component: SettingsComponent }
 ];
 
