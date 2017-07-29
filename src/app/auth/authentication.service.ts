@@ -1,6 +1,6 @@
 import { Injectable }              from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import { Observable }              from 'rxjs';
+import { Observable }              from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import * as _ from "lodash";
 
@@ -27,14 +27,21 @@ export class AuthenticationService {
     this.token = currentUser && currentUser.token;
   }
 
-  login(no_pegawai: string, password: string): boolean {
+  isLoggedIn(): boolean {
+    if (localStorage.getItem('currentUser') != null)
+      return true;
+    else
+      return false;
+  }
+
+  login(no_pegawai: string, password: string): Observable<boolean> {
     let user = this.users.find(user => user.no_pegawai == no_pegawai && user.password == password);
     if (user != null) {
       localStorage.setItem('currentUser', JSON.stringify(user));
-      return true;
+      return Observable.of(true);
     }
     else {
-      return false;
+      return Observable.of(false);
     }
   }
 
