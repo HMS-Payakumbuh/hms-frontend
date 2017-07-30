@@ -160,7 +160,7 @@
 		</div>
 	</div>
 
-	<div id="invoice" class="row">
+	<div id="invoice" class="row" hidden>
 		<div class="col-md-12">
 			<div class="row">
 				<div class="col-md-3">
@@ -198,6 +198,11 @@
 							<td>{{kamar.kamar_rawatinap.jenis_kamar}} Kelas {{kamar.kamar_rawatinap.kelas}}</td>
 							<td>{{howLong(kamar.waktu_masuk, kamar.waktu_keluar)}} Hari @ Rp. {{kamar.kamar_rawatinap.harga_per_hari | number: '.2-2'}}</td>
 							<td>Rp. {{kamar.harga | number: '.2-2'}}</td>
+						</tr>
+						<tr *ngIf = "bayar_tambahan">
+							<td>Tambahan Biaya Naik Kelas</td>
+							<td></td>
+							<td>Rp. {{harga_tambahan | number: '.2-2'}}</td>
 						</tr>
 						<tr>
 							<td><b>Total Pembayaran</b></td>

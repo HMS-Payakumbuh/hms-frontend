@@ -81,7 +81,7 @@ export class PasienFormComponent implements OnInit {
 
   bloodTypes = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
 
-  allNamaAsuransi = ['BPJS', 'Bumidaya', 'Prudential', 'AIG'];
+  allNamaAsuransi = ['bpjs', 'bumidaya', 'prudential', 'aig'];
 
   inputFormatter = (value : any) => value.nama;
 
