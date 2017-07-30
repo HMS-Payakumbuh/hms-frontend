@@ -1,0 +1,42 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-list-alt" aria-hidden="true"></i> List Rekam Medis 
+				</h4>
+			</div>
+
+			<div class="card-block">
+				<div class="card-text">	
+					<table *ngIf="allRekamMedis" class="table" [mfData]="allRekamMedis" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+						<thead>
+							<th><mfDefaultSorter by="tanggal">Tanggal</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="keluhan">Keluhan Utama</mfDefaultSorter></th>
+							<th></th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let rekamMedis of mf.data; let i = index; ">
+								<td>{{rekamMedis.tanggal_waktu}}</td>
+								<td>{{rekamMedis.keluhan}}</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-info" [routerLink]="['/rekam_medis', pasienId, i]">Detail</button>
+								</td>
+							</tr>
+						</tbody>
+						<tfoot>
+				            <tr>
+				              <td colspan="9">
+				                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+				              </td>
+				            </tr>
+			            </tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="pull-right">
+			<button type="button" class="btn btn-warning" [routerLink]="['/poliklinik', layanan, transaksiId]">Kembali</button>
+		</div>
+	</div>
+</div>

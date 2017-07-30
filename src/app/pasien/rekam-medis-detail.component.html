@@ -96,13 +96,17 @@
 								<td><b>Keluhan Utama</b></td>
 								<td>{{anamnesis?.keluhan}}</td>
 							</tr>
-							<tr *ngIf="anamnesis?.riwayat_penyakit">
+							<tr>
 								<td><b>Riwayat Penyakit</b></td>
-								<td>{{anamnesis?.riwayat_penyakit}}</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-info" (click)="loadRiwayat()" data-toggle="modal" data-target="#riwayatModal" [attr.data-target]="'#riwayatModal'">Detail</button>
+								</td>
 							</tr>
-							<tr *ngIf="anamnesis?.alergi">
+							<tr>
 								<td><b>Alergi</b></td>
-								<td>{{anamnesis?.alergi}}</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#alergiModal" [attr.data-target]="'#alergiModal'">Detail</button>
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -154,10 +158,150 @@
 					</table>
 				</div>
 			</div>
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-sticky-note-o" aria-hidden="true"></i> Resep
+					</h4>
+				</div>
+				<div class="card-block">
+					<div *ngFor="let resep of allResep; index as i">
+						<div class="card card-outline-info mb-3">
+					  		<div class="card-block">
+								<label class="form-group"><b>Resep {{i + 1}}.</b></label>
+								<table class="table">
+									<thead>
+										<th>Merek</th>
+										<th>Nama Generik</th>
+										<th>Golongan</th>
+										<th>Jumlah</th>
+										<th>Aturan Pemakaian</th>
+										<th>Petunjuk Peracikan</th>
+									</thead>
+									<tbody>
+										<tr *ngFor="let resepItem of resep.resep_item; index as j">
+											<td>
+												<div *ngIf="resepItem.racikan_item.length == 0">
+													--
+												</div>
+												<div *ngIf="resepItem.racikan_item.length > 0">
+													<div *ngFor="let racikanItem of resepItem.racikan_item">
+														{{racikanItem.jenis_obat.merek_obat}} 
+													</div>
+												</div>
+											</td>
+											<td>
+												<div *ngIf="resepItem.racikan_item.length == 0">
+													--
+												</div>
+												<div *ngIf="resepItem.racikan_item.length > 0">
+													<div *ngFor="let racikanItem of resepItem.racikan_item">
+		 												{{racikanItem.jenis_obat.nama_generik}} 
+													</div>
+												</div>
+											</td>
+											<td>
+												<div *ngIf="resepItem.racikan_item.length == 0">
+													--
+												</div>
+												<div *ngIf="resepItem.racikan_item.length > 0">
+													<div *ngFor="let racikanItem of resepItem.racikan_item">
+														{{racikanItem.jenis_obat.golongan}} 
+													</div>
+												</div>
+											</td>
+											<td>
+												<div *ngIf="resepItem.racikan_item.length == 0">
+													--
+												</div>
+												<div *ngIf="resepItem.racikan_item.length > 0">
+													<div *ngFor="let racikanItem of resepItem.racikan_item">
+														{{racikanItem.jumlah}}
+													</div>
+												</div>
+											</td>
+											<td *ngIf="resepItem.racikan_item.length < 2">
+												{{resepItem.aturan_pemakaian}}
+											</td>
+											<td *ngIf="resepItem.racikan_item.length > 1">
+												{{resepItem.aturan_pemakaian}}
+											</td>
+											<td *ngIf="resepItem.racikan_item.length > 1">
+												{{resepItem.petunjuk_peracikan}}
+											</td>
+											<td *ngIf="resepItem.racikan_item.length <= 1">
+												--
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="pull-right">
 			<button type="button" class="btn btn-warning" (click)="goBack()">Kembali</button>
-			<button type="button" class="btn btn-success" *ngIf="!end" [routerLink]="['/rekam_medis', pasien?.id, noEntry]">Berikutnya</button>
 		</div>
+
+		<div class="modal fade" id="riwayatModal" tabindex="-1" role="dialog" aria-labelledby="riwayatModal" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				    <div class="modal-header">
+				        <h5 class="modal-title" id="riwayatModal">Rekap Kesehatan {{pasien?.nama_pasien}}</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <i class="fa fa-times" aria-hidden="true"></i>
+				        </button>
+				    </div>
+				    <div class="modal-body">
+					    <div class="form-group">
+				  			<h6>Riwayat Penyakit :</h6>
+				  			<div *ngFor="let riwayat of allRiwayatPenyakit, let i = index; ">
+					  			<div>{{i+1}}. {{riwayat}}</div>
+				  			</div>
+			  			</div>
+				    	<div *ngFor="let riwayat of allRiwayat, let i = index, ">
+					    	<div class="card card-outline-info mb-3">
+						  		<div class="card-block">
+								    <div class="form-group">
+								  		<h5 class="btn btn-info form-control" data-toggle="collapse" [attr.data-target]="'#riwayat-collapse-' + i">Tercatat pada {{riwayat.tanggal_waktu}}</h5>
+							  		</div>
+							  		<div class="collapse" id="riwayat-collapse-{{i}}">
+								  		<div class="form-group">
+								  			<h6>Diagnosis :</h6>
+									    	<div *ngFor="let diagnosis of riwayat.allDiagnosis, let i = index; ">
+								  				<div>{{i+1}}. {{diagnosis.daftar_diagnosis.nama}}</div>
+									    	</div>
+								    	</div>
+							    	</div>
+						    	</div>
+					    	</div>
+				    	</div>
+				    </div>
+			    </div>
+		    </div>
+	    </div>
+
+	    <div class="modal fade" id="alergiModal" tabindex="-1" role="dialog" aria-labelledby="alergiModal" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				    <div class="modal-header">
+				        <h5 class="modal-title" id="alergiModal">Alergi yang diderita {{pasien?.nama_pasien}}</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <i class="fa fa-times" aria-hidden="true"></i>
+				        </button>
+				    </div>
+				    <div class="modal-body">
+				    	<div *ngFor="let alergi of allAlergi, let i = index; ">
+					  		<div class="form-group">
+				  				<div class="form-group">{{i+1}}. {{alergi}}</div>
+					    	</div>
+				    	</div>
+				    </div>
+			    </div>
+		    </div>
+	    </div>
+
 	</div>
 </div>

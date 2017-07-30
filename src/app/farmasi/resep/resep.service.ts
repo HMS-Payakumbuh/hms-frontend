@@ -29,6 +29,11 @@ export class ResepService {
 			.map(allResep => allResep.find(resep => resep.id == id));
 	}
 
+	getResepOfRekamMedis(id_pasien: number, tanggal_waktu: number): Observable<Resep[]> {
+		return this.http.get(this.resepUrl + '/rekam_medis/' + id_pasien + '/' + tanggal_waktu)
+			.map((res: Response) => res.json());
+	}
+
 	createResep(resep: Resep[]) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });

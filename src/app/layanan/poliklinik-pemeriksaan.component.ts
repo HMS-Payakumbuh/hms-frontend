@@ -1,8 +1,9 @@
 import { Component, OnInit }              from '@angular/core';
-import { ActivatedRoute, Params }					from '@angular/router';
+import { ActivatedRoute, Params, Router }					from '@angular/router';
 import { Location }												from '@angular/common';
 import { Observable }											from 'rxjs/Observable';
 import { NgbTypeaheadConfig, NgbModal }   from '@ng-bootstrap/ng-bootstrap';
+import * as _ from "lodash";
 
 import { Transaksi }						from '../transaksi/transaksi';
 import { TransaksiService }			from '../transaksi/transaksi.service';
@@ -17,8 +18,6 @@ import { PoliklinikService }		from './poliklinik.service';
 
 import { TenagaMedis }          from '../tenaga-medis/tenaga-medis';
 import { TenagaMedisService }   from '../tenaga-medis/tenaga-medis.service';
-
-import { JadwalDokter }         from '../tenaga-medis/jadwal-dokter';
 
 import { Diagnosis }            from './diagnosis';
 import { DiagnosisReference }		from './diagnosis-reference';
@@ -68,18 +67,23 @@ import { ObatMasukService }		  from '../farmasi/obat-masuk/obat-masuk.service';
 export class PoliklinikPemeriksaanComponent implements OnInit {
 	transaksi: any = null;
 	poliklinik: Poliklinik;
-  jadwalDokter: JadwalDokter;
   rekamMedis: RekamMedis = null;
   hasilPemeriksaan: HasilPemeriksaan = new HasilPemeriksaan();
   keluhan: string;
-  allRiwayat: string[] = [];
-  allAlergi: string[] = [];
+  allRiwayat: any[] = [];
+  allRiwayatLama: any;
+  anamnesis: any;
+  allPenyakit: any;
+  allAlergi: any[] = [];
+  allRiwayatPenyakit: any;
+  allAlergiLama: any;
   pelayananLain: string[] = [];
   riwayatBaru: string;
   alergiBaru: string;
   pelayananBaru: string;
   rencana: any = {};
   rujuk: boolean = false;
+  firstRekamMedis: boolean = false;
   namaPoliRujuk: string = null;
 
 	allDiagnosisReference: DiagnosisReference[];
@@ -101,7 +105,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
 
   inputObatFormatter = (value : StokObat) => value.jenis_obat.merek_obat;
-  resultObatFormatter = (value: StokObat)	=> value.jenis_obat.merek_obat  + ' - ' + value.obat_masuk.nomor_batch;
+  resultObatFormatter = (value: StokObat)	=> value.jenis_obat.merek_obat  + ' - ' + value.nomor_batch;
 
   inputJenisObatFormatter = (value : JenisObat) => value.merek_obat;
   resultJenisObatFormatter = (value: JenisObat)	=> value.merek_obat;
@@ -136,6 +140,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
+    private router: Router,
 		private location: Location,
     private antrianService: AntrianService,
 		private transaksiService: TransaksiService,
@@ -163,10 +168,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
           this.poliklinik = poliklinik;
           this.stokObatService.getStokObatByLocation(this.poliklinik.id_lokasi).subscribe(
             allStokObatAtLocation => this.allStokObatAtLocation = allStokObatAtLocation
-          )
-          this.tenagaMedisService.getAllAvailableJadwalDokter(this.poliklinik.nama).subscribe(
-            data => this.jadwalDokter = data
-          )
+          );
         }
     );
 
@@ -200,25 +202,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
         if (data != null) {
           if (data.tanggal_waktu == this.transaksi.transaksi.waktu_masuk_pasien) {
             this.rekamMedis = data;
-            this.rekamMedisService.getRekamMedisOfPasien(this.transaksi.transaksi.id_pasien, 1).subscribe(
-              data => {
-                if (data.anamnesis != null) {
-                  let anamnesis: any = JSON.parse(data.anamnesis);
-                  if (anamnesis.riwayat_penyakit)
-                  this.allRiwayat = anamnesis.riwayat_penyakit.split(',');
-                  if (anamnesis.alergi)
-                  this.allAlergi = anamnesis.alergi.split(',');
-                }
-              }
-            )
-          }
-
-          if (data.anamnesis != null) {
-            let anamnesis: any = JSON.parse(data.anamnesis);
-            if (anamnesis.riwayat_penyakit)
-            this.allRiwayat = anamnesis.riwayat_penyakit.split(',');
-            if (anamnesis.alergi)
-            this.allAlergi = anamnesis.alergi.split(',');
           }
         }
 
@@ -226,7 +209,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
           this.rekamMedis = new RekamMedis(
             this.transaksi.transaksi.id_pasien,
             this.transaksi.transaksi.waktu_masuk_pasien,
-            this.jadwalDokter.np_dokter,
+            JSON.parse(localStorage.getItem('currentUser')).no_pegawai,
             '',
             '',
             '',
@@ -234,11 +217,58 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
           );
 
           this.rekamMedisService.createRekamMedis(this.rekamMedis).subscribe(
-            data => {}
+            data => { this.firstRekamMedis = true; }
           );
         }
       }
     )
+    this.rekamMedisService.getAllRekamMedisOfPasien(this.transaksi.transaksi.id_pasien)
+            .subscribe(allRekamMedis => {
+              let allAnamnesis: any[] = [];
+              for (let rekamMedis of allRekamMedis) {
+                let anamnesis: any = JSON.parse(rekamMedis.anamnesis);
+                allAnamnesis.push(anamnesis);
+              }
+              let allAlergi: any[] = [];
+              let allRiwayat: any[] = [];
+              for (let anamnesis of allAnamnesis) {
+                if (anamnesis) {
+                  if (_.includes(anamnesis.alergi, ',')) {
+                    let moreAlergi: any[] = anamnesis.alergi.split(',');
+                    allAlergi = allAlergi.concat(moreAlergi);
+                  } else if (anamnesis.alergi != '') {
+                    allAlergi.push(anamnesis.alergi);
+                  }
+
+                  if (_.includes(anamnesis.riwayat_penyakit, ',')) {
+                    let moreRiwayat: any[] = anamnesis.riwayat_penyakit.split(',');
+                    allRiwayat = allRiwayat.concat(moreRiwayat);
+                  } else if (anamnesis.riwayat_penyakit != '') {
+                    allRiwayat.push(anamnesis.riwayat_penyakit);
+                  }
+                }
+              }
+              this.allAlergiLama = _.uniq(allAlergi, true);
+              if (_.isEmpty(this.allAlergiLama))
+                this.allAlergiLama = ['Tidak ada alergi yang tercatat'];
+              this.allRiwayatPenyakit =  _.uniq(allRiwayat, true);
+              if (_.isEmpty(this.allRiwayatPenyakit))
+                this.allRiwayatPenyakit = ['Tidak ada penyakit yang tercatat'];
+            });
+  }
+
+  loadRiwayat(): void {
+    this.diagnosisService.getDiagnosisOfPasien(this.transaksi.transaksi.id_pasien)
+      .subscribe(data => {
+        let allTanggalDiagnosis: any[] =  _.uniqBy(data, 'tanggal_waktu');
+        this.allRiwayatLama = [];
+        for (let tanggalDiagnosis of allTanggalDiagnosis) {
+          let json: any = { tanggal_waktu: tanggalDiagnosis.tanggal_waktu };
+          let allDiagnosis: any = _.filter(data, {'tanggal_waktu': tanggalDiagnosis.tanggal_waktu});
+          json.allDiagnosis = allDiagnosis;
+          this.allRiwayatLama.push(json);
+        }
+      });
   }
 
 	addSelectedDiagnosis(diagnosisReference: DiagnosisReference) {
@@ -267,7 +297,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     temp.kode_tindakan = tindakanReference.kode;
     temp.id_pasien = this.transaksi.transaksi.id_pasien;
     temp.tanggal_waktu = this.rekamMedis.tanggal_waktu;
-    temp.np_tenaga_medis = this.jadwalDokter.np_dokter;
+    temp.np_tenaga_medis = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
     temp.nama_poli = this.poliklinik.nama;
     temp.nama_lab = null;
     temp.nama_ambulans = null;
@@ -280,9 +310,8 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	}
 
   addSelectedStokObat(obatTindakan: ObatTindakan, stokObat: StokObat) {
-    obatTindakan.stokObat = stokObat;
+    obatTindakan.stok_obat = stokObat;
     obatTindakan.id_jenis_obat = stokObat.id_jenis_obat;
-    obatTindakan.id_obat_masuk = stokObat.id_obat_masuk;
     obatTindakan.id_stok_obat = stokObat.id;
   }
 
@@ -400,7 +429,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
   saveResep() {
     this.resepService.createResep(this.allResep).subscribe(
       data => {
-        this.goBack();
+        this.router.navigate(['']);
       }
     )
   }

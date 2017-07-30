@@ -193,9 +193,8 @@ export class PasienFormComponent implements OnInit {
       data => {
         if(data.error) {
           alert(data.error);
-          this.ngOnInit();
         } else {
-          this.location.back();
+          this.ngOnInit();
         }
       }
     );
@@ -212,16 +211,27 @@ export class PasienFormComponent implements OnInit {
 
   private createTransaksi() {
     let kode_jenis_pasien:number = 1;
+    let payload: any;
     if (this.asuransiChecked) {
       kode_jenis_pasien = 2;
     }
-    let payload: any = {
-      id_pasien: this.pasien.id,
-      no_sep: Math.random().toString(36).substring(7),
-      kode_jenis_pasien: kode_jenis_pasien,
-      asuransi_pasien: this.asuransi.nama_asuransi,
-      jenis_rawat: 2,
-    };
+    if (this.asuransi.nama_asuransi == 'bpjs') {
+      payload = {
+        id_pasien: this.pasien.id,
+        no_sep: Math.random().toString(36).substring(7),
+        kode_jenis_pasien: kode_jenis_pasien,
+        asuransi_pasien: this.asuransi.nama_asuransi,
+        jenis_rawat: 2,
+      };
+    }
+    else {
+      payload = {
+        id_pasien: this.pasien.id,
+        kode_jenis_pasien: kode_jenis_pasien,
+        asuransi_pasien: this.asuransi.nama_asuransi,
+        jenis_rawat: 2,
+      };
+    }
     let request: any = {
       transaksi : payload
     }

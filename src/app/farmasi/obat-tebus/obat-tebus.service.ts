@@ -5,6 +5,7 @@ import { Observable }		from 'rxjs/Rx';
 import 'rxjs/add/operator/toPromise';
 
 import { ObatTebus }		from './obat-tebus';
+import { ObatTebusItem }		from './obat-tebus-item';
 import { ENV }				from '../../environment';
 
 @Injectable()
@@ -27,6 +28,11 @@ export class ObatTebusService {
 	getObatTebus(id: number): Observable<ObatTebus> {
 		return this.getAllObatTebus()
 			.map(allObatTebus => allObatTebus.find(obat_tebus => obat_tebus.id == id));
+	}
+
+	getTodayObatTebus(id_stok_obat: number): Observable<ObatTebusItem[]> {
+		return this.http.get(this.obatTebusUrl + '/today/' + id_stok_obat)
+			.map((res: Response) => res.json());
 	}
 
 	createObatTebus(obatTebus: ObatTebus) {

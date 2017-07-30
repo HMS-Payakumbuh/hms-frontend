@@ -20,7 +20,7 @@ export class DaftarStockOpnameComponent {
 	public filterQuery = "";
     public rowsOnPage = 5;
     public sortBy = "id";
-    public sortOrder = "asc";
+    public sortOrder = "desc";
 
     public lokasi: number;
     public lokasiData: LokasiObat;

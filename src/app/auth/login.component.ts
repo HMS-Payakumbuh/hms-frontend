@@ -1,6 +1,7 @@
-import { Component, OnInit, Input }		  from '@angular/core';
-import { Router }                 from '@angular/router';
-import { AuthenticationService }  from './authentication.service';
+import { Component, OnInit, Input }		from '@angular/core';
+import { Router }                     from '@angular/router';
+import { AuthenticationService }      from './authentication.service';
+import { User }                       from './user';
 
 @Component({
  	selector: 'login-page',
@@ -13,7 +14,6 @@ export class LoginComponent implements OnInit {
 
   @Input()
   public alerts: Array<IAlert> = [];
-  private backup: Array<IAlert>;
 
 	constructor(
     private router: Router,
@@ -21,8 +21,7 @@ export class LoginComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-    if (localStorage.getItem('currentUser') != null)
-      this.router.navigate(['pendaftaran']);
+
 	}
 
   public closeAlert(alert: IAlert) {
@@ -30,19 +29,18 @@ export class LoginComponent implements OnInit {
     this.alerts.splice(index, 1);
   }
 
-  public reset() {
-    this.alerts = this.backup.map((alert: IAlert) => Object.assign({}, alert));
-  }
-
   login() {
-    if(this.authenticationService.login(this.data.no_pegawai, this.data.password)) {
-      localStorage.getItem('currentUser');
-      window.location.assign('/pendaftaran');
-    }
-    else {
-      this.alerts.pop();
-      this.alerts.push({id: 1, type: 'warning', message: 'Login gagal, silakan coba lagi'});
-    }
+    this.authenticationService.login(this.data.no_pegawai, this.data.password).subscribe(
+      () => {
+        if (this.authenticationService.isLoggedIn()) {
+          window.location.assign('');
+        }
+        else {
+          this.alerts.pop();
+          this.alerts.push({id: 1, type: 'warning', message: 'Login gagal, silakan coba lagi'});
+        }
+      }
+    );
   }
 }
 

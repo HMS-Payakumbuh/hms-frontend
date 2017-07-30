@@ -11,8 +11,7 @@ export class StockOpnameItem {
     public id_obat_masuk: number = null,
     public jumlah_awal: number = null,
     public jumlah_akhir: number = null,
-    public jumlah_sebenarnya: number = null,
-    public obat_masuk: ObatMasuk = new ObatMasuk(),
+    public jumlah_fisik: number = null,
     public jenis_obat: JenisObat = new JenisObat(),
     public stok_obat: StokObat = new StokObat()
   ) {  }

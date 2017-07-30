@@ -11,7 +11,7 @@
 						<tbody>
 							<tr>
 								<td><b>Kode Obat</b></td>
-								<td>{{obatMasuk.barcode}}</td>	
+								<td>{{obatMasuk.stok_obat.barcode}}</td>	
 							</tr>
 							<tr>
 								<td><b>ID Jenis Obat</b></td>
@@ -39,7 +39,7 @@
 							</tr>
 							<tr>
 								<td><b>Nomor Batch</b></td>								
-								<td>{{obatMasuk.nomor_batch}}</td>
+								<td>{{obatMasuk.stok_obat.nomor_batch}}</td>
 							</tr>
 							<tr>
 								<td><b>Waktu Masuk</b></td>								
@@ -47,12 +47,12 @@
 							</tr>
 							<tr>
 								<td><b>Kadaluarsa</b></td>								
-								<td>{{obatMasuk.kadaluarsa | date:'d MMM y'}}</td>
+								<td>{{obatMasuk.stok_obat.kadaluarsa | date:'d MMM y'}}</td>
 							</tr>
 
 							<tr>
 								<td><b>Harga Beli Satuan</b></td>								
-								<td>Rp. {{obatMasuk.harga_beli}}</td>
+								<td>Rp. {{obatMasuk.harga_beli_satuan}}</td>
 							</tr>
 							<tr>
 								<td><b>Jumlah</b></td>								

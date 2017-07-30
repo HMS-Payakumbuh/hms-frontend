@@ -25,8 +25,8 @@ export class ObatEceranFormComponent {
 
 	public allStokObatAtLocation: StokObat[];
 
-	inputFormatter = (value : StokObat) => value.jenis_obat.merek_obat + ' - ' + value.obat_masuk.nomor_batch;
-	resultFormatter = (value: StokObat)	=> value.jenis_obat.merek_obat + ' - ' + value.obat_masuk.nomor_batch;	
+	inputFormatter = (value : StokObat) => value.jenis_obat.merek_obat + ' - ' + value.nomor_batch;
+	resultFormatter = (value: StokObat)	=> value.jenis_obat.merek_obat + ' - ' + value.nomor_batch;	
 
 	searchStokObat = (text$: Observable<string>) =>
 		text$
@@ -47,8 +47,7 @@ export class ObatEceranFormComponent {
 		this.obatEceran = new ObatEceran();	
 		this.obatEceranItems = [];
 
-		// TO-DO: Change Location ID to dynamic based on which is the Apotek
-		this.stokObatService.getStokObatByLocation(2).subscribe(
+		this.stokObatService.getStokObatByLocationType(1).subscribe( // 1 adalah kode untuk jenis lokasi apotek
 			data => { this.allStokObatAtLocation = data }
 		);
 	}
@@ -57,12 +56,10 @@ export class ObatEceranFormComponent {
 	    let temp = new ObatEceranItem();
 
 	    temp.jumlah = null;
-	    temp.keterangan = '';
 
 		temp.id_jenis_obat = stokObat.id_jenis_obat;
-    	temp.id_obat_masuk = stokObat.id_obat_masuk;
     	temp.id_stok_obat = stokObat.id;
-    	temp.obat_masuk = stokObat.obat_masuk;
+    	temp.stok_obat = stokObat;
     	temp.jenis_obat = stokObat.jenis_obat;
     	temp.harga_jual_realisasi = temp.jenis_obat.harga_jual_satuan;
 

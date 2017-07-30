@@ -16,6 +16,7 @@
 					                <option>Kadaluarsa</option>
 					                <option>Hilang</option>
 					                <option>Rusak</option>
+					                <option>Selisih</option>
 				                </select>
 							</div>
 						</div>
@@ -35,9 +36,9 @@
 						<tbody>
 							<tr>								
 								<th><mfDefaultSorter by="waktu_keluar">Waktu Keluar</mfDefaultSorter></th>
-								<th><mfDefaultSorter by="obat_masuk.barcode">Kode Obat</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="stok_obat.barcode">Kode Obat</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="jenis_obat.merek_obat">Merek Obat</mfDefaultSorter></th>
-								<th><mfDefaultSorter by="obat_masuk.kadaluarsa">Kadaluarsa</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="stok_obat.kadaluarsa">Kadaluarsa</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="jumlah">Jumlah</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="alasan">Alasan</mfDefaultSorter></th>							
 								<th><mfDefaultSorter by="keterangan">Keterangan</mfDefaultSorter></th>
@@ -45,9 +46,9 @@
 							</tr>
 							<tr *ngFor="let obatRusak of mf.data">
 								<td>{{obatRusak.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>	
-								<td>{{obatRusak.obat_masuk.barcode}}</td>
+								<td>{{obatRusak.stok_obat.barcode}}</td>
 								<td>{{obatRusak.jenis_obat.merek_obat}}</td>	
-								<td>{{obatRusak.obat_masuk.kadaluarsa | date:'d MMM y'}}</td>
+								<td>{{obatRusak.stok_obat.kadaluarsa | date:'d MMM y'}}</td>
 								<td>{{obatRusak.jumlah}} {{obatRusak.jenis_obat.satuan}}</td>
 								<td>{{obatRusak.alasan}}</td>
 								<td>{{obatRusak.keterangan}}</td>						
