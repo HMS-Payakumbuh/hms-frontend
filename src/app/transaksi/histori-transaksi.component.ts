@@ -8,16 +8,14 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 
 
 @Component({
- 	selector: 'transaksi-page',
- 	templateUrl: './transaksi.component.html',
+ 	selector: 'histori-transaksi-page',
+ 	templateUrl: './histori-transaksi.component.html',
  	providers: [TransaksiService, AsuransiService]
 })
 
-export class TransaksiComponent {
-	transaksi_obat: boolean;
+export class HistoriTransaksiComponent {
 	nama_pasien: string;
 	kode_pasien: string;
-	cari: boolean;
 	response: any;
 	allTransaksi: any[];
 	allJenis = ['', 'tunai'];
@@ -41,21 +39,25 @@ export class TransaksiComponent {
 	}
 
 	ngOnInit(): void {
-		this.transaksi_obat = false;
-		this.cari = false;
 		this.nama_pasien = null;
 		this.kode_pasien = null;
 		this.asuransiService.getAllAsuransi()
 			.subscribe(allAsuransi => this.initJenisList(allAsuransi.allAsuransi));
-	}
 
-	private searchTransaksi() {
-		this.transaksiService.getAllTransaksi(this.kode_pasien, 'open')
+		this.transaksiService.getAllTransaksi(null, 'closed')
 			.subscribe(data => {
 				this.response = data;
 				this.allTransaksi = this.response.allTransaksi;
 				console.log(this.allTransaksi);
-				this.cari = true;
+			});
+	}
+
+	private searchTransaksi() {
+		this.transaksiService.getAllTransaksi(this.kode_pasien, 'closed')
+			.subscribe(data => {
+				this.response = data;
+				this.allTransaksi = this.response.allTransaksi;
+				console.log(this.allTransaksi);
 			});
 	}
 }

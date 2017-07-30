@@ -17,7 +17,6 @@ import * as io from "socket.io-client";
 
 export class AntrianDashboardComponent implements OnInit {
 	private allLayanan: any[];
-	private allAntrian: any[];
 	private allAntrian: any[] = [];
 	private socket: any;
 	private frontOfficeChecked: boolean = true;
