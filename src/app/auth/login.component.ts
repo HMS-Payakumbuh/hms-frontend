@@ -42,6 +42,10 @@ export class LoginComponent implements OnInit {
           window.location.assign('/petugas-lab-dashboard')
           break;
         }
+        case 'frontOffice': {
+          window.location.assign('/antrian');
+          break;
+        }
         default: {
           window.location.assign('/pendaftaran');
           break;

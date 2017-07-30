@@ -16,6 +16,7 @@
 		<div class="col-md-2 ml-4">
 			<div class="card">
 				<div *ngIf="user == null" class="list-group list-group-flush">
+					<a routerLink="/daftar-antrian" class="list-group-item list-group-item-info">Pendaftaran Antrian</a>
 					<a routerLink="/register" class="list-group-item list-group-item-info">Register</a>
 					<a routerLink="/login" class="list-group-item list-group-item-info">Login</a>
 				</div>
@@ -23,12 +24,12 @@
 				<div *ngIf="user != null" class="list-group list-group-flush">
 					<a *ngIf="user.role == 'dokter'" [routerLink]="['/dokter-dashboard']" class="list-group-item list-group-item-info">Home</a>
 					<a *ngIf="user.role == 'petugasLab'" [routerLink]="['/petugas-lab-dashboard']" class="list-group-item list-group-item-info">Home</a>
-
-					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/daftar-antrian" class="list-group-item list-group-item-info">Pendaftaran Antrian</a>
-					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/daftar-pasien" class="list-group-item list-group-item-info">List Pasien</a>
+					<a *ngIf="user.role == 'admin'" [routerLink]="['/antrian-dashboard']" class="list-group-item list-group-item-info">Home</a>
+					
+					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/antrian" class="list-group-item list-group-item-info">Antrian</a>
 					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/pendaftaran" class="list-group-item list-group-item-info">Registrasi</a>
 					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/pendaftaran-igd" class="list-group-item list-group-item-info">Registrasi IGD</a>
-					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/antrian" class="list-group-item list-group-item-info">Antrian</a>
+					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/daftar-pasien" class="list-group-item list-group-item-info">List Pasien</a>
 
 					<a *ngIf="user.role == 'admin'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#RawatJalanSubMenu">Rawat Jalan</a>
 					<div id="RawatJalanSubMenu" class="collapse">

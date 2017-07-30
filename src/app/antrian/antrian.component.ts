@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { Antrian }                from './antrian';
 import { AntrianService }         from './antrian.service';
-import { Poliklinik }             from '../layanan/poliklinik';
+import { LaboratoriumService }      from '../layanan/laboratorium.service';
 import { PoliklinikService }      from '../layanan/poliklinik.service';
 import { Transaksi }              from '../transaksi/transaksi';
 import { TransaksiService }       from '../transaksi/transaksi.service'
@@ -23,12 +23,13 @@ import * as io from "socket.io-client";
     AntrianService,
     AuthenticationService,
     PoliklinikService,
+    LaboratoriumService,
     TransaksiService,
     TenagaMedisService
   ]
 })
 export class AntrianComponent implements OnInit {
-  allKategori: Poliklinik[];
+  allKategori: any[] = [];
   allAntrian: any[];
   kategori: string;
   selectedKategori: string;
@@ -61,6 +62,7 @@ export class AntrianComponent implements OnInit {
     private antrianService : AntrianService,
     private authenticationService: AuthenticationService,
     private poliklinikService: PoliklinikService,
+    private laboratoriumService: LaboratoriumService,
     private transaksiService: TransaksiService,
     private tenagaMedisService: TenagaMedisService
   ) { this.socket = io('http://localhost') }
@@ -90,7 +92,7 @@ export class AntrianComponent implements OnInit {
       this.tenagaMedisService.getAllAvailableJadwalDokter(this.layanan).subscribe(
         data => { this.allAvailableDokter = data }
       )
-      this.socket.on('antrianLayanan', this.updateAntrian.bind(this));
+      this.socket.on('antrianLayanan'+this.layanan, this.updateAntrian.bind(this));
     }
   }
 
@@ -100,18 +102,23 @@ export class AntrianComponent implements OnInit {
   }
 
   private updateKategori() {
-    this.antrianService.getAllAntrianFrontOffice().subscribe(
-        data => {
-          this.allKategori = _.sortBy(_.uniqBy(data, 'kategori_antrian'), 'kategori_antrian'); 
+    this.poliklinikService.getAllPoliklinik().subscribe(
+      data => {
+        for(let dat of data) {
+          this.allKategori.push(_.pick(dat, ['nama', 'kategori_antrian', 'created_at', 'updated_at']));
         }
-      );
+        this.laboratoriumService.getAllLaboratorium().subscribe(
+          data => {
+            this.allKategori = _.sortBy(_.unionBy(this.allKategori, data, 'kategori_antrian'), 'kategori_antrian');
+          });
+      }
+    );
   }
 
   private updateAntrian() {
     this.route.params
         .switchMap((params: Params) => this.antrianService.getAntrian(params['namaLayanan']))
         .subscribe(allAntrian => {
-          console.log(allAntrian);
           this.allAntrian = allAntrian;
           this.total = allAntrian.length;
           this.antrian = this.nextAntrian(this.umum);
@@ -130,7 +137,6 @@ export class AntrianComponent implements OnInit {
   private updateAntrianFrontOffice() {
     this.antrianService.getAntrianFrontOffice(this.kategori)
       .subscribe(allAntrian => {
-        this.updateKategori();
         this.allAntrian = allAntrian;
         this.total = allAntrian.length;
         this.antrian = this.nextAntrian(this.umum);

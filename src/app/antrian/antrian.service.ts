@@ -20,6 +20,29 @@ export class AntrianService {
 		return Promise.reject(error.message || error);
 	}
 
+	resetAntrian() {
+		return this.http.get(this.antrianUrl + '/cleanup')
+		.map((res: Response) => res.json());
+	}
+
+	resetAntrianFrontOffice() {
+		return this.http.get(this.antrianFrontOfficeUrl + '/cleanup')
+		.map((res: Response) => res.json());
+	}
+
+	getAllAntrianWithoutLayanan(): Observable<Antrian[]> {
+		return this.http.get(this.antrianUrl)
+			.map((res: Response) => res.json())
+			.map(allAntrian => 
+				_.each(allAntrian, antrian => {
+					if (antrian.nama_layanan_poli)
+						_.set(antrian, 'nama_layanan', antrian.nama_layanan_poli);
+					else if (antrian.nama_layanan_lab)	
+						_.set(antrian, 'nama_layanan', antrian.nama_layanan_lab);
+				})
+			);
+	}
+
 	getAllAntrian(nama_layanan:string): Observable<Antrian[]> {
 		return this.http.get(this.antrianUrl + '/' + nama_layanan)
 			.map((res: Response) => res.json());
