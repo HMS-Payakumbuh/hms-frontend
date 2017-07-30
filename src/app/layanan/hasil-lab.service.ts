@@ -17,33 +17,45 @@ export class HasilLabService {
 		return Promise.reject(error.message || error);
 	}
 
-	downloadHasilLab(id: number) {
-		return this.http.get(this.hasilLabUrl + '/download/' + id,  { responseType: ResponseContentType.Blob })
-			.map((res) => {
-				return new Blob([res.blob()], { type: res.headers.get('Content-Type') });
-			})
-	}
-
 	getHasilLab(kode_pasien: string): Observable<HasilLab[]> {
 		return this.http.get(this.hasilLabUrl + '/' + kode_pasien)
       .map((res: Response) => res.json());
 	}
 
-	createHasilLab(event: any, id_transaksi: number, id_tindakan: number) {
+	getEmptyHasilLab(no_pegawai: string): Observable<HasilLab[]> {
+		return this.http.get(this.hasilLabUrl + '/empty/' + no_pegawai)
+			.map((res: Response) => res.json());
+	}
+
+	createHasilLab(hasilLab: HasilLab) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(hasilLab);
+
+		return this.http.post(this.hasilLabUrl, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	uploadHasilLab(event: any, id: number) {
 		let fileList: FileList = event.target.files;
     if(fileList.length > 0) {
       let file: File = fileList[0];
       let formData:FormData = new FormData();
-			formData.append('id_transaksi', id_transaksi.toString());
-			formData.append('id_tindakan', id_tindakan.toString());
       formData.append('dokumen', file, file.name);
 
       let headers = new Headers();
       headers.append('enctype', 'multipart/form-data');
       headers.append('Accept', 'application/json');
       let options = new RequestOptions({ headers: headers });
-      return this.http.post(this.hasilLabUrl, formData, options)
+      return this.http.post(this.hasilLabUrl + '/upload/' + id, formData, options)
         .map((res: Response) => res.json());
     }
+	}
+
+	downloadHasilLab(id: number) {
+		return this.http.get(this.hasilLabUrl + '/download/' + id,  { responseType: ResponseContentType.Blob })
+			.map((res) => {
+				return new Blob([res.blob()], { type: res.headers.get('Content-Type') });
+			})
 	}
 }
