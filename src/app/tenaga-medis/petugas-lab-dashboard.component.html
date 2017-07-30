@@ -4,11 +4,11 @@
 
       <div class="card mb-3">
         <div class="card-header card-info">
-          <h5 class="mb-0">Laboratorium</h5>
+          <h5 class="mb-0"><b>Laboratorium</b></h5>
         </div>
         <div class="card-block">
-          <label for="selectPoli">Pilih laboratorium</label>
-          <select class="form-control mb-3" id="selectPoli" [(ngModel)]="selectedLaboratorium" name="selectPoli">
+          <label for="selectLaboratorium">Pilih laboratorium</label>
+          <select class="form-control mb-3" id="selectLaboratorium" [(ngModel)]="selectedLaboratorium" name="selectLaboratorium">
             <option *ngFor="let laboratorium of allLaboratorium" [ngValue]="laboratorium">{{laboratorium.nama}}</option>
           </select>
 
@@ -22,7 +22,7 @@
 
       <div class="card mb-3">
 				<div class="card-header card-info">
-					<h5 class="mb-0">Lihat Hasil Lab</h5>
+					<h5 class="mb-0"><b>Lihat Hasil Lab</b></h5>
 				</div>
 				<div class="card-block">
           <div class="form-group">
@@ -71,7 +71,7 @@
 
       <div class="card mb-3">
         <div class="card-header card-info">
-          <h5 class="mb-0">Upload Hasil lab</h5>
+          <h5 class="mb-0"><b>Upload Hasil lab</b></h5>
         </div>
         <div class="card-block">
           <p *ngFor="let alert of alerts">

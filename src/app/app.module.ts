@@ -59,8 +59,9 @@ import { RekamMedisDetailComponent }        from './pasien/rekam-medis-detail.co
 import { PoliklinikListComponent }          from './layanan/poliklinik-list.component';
 import { PoliklinikPemeriksaanComponent }   from './layanan/poliklinik-pemeriksaan.component';
 
-import { LaboratoriumListComponent }      from './layanan/laboratorium-list.component';
-import { LaboratoriumPemeriksaanComponent }    from './layanan/laboratorium-pemeriksaan.component';
+import { LaboratoriumListComponent }        from './layanan/laboratorium-list.component';
+import { LaboratoriumPemeriksaanComponent } from './layanan/laboratorium-pemeriksaan.component';
+import { LaboratoriumTindakanComponent }		from './layanan/laboratorium-tindakan.component';
 
 import { AmbulansListComponent }    from './layanan/ambulans-list.component';
 
@@ -196,6 +197,7 @@ import { AppComponent }             from './app.component';
 
         LaboratoriumListComponent,
         LaboratoriumPemeriksaanComponent,
+        LaboratoriumTindakanComponent,
 
         AmbulansListComponent,
 

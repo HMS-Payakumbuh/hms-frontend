@@ -33,6 +33,11 @@ export class TindakanService {
 			.map((res: Response) => res.json());
 	}
 
+	getTindakanOfLabByKodePasien(nama_lab: string, kode_pasien: string): Observable<Tindakan[]> {
+		return this.http.get(this.tindakanUrl + '/laboratorium/' + nama_lab + '/' + kode_pasien)
+			.map((res: Response) => res.json());
+	}
+
 	getAllTindakanReference(): Observable<TindakanReference[]> {
 		return this.http.get(this.tindakanReferenceUrl)
 			.map((res: Response) => res.json());
