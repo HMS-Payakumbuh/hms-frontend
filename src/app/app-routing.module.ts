@@ -6,6 +6,9 @@ import { HomeComponent }							from './home.component';
 import { RegisterComponent }					from './auth/register.component';
 import { LoginComponent }							from './auth/login.component';
 
+import { HistoriTransaksiComponent }   			from './transaksi/histori-transaksi.component';
+import { TransaksiObatComponent }   			from './transaksi/transaksi-obat.component';
+import { TransaksiObatDetailComponent }		from './transaksi/transaksi-obat-detail.component';
 import { TransaksiComponent }   			from './transaksi/transaksi.component';
 import { TransaksiDetailComponent }		from './transaksi/transaksi-detail.component';
 
@@ -106,9 +109,11 @@ const routes: Routes = [
 	{ path: 'login', component: LoginComponent },
 
 	{ path: '', canActivate: [AuthGuard], component: HomeComponent },
-
 	{ path: 'transaksi', canActivate: [AuthGuard], component: TransaksiComponent },
+	{ path: 'transaksi-obat', canActivate: [AuthGuard], component: TransaksiObatComponent },
+	{ path: 'histori-transaksi', canActivate: [AuthGuard], component: HistoriTransaksiComponent },
 	{ path: 'transaksi/:id', canActivate: [AuthGuard], component: TransaksiDetailComponent },
+	{ path: 'transaksi-obat/:id', canActivate: [AuthGuard], component: TransaksiObatDetailComponent },
 	{ path: 'pembayaran', canActivate: [AuthGuard], component: PembayaranComponent },
 	{ path: 'pembayaran/:id', canActivate: [AuthGuard], component: PembayaranDetailComponent },
 	{ path: 'klaim', canActivate: [AuthGuard], component: KlaimComponent },

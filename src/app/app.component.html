@@ -65,7 +65,12 @@
 						<a routerLink="/kamar-jenazah" class="list-group-item">Daftar Kamar Jenazah</a>
 					</div>
 
-					<a *ngIf="user.role == 'kasir' || user.role == 'admin'" routerLink="/transaksi" class="list-group-item list-group-item-info">Transaksi</a>
+					<a *ngIf="user.role == 'kasir' || user.role == 'admin'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#TransaksiSubMenu">Transaksi</a>
+					<div id="TransaksiSubMenu" class="collapse">
+						<a routerLink="/transaksi" class="list-group-item">Transaksi Aktif</a>
+						<a routerLink="/transaksi-obat" class="list-group-item">Transaksi Obat</a>
+						<a *ngIf="user.role == 'admin'" routerLink="/histori-transaksi" class="list-group-item">Histori Transaksi</a>
+					</div>
 					<a *ngIf="user.role == 'admin'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#PembayaranSubMenu">Pembayaran</a>
 					<div id="PembayaranSubMenu" class="collapse">
 						<a routerLink="/pembayaran" class="list-group-item">Data Pembayaran</a>
