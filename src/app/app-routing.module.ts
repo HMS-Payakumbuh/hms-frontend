@@ -6,6 +6,9 @@ import { HomeComponent }							from './home.component';
 import { RegisterComponent }					from './auth/register.component';
 import { LoginComponent }							from './auth/login.component';
 
+import { HistoriTransaksiComponent }   			from './transaksi/histori-transaksi.component';
+import { TransaksiObatComponent }   			from './transaksi/transaksi-obat.component';
+import { TransaksiObatDetailComponent }		from './transaksi/transaksi-obat-detail.component';
 import { TransaksiComponent }   			from './transaksi/transaksi.component';
 import { TransaksiDetailComponent }		from './transaksi/transaksi-detail.component';
 
@@ -21,6 +24,7 @@ import { PasienListComponent }			from './pasien/pasien-list.component';
 import { CatatanKematianFormComponent } from './pasien/catatan-kematian-form.component';
 import { AntrianComponent }				from './antrian/antrian.component';
 import { DaftarAntrianComponent }	    from './antrian/daftar-antrian.component';
+import { AntrianDashboardComponent }    from './antrian/antrian-dashboard.component';
 import { RekamMedisListComponent }		from './pasien/rekam-medis-list.component';
 import { RekamMedisDetailComponent }	from './pasien/rekam-medis-detail.component';
 
@@ -107,11 +111,12 @@ const routes: Routes = [
 
 	{ path: 'register', component: RegisterComponent },
 	{ path: 'login', component: LoginComponent },
-
 	{ path: '', canActivate: [AuthGuard], component: HomeComponent },
-
 	{ path: 'transaksi', canActivate: [AuthGuard], component: TransaksiComponent },
+	{ path: 'transaksi-obat', canActivate: [AuthGuard], component: TransaksiObatComponent },
+	{ path: 'histori-transaksi', canActivate: [AuthGuard], component: HistoriTransaksiComponent },
 	{ path: 'transaksi/:id', canActivate: [AuthGuard], component: TransaksiDetailComponent },
+	{ path: 'transaksi-obat/:id', canActivate: [AuthGuard], component: TransaksiObatDetailComponent },
 	{ path: 'pembayaran', canActivate: [AuthGuard], component: PembayaranComponent },
 	{ path: 'pembayaran/:id', canActivate: [AuthGuard], component: PembayaranDetailComponent },
 	{ path: 'klaim', canActivate: [AuthGuard], component: KlaimComponent },
@@ -122,6 +127,7 @@ const routes: Routes = [
 	{ path: 'antrian', canActivate: [AuthGuard], component: AntrianComponent },
 	{ path: 'antrian/:namaLayanan', canActivate: [AuthGuard], component: AntrianComponent },
 	{ path: 'daftar-antrian', canActivate: [AuthGuard], component: DaftarAntrianComponent },
+	{ path: 'antrian-dashboard', canActivate: [AuthGuard], component: AntrianDashboardComponent },
 	{ path: 'daftar-pasien', canActivate: [AuthGuard], component: PasienListComponent },
 	{ path: 'pendaftaran', canActivate: [AuthGuard], component: PasienFormComponent},
 	{ path: 'daftar-pasien/catatan-kematian-form', canActivate: [AuthGuard], component: CatatanKematianFormComponent},
@@ -212,6 +218,7 @@ const routes: Routes = [
 	{ path: 'laporan', canActivate: [AuthGuard], component: LaporanComponent },
 
 	{ path: 'settings', canActivate: [AuthGuard], component: SettingsComponent }
+
 ];
 
 @NgModule ({

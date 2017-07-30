@@ -125,7 +125,7 @@
 								</div>
 								<div class="form-group">
 									<label for="riwayat">Riwayat Penyakit</label>
-									<button type="button" class="btn btn-sm btn-info" (click)="loadRiwayat()" data-toggle="modal" data-target="#riwayatModal" [attr.data-target]="'#riwayatModal'">Detail</button>
+									<button type="button" *ngIf="!riwayatEmpty" class="btn btn-sm btn-info" (click)="loadRiwayat()" data-toggle="modal" data-target="#riwayatModal" [attr.data-target]="'#riwayatModal'">Detail</button>
 									<div class="row" *ngFor="let riwayat of allRiwayat; index as i">
 										<div class="col-sm-11 text-left">
 											<div class="input-group">
@@ -152,7 +152,7 @@
 								</div>
 								<div class="form-group">
 									<label for="alergi">Alergi</label>
-									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#alergiModal" [attr.data-target]="'#alergiModal'">Detail</button>
+									<button *ngIf="!alergiEmpty" type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#alergiModal" [attr.data-target]="'#alergiModal'">Detail</button>
 									<div class="row" *ngFor="let alergi of allAlergi; index as i">
 										<div class="col-sm-11 text-left">
 											<div class="input-group">

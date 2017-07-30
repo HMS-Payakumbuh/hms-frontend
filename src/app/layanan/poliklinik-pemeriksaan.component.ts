@@ -83,6 +83,8 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
   pelayananBaru: string;
   rencana: any = {};
   rujuk: boolean = false;
+  riwayatEmpty: boolean = false;
+  alergiEmpty: boolean = false;
   firstRekamMedis: boolean = false;
   namaPoliRujuk: string = null;
 
@@ -202,6 +204,12 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
         if (data != null) {
           if (data.tanggal_waktu == this.transaksi.transaksi.waktu_masuk_pasien) {
             this.rekamMedis = data;
+            this.hasilPemeriksaan = JSON.parse(data.hasil_pemeriksaan);
+            this.keluhan = JSON.parse(data.anamnesis).keluhan;
+            if (JSON.parse(data.anamnesis).alergi)
+              this.allAlergi = JSON.parse(data.anamnesis).alergi.split(',');
+            if (JSON.parse(data.anamnesis).riwayat_penyakit)
+              this.allRiwayat = JSON.parse(data.anamnesis).riwayat_penyakit.split(',');
           }
         }
 
@@ -249,11 +257,15 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
                 }
               }
               this.allAlergiLama = _.uniq(allAlergi, true);
-              if (_.isEmpty(this.allAlergiLama))
+              if (_.isEmpty(this.allAlergiLama)) {
                 this.allAlergiLama = ['Tidak ada alergi yang tercatat'];
+                this.alergiEmpty = true;
+              }
               this.allRiwayatPenyakit =  _.uniq(allRiwayat, true);
-              if (_.isEmpty(this.allRiwayatPenyakit))
+              if (_.isEmpty(this.allRiwayatPenyakit)) {
                 this.allRiwayatPenyakit = ['Tidak ada penyakit yang tercatat'];
+                this.riwayatEmpty = true;
+              } 
             });
   }
 

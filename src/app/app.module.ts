@@ -7,6 +7,7 @@ import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
 import { DpDatePickerModule }       from 'ng2-date-picker';
 import { AutocompleteModule}        from 'ng2-input-autocomplete';
 import { DataTableModule }          from 'angular2-datatable';
+import { ToastyModule }             from 'ng2-toasty';
 
 import { MatchesStatusPipe }            from './pipe/matches-status.pipe';
 import { FilterPasienPipe }         from './pipe/filter-pasien.pipe';
@@ -39,6 +40,9 @@ import { HomeComponent }          from './home.component';
 import { RegisterComponent }      from './auth/register.component';
 import { LoginComponent }         from './auth/login.component';
 
+import { HistoriTransaksiComponent }          from './transaksi/histori-transaksi.component';
+import { TransaksiObatComponent }          from './transaksi/transaksi-obat.component';
+import { TransaksiObatDetailComponent }        from './transaksi/transaksi-obat-detail.component';
 import { TransaksiComponent }          from './transaksi/transaksi.component';
 import { TransaksiDetailComponent }    from './transaksi/transaksi-detail.component';
 
@@ -49,6 +53,7 @@ import { KlaimDetailComponent }        		from './pembayaran/klaim/klaim-detail.c
 
 import { AntrianComponent }         		from './antrian/antrian.component';
 import { DaftarAntrianComponent }         	from './antrian/daftar-antrian.component';
+import { AntrianDashboardComponent }        from './antrian/antrian-dashboard.component';
 import { PasienFormComponent }      		from './pasien/pasien-form.component';
 import { PasienIGDFormComponent }      		from './pasien/pasien-igd-form.component';
 import { PasienListComponent }              from './pasien/pasien-list.component';
@@ -149,6 +154,7 @@ import { AppComponent }             from './app.component';
         NgbModule.forRoot(),
         DpDatePickerModule,
         AutocompleteModule.forRoot(),
+        ToastyModule.forRoot(),
         DataTableModule
     ],
     declarations: [
@@ -182,6 +188,9 @@ import { AppComponent }             from './app.component';
         RegisterComponent,
         LoginComponent,
 
+        HistoriTransaksiComponent,
+        TransaksiObatComponent,
+        TransaksiObatDetailComponent,
         TransaksiComponent,
         TransaksiDetailComponent,
         PembayaranComponent,
@@ -243,6 +252,7 @@ import { AppComponent }             from './app.component';
         FilterTanggalPipe,
         AntrianComponent,
         DaftarAntrianComponent,
+        AntrianDashboardComponent,
 
         DaftarStokObatComponent,
         DetailStokObatComponent,

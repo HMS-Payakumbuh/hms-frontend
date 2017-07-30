@@ -1,0 +1,74 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-list-alt" aria-hidden="true"></i> Dashboard Antrian
+				</h4>
+			</div>
+
+			<div class="card-block">
+				<div class="card-text">
+					<label class="custom-control custom-checkbox">
+	                    <input type="checkbox" class="custom-control-input" [checked]="frontOfficeChecked" (change)="changeMode()">
+	                    <span class="custom-control-indicator"></span>
+	                    <span class="custom-control-description">FrontOffice</span>
+                  	</label>
+                  	<label class="custom-control custom-checkbox">
+	                    <input type="checkbox" class="custom-control-input" [checked]="layananChecked" (change)="changeMode()">
+	                    <span class="custom-control-indicator"></span>
+	                    <span class="custom-control-description">Layanan</span>
+                  	</label>	
+					<table *ngIf="allAntrian && frontOfficeChecked" class="table" [mfData]="allAntrian" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+						<thead>
+							<th><mfDefaultSorter by="kategori">Kategori</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="panjang">Panjang Antrian</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="layanan">Layanan</mfDefaultSorter></th>
+							<th></th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let antrian of mf.data">
+								<td>{{antrian?.kategori_antrian}}</td>
+								<td>{{antrian?.panjang}}</td>
+								<td><div *ngFor="let layanan of antrian.layanan">{{layanan.nama}}</div></td>
+								<td></td>
+							</tr>
+						</tbody>
+						<tfoot>
+			            	<tr>
+				              <td colspan="9">
+				                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+				              </td>
+				            </tr>
+				        </tfoot>
+					</table>
+					<table *ngIf="allAntrian && layananChecked" class="table" [mfData]="allAntrian" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+						<thead>
+							<th><mfDefaultSorter by="layanan">Layanan</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="panjang">Panjang Antrian</mfDefaultSorter></th>
+							<th></th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let antrian of mf.data">
+								<td>{{antrian?.nama}}</td>
+								<td>{{antrian?.panjang}}</td>
+								<td></td>
+							</tr>
+						</tbody>
+						<tfoot>
+			            	<tr>
+				              <td colspan="9">
+				                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+				              </td>
+				            </tr>
+				        </tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="pull-right">
+			<button *ngIf="frontOfficeChecked" type="button" class="btn btn-warning" (click)="resetAntrianFrontOffice()">Reset Antrian</button>
+			<button *ngIf="layananChecked" type="button" class="btn btn-warning" (click)="resetAntrian()">Reset Antrian</button>
+		</div>
+	</div>
+</div>

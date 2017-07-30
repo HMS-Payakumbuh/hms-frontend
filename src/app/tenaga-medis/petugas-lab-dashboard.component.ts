@@ -40,8 +40,8 @@ export class PetugasLabDashboardComponent implements OnInit {
   searchTerm: string = '';
   tenagaMedis: TenagaMedis = null;
   allHasilLab: HasilLab[] = [];
+  allEmptyHasilLab: HasilLab[] = [];
   allLaboratorium: Laboratorium[] = [];
-  allTindakan: Tindakan[] = [];
 
   selectedLaboratorium: Laboratorium = null;
 
@@ -62,8 +62,8 @@ export class PetugasLabDashboardComponent implements OnInit {
     this.tenagaMedisService.getTenagaMedis(noPegawai).subscribe(
       tenagaMedis => {
         this.tenagaMedis = tenagaMedis;
-        this.tindakanService.getTindakanWithoutHasilLab(this.tenagaMedis.no_pegawai).subscribe(
-          data => this.allTindakan = data
+        this.hasilLabService.getEmptyHasilLab(this.tenagaMedis.no_pegawai).subscribe(
+          data => this.allEmptyHasilLab = data
         )
       }
     );
@@ -81,7 +81,9 @@ export class PetugasLabDashboardComponent implements OnInit {
 
   searchHasilLab() {
     this.hasilLabService.getHasilLab(this.searchTerm).subscribe(
-      data => this.allHasilLab = data
+      data => {
+        this.allHasilLab = data
+      }
     )
   }
 
@@ -94,8 +96,8 @@ export class PetugasLabDashboardComponent implements OnInit {
     )
   }
 
-  uploadHasilLab(event: any, id_transaksi: number, id_tindakan: number) {
-    this.hasilLabService.createHasilLab(event, id_transaksi, id_tindakan).subscribe(
+  uploadHasilLab(event: any, id: number) {
+    this.hasilLabService.uploadHasilLab(event, id).subscribe(
       data => {
         this.ngOnInit();
         this.alerts.pop();

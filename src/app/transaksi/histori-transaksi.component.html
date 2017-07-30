@@ -4,12 +4,12 @@
 			<div class="card">
 				<div class="card-header card-info mb-3">
 					<h4>
-						<i class="fa fa-money" aria-hidden="true"></i> Daftar Transaksi
+						<i class="fa fa-money" aria-hidden="true"></i> Histori Transaksi
 					</h4>
 				</div>
 				<div class="card-block">
 					<div class="form-group">
-						<label for="search">Cari Transaksi Berdasarkan Kode Pasien</label> <br>
+						<label for="search">Cari Transaksi</label> <br>
 						<div class="input-group">
 							<input type="text" class="form-control" id="searchKode" [(ngModel)]="kode_pasien" placeholder="Kode Pasien" (keyup.enter)="searchTransaksi()">
 							<span class="input-group-btn">
@@ -17,21 +17,49 @@
 							</span>
 						</div>
 					</div>
-					<div *ngIf="cari">
+					<div>
 						<table class="table" [mfData]="allTransaksi" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 							<tbody>
+								<tr>
+									<td>
+										<div class="col-md-12 input-group">
+											<input type="text" class="form-control" [(ngModel)]="searchKode" placeholder="Kode Pasien">
+										</div>
+									</td>
+									<td>
+										<div class="col-md-12 input-group">
+											<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="Nama Pasien">
+										</div>
+									</td>
+									<td>
+										<div class="col-md-12 input-group" id="datetimepicker">
+												<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" [theme]="'dp-material'" placeholder="Tanggal Transaksi">
+										</div>
+									</td>
+									<td>
+										<div class="col-md-12 input-group">
+											<select class="form-control" [(ngModel)]="jenis" id="jenisDropdown">
+												<option *ngFor="let jenis of allJenis">
+													{{jenis.toUpperCase()}}
+												</option>
+											</select>
+										</div>
+									</td>
+									<td></td>
+								</tr>
 								<tr>
 									<th><mfDefaultSorter by="kode_pasien">Kode Pasien</mfDefaultSorter></th>
 									<th><mfDefaultSorter by="nama_pasien">Nama Pasien</mfDefaultSorter></th>
 									<th><mfDefaultSorter by="waktu_masuk_pasien">Waktu Transaksi</mfDefaultSorter></th>
+									<th>Jenis Pasien</th>
 									<th></th>
 								</tr>
 								<tr *ngFor="let transaksi of mf.data | matchesStatus: status | filterNamaPasien: searchParam | filterTanggal: selectedDate | filterJenisPasien: jenis">
 									<td>{{transaksi.pasien.kode_pasien}}</td>
 									<td>{{transaksi.pasien.nama_pasien}}</td>
 									<td>{{transaksi.waktu_masuk_pasien | date: 'dd/MM/y HH:mm'}}</td>
-									<td *ngIf="!transaksi_obat"><button type="button" class="btn btn-primary" [routerLink] = "['/transaksi', transaksi.id]">Details</button></td>
-									<td *ngIf="transaksi_obat"><button type="button" class="btn btn-primary" [routerLink] = "['/transaksi-obat', transaksi.id]">Details</button></td>
+									<td>{{transaksi.asuransi_pasien.toUpperCase()}}</td>
+									<td><button type="button" class="btn btn-primary" [routerLink] = "['/transaksi', transaksi.id]">Details</button></td>
 								</tr>
 							</tbody>
 							<tfoot>

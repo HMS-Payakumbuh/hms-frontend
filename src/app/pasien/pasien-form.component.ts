@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Location }               from '@angular/common';
 import { Observable }             from 'rxjs/Observable';
 import { NgbTypeaheadConfig }   from '@ng-bootstrap/ng-bootstrap';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
 import { Pasien }    from './pasien';
 import { PasienService }    from './pasien.service';
@@ -67,6 +68,8 @@ export class PasienFormComponent implements OnInit {
     private tenagaMedisService: TenagaMedisService,
     private rujukanService: RujukanService,
     private config: NgbTypeaheadConfig,
+    private toastyService: ToastyService, 
+    private toastyConfig: ToastyConfig
   ) {
     config.editable = false;
   }
@@ -81,7 +84,7 @@ export class PasienFormComponent implements OnInit {
 
   bloodTypes = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
 
-  allNamaAsuransi = ['BPJS', 'Bumidaya', 'Prudential', 'AIG'];
+  allNamaAsuransi = ['bpjs', 'bumidaya', 'prudential', 'aig'];
 
   inputFormatter = (value : any) => value.nama;
 
@@ -168,6 +171,12 @@ export class PasienFormComponent implements OnInit {
   private pakaiAsuransi(asuransi: Asuransi) {
     this.asuransi.nama_asuransi = asuransi.nama_asuransi;
     this.asuransi.no_kartu = asuransi.no_kartu;
+    this.cekAsuransi();
+  }
+
+  private cekAsuransi() {
+    if (this.asuransi.nama_asuransi === 'BPJS')
+      this.rujukanChecked = true;
   }
 
   private createAntrian(id_transaksi: number) {
@@ -192,8 +201,25 @@ export class PasienFormComponent implements OnInit {
     this.antrianService.createAntrian(request).subscribe(
       data => {
         if(data.error) {
-          alert(data.error);
+          let toastOptions:ToastOptions = {
+              title: "Pendaftaran Antrian Gagal !",
+              msg: "Harap mencoba sekali lagi.",
+              showClose: true,
+              timeout: 5000,
+              theme: 'bootstrap'
+          };
+
+          this.toastyService.error(toastOptions);
         } else {
+          let toastOptions:ToastOptions = {
+              title: "Pendaftaran Antrian Sukses !",
+              msg: "Pasien mendapat nomor antrian : "+data.no_antrian,
+              showClose: true,
+              timeout: 5000,
+              theme: 'bootstrap'
+          };
+
+          this.toastyService.success(toastOptions);
           this.ngOnInit();
         }
       }
@@ -254,28 +280,47 @@ export class PasienFormComponent implements OnInit {
   }
 
   private createPasien() {
-    if (this.update) {
-      this.pasienService.updatePasien(this.pasien.id, this.pasien).subscribe(
-        data => {
-          this.pasien = data;
-          alert('Anda mendapat kode pasien : '+ data.kode_pasien);
-          if (this.asuransiChecked)
-            this.createAsuransi();
-          else
-            this.createTransaksi();
-        }
-      );
+    if (this.asuransi.nama_asuransi === 'BPJS' && !this.rujukanChecked) {
+      let toastOptions:ToastOptions = {
+          title: "Registrasi Pasien Gagal !",
+          msg: "Pasien BPJS harus memasukkan nomor rujukan.",
+          showClose: true,
+          timeout: 5000,
+          theme: 'bootstrap'
+      };
+
+      this.toastyService.error(toastOptions);
     } else {
-      this.pasienService.createPasien(this.pasien).subscribe(
-        data => {
-          this.pasien = data;
-          alert('Anda mendapat kode pasien : '+ data.kode_pasien);
-          if (this.asuransiChecked)
-            this.createAsuransi();
-          else
-            this.createTransaksi();
-        }
-      );
+      if (this.update) {
+        this.pasienService.updatePasien(this.pasien.id, this.pasien).subscribe(
+          data => {
+            this.pasien = data;
+            if (this.asuransiChecked)
+              this.createAsuransi();
+            else
+              this.createTransaksi();
+          }
+        );
+      } else {
+        this.pasienService.createPasien(this.pasien).subscribe(
+          data => {
+            this.pasien = data;
+            let toastOptions:ToastOptions = {
+                title: "Registrasi Pasien Sukses !",
+                msg: "Pasien mendapat nomor pasien : "+data.kode_pasien,
+                showClose: true,
+                timeout: 5000,
+                theme: 'bootstrap'
+            };
+
+            this.toastyService.success(toastOptions);
+            if (this.asuransiChecked)
+              this.createAsuransi();
+            else
+              this.createTransaksi();
+          }
+        );
+      }
     }
   }
 }

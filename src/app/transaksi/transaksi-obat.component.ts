@@ -8,12 +8,12 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 
 
 @Component({
- 	selector: 'transaksi-page',
+ 	selector: 'transaksi-obat-page',
  	templateUrl: './transaksi.component.html',
  	providers: [TransaksiService, AsuransiService]
 })
 
-export class TransaksiComponent {
+export class TransaksiObatComponent {
 	transaksi_obat: boolean;
 	nama_pasien: string;
 	kode_pasien: string;
@@ -41,10 +41,11 @@ export class TransaksiComponent {
 	}
 
 	ngOnInit(): void {
-		this.transaksi_obat = false;
+		this.transaksi_obat = true;
 		this.cari = false;
 		this.nama_pasien = null;
 		this.kode_pasien = null;
+		this.allTransaksi = [];
 		this.asuransiService.getAllAsuransi()
 			.subscribe(allAsuransi => this.initJenisList(allAsuransi.allAsuransi));
 	}
@@ -52,10 +53,16 @@ export class TransaksiComponent {
 	private searchTransaksi() {
 		this.transaksiService.getAllTransaksi(this.kode_pasien, 'open')
 			.subscribe(data => {
+				let allTransaksi: any[] = [];
 				this.response = data;
-				this.allTransaksi = this.response.allTransaksi;
+				allTransaksi = this.response.allTransaksi;
 				console.log(this.allTransaksi);
 				this.cari = true;
+				for (let transaksi of allTransaksi) {
+					if (transaksi.obat_tebus.length > 0 || transaksi.obat_eceran.length > 0) {
+						this.allTransaksi.push(transaksi);
+					}
+				}
 			});
 	}
 }

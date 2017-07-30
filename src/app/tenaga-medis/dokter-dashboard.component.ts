@@ -31,6 +31,7 @@ export class DokterDashboardComponent implements OnInit {
 
   allAmbulans: Ambulans[] = [];
   allAntrian: Antrian[] = [];
+  allProcessedAntrian: Antrian[] = [];
   allPoliklinik: Poliklinik[] = [];
 
   poliklinikSelected: boolean = false;
@@ -82,8 +83,14 @@ export class DokterDashboardComponent implements OnInit {
       data => {
         this.allAntrian = data;
         this.poliklinikSelected = true;
+        this.antrianService.getProcessedAntrian(this.selectedPoliklinik.nama).subscribe(
+          data => {
+            this.allProcessedAntrian = data;
+          }
+        )
       }
     )
+
   }
 
   updateCurrentPasien(message: any) {

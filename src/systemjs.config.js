@@ -45,7 +45,10 @@
       'angular2-datatable':'npm:angular2-datatable',
 
       //socket.io
-      "socket.io-client": 'npm:socket.io-client'
+      "socket.io-client": 'npm:socket.io-client',
+      
+      //ng2-toasty
+      'ng2-toasty': 'node_modules/ng2-toasty/bundles/index.umd.js'
 
     },
     // packages tells the System loader how to load when no filename and/or no extension

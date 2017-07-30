@@ -16,6 +16,7 @@
 		<div class="col-md-2 ml-4">
 			<div class="card">
 				<div *ngIf="user == null" class="list-group list-group-flush">
+					<a routerLink="/daftar-antrian" class="list-group-item list-group-item-info">Pendaftaran Antrian</a>
 					<a routerLink="/register" class="list-group-item list-group-item-info">Register</a>
 					<a routerLink="/login" class="list-group-item list-group-item-info">Login</a>
 				</div>
@@ -23,14 +24,16 @@
 				<div *ngIf="user != null" class="list-group list-group-flush">
 					<a *ngIf="user.role == 'dokter'" [routerLink]="['/dokter-dashboard']" class="list-group-item list-group-item-info">Home</a>
 					<a *ngIf="user.role == 'petugasLab'" [routerLink]="['/petugas-lab-dashboard']" class="list-group-item list-group-item-info">Home</a>
-
-					<a *ngIf="user.role == 'petugasLab'" [routerLink]="['/laboratorium/tindakan']" class="list-group-item list-group-item-info">Tindakan Laboratorium</a>
-
-					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/daftar-antrian" class="list-group-item list-group-item-info">Pendaftaran Antrian</a>
+					<a *ngIf="user.role == 'admin'" [routerLink]="['/antrian-dashboard']" class="list-group-item list-group-item-info">Home</a>
+					
+					<a *ngIf="user.role == 'admin'" routerLink="/daftar-antrian" class="list-group-item list-group-item-info">Pendaftaran Antrian</a>
+					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/antrian" class="list-group-item list-group-item-info">Antrian</a>
 					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/daftar-pasien" class="list-group-item list-group-item-info">List Pasien</a>
 					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/pendaftaran" class="list-group-item list-group-item-info">Registrasi</a>
 					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/pendaftaran-igd" class="list-group-item list-group-item-info">Registrasi IGD</a>
-					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/antrian" class="list-group-item list-group-item-info">Antrian</a>
+					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/daftar-pasien" class="list-group-item list-group-item-info">List Pasien</a>
+
+					<a *ngIf="user.role == 'petugasLab'" [routerLink]="['/laboratorium/tindakan']" class="list-group-item list-group-item-info">Tindakan Laboratorium</a>
 
 					<a *ngIf="user.role == 'admin'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#RawatJalanSubMenu">Rawat Jalan</a>
 					<div id="RawatJalanSubMenu" class="collapse">
@@ -79,8 +82,13 @@
 						<a routerLink="/kamar-jenazah" class="list-group-item">Daftar Kamar Jenazah</a>
 					</div>
 
-					<a *ngIf="user.role == 'kasir' || user.role == 'admin'" routerLink="/transaksi" class="list-group-item list-group-item-info">Transaksi</a>
-					<a *ngIf="user.role == 'kasir' || user.role == 'admin'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#PembayaranSubMenu">Pembayaran</a>
+					<a *ngIf="user.role == 'kasir' || user.role == 'admin'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#TransaksiSubMenu">Transaksi</a>
+					<div id="TransaksiSubMenu" class="collapse">
+						<a routerLink="/transaksi" class="list-group-item">Transaksi Aktif</a>
+						<a routerLink="/transaksi-obat" class="list-group-item">Transaksi Obat</a>
+						<a *ngIf="user.role == 'admin'" routerLink="/histori-transaksi" class="list-group-item">Histori Transaksi</a>
+					</div>
+					<a *ngIf="user.role == 'admin'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#PembayaranSubMenu">Pembayaran</a>
 					<div id="PembayaranSubMenu" class="collapse">
 						<a routerLink="/pembayaran" class="list-group-item">Data Pembayaran</a>
 						<a routerLink="/klaim" class="list-group-item">Data Klaim</a>
