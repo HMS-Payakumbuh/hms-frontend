@@ -2,100 +2,123 @@
   <div class="row">
 
     <div class="col-md-6">
-      <div class="card mb-3">
-        <div class="card-header card-info">
-          <h4 class="mb-0">Poliklinik</h4>
-        </div>
-        <div class="card-block">
-          <label for="selectPoli">Pilih poliklinik</label>
-          <select class="form-control mb-3" id="selectPoli" [(ngModel)]="selectedPoliklinik" name="selectPoli">
-            <option *ngFor="let poliklinik of allPoliklinik" [ngValue]="poliklinik">{{poliklinik.nama}}</option>
-          </select>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card mb-3">
+            <div class="card-header card-info">
+              <h5 class="text-center mb-0"><b>Poliklinik</b></h5>
+            </div>
+            <div class="card-block">
+              <label for="selectPoli">Pilih poliklinik</label>
+              <select class="form-control mb-3" id="selectPoli" [(ngModel)]="selectedPoliklinik" name="selectPoli">
+                <option *ngFor="let poliklinik of allPoliklinik" [ngValue]="poliklinik">{{poliklinik.nama}}</option>
+              </select>
 
-          <div *ngIf="selectedPoliklinik != null">
-            <button type="button mr-3" class="btn btn-info" (click)="showDaftarPasien()">
-              Lihat Daftar Pasien {{selectedPoliklinik.nama}}
-            </button>
+              <div *ngIf="selectedPoliklinik != null">
+                <button type="button mr-3" class="btn btn-info" (click)="showDaftarPasien()">
+                  Lihat Daftar Pasien {{selectedPoliklinik.nama}}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card mb-3">
+            <div class="card-header card-info">
+              <h5 class="text-center mb-0"><b>Pasien yang harus diperiksa</b></h5>
+            </div>
+            <div class="card-block">
+              <div class="card card-outline-info">
+                <div class="card-block">
+                  <span *ngIf="currentTransaksi == null">Belum ada pasien</span>
+                  <table *ngIf="currentTransaksi != null" class="table borderless">
+                    <tbody>
+                      <tr>
+                        <th scope="row">No Transaksi</th>
+                        <td>{{currentTransaksi.transaksi.no_transaksi}}</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Nama Pasien</th>
+                        <td>{{currentTransaksi.transaksi.pasien.nama_pasien}}</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">
+                          <button type="button" class="btn btn-success" [routerLink]="['/poliklinik', nama_poli, currentTransaksi.transaksi.id]">
+                            Proses
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card mb-3">
+            <div class="card-header card-info">
+              <h5 class="text-center mb-0"><b>Ambulans</b></h5>
+            </div>
+            <div class="card-block text-center">
+              <button type="button" class="btn btn-info" data-toggle="modal" [attr.data-target]="'#panggilAmbulansModal'">
+                Panggil Ambulans
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <div class="col-md-6">
-      <div class="card mb-3">
-        <div class="card-header card-info">
-          <h4 class="mb-0">Ambulans</h4>
-        </div>
-        <div class="card-block">
-          <button type="button" class="btn btn-info" data-toggle="modal" [attr.data-target]="'#panggilAmbulansModal'">
-            Panggil Ambulans
-          </button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="row">
-
-    <div class="col-md-6">
-      <div class="card mb-3">
-        <div class="card-header card-info">
-          <h4 class="mb-0">Antrian Pasien {{poliklinikSelected && selectedPoliklinik.nama || ''}}</h4>
-        </div>
-        <div class="card-block">
-          <span *ngIf="allAntrian.length == 0">
-            Tidak ada pasien yang mengantri
-          </span>
-          <table *ngIf="allAntrian.length > 0" class="table mt-3" [mfData]="allAntrian" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
-            <thead>
-              <th><mfDefaultSorter by="nama">Nama Pasien</mfDefaultSorter></th>
-              <th><mfDefaultSorter by="no_antrian">No Antrian</mfDefaultSorter></th>
-            </thead>
-            <tbody>
-              <tr *ngFor="let antrian of mf.data">
-                <td class="text-left">{{antrian.transaksi.pasien.nama_pasien}}</td>
-                <td>{{antrian.no_antrian}}</td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colspan="2">
-                  <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-6">
-      <div class="card mb-3">
-        <div class="card-header card-info">
-          <h4 class="mb-0">Pasien yang harus diperiksa</h4>
-        </div>
-        <div class="card-block">
-          <span *ngIf="currentTransaksi == null">Belum ada pasien</span>
-          <table *ngIf="currentTransaksi != null" class="table borderless">
-            <tbody>
-              <tr>
-                <th scope="row">No Transaksi</th>
-                <td>{{currentTransaksi.transaksi.no_transaksi}}</td>
-              </tr>
-              <tr>
-                <th scope="row">Nama Pasien</th>
-                <td>{{currentTransaksi.transaksi.pasien.nama_pasien}}</td>
-              </tr>
-              <tr>
-                <td colspan="2">
-                  <button type="button" class="btn btn-success" [routerLink]="['/poliklinik', nama_poli, currentTransaksi.transaksi.id]">
-                    Proses
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card mb-3">
+            <div class="card-header card-info">
+              <h5 class="text-center mb-0">
+                <b>
+                  Antrian Pasien {{poliklinikSelected && selectedPoliklinik.nama || ''}}
+                </b>
+              </h5>
+            </div>
+            <div class="card-block">
+              <div class="card card-outline-info">
+                <div class="card-block">
+                  <span *ngIf="!poliklinikSelected">
+                    Pilih poliklinik dulu untuk melihat antrian
+                  </span>
+                  <span *ngIf="poliklinikSelected && allAntrian.length == 0">
+                    Tidak ada pasien yang mengantri
+                  </span>
+                  <table *ngIf="allAntrian.length > 0" class="table mt-3" [mfData]="allAntrian" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+                    <thead>
+                      <th><mfDefaultSorter by="nama">Nama Pasien</mfDefaultSorter></th>
+                      <th><mfDefaultSorter by="no_antrian">No Antrian</mfDefaultSorter></th>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let antrian of mf.data">
+                        <td class="text-left">{{antrian.transaksi.pasien.nama_pasien}}</td>
+                        <td>{{antrian.no_antrian}}</td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="2">
+                          <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

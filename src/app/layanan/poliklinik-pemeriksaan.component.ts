@@ -1,5 +1,5 @@
 import { Component, OnInit }              from '@angular/core';
-import { ActivatedRoute, Params }					from '@angular/router';
+import { ActivatedRoute, Params, Router }					from '@angular/router';
 import { Location }												from '@angular/common';
 import { Observable }											from 'rxjs/Observable';
 import { NgbTypeaheadConfig, NgbModal }   from '@ng-bootstrap/ng-bootstrap';
@@ -142,6 +142,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
+    private router: Router,
 		private location: Location,
     private antrianService: AntrianService,
 		private transaksiService: TransaksiService,
@@ -440,7 +441,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
   saveResep() {
     this.resepService.createResep(this.allResep).subscribe(
       data => {
-        this.goBack();
+        this.router.navigate(['']);
       }
     )
   }

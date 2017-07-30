@@ -21,8 +21,7 @@ export class LoginComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-    if (localStorage.getItem('currentUser') != null)
-      this.router.navigate(['pendaftaran']);
+
 	}
 
   public closeAlert(alert: IAlert) {
@@ -31,31 +30,17 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if(this.authenticationService.login(this.data.no_pegawai, this.data.password)) {
-      let user: User = JSON.parse(localStorage.getItem('currentUser'));
-      switch (user.role) {
-        case 'dokter': {
-          window.location.assign('/dokter-dashboard');
-          break;
+    this.authenticationService.login(this.data.no_pegawai, this.data.password).subscribe(
+      () => {
+        if (this.authenticationService.isLoggedIn()) {
+          window.location.assign('');
         }
-        case 'petugasLab': {
-          window.location.assign('/petugas-lab-dashboard')
-          break;
-        }
-        case 'frontOffice': {
-          window.location.assign('/antrian');
-          break;
-        }
-        default: {
-          window.location.assign('/pendaftaran');
-          break;
+        else {
+          this.alerts.pop();
+          this.alerts.push({id: 1, type: 'warning', message: 'Login gagal, silakan coba lagi'});
         }
       }
-    }
-    else {
-      this.alerts.pop();
-      this.alerts.push({id: 1, type: 'warning', message: 'Login gagal, silakan coba lagi'});
-    }
+    );
   }
 }
 

@@ -4,11 +4,11 @@
 
       <div class="card mb-3">
         <div class="card-header card-info">
-          <h5 class="mb-0">Laboratorium</h5>
+          <h5 class="mb-0"><b>Laboratorium</b></h5>
         </div>
         <div class="card-block">
-          <label for="selectPoli">Pilih laboratorium</label>
-          <select class="form-control mb-3" id="selectPoli" [(ngModel)]="selectedLaboratorium" name="selectPoli">
+          <label for="selectLaboratorium">Pilih laboratorium</label>
+          <select class="form-control mb-3" id="selectLaboratorium" [(ngModel)]="selectedLaboratorium" name="selectLaboratorium">
             <option *ngFor="let laboratorium of allLaboratorium" [ngValue]="laboratorium">{{laboratorium.nama}}</option>
           </select>
 
@@ -22,7 +22,7 @@
 
       <div class="card mb-3">
 				<div class="card-header card-info">
-					<h5 class="mb-0">Lihat Hasil Lab</h5>
+					<h5 class="mb-0"><b>Lihat Hasil Lab</b></h5>
 				</div>
 				<div class="card-block">
           <div class="form-group">
@@ -41,6 +41,7 @@
 						<thead>
 							<th><mfDefaultSorter by="nama_tindakan">Tindakan</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="nama_pasien">Pasien</mfDefaultSorter></th>
+              <th><mfDefaultSorter by="no_pegawai">Petugas Lab</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="no_transaksi">No Transaksi</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="tanggal_waktu">Tanggal</mfDefaultSorter></th>
               <th></th>
@@ -49,6 +50,7 @@
 							<tr>
 								<td>{{hasilLab.tindakan.daftar_tindakan.nama}}</td>
 								<td>{{hasilLab.tindakan.pasien.nama_pasien}}</td>
+                <td>{{hasilLab.tindakan.tenaga_medis.no_pegawai}}</td>
 								<td>{{hasilLab.transaksi.no_transaksi}}</td>
 								<td>{{hasilLab.tindakan.tanggal_waktu | date: 'dd-MMM-yyyy'}}</td>
                 <td>
@@ -71,13 +73,13 @@
 
       <div class="card mb-3">
         <div class="card-header card-info">
-          <h5 class="mb-0">Upload Hasil lab</h5>
+          <h5 class="mb-0"><b>Upload Hasil lab</b></h5>
         </div>
         <div class="card-block">
           <p *ngFor="let alert of alerts">
             <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
           </p>
-          <table class="table" *ngIf="allTindakan.length > 0">
+          <table class="table" *ngIf="allEmptyHasilLab.length > 0">
             <thead>
               <th>Nama Tindakan</th>
               <th>Nama Pasien</th>
@@ -86,18 +88,18 @@
               <th></th>
             </thead>
             <tbody>
-              <tr *ngFor="let tindakan of allTindakan; index as i">
-                <td>{{tindakan.daftar_tindakan.nama}}</td>
-                <td>{{tindakan.pasien.nama_pasien}}</td>
-                <td>{{tindakan.transaksi.no_transaksi}}</td>
-                <td>{{tindakan.tanggal_waktu | date: 'dd-MMM-yyyy'}}</td>
+              <tr *ngFor="let hasilLab of allEmptyHasilLab; index as i">
+                <td>{{hasilLab.tindakan.daftar_tindakan.nama}}</td>
+                <td>{{hasilLab.tindakan.pasien.nama_pasien}}</td>
+                <td>{{hasilLab.transaksi.no_transaksi}}</td>
+                <td>{{hasilLab.tindakan.tanggal_waktu | date: 'dd-MMM-yyyy'}}</td>
                 <td>
-                    <input type="file" (change)="uploadHasilLab($event, tindakan.transaksi.id, tindakan.id)" class="form-control-file" accept="application/pdf" name="dokumen">
+                    <input type="file" (change)="uploadHasilLab($event, hasilLab.id)" class="form-control-file" accept="application/pdf" name="dokumen">
                 </td>
               </tr>
             </tbody>
           </table>
-          <span *ngIf="allTindakan.length == 0">
+          <span *ngIf="allEmptyHasilLab.length == 0">
             Tidak ada hasil lab yang perlu diupload
           </span>
         </div>

@@ -1,0 +1,63 @@
+<html>
+  <div class="row">
+    <div class="col-md-12">
+
+      <div class="card mb-3">
+        <div class="card-header card-info">
+          <h5 class="mb-0"><b>Cari Tindakan Laboratorium</b></h5>
+        </div>
+        <div class="card-block">
+          <label for="selectLaboratorium">Pilih laboratorium</label>
+          <select class="form-control mb-3" id="selectLaboratorium" [(ngModel)]="selectedLaboratorium" name="selectLaboratorium">
+            <option *ngFor="let laboratorium of allLaboratorium" [ngValue]="laboratorium">{{laboratorium.nama}}</option>
+          </select>
+
+          <div *ngIf="selectedLaboratorium != null" class="form-group">
+            <label for="search">Cari tindakan dengan kode pasien</label>
+            <div class="input-group">
+              <input type="text" class="form-control" [(ngModel)]="searchTerm" (keydown)="onEnter($event)" id="search" name="search">
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-success" (click)="search()">
+                  Cari
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p *ngFor="let alert of alerts">
+        <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+      </p>
+
+      <div class="card mb-3" *ngIf="allTindakan.length > 0">
+        <div class="card-header card-info">
+          <h5 class="mb-0"><b>Tindakan Pasien {{searchTerm}} pada {{selectedLaboratorium.nama}}</b></h5>
+        </div>
+        <div class="card-block">
+          <table class="table">
+            <thead>
+              <th>Nama Tindakan</th>
+              <th>No Transaksi</th>
+              <th>Tanggal</th>
+              <th></th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tindakan of allTindakan; index as i">
+                <td>{{tindakan.daftar_tindakan.nama}}</td>
+                <td>{{tindakan.transaksi.no_transaksi}}</td>
+                <td>{{tindakan.tanggal_waktu | date: 'dd-MMM-yyyy'}}</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-success" (click)="lakukanTindakan(tindakan)">
+                    Lakukan Tindakan
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</html>
