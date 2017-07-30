@@ -88,15 +88,18 @@
               </h5>
             </div>
             <div class="card-block">
-              <div class="card card-outline-info">
+              <span *ngIf="!poliklinikSelected">
+                Pilih poliklinik dulu untuk melihat antrian
+              </span>
+              <span *ngIf="poliklinikSelected && allAntrian.length == 0">
+                Tidak ada pasien yang mengantri
+              </span>
+              <span *ngIf="allAntrian.length > 0">
+                Pasien yang sedang mengantri:
+              </span>
+              <div *ngIf="allAntrian.length > 0" class="card card-outline-info mt-2 mb-3">
                 <div class="card-block">
-                  <span *ngIf="!poliklinikSelected">
-                    Pilih poliklinik dulu untuk melihat antrian
-                  </span>
-                  <span *ngIf="poliklinikSelected && allAntrian.length == 0">
-                    Tidak ada pasien yang mengantri
-                  </span>
-                  <table *ngIf="allAntrian.length > 0" class="table mt-3" [mfData]="allAntrian" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+                  <table class="table" [mfData]="allAntrian" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
                     <thead>
                       <th><mfDefaultSorter by="nama">Nama Pasien</mfDefaultSorter></th>
                       <th><mfDefaultSorter by="no_antrian">Nomor Antrian</mfDefaultSorter></th>
@@ -115,29 +118,32 @@
                       </tr>
                     </tfoot>
                   </table>
-                  <div class="card card-outline-info">
-                    <div class="card-block">
-                      <table *ngIf="allProcessedAntrian.length > 0" class="table mt-3" [mfData]="allProcessedAntrian" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
-                        <thead>
-                          <th><mfDefaultSorter by="nama">Nama Pasien</mfDefaultSorter></th>
-                          <th><mfDefaultSorter by="no_antrian">Nomor Antrian</mfDefaultSorter></th>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let antrian of mf.data">
-                            <td class="text-left">{{antrian.transaksi.pasien.nama_pasien}}</td>
-                            <td>{{antrian.no_antrian}}</td>
-                          </tr>
-                        </tbody>
-                        <tfoot>
-                          <tr>
-                            <td colspan="2">
-                              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
-                            </td>
-                          </tr>
-                        </tfoot>
-                      </table>
-                    </div>
-                  </div>
+                </div>
+              </div>
+              <span *ngIf="allProcessedAntrian.length > 0">
+                Pasien yang sudah diproses:
+              </span>
+              <div *ngIf="allProcessedAntrian.length > 0" class="card card-outline-info mt-2">
+                <div class="card-block">
+                  <table class="table mt-3" [mfData]="allProcessedAntrian" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+                    <thead>
+                      <th><mfDefaultSorter by="nama">Nama Pasien</mfDefaultSorter></th>
+                      <th><mfDefaultSorter by="no_antrian">Nomor Antrian</mfDefaultSorter></th>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let antrian of mf.data">
+                        <td class="text-left">{{antrian.transaksi.pasien.nama_pasien}}</td>
+                        <td>{{antrian.no_antrian}}</td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="2">
+                          <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
                 </div>
               </div>
             </div>
