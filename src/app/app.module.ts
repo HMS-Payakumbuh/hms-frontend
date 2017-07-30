@@ -40,6 +40,9 @@ import { HomeComponent }          from './home.component';
 import { RegisterComponent }      from './auth/register.component';
 import { LoginComponent }         from './auth/login.component';
 
+import { HistoriTransaksiComponent }          from './transaksi/histori-transaksi.component';
+import { TransaksiObatComponent }          from './transaksi/transaksi-obat.component';
+import { TransaksiObatDetailComponent }        from './transaksi/transaksi-obat-detail.component';
 import { TransaksiComponent }          from './transaksi/transaksi.component';
 import { TransaksiDetailComponent }    from './transaksi/transaksi-detail.component';
 
@@ -182,6 +185,9 @@ import { AppComponent }             from './app.component';
         RegisterComponent,
         LoginComponent,
 
+        HistoriTransaksiComponent,
+        TransaksiObatComponent,
+        TransaksiObatDetailComponent,
         TransaksiComponent,
         TransaksiDetailComponent,
         PembayaranComponent,

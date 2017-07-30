@@ -21,8 +21,15 @@ export class TransaksiService {
 		return Promise.reject(error.message || error);
 	}
 
-	getAllTransaksi(): Observable<any[]> {
-		return this.http.get(this.transaksiUrl)
+	getAllTransaksi(kode_pasien: string = null, status: string = null): Observable<any[]> {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('kode_pasien', kode_pasien);
+		params.set('status', status);
+
+		let requestOptions = new RequestOptions();
+		requestOptions.params = params;
+
+		return this.http.get(this.transaksiUrl, requestOptions)
 			.map((res: Response) => res.json());
 	}
 
