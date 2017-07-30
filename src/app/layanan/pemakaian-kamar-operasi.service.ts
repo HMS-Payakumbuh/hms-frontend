@@ -21,6 +21,16 @@ export class PemakaianKamarOperasiService {
 			.map((res: Response) => res.json());
 	}
 
+	getAllPemakaianKamarOperasiBooked(): Observable<PemakaianKamarOperasi[]> {
+		return this.getAllPemakaianKamarOperasi()
+			.map(allPemakaianKamarOperasi => allPemakaianKamarOperasi.filter(PemakaianKamarOperasi => PemakaianKamarOperasi.waktu_masuk_real == null));
+	}
+
+	getAllPemakaianKamarOperasiNow(): Observable<PemakaianKamarOperasi[]> {
+		return this.getAllPemakaianKamarOperasi()
+			.map(allPemakaianKamarOperasi => allPemakaianKamarOperasi.filter(PemakaianKamarOperasi => PemakaianKamarOperasi.waktu_masuk_real != null));
+	}
+
 	getPemakaianKamarOperasi(no_kamar: string): Observable<PemakaianKamarOperasi> {
 		return this.getAllPemakaianKamarOperasi()
 			.map(allPemakaianKamarOperasi => allPemakaianKamarOperasi.find(PemakaianKamarOperasi => PemakaianKamarOperasi.no_kamar == no_kamar));

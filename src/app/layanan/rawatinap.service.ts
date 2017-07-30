@@ -21,6 +21,31 @@ export class RawatinapService {
 			.map((res: Response) => res.json());
 	}
 
+	getAllRawatinapAdmin(): Observable<Rawatinap[]> {
+		return this.http.get(this.rawatinapUrl + '/list/all')
+			.map((res: Response) => res.json());
+	}
+
+	getAvailableKamarBooked(tanggal : string): Observable<Rawatinap[]> {
+		return this.http.get(this.rawatinapUrl + '/booking/' + tanggal + '/booked')
+			.map((res: Response) => res.json());
+	}
+
+	getAvailableKamarNow(tanggal : string): Observable<Rawatinap[]> {
+		return this.http.get(this.rawatinapUrl + '/booking/' + tanggal + '/now')
+			.map((res: Response) => res.json());
+	}
+
+	getAvailableKamarBookedByNamaKamar(tanggal : string): Observable<Rawatinap[]> {
+		return this.http.get(this.rawatinapUrl + '/available/' + tanggal + '/booked')
+			.map((res: Response) => res.json());
+	}
+
+	getAvailableKamarNowByNamaKamar(tanggal : string): Observable<Rawatinap[]> {
+		return this.http.get(this.rawatinapUrl + '/available/' + tanggal + '/now')
+			.map((res: Response) => res.json());
+	}
+
 	getAllAvailableRawatinap() : Observable<Rawatinap[]> {
 		return this.getAllRawatinap()
 		.map(allRawatinap => allRawatinap.filter(rawatinap => rawatinap.available_kamar != 0 && rawatinap.jenis_kamar == "Rawat Inap"));

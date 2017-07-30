@@ -26,18 +26,18 @@ import { PoliklinikService }		from './poliklinik.service';
 
 
 @Component({
- 	selector: 'pemakaian-kamar-operasi-list-page',
- 	templateUrl: './pemakaian-kamar-operasi-list.component.html',
+ 	selector: 'booking-operasi-list-page',
+ 	templateUrl: './booking-operasi-list.component.html',
  	providers: [PemakaianKamarOperasiService,
 	 			TenagaMedisService,
-				TindakanService,
+                TindakanService,
+                PasienService,
 				TindakanOperasiService,
 				TransaksiService,
-				PasienService,
 				KamarOperasiService]
 })
 
-export class PemakaianKamarOperasiListComponent implements OnInit {
+export class BookingOperasiListComponent implements OnInit {
 	allPemakaianKamarOperasi: PemakaianKamarOperasi[];
 	allKamarOperasi: KamarOperasi[];
 	allTenagaMedis: TenagaMedis[];
@@ -103,7 +103,7 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.pemakaianKamarOperasiService.getAllPemakaianKamarOperasiNow().subscribe(
+		this.pemakaianKamarOperasiService.getAllPemakaianKamarOperasiBooked().subscribe(
      		data => { this.allPemakaianKamarOperasi = data }
     	);
 		
@@ -136,8 +136,8 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
     }
     
 	newPemakaianKamarOperasi() {
-		this.pemakaianKamarOperasiModal = new PemakaianKamarOperasi();
-		this.pemakaianKamarOperasiModal.waktu_masuk_real = new Date().toISOString().slice(0, 10);
+    	this.pemakaianKamarOperasiModal = new PemakaianKamarOperasi();
+
  	}
 
 	showDetailPemakaianKamarOperasi(pemakaianKamarOperasiId: number, pemakaianKamarOperasi: PemakaianKamarOperasi) {
@@ -159,6 +159,10 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 		);
 	}
 
+	getTanggalOperasi() {
+		this.pemakaianKamarOperasiModal.waktu_masuk = this.tanggalOperasi + " " +  this.waktuMasuk;
+		this.pemakaianKamarOperasiModal.waktu_keluar = this.tanggalOperasi + " " +  this.waktuKeluar;
+	}
 
 	getTenagaMedis() {
 		this.noTenagaMedis = this.no_pegawai.toString().split(",");
@@ -173,7 +177,7 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 		temp.id_pembayaran = null;
 		temp.kode_tindakan = tindakanReference.kode;
 		temp.id_pasien = this.transaksi.id_pasien;
-		temp.tanggal_waktu = this.transaksi.waktu_masuk_pasien;
+		temp.tanggal_waktu = this.transaksi.waktu_masuk;
 		temp.np_tenaga_medis = null;
 		temp.nama_poli = null;
 		temp.nama_lab = null;

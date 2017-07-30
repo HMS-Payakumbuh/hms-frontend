@@ -75,6 +75,7 @@ import { KamarRawatinapListComponent } 	from './layanan/kamar-rawatinap-list.com
 import { KamarJenazahListComponent } 	from './layanan/kamar-jenazah-list.component';
 import { KamarOperasiListComponent }		from './layanan/kamar-operasi-list.component';
 
+import { BookingOperasiListComponent }		from './layanan/booking-operasi-list.component';
 import { PemakaianKamarListComponent }		from './layanan/pemakaian-kamar.component';
 import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-operasi-list.component';
 import { PemakaianKamarJenazahListComponent }		from './layanan/pemakaian-kamar-jenazah-list.component';
@@ -205,6 +206,8 @@ import { AppComponent }             from './app.component';
         PindahKamarListComponent,
         PindahKamarDetailComponent,
 
+        BookingOperasiListComponent,
+        
         PemakaianKamarListComponent,
         PemakaianKamarOperasiListComponent,
         PemakaianKamarJenazahListComponent,

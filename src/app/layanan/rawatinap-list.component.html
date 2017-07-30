@@ -11,19 +11,10 @@
 					<div class="row mb-3">
 						<div class="col-md-4 pull-left">
 							<div class="col-md-12 input-group">
-								<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="No. Kamar">
+								<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="Nama Kamar">
 							</div>
 						</div>
-						<div class="col-md-4 pull-right">				
-							<div class="col-md-12 input-group">
-								<span class="pt-2 pr-2"><b>Jenis :  </b></span>	
-								<select class="form-control" [(ngModel)]="jenis" id="statusDropdown">
-									<option *ngFor="let jenis of allJenis">
-										{{jenis}}
-									</option>
-								</select>
-							</div>
-						</div>
+
 						<div class="col-md-4 pull-right">
 							<div class="col-md-12 input-group">
 								<span class="pt-2 pr-2"><b>Kelas :  </b></span>
@@ -38,18 +29,16 @@
 
 					<table class="table">
 						<thead>
-							<th>No. Kamar</th>
-							<th>Jenis Kamar</th>
+							<th>Nama Kamar</th>
 							<th>Kelas</th>
 							<th>Harga Per Hari (Rp.)</th>
 							<th>Tempat Tidur Tersedia</th>
 							<th></th>
 						</thead>
 						
-						<tbody *ngFor="let rawatinap of allRawatinap | filterKelasKamar: kelas | filterNoKamar: searchParam | filterJenisKamar: jenis">
+						<tbody *ngFor="let rawatinap of allRawatinap | filterKelasKamar: kelas | filterNoKamar: searchParam ">
 							<tr>
 								<td>{{rawatinap?.no_kamar}}</td>
-								<td>{{rawatinap?.jenis_kamar}}</td>
 								<td>{{rawatinap?.kelas}}</td>
 								<td>{{rawatinap?.harga_per_hari}}</td>
 								<td>{{rawatinap?.available_kamar}} / {{rawatinap?.kapasitas_kamar}}</td>
@@ -85,7 +74,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="nama_pasien">No. Kamar</label>
+									<label for="nama_pasien">Nama Kamar</label>
 									<input type="text" class="form-control" id="nama_pasien" disabled name="no_kamar" [(ngModel)]="pemakaianKamarModal.no_kamar">
 								</div>
 
@@ -111,7 +100,7 @@
 
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-								<button type="button" class="btn btn-success" (click)="createPemakaianKamar(pemakaianKamarModal.no_kamar, pemakaianKamarModal.no_tempat_tidur)">Simpan</button>
+								<button type="button" class="btn btn-success" (click)="createPemakaianKamar(pemakaianKamarModal.no_kamar, pemakaianKamarModal.no_tempat_tidur)" data-dismiss="modal">Simpan</button>
 							</div>
 						</div>
 					</div>

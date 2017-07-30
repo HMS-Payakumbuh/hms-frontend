@@ -22,10 +22,11 @@
 					<table class="table">
                         
 						<thead>
-							<th>No. Kamar</th>
+							<th>Nama Kamar</th>
+							<th>Kelas</th>
 							<th>No. Tempat Tidur</th>
-                            <th>Nama Pasien</th>
-                            <th>Dokter Rawat</th>
+							<th>Nama Booking</th>
+							<th>Kontak Booking</th>
 							<th>Tanggal Booking</th>
 							<th></th>
 							<th></th>
@@ -37,12 +38,13 @@
 						<tbody *ngFor="let pemakaiankamar of allPemakaianKamar | filterWaktuKeluar: selectedDate">
 							<tr>
 								<td>{{pemakaiankamar.no_kamar}}</td>
+								<td>{{pemakaiankamar.kelas}}</td>
 								<td>{{pemakaiankamar.no_tempat_tidur}}</td>
-                                <td>{{pemakaiankamar.nama_pasien}}</td>
-                                <td>{{pemakaiankamar.nama}}</td>
+								<td>{{pemakaiankamar.nama_booking}}</td>
+								<td>{{pemakaiankamar.kontak_booking}}</td>
 								<td>{{pemakaiankamar.tanggal_booking | date:'d MMM y'}}</td>
 								<td>
-									<button type="button"  class="btn btn-sm btn-info" (click)="editPemakaianKamarRawatinap(pemakaiankamar.id, pemakaiankamar)">
+									<button type="button" *ngIf="pemakaiankamar.tanggal_booking == today"  class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#createPemakaianKamarModal'" (click)="newPemakaianKamarRawatinap(pemakaiankamar)">
 										Masuk
 									</button>
 								</td>
@@ -55,6 +57,56 @@
 						</tbody>
 					</table>
 			</div>
+
+			<div class="modal fade" tabindex="-1" role="dialog" id="createPemakaianKamarModal" aria-hidden="true" *ngIf="pemakaianKamarModal != null">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+
+							<div class="modal-header bg-info text-white">
+								<h5 class="modal-title">Pendaftaran Rawat Inap</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<i class="fa fa-times" aria-hidden="true"></i>
+								</button>
+							</div>
+
+							<div class="modal-body">
+
+								<div class="form-group">
+									<label for="id_transaksi">Nama Pasien</label>
+									<div class="input-group">
+									<input type="text" class="form-control" id="nama_pasien" required required [ngbTypeahead]="searchNamaPasien" [inputFormatter]="inputPasienFormatter" [resultFormatter]="resultPasienFormatter" (selectItem)="addPasien($event.item)" [(ngModel)]="pemakaianKamarModal.nama_pasien" name="nama_pasien">
+									</div>                    
+								</div>
+
+								<div class="form-group">
+									<label for="nama_pasien">Nama Kamar</label>
+									<input type="text" class="form-control" id="no_kamar" disabled name="no_kamar" [(ngModel)]="pemakaianKamarModal.no_kamar">
+								</div>
+
+								<div class="form-group">
+									<label for="nama_pasien">No. Tempat Tidur</label>
+									<input type="text" class="form-control" id="no_tempat_tidur" disabled name="no_tempat_tidur" [(ngModel)]="pemakaianKamarModal.no_tempat_tidur">
+								</div>
+
+								<div class="form-group">
+									<label for="nama_pasien">Harga</label>
+									<input type="text" class="form-control" id="harga" disabled name="harga" [(ngModel)]="pemakaianKamarModal.harga">
+								</div>
+
+								<div class="form-group">
+									<label for="nama_pasien">Nama Dokter Penanggungjawab</label>
+									<input type="text" class="form-control" id="no_pegawai" required [ngbTypeahead]="searchNamaDokter" [inputFormatter]="inputDokterFormatter" [resultFormatter]="resultDokterFormatter" (selectItem)="setNoPegawai($event.item)" name="no_pegawai">
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+								<button type="button" class="btn btn-success" (click)="editPemakaianKamarRawatinap(pemakaianKamarModal.id, pemakaianKamarModal)" data-dismiss="modal">Simpan</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
 		</div>
 	</div>
 	</div>
