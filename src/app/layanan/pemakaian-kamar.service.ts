@@ -90,6 +90,14 @@ export class PemakaianKamarService {
 			.map((res: Response) => res.json());
 	}
 
+	perbaruiWaktuKeluarPemakaianKamar(id: number, PemakaianKamar: PemakaianKamar) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(PemakaianKamar);
+
+		return this.http.put(this.pemakaianKamarRawatinapUrl+ '/update/waktu_keluar/' + id, body, options)
+	}
+
 	pindahPemakaianKamar(id: number, PemakaianKamar: PemakaianKamar) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});

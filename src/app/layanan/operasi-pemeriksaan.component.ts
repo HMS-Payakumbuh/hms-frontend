@@ -13,8 +13,8 @@ import { RekamMedisService }    from '../pasien/rekam-medis.service';
 import { HasilPemeriksaan }     from './hasil-pemeriksaan';
 import { AntrianService }       from '../antrian/antrian.service';
 
-import { PemakaianKamar }						from './pemakaian-kamar';
-import { PemakaianKamarService }		from './pemakaian-kamar.service';
+import { PemakaianKamarOperasi }						from './pemakaian-kamar-operasi';
+import { PemakaianKamarOperasiService }		from './pemakaian-kamar-operasi.service';
 
 import { TenagaMedis }		from '../tenaga-medis/tenaga-medis';
 import { TenagaMedisService }		from '../tenaga-medis/tenaga-medis.service';
@@ -27,6 +27,9 @@ import { DiagnosisService }			from './diagnosis.service';
 import { Tindakan }							from './tindakan';
 import { TindakanReference }		from './tindakan-reference';
 import { TindakanService }			from './tindakan.service';
+
+import { TindakanOperasi }			from './tindakan-operasi';
+import { TindakanOperasiService }			from './tindakan-operasi.service';
 
 import { ObatTindakan }         from '../farmasi/obat-tindakan/obat-tindakan';
 import { ObatTindakanService }  from '../farmasi/obat-tindakan/obat-tindakan.service';
@@ -46,67 +49,73 @@ import { ObatMasuk }	          from '../farmasi/obat-masuk/obat-masuk';
 import { ObatMasukService }		  from '../farmasi/obat-masuk/obat-masuk.service';
 
 @Component({
- 	selector: 'pemeriksaan-rawat-inap-page',
- 	templateUrl: './rawatinap-pemeriksaan.component.html',
+ 	selector: 'pemeriksaan-operasi-page',
+ 	templateUrl: './operasi-pemeriksaan.component.html',
  	providers: [
     AntrianService,
-    PemakaianKamarService,
+    PemakaianKamarOperasiService,
     RekamMedisService,
     TenagaMedisService,
- 		TransaksiService,
- 		DiagnosisService,
- 		TindakanService,
+    TransaksiService,
+    DiagnosisService,
+    TindakanService,
+    TindakanOperasiService,
     ObatTindakanService,
     ResepService,
     JenisObatService,
     StokObatService,
     ObatMasukService,
- 		NgbTypeaheadConfig
+    NgbTypeaheadConfig
 	]
 })
 
-export class PemeriksaanRawatinapComponent implements OnInit {
-	transaksi: any = null;
-  rekamMedis: RekamMedis = null;
-  hasilPemeriksaan: HasilPemeriksaan = new HasilPemeriksaan();
-  keluhan: string;
-  allRiwayat: any[] = [];
-  allRiwayatLama: any;
-  anamnesis: any;
-  allPenyakit: any;
-  allAlergi: any[] = [];
-  allRiwayatPenyakit: any;
-  allAlergiLama: any;
-  pelayananLain: string[] = [];
-  riwayatBaru: string;
-  alergiBaru: string;
-  pelayananBaru: string;
-  rencana: any = {};
-  rujuk: boolean = false;
-  firstRekamMedis: boolean = false;
-  namaPoliRujuk: string = null;
+export class PemeriksaanOperasiComponent implements OnInit {
+    transaksi: any = null;
+    rekamMedis: RekamMedis = null;
+    hasilPemeriksaan: HasilPemeriksaan = new HasilPemeriksaan();
+    keluhan: string;
+    allRiwayat: any[] = [];
+    allRiwayatLama: any;
+    anamnesis: any;
+    allPenyakit: any;
+    allAlergi: any[] = [];
+    allRiwayatPenyakit: any;
+    allAlergiLama: any;
+    pelayananLain: string[] = [];
+    riwayatBaru: string;
+    alergiBaru: string;
+    pelayananBaru: string;
+    rencana: any = {};
+    rujuk: boolean = false;
+    firstRekamMedis: boolean = false;
+    namaPoliRujuk: string = null;
 
-	allDiagnosisReference: DiagnosisReference[];
-	allTindakanReference: TindakanReference[];
-  allStokObatAtLocation: StokObat[];
-  allJenisObat: JenisObat[];
-  allDokter: Dokter[];
+    allDiagnosisReference: DiagnosisReference[];
+    allTindakanReference: TindakanReference[];
+    allStokObatAtLocation: StokObat[];
+    allJenisObat: JenisObat[];
+    allDokter: Dokter[];
 
-  pemakaianKamar : PemakaianKamar;
+    pemakaianKamar : PemakaianKamarOperasi;
 
-  selectedDiagnosis: Diagnosis[] = [];
-  selectedDiagnosisReference: DiagnosisReference[] = [];
 
-  selectedTindakan: Tindakan[] = [];
-  selectedTindakanReference: TindakanReference[] = [];
+    selectedDiagnosis: Diagnosis[] = [];
+    selectedDiagnosisReference: DiagnosisReference[] = [];
 
-  addedDokter: Dokter[] = [];
+    selectedTindakan: Tindakan[] = [];
+    selectedTindakanReference: TindakanReference[] = [];
 
-  perkiraan_waktu_keluar: string = null;
-  perkembangan_pasien: string = null;
+    addedDokter: Dokter[] = [];
 
-  resepItemModal: ResepItem = null;
-  allResep: Resep[] = [];
+    perkiraan_waktu_keluar: string = null;
+    perkembangan_pasien: string = null;
+
+    savedTindakanOperasi: TindakanOperasi[] = [];
+
+    resepItemModal: ResepItem = null;
+    allResep: Resep[] = [];
+
+  user : any;
 
 	inputFormatter = (value : any) => value.nama;
 	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
@@ -162,7 +171,7 @@ export class PemeriksaanRawatinapComponent implements OnInit {
     private antrianService: AntrianService,
 		private transaksiService: TransaksiService,
     private rekamMedisService: RekamMedisService,
-		private pemakaianKamarService: PemakaianKamarService,
+		private pemakaianKamarService: PemakaianKamarOperasiService,
     private tenagaMedisService: TenagaMedisService,
 		private diagnosisService: DiagnosisService,
 		private tindakanService: TindakanService,
@@ -171,7 +180,8 @@ export class PemeriksaanRawatinapComponent implements OnInit {
     private jenisObatService: JenisObatService,
     private obatMasukService: ObatMasukService,
     private stokObatService: StokObatService,
-		private config: NgbTypeaheadConfig,
+        private config: NgbTypeaheadConfig,
+        private tindakanOperasiService : TindakanOperasiService,
     private modalService: NgbModal
 	) {
 		config.editable = false;
@@ -179,11 +189,11 @@ export class PemeriksaanRawatinapComponent implements OnInit {
 
 	ngOnInit() {
     this.route.params
-			.switchMap((params: Params) => this.pemakaianKamarService.getPemakaianKamar(params['idPemakaian']))
+			.switchMap((params: Params) => this.pemakaianKamarService.getPemakaianKamarOperasi(params['idPemakaian']))
 			.subscribe(
           data => {
             this.pemakaianKamar = data;
-            this.stokObatService.getStokObatByLocationType(3).subscribe(
+            this.stokObatService.getStokObatByLocationType(5).subscribe(
               allStokObatAtLocation => this.allStokObatAtLocation = allStokObatAtLocation
             );
         }
@@ -210,6 +220,8 @@ export class PemeriksaanRawatinapComponent implements OnInit {
     this.jenisObatService.getAllJenisObat().subscribe(
       data => { this.allJenisObat = data }
     )
+
+    this.user = JSON.parse(localStorage.getItem('currentUser'));
 	}
 
   checkRekamMedis() {
@@ -318,6 +330,12 @@ export class PemeriksaanRawatinapComponent implements OnInit {
     temp.nama_lab = null;
     temp.nama_ambulans = null;
     this.selectedTindakan.push(temp);
+    
+    let temp2 = new TindakanOperasi();
+    temp2.id_tindakan = null;
+    temp2.id_transaksi = this.transaksi.id;
+    temp2.np_tenaga_medis = this.user.no_pegawai;
+    this.savedTindakanOperasi.push(temp2);
   }
   
   // addDokter(dokter: Dokter) {
@@ -465,37 +483,21 @@ export class PemeriksaanRawatinapComponent implements OnInit {
       alergi: this.allAlergi.toString()
     };
 
-    if(this.perkiraan_waktu_keluar != null) {
-      this.pemakaianKamar.perkiraan_waktu_keluar = this.perkiraan_waktu_keluar;
-      this.pemakaianKamarService.perbaruiWaktuKeluarPemakaianKamar(this.pemakaianKamar.id, this.pemakaianKamar);
-    }
-
-    this.rekamMedis.perkembangan_pasien = this.perkembangan_pasien;
-    this.rekamMedis.hasil_pemeriksaan = JSON.stringify(this.hasilPemeriksaan);
-    this.rekamMedis.anamnesis = JSON.stringify(anamnesis);
-    this.rekamMedis.rencana_penatalaksanaan = JSON.stringify(this.rencana);
-    this.rekamMedis.pelayanan_lain = JSON.stringify(this.pelayananLain);
-    this.rekamMedisService.updateRekamMedis(this.rekamMedis).subscribe(
-      data1 => {
-        if (this.selectedDiagnosis.length > 0) {
-          this.diagnosisService.saveDiagnosis(this.selectedDiagnosis).subscribe(
-            data2 => {
-              this.tindakanService.saveTindakan(this.selectedTindakan).subscribe(
-                data3 => {
-                  this.saveObatTindakan(data3);
-                }
-              );
-            }
-          );
-        }
-        else {
+    
+    
+        if(this.selectedTindakan.length > 0) {
           this.tindakanService.saveTindakan(this.selectedTindakan).subscribe(
             data3 => {
-              this.saveObatTindakan(data3);
+                this.saveObatTindakan(data3);
+                this.tindakanOperasiService.createTindakanOperasi(this.savedTindakanOperasi).subscribe(
+                    data => {
+                        // this.router.navigate(['']);
+                    }
+                
             }
           );
         }
-      }
-    )
+      
+    
 	}
 }

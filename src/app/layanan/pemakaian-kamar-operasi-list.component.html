@@ -38,8 +38,8 @@
 								<td>{{kamaroperasi?.nama_tindakan}}</td>
 								<td>{{kamaroperasi?.waktu_masuk_real | date:'d MMM y H:mm'}}</td>
 								<td>
-									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#detailModal'" (click)="showDetailPemakaianKamarOperasi(kamaroperasi.id, kamaroperasi)">
-										Tindak
+									<button type="button" class="btn btn-sm btn-info" routerLink="{{kamaroperasi.no_kamar}}/{{kamaroperasi.id}}/{{kamaroperasi.id_transaksi}}">
+										Operasi
 									</button>
 								</td>
 								<td>
@@ -98,32 +98,7 @@
 									<input [disabled]= "isTindakanAlreadySelected()" id="inputTindakan" class="form-control" [ngbTypeahead]="searchTindakan" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addSelectedTindakan($event.item)">
 								</div>
 
-								<table class="table" *ngIf="selectedTindakan.length > 0">
-									<thead>
-										<th>Nama</th>
-										<th>Keterangan</th>
-										<th></th>
-										<th></th>
-									</thead>
-									<tbody>
-										<tr *ngFor="let tindakan of selectedTindakan; index as i">
-											<td style="vertical-align: middle;">{{selectedTindakanReference[i].nama}}</td>
-											<td style="vertical-align: middle;">
-												<textarea class="form-control" rows="2" [(ngModel)]="tindakan.keterangan"></textarea>
-											</td>
-											<td style="vertical-align: middle;">
-												<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#obatTindakanModal' + i">
-													Pemakaian Obat
-												</button>
-											</td>
-											<td style="vertical-align: middle;">
-												<button type="button" class="btn btn-sm btn-outline-danger" (click)="removeSelectedTindakan(i)">
-													<i class="fa fa-window-close"></i>
-												</button>
-											</td>
-										</tr>
-									</tbody>
-								</table>
+								
 							</div>
 
 							<div class="modal-footer">

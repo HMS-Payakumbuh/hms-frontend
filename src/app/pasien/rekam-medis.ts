@@ -6,6 +6,7 @@ export class RekamMedis {
     public hasil_pemeriksaan: string = null,
     public anamnesis: string = null,
     public rencana_penatalaksanaan: string = null,
-    public pelayanan_lain: string = null
+    public pelayanan_lain: string = null,
+    public perkembangan_pasien: string = null
   ) {  }
 }

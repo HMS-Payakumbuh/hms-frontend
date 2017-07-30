@@ -31,9 +31,9 @@ export class PemakaianKamarOperasiService {
 			.map(allPemakaianKamarOperasi => allPemakaianKamarOperasi.filter(PemakaianKamarOperasi => PemakaianKamarOperasi.waktu_masuk_real != null));
 	}
 
-	getPemakaianKamarOperasi(no_kamar: string): Observable<PemakaianKamarOperasi> {
+	getPemakaianKamarOperasi(id: number): Observable<PemakaianKamarOperasi> {
 		return this.getAllPemakaianKamarOperasi()
-			.map(allPemakaianKamarOperasi => allPemakaianKamarOperasi.find(PemakaianKamarOperasi => PemakaianKamarOperasi.no_kamar == no_kamar));
+			.map(allPemakaianKamarOperasi => allPemakaianKamarOperasi.find(PemakaianKamarOperasi => PemakaianKamarOperasi.id == id));
 	}
 
 	createPemakaianKamarOperasi(PemakaianKamarOperasi: PemakaianKamarOperasi) {

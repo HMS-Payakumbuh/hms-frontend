@@ -5,7 +5,7 @@
 
 	  	<div class="card card-outline-info mb-3">
 	  		<div class="card-block">
-		  		<h3>{{pemakaianKamar?.no_kamar}} - Transaksi #{{transaksi?.transaksi.id}}</h3>
+		  		<h3 class="mb-0">{{pemakaianKamar.no_kamar}}</h3>
 	  		</div>
 	  	</div>
 
@@ -28,11 +28,11 @@
 							</tr>
 							<tr>
 								<td><b>Tanggal Lahir</b></td>
-								<td>{{transaksi?.transaksi.pasien.tanggal_lahir}}</td>
+								<td>{{transaksi?.transaksi.pasien.tanggal_lahir | date: 'dd-MMM-yyyy'}}</td>
 							</tr>
-							<tr>
+							<tr *ngIf="!firstRekamMedis">
 								<td colspan="2">
-									<button type="button" class="btn btn-outline-primary" [routerLink]="['/rekam_medis', transaksi?.transaksi.pasien.id, 0]">Lihat Rekam Medis</button>
+									<button type="button" class="btn btn-outline-primary" [routerLink]="['/rekam_medis', 'rawatinap', transaksi?.transaksi.id, transaksi?.transaksi.pasien.id]">Lihat Rekam Medis</button>
 								</td>
 							</tr>
 						</tbody>
@@ -53,11 +53,11 @@
 								<i class="fa fa-files-o" aria-hidden="true"></i> Anamnesis
 							</a>
 						</li>
-						<li class="nav-item">
+						<!-- <li class="nav-item">
 							<a class="nav-link" data-toggle="tab" href="#diagnosis" role="tab" style="color: black;">
 								<i class="fa fa-stethoscope" aria-hidden="true"></i> Diagnosis
 							</a>
-						</li>
+						</li> -->
 						<li class="nav-item">
 							<a class="nav-link" data-toggle="tab" href="#tindakan" role="tab" style="color: black;">
 								<i class="fa fa-medkit" aria-hidden="true"></i> Tindakan
@@ -66,6 +66,11 @@
 						<li class="nav-item">
 							<a class="nav-link" data-toggle="tab" href="#resep" role="tab" style="color: black;">
 								<i class="fa fa-sticky-note-o" aria-hidden="true"></i> Resep
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#lain" role="tab" style="color: black;">
+								<i class="fa fa-bookmark" aria-hidden="true"></i> Lainnya
 							</a>
 						</li>
 					</ul>
@@ -77,6 +82,13 @@
 
 							<form>
 								<div class="form-group">
+									<div class="row mb-3">
+										<div class="col-8">
+											<label>Perkembangan Pasien</label>
+											<textarea id="inputPerkembanganPasien" class="form-control" rows="3" [(ngModel)]="perkembangan_pasien" name="perkembangan"></textarea>
+										</div>
+									</div>
+									
 									<div class="row mb-3">
 										<div class="col-4">
 											<label for="tekananDarah">TD (mmHg)</label>
@@ -114,59 +126,73 @@
 						<div class="tab-pane fade" id="anamnesis" role="tabpanel">
 
 							<form>
-								<div class="form-group">	
+								<!-- <div class="form-group">
 									<label for="keluhan">Keluhan Utama</label>
 									<input type="text" class="form-control" id="keluhan" [(ngModel)]="keluhan" name="keluhan">
-								</div>
+								</div> -->
 								<div class="form-group">
 									<label for="riwayat">Riwayat Penyakit</label>
-										<div class="row" *ngFor="let riwayat of allRiwayat; index as i">
-											<div class="col-sm-4 text-left">
-												<div class="input-group">
-													<div class="input-group-addon">{{i + 1}}. </div>
-													 <input type="text" class="form-control" id="riwayat" [value]="riwayat" name="riwayat" disabled>
-												 </div>
-											</div>
-											<div class="col-sm-8">
-												<button type="button" class="btn btn-sm btn-danger" (click)="removeRiwayat(i)">
-													Hapus
-												</button>
-											</div>
+									<button type="button" class="btn btn-sm btn-info" (click)="loadRiwayat()" data-toggle="modal" data-target="#riwayatModal" [attr.data-target]="'#riwayatModal'">Detail</button>
+									<div class="row" *ngFor="let riwayat of allRiwayat; index as i">
+										<div class="col-sm-11 text-left">
+											<div class="input-group">
+												<div class="input-group-addon">{{i + 1}}. </div>
+												 <input type="text" class="form-control" id="riwayat" [value]="riwayat" name="riwayat" disabled>
+											 </div>
 										</div>
-									<input type="text" class="form-control" id="riwayat" [(ngModel)]="riwayatBaru" name="riwayat">
-									<button type="button" class="btn btn-sm btn-info" (click)="addRiwayat()">
-										Tambah
-									</button>
-								</div>	
+										<div class="col-sm-1">
+											<button type="button" class="btn btn-sq-sm btn-danger" (click)="removeRiwayat(i)">
+												<i class="fa fa-minus" aria-hidden="true"></i>
+											</button>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-11 text-left">
+											<input type="text" class="form-control" id="riwayat" [(ngModel)]="riwayatBaru" name="riwayat" (keyup.enter) = "addRiwayat()">
+										</div>
+										<div class="col-sm-1">
+											<button type="button" class="btn btn-sq-sm btn-info" (click)="addRiwayat()">
+												<i class="fa fa-plus" aria-hidden="true"></i>
+											</button>
+										</div>
+									</div>
+								</div>
 								<div class="form-group">
 									<label for="alergi">Alergi</label>
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#alergiModal" [attr.data-target]="'#alergiModal'">Detail</button>
 									<div class="row" *ngFor="let alergi of allAlergi; index as i">
-										<div class="col-sm-4 text-left">
-												<div class="input-group">
-													<div class="input-group-addon">{{i + 1}}. </div>
-													 <input type="text" class="form-control" id="alergi" [value]="alergi" name="alergi" disabled>
-												 </div>
-											</div>
-											<div class="col-sm-8">
-												<button type="button" class="btn btn-sm btn-danger" (click)="removeAlergi(i)">
-													Hapus
-												</button>
-											</div>
+										<div class="col-sm-11 text-left">
+											<div class="input-group">
+												<div class="input-group-addon">{{i + 1}}. </div>
+												 <input type="text" class="form-control" id="alergi" [value]="alergi" name="alergi" disabled>
+											 </div>
 										</div>
-									<input type="text" class="form-control" id="alergi" [(ngModel)]="alergiBaru" name="alergi">
-									<button type="button" class="btn btn-sm btn-info" (click)="addAlergi()">
-										Tambah
-									</button>
+										<div class="col-sm-1">
+											<button type="button" class="btn btn-sq-sm btn-danger" (click)="removeAlergi(i)">
+												<i class="fa fa-minus" aria-hidden="true"></i>
+											</button>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-11 text-left">
+											<input type="text" class="form-control" id="alergi" [(ngModel)]="alergiBaru" name="alergi" (keyup.enter) = "addAlergi()">
+										</div>
+										<div class="col-sm-1">
+											<button type="button" class="btn btn-sq-sm btn-info" (click)="addAlergi()">
+												<i class="fa fa-plus" aria-hidden="true"></i>
+											</button>
+										</div>
+									</div>
 								</div>
 							</form>
 
 						</div>
 
-						<div class="tab-pane fade" id="diagnosis" role="tabpanel">
+						<!-- <div class="tab-pane fade" id="diagnosis" role="tabpanel">
 
 							<div class="form-group">
 								<label for="inputDiagnosis">Masukkan kode diagnosis pasien (ICD-10)</label>
-								<input id="inputTindakan" class="form-control" [ngbTypeahead]="searchDiagnosis" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addSelectedDiagnosis($event.item)">
+								<input id="inputDiagnosis" class="form-control" [ngbTypeahead]="searchDiagnosis" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addSelectedDiagnosis($event.item)">
 							</div>
 
 							<table class="table" *ngIf="selectedDiagnosis.length > 0">
@@ -180,7 +206,7 @@
 									<tr *ngFor="let diagnosis of selectedDiagnosisReference; index as i">
 										<td style="vertical-align: middle;">{{i + 1}}</td>
 										<td style="vertical-align: middle;">{{diagnosis.kode}}</td>
-										<td style="vertical-align: middle;">{{diagnosis.nama}}</td>
+										<td style="vertical-align: middle; text-align: left;">{{diagnosis.nama}}</td>
 										<td style="vertical-align: middle;">
 											<button type="button" class="btn btn-sm btn-danger" (click)="removeSelectedDiagnosis(i)">
 												Hapus
@@ -190,7 +216,7 @@
 								</tbody>
 							</table>
 
-						</div>
+						</div> -->
 
 						<div class="tab-pane fade" id="tindakan" role="tabpanel">
 
@@ -205,7 +231,6 @@
 									<th>Kode</th>
 									<th>Nama</th>
 									<th>Keterangan</th>
-									<th>Tenaga Medis</th>
 									<th></th>
 									<th></th>
 								</thead>
@@ -213,14 +238,9 @@
 									<tr *ngFor="let tindakan of selectedTindakan; index as i">
 										<td style="vertical-align: middle;">{{i + 1}}</td>
 										<td style="vertical-align: middle;">{{tindakan.kode_tindakan}}</td>
-										<td style="vertical-align: middle;">{{selectedTindakanReference[i].nama}}</td>
+										<td style="vertical-align: middle; text-align: left;">{{selectedTindakanReference[i].nama}}</td>
 										<td style="vertical-align: middle;">
 											<textarea class="form-control" rows="2" [(ngModel)]="tindakan.keterangan"></textarea>
-										</td>
-										<td style="vertical-align: middle;">
-											<input class="form-control" [ngbTypeahead]="searchTenagaMedis"
-											[inputFormatter]="tenagaMedisFormatter" [resultFormatter]="tenagaMedisFormatter"
-											(selectItem)="selectTenagaMedis(tindakan, $event.item)">
 										</td>
 										<td style="vertical-align: middle;">
 											<button type="button" class="btn btn-sm btn-info" data-toggle="modal"
@@ -264,22 +284,34 @@
 											<table class="table table-sm borderless">
 												<thead *ngIf="resep.resep_item.length > 0">
 													<th></th>
-													<th>Aturan Pemakaian</th>
-													<th>Petunjuk Peracikan</th>
+													<th></th>
+													<th></th>
+													<th></th>
 												</thead>
 												<tbody>
 													<tr *ngFor="let resepItem of resep.resep_item; index as j">
-														<th scope="row" style="vertical-align: middle;">
-															Obat {{j + 1}}
+														<th scope="row" style="vertical-align: middle; text-align: left;">
+															<div *ngIf="resepItem.racikan_item.length == 0">
+																--
+															</div>
+															<div *ngIf="resepItem.racikan_item.length > 0">
+																<div *ngFor="let racikanItem of resepItem.racikan_item">
+																	{{racikanItem.jenis_obat.merek_obat}}
+																</div>
+															</div>
 														</th>
-														<td style="vertical-align: middle;">
-															<input type="text" class="form-control" [(ngModel)]="resepItem.aturan_pemakaian">
+														<td *ngIf="resepItem.racikan_item.length < 2" colspan="2" style="vertical-align: middle;">
+															<input type="text" class="form-control" placeholder="Aturan Pemakaian" [(ngModel)]="resepItem.aturan_pemakaian">
 														</td>
-														<td style="vertical-align: middle;">
-															<input type="text" class="form-control" [(ngModel)]="resepItem.petunjuk_peracikan">
+														<td *ngIf="resepItem.racikan_item.length > 1" style="vertical-align: middle;">
+															<input type="text" class="form-control" placeholder="Aturan Pemakaian" [(ngModel)]="resepItem.aturan_pemakaian">
+														</td>
+														<td *ngIf="resepItem.racikan_item.length > 1" style="vertical-align: middle;">
+															<input  type="text" class="form-control" placeholder="Petunjuk Peracikan" [(ngModel)]="resepItem.petunjuk_peracikan">
 														</td>
 														<td style="vertical-align: middle; text-align: right;">
-															<button type=button class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#resep-item-' + i + '-' + j">
+															<button type=button class="btn btn-sm btn-info"
+															 data-toggle="modal" [attr.data-target]="'#edit-resep-item-modal-' + i" (click)="editResepItem(resepItem)">
 																Edit Obat
 															</button>
 															<button type=button class="btn btn-sm btn-danger" (click)="removeResepItem(j, resep)">
@@ -287,9 +319,10 @@
 															</button>
 														</td>
 													</tr>
-													<tr>
-														<td colspan="3">
-															<button type="button" class="btn btn-sm btn-info pull-left" (click)="addResepItem(resep)">
+													<tr class="mt-3">
+														<td colspan="4">
+															<button type="button" class="btn btn-sm btn-info pull-left"
+															 data-toggle="modal" [attr.data-target]="'#create-resep-item-modal-' + i" (click)="createResepItem()">
 																Tambah Obat
 															</button>
 														</td>
@@ -300,7 +333,7 @@
 									</div>
 								</div>
 
-								<div *ngFor="let resepItem of resep.resep_item; index as j" class="modal fade" tabindex="-1" role="dialog" id="resep-item-{{i}}-{{j}}" aria-hidden="true">
+								<div *ngIf="resepItemModal != null" class="modal fade" tabindex="-1" role="dialog" id="edit-resep-item-modal-{{i}}" aria-hidden="true">
 									<div class="modal-dialog" role="document">
 										<div class="modal-content">
 
@@ -314,29 +347,26 @@
 											</div>
 
 											<div class="modal-body">
-												<div *ngFor="let racikanItem of resepItem.racikan_item; index as k">
+												<div *ngFor="let racikanItem of resepItemModal.racikan_item; index as j">
 													<div class="input-group mb-2">
-														<div class="input-group-addon">Bahan Racikan {{k + 1}}</div>
-														<input type="text" class="form-control" placeholder="Input merek obat"
+														<div class="input-group-addon">Bahan Racikan {{j + 1}}</div>
+														<input type="text" class="form-control" placeholder="{{racikanItem.jenis_obat.merek_obat}}"
 														 [ngbTypeahead]="searchJenisObat" (selectItem)="addSelectedJenisObat(racikanItem, $event.item)"
 														 [inputFormatter]="inputJenisObatFormatter" [resultFormatter]="resultJenisObatFormatter">
 													</div>
 													<div *ngIf="racikanItem.jenis_obat != null" class="row mb-2">
 														<div class="col-sm-6 input-group">
-															<div class="input-group-addon bg-success text-white">Nama</div>
-															<input type="text" class="form-control" disabled [(ngModel)]="racikanItem.jenis_obat.nama_generik">
-														</div>
-														<div class="col-sm-6 input-group">
 															<div class="input-group-addon">Jumlah</div>
 															<input type="number" class="form-control" [(ngModel)]="racikanItem.jumlah">
+															<div class="input-group-addon">{{racikanItem.jenis_obat.satuan}}</div>
 														</div>
 													</div>
-													<button type="button" class="btn btn-sm btn-danger mb-3" (click)="removeRacikanItem(k, resepItem)">
+													<button type="button" class="btn btn-sm btn-danger mb-3" (click)="removeRacikanItem(j, resepItemModal)">
 														Hapus Bahan Racikan
 													</button>
 												</div>
 												<div>
-													<button type="button" class="btn btn-sm btn-info" (click)="addRacikanItem(resepItem)">
+													<button type="button" class="btn btn-sm btn-info" (click)="addRacikanItem(resepItemModal)">
 														Tambah Bahan Racikan
 													</button>
 												</div>
@@ -350,10 +380,96 @@
 									</div>
 								</div>
 
+								<div *ngIf="resepItemModal != null" class="modal fade" tabindex="-1" role="dialog" id="create-resep-item-modal-{{i}}" aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+
+											<div class="modal-header bg-info text-white">
+												<h5 class="modal-title mb-0">
+													Tambah Obat Resep
+												</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<i class="fa fa-times" aria-hidden="true"></i>
+												</button>
+											</div>
+
+											<div class="modal-body">
+												<div *ngFor="let racikanItem of resepItemModal.racikan_item; index as j">
+													<div class="input-group mb-2">
+														<div class="input-group-addon">Bahan Racikan {{j + 1}}</div>
+														<input type="text" class="form-control" placeholder="{{racikanItem.jenis_obat.merek_obat}}"
+														 [ngbTypeahead]="searchJenisObat" (selectItem)="addSelectedJenisObat(racikanItem, $event.item)"
+														 [inputFormatter]="inputJenisObatFormatter" [resultFormatter]="resultJenisObatFormatter">
+													</div>
+													<div *ngIf="racikanItem.jenis_obat != null" class="row mb-2">
+														<div class="col-sm-6 input-group">
+															<div class="input-group-addon">Jumlah</div>
+															<input type="number" class="form-control" [(ngModel)]="racikanItem.jumlah">
+															<div class="input-group-addon">{{racikanItem.jenis_obat.satuan}}</div>
+														</div>
+													</div>
+													<button type="button" class="btn btn-sm btn-danger mb-3" (click)="removeRacikanItem(j, resepItemModal)">
+														Hapus Bahan Racikan
+													</button>
+												</div>
+												<div>
+													<button type="button" class="btn btn-sm btn-info" (click)="addRacikanItem(resepItemModal)">
+														Tambah Bahan Racikan
+													</button>
+												</div>
+											</div>
+
+											<div class="modal-footer">
+												<button type="button" class="btn btn-success" data-dismiss="modal" (click)="addResepItem(resep)">Simpan</button>
+											</div>
+
+										</div>
+									</div>
+								</div>
+
 							</div>
+
 							<button type="button" class="btn btn-sm btn-info" (click)="addResep()">
 								Tambah Resep
 							</button>
+						</div>
+
+						<div class="tab-pane fade" id="lain" role="tabpanel">
+							<form>
+								<!-- <div class="form-group">
+									<label for="inputDokter">Tambah Jasa Dokter</label>
+									<input type="text" class="form-control" id="no_pegawai" required [ngbTypeahead]="searchNamaDokter" [inputFormatter]="inputDokterFormatter" [resultFormatter]="resultDokterFormatter" (selectItem)="addDokter($event.item)" name="no_pegawai">
+								</div>
+
+								<table class="table" *ngIf="addedDokter.length > 0">
+									<thead>
+										<th>#</th>
+										<th>No. Pegawai</th>
+										<th>Nama</th>
+										<th>Spesialis</th>
+										<th></th>
+										<th></th>
+									</thead>
+									<tbody>
+										<tr *ngFor="let dokter of addedDokter; index as i">
+											<td style="vertical-align: middle;">{{i + 1}}</td>
+											<td style="vertical-align: middle;">{{addedDokter[i].no_pegawai}}</td>
+											<td style="vertical-align: middle;">{{addedDokter[i].tenaga_medis.nama}}</td>
+											<td style="vertical-align: middle;">{{addedDokter[i].spesialis}}</td>
+											<td style="vertical-align: middle;">
+												<button type="button" class="btn btn-sm btn-danger" (click)="removeAddedDokter(i)">
+													Hapus
+												</button>
+											</td>
+										</tr>
+									</tbody>
+								</table> -->
+
+								<div class="form-group">
+									<label for="tanggal">Perbarui Perkiraan Waktu Keluar</label>
+									<input [dpDayPicker]="config" theme="dp-material" class="form-control" id="tanggal" [(ngModel)]="perkiraan_waktu_keluar" name="tanggal">
+								</div>
+							</form>
 						</div>
 
 					</div>
@@ -366,6 +482,64 @@
 			</div>
 
 		</div>
+
+		<div class="modal fade" id="riwayatModal" tabindex="-1" role="dialog" aria-labelledby="riwayatModal" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				    <div class="modal-header">
+				        <h5 class="modal-title" id="riwayatModal">Rekap Kesehatan {{transaksi?.transaksi.pasien.nama_pasien}}</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <i class="fa fa-times" aria-hidden="true"></i>
+				        </button>
+				    </div>
+				    <div class="modal-body">
+					    <div class="form-group">
+				  			<h6>Riwayat Penyakit :</h6>
+				  			<div *ngFor="let riwayat of allRiwayatPenyakit, let i = index; ">
+					  			<div>{{i+1}}. {{riwayat}}</div>
+				  			</div>
+			  			</div>
+				    	<div *ngFor="let riwayat of allRiwayatLama, let i = index; ">
+					    	<div class="card card-outline-info mb-3">
+						  		<div class="card-block">
+								    <div class="form-group">
+								  		<h5 class="btn btn-info form-control" data-toggle="collapse" [attr.data-target]="'#riwayat-collapse-' + i">Tercatat pada {{riwayat.tanggal_waktu}}</h5>
+							  		</div>
+							  		<div class="collapse" id="riwayat-collapse-{{i}}">
+								  		<div class="form-group">
+								  			<h6>Diagnosis :</h6>
+									    	<div *ngFor="let diagnosis of riwayat.allDiagnosis, let i = index; ">
+								  				<div>{{i+1}}. {{diagnosis.daftar_diagnosis.nama}}</div>
+									    	</div>
+								    	</div>
+							    	</div>
+						    	</div>
+					    	</div>
+				    	</div>
+				    </div>
+			    </div>
+		    </div>
+	    </div>
+
+	    <div class="modal fade" id="alergiModal" tabindex="-1" role="dialog" aria-labelledby="alergiModal" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				    <div class="modal-header">
+				        <h5 class="modal-title" id="alergiModal">Alergi yang diderita {{transaksi?.transaksi.pasien.nama_pasien}}</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <i class="fa fa-times" aria-hidden="true"></i>
+				        </button>
+				    </div>
+				    <div class="modal-body">
+				    	<div *ngFor="let alergi of allAlergiLama, let i = index; ">
+					  		<div class="form-group">
+				  				<div class="form-group">{{i+1}}. {{alergi}}</div>
+					    	</div>
+				    	</div>
+				    </div>
+			    </div>
+		    </div>
+	    </div>
 
 		<div class="modal fade" tabindex="-1" role="dialog" id="rujukanModal" aria-hidden="true">
 			<div class="modal-dialog" role="document">
@@ -385,27 +559,11 @@
 							<option [ngValue]="true">Ya</option>
 						</select>
 
-						<div class="form-group" *ngIf="rujuk">
-							<label for="tipeLayanan">Tipe Layanan</label>
-							<select class="form-control" id="tipeLayanan" [(ngModel)]="tipeLayanan" (ngModelChange)="selectTipeLayanan()" name="tipeLayanan">
-								<option *ngFor="let layanan of allTipeLayanan" [value]="layanan">{{layanan}}</option>
-							</select>
-						</div>
-
-						<div *ngIf="tipeLayanan === 'Poliklinik' && rujuk" class="form-group">
-							<label for="selectPoliklinik">Poliklinik</label>
+						<div *ngIf="rujuk" class="form-group">
+							<label for="selectPoliklinik">Pilih Poliklinik</label>
 							<select class="form-control" id="selectPoliklinik" [(ngModel)]="namaPoliRujuk" name="poliklinikRujuk">
-								<ng-container *ngFor="let poliklinik of layanan">
-									<option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}} ({{dokter}})</option>
-								</ng-container>
-							</select>
-						</div>
-
-						<div *ngIf="tipeLayanan === 'Laboratorium' && rujuk" class="form-group">
-							<label for="selectLaboratorium">Laboratorium</label>
-							<select class="form-control" id="selectLaboratorium" [(ngModel)]="namaLabRujuk" name="laboratoriumRujuk">
-								<ng-container *ngFor="let laboratorium of layanan">
-									<option [value]="laboratorium.nama">{{laboratorium.nama}}</option>
+								<ng-container *ngFor="let p of allPoliklinik">
+									<option *ngIf="p.sisa_pelayanan > 0 && p.nama != poliklinik.nama " [value]="p.nama">{{p.nama}}</option>
 								</ng-container>
 							</select>
 						</div>
@@ -434,18 +592,15 @@
 						<div *ngFor="let obatTindakan of tindakan.obat_tindakan; index as j">
 							<div class="input-group mb-2">
 								<div class="input-group-addon">Obat {{j + 1}}</div>
-								<input type="text" class="form-control" placeholder="Input merek obat"
+								<input type="text" class="form-control" placeholder="{{obatTindakan.stokObat.jenis_obat.merek_obat}}"
 								[ngbTypeahead]="searchStokObat" (selectItem)="addSelectedStokObat(obatTindakan, $event.item)"
 								[inputFormatter]="inputObatFormatter" [resultFormatter]="resultObatFormatter">
 							</div>
 							<div *ngIf="obatTindakan.stokObat != null" class="row mb-2">
 								<div class="col-sm-6 input-group">
-									<div class="input-group-addon bg-success text-white">Nama</div>
-									<input type="text" class="form-control" disabled [(ngModel)]="obatTindakan.stokObat.jenis_obat.nama_generik">
-								</div>
-								<div class="col-sm-6 input-group">
 									<div class="input-group-addon">Jumlah</div>
 									<input type="number" class="form-control" [(ngModel)]="obatTindakan.jumlah">
+									<div class="input-group-addon">{{obatTindakan.stokObat.jenis_obat.satuan}}</div>
 								</div>
 							</div>
 							<button type="button" class="btn btn-sm btn-danger mb-3" (click)="removeObatTindakanForm(j, tindakan)">

@@ -36,7 +36,8 @@
 			</div>
 		</div>
 		<div class="pull-right">
-			<button type="button" class="btn btn-warning" [routerLink]="['/poliklinik', layanan, transaksiId]">Kembali</button>
+			<button *ngIf="layanan != 'rawatinap'" type="button" class="btn btn-warning" [routerLink]="['/poliklinik', layanan, transaksiId]">Kembali</button>
+			<button *ngIf="layanan == 'rawatinap'" type="button" class="btn btn-warning" (click)="goBack()">Kembali</button>
 		</div>
 	</div>
 </div>

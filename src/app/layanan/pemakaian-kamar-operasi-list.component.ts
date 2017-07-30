@@ -17,6 +17,7 @@ import { Tindakan } 				from './tindakan';
 import { TindakanService }		    from './tindakan.service';
 import { TindakanOperasi }			from './tindakan-operasi';
 import { TindakanOperasiService }			from './tindakan-operasi.service';
+
 import { Transaksi } 				from '../transaksi/transaksi';
 import { TransaksiService }		    from '../transaksi/transaksi.service';
 import { Pasien } from '../pasien/pasien';

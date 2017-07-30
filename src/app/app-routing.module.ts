@@ -48,7 +48,7 @@ import { KamarOperasiListComponent }		from './layanan/kamar-operasi-list.compone
 import { KamarJenazahListComponent }		from './layanan/kamar-jenazah-list.component';
 import { KamarRawatinapListComponent }		from './layanan/kamar-rawatinap-list.component';
 
-
+import { PemeriksaanOperasiComponent }		from './layanan/operasi-pemeriksaan.component';
 import { BookingOperasiListComponent }		from './layanan/booking-operasi-list.component';
 import { PemakaianKamarListComponent }		from './layanan/pemakaian-kamar.component';
 import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-operasi-list.component';
@@ -159,6 +159,7 @@ const routes: Routes = [
 
 	{ path: 'pemakaiankamarrawatinap', canActivate: [AuthGuard], component: PemakaianKamarListComponent },
 
+	{ path: 'pemakaiankamaroperasi/:noKamar/:idPemakaian/:idTransaksi', canActivate: [AuthGuard], component: PemeriksaanOperasiComponent },
 	{ path: 'operasi/booking', canActivate: [AuthGuard], component: BookingOperasiListComponent },
 	{ path: 'pemakaiankamaroperasi', canActivate: [AuthGuard], component: PemakaianKamarOperasiListComponent },
 	{ path: 'pemakaiankamarjenazah', canActivate: [AuthGuard], component: PemakaianKamarJenazahListComponent },
