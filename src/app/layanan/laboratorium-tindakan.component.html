@@ -48,7 +48,7 @@
                 <td>{{tindakan.transaksi.no_transaksi}}</td>
                 <td>{{tindakan.tanggal_waktu | date: 'dd-MMM-yyyy'}}</td>
                 <td>
-                  <button type="button" class="btn btn-sm btn-success">
+                  <button type="button" class="btn btn-sm btn-success" (click)="lakukanTindakan(tindakan)">
                     Lakukan Tindakan
                   </button>
                 </td>

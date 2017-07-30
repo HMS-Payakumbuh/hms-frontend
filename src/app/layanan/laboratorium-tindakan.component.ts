@@ -3,6 +3,9 @@ import { Component, OnInit, Input }		from '@angular/core';
 import { Laboratorium }         from './laboratorium';
 import { LaboratoriumService }  from './laboratorium.service';
 
+import { HasilLab }             from './hasil-lab';
+import { HasilLabService }      from './hasil-lab.service';
+
 import { Tindakan }             from './tindakan';
 import { TindakanService }      from './tindakan.service';
 
@@ -11,6 +14,7 @@ import { TindakanService }      from './tindakan.service';
   templateUrl: './laboratorium-tindakan.component.html',
   providers: [
     LaboratoriumService,
+    HasilLabService,
     TindakanService
   ]
 })
@@ -26,6 +30,7 @@ export class LaboratoriumTindakanComponent implements OnInit {
 
   constructor (
     private laboratoriumService: LaboratoriumService,
+    private hasilLabService: HasilLabService,
     private tindakanService: TindakanService
   ) {}
 
@@ -47,7 +52,7 @@ export class LaboratoriumTindakanComponent implements OnInit {
   }
 
   search() {
-    this.tindakanService.getTindakanOfLabByKodePasien(this.selectedLaboratorium.nama, this.searchTerm)
+    this.tindakanService.getTindakanWithoutHasilLab(this.selectedLaboratorium.nama, this.searchTerm)
       .subscribe(
         data => {
           if (data.length > 0) {
@@ -61,6 +66,29 @@ export class LaboratoriumTindakanComponent implements OnInit {
           }
         }
       )
+  }
+
+  lakukanTindakan(tindakan: Tindakan) {
+    let hasilLab = new HasilLab(
+      null,
+      tindakan.id_transaksi,
+      tindakan.id,
+      null
+    );
+
+    tindakan.np_tenaga_medis = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
+
+    this.tindakanService.updateTindakan(tindakan).subscribe(
+      data => {
+        this.hasilLabService.createHasilLab(hasilLab).subscribe(
+          data => {
+            this.alerts.pop();
+            this.alerts.push({id: 1, type: 'success', message: 'Tindakan sudah dilakukan, hasil lab dapat diupload pada halaman Home'});
+            this.allTindakan.splice(this.allTindakan.indexOf(tindakan), 1);
+          }
+        )
+      }
+    );
   }
 }
 
