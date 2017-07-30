@@ -228,7 +228,7 @@ export class TransaksiObatDetailComponent implements OnInit {
 				this.createAsuransi(this.transaksi.id_pasien);
 			}
 
-			this.createPembayaran(this.total_bayar, metode.toLowerCase(), false, this.listOfTindakan, this.listOfObatTebusId, this.listOfObatEceranId, this.listOfKamarRawatInapId);
+			this.createPembayaran(this.total_bayar, metode.toLowerCase(), false, null, this.listOfObatTebusId, this.listOfObatEceranId, null);
 		}
 
 		this.ngOnInit();
