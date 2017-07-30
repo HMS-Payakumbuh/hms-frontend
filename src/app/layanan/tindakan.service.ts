@@ -23,8 +23,8 @@ export class TindakanService {
 		return Promise.reject(error.message || error);
 	}
 
-	getTindakanWithoutHasilLab(no_pegawai: string): Observable<Tindakan[]> {
-		return this.http.get(this.tindakanUrl + '/hasil_lab/' + no_pegawai)
+	getTindakanWithoutHasilLab(nama_lab: string, kode_pasien: string): Observable<Tindakan[]> {
+		return this.http.get(this.tindakanUrl + '/hasil_lab/' + nama_lab + '/' + kode_pasien)
 			.map((res: Response) => res.json());
 	}
 
@@ -35,6 +35,22 @@ export class TindakanService {
 
 	getTindakanOfLabByKodePasien(nama_lab: string, kode_pasien: string): Observable<Tindakan[]> {
 		return this.http.get(this.tindakanUrl + '/laboratorium/' + nama_lab + '/' + kode_pasien)
+			.map((res: Response) => res.json());
+	}
+
+	updateTindakan(tindakan: Tindakan): Observable<Tindakan> {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers});
+		let body = JSON.stringify(tindakan);
+		return this.http.put(this.tindakanUrl + '/' + tindakan.id, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	saveTindakan (selectedTindakan: Tindakan[]) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers});
+		let body = JSON.stringify(selectedTindakan);
+		return this.http.post(this.tindakanUrl, body, options)
 			.map((res: Response) => res.json());
 	}
 
@@ -68,14 +84,6 @@ export class TindakanService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers});
 		return this.http.delete(this.tindakanReferenceUrl + '/' + kode, options)
-			.map((res: Response) => res.json());
-	}
-
-	saveTindakan (selectedTindakan: Tindakan[]) {
-		let headers = new Headers({ 'Content-Type': 'application/json' });
-		let options = new RequestOptions({ headers: headers});
-		let body = JSON.stringify(selectedTindakan);
-		return this.http.post(this.tindakanUrl, body, options)
 			.map((res: Response) => res.json());
 	}
 }
