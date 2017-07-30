@@ -1,18 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Location }               from '@angular/common';
+import { Router } from '@angular/router';
 import { Observable }             from 'rxjs/Observable';
 import { NgbTypeaheadConfig }   from '@ng-bootstrap/ng-bootstrap';
 
 import { Pasien }    from './pasien';
 import { PasienService }    from './pasien.service';
-import { AntrianService }    from '../antrian/antrian.service';
 import { Asuransi }  from './asuransi';
 import { AsuransiService }  from './asuransi.service';
-import { PoliklinikService }    from '../layanan/poliklinik.service';
-import { LaboratoriumService }    from '../layanan/laboratorium.service';
-import { JadwalDokter }   from '../tenaga-medis/jadwal-dokter';
-import { TenagaMedisService}  from '../tenaga-medis/tenaga-medis.service';
 import { Rujukan }  from '../transaksi/rujukan';
 import { RujukanService }  from '../transaksi/rujukan.service';
 import { TransaksiService}  from '../transaksi/transaksi.service';
@@ -21,24 +15,18 @@ import { DiagnosisService }     from '../layanan/diagnosis.service';
 
 @Component({
   selector: 'pasien-form',
-  templateUrl: './pasien-form.component.html',
+  templateUrl: './pasien-igd-form.component.html',
   providers: [
     DiagnosisService,
-    PoliklinikService,
-    LaboratoriumService,
     PasienService,
-    AntrianService,
     AsuransiService,
     TransaksiService,
-    TenagaMedisService,
     RujukanService,
     NgbTypeaheadConfig
   ]
 })
-export class PasienFormComponent implements OnInit {
+export class PasienIGDFormComponent implements OnInit {
 	tipe: string;
-  layanan: string;
-  dokter: string;
 	search: string;
   searchDone: boolean;
   update: boolean;
@@ -50,21 +38,15 @@ export class PasienFormComponent implements OnInit {
   rujukanChecked: boolean;
   asuransiChecked:boolean;
   allAsuransi: Asuransi[];
-  allLayanan: any[];
   allPasien: Pasien[] = [];
   allDiagnosisReference: DiagnosisReference[];
 
   constructor(
-    private route: ActivatedRoute,
-    private location: Location,
+    private router: Router,
     private diagnosisService: DiagnosisService,
-    private poliklinikService: PoliklinikService,
-    private laboratoriumService: LaboratoriumService,
     private pasienService: PasienService,
-    private antrianService: AntrianService,
     private asuransiService: AsuransiService,
     private transaksiService: TransaksiService,
-    private tenagaMedisService: TenagaMedisService,
     private rujukanService: RujukanService,
     private config: NgbTypeaheadConfig,
   ) {
@@ -72,19 +54,12 @@ export class PasienFormComponent implements OnInit {
   }
 
   submitted = false;
-
-  allTipeLayanan = ['Poliklinik', 'Laboratorium'];
-
   genders = [{id: 1, nama: 'Laki-laki'}, {id: 2, nama: 'Perempuan'}];
-
   religions = ['Islam', 'Protestan', 'Katolik', 'Buddha', 'Hindu', 'Konghucu'];
-
   bloodTypes = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
-
-  allNamaAsuransi = ['bpjs', 'bumidaya', 'prudential', 'aig'];
+  allNamaAsuransi = ['BPJS', 'Bumidaya', 'Prudential', 'AIG'];
 
   inputFormatter = (value : any) => value.nama;
-
   resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
 
   searchDiagnosis = (text$: Observable<string>) =>
@@ -99,21 +74,9 @@ export class PasienFormComponent implements OnInit {
     this.pasien = new Pasien();
     this.asuransi = new Asuransi();
     this.rujukan = new Rujukan();
-
-    this.sub = this.route.params
-      .subscribe(params => {
-        this.layanan = params['namaLayanan'];
-    });
-    if (this.layanan === undefined) {
-
-    } else {
-      this.fromAntrian = true;
-      if (this.layanan.indexOf("Poli") >= 0)
-          this.tipe = "Poliklinik";
-        else
-          this.tipe = "Laboratorium";
-      this.selectTipeLayanan();
-    }
+    this.rujukanChecked = false;
+    this.asuransiChecked = false;
+    this.searchDone = false;
 
     this.diagnosisService.getAllDiagnosisReference().subscribe(
       data => { this.allDiagnosisReference = data }
@@ -148,19 +111,6 @@ export class PasienFormComponent implements OnInit {
     this.searchDone = true;
   }
 
-  private selectTipeLayanan() {
-    if (this.tipe === 'Poliklinik') {
-      this.poliklinikService.getAllPoliklinik().subscribe(
-        data => {
-          this.allLayanan = data;
-        })
-    } else if (this.tipe === 'Laboratorium') {
-      this.laboratoriumService.getAllLaboratorium().subscribe(
-        data => { this.allLayanan = data }
-      )
-    }
-  }
-
   private customTrackBy(index: number, obj: any): any {
     return index;
   }
@@ -170,42 +120,10 @@ export class PasienFormComponent implements OnInit {
     this.asuransi.no_kartu = asuransi.no_kartu;
   }
 
-  private createAntrian(id_transaksi: number) {
-    let request: any = null;
-    if (this.tipe === 'Poliklinik') {
-      request = {
-        id_transaksi: id_transaksi,
-        nama_layanan_poli: this.layanan,
-        kesempatan: 3,
-        id_pasien: this.pasien.id
-      };
-    }
-    else if (this.tipe === 'Laboratorium') {
-      request = {
-        id_transaksi: id_transaksi,
-        nama_layanan_lab: this.layanan,
-        kesempatan: 3,
-        id_pasien: this.pasien.id
-      };
-    }
-
-    this.antrianService.createAntrian(request).subscribe(
-      data => {
-        if(data.error) {
-          alert(data.error);
-        } else {
-          this.ngOnInit();
-        }
-      }
-    );
-  }
-
   private createRujukan(id_transaksi: number) {
     this.rujukan.id_transaksi = id_transaksi;
     this.rujukanService.createRujukan(this.rujukan).subscribe(
-      data => {
-          this.createAntrian(id_transaksi);
-      }
+      data => this.ngOnInit()
     );
   }
 
@@ -240,7 +158,7 @@ export class PasienFormComponent implements OnInit {
         if (this.rujukanChecked)
           this.createRujukan(data.transaksi.id);
         else
-          this.createAntrian(data.transaksi.id);
+          this.ngOnInit()
       }
     );
   }

@@ -18,6 +18,6 @@ export class AppComponent {
 
 	logout() {
 		this.authenticationService.logout();
-		window.location.assign('/login');
+		window.location.assign('login');
 	}
 }

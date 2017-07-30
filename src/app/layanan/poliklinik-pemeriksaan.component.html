@@ -30,7 +30,7 @@
 								<td><b>Tanggal Lahir</b></td>
 								<td>{{transaksi?.transaksi.pasien.tanggal_lahir | date: 'dd-MMM-yyyy'}}</td>
 							</tr>
-							<tr>
+							<tr *ngIf="!firstRekamMedis">
 								<td colspan="2">
 									<button type="button" class="btn btn-outline-primary" [routerLink]="['/rekam_medis', poliklinik?.nama, transaksi?.transaksi.id, transaksi?.transaksi.pasien.id]">Lihat Rekam Medis</button>
 								</td>

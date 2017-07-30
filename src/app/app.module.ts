@@ -33,8 +33,11 @@ import { FilterJenisKamarPipe }     from './pipe/filter-jenis-kamar.pipe';
 import { FilterKelasKamarPipe }     from './pipe/filter-kelas-kamar.pipe';
 import { FilterPemakaianKamarOperasiPipe }     from './pipe/filter-pemakaian-kamar-operasi.pipe';
 
-import { RegisterComponent }        from './auth/register.component';
-import { LoginComponent }           from './auth/login.component';
+import { AuthGuard }              from './auth/auth-guard.service';
+import { AuthenticationService }  from './auth/authentication.service';
+import { HomeComponent }          from './home.component';
+import { RegisterComponent }      from './auth/register.component';
+import { LoginComponent }         from './auth/login.component';
 
 import { TransaksiComponent }          from './transaksi/transaksi.component';
 import { TransaksiDetailComponent }    from './transaksi/transaksi-detail.component';
@@ -47,6 +50,7 @@ import { KlaimDetailComponent }        		from './pembayaran/klaim/klaim-detail.c
 import { AntrianComponent }         		from './antrian/antrian.component';
 import { DaftarAntrianComponent }         	from './antrian/daftar-antrian.component';
 import { PasienFormComponent }      		from './pasien/pasien-form.component';
+import { PasienIGDFormComponent }      		from './pasien/pasien-igd-form.component';
 import { PasienListComponent }              from './pasien/pasien-list.component';
 import { CatatanKematianFormComponent }     from './pasien/catatan-kematian-form.component';
 import { RekamMedisListComponent }          from './pasien/rekam-medis-list.component';
@@ -55,8 +59,9 @@ import { RekamMedisDetailComponent }        from './pasien/rekam-medis-detail.co
 import { PoliklinikListComponent }          from './layanan/poliklinik-list.component';
 import { PoliklinikPemeriksaanComponent }   from './layanan/poliklinik-pemeriksaan.component';
 
-import { LaboratoriumListComponent }      from './layanan/laboratorium-list.component';
-import { LaboratoriumPemeriksaanComponent }    from './layanan/laboratorium-pemeriksaan.component';
+import { LaboratoriumListComponent }        from './layanan/laboratorium-list.component';
+import { LaboratoriumPemeriksaanComponent } from './layanan/laboratorium-pemeriksaan.component';
+import { LaboratoriumTindakanComponent }		from './layanan/laboratorium-tindakan.component';
 
 import { AmbulansListComponent }    from './layanan/ambulans-list.component';
 
@@ -124,6 +129,8 @@ import { DaftarStockOpnameComponent }      from './farmasi/stock-opname/daftar-s
 import { DetailStockOpnameComponent }      from './farmasi/stock-opname/detail-stock-opname.component';
 import { StockOpnameFormComponent }      from './farmasi/stock-opname/stock-opname-form.component';
 
+import { LaporanComponent }        from './farmasi/laporan/laporan.component';
+
 import { SettingsComponent }        from './settings/settings.component';
 
 import { AppRoutingModule }         from './app-routing.module';
@@ -168,6 +175,7 @@ import { AppComponent }             from './app.component';
         FilterKelasKamarPipe,
         FilterPemakaianKamarOperasiPipe,
 
+        HomeComponent,
         RegisterComponent,
         LoginComponent,
 
@@ -178,6 +186,7 @@ import { AppComponent }             from './app.component';
         KlaimComponent,
         KlaimDetailComponent,
         PasienFormComponent,
+        PasienIGDFormComponent,
         PasienListComponent,
         CatatanKematianFormComponent,
         RekamMedisListComponent,
@@ -188,6 +197,7 @@ import { AppComponent }             from './app.component';
 
         LaboratoriumListComponent,
         LaboratoriumPemeriksaanComponent,
+        LaboratoriumTindakanComponent,
 
         AmbulansListComponent,
 
@@ -264,11 +274,12 @@ import { AppComponent }             from './app.component';
         DetailStockOpnameComponent,
         StockOpnameFormComponent,
 
+        LaporanComponent,
+
         SettingsComponent,
     ],
-    bootstrap:    [
-	   AppComponent
-    ]
+    providers: [AuthGuard, AuthenticationService],
+    bootstrap: [AppComponent]
 })
 
 export class AppModule { }
