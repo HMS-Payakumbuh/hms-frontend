@@ -21,7 +21,7 @@ export class KamarRawatinapListComponent implements OnInit {
 	) {}
 	
 	ngOnInit() {
-		this.kamarRawatinapService.getAllRawatinap().subscribe(
+		this.kamarRawatinapService.getAllRawatinapAdmin().subscribe(
 			data =>  { this.allKamarRawatinap = data }
 		);
 	}
@@ -37,19 +37,19 @@ export class KamarRawatinapListComponent implements OnInit {
 
 	updateKamarRawatinap() {
 		this.kamarRawatinapService.updateRawatinap(this.kamarRawatinapModalNama, this.kamarRawatinapModal).subscribe(
-			data => { window.location.reload() }
+			data => { this.ngOnInit() }
 		);
 	}
 
     createKamarRawatinap(noKamar: string) {
     	this.kamarRawatinapService.createRawatinap(this.kamarRawatinapModal).subscribe(
-      		data => { window.location.reload() }
+      		data => { this.ngOnInit() }
     	);
   	}
 
 	destroyKamarRawatinap(no_kamar: string) {
 		this.kamarRawatinapService.destroyRawatinap(no_kamar).subscribe(
-			data => { window.location.reload() }
+			data => { this.ngOnInit() }
     	);
  	 }
 }

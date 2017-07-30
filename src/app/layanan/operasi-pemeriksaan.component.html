@@ -1,0 +1,183 @@
+<html>
+	<div class="row">
+
+	  <div class="col-md-12">
+
+	  	<div class="card card-outline-info mb-3">
+	  		<div class="card-block">
+		  		<h3 class="mb-0">{{pemakaianKamar.no_kamar}}</h3>
+	  		</div>
+	  	</div>
+
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-id-card-o" aria-hidden="true"></i> Data Pasien
+					</h4>
+				</div>
+				<div class="card-block">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td><b>Nama</b></td>
+								<td>{{transaksi?.transaksi.pasien.nama_pasien}}</td>
+							</tr>
+							<tr>
+								<td><b>Jenis kelamin</b></td>
+								<td>{{transaksi?.transaksi.pasien.jender == 1 && 'Laki-laki' || 'Perempuan'}}</td>
+							</tr>
+							<tr>
+								<td><b>Tanggal Lahir</b></td>
+								<td>{{transaksi?.transaksi.pasien.tanggal_lahir | date: 'dd-MMM-yyyy'}}</td>
+							</tr>
+							<tr *ngIf="!firstRekamMedis">
+								<td colspan="2">
+									<button type="button" class="btn btn-outline-primary" [routerLink]="['/rekam_medis', 'rawatinap', transaksi?.transaksi.id, transaksi?.transaksi.pasien.id]">Lihat Rekam Medis</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="card mb-3">
+				<div class="card-header card-info">
+                    <h4>
+						<i class="fa" aria-hidden="true"></i> Tindakan Operasi
+					</h4>
+				</div>
+	
+				<div class="card-block">
+					 
+
+							<div class="form-group">
+								<label for="inputTindakan">Masukkan tindakan yang dilakukan (ICD-9-CM)</label>
+								<input id="inputTindakan" class="form-control" [ngbTypeahead]="searchTindakan" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addSelectedTindakan($event.item)">
+							</div>
+
+							<table class="table" *ngIf="selectedTindakan.length > 0">
+								<thead>
+									<th>#</th>
+									<th>Kode</th>
+									<th>Nama</th>
+									<th>Keterangan</th>
+									<th></th>
+									<th></th>
+								</thead>
+								<tbody>
+									<tr *ngFor="let tindakan of selectedTindakan; index as i">
+										<td style="vertical-align: middle;">{{i + 1}}</td>
+										<td style="vertical-align: middle;">{{tindakan.kode_tindakan}}</td>
+										<td style="vertical-align: middle; text-align: left;">{{selectedTindakanReference[i].nama}}</td>
+										<td style="vertical-align: middle;">
+											<textarea class="form-control" rows="2" [(ngModel)]="tindakan.keterangan"></textarea>
+										</td>
+										<td style="vertical-align: middle;">
+											<button type="button" class="btn btn-sm btn-info" data-toggle="modal"
+											[attr.data-target]="'#obatTindakanModal-' + i">
+												Pemakaian Obat
+											</button>
+										</td>
+										<td style="vertical-align: middle;">
+											<button type="button" class="btn btn-sm btn-danger" (click)="removeSelectedTindakan(i)">
+												Hapus
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+					</div>
+			<div class="pull-right">
+				<button type="button" class="btn btn-warning" (click)="goBack()">Kembali</button>
+				<button type="button" class="btn btn-success" (click)="save()">Selesai</button>
+			</div>
+		</div>
+
+		
+
+
+		<!-- <div class="modal fade" tabindex="-1" role="dialog" id="rujukanModal" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header bg-info text-white">
+						<h5 class="modal-title mb-0">
+							Rujukan
+						</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<i class="fa fa-times" aria-hidden="true"></i>
+						</button>
+					</div>
+					<div class="modal-body">
+						<label for="selectRujuk">Apakah pasien perlu rujukan ke layanan lain?</label>
+						<select class="form-control mb-3" id="selectRujuk" [(ngModel)]="rujuk" name="selectRujuk">
+							<option [ngValue]="false">Tidak</option>
+							<option [ngValue]="true">Ya</option>
+						</select>
+
+						<div *ngIf="rujuk" class="form-group">
+							<label for="selectPoliklinik">Pilih Poliklinik</label>
+							<select class="form-control" id="selectPoliklinik" [(ngModel)]="namaPoliRujuk" name="poliklinikRujuk">
+								<ng-container *ngFor="let p of allPoliklinik">
+									<option *ngIf="p.sisa_pelayanan > 0 && p.nama != poliklinik.nama " [value]="p.nama">{{p.nama}}</option>
+								</ng-container>
+							</select>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success" data-dismiss="modal" (click)="save()">Selesai</button>
+					</div>
+				</div>
+			</div>
+		</div> -->
+
+		<div *ngFor="let tindakan of selectedTindakan; index as i" class="modal fade" tabindex="-1" role="dialog" id="obatTindakanModal-{{i}}" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+
+					<div class="modal-header bg-info text-white">
+						<h5 class="modal-title mb-0">
+							Pemakaian Obat untuk Tindakan {{tindakan.kode_tindakan}}
+						</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<i class="fa fa-times" aria-hidden="true"></i>
+						</button>
+					</div>
+
+					<div class="modal-body">
+						<div *ngFor="let obatTindakan of tindakan.obat_tindakan; index as j">
+							<div class="input-group mb-2">
+								<div class="input-group-addon">Obat {{j + 1}}</div>
+								<input type="text" class="form-control" placeholder="{{obatTindakan.stokObat.jenis_obat.merek_obat}}"
+								[ngbTypeahead]="searchStokObat" (selectItem)="addSelectedStokObat(obatTindakan, $event.item)"
+								[inputFormatter]="inputObatFormatter" [resultFormatter]="resultObatFormatter">
+							</div>
+							<div *ngIf="obatTindakan.stokObat != null" class="row mb-2">
+								<div class="col-sm-6 input-group">
+									<div class="input-group-addon">Jumlah</div>
+									<input type="number" class="form-control" [(ngModel)]="obatTindakan.jumlah">
+									<div class="input-group-addon">{{obatTindakan.stokObat.jenis_obat.satuan}}</div>
+								</div>
+							</div>
+							<button type="button" class="btn btn-sm btn-danger mb-3" (click)="removeObatTindakanForm(j, tindakan)">
+								Hapus
+							</button>
+						</div>
+						<div>
+							<button type="button" class="btn btn-sm btn-info" (click)="addObatTindakanForm(tindakan)">
+								Tambah Pemakaian Obat
+							</button>
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success" data-dismiss="modal">Simpan</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+    </div>
+    </div>
+</html>

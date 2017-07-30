@@ -21,15 +21,15 @@ import { PoliklinikService }		from './poliklinik.service';
 
 
 @Component({
- 	selector: 'pemakaian-kamar-page',
- 	templateUrl: './pemakaian-kamar.component.html',
+ 	selector: 'pemakaian-icu-page',
+ 	templateUrl: './pemakaian-icu.component.html',
  	providers: [PemakaianKamarService, 
 	 			TenagaMedisService, 
 				TindakanService,
 				TransaksiService]
 })
 
-export class PemakaianKamarListComponent implements OnInit {
+export class PemakaianICUListComponent implements OnInit {
 	allPemakaianKamar: PemakaianKamar[];
 	allTenagaMedis: TenagaMedis[];
 
@@ -58,7 +58,7 @@ export class PemakaianKamarListComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.pemakaianKamarService.getAllPemakaianKamarRawatinap().subscribe(
+		this.pemakaianKamarService.getAllPemakaianKamarICU().subscribe(
      		data => { this.allPemakaianKamar = data }
     	);
 

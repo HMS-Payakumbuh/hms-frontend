@@ -4,12 +4,12 @@ import { Rawatinap } 				from './rawatinap';
 import { RawatinapService }		    from './rawatinap.service';
 
 @Component({
- 	selector: 'rawatinap-pemeriksaan-kamar-list-page',
- 	templateUrl: './rawatinap-pemeriksaan-kamar-list.component.html',
+ 	selector: 'icu-pemeriksaan-kamar-list-page',
+ 	templateUrl: './icu-pemeriksaan-kamar-list.component.html',
  	providers: [RawatinapService]
 })
 
-export class PemeriksaanRawatinapKamarListComponent implements OnInit {
+export class PemeriksaanICUKamarListComponent implements OnInit {
 	allRawatinap: Rawatinap[];
 	allJenis = ['', 'Rawat Inap', 'ICU'];
 	allKelas = ['', 'VIP', '1', '2', '3'];
@@ -19,7 +19,7 @@ export class PemeriksaanRawatinapKamarListComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.rawatinapService.getAllJenisRawatInap().subscribe(
+		this.rawatinapService.getAllICU().subscribe(
      		data => { this.allRawatinap = data }
     	);
 	}

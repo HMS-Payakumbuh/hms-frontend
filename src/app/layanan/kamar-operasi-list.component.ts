@@ -38,19 +38,19 @@ export class KamarOperasiListComponent implements OnInit {
 
 	updateKamarOperasi() {
 		this.kamarOperasiService.updateKamarOperasi(this.kamarOperasiModalNama, this.kamarOperasiModal).subscribe(
-			data => { window.location.reload() }
+			data => { this.ngOnInit() }
 		);
 	}
 
     createKamarOperasi(noKamar: string) {
     	this.kamarOperasiService.createKamarOperasi(this.kamarOperasiModal).subscribe(
-      		data => { window.location.reload() }
+      		data => { this.ngOnInit() }
     	);
   	}
 	
 	destroyKamarOperasi(no_kamar: string) {
 		this.kamarOperasiService.destroyKamarOperasi(no_kamar).subscribe(
-			data => { window.location.reload() }
+			data => { this.ngOnInit() }
     	);
  	}
 }
