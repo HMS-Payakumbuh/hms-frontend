@@ -1,0 +1,51 @@
+<html>
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>Daftar Pasien {{ allPemakaianKamar[0].no_kamar }}</h4>
+				</div>
+
+				<div class="card-block">
+                    <div class="row mb-3">
+						<div class="col-md-6 pull-left">
+							<div class="input-group">							
+							    <input type="text" class="form-control" [(ngModel)]="param" placeholder="Nama Pasien/Nama Dokter"/>
+							</div>
+						</div>
+					</div>
+
+					<table class="table">
+                        
+						<thead>
+							<th>Nama Kamar</th>
+							<th>No. Tempat Tidur</th>
+                            <th>Nama Pasien</th>
+                            <th>Dokter Rawat</th>
+							<th>Waktu Masuk</th>
+							<th></th>
+							<tr>
+						</thead>
+						
+				
+						<tbody *ngFor="let pemakaiankamar of allPemakaianKamar | filterWaktuKeluar: selectedDate">
+							<tr>
+								<td>{{pemakaiankamar.no_kamar}}</td>
+								<td>{{pemakaiankamar.no_tempat_tidur}}</td>
+                                <td>{{pemakaiankamar.nama_pasien}}</td>
+                                <td>{{pemakaiankamar.nama}}</td>
+								<td>{{pemakaiankamar.waktu_masuk | date:'d MMM y H:mm:ss'}}</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-info" routerLink="{{pemakaiankamar.id}}/{{pemakaiankamar.id_transaksi}}">
+										Periksa
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+			</div>
+		</div>
+	</div>
+	</div>
+</html>

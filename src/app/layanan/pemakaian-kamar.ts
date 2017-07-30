@@ -11,5 +11,7 @@ export class PemakaianKamar {
     kontak_booking : string;
     tanggal_booking : Date;
     harga: number;
+    jenis_kamar: string;
     no_pegawai: string;
+    durasi_pemakaian_ventilator: number;
 }

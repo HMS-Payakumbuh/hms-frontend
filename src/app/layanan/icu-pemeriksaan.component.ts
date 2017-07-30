@@ -46,8 +46,8 @@ import { ObatMasuk }	          from '../farmasi/obat-masuk/obat-masuk';
 import { ObatMasukService }		  from '../farmasi/obat-masuk/obat-masuk.service';
 
 @Component({
- 	selector: 'pemeriksaan-rawat-inap-page',
- 	templateUrl: './rawatinap-pemeriksaan.component.html',
+ 	selector: 'pemeriksaan-icu-page',
+ 	templateUrl: './icu-pemeriksaan.component.html',
  	providers: [
     AntrianService,
     PemakaianKamarService,
@@ -65,7 +65,7 @@ import { ObatMasukService }		  from '../farmasi/obat-masuk/obat-masuk.service';
 	]
 })
 
-export class PemeriksaanRawatinapComponent implements OnInit {
+export class PemeriksaanICUComponent implements OnInit {
 	transaksi: any = null;
   rekamMedis: RekamMedis = null;
   hasilPemeriksaan: HasilPemeriksaan = new HasilPemeriksaan();
@@ -102,6 +102,7 @@ export class PemeriksaanRawatinapComponent implements OnInit {
 
   addedDokter: Dokter[] = [];
 
+  durasi_pemakaian_ventilator: number = null;
   perkiraan_waktu_keluar: string = null;
   perkembangan_pasien: string = null;
 
@@ -183,7 +184,7 @@ export class PemeriksaanRawatinapComponent implements OnInit {
 			.subscribe(
           data => {
             this.pemakaianKamar = data;
-            this.stokObatService.getStokObatByLocationType(3).subscribe(
+            this.stokObatService.getStokObatByLocationType(4).subscribe(
               allStokObatAtLocation => this.allStokObatAtLocation = allStokObatAtLocation
             );
         }
@@ -342,7 +343,7 @@ export class PemeriksaanRawatinapComponent implements OnInit {
   addObatTindakanForm(tindakan: Tindakan) {
     let obatTindakan = new ObatTindakan();
     obatTindakan.id_transaksi = this.transaksi.transaksi.id;
-    obatTindakan.asal = 3;
+    obatTindakan.asal = 4;
     tindakan.obat_tindakan.push(obatTindakan);
   }
 
@@ -453,7 +454,7 @@ export class PemeriksaanRawatinapComponent implements OnInit {
   saveResep() {
     this.resepService.createResep(this.allResep).subscribe(
       data => {
-        this.router.navigate(['']);
+        // this.router.navigate(['']);
       }
     )
   }
@@ -468,6 +469,13 @@ export class PemeriksaanRawatinapComponent implements OnInit {
     if(this.perkiraan_waktu_keluar != null) {
       this.pemakaianKamar.perkiraan_waktu_keluar = this.perkiraan_waktu_keluar;
       this.pemakaianKamarService.perbaruiWaktuKeluarPemakaianKamar(this.pemakaianKamar.id, this.pemakaianKamar).subscribe(
+          data => {}
+      )
+    }
+
+    if(this.durasi_pemakaian_ventilator != null) {
+      this.pemakaianKamar.durasi_pemakaian_ventilator = this.durasi_pemakaian_ventilator;
+      this.pemakaianKamarService.tambahDurasiPemakaianVentilator(this.pemakaianKamar.id, this.pemakaianKamar).subscribe(
           data => {}
       )
     }
