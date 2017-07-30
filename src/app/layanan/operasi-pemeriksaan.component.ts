@@ -333,7 +333,7 @@ export class PemeriksaanOperasiComponent implements OnInit {
     
     let temp2 = new TindakanOperasi();
     temp2.id_tindakan = null;
-    temp2.id_transaksi = this.transaksi.id;
+    temp2.id_transaksi = this.transaksi.transaksi.id;
     temp2.np_tenaga_medis = this.user.no_pegawai;
     this.savedTindakanOperasi.push(temp2);
   }
@@ -348,7 +348,7 @@ export class PemeriksaanOperasiComponent implements OnInit {
 
 	removeSelectedTindakan(i: number) {
 		this.selectedTindakan.splice(i, 1);
-    this.selectedTindakanReference.splice(i, 1);
+        this.selectedTindakanReference.splice(i, 1);
 	}
 
   addSelectedStokObat(obatTindakan: ObatTindakan, stokObat: StokObat) {
@@ -493,7 +493,7 @@ export class PemeriksaanOperasiComponent implements OnInit {
                     data => {
                         // this.router.navigate(['']);
                     }
-                
+                );
             }
           );
         }
