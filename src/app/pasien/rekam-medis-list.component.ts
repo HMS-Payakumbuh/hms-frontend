@@ -42,7 +42,8 @@ export class RekamMedisListComponent implements OnInit {
 		this.rekamMedisService.getAllRekamMedisOfPasien(this.pasienId)
 			.subscribe(allRekamMedis => {
 				this.allRekamMedis = _.each(allRekamMedis, rekamMedis => {
-					_.set(rekamMedis, 'keluhan', JSON.parse(rekamMedis.anamnesis).keluhan);
+					if (rekamMedis.anamnesis)
+						_.set(rekamMedis, 'keluhan', JSON.parse(rekamMedis.anamnesis).keluhan);
 				})
 			});
 	}

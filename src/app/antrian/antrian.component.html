@@ -24,10 +24,13 @@
 	                    <input type="text" class="form-control" id="total" [value]="total" name="total" disabled>
 	                </div>
 	                <div class="form-group" *ngIf="!antrianEmpty">
-		                <label *ngIf="kategori || !isfrontoffice" for="nomor">Nomor Antrian yang Dilayani</label>
+		                <label *ngIf="kategori || !isfrontoffice" for="nomor">Antrian yang Dilayani</label>
 		                <div class="form-inline">
-			                <div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="kategori || !isfrontoffice">
-			                  	<input type="text" class="form-control" id="nomor" value="{{selectedKategori}}{{antrian?.no_antrian}}" name="nomor" disabled>
+			                <div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="kategori">
+			                  	<input type="text" class="form-control" id="nomor" value="{{selectedKategori}}{{antrian?.no_antrian}} - {{antrian?.nama_pasien}}" name="nomor" disabled>
+			              	</div>
+			              	<div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="!isfrontoffice">
+			                  	<input type="text" class="form-control" id="nomor" value="{{selectedKategori}}{{antrian?.no_antrian}} - {{antrian?.transaksi?.pasien.nama_pasien}}" name="nomor" disabled>
 			              	</div>
 			              	<div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="kategori || !isfrontoffice">
 				              	<div>
@@ -36,10 +39,10 @@
 				              	<div *ngIf="isfrontoffice">
 									<button type="button" class="btn btn-success" [routerLink] = "['/pendaftaran', antrian.nama_layanan]" (click)="proses('proses')">Proses</button>
 								</div>
-								<div *ngIf="!isfrontoffice && ispoli">
+								<div *ngIf="!isfrontoffice && isPoli">
 									<button type="button" class="btn btn-success" data-toggle="modal" [attr.data-target]="'#assignDokterModal'" (click)="proses('proses')">Proses</button>
 								</div>
-								<div *ngIf="!isfrontoffice && !ispoli">
+								<div *ngIf="!isfrontoffice && !isPoli">
 									<button type="button" class="btn btn-success" [routerLink] = "['/laboratorium', antrian.nama_layanan, antrian.id_transaksi]" (click)="proses('proses')">Proses</button>
 								</div>
 							</div>
