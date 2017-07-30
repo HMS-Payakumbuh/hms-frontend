@@ -99,7 +99,7 @@
                   <table *ngIf="allAntrian.length > 0" class="table mt-3" [mfData]="allAntrian" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
                     <thead>
                       <th><mfDefaultSorter by="nama">Nama Pasien</mfDefaultSorter></th>
-                      <th><mfDefaultSorter by="no_antrian">No Antrian</mfDefaultSorter></th>
+                      <th><mfDefaultSorter by="no_antrian">Nomor Antrian</mfDefaultSorter></th>
                     </thead>
                     <tbody>
                       <tr *ngFor="let antrian of mf.data">
@@ -115,6 +115,29 @@
                       </tr>
                     </tfoot>
                   </table>
+                  <div class="card card-outline-info">
+                    <div class="card-block">
+                      <table *ngIf="allProcessedAntrian.length > 0" class="table mt-3" [mfData]="allProcessedAntrian" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+                        <thead>
+                          <th><mfDefaultSorter by="nama">Nama Pasien</mfDefaultSorter></th>
+                          <th><mfDefaultSorter by="no_antrian">Nomor Antrian</mfDefaultSorter></th>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let antrian of mf.data">
+                            <td class="text-left">{{antrian.transaksi.pasien.nama_pasien}}</td>
+                            <td>{{antrian.no_antrian}}</td>
+                          </tr>
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <td colspan="2">
+                              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                            </td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
