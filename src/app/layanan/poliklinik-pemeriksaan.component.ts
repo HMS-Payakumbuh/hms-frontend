@@ -340,6 +340,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 
   addResep() {
     let resep = new Resep();
+    resep.tebus = false;
     resep.id_transaksi = this.transaksi.transaksi.id;
     this.allResep.push(resep);
   }
