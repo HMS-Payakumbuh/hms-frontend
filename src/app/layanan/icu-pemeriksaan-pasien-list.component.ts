@@ -8,6 +8,8 @@ import * as _ from "lodash";
 
 import { PemakaianKamar } 				from './pemakaian-kamar';
 import { PemakaianKamarService }		    from './pemakaian-kamar.service';
+import { Rawatinap }                from './rawatinap';
+import { RawatinapService }                from './rawatinap.service';
 import { TenagaMedis } 				from '../tenaga-medis/tenaga-medis';
 import { TenagaMedisService }		    from '../tenaga-medis/tenaga-medis.service';
 import { TindakanReference } 				from './tindakan-reference';
@@ -21,15 +23,15 @@ import { PoliklinikService }		from './poliklinik.service';
 
 
 @Component({
- 	selector: 'pemakaian-kamar-page',
- 	templateUrl: './pemakaian-kamar.component.html',
+ 	selector: 'icu-pemeriksaan-pasien-list-page',
+ 	templateUrl: './icu-pemeriksaan-pasien-list.component.html',
  	providers: [PemakaianKamarService, 
 	 			TenagaMedisService, 
 				TindakanService,
 				TransaksiService]
 })
 
-export class PemakaianKamarListComponent implements OnInit {
+export class PemeriksaanICUPasienListComponent implements OnInit {
 	allPemakaianKamar: PemakaianKamar[];
 	allTenagaMedis: TenagaMedis[];
 
@@ -48,23 +50,22 @@ export class PemakaianKamarListComponent implements OnInit {
 	poliklinik: Poliklinik;
 	addForm: FormGroup;
 
-
 	constructor(
 		private pemakaianKamarService: PemakaianKamarService,
 		private tenagaMedisService: TenagaMedisService,
 		private formBuilder: FormBuilder,
 		private tindakanService: TindakanService,
-		private transaksiService: TransaksiService
+		private transaksiService: TransaksiService,
+        private route: ActivatedRoute
 	) {}
 
 	ngOnInit() {
-		this.pemakaianKamarService.getAllPemakaianKamarRawatinap().subscribe(
-     		data => { this.allPemakaianKamar = data }
-    	);
-
+        this.route.params
+			.switchMap((params: Params) => this.pemakaianKamarService.getAllPemakaianKamarByNoKamar(params['noKamar']))
+			.subscribe(data => this.allPemakaianKamar = data);
+        
 		this.tenagaMedisService.getAllTenagaMedis().
 			subscribe(data => this.allTenagaMedis = data);
-
 	}
 
 	newPemakaianKamarRawatinap() {

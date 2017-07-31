@@ -4,7 +4,7 @@
 
 			<div class="card mb-3">
 				<div class="card-header card-info">
-					<h4>Daftar Pemakaian Kamar Operasi Sekarang</h4>
+					<h4>Daftar Booking Kamar Operasi</h4>
 				</div>
 
 				<div class="card-block">
@@ -24,8 +24,9 @@
 						<thead>
 							<th>Nama Kamar</th>
                             <th>Nama Pasien</th>
-							<th>Nama Tindakan</th>
+							<th>Operasi</th>
 							<th>Waktu Masuk</th>
+							<th>Waktu Keluar</th>
 							<th></th>
 							<th></th>
 							<tr>
@@ -36,10 +37,11 @@
 								<td>{{kamaroperasi?.no_kamar}}</td>
                                 <td>{{kamaroperasi?.nama_pasien}}</td>
 								<td>{{kamaroperasi?.nama_tindakan}}</td>
-								<td>{{kamaroperasi?.waktu_masuk_real | date:'d MMM y H:mm'}}</td>
+								<td>{{kamaroperasi?.waktu_masuk | date:'d MMM y H:mm'}}</td>
+                                <td>{{kamaroperasi?.waktu_keluar | date:'d MMM y H:mm'}}</td>
 								<td>
-									<button type="button" class="btn btn-sm btn-info" routerLink="{{kamaroperasi.no_kamar}}/{{kamaroperasi.id}}/{{kamaroperasi.id_transaksi}}">
-										Operasi
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#detailModal'" (click)="showDetailPemakaianKamarOperasi(kamaroperasi.id, kamaroperasi)">
+										Detail
 									</button>
 								</td>
 								<td>
@@ -53,7 +55,7 @@
 
                     <div class="pull-left">
 						<button type="button" class="btn btn-info" data-toggle="modal" [attr.data-target]="'#createPemakaianKamarOperasiModal'" (click)="newPemakaianKamarOperasi()">
-							Daftar Operasi Sekarang (Khusus dari IGD)
+							Booking Kamar Operasi
 						</button>
 					</div>
 
@@ -63,7 +65,7 @@
 						<div class="modal-content">
 
 							<div class="modal-header bg-info text-white">
-								<h5 class="modal-title">Pendaftaran Operasi</h5>
+								<h5 class="modal-title">Pendaftaran Booking Kamar Operasi</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<i class="fa fa-times" aria-hidden="true"></i>
 								</button>
@@ -98,7 +100,47 @@
 									<input [disabled]= "isTindakanAlreadySelected()" id="inputTindakan" class="form-control" [ngbTypeahead]="searchTindakan" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addSelectedTindakan($event.item)">
 								</div>
 
-								
+								<table class="table" *ngIf="selectedTindakan.length > 0">
+									<thead>
+										<th>Nama</th>
+										<th>Keterangan</th>
+										<th></th>
+										<th></th>
+									</thead>
+									<tbody>
+										<tr *ngFor="let tindakan of selectedTindakan; index as i">
+											<td style="vertical-align: middle;">{{selectedTindakanReference[i].nama}}</td>
+											<td style="vertical-align: middle;">
+												<textarea class="form-control" rows="2" [(ngModel)]="tindakan.keterangan"></textarea>
+											</td>
+											<td style="vertical-align: middle;">
+												<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#obatTindakanModal' + i">
+													Pemakaian Obat
+												</button>
+											</td>
+											<td style="vertical-align: middle;">
+												<button type="button" class="btn btn-sm btn-outline-danger" (click)="removeSelectedTindakan(i)">
+													<i class="fa fa-window-close"></i>
+												</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+
+								<div class="form-group">
+									<label for="tanggal">Tanggal Operasi</label>       
+									<input type="date" class="form-control" id="tanggal" name="tanggal" [(ngModel)]="tanggalOperasi">
+								</div>
+
+								<div class="form-group">
+									<label for="waktu_masuk">Waktu Masuk</label>           
+									<input type="time" class="form-control" id="waktu_masuk" name="waktu_masuk" placeholder="HH:mm" required [(ngModel)]="waktuMasuk"/>
+								</div>
+
+								<div class="form-group">
+									<label for="waktu_keluar">Waktu Keluar</label>           
+									<input type="time" class="form-control" id="waktu_keluar" name="waktu_keluar" placeholder="HH:mm" required [(ngModel)]="waktuKeluar" (ngModelChange)="getTanggalOperasi()"/>
+								</div>
 							</div>
 
 							<div class="modal-footer">

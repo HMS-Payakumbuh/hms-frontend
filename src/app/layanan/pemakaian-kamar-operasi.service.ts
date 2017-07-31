@@ -21,9 +21,19 @@ export class PemakaianKamarOperasiService {
 			.map((res: Response) => res.json());
 	}
 
-	getPemakaianKamarOperasi(no_kamar: string): Observable<PemakaianKamarOperasi> {
+	getAllPemakaianKamarOperasiBooked(): Observable<PemakaianKamarOperasi[]> {
 		return this.getAllPemakaianKamarOperasi()
-			.map(allPemakaianKamarOperasi => allPemakaianKamarOperasi.find(PemakaianKamarOperasi => PemakaianKamarOperasi.no_kamar == no_kamar));
+			.map(allPemakaianKamarOperasi => allPemakaianKamarOperasi.filter(PemakaianKamarOperasi => PemakaianKamarOperasi.waktu_masuk_real == null));
+	}
+
+	getAllPemakaianKamarOperasiNow(): Observable<PemakaianKamarOperasi[]> {
+		return this.getAllPemakaianKamarOperasi()
+			.map(allPemakaianKamarOperasi => allPemakaianKamarOperasi.filter(PemakaianKamarOperasi => PemakaianKamarOperasi.waktu_masuk_real != null));
+	}
+
+	getPemakaianKamarOperasi(id: number): Observable<PemakaianKamarOperasi> {
+		return this.getAllPemakaianKamarOperasi()
+			.map(allPemakaianKamarOperasi => allPemakaianKamarOperasi.find(PemakaianKamarOperasi => PemakaianKamarOperasi.id == id));
 	}
 
 	createPemakaianKamarOperasi(PemakaianKamarOperasi: PemakaianKamarOperasi) {

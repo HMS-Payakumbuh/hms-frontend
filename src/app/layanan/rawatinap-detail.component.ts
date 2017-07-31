@@ -75,7 +75,7 @@ export class RawatinapDetailComponent implements OnInit {
 
 		
 	}
-
+	
 	getRecentTransaksi(nama_pasien: string) {
 		this.transaksiService.getRecentTransaksi(nama_pasien).
 			subscribe(data => {
