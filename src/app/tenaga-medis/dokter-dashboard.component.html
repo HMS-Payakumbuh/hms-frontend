@@ -74,8 +74,8 @@
               <h5 class="text-center mb-0"><b>Ambulans</b></h5>
             </div>
             <div class="card-block text-center">
-              <button type="button" class="btn btn-info" data-toggle="modal" [attr.data-target]="'#panggilAmbulansModal'">
-                Panggil Ambulans
+              <button type="button" class="btn btn-info" data-toggle="modal" [attr.data-target]="'#pemakaianAmbulansModal'">
+                Tambah Pemakaian Ambulans
               </button>
             </div>
           </div>
@@ -204,7 +204,7 @@
 
   </div>
 
-  <div class="modal fade" tabindex="-1" role="dialog" id="panggilAmbulansModal" aria-hidden="true">
+  <div class="modal fade" tabindex="-1" role="dialog" id="pemakaianAmbulansModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
 
@@ -216,15 +216,46 @@
         </div>
 
         <div class="modal-body">
-          <label for="selectAmbulans">Pilih Ambulans</label>
-          <select class="form-control mb-3" id="selectAmbulans" [(ngModel)]="selectedAmbulans" name="selectAmbulans">
-            <option *ngFor="let ambulans of allAmbulans" [ngValue]="ambulans">{{ambulans.nama}}</option>
-          </select>
+          <div class="form-group mb-3">
+            <label for="searchTransaksi">
+              Cari transaksi dengan kode pasien
+            </label>
+            <div class="input-group">
+              <input type="text" class="form-control" [(ngModel)]="searchKodePasien" id="searchTransaksi" name="searchTransaksi" (keydown)="onEnter($event)">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-success" (click)="searchTransaksi()">
+                  Cari
+                </button>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="transaksiAmbulans != null">
+            <table class="table mb-3">
+              <tbody>
+                <tr>
+                  <th scope="row" class="text-left">Nama Pasien</th>
+                  <td>{{transaksiAmbulans.allTransaksi[0].pasien.nama_pasien}}</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-left">Nomor Transaksi</th>
+                  <td>{{transaksiAmbulans.allTransaksi[0].no_transaksi}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="form-group">
+              <label for="selectAmbulans">Pilih Ambulans</label>
+              <select class="form-control mb-3" id="selectAmbulans" [(ngModel)]="selectedAmbulans" name="selectAmbulans">
+                <option *ngFor="let ambulans of allAmbulans" [ngValue]="ambulans">{{ambulans.nama}}</option>
+              </select>
+            </div>
+          </div>
         </div>
 
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-          <button type="button" class="btn btn-success" data-dismiss="modal" (click)="panggilAmbulans()">Panggil</button>
+          <button type="button" class="btn btn-success" data-dismiss="modal" (click)="pemakaianAmbulans()">
+            Pakai Ambulans
+          </button>
         </div>
 
       </div>
