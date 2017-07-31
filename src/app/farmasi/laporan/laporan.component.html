@@ -32,6 +32,7 @@
              				<div *ngIf="jenis == 'Stok Obat'" class="form-group">
 							  	<label for="lokasi"><b>Lokasi</b></label>
 						  		<select class="form-control" [(ngModel)]="lokasi">
+						  			<option [value]="0"></option>
 						  			<option *ngFor="let lokasiObat of allLokasiObat" [value]="lokasiObat.id">{{lokasiObat.nama}}</option>
 						  		</select>						  		
 							</div>				
