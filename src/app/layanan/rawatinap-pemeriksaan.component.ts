@@ -118,7 +118,7 @@ export class PemeriksaanRawatinapComponent implements OnInit {
   resultJenisObatFormatter = (value: JenisObat)	=> value.merek_obat;
 
   inputDokterFormatter = (value : Dokter) => value.tenaga_medis.nama;
-	resultDokterFormatter = (value: Dokter)	=> value.tenaga_medis.nama + ' - ' + value.no_pegawai + ' - ' + value.spesialis;
+	resultDokterFormatter = (value: Dokter)	=> value.tenaga_medis.nama + ' - ' + value.spesialis + ' - ' + value.no_pegawai;
 
 	searchTindakan = (text$: Observable<string>) =>
 		text$
