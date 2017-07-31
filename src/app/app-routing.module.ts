@@ -70,6 +70,7 @@ import { TindakanReferenceListComponent }		from './layanan/tindakan-reference-li
 
 import { DokterDashboardComponent }			from './tenaga-medis/dokter-dashboard.component';
 import { PetugasLabDashboardComponent }	from './tenaga-medis/petugas-lab-dashboard.component';
+import { PerawatDashboardComponent }		from './tenaga-medis/perawat-dashboard.component';
 
 import { DaftarStokObatComponent }			from './farmasi/stok-obat/daftar-stok-obat.component';
 import { DetailStokObatComponent }			from './farmasi/stok-obat/detail-stok-obat.component';
@@ -188,6 +189,7 @@ const routes: Routes = [
 
 	{ path: 'dokter-dashboard', canActivate: [AuthGuard], component: DokterDashboardComponent },
 	{ path: 'petugas-lab-dashboard', canActivate: [AuthGuard], component: PetugasLabDashboardComponent },
+	{ path: 'perawat-dashboard', canActivate: [AuthGuard], component: PerawatDashboardComponent },
 
 	{ path: 'stok-obat', canActivate: [AuthGuard], component: DaftarStokObatComponent },
 	{ path: 'stok-obat/:id', canActivate: [AuthGuard], component: DetailStokObatComponent },

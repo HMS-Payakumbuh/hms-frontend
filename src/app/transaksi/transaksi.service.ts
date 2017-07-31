@@ -71,11 +71,6 @@ export class TransaksiService {
 			.map((res: Response) => res.json());
 	}
 
-	getTransaksiByKodePasien(kode_pasien: string): Observable<Transaksi[]> {
-		return this.http.get(this.transaksiUrl + '/' + kode_pasien + '/kode_pasien')
-			.map((res: Response) => res.json());
-	}
-
 	getTransaksiByPasien(id_pasien: number): Observable<Transaksi[]> {
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('id_pasien', ''+id_pasien);
