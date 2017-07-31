@@ -118,7 +118,7 @@ export class RawatinapDetailComponent implements OnInit {
     	this.pemakaianKamarService.createPemakaianKamar(noKamar,this.pemakaianKamarModal).subscribe(
       		data => {
 				this.tempattidurService.updateTempatTidur(this.tempatTidurModal, noKamar, noTempatTidur).subscribe(
-					data => { window.location.reload() }
+					data => { this.ngOnInit() }
 				);
 			}
     	);

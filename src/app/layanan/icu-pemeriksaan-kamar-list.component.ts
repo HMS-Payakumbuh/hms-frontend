@@ -23,31 +23,4 @@ export class PemeriksaanICUKamarListComponent implements OnInit {
      		data => { this.allRawatinap = data }
     	);
 	}
-
-//   newPoliklinik() {
-//     this.poliklinikModal = new Poliklinik();
-//   }
-
-//   createPoliklinik() {
-//     this.poliklinikService.createPoliklinik(this.poliklinikModal).subscribe(
-//       data => { window.location.reload() }
-//     );
-//   }
-
-//   editPoliklinik(nama: string, poliklinik: Poliklinik) {
-//     this.poliklinikModalNama = nama;
-//     this.poliklinikModal = Object.assign({}, poliklinik);
-//   }
-
-//   updatePoliklinik() {
-//     this.poliklinikService.updatePoliklinik(this.poliklinikModalNama, this.poliklinikModal).subscribe(
-//       data => { window.location.reload() }
-//     );
-//   }
-
-//   destroyPoliklinik(nama: string) {
-//     this.poliklinikService.destroyPoliklinik(nama).subscribe(
-//       data => { window.location.reload() }
-//     );
-//   }
 }

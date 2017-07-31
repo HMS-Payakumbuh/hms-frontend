@@ -36,7 +36,7 @@
 								<td>{{kamarrawatinap?.no_kamar}}</td>
                                 <td>{{kamarrawatinap?.jenis_kamar}}</td>
                                 <td>{{kamarrawatinap?.kelas}}</td>
-								<td>{{kamarrawatinap?.harga_per_hari}}</td>
+								<td>{{kamarrawatinap?.harga_per_hari | number: '.2-2'}}</td>
 								<td>
 									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#editKamarRawatinapModal'" (click)="editKamarRawatinap(kamarrawatinap.no_kamar, kamarrawatinap)">
 										Edit
@@ -44,7 +44,7 @@
 								</td>
 								<td>
 									<button type="button" class="btn btn-sm btn-danger" (click)="destroyKamarRawatinap(kamarrawatinap.no_kamar)">
-										<i class="fa fa-trash"></i>
+										Hapus
 									</button>
 								</td>
 							</tr>
@@ -111,7 +111,7 @@
 
 								<div class="modal-footer">
 									<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-									<button type="button" class="btn btn-success" (click)="createKamarRawatinap()">Simpan</button>
+									<button type="button" class="btn btn-success" data-dismiss="modal" (click)="createKamarRawatinap()">Simpan</button>
 								</div>
 
 							</div>
@@ -174,7 +174,7 @@
 
 								<div class="modal-footer">
 									<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-									<button type="button" class="btn btn-success" (click)="updateKamarRawatinap()">Simpan</button>
+									<button type="button" class="btn btn-success" data-dismiss="modal" (click)="updateKamarRawatinap()">Simpan</button>
 								</div>
 							</div>
 						</div>
