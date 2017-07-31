@@ -27,16 +27,15 @@
 					<a *ngIf="user.role == 'perawat'" [routerLink]="['/perawat-dashboard']" class="list-group-item list-group-item-info">Home</a>
 					<a *ngIf="user.role == 'admin'" [routerLink]="['/antrian-dashboard']" class="list-group-item list-group-item-info">Home</a>
 
-					<a *ngIf="user.role == 'admin'" routerLink="/daftar-antrian" class="list-group-item list-group-item-info">Pendaftaran Antrian</a>
-					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/antrian" class="list-group-item list-group-item-info">Antrian</a>
+					<a *ngIf="user.role == 'frontOffice'" routerLink="/daftar-antrian" class="list-group-item list-group-item-info">Pendaftaran Antrian</a>
+					<a *ngIf="user.role == 'frontOffice'" routerLink="/antrian" class="list-group-item list-group-item-info">Antrian</a>
 					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/daftar-pasien" class="list-group-item list-group-item-info">List Pasien</a>
-					<a *ngIf="user.role == 'frontOffice' || user.role == 'petugasLab' || user.role == 'admin'" routerLink="/pendaftaran" class="list-group-item list-group-item-info">Registrasi</a>
-					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/pendaftaran-igd" class="list-group-item list-group-item-info">Registrasi IGD</a>
-					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/daftar-pasien" class="list-group-item list-group-item-info">List Pasien</a>
+					<a *ngIf="user.role == 'frontOffice' || user.role == 'petugasLab'" routerLink="/pendaftaran" class="list-group-item list-group-item-info">Registrasi</a>
+					<a *ngIf="user.role == 'dokter'" routerLink="/pendaftaran-igd" class="list-group-item list-group-item-info">IGD</a>
 
 					<a *ngIf="user.role == 'petugasLab'" [routerLink]="['/laboratorium/tindakan']" class="list-group-item list-group-item-info">Tindakan Laboratorium</a>
 
-					<a *ngIf="user.role == 'admin'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#RawatJalanSubMenu">Rawat Jalan</a>
+					<a *ngIf="user.role == 'admin'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#RawatJalanSubMenu">Administrasi Rawat Jalan</a>
 					<div id="RawatJalanSubMenu" class="collapse">
 						<a routerLink="/poliklinik" class="list-group-item">Daftar Poliklinik</a>
 						<a routerLink="/laboratorium" class="list-group-item">Daftar Laboratorium</a>

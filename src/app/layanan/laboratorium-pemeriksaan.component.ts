@@ -165,7 +165,7 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 
   save() {
 		this.tindakanService.saveTindakan(this.selectedTindakan).subscribe(
-      data => this.router.navigate(['/antrian'], this.laboratorium.nama)
+      data => this.router.navigate([''])
     );
 	}
 }
