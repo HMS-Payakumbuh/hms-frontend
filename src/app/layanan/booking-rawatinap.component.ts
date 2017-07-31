@@ -150,7 +150,7 @@ export class BookingRawatinapComponent implements OnInit {
 	destroyPemakaianKamarRawatinap(id: number) {
 		this.pemakaianKamarService.destroyBookingKamar(id).subscribe(
 			data => { 
-                window.location.reload() 
+                this.ngOnInit() 
             }
 		);
 	}
