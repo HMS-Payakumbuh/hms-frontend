@@ -4,4 +4,5 @@ export class Rawatinap {
 	kelas: string;
     harga_per_hari: number;
 	kapasitas_kamar: number;
+	available_kamar : number;
 }

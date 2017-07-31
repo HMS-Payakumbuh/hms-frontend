@@ -82,8 +82,8 @@ export class AntrianService {
 			);
 	}
 
-	getProcessedAntrian(nama_layanan: string): Observable<Antrian[]> {
-		return this.http.get(this.antrianUrl + '/processed/' + nama_layanan)
+	getAntrianWithStatus(nama_layanan: string, status: number): Observable<Antrian[]> {
+		return this.http.get(this.antrianUrl + '/' + nama_layanan + '/status/' + status)
 			.map((res: Response) => res.json());
 	}
 

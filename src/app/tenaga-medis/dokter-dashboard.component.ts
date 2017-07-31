@@ -31,13 +31,14 @@ export class DokterDashboardComponent implements OnInit {
 
   allAmbulans: Ambulans[] = [];
   allAntrian: Antrian[] = [];
+  allOnProcessAntrian: Antrian[] = [];
   allProcessedAntrian: Antrian[] = [];
   allPoliklinik: Poliklinik[] = [];
 
   poliklinikSelected: boolean = false;
-  selectedPoliklinik: Poliklinik = null;
+  selectedPoliklinik: Poliklinik = new Poliklinik();
   selectedAmbulans: Ambulans = null;
-  currentTransaksi: Transaksi = null;
+  transaksiRujukan: Transaksi = null;
   nama_poli: string = null;
 
   public filterQuery = "";
@@ -68,7 +69,7 @@ export class DokterDashboardComponent implements OnInit {
       data => { this.allAmbulans = data }
     );
 
-    this.socket.on(noPegawai, (message) => this.updateCurrentPasien(message));
+    this.socket.on(noPegawai, (message) => this.updatePasienRujukan(message));
   }
 
   panggilAmbulans() {
@@ -83,22 +84,32 @@ export class DokterDashboardComponent implements OnInit {
       data => {
         this.allAntrian = data;
         this.poliklinikSelected = true;
-        this.antrianService.getProcessedAntrian(this.selectedPoliklinik.nama).subscribe(
+        this.antrianService.getAntrianWithStatus(this.selectedPoliklinik.nama, 1).subscribe(
+          data => {
+            this.allOnProcessAntrian = data;
+          }
+        )
+        this.antrianService.getAntrianWithStatus(this.selectedPoliklinik.nama, 2).subscribe(
           data => {
             this.allProcessedAntrian = data;
           }
         )
       }
     )
-
   }
 
-  updateCurrentPasien(message: any) {
+  prosesPasien(id_transaksi: number, no_antrian: number) {
+    this.antrianService.updateAntrian(id_transaksi, no_antrian).subscribe(
+      data => {}
+    )
+  }
+
+  updatePasienRujukan(message: any) {
     if (this.selectedPoliklinik != null)
-      this.showDaftarPasien()
+      this.showDaftarPasien();
     this.nama_poli = message.nama_poli;
     this.transaksiService.getTransaksi(message.id_transaksi).subscribe(
-      data => this.currentTransaksi = data
+      data => this.transaksiRujukan = data
     )
   }
 }

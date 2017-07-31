@@ -24,8 +24,9 @@
 				<div *ngIf="user != null" class="list-group list-group-flush">
 					<a *ngIf="user.role == 'dokter'" [routerLink]="['/dokter-dashboard']" class="list-group-item list-group-item-info">Home</a>
 					<a *ngIf="user.role == 'petugasLab'" [routerLink]="['/petugas-lab-dashboard']" class="list-group-item list-group-item-info">Home</a>
+					<a *ngIf="user.role == 'perawat'" [routerLink]="['/perawat-dashboard']" class="list-group-item list-group-item-info">Home</a>
 					<a *ngIf="user.role == 'admin'" [routerLink]="['/antrian-dashboard']" class="list-group-item list-group-item-info">Home</a>
-					
+
 					<a *ngIf="user.role == 'admin'" routerLink="/daftar-antrian" class="list-group-item list-group-item-info">Pendaftaran Antrian</a>
 					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/antrian" class="list-group-item list-group-item-info">Antrian</a>
 					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/daftar-pasien" class="list-group-item list-group-item-info">List Pasien</a>
@@ -46,12 +47,28 @@
 
 					<a *ngIf="user.role == 'dokter' || user.role == 'perawat' || user.role == 'admin'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#RawatInapSubMenu">Rawat Inap</a>
 					<div id="RawatInapSubMenu" class="collapse">
-						<a routerLink="/pemeriksaan/rawatinap" class="list-group-item">Pemeriksaan Pasien Rawat Inap</a>
 						<a routerLink="/rawatinap" class="list-group-item">Pendaftaran Rawat Inap</a>
 						<a routerLink="/rawatinap/booking/kamar" class="list-group-item">Pendaftaran Booking Kamar Rawat Inap</a>
 						<a routerLink="/daftarbookingrawatinap" class="list-group-item">Daftar Booking Kamar Rawat Inap</a>
-						<a routerLink="/pemakaiankamarrawatinap" class="list-group-item">Pemakaian Kamar Rawat Inap</a>
-						<a routerLink="/pemakaiankamaroperasi" class="list-group-item">Pemakaian Kamar Operasi</a>
+						<a routerLink="/pemakaiankamarrawatinap" class="list-group-item">Daftar Pemakaian Kamar Rawat Inap</a>
+						<a routerLink="/pemeriksaan/rawatinap" class="list-group-item">Pemeriksaan Pasien Rawat Inap</a>
+					</div>
+
+					<a href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#ICUSubMenu">ICU</a>
+					<div id="ICUSubMenu" class="collapse">
+						<a routerLink="/icu" class="list-group-item">Pendaftaran ICU</a>
+						<a routerLink="/pemakaianicu" class="list-group-item">Daftar Pemakaian ICU</a>
+						<a routerLink="/pemeriksaan/icu" class="list-group-item">Pemeriksaan Pasien ICU</a>
+					</div>
+
+					<a href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#OperasiSubMenu">Operasi</a>
+					<div id="OperasiSubMenu" class="collapse">
+						<a routerLink="/operasi/booking" class="list-group-item">Pendaftaran Booking Kamar Operasi</a>
+						<a routerLink="/pemakaiankamaroperasi" class="list-group-item">Pemakaian Kamar Operasi Sekarang</a>
+					</div>
+
+					<a href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#JenazahSubMenu">Kamar Jenazah</a>
+					<div id="JenazahSubMenu" class="collapse">
 						<a routerLink="/pemakaiankamarjenazah" class="list-group-item">Pemakaian Kamar Jenazah</a>
 					</div>
 

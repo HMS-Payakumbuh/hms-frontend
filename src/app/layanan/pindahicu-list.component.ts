@@ -18,8 +18,8 @@ import { Pasien } from '../pasien/pasien';
 import { PasienService } from '../pasien/pasien.service';
 
 @Component({
- 	selector: 'pindahkamar-list-page',
- 	templateUrl: './pindahkamar-list.component.html',
+ 	selector: 'pindahicu-list-page',
+ 	templateUrl: './pindahicu-list.component.html',
  	providers: [RawatinapService,
          TempattidurService,
 		 PemakaianKamarService,
@@ -28,7 +28,7 @@ import { PasienService } from '../pasien/pasien.service';
 		 PasienService]
 })
 
-export class PindahKamarListComponent implements OnInit {
+export class PindahICUListComponent implements OnInit {
 	allRawatinap: Rawatinap[];
 	allJenis = ['', 'Rawat Inap', 'ICU'];
 	allKelas = ['', 'VIP', '1', '2', '3'];
@@ -61,7 +61,7 @@ export class PindahKamarListComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.rawatinapService.getAllAvailableRawatinap().subscribe(
+		this.rawatinapService.getAllAvailableICU().subscribe(
      		data => { this.allRawatinap = data }
 		);
 		

@@ -38,19 +38,19 @@ export class KamarJenazahListComponent implements OnInit {
 
 	updateKamarJenazah() {
 		this.kamarJenazahService.updateKamarJenazah(this.kamarJenazahModalNama, this.kamarJenazahModal).subscribe(
-			data => { window.location.reload() }
+			data => { this.ngOnInit() }
 		);
 	}
 
     createKamarJenazah(noKamar: string) {
     	this.kamarJenazahService.createKamarJenazah(this.kamarJenazahModal).subscribe(
-      		data => { window.location.reload() }
+      		data => { this.ngOnInit() }
     	);
   	}
 
 	destroyKamarJenazah(no_kamar: string) {
 		this.kamarJenazahService.destroyKamarJenazah(no_kamar).subscribe(
-			data => { window.location.reload() }
+			data => { this.ngOnInit() }
     	);
  	}
 }

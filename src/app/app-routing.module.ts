@@ -37,6 +37,9 @@ import { LaboratoriumTindakanComponent }		from './layanan/laboratorium-tindakan.
 
 import { AmbulansListComponent }		from './layanan/ambulans-list.component';
 
+import { PemeriksaanICUKamarListComponent }		from './layanan/icu-pemeriksaan-kamar-list.component';
+import { PemeriksaanICUPasienListComponent }		from './layanan/icu-pemeriksaan-pasien-list.component';
+import { PemeriksaanICUComponent }		from './layanan/icu-pemeriksaan.component';
 import { PemeriksaanRawatinapKamarListComponent }		from './layanan/rawatinap-pemeriksaan-kamar-list.component';
 import { PemeriksaanRawatinapPasienListComponent }		from './layanan/rawatinap-pemeriksaan-pasien-list.component';
 import { PemeriksaanRawatinapComponent }		from './layanan/rawatinap-pemeriksaan.component';
@@ -44,14 +47,19 @@ import { BookingRawatinapComponent }		from './layanan/booking-rawatinap.componen
 import { BookingRawatinapListComponent }		from './layanan/booking-rawatinap-list.component';
 import { BookingRawatinapDetailComponent }		from './layanan/booking-rawatinap-detail.component';
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
+import { ICUListComponent }		from './layanan/icu-list.component';
 import { RawatinapDetailComponent }	    from './layanan/rawatinap-detail.component';
 import { PindahKamarListComponent }		from './layanan/pindahkamar-list.component';
 import { PindahKamarDetailComponent }	    from './layanan/pindahkamar-detail.component';
+import { PindahICUListComponent }		from './layanan/pindahicu-list.component';
 import { KamarOperasiListComponent }		from './layanan/kamar-operasi-list.component';
 import { KamarJenazahListComponent }		from './layanan/kamar-jenazah-list.component';
 import { KamarRawatinapListComponent }		from './layanan/kamar-rawatinap-list.component';
 
+import { PemeriksaanOperasiComponent }		from './layanan/operasi-pemeriksaan.component';
+import { BookingOperasiListComponent }		from './layanan/booking-operasi-list.component';
 import { PemakaianKamarListComponent }		from './layanan/pemakaian-kamar.component';
+import { PemakaianICUListComponent }		from './layanan/pemakaian-icu.component';
 import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-operasi-list.component';
 import { PemakaianKamarJenazahListComponent }		from './layanan/pemakaian-kamar-jenazah-list.component';
 
@@ -62,6 +70,7 @@ import { TindakanReferenceListComponent }		from './layanan/tindakan-reference-li
 
 import { DokterDashboardComponent }			from './tenaga-medis/dokter-dashboard.component';
 import { PetugasLabDashboardComponent }	from './tenaga-medis/petugas-lab-dashboard.component';
+import { PerawatDashboardComponent }		from './tenaga-medis/perawat-dashboard.component';
 
 import { DaftarStokObatComponent }			from './farmasi/stok-obat/daftar-stok-obat.component';
 import { DetailStokObatComponent }			from './farmasi/stok-obat/detail-stok-obat.component';
@@ -141,7 +150,12 @@ const routes: Routes = [
 	{ path: 'ambulans', canActivate: [AuthGuard], component: AmbulansListComponent },
 
 	{ path: 'rawatinap', canActivate: [AuthGuard], component: RawatinapListComponent },
+	{ path: 'icu', canActivate: [AuthGuard],component: ICUListComponent },
 	{ path: 'rawatinap/:noKamar', canActivate: [AuthGuard], component: RawatinapDetailComponent },
+
+	{ path: 'pemeriksaan/icu', canActivate: [AuthGuard], component: PemeriksaanICUKamarListComponent },
+	{ path: 'pemeriksaan/icu/:noKamar', canActivate: [AuthGuard], component: PemeriksaanICUPasienListComponent },
+	{ path: 'pemeriksaan/icu/:noKamar/:idPemakaian/:idTransaksi', canActivate: [AuthGuard], component: PemeriksaanICUComponent },
 
 	{ path: 'pemeriksaan/rawatinap', canActivate: [AuthGuard], component: PemeriksaanRawatinapKamarListComponent },
 	{ path: 'pemeriksaan/rawatinap/:noKamar', canActivate: [AuthGuard], component: PemeriksaanRawatinapPasienListComponent },
@@ -154,13 +168,17 @@ const routes: Routes = [
 
 	{ path: 'rawatinap/pindah/:idPemakaian', canActivate: [AuthGuard], component: PindahKamarListComponent },
 	{ path: 'rawatinap/pindah/:idPemakaian/:noKamar', canActivate: [AuthGuard], component: PindahKamarDetailComponent },
+	{ path: 'icu/pindah/:idPemakaian', canActivate: [AuthGuard], component: PindahICUListComponent },
 
 	{ path: 'kamar-rawatinap', canActivate: [AuthGuard], component: KamarRawatinapListComponent },
 	{ path: 'kamar-operasi', canActivate: [AuthGuard], component: KamarOperasiListComponent },
 	{ path: 'kamar-jenazah', canActivate: [AuthGuard], component: KamarJenazahListComponent },
 
 	{ path: 'pemakaiankamarrawatinap', canActivate: [AuthGuard], component: PemakaianKamarListComponent },
+	{ path: 'pemakaianicu', canActivate: [AuthGuard], component: PemakaianICUListComponent },
 
+	{ path: 'pemakaiankamaroperasi/:noKamar/:idPemakaian/:idTransaksi', canActivate: [AuthGuard], component: PemeriksaanOperasiComponent },
+	{ path: 'operasi/booking', canActivate: [AuthGuard], component: BookingOperasiListComponent },
 	{ path: 'pemakaiankamaroperasi', canActivate: [AuthGuard], component: PemakaianKamarOperasiListComponent },
 	{ path: 'pemakaiankamarjenazah', canActivate: [AuthGuard], component: PemakaianKamarJenazahListComponent },
 
@@ -171,6 +189,7 @@ const routes: Routes = [
 
 	{ path: 'dokter-dashboard', canActivate: [AuthGuard], component: DokterDashboardComponent },
 	{ path: 'petugas-lab-dashboard', canActivate: [AuthGuard], component: PetugasLabDashboardComponent },
+	{ path: 'perawat-dashboard', canActivate: [AuthGuard], component: PerawatDashboardComponent },
 
 	{ path: 'stok-obat', canActivate: [AuthGuard], component: DaftarStokObatComponent },
 	{ path: 'stok-obat/:id', canActivate: [AuthGuard], component: DetailStokObatComponent },

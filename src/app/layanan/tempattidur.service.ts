@@ -6,6 +6,7 @@ import { ENV }						from '../environment';
 
 import { Tempattidur }			from './tempattidur';
 
+
 @Injectable()
 export class TempattidurService {
 	rawatinapUrl = ENV.rawatinapUrl;
@@ -23,6 +24,11 @@ export class TempattidurService {
 	getAllTempattidur(no_kamar: string): Observable<Tempattidur[]> {
 		return this.http.get(this.rawatinapUrl + '/' + no_kamar)
 			.map((res: Response) => res.json());
+	}
+
+	getAllAvailableTempatTidur(no_kamar: string) : Observable<Tempattidur[]> {
+		return this.getAllTempattidur(no_kamar)
+		.map(allTempatTidur => allTempatTidur.filter(tempattidur => tempattidur.status != 0));
 	}
 
 	getSelectedTempattidur(): Promise<number> {

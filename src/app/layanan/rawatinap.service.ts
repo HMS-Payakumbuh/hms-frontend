@@ -21,6 +21,51 @@ export class RawatinapService {
 			.map((res: Response) => res.json());
 	}
 
+	getAllICU() : Observable<Rawatinap[]> {
+		return this.getAllRawatinap()
+			.map(allRawatinap => allRawatinap.filter(rawatinap => rawatinap.jenis_kamar == "ICU"));
+	}
+
+	getAllJenisRawatInap() : Observable<Rawatinap[]> {
+		return this.getAllRawatinap()
+			.map(allRawatinap => allRawatinap.filter(rawatinap => rawatinap.jenis_kamar == "Rawat Inap"));
+	}
+
+	getAllRawatinapAdmin(): Observable<Rawatinap[]> {
+		return this.http.get(this.rawatinapUrl + '/list/all')
+			.map((res: Response) => res.json());
+	}
+
+	getAvailableKamarBooked(tanggal : string): Observable<Rawatinap[]> {
+		return this.http.get(this.rawatinapUrl + '/booking/' + tanggal + '/booked')
+			.map((res: Response) => res.json());
+	}
+
+	getAvailableKamarNow(tanggal : string): Observable<Rawatinap[]> {
+		return this.http.get(this.rawatinapUrl + '/booking/' + tanggal + '/now')
+			.map((res: Response) => res.json());
+	}
+
+	getAvailableKamarBookedByNamaKamar(tanggal : string): Observable<Rawatinap[]> {
+		return this.http.get(this.rawatinapUrl + '/available/' + tanggal + '/booked')
+			.map((res: Response) => res.json());
+	}
+
+	getAvailableKamarNowByNamaKamar(tanggal : string): Observable<Rawatinap[]> {
+		return this.http.get(this.rawatinapUrl + '/available/' + tanggal + '/now')
+			.map((res: Response) => res.json());
+	}
+
+	getAllAvailableRawatinap() : Observable<Rawatinap[]> {
+		return this.getAllRawatinap()
+		.map(allRawatinap => allRawatinap.filter(rawatinap => rawatinap.available_kamar != 0 && rawatinap.jenis_kamar == "Rawat Inap"));
+	}
+
+	getAllAvailableICU() : Observable<Rawatinap[]> {
+		return this.getAllRawatinap()
+		.map(allRawatinap => allRawatinap.filter(rawatinap => rawatinap.available_kamar != 0 && rawatinap.jenis_kamar == "ICU"));
+	}
+
 	getRawatinap(no_kamar: string): Observable<Rawatinap> {
 		return this.getAllRawatinap()
 			.map(allRawatinap => allRawatinap.find(Rawatinap => Rawatinap.no_kamar == no_kamar));

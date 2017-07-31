@@ -36,6 +36,7 @@ export var ENV = {
 	pemakaianKamarJenazahUrl : baseUrl + "/api/pemakaiankamarjenazah",
 	kamarOperasiUrl : baseUrl + "/api/kamaroperasi",
 	kamarJenazahUrl : baseUrl + "/api/kamarjenazah",
+	bookingKamarUrl : baseUrl + "/api/booking_kamar",
 
 	resepUrl: baseUrl + "/api/resep",
 	lokasiObatUrl: baseUrl + "/api/lokasi_obat",

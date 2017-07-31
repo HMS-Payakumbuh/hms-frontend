@@ -4,26 +4,17 @@
 
 			<div class="card mb-3">
 				<div class="card-header card-info">
-					<h4>Daftar Kamar Rawat Inap</h4>
+					<h4>Pendaftaran Rawat Inap</h4>
 				</div>
 
 				<div class="card-block">
 					<div class="row mb-3">
 						<div class="col-md-4 pull-left">
 							<div class="col-md-12 input-group">
-								<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="No. Kamar">
+								<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="Nama Kamar">
 							</div>
 						</div>
-						<div class="col-md-4 pull-right">				
-							<div class="col-md-12 input-group">
-								<span class="pt-2 pr-2"><b>Jenis :  </b></span>	
-								<select class="form-control" [(ngModel)]="jenis" id="statusDropdown">
-									<option *ngFor="let jenis of allJenis">
-										{{jenis}}
-									</option>
-								</select>
-							</div>
-						</div>
+
 						<div class="col-md-4 pull-right">
 							<div class="col-md-12 input-group">
 								<span class="pt-2 pr-2"><b>Kelas :  </b></span>
@@ -38,25 +29,81 @@
 
 					<table class="table">
 						<thead>
-							<th>No. Kamar</th>
-							<th>Jenis Kamar</th>
+							<th>Nama Kamar</th>
 							<th>Kelas</th>
+							<th>Harga Per Hari (Rp.)</th>
 							<th>Tempat Tidur Tersedia</th>
 							<th></th>
 						</thead>
 						
-						<tbody *ngFor="let rawatinap of allRawatinap | filterKelasKamar: kelas | filterNoKamar: searchParam | filterJenisKamar: jenis">
+						<tbody *ngFor="let rawatinap of allRawatinap | filterKelasKamar: kelas | filterNoKamar: searchParam ">
 							<tr>
 								<td>{{rawatinap?.no_kamar}}</td>
-								<td>{{rawatinap?.jenis_kamar}}</td>
 								<td>{{rawatinap?.kelas}}</td>
-								<td>{{rawatinap?.kapasitas_kamar}}</td>
+								<td>{{rawatinap?.harga_per_hari}}</td>
+								<td>{{rawatinap?.available_kamar}} / {{rawatinap?.kapasitas_kamar}}</td>
 								<td>
-									<button type="button" class="btn btn-primary" routerLink="{{rawatinap.no_kamar}}">Detail</button>
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#createPemakaianKamarModal'" (click)="newPemakaianKamar(rawatinap)">
+										Daftar
+									</button>
 								</td>
 							</tr>
 						</tbody>
 					</table>
+				</div>
+				
+
+				<div class="modal fade" tabindex="-1" role="dialog" id="createPemakaianKamarModal" aria-hidden="true" *ngIf="pemakaianKamarModal != null">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+
+							<div class="modal-header bg-info text-white">
+								<h5 class="modal-title">Pendaftaran Rawat Inap</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<i class="fa fa-times" aria-hidden="true"></i>
+								</button>
+							</div>
+
+							<div class="modal-body">
+
+								<div class="form-group">
+									<label for="id_transaksi">Nama Pasien</label>
+									<div class="input-group">
+									<input type="text" class="form-control" id="nama_pasien" required required [ngbTypeahead]="searchNamaPasien" [inputFormatter]="inputPasienFormatter" [resultFormatter]="resultPasienFormatter" (selectItem)="addPasien($event.item)" [(ngModel)]="pemakaianKamarModal.nama_pasien" name="nama_pasien">
+									</div>                    
+								</div>
+
+								<div class="form-group">
+									<label for="nama_pasien">Nama Kamar</label>
+									<input type="text" class="form-control" id="nama_pasien" disabled name="no_kamar" [(ngModel)]="pemakaianKamarModal.no_kamar">
+								</div>
+
+								<div class="form-group">
+									<label for="nama_pasien">No. Tempat Tidur</label>
+									<select class="form-control" required id="no_tempat_tidur" [(ngModel)]="pemakaianKamarModal.no_tempat_tidur" (ngModelChange)="setTempatTidur()">
+										<option *ngFor="let tempattidur of allTempatTidur" [value]="tempattidur.no_tempat_tidur">
+											{{tempattidur.no_tempat_tidur}}
+										</option>
+									</select>
+								</div>
+
+								<div class="form-group">
+									<label for="nama_pasien">Harga</label>
+									<input type="text" class="form-control" id="harga" disabled name="harga" [(ngModel)]="pemakaianKamarModal.harga">
+								</div>
+
+								<div class="form-group">
+									<label for="nama_pasien">Nama Dokter Penanggungjawab</label>
+									<input type="text" class="form-control" id="no_pegawai" required [ngbTypeahead]="searchNamaDokter" [inputFormatter]="inputDokterFormatter" [resultFormatter]="resultDokterFormatter" (selectItem)="setNoPegawai($event.item)" name="no_pegawai">
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+								<button type="button" class="btn btn-success" (click)="createPemakaianKamar(pemakaianKamarModal.no_kamar, pemakaianKamarModal.no_tempat_tidur)" data-dismiss="modal">Simpan</button>
+							</div>
+						</div>
+					</div>
 				</div>
 
 			</div>
