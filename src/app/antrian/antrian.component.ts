@@ -48,6 +48,7 @@ export class AntrianComponent implements OnInit {
   allAvailableDokter: JadwalDokter[] = [];
   selectedDokter: JadwalDokter = null;
   idTransaksi: number = null;
+  isRujukan:boolean = false;
 
   @Input()
   public alerts: Array<IAlert> = [];
@@ -169,7 +170,6 @@ export class AntrianComponent implements OnInit {
           this.updateAntrianFrontOffice();
         });
       } else {
-        this.idTransaksi = this.antrian.id_transaksi;
         this.antrianService.destroyAntrian(this.antrian.id_transaksi, this.antrian.no_antrian).subscribe(data => {
           this.updateAntrian();
         });
@@ -221,16 +221,25 @@ export class AntrianComponent implements OnInit {
 
   private setIdTransaksi(id: number) {
     this.idTransaksi = id;
+    this.isRujukan = true;
+  }
+
+  private setRujukan(value: boolean) {
+    this.idTransaksi = this.antrian.id_transaksi;
+    this.isRujukan = value;
   }
 
   private periksa(no_pegawai, nama_poli, id_transaksi) {
+    if (!this.isRujukan)
+      this.proses('proses');
+      
     let request = {
       no_pegawai: no_pegawai,
       nama_poli: nama_poli,
       id_transaksi: id_transaksi
     }
     this.tenagaMedisService.periksa(request).subscribe(
-      data => { }
+      data => {}
     )
   }
 

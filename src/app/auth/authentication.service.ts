@@ -10,7 +10,8 @@ import { User } from './user';
 @Injectable()
 export class AuthenticationService {
   private users: User[] = [
-    {no_pegawai: 'D001', name: 'Dokter', role: 'dokter', password: 'dokter', other: ''},
+    {no_pegawai: 'D001', name: 'Dokter A', role: 'dokter', password: 'dokter', other: ''},
+    {no_pegawai: 'D002', name: 'Dokter B', role: 'dokter', password: 'dokter', other: ''},
     {no_pegawai: 'P001', name: 'Perawat', role: 'perawat', password: 'perawat', other: ''},
     {no_pegawai: 'L001', name: 'Petugas Lab A', role: 'petugasLab', password: 'petugaslab', other: ''},
     {no_pegawai: 'L002', name: 'Petugas Lab B', role: 'petugasLab', password: 'petugaslab', other: ''},

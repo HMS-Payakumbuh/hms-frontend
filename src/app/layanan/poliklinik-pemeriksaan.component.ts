@@ -69,7 +69,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	poliklinik: Poliklinik;
   rekamMedis: RekamMedis = null;
   hasilPemeriksaan: HasilPemeriksaan = new HasilPemeriksaan();
-  keluhan: string;
+  keluhan: string = '';
   allRiwayat: any[] = [];
   allRiwayatLama: any;
   anamnesis: any;
@@ -204,12 +204,14 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
         if (data != null) {
           if (data.tanggal_waktu == this.transaksi.transaksi.waktu_masuk_pasien) {
             this.rekamMedis = data;
-            this.hasilPemeriksaan = JSON.parse(data.hasil_pemeriksaan);
-            this.keluhan = JSON.parse(data.anamnesis).keluhan;
-            if (JSON.parse(data.anamnesis).alergi)
+            if (JSON.parse(data.hasil_pemeriksaan) != null)
+              this.hasilPemeriksaan = JSON.parse(data.hasil_pemeriksaan);
+
+            if (JSON.parse(data.anamnesis) != null) {
+              this.keluhan = JSON.parse(data.anamnesis).keluhan;
               this.allAlergi = JSON.parse(data.anamnesis).alergi.split(',');
-            if (JSON.parse(data.anamnesis).riwayat_penyakit)
               this.allRiwayat = JSON.parse(data.anamnesis).riwayat_penyakit.split(',');
+            }
           }
         }
 
@@ -265,7 +267,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
               if (_.isEmpty(this.allRiwayatPenyakit)) {
                 this.allRiwayatPenyakit = ['Tidak ada penyakit yang tercatat'];
                 this.riwayatEmpty = true;
-              } 
+              }
             });
   }
 
@@ -342,6 +344,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     let resep = new Resep();
     resep.tebus = false;
     resep.id_transaksi = this.transaksi.transaksi.id;
+    resep.nama_dokter = JSON.parse(localStorage.getItem('currentUser')).name;
     this.allResep.push(resep);
   }
 
