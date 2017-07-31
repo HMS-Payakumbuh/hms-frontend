@@ -21,7 +21,11 @@ export class HomeComponent implements OnInit {
         break;
       }
       case 'petugasLab': {
-        this.router.navigate(['/petugas-lab-dashboard'])
+        this.router.navigate(['/petugas-lab-dashboard']);
+        break;
+      }
+      case 'perawat': {
+        this.router.navigate(['/perawat-dashboard']);
         break;
       }
       default: {

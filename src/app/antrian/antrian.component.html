@@ -74,7 +74,7 @@
 				<div *ngIf="transaksiRujukan != null">
 					<div class="row">
 						<div class="col-md-12">
-							<table class="table" [mfData]="transaksiRujukan.transaksi" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+							<table class="table" [mfData]="transaksiRujukan.allTransaksi" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 								<thead>
 									<th><mfDefaultSorter by="kode_pasien">Kode Pasien</mfDefaultSorter></th>
 									<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
@@ -89,10 +89,10 @@
 										<td>{{transaksi.pasien.tanggal_lahir | date: 'dd-MMM-yyyy'}}</td>
 										<td class="text-left">{{transaksi.pasien.alamat}}</td>
 										<td>
-											<button *ngIf="ispoli" class="btn btn-success" data-toggle="modal" [attr.data-target]="'#assignDokterModal'" (click)="setIdTransaksi(transaksi.id)">
+											<button *ngIf="isPoli" class="btn btn-success" data-toggle="modal" [attr.data-target]="'#assignDokterModal'" (click)="setIdTransaksi(transaksi.id)">
 												Proses
 											</button>
-											<button *ngIf="!ispoli" class="btn btn-success" [routerLink]="['/laboratorium', layanan, transaksi.id]">
+											<button *ngIf="!isPoli" class="btn btn-success" [routerLink]="['/laboratorium', layanan, transaksi.id]">
 												Proses
 											</button>
 										</td>

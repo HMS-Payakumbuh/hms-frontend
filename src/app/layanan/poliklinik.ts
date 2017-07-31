@@ -1,7 +1,7 @@
 export class Poliklinik {
-	nama: string;
-	kategori_antrian: string;
-	kapasitas_pelayanan: number;
-	sisa_pelayanan: number;
-	id_lokasi: number;
+	nama: string = '';
+	kategori_antrian: string = '';
+	kapasitas_pelayanan: number = null;
+	sisa_pelayanan: number = null;
+	id_lokasi: number = null;
 }

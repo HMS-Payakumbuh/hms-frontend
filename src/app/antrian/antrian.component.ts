@@ -202,19 +202,21 @@ export class AntrianComponent implements OnInit {
   }
 
   private searchTransaksiRujukan() {
-    this.transaksiService.getTransaksiByKodePasien(this.searchTransaksiRujukanTerm).subscribe(
-      data => {
-        if (data.length == 0) {
-          this.transaksiRujukan = null;
-          this.alerts.pop();
-          this.alerts.push({id: 1, type: 'warning', message: 'Pasien tidak ditemukan'});
-        }
-        else {
+    if (this.searchTransaksiRujukanTerm != '') {
+      this.transaksiService.getAllTransaksi(this.searchTransaksiRujukanTerm, 'open').subscribe(
+        data => {
           this.transaksiRujukan = data;
-          this.alerts.pop();
+          if (this.transaksiRujukan.allTransaksi.length == 0) {
+            this.transaksiRujukan = null;
+            this.alerts.pop();
+            this.alerts.push({id: 1, type: 'warning', message: 'Pasien tidak ditemukan'});
+          }
+          else {
+            this.alerts.pop();
+          }
         }
-      }
-    )
+      )
+    }
   }
 
   private setIdTransaksi(id: number) {
