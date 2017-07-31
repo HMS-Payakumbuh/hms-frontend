@@ -95,6 +95,7 @@ export class ObatTebusEksternalFormComponent {
 					.subscribe(
 						resep => {
 							this.resep = resep;
+							console.log(this.resep);
 
 							let i = 0;
 							let j = 0;

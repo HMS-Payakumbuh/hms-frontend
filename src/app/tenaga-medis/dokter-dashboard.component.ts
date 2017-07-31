@@ -98,18 +98,23 @@ export class DokterDashboardComponent implements OnInit {
     )
   }
 
-  prosesPasien(id_transaksi: number, no_antrian: number) {
-    this.antrianService.updateAntrian(id_transaksi, no_antrian).subscribe(
-      data => {}
+  prosesAntrian(id_transaksi: number, no_antrian: number) {
+    this.antrianService.processAntrian(id_transaksi, no_antrian).subscribe(
+      data => {
+        this.router.navigate(['/poliklinik', this.selectedPoliklinik.nama, id_transaksi])
+      }
     )
   }
 
   updatePasienRujukan(message: any) {
-    if (this.selectedPoliklinik != null)
+    if (this.allAntrian.find(antrian => antrian.id_transaksi == message.id_transaksi)) {
       this.showDaftarPasien();
-    this.nama_poli = message.nama_poli;
-    this.transaksiService.getTransaksi(message.id_transaksi).subscribe(
-      data => this.transaksiRujukan = data
-    )
+    }
+    else {
+      this.nama_poli = message.nama_poli;
+      this.transaksiService.getTransaksi(message.id_transaksi).subscribe(
+        data => this.transaksiRujukan = data
+      )
+    }
   }
 }

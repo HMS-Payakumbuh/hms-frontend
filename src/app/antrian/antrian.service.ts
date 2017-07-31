@@ -110,6 +110,13 @@ export class AntrianService {
 		.map((res: Response) => res.json());
 	}
 
+	processAntrian(id_transaksi: number, no_antrian: number) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		return this.http.put(this.antrianUrl + '/process/' + id_transaksi + '/' + no_antrian, options)
+		.map((res: Response) => res.json());
+	}
+
 	createAntrian(antrian: Antrian) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
