@@ -13,9 +13,9 @@
 							<tbody>
 								<tr>
 									<td><b>Nama Pasien</b></td>
-									<div *ngIf="obatTebus.resep.eksternal; then thenBlock1 else elseBlock1"> </div>
+									<div *ngIf="obatTebus.eksternal; then thenBlock1 else elseBlock1"> </div>
 									<ng-template #thenBlock1>
-										<td>{{obatTebus.resep.nama}}</td>
+										<td>{{obatTebus.transaksi_eksternal?.nama}}</td>
 									</ng-template>
 									<ng-template #elseBlock1>
 										<td>{{obatTebus.transaksi.pasien.nama_pasien}}</td>
@@ -23,7 +23,7 @@
 								</tr>																
 								<tr>
 									<td><b>ID Pasien</b></td>
-									<div *ngIf="obatTebus.resep.eksternal; then thenBlock2 else elseBlock2"> </div>
+									<div *ngIf="obatTebus.eksternal; then thenBlock2 else elseBlock2"> </div>
 									<ng-template #thenBlock2>
 										<td>EKSTERNAL</td>
 									</ng-template>

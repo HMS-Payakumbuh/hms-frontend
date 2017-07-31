@@ -22,12 +22,12 @@
 						<tbody>
 							<tr>
 								<th><mfDefaultSorter by="waktu_transaksi">Waktu Transaksi</mfDefaultSorter></th>
-								<th><mfDefaultSorter by="nama_pembeli">Nama Pembeli</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="transaksi_eksternal.nama">Nama Pembeli</mfDefaultSorter></th>
 								<th></th>
 							</tr>
 							<tr *ngFor="let obatEceran of mf.data">
 								<td>{{obatEceran.waktu_transaksi | date:'d MMM y H:mm:ss'}}</td>
-								<td>{{obatEceran.nama_pembeli}}</td>
+								<td>{{obatEceran.transaksi_eksternal.nama}}</td>
 								<td><button type="button" class="btn btn-info" [routerLink] = "['/obat-eceran', obatEceran.id]">Detail</button></td>
 							</tr>						
 						</tbody>	
