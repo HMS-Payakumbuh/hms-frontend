@@ -105,15 +105,12 @@ export class TransaksiObatDetailComponent implements OnInit {
 			for (let item of obatTebus.obat_tebus_item) {
 				console.log(item);
 				let hitung = false;
-				if (this.transaksi.no_sep === null) {
-					this.listOfObatTebus.push(item);
-					hitung = true;
+				if (item.jenis_obat.dicover_bpjs === true && this.transaksi.no_sep !== null) {
+					// code...
 				}
 				else {
-					if (item.jenis_obat.dicover_bpjs !== true) {
-						this.listOfObatTebus.push(item);
-						hitung = true;
-					}
+					this.listOfObatTebus.push(item);
+					hitung = true;
 				}
 
 				if (hitung) {
@@ -162,25 +159,6 @@ export class TransaksiObatDetailComponent implements OnInit {
 		console.log(this.umur_pasien);
 	}
 
-	howLong(tanggal1: string, tanggal2: string): number {
-		let one_day = 1000*60*60*24;
-		let masuk: Date = new Date(tanggal1);
-		let keluar: Date = new Date(tanggal2);
-
-		let masuk_ms = masuk.getTime();
-		let keluar_ms = keluar.getTime();
-
-		let days = Math.round((keluar_ms - masuk_ms)/one_day);
-
-		if (days <= 0) {
-			days = 1;
-		}
-
-		console.log(days);
-		return days;
-	}
-
-
 	private createAsuransi(id: number) {
 		this.asuransi.id_pasien = id;
 		let asuransi:any = { asuransi: this.asuransi };
@@ -202,15 +180,12 @@ export class TransaksiObatDetailComponent implements OnInit {
 			bayar = true;
 		}
 
-		
-
 		if (bayar) {
 			if (metode != 'tunai') {
 				this.createAsuransi(this.transaksi.id_pasien);
 			}
 
-			let response = this.createPembayaran(this.total_bayar, metode.toLowerCase(), false, null, this.listOfObatTebusId, null, null);
-			this.print();
+			this.createPembayaran(this.total_bayar, metode.toLowerCase(), false, null, this.listOfObatTebusId, null, null);
 		}
 
 		this.ngOnInit();
@@ -244,10 +219,11 @@ export class TransaksiObatDetailComponent implements OnInit {
 		this.pembayaranService.createPembayaran(request)
 		.subscribe(data => {
 			console.log(data);
-			response = data;
-		});
+			this.no_pembayaran = data.pembayaran.no_pembayaran;
+			console.log(this.no_pembayaran);
+			setTimeout(() => this.print(), 1000);
 
-		return response;
+		});
 	}
 
 	print(): void {

@@ -141,14 +141,12 @@ export class TransaksiDetailComponent implements OnInit {
 
 	initRawatInap(value): void {
 		for (let item of value) {
-			if (item.waktu_keluar !== null) {
-				console.log(item);
-				this.listOfKamarRawatInap.push(item);
-				
-				if (this.transaksi.no_sep === null) {
-					if (item.id_pembayaran === null) {
-						this.harga_total += parseInt(item.harga);
-					}
+			console.log(item);
+			this.listOfKamarRawatInap.push(item);
+			
+			if (this.transaksi.no_sep === null) {
+				if (item.id_pembayaran === null) {
+					this.harga_total += parseInt(item.harga);
 				}
 			}
 		}
@@ -257,10 +255,16 @@ export class TransaksiDetailComponent implements OnInit {
 		console.log(this.umur_pasien);
 	}
 
-	howLong(tanggal1: string, tanggal2: string): number {
+	howLong(tanggal1: string, tanggal2: string = null): number {
 		let one_day = 1000*60*60*24;
 		let masuk: Date = new Date(tanggal1);
-		let keluar: Date = new Date(tanggal2);
+		let keluar: Date;
+		if (tanggal2 === null) {
+			keluar = new Date();
+		}
+		else {
+			keluar = new Date(tanggal2);
+		}
 
 		let masuk_ms = masuk.getTime();
 		let keluar_ms = keluar.getTime();
@@ -329,10 +333,6 @@ export class TransaksiDetailComponent implements OnInit {
 			bayar = true;
 		}
 
-		if (this.listOfObatTebusId.length > 0) {
-			bayar = true;
-		}
-
 		if (this.listOfKamarRawatInapId.length > 0) {
 			bayar = true;
 		}
@@ -345,14 +345,12 @@ export class TransaksiDetailComponent implements OnInit {
 			if (metode != 'tunai') {
 				this.createAsuransi(this.transaksi.id_pasien);
 			}
-			let response: any = null;
 			if (this.bayar_tambahan == true) {
-				response = this.createPembayaran(this.total_bayar - this.harga_tambahan, metode.toLowerCase(), false, this.listOfTindakan, this.listOfObatTebusId, this.listOfKamarRawatInapId);
+				this.createPembayaran(this.total_bayar - this.harga_tambahan, metode.toLowerCase(), false, this.listOfTindakan, this.listOfObatTebusId, this.listOfKamarRawatInapId);
 			}
 			else {
-				response = this.createPembayaran(this.total_bayar, metode.toLowerCase(), false, this.listOfTindakan, this.listOfObatTebusId, this.listOfKamarRawatInapId);
+				this.createPembayaran(this.total_bayar, metode.toLowerCase(), false, this.listOfTindakan, this.listOfObatTebusId, this.listOfKamarRawatInapId);
 			}
-			this.print();
 		}
 
 		this.ngOnInit();
@@ -386,10 +384,10 @@ export class TransaksiDetailComponent implements OnInit {
 		this.pembayaranService.createPembayaran(request)
 		.subscribe(data => {
 			console.log(data);
-			response = data;
+			this.no_pembayaran = data.pembayaran.no_pembayaran;
+			console.log(this.no_pembayaran);
+			setTimeout(() => this.print(), 1000);
 		});
-
-		return response;
 	}
 
 	print(): void {

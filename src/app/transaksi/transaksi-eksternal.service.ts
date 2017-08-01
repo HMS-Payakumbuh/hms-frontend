@@ -21,10 +21,14 @@ export class TransaksiEksternalService {
 		return Promise.reject(error.message || error);
 	}
 
-	getAllTransaksi(kode_pasien: string = null, status: string = null): Observable<any[]> {
+	getAllTransaksi(status: string = null): Observable<any[]> {
 		let params: URLSearchParams = new URLSearchParams();
+		params.set('status', status);
 
-		return this.http.get(this.transaksiEksternalUrl)
+		let requestOptions = new RequestOptions();
+		requestOptions.params = params;
+
+		return this.http.get(this.transaksiEksternalUrl, requestOptions)
 			.map((res: Response) => res.json());
 	}
 

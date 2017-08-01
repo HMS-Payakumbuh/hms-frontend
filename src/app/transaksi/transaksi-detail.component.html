@@ -82,7 +82,7 @@
 									<td>{{kamar.waktu_masuk}}</td>
 									<td>{{kamar.waktu_keluar}}</td>
 									<td>{{howLong(kamar.waktu_masuk, kamar.waktu_keluar)}} Hari @ Rp. {{kamar.kamar_rawatinap.harga_per_hari | number: '.2-2'}}</td>
-									<td>Rp. {{kamar.harga | number: '.2-2'}}</td>
+									<td>Rp. {{kamar.kamar_rawatinap.harga_per_hari * howLong(kamar.waktu_masuk, kamar.waktu_keluar) | number: '.2-2'}}</td>
 									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs' && kamar.id_pembayaran === null" type="checkbox" value="kamar.id"  [id]="'kamarRawatInap' + kamar.id" (change)="updateCheckedKamarRawatInap(kamar)"></td>
 								</tr>
 								<tr *ngIf="harga_tambahan !== 0 && !transaksi_obat">
@@ -114,17 +114,6 @@
 						</div>
 					</div>
 					<div *ngIf="transaksi.pembayaran?.length > 0" class="row">
-						<div class="col-md-12">
-							<div class="form-group">
-			                    <label class="custom-control custom-checkbox">
-			                    	<input type="checkbox" class="custom-control-input" [checked]="showPembayaran" (change)="showPembayaran = !showPembayaran">
-			                    	<span class="custom-control-indicator"></span>
-			                    	<span class="custom-control-description">Tampilkan Pembayaran</span>
-			                    </label>
-		                	</div>
-						</div>
-					</div>
-					<div *ngIf="showPembayaran" class="row">
 						<div class="col-md-12">
 							<ul class='list-group'>
 								<a *ngFor="let pembayaran of transaksi.pembayaran" [routerLink] = "['/pembayaran', pembayaran.id]">Pembayaran {{pembayaran.metode_bayar.toUpperCase()}} : {{pembayaran.created_at}}</a>
@@ -209,7 +198,7 @@
 							<td></td>
 							<td>Rp. {{tindakan.harga | number: '.2-2'}}</td>
 						</tr>
-						<tr *ngIf="printListOfObatTebus?.length > 0">
+						<tr *ngIf="printListOfObatTebus?.length > 0 || printListOfObatEceran?.length > 0">
 							<th>Obat</th>
 							<th></th>
 							<th></th>
