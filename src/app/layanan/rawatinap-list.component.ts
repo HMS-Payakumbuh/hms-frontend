@@ -33,7 +33,7 @@ export class RawatinapListComponent implements OnInit {
 	allRawatinap: Rawatinap[];
 	allJenis = ['', 'Rawat Inap', 'ICU'];
 	allKelas = ['', 'VIP', '1', '2', '3'];
-	
+
 	public allPasien: Pasien[];
 	public pasien: Pasien;
 
@@ -48,9 +48,9 @@ export class RawatinapListComponent implements OnInit {
     pemakaianKamarModalNama: string = null;
 
 	rawatinap: Rawatinap;
-	
+
 	inputPasienFormatter = (value : Pasien) => value.nama_pasien;
-	resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.id;
+	resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.kode_pasien;
 
 	inputDokterFormatter = (value : Dokter) => value.tenaga_medis.nama;
 	resultDokterFormatter = (value: Dokter)	=> value.tenaga_medis.nama + ' - ' + value.spesialis + ' - ' + value.no_pegawai;
@@ -95,11 +95,11 @@ export class RawatinapListComponent implements OnInit {
 		this.pasien = new Pasien();
 	}
 
-	private addPasien(pasien: Pasien) {	
+	private addPasien(pasien: Pasien) {
 		this.pasien = pasien;
 
 		this.transaksiService.getLatestOpenTransaksi(this.pasien.id).subscribe(
-			data => { 
+			data => {
 				this.transaksi = data;
 				this.pemakaianKamarModal.id_transaksi = this.transaksi.id;
 			}
@@ -123,7 +123,7 @@ export class RawatinapListComponent implements OnInit {
 
 		this.tempatTidurModal = new Tempattidur();
 		this.tempatTidurModal.no_kamar = rawatinap.no_kamar;
-		this.tempatTidurModal.status = 0;		
+		this.tempatTidurModal.status = 0;
  	}
 
 	setTempatTidur() {
