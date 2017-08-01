@@ -38,9 +38,14 @@
 								<td>Rp. {{jenisObat.harga_jual_satuan}}</td>
 							</tr>
 							<tr>
-								<td><b>Dicover BPJS?</b></td>								
+								<td><b>Dicover BPJS</b></td>								
 								<td *ngIf="jenisObat.dicover_bpjs">Ya</td>		
 								<td *ngIf="!jenisObat.dicover_bpjs">Tidak</td>
+							</tr>
+							<tr *ngIf="jenisObat.dicover_bpjs">
+								<td><b>Special Medicine</b></td>								
+								<td *ngIf="jenisObat.special_medicine">Ya</td>		
+								<td *ngIf="!jenisObat.special_medicine">Tidak</td>
 							</tr>
 						</tbody>
 					</table>
