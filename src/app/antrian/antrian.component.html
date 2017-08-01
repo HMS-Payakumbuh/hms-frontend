@@ -40,7 +40,7 @@
 									<button type="button" class="btn btn-success" [routerLink] = "['/pendaftaran', antrian.nama_layanan]" (click)="proses('proses')">Proses</button>
 								</div>
 								<div *ngIf="!isfrontoffice && isPoli">
-									<button type="button" class="btn btn-success" data-toggle="modal" [attr.data-target]="'#assignDokterModal'" (click)="proses('proses')">Proses</button>
+									<button type="button" class="btn btn-success" data-toggle="modal" [attr.data-target]="'#assignDokterModal'" (click)="setRujukan(false)">Proses</button>
 								</div>
 								<div *ngIf="!isfrontoffice && !isPoli">
 									<button type="button" class="btn btn-success" [routerLink] = "['/laboratorium', antrian.nama_layanan, antrian.id_transaksi]" (click)="proses('proses')">Proses</button>

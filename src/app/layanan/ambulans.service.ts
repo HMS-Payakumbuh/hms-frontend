@@ -21,6 +21,11 @@ export class AmbulansService {
 			.map((res: Response) => res.json());
 	}
 
+	getAllAvailableAmbulans(): Observable<Ambulans[]> {
+		return this.http.get(this.ambulansUrl + '/available')
+			.map((res: Response) => res.json());
+	}
+
 	getAmbulans(nama: string): Observable<Ambulans> {
 		return this.getAllAmbulans()
 			.map(allAmbulans => allAmbulans.find(ambulans => ambulans.nama == nama));

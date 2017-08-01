@@ -205,16 +205,15 @@ export class ObatTebusEksternalFormComponent {
 		}
 	}
 
-	private save() { // STILL NEEDS REPAIR
+	private save() {
 		let observables = [];
 		let stokObat = new StokObat();
 
 		for (let i = 0; i < this.resepItemCount; i++) {  
-			for (let j = 0; j < this.racikanItemCount[i] ; j++) {  				
-				// console.log(this.tebus[i][j]);
+			for (let j = 0; j < this.racikanItemCount[i] ; j++) {  
 				// if (this.tebus[i][j]) {									
 					observables.push(
-				   		this.stokObatService.getStokObatByJenisObatAndBatch(this.id_jenis_obat[i][j], this.no_batch[i][j], 2)
+				   		this.stokObatService.getStokObatByJenisObatAndBatch(this.id_jenis_obat[i][j], this.no_batch[i][j], 1) // Cari di stok obat apotek
 				   	)
 				// }
 			}
