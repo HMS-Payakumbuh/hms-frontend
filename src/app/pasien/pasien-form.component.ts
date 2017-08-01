@@ -304,16 +304,20 @@ export class PasienFormComponent implements OnInit {
       } else {
         this.pasienService.createPasien(this.pasien).subscribe(
           data => {
-            this.pasien = data;
-            let toastOptions:ToastOptions = {
+            this.pasien = data.json;
+
+            if (data.status === 201) {
+              let toastOptions:ToastOptions = {
                 title: "Registrasi Pasien Sukses !",
-                msg: "Pasien mendapat nomor pasien : "+data.kode_pasien,
+                msg: "Pasien mendapat nomor pasien : "+data.json.kode_pasien,
                 showClose: true,
                 timeout: 5000,
                 theme: 'bootstrap'
-            };
+              };
 
-            this.toastyService.success(toastOptions);
+              this.toastyService.success(toastOptions);
+            }
+            
             if (this.asuransiChecked)
               this.createAsuransi();
             else

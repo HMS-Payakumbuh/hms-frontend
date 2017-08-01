@@ -21,6 +21,7 @@ export class AntrianDashboardComponent implements OnInit {
 	private socket: any;
 	private frontOfficeChecked: boolean = true;
 	private layananChecked: boolean = false;
+	private loadFinished: boolean;
 
 	public filterQuery = "";
  	public rowsOnPage = 10;
@@ -51,6 +52,7 @@ export class AntrianDashboardComponent implements OnInit {
 		this.poliklinikService.getAllPoliklinik().subscribe(
 		    data => {
 		    	this.allAntrian = [];
+		    	this.loadFinished = false;
 		        for(let dat of data) {
 		          this.allAntrian.push(_.pick(dat, ['nama', 'kategori_antrian', 'created_at', 'updated_at']));
 		        }
@@ -73,6 +75,7 @@ export class AntrianDashboardComponent implements OnInit {
 					      	kategori.layanan = tipeLayanan;
 					      });
 			        }
+			        this.loadFinished = true;
 		          });
 		      }
 		    );
@@ -82,6 +85,7 @@ export class AntrianDashboardComponent implements OnInit {
 		this.poliklinikService.getAllPoliklinik().subscribe(
 		    data => {
 		    	this.allAntrian = [];
+		    	this.loadFinished = false;
 		        for(let dat of data) {
 		          this.allAntrian.push(_.pick(dat, ['nama', 'kategori_antrian', 'created_at', 'updated_at']));
 		        }
@@ -97,6 +101,7 @@ export class AntrianDashboardComponent implements OnInit {
 						      	}
 						})
 					}
+					this.loadFinished = true;
 				});
 	        });
 	}
@@ -124,11 +129,11 @@ export class AntrianDashboardComponent implements OnInit {
 	}
 
 	resetAntrianFrontOffice() {
-		this.antrianService.resetAntrianFrontOffice().subscribe(data => {});
+		this.antrianService.resetAntrianFrontOffice().subscribe(data => {window.location.reload()});
 	}
 
 	resetAntrian() {
-		this.antrianService.resetAntrian().subscribe(data => {});
+		this.antrianService.resetAntrian().subscribe(data => {window.location.reload()});
 	}
 
 }

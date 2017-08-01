@@ -1,5 +1,6 @@
 import { ResepItem } from './resep-item';
 import { Transaksi } from '../../transaksi/transaksi';
+import { TransaksiEksternal } from '../../transaksi/transaksi-eksternal';
 
 export class Resep {
 	constructor(
@@ -13,8 +14,8 @@ export class Resep {
 	public no_telepon: string = "",
 	public eksternal: boolean = false,
 	public resep_item: ResepItem[] = [],
-	public transaksi: Transaksi = null,
+	public transaksi: Transaksi = new Transaksi(),
 	public tebus: boolean = false,
-	public transaksi_eksternal: any = null
+	public transaksi_eksternal: TransaksiEksternal = new TransaksiEksternal()
 	) {}
 }

@@ -19,7 +19,7 @@
 	                    <span class="custom-control-indicator"></span>
 	                    <span class="custom-control-description">Layanan</span>
                   	</label>	
-					<table *ngIf="allAntrian && frontOfficeChecked" class="table" [mfData]="allAntrian" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+					<table *ngIf="loadFinished && frontOfficeChecked" class="table" [mfData]="allAntrian" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<thead>
 							<th><mfDefaultSorter by="kategori">Kategori</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="panjang">Panjang Antrian</mfDefaultSorter></th>
@@ -42,7 +42,7 @@
 				            </tr>
 				        </tfoot>
 					</table>
-					<table *ngIf="allAntrian && layananChecked" class="table" [mfData]="allAntrian" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+					<table *ngIf="loadFinished && layananChecked" class="table" [mfData]="allAntrian" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<thead>
 							<th><mfDefaultSorter by="layanan">Layanan</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="panjang">Panjang Antrian</mfDefaultSorter></th>

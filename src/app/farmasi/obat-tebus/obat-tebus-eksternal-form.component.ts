@@ -258,7 +258,12 @@ export class ObatTebusEksternalFormComponent {
 
 				this.obatTebusService.createObatTebus(this.obatTebus).subscribe(
 			       	data => {			         	
-		     			this.router.navigateByUrl('/obat-tebus');
+			     		console.log(data);
+			     		if (data.eksternal) {
+				     		this.router.navigateByUrl('/transaksi-eksternal/' + data.id_transaksi_eksternal);
+				     	} else {
+				     		this.router.navigateByUrl('/transaksi-obat/' + data.id_transaksi);
+				     	}
 			         	return true;
 			       	},
 			       	error => {

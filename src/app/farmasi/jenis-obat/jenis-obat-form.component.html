@@ -40,10 +40,19 @@
             </div>
 
             <div class="form-group">
-              <div class="input-group">
-                <label for="dicover_bpjs">Dicover BPJS? *</label>
-                <input type="checkbox" class="form-control" id="dicover_bpjs" [checked]="jenisObat.dicover_bpjs" (change)="jenisObat.dicover_bpjs = !jenisObat.dicover_bpjs" name="dicover_bpjs">
-              </div>
+                <label for="dicover_bpjs">Dicover BPJS *</label>
+                <select class="form-control" id="dicover_bpjs" [(ngModel)] = "jenisObat.dicover_bpjs" name="dicover_bpjs">
+                  <option value="false">Tidak</option>
+                  <option value="true">Ya</option>   
+                </select>
+            </div>
+
+            <div *ngIf="jenisObat.dicover_bpjs" class="form-group">
+                <label for="special_medicine">Special Medicine *</label>
+                <select class="form-control" id="special_medicine" [(ngModel)] = "jenisObat.special_medicine" name="special_medicine">
+                  <option value="false">Tidak</option>
+                  <option value="true">Ya</option>   
+                </select>
             </div>
 
             <button type="submit" class="btn btn-success" (click)="save()">Simpan</button>
