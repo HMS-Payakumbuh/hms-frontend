@@ -122,7 +122,7 @@ export class BookingRawatinapDetailComponent implements OnInit {
 			.switchMap((params: Params) => this.pemakaianKamarService.createBookedKamar(params['tanggal'], this.pemakaianKamarModal))
             .subscribe(
                 data => { 
-                    window.location.reload
+                    this.ngOnInit()
                 }
     	    );
   	}

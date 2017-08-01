@@ -37,21 +37,21 @@
                                 <td>{{kamaroperasi?.nama_pasien}}</td>
 								<td>{{kamaroperasi?.nama_tindakan}}</td>
 								<td>{{kamaroperasi?.waktu_masuk_real | date:'d MMM y H:mm'}}</td>
-								<td>
+								<td *ngIf="user.role == 'dokter'" >
 									<button type="button" class="btn btn-sm btn-info" routerLink="{{kamaroperasi.no_kamar}}/{{kamaroperasi.id}}/{{kamaroperasi.id_transaksi}}">
 										Operasi
 									</button>
 								</td>
-								<td>
+								<td *ngIf="user.role == 'frontOffice'">
 									<button type="button" class="btn btn-sm btn-danger" (click)="destroyPemakaianKamarOperasi(kamaroperasi.id)">
-										<i class="fa fa-trash"></i>
+										Hapus
 									</button>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 
-                    <div class="pull-left">
+                    <div *ngIf="user.role == 'frontOffice'" class="pull-left">
 						<button type="button" class="btn btn-info" data-toggle="modal" [attr.data-target]="'#createPemakaianKamarOperasiModal'" (click)="newPemakaianKamarOperasi()">
 							Daftar Operasi Sekarang (Khusus dari IGD)
 						</button>

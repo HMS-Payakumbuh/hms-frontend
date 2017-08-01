@@ -108,7 +108,7 @@ export class PindahKamarDetailComponent implements OnInit {
       		data => { 
 				this.tempattidurService.updateTempatTidur(this.tempatTidurModal, noKamar, noTempatTidur).subscribe(
 					data => {
- 						window.location.reload();
+ 						this.ngOnInit();
 					}
 				);
 			}

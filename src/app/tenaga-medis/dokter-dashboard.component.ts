@@ -10,6 +10,8 @@ import { PoliklinikService }      from '../layanan/poliklinik.service';
 import { Transaksi }              from '../transaksi/transaksi';
 import { TransaksiService }       from '../transaksi/transaksi.service';
 import { TenagaMedisService }     from './tenaga-medis.service';
+import { Tindakan }               from '../layanan/tindakan';
+import { TindakanService }        from '../layanan/tindakan.service';
 
 import * as io from "socket.io-client";
 
@@ -21,7 +23,8 @@ import * as io from "socket.io-client";
     AmbulansService,
     PoliklinikService,
     TenagaMedisService,
-    TransaksiService
+    TransaksiService,
+    TindakanService
   ]
 })
 
@@ -39,7 +42,9 @@ export class DokterDashboardComponent implements OnInit {
   selectedPoliklinik: Poliklinik = new Poliklinik();
   selectedAmbulans: Ambulans = null;
   transaksiRujukan: Transaksi = null;
+  transaksiAmbulans: any = null;
   nama_poli: string = null;
+  searchKodePasien: string = '';
 
   public filterQuery = "";
   public rowsOnPage = 5;
@@ -52,7 +57,8 @@ export class DokterDashboardComponent implements OnInit {
     private antrianService: AntrianService,
 		private poliklinikService: PoliklinikService,
     private tenagaMedisService: TenagaMedisService,
-    private transaksiService: TransaksiService
+    private transaksiService: TransaksiService,
+    private tindakanService: TindakanService
 	) { this.socket = io('http://localhost') }
 
   ngOnInit() {
@@ -65,17 +71,47 @@ export class DokterDashboardComponent implements OnInit {
       data => { this.allPoliklinik = data }
     );
 
-    this.ambulansService.getAllAmbulans().subscribe(
+    this.ambulansService.getAllAvailableAmbulans().subscribe(
       data => { this.allAmbulans = data }
     );
 
     this.socket.on(noPegawai, (message) => this.updatePasienRujukan(message));
   }
 
-  panggilAmbulans() {
-    this.selectedAmbulans.status = "In Use";
-    this.ambulansService.updateAmbulans(this.selectedAmbulans.nama, this.selectedAmbulans).subscribe(
-      data => {}
+  onEnter(event) {
+    if (event.keyCode == 13)
+      this.searchTransaksi();
+  }
+
+  searchTransaksi() {
+    if (this.searchKodePasien != '') {
+      this.transaksiService.getAllTransaksi(this.searchKodePasien, 'open').subscribe(
+        data => this.transaksiAmbulans = data
+      )
+    }
+  }
+
+  pemakaianAmbulans() {
+    let tindakan: Tindakan[] = [];
+    let temp: Tindakan = new Tindakan();
+
+    temp.id_transaksi = this.transaksiAmbulans.allTransaksi[0].id;
+    temp.harga = 50000;
+    temp.keterangan = '';
+    temp.kode_tindakan = '00.0';
+    temp.id_pasien = this.transaksiAmbulans.allTransaksi[0].id_pasien;
+    temp.tanggal_waktu = this.transaksiAmbulans.allTransaksi[0].waktu_masuk_pasien;
+    temp.np_tenaga_medis = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
+    temp.nama_ambulans = this.selectedAmbulans.nama;
+    tindakan.push(temp);
+
+    this.tindakanService.saveTindakan(tindakan).subscribe(
+      data => {
+        this.selectedAmbulans.status = "In Use";
+        this.ambulansService.updateAmbulans(this.selectedAmbulans.nama, this.selectedAmbulans).subscribe(
+          data => {}
+        )
+      }
     )
   }
 
@@ -98,18 +134,23 @@ export class DokterDashboardComponent implements OnInit {
     )
   }
 
-  prosesPasien(id_transaksi: number, no_antrian: number) {
-    this.antrianService.updateAntrian(id_transaksi, no_antrian).subscribe(
-      data => {}
+  prosesAntrian(id_transaksi: number, no_antrian: number) {
+    this.antrianService.processAntrian(id_transaksi, no_antrian).subscribe(
+      data => {
+        this.router.navigate(['/poliklinik', this.selectedPoliklinik.nama, id_transaksi])
+      }
     )
   }
 
   updatePasienRujukan(message: any) {
-    if (this.selectedPoliklinik != null)
+    if (this.allAntrian.find(antrian => antrian.id_transaksi == message.id_transaksi)) {
       this.showDaftarPasien();
-    this.nama_poli = message.nama_poli;
-    this.transaksiService.getTransaksi(message.id_transaksi).subscribe(
-      data => this.transaksiRujukan = data
-    )
+    }
+    else {
+      this.nama_poli = message.nama_poli;
+      this.transaksiService.getTransaksi(message.id_transaksi).subscribe(
+        data => this.transaksiRujukan = data
+      )
+    }
   }
 }

@@ -76,11 +76,13 @@ export class PindahKamarListComponent implements OnInit {
 				this.allTempatTidur = data;
 			}
 		);
-
-    	this.pemakaianKamarModal = new PemakaianKamar();
+		
+		
+		this.pemakaianKamarModal = new PemakaianKamar();
+		this.pemakaianKamarModal.id_transaksi = this.pemakaianKamar.id_transaksi;
+		this.pemakaianKamarModal.no_pegawai = this.pemakaianKamar.no_pegawai;
 		this.pemakaianKamarModal.no_kamar = rawatinap.no_kamar;
 		this.pemakaianKamarModal.harga = rawatinap.harga_per_hari;
-		this.pemakaianKamar.harga = this.pemakaianKamarModal.harga;
 
 		this.tempatTidurModal = new Tempattidur();
 		this.tempatTidurModal.no_kamar = rawatinap.no_kamar;
@@ -92,7 +94,7 @@ export class PindahKamarListComponent implements OnInit {
 	}
 
     pindahPemakaianKamar(noKamar: string, noTempatTidur: number) {
-    	this.pemakaianKamarService.pindahPemakaianKamar(this.pemakaianKamar.id, this.pemakaianKamar).subscribe(
+    	this.pemakaianKamarService.pindahPemakaianKamar(this.pemakaianKamar.id, this.pemakaianKamarModal).subscribe(
       		data => {
 				this.tempattidurService.updateTempatTidur(this.tempatTidurModal, noKamar, noTempatTidur).subscribe(
 					data => { this.ngOnInit() }

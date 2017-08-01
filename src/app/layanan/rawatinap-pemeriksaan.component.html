@@ -85,7 +85,7 @@
 									<div class="row mb-3">
 										<div class="col-8">
 											<label>Perkembangan Pasien</label>
-											<textarea id="inputPerkembanganPasien" class="form-control" rows="3" [(ngModel)]="perkembangan_pasien" name="perkembangan"></textarea>
+											<textarea id="inputPerkembanganPasien" class="form-control" rows="3" [(ngModel)]="perkembanganPasienBaru" name="perkembangan"></textarea>
 										</div>
 									</div>
 									
@@ -173,6 +173,7 @@
 											</button>
 										</div>
 									</div>
+									
 									<div class="row">
 										<div class="col-sm-11 text-left">
 											<input type="text" class="form-control" id="alergi" [(ngModel)]="alergiBaru" name="alergi" (keyup.enter) = "addAlergi()">
@@ -478,7 +479,7 @@
 
 			<div class="pull-right">
 				<button type="button" class="btn btn-warning" (click)="goBack()">Kembali</button>
-				<button type="button" class="btn btn-success" data-toggle="modal" [attr.data-target]="'#rujukanModal'">Selesai</button>
+				<button type="button" class="btn btn-success" (click)="save()">Selesai</button>
 			</div>
 
 		</div>

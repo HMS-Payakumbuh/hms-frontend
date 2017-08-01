@@ -149,13 +149,13 @@ export class BookingOperasiListComponent implements OnInit {
 
 	updatePemakaianKamarOperasi() {
 		this.pemakaianKamarOperasiService.updatePemakaianKamarOperasi(this.pemakaianKamarOperasiModalNama, this.pemakaianKamarOperasiModal).subscribe(
-			data => { window.location.reload() }
+			data => { this.ngOnInit() }
 		);
 	}
 
 	destroyPemakaianKamarOperasi(id: number) {
 		this.pemakaianKamarOperasiService.destroyPemakaianKamarOperasi(id).subscribe(
-			data => { window.location.reload() }
+			data => { this.ngOnInit() }
 		);
 	}
 

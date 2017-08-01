@@ -60,7 +60,7 @@ export class PemakaianKamarJenazahListComponent implements OnInit {
 
     createPemakaianKamarJenazah() {
     	this.PemakaianKamarJenazahService.createPemakaianKamarJenazah(this.pemakaianKamarJenazahModal).subscribe(
-      		data => { window.location.reload() }
+      		data => { this.ngOnInit() }
     	);
   	}
 
@@ -68,13 +68,13 @@ export class PemakaianKamarJenazahListComponent implements OnInit {
 		this.pemakaianKamarJenazahModalId = id;
 		this.pemakaianKamarJenazahModal = Object.assign({}, PemakaianKamarJenazah);
 		this.PemakaianKamarJenazahService.updatePemakaianKamarJenazah(this.pemakaianKamarJenazahModalId, this.pemakaianKamarJenazahModal).subscribe(
-			data => { window.location.reload() }
+			data => { this.ngOnInit() }
 		);
 	}
 
 	destroyPemakaianKamarJenazah(id: number) {		
 		this.PemakaianKamarJenazahService.destroyPemakaianKamarJenazah(id).subscribe(
-			data => { window.location.reload() }
+			data => { this.ngOnInit() }
 		);
 	}
 

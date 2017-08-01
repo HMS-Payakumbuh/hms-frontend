@@ -289,7 +289,7 @@
 															</div>
 															<div *ngIf="resepItem.racikan_item.length > 0">
 																<div *ngFor="let racikanItem of resepItem.racikan_item">
-																	{{racikanItem.jenis_obat.merek_obat}}
+																	{{racikanItem.jenis_obat?.merek_obat}}
 																</div>
 															</div>
 														</th>
@@ -343,7 +343,7 @@
 												<div *ngFor="let racikanItem of resepItemModal.racikan_item; index as j">
 													<div class="input-group mb-2">
 														<div class="input-group-addon">Bahan Racikan {{j + 1}}</div>
-														<input type="text" class="form-control" placeholder="{{racikanItem.jenis_obat.merek_obat}}"
+														<input type="text" class="form-control" placeholder="{{racikanItem.jenis_obat?.merek_obat}}"
 														 [ngbTypeahead]="searchJenisObat" (selectItem)="addSelectedJenisObat(racikanItem, $event.item)"
 														 [inputFormatter]="inputJenisObatFormatter" [resultFormatter]="resultJenisObatFormatter">
 													</div>
@@ -351,7 +351,7 @@
 														<div class="col-sm-6 input-group">
 															<div class="input-group-addon">Jumlah</div>
 															<input type="number" class="form-control" [(ngModel)]="racikanItem.jumlah">
-															<div class="input-group-addon">{{racikanItem.jenis_obat.satuan}}</div>
+															<div class="input-group-addon">{{racikanItem.jenis_obat?.satuan}}</div>
 														</div>
 													</div>
 													<button type="button" class="btn btn-sm btn-danger mb-3" (click)="removeRacikanItem(j, resepItemModal)">
@@ -390,7 +390,7 @@
 												<div *ngFor="let racikanItem of resepItemModal.racikan_item; index as j">
 													<div class="input-group mb-2">
 														<div class="input-group-addon">Bahan Racikan {{j + 1}}</div>
-														<input type="text" class="form-control" placeholder="{{racikanItem.jenis_obat.merek_obat}}"
+														<input type="text" class="form-control" placeholder="{{racikanItem.jenis_obat?.merek_obat}}"
 														 [ngbTypeahead]="searchJenisObat" (selectItem)="addSelectedJenisObat(racikanItem, $event.item)"
 														 [inputFormatter]="inputJenisObatFormatter" [resultFormatter]="resultJenisObatFormatter">
 													</div>
@@ -398,7 +398,7 @@
 														<div class="col-sm-6 input-group">
 															<div class="input-group-addon">Jumlah</div>
 															<input type="number" class="form-control" [(ngModel)]="racikanItem.jumlah">
-															<div class="input-group-addon">{{racikanItem.jenis_obat.satuan}}</div>
+															<div class="input-group-addon">{{racikanItem.jenis_obat?.satuan}}</div>
 														</div>
 													</div>
 													<button type="button" class="btn btn-sm btn-danger mb-3" (click)="removeRacikanItem(j, resepItemModal)">
@@ -596,15 +596,21 @@
 						<div *ngFor="let obatTindakan of tindakan.obat_tindakan; index as j">
 							<div class="input-group mb-2">
 								<div class="input-group-addon">Obat {{j + 1}}</div>
-								<input type="text" class="form-control" placeholder="{{obatTindakan.stokObat.jenis_obat.merek_obat}}"
+								<input type="text" class="form-control" placeholder="{{obatTindakan.stok_obat.jenis_obat?.merek_obat}}"
 								[ngbTypeahead]="searchStokObat" (selectItem)="addSelectedStokObat(obatTindakan, $event.item)"
 								[inputFormatter]="inputObatFormatter" [resultFormatter]="resultObatFormatter">
 							</div>
-							<div *ngIf="obatTindakan.stokObat != null" class="row mb-2">
+							<div *ngIf="obatTindakan.stok_obat != null" class="row mb-2">
 								<div class="col-sm-6 input-group">
 									<div class="input-group-addon">Jumlah</div>
 									<input type="number" class="form-control" [(ngModel)]="obatTindakan.jumlah">
-									<div class="input-group-addon">{{obatTindakan.stokObat.jenis_obat.satuan}}</div>
+									<div class="input-group-addon">{{obatTindakan.stok_obat.jenis_obat?.satuan}}</div>
+								</div>
+								<div class="col-sm-6 input-group">
+									<div class="input-group-addon">
+										Dicover BPJS
+									</div>
+									<input type="text" class="form-control" [value]="obatTindakan.stok_obat.jenis_obat?.dicover_bpjs && 'Ya' || 'Tidak'" disabled>
 								</div>
 							</div>
 							<button type="button" class="btn btn-sm btn-danger mb-3" (click)="removeObatTindakanForm(j, tindakan)">

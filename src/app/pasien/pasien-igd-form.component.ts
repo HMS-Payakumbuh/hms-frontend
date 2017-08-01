@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable }             from 'rxjs/Observable';
 import { NgbTypeaheadConfig }   from '@ng-bootstrap/ng-bootstrap';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
 import { Pasien }    from './pasien';
 import { PasienService }    from './pasien.service';
@@ -49,6 +50,8 @@ export class PasienIGDFormComponent implements OnInit {
     private transaksiService: TransaksiService,
     private rujukanService: RujukanService,
     private config: NgbTypeaheadConfig,
+    private toastyService: ToastyService,
+    private toastyConfig: ToastyConfig
   ) {
     config.editable = false;
   }
@@ -123,7 +126,7 @@ export class PasienIGDFormComponent implements OnInit {
   private createRujukan(id_transaksi: number) {
     this.rujukan.id_transaksi = id_transaksi;
     this.rujukanService.createRujukan(this.rujukan).subscribe(
-      data => this.ngOnInit()
+      data => this.router.navigate(['/poliklinik', 'IGD', id_transaksi])
     );
   }
 
@@ -158,7 +161,7 @@ export class PasienIGDFormComponent implements OnInit {
         if (this.rujukanChecked)
           this.createRujukan(data.transaksi.id);
         else
-          this.ngOnInit()
+          this.router.navigate(['/poliklinik', 'IGD', data.transaksi.id])
       }
     );
   }
@@ -176,7 +179,15 @@ export class PasienIGDFormComponent implements OnInit {
       this.pasienService.updatePasien(this.pasien.id, this.pasien).subscribe(
         data => {
           this.pasien = data;
-          alert('Anda mendapat kode pasien : '+ data.kode_pasien);
+          let toastOptions: ToastOptions = {
+              title: 'Pendaftaran IGD Sukses',
+              msg: 'Anda mendapat kode pasien: ' + data.kode_pasien,
+              showClose: true,
+              timeout: 5000,
+              theme: 'bootstrap'
+          };
+          this.toastyService.success(toastOptions);
+
           if (this.asuransiChecked)
             this.createAsuransi();
           else
@@ -187,6 +198,15 @@ export class PasienIGDFormComponent implements OnInit {
       this.pasienService.createPasien(this.pasien).subscribe(
         data => {
           this.pasien = data.json;
+          let toastOptions: ToastOptions = {
+              title: 'Pendaftaran IGD Sukses',
+              msg: 'Anda mendapat kode pasien: ' + data.json.kode_pasien,
+              showClose: true,
+              timeout: 5000,
+              theme: 'bootstrap'
+          };
+          this.toastyService.success(toastOptions);
+          
           if (this.asuransiChecked)
             this.createAsuransi();
           else

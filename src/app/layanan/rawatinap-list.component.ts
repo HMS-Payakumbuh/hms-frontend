@@ -53,7 +53,7 @@ export class RawatinapListComponent implements OnInit {
 	resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.id;
 
 	inputDokterFormatter = (value : Dokter) => value.tenaga_medis.nama;
-	resultDokterFormatter = (value: Dokter)	=> value.tenaga_medis.nama + ' - ' + value.no_pegawai;
+	resultDokterFormatter = (value: Dokter)	=> value.tenaga_medis.nama + ' - ' + value.spesialis + ' - ' + value.no_pegawai;
 
 	searchNamaPasien = (text$: Observable<string>) =>
 		text$

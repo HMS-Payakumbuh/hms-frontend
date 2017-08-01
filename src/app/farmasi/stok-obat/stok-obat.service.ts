@@ -58,11 +58,11 @@ export class StokObatService {
     	return this.http.post(this.stokObatUrl, body, options ).map((res: Response) => res.json());
 	}
 	
-	getStokObatByJenisObatAndBatch(id_jenis_obat: number, nomor_batch: string, lokasi: number): Observable<StokObat> {
+	getStokObatByJenisObatAndBatch(id_jenis_obat: number, nomor_batch: string, jenis_lokasi: number): Observable<StokObat> {
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('id_jenis_obat', ''+id_jenis_obat);		
 		params.set('nomor_batch', nomor_batch);	
-		params.set('lokasi', ''+lokasi);
+		params.set('jenis_lokasi', ''+jenis_lokasi);
 
 		let requestOptions = new RequestOptions();
 		requestOptions.params = params;

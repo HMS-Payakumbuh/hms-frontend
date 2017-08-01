@@ -76,7 +76,7 @@ export class PemeriksaanICUPasienListComponent implements OnInit {
 		this.PemakaianKamarModalId = id;
 		this.PemakaianKamarModal = Object.assign({}, PemakaianKamarRawatinap);
 		this.pemakaianKamarService.updatePemakaianKamar(this.PemakaianKamarModalId, this.PemakaianKamarModal.no_kamar, this.PemakaianKamarModal.no_tempat_tidur, this.PemakaianKamarModal).subscribe(
-			data => { window.location.reload() }
+			data => { this.ngOnInit() }
 		);
 	}
 
@@ -84,7 +84,7 @@ export class PemeriksaanICUPasienListComponent implements OnInit {
 		this.PemakaianKamarModalId = id;
 		this.PemakaianKamarModal = Object.assign({}, PemakaianKamarRawatinap);
 		this.pemakaianKamarService.destroyPemakaianKamar(id, this.PemakaianKamarModal.no_kamar, this.PemakaianKamarModal.no_tempat_tidur).subscribe(
-			data => { window.location.reload() }
+			data => { this.ngOnInit() }
 		);
 	}
 
