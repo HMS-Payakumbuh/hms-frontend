@@ -186,8 +186,7 @@ export class PasienIGDFormComponent implements OnInit {
     } else {
       this.pasienService.createPasien(this.pasien).subscribe(
         data => {
-          this.pasien = data;
-          alert('Anda mendapat kode pasien : '+ data.kode_pasien);
+          this.pasien = data.json;
           if (this.asuransiChecked)
             this.createAsuransi();
           else

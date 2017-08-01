@@ -66,15 +66,28 @@ export class DaftarAntrianComponent {
     }
     this.antrianService.createAntrianFrontOffice(request).subscribe(
         data => {
+          if (data.error) {
           let toastOptions:ToastOptions = {
+            title: "Pendaftaran Gagal !",
+            msg: "Layanan yang Anda tuju sudah habis.",
+            showClose: true,
+            timeout: 5000,
+            theme: 'bootstrap'
+            };
+
+            this.toastyService.error(toastOptions);
+          } else {
+            let toastOptions:ToastOptions = {
             title: "Pendaftaran Sukses !",
             msg: "Anda mendapat nomor antrian : "+data.kategori_antrian+""+data.no_antrian,
             showClose: true,
             timeout: 5000,
             theme: 'bootstrap'
-        };
+            };
 
-        this.toastyService.success(toastOptions);
+            this.toastyService.success(toastOptions);
+          }
+          
         }
       );
   }
