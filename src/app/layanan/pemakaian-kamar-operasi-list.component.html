@@ -51,7 +51,7 @@
 						</tbody>
 					</table>
 
-                    <div class="pull-left">
+                    <div *ngIf="user == frontOffice" class="pull-left">
 						<button type="button" class="btn btn-info" data-toggle="modal" [attr.data-target]="'#createPemakaianKamarOperasiModal'" (click)="newPemakaianKamarOperasi()">
 							Daftar Operasi Sekarang (Khusus dari IGD)
 						</button>

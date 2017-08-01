@@ -76,6 +76,7 @@ export class PemeriksaanRawatinapComponent implements OnInit {
   allPenyakit: any;
   allAlergi: any[] = [];
   allPerkembanganPasien: any[] = [];
+  allTanggalPerkembangan: any[] = [];
   allRiwayatPenyakit: any;
   allAlergiLama: any;
   pelayananLain: string[] = [];
@@ -84,6 +85,7 @@ export class PemeriksaanRawatinapComponent implements OnInit {
   riwayatEmpty: boolean = false;
   alergiEmpty: boolean = false;
   perkembanganPasienBaru: string;
+  tanggalPerkembanganBaru: string;
   pelayananBaru: string;
   rencana: any = {};
   rujuk: boolean = false;
@@ -222,15 +224,21 @@ export class PemeriksaanRawatinapComponent implements OnInit {
         if (data != null) {
           if (data.tanggal_waktu == this.transaksi.transaksi.waktu_masuk_pasien) {
             this.rekamMedis = data;
-            this.hasilPemeriksaan = JSON.parse(data.hasil_pemeriksaan);
-            this.keluhan = JSON.parse(data.anamnesis).keluhan;
-            if (JSON.parse(data.anamnesis).alergi)
+            if (JSON.parse(data.hasil_pemeriksaan) != null)
+              this.hasilPemeriksaan = JSON.parse(data.hasil_pemeriksaan);
+
+            if (JSON.parse(data.anamnesis) != null) {
+              this.keluhan = JSON.parse(data.anamnesis).keluhan;
               this.allAlergi = JSON.parse(data.anamnesis).alergi.split(',');
-            if (JSON.parse(data.anamnesis).riwayat_penyakit)
               this.allRiwayat = JSON.parse(data.anamnesis).riwayat_penyakit.split(',');
-            if (JSON.parse(data.perkembangan_pasien).perkembangan)
+            }
+
+            if(JSON.parse(data.perkembangan_pasien) != null) {
               this.allPerkembanganPasien = JSON.parse(data.perkembangan_pasien).perkembangan.split(',');
+              this.allTanggalPerkembangan = JSON.parse(data.perkembangan_pasien).tanggal.split(',');
+            }
           }
+          
         }
 
         if (this.rekamMedis == null) {
@@ -417,6 +425,11 @@ export class PemeriksaanRawatinapComponent implements OnInit {
     this.perkembanganPasienBaru = '';
   }
 
+  addTanggalPerkembangan() {
+    this.allTanggalPerkembangan.push(new Date().toISOString().slice(0, 10));
+    this.tanggalPerkembanganBaru = '';
+  }
+
   removeAlergi(i: number) {
     this.allAlergi.splice(i, 1);
   }
@@ -479,9 +492,11 @@ export class PemeriksaanRawatinapComponent implements OnInit {
     };
 
     this.addPerkembanganPasien();
+    this.addTanggalPerkembangan();
 
-    let perkembangan_pasien: any {
-      perkembangan: this.allPerkembanganPasien.toString()
+    let perkembangan_pasien: any = {
+      perkembangan: this.allPerkembanganPasien.toString(),
+      tanggal: this.allTanggalPerkembangan.toString()
     }
 
     if(this.perkiraan_waktu_keluar != null) {

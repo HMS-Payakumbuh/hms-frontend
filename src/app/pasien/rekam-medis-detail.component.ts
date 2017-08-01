@@ -38,9 +38,14 @@ export class RekamMedisDetailComponent implements OnInit {
 	allDiagnosis: any[];
 	allTindakan: any[];
 	hasilPemeriksaan: any;
+	perkembanganPasien: any;
+	perkembangan:any[] = null;
+	tanggalPemeriksaan:any[];
 	anamnesis: any;
 	allRiwayat: any;
 	allAlergi: any;
+	allPerkembangan: any;
+	allTanggalPerkembangan: any;
 	allRiwayatPenyakit: any;
 	allResep: any;
 
@@ -61,6 +66,9 @@ export class RekamMedisDetailComponent implements OnInit {
 				if (data) {
 					this.pasien = data.pasien;
 					this.hasilPemeriksaan = JSON.parse(data.hasil_pemeriksaan);
+					this.perkembanganPasien = JSON.parse(data.perkembangan_pasien);
+					this.perkembangan = this.perkembanganPasien.perkembangan.split(',');
+					this.tanggalPemeriksaan = this.perkembanganPasien.tanggal.split(',');
 					this.anamnesis = JSON.parse(data.anamnesis);
 					this.tanggal = data.tanggal_waktu;
 					this.dokter = data.tenaga_medis;
@@ -89,12 +97,43 @@ export class RekamMedisDetailComponent implements OnInit {
 					this.rekamMedisService.getAllRekamMedisOfPasien(this.pasien.id)
 						.subscribe(allRekamMedis => {
 							let allAnamnesis: any[] = [];
+							let allPerkembangan: any[] = [];
+
 							for (let rekamMedis of allRekamMedis) {
 								let anamnesis: any = JSON.parse(rekamMedis.anamnesis);
+								let perkembangan: any = JSON.parse(rekamMedis.perkembangan_pasien)
 								allAnamnesis.push(anamnesis);
+								allPerkembangan.push(perkembangan);
 							}
 							let allAlergi: any[] = [];
 							let allRiwayat: any[] = [];
+							let allPerkembanganPasien: any[] = [];
+							let allTanggalPerkembangan: any[] = [];
+
+							for (let perkembangan of allPerkembangan) {
+								if (perkembangan) {
+									if (_.includes(perkembangan.perkembangan, ',')) {
+										let morePerkembangan: any[] = perkembangan.perkembangan.split(',');
+										allPerkembanganPasien = allPerkembanganPasien.concat(morePerkembangan);
+									} else if (perkembangan.perkembangan != '') {
+										allPerkembanganPasien.push(perkembangan.perkembangan_pasien);
+									}
+
+									if (_.includes(perkembangan.tanggal, ',')) {
+										let moreTanggalPerkembangan: any[] = perkembangan.tanggal.split(',');
+										allTanggalPerkembangan = allTanggalPerkembangan.concat(moreTanggalPerkembangan);
+									} else if (perkembangan.tanggal != '') {
+										allTanggalPerkembangan.push(perkembangan.tanggal);
+									}
+								}
+							}
+							this.allPerkembangan = _.uniq(allPerkembanganPasien, true);
+							this.allTanggalPerkembangan =  _.uniq(allTanggalPerkembangan, true);
+							if (_.isEmpty(this.allPerkembangan))
+								this.allPerkembangan = ['Tidak ada perkembangan pasien yang tercatat.'];
+							if (_.isEmpty(this.allTanggalPerkembangan))
+								this.allTanggalPerkembangan = ['Tidak ada perkembangan pasien yang tercatat.'];
+
 							for (let anamnesis of allAnamnesis) {
 								if (anamnesis) {
 									if (_.includes(anamnesis.alergi, ',')) {
