@@ -46,9 +46,9 @@
 						<i class="fa" aria-hidden="true"></i> Tindakan Operasi
 					</h4>
 				</div>
-	
+
 				<div class="card-block">
-					 
+
 
 							<div class="form-group">
 								<label for="inputTindakan">Masukkan tindakan yang dilakukan (ICD-9-CM)</label>
@@ -87,6 +87,10 @@
 								</tbody>
 							</table>
 
+							<button type="button" class="btn btn-sm btn-danger" (click)="selesaiOperasi(pemakaianKamar.id, pemakaianKamar)">
+								Selesaikan Operasi
+							</button>
+
 					</div>
 			<div class="pull-right">
 				<button type="button" class="btn btn-warning" (click)="goBack()">Kembali</button>
@@ -94,7 +98,7 @@
 			</div>
 		</div>
 
-		
+
 
 
 		<!-- <div class="modal fade" tabindex="-1" role="dialog" id="rujukanModal" aria-hidden="true">

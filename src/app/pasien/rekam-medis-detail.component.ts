@@ -4,7 +4,7 @@ import { ActivatedRoute, Params }	from '@angular/router';
 import { Location }					from '@angular/common';
 
 import * as _ from "lodash";
-import { Pasien }					from './pasien';		
+import { Pasien }					from './pasien';
 import { PasienService }			from './pasien.service';
 import { RekamMedisService }		from './rekam-medis.service';
 import { DiagnosisService }			from '../layanan/diagnosis.service';
@@ -66,9 +66,11 @@ export class RekamMedisDetailComponent implements OnInit {
 				if (data) {
 					this.pasien = data.pasien;
 					this.hasilPemeriksaan = JSON.parse(data.hasil_pemeriksaan);
-					this.perkembanganPasien = JSON.parse(data.perkembangan_pasien);
-					this.perkembangan = this.perkembanganPasien.perkembangan.split(',');
-					this.tanggalPemeriksaan = this.perkembanganPasien.tanggal.split(',');
+          if (JSON.parse(data.perkembangan_pasien) != null) {
+            this.perkembanganPasien = JSON.parse(data.perkembangan_pasien);
+            this.perkembangan = this.perkembanganPasien.perkembangan.split(',');
+            this.tanggalPemeriksaan = this.perkembanganPasien.tanggal.split(',');
+          }
 					this.anamnesis = JSON.parse(data.anamnesis);
 					this.tanggal = data.tanggal_waktu;
 					this.dokter = data.tenaga_medis;
@@ -80,7 +82,7 @@ export class RekamMedisDetailComponent implements OnInit {
 					if (this.noPrevEntry !== -1)
 						this.first = false;
 					else
-						this.first = true;	
+						this.first = true;
 
 					this.diagnosisService.getDiagnosisOfRekamMedis(data.id_pasien, data.tanggal_waktu)
 						.subscribe(data => {
@@ -93,7 +95,7 @@ export class RekamMedisDetailComponent implements OnInit {
 					this.resepService.getResepOfRekamMedis(data.id_pasien, data.tanggal_waktu)
 						.subscribe(data => {
 							this.allResep = data;
-						});	
+						});
 					this.rekamMedisService.getAllRekamMedisOfPasien(this.pasien.id)
 						.subscribe(allRekamMedis => {
 							let allAnamnesis: any[] = [];
@@ -157,9 +159,9 @@ export class RekamMedisDetailComponent implements OnInit {
 								this.allAlergi = ['Tidak ada alergi yang tercatat.'];
 							if (_.isEmpty(this.allRiwayatPenyakit))
 								this.allRiwayatPenyakit = ['Tidak ada penyakit yang tercatat.'];
-						});		
+						});
 				}
-			});	
+			});
 	}
 
 	loadRiwayat(): void {
@@ -173,7 +175,7 @@ export class RekamMedisDetailComponent implements OnInit {
 					json.allDiagnosis = allDiagnosis;
 					this.allRiwayat.push(json);
 				}
-			});	
+			});
 	}
 
 	goBack(): void {
