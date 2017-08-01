@@ -197,10 +197,10 @@ export class PasienIGDFormComponent implements OnInit {
     } else {
       this.pasienService.createPasien(this.pasien).subscribe(
         data => {
-          this.pasien = data;
+          this.pasien = data.json;
           let toastOptions: ToastOptions = {
               title: 'Pendaftaran IGD Sukses',
-              msg: 'Anda mendapat kode pasien: ' + data.kode_pasien,
+              msg: 'Anda mendapat kode pasien: ' + data.json.kode_pasien,
               showClose: true,
               timeout: 5000,
               theme: 'bootstrap'
