@@ -28,6 +28,14 @@ export class HomeComponent implements OnInit {
         this.router.navigate(['/perawat-dashboard']);
         break;
       }
+      case 'stafApotek': {
+        this.router.navigate(['/stok-obat']);
+        break;
+      }
+      case 'gudangUtama': {
+        this.router.navigate(['/stok-obat']);
+        break;
+      }
       default: {
         this.router.navigate(['/pendaftaran']);
         break;

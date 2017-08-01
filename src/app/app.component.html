@@ -95,14 +95,14 @@
 						<a routerLink="/pembayaran" class="list-group-item">Data Pembayaran</a>
 						<a routerLink="/klaim" class="list-group-item">Data Klaim</a>
 					</div>
-					<a *ngIf="user.role == 'stafApotek' || user.role == 'admin'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#FarmasiSubMenu">Farmasi</a>
+					<a *ngIf="user.role == 'stafApotek' || user.role == 'admin' || user.role == 'gudangUtama'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#FarmasiSubMenu">Farmasi</a>
 					<div id="FarmasiSubMenu" class="collapse">
-						<a routerLink="/lokasi-obat" class="list-group-item">Lokasi Obat</a>
-						<a routerLink="/jenis-obat" class="list-group-item">Merek Obat</a>
-						<a routerLink="/stok-obat" class="list-group-item">Stok Obat</a>
-						<a routerLink="/obat-masuk" class="list-group-item">Obat Masuk</a>
-						<a routerLink="/obat-tebus" class="list-group-item">Obat Tebus</a>
-						<a routerLink="/obat-eceran" class="list-group-item">Obat Eceran</a>
+						<a *ngIf="user.role == 'admin' || user.role == 'gudangUtama'" routerLink="/lokasi-obat" class="list-group-item">Lokasi Obat</a>
+						<a *ngIf="user.role == 'admin' || user.role == 'gudangUtama'" routerLink="/jenis-obat" class="list-group-item">Merek Obat</a>
+						<a *ngIf="user.role == 'stafApotek' || user.role == 'admin' || user.role == 'gudangUtama'" routerLink="/stok-obat" class="list-group-item">Stok Obat</a>
+						<a *ngIf="user.role == 'admin' || user.role == 'gudangUtama'" routerLink="/obat-masuk" class="list-group-item">Obat Masuk</a>
+						<a *ngIf="user.role == 'stafApotek' || user.role == 'admin'" routerLink="/obat-tebus" class="list-group-item">Obat Tebus</a>
+						<a *ngIf="user.role == 'stafApotek' || user.role == 'admin'" routerLink="/obat-eceran" class="list-group-item">Obat Eceran</a>
 						<a routerLink="/obat-pindah" class="list-group-item">Obat Pindah</a>
 						<a routerLink="/obat-rusak" class="list-group-item">Obat Rusak/Hilang</a>
 						<a routerLink="/stock-opname" class="list-group-item">Stock Opname</a>
