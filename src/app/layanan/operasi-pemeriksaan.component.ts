@@ -71,24 +71,26 @@ import { ObatMasukService }		  from '../farmasi/obat-masuk/obat-masuk.service';
 
 export class PemeriksaanOperasiComponent implements OnInit {
     transaksi: any = null;
-    rekamMedis: RekamMedis = null;
-    hasilPemeriksaan: HasilPemeriksaan = new HasilPemeriksaan();
-    keluhan: string;
-    allRiwayat: any[] = [];
-    allRiwayatLama: any;
-    anamnesis: any;
-    allPenyakit: any;
-    allAlergi: any[] = [];
-    allRiwayatPenyakit: any;
-    allAlergiLama: any;
-    pelayananLain: string[] = [];
-    riwayatBaru: string;
-    alergiBaru: string;
-    pelayananBaru: string;
-    rencana: any = {};
-    rujuk: boolean = false;
-    firstRekamMedis: boolean = false;
-    namaPoliRujuk: string = null;
+  rekamMedis: RekamMedis = null;
+  hasilPemeriksaan: HasilPemeriksaan = new HasilPemeriksaan();
+  keluhan: string;
+  allRiwayat: any[] = [];
+  allRiwayatLama: any;
+  anamnesis: any;
+  allPenyakit: any;
+  allAlergi: any[] = [];
+  allRiwayatPenyakit: any;
+  allAlergiLama: any;
+  pelayananLain: string[] = [];
+  riwayatBaru: string;
+  alergiBaru: string;
+  riwayatEmpty: boolean = false;
+  alergiEmpty: boolean = false;
+  pelayananBaru: string;
+  rencana: any = {};
+  rujuk: boolean = false;
+  firstRekamMedis: boolean = false;
+  namaPoliRujuk: string = null;
 
     allDiagnosisReference: DiagnosisReference[];
     allTindakanReference: TindakanReference[];
@@ -230,7 +232,21 @@ export class PemeriksaanOperasiComponent implements OnInit {
         if (data != null) {
           if (data.tanggal_waktu == this.transaksi.transaksi.waktu_masuk_pasien) {
             this.rekamMedis = data;
+            if (JSON.parse(data.hasil_pemeriksaan) != null)
+              this.hasilPemeriksaan = JSON.parse(data.hasil_pemeriksaan);
+
+            if (JSON.parse(data.anamnesis) != null) {
+              this.keluhan = JSON.parse(data.anamnesis).keluhan;
+              this.allAlergi = JSON.parse(data.anamnesis).alergi.split(',');
+              this.allRiwayat = JSON.parse(data.anamnesis).riwayat_penyakit.split(',');
+            }
+
+            if(JSON.parse(data.perkembangan_pasien) != null) {
+              this.allPerkembanganPasien = JSON.parse(data.perkembangan_pasien).perkembangan.split(',');
+              this.allTanggalPerkembangan = JSON.parse(data.perkembangan_pasien).tanggal.split(',');
+            }
           }
+          
         }
 
         if (this.rekamMedis == null) {
@@ -277,11 +293,15 @@ export class PemeriksaanOperasiComponent implements OnInit {
                 }
               }
               this.allAlergiLama = _.uniq(allAlergi, true);
-              if (_.isEmpty(this.allAlergiLama))
+              if (_.isEmpty(this.allAlergiLama)) {
                 this.allAlergiLama = ['Tidak ada alergi yang tercatat'];
+                this.alergiEmpty = true;
+              }
               this.allRiwayatPenyakit =  _.uniq(allRiwayat, true);
-              if (_.isEmpty(this.allRiwayatPenyakit))
+              if (_.isEmpty(this.allRiwayatPenyakit)) {
                 this.allRiwayatPenyakit = ['Tidak ada penyakit yang tercatat'];
+                this.riwayatEmpty = true;
+              } 
             });
   }
 

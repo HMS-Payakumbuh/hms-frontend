@@ -158,6 +158,27 @@
 					</table>
 				</div>
 			</div>
+			<div class="card mb-3" *ngIf="perkembangan != null">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-clipboard" aria-hidden="true"></i> Perkembangan Pasien Rawat Inap / ICU
+					</h4>
+				</div>
+				<div class="card-block">
+					<table class="table">
+						<thead>
+							<th><b>Tanggal</b></th>
+							<th><b>Perkembangan</b></th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let perkembangan of perkembangan, let i = index;">
+								<td>{{tanggalPemeriksaan[i]}}</td>
+								<td>{{perkembangan}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 			<div class="card mb-3">
 				<div class="card-header card-info">
 					<h4>

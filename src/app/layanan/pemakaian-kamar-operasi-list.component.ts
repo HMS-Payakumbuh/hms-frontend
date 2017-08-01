@@ -67,6 +67,7 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 	transaksi2 : any = null;
 	poliklinik: Poliklinik;
 	addForm: FormGroup;
+	user : any;
 
 	tindakanOperasi : TindakanOperasi[];
 
@@ -104,11 +105,12 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
+		this.user = JSON.parse(localStorage.getItem('currentUser'));
+
 		this.pemakaianKamarOperasiService.getAllPemakaianKamarOperasiNow().subscribe(
      		data => { this.allPemakaianKamarOperasi = data }
     	);
 		
-
 		this.kamarOperasiService.getAllKamarOperasi().subscribe(
 			data =>  { this.allKamarOperasi = data }
 		);
