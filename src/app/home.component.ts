@@ -28,6 +28,10 @@ export class HomeComponent implements OnInit {
         this.router.navigate(['/perawat-dashboard']);
         break;
       }
+      case 'kasir': {
+        this.router.navigate(['/transaksi']);
+        break;
+      }
       default: {
         this.router.navigate(['/pendaftaran']);
         break;

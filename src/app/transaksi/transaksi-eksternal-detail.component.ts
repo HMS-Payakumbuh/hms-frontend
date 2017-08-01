@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/switchMap';
 import * as _ from "lodash";
 import { Component, Input, OnInit }	from '@angular/core';
-import { ActivatedRoute, Params }	from '@angular/router';
+import { ActivatedRoute, Params, Router }	from '@angular/router';
 import { Location }					from '@angular/common';
 
 import { PembayaranService }		from '../pembayaran/pembayaran.service';
@@ -45,7 +45,8 @@ export class TransaksiEksternalDetailComponent implements OnInit {
 		private transaksiEksternalService: TransaksiEksternalService,
 		private pembayaranService: PembayaranService,
 		private route: ActivatedRoute,
-		private location: Location
+		private location: Location,
+		private router: Router,
 	) {}
 
 	ngOnInit(): void {
@@ -93,7 +94,7 @@ export class TransaksiEksternalDetailComponent implements OnInit {
 	}
 
 	goBack(): void {
-		this.location.back();
+		this.router.navigateByUrl('/histori-transaksi');
 	}
 
 	initObatTebus(value): void {

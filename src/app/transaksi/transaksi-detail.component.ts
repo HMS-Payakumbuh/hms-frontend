@@ -20,6 +20,7 @@ export class TransaksiDetailComponent implements OnInit {
 	response: any;
 	transaksi: any;
 	listOfObatTebus: any[] = [];
+	listObat: any[] = [];
 	listOfKamarRawatInap: any[] = [];
 	asuransi: Asuransi;
 	allAsuransi: Asuransi[];
@@ -64,6 +65,7 @@ export class TransaksiDetailComponent implements OnInit {
 		this.no_pembayaran = '';
 
 		this.listOfObatTebus = [];
+		this.listObat = [];
 		this.listOfKamarRawatInap = [];
 
 		this.listOfTindakan = [];
@@ -98,6 +100,9 @@ export class TransaksiDetailComponent implements OnInit {
 					this.initTotalHarga();
 				}
 
+				if (this.transaksi.obat_tebus.length > 0) {
+					this.initObatTebus(this.transaksi.obat_tebus);
+				}
 
 				if (this.transaksi.pembayaran.length > 0) {
 					for (let item of this.transaksi.pembayaran) {
@@ -124,7 +129,7 @@ export class TransaksiDetailComponent implements OnInit {
 		for (let obatTebus of value) {
 			for (let item of obatTebus.obat_tebus_item) {
 				console.log(item);
-				this.listOfObatTebus.push(item);
+				this.listObat.push(item);
 			}
 		}
 	}
@@ -146,7 +151,7 @@ export class TransaksiDetailComponent implements OnInit {
 			
 			if (this.transaksi.no_sep === null) {
 				if (item.id_pembayaran === null) {
-					this.harga_total += parseInt(item.harga);
+					this.harga_total += parseInt(item.kamar_rawatinap.harga_per_hari) * this.howLong(item.waktu_masuk, item.waktu_keluar);
 				}
 			}
 		}
@@ -227,17 +232,18 @@ export class TransaksiDetailComponent implements OnInit {
 
 	updateCheckedKamarRawatInap(value): void {
 		let html = <HTMLInputElement>document.getElementById('kamarRawatInap' + value.id);
+		let harga = parseInt(value.kamar_rawatinap.harga_per_hari) * this.howLong(value.waktu_masuk, value.waktu_keluar);
 		if (html.checked == true) {
 			this.listOfKamarRawatInapId.push(value.id);
 			this.printListOfKamarRawatInap.push(value);
-			this.total_bayar = this.total_bayar + parseInt(value.harga);
+			this.total_bayar = this.total_bayar + harga;
 		}
 		else if (html.checked == false) {
 			let index1 = this.listOfKamarRawatInapId.indexOf(value.id);
 			let index2 = this.printListOfKamarRawatInap.indexOf(value);
 			this.listOfKamarRawatInapId.splice(index1, 1);
 			this.printListOfKamarRawatInap.splice(index2, 1);
-			this.total_bayar = this.total_bayar - parseInt(value.harga);
+			this.total_bayar = this.total_bayar - harga;
 		}
 		console.log(this.listOfKamarRawatInapId);
 		console.log(this.printListOfKamarRawatInap);
@@ -280,44 +286,70 @@ export class TransaksiDetailComponent implements OnInit {
 	}
 
 	close(): void {
-		let total_harga: number = 0;
-		let listOfTindakan: number[] = [];
-		let listOfObatTebusId: number[] = [];
-		let listOfKamarRawatInapId: number[]= [];
+		let tutup = true;
+		let bayar = false;
+		let total_harga = 0;
+		let listOfTindakanId: any[] = [];
+		let listOfKamarRawatInapId: any[] = [];
+		let listOfObatId: any[] = [];
 		for (let i of this.transaksi.tindakan) {
 			if (i.id_pembayaran === null) {
-				total_harga += parseInt(i.harga);
-				listOfTindakan.push(i.id);
+				if (this.transaksi.no_sep !== null) {
+					listOfTindakanId.push(i.id);
+					bayar = true;
+					total_harga += parseInt(i.harga);
+				}
+				else {
+					tutup = false;
+				}
 			}
 		}
 
-		for (let i of this.listOfObatTebus) {
+		for (let i of this.listObat) {
 			if (i.id_pembayaran === null) {
-				total_harga += parseInt(i.harga_jual_realisasi) * parseInt(i.jumlah);
-				listOfObatTebusId.push(i.id);
+				if (this.transaksi.no_sep !== null && i.jenis_obat.dicover_bpjs === true) {
+					listOfObatId.push(i.id);
+					bayar = true;
+					total_harga += parseInt(i.jumlah) * parseInt(i.harga_jual_realisasi);
+				}
+				else {
+					tutup = false;
+				}
 			}
 		}
 
 		for (let i of this.listOfKamarRawatInap) {
 			if (i.id_pembayaran === null) {
-				total_harga += parseInt(i.harga);
-				listOfKamarRawatInapId.push(i.id);
+				if (this.transaksi.no_sep !== null) {
+					listOfTindakanId.push(i.id);
+					bayar = true;
+					total_harga += parseInt(i.kamar_rawatinap.harga_per_hari) * this.howLong(i.waktu_masuk, i.waktu_keluar);
+				}
+				else {
+					tutup = false;
+				}
 			}
 		}
 
-		this.createPembayaran(total_harga, this.transaksi.asuransi_pasien, false, listOfTindakan, listOfObatTebusId, null, listOfKamarRawatInapId);
-		
-		let payload: any = {
-			status: 'closed'
-		};
-		let transaksi: any = {
-			transaksi: payload
-		};
+		if (tutup) {
+			if (bayar) {
+				this.createPembayaran(total_harga, 'bpjs', false, listOfTindakanId, listOfObatId, null, listOfKamarRawatInapId);
+			}
+			let payload: any = {
+				status: 'closed'
+			};
+			let transaksi: any = {
+				transaksi: payload
+			};
 
-		this.transaksiService.updateTransaksi(transaksi, this.transaksi.id)
-		.subscribe(data => {
-			console.log(data);
-		});
+			this.transaksiService.updateTransaksi(transaksi, this.transaksi.id)
+			.subscribe(data => {
+				console.log(data);
+			});
+		}
+		else {
+			alert("Masih ada komponen yang belum dibayar");
+		}
 	}
 
 	private createAsuransi(id: number) {
