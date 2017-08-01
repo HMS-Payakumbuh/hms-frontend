@@ -1,6 +1,7 @@
 import { Component, Input, ChangeDetectorRef } from '@angular/core';
 import { Observable } 	from 'rxjs/Observable';
 import { Location }					from '@angular/common';
+import { Router }                     from '@angular/router';
 
 import { ObatEceran } from './obat-eceran';
 import { ObatEceranItem } from './obat-eceran-item';
@@ -39,7 +40,8 @@ export class ObatEceranFormComponent {
 		private changeDetectorRef: ChangeDetectorRef,		
 		private stokObatService: StokObatService,	
 		private obatEceranService: ObatEceranService,
-		private location: Location
+		private location: Location,
+    	private router: Router
 	) {}
 
 	ngOnInit(): void {				

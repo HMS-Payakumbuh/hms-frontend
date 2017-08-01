@@ -20,13 +20,11 @@ export class TransaksiDetailComponent implements OnInit {
 	response: any;
 	transaksi: any;
 	listOfObatTebus: any[] = [];
-	listOfObatEceran: any[] = [];
 	listOfKamarRawatInap: any[] = [];
 	asuransi: Asuransi;
 	allAsuransi: Asuransi[];
 	listOfTindakan: number[] = [];
 	listOfObatTebusId: number[] = [];
-	listOfObatEceranId: number[] = [];
 	listOfKamarRawatInapId: number[] = [];
 	allMetode = [];
 	nama_pasien: any;
@@ -37,6 +35,9 @@ export class TransaksiDetailComponent implements OnInit {
 	perlu_bayar_tambahan: boolean = true;
 	bayar_tambahan: boolean = false;
 	total_bayar: number = 0;
+	transaksi_obat: boolean;
+	transaksi_eksternal: boolean;
+	no_pembayaran: string = '';
 
 	printListOfTindakan: any[] = [];
 	printListOfKamarRawatInap: any[] = [];
@@ -50,7 +51,8 @@ export class TransaksiDetailComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-
+		this.transaksi_obat = false;
+		this.transaksi_eksternal = false;
 		this.harga_tambahan = 0;
 		this.harga_total = 0;
 		this.perlu_bayar_tambahan = true;
@@ -59,14 +61,13 @@ export class TransaksiDetailComponent implements OnInit {
 		this.jender_pasien = 0;
 		this.umur_pasien = 0;
 		this.bayar_tambahan = false;
+		this.no_pembayaran = '';
 
 		this.listOfObatTebus = [];
-		this.listOfObatEceran = [];
 		this.listOfKamarRawatInap = [];
 
 		this.listOfTindakan = [];
 		this.listOfObatTebusId = [];
-		this.listOfObatEceranId = [];
 		this.listOfKamarRawatInapId = [];
 
 		this.printListOfTindakan = [];
@@ -77,7 +78,6 @@ export class TransaksiDetailComponent implements OnInit {
 			.subscribe(data => {
 				this.response = data;
 				this.transaksi = this.response.transaksi;
-				this.harga_total = this.transaksi.harga_total;
 				if (this.transaksi.pasien !== null) {
 					this.nama_pasien = this.transaksi.pasien.nama_pasien;
 					this.jender_pasien = this.transaksi.pasien.jender;
@@ -91,8 +91,6 @@ export class TransaksiDetailComponent implements OnInit {
 					if (this.transaksi.obat_tebus.length > 0) {
 						this.nama_pasien = this.transaksi.obat_tebus[0].resep.nama;
 						this.umur_pasien = this.transaksi.obat_tebus[0].resep.umur;
-					} else {
-						this.nama_pasien = this.transaksi.obat_eceran[0].nama_pembeli;
 					}
 				}
 
@@ -122,14 +120,20 @@ export class TransaksiDetailComponent implements OnInit {
 		this.location.back();
 	}
 
+	initObatTebus(value): void {
+		for (let obatTebus of value) {
+			for (let item of obatTebus.obat_tebus_item) {
+				console.log(item);
+				this.listOfObatTebus.push(item);
+			}
+		}
+	}
+
 	initTotalHarga(): void {
 		for (let item of this.transaksi.tindakan) {
-			if (this.transaksi.no_sep !== null) {
-				this.harga_total -= item.harga;
-			}
-			else {
-				if (item.id_pembayaran !== null) {
-					this.harga_total -= item.harga;
+			if (this.transaksi.no_sep === null) {
+				if (item.id_pembayaran === null) {
+					this.harga_total += parseInt(item.harga);
 				}
 			}
 		}
@@ -141,12 +145,9 @@ export class TransaksiDetailComponent implements OnInit {
 				console.log(item);
 				this.listOfKamarRawatInap.push(item);
 				
-				if (this.transaksi.no_sep !== null) {
-					this.harga_total -= item.harga;
-				} 
-				else {
-					if (item.id_pembayaran !== null) {
-						this.harga_total -= item.harga;
+				if (this.transaksi.no_sep === null) {
+					if (item.id_pembayaran === null) {
+						this.harga_total += parseInt(item.harga);
 					}
 				}
 			}
@@ -278,7 +279,6 @@ export class TransaksiDetailComponent implements OnInit {
 		let total_harga: number = 0;
 		let listOfTindakan: number[] = [];
 		let listOfObatTebusId: number[] = [];
-		let listOfObatEceranId: number[] = [];
 		let listOfKamarRawatInapId: number[]= [];
 		for (let i of this.transaksi.tindakan) {
 			if (i.id_pembayaran === null) {
@@ -294,13 +294,6 @@ export class TransaksiDetailComponent implements OnInit {
 			}
 		}
 
-		for (let i of this.listOfObatEceran) {
-			if (i.id_pembayaran === null) {
-				total_harga += parseInt(i.harga_jual_realisasi) * parseInt(i.jumlah);
-				listOfObatEceranId.push(i.id);
-			}
-		}
-
 		for (let i of this.listOfKamarRawatInap) {
 			if (i.id_pembayaran === null) {
 				total_harga += parseInt(i.harga);
@@ -308,7 +301,7 @@ export class TransaksiDetailComponent implements OnInit {
 			}
 		}
 
-		this.createPembayaran(total_harga, this.transaksi.asuransi_pasien, false, listOfTindakan, listOfObatTebusId, listOfObatEceranId, listOfKamarRawatInapId);
+		this.createPembayaran(total_harga, this.transaksi.asuransi_pasien, false, listOfTindakan, listOfObatTebusId, null, listOfKamarRawatInapId);
 		
 		let payload: any = {
 			status: 'closed'
@@ -340,10 +333,6 @@ export class TransaksiDetailComponent implements OnInit {
 			bayar = true;
 		}
 
-		if (this.listOfObatEceranId.length > 0) {
-			bayar = true;
-		}
-
 		if (this.listOfKamarRawatInapId.length > 0) {
 			bayar = true;
 		}
@@ -356,17 +345,17 @@ export class TransaksiDetailComponent implements OnInit {
 			if (metode != 'tunai') {
 				this.createAsuransi(this.transaksi.id_pasien);
 			}
-
+			let response: any = null;
 			if (this.bayar_tambahan == true) {
-				this.createPembayaran(this.total_bayar - this.harga_tambahan, metode.toLowerCase(), false, this.listOfTindakan, this.listOfObatTebusId, this.listOfObatEceranId, this.listOfKamarRawatInapId);
+				response = this.createPembayaran(this.total_bayar - this.harga_tambahan, metode.toLowerCase(), false, this.listOfTindakan, this.listOfObatTebusId, this.listOfKamarRawatInapId);
 			}
 			else {
-				this.createPembayaran(this.total_bayar, metode.toLowerCase(), false, this.listOfTindakan, this.listOfObatTebusId, this.listOfObatEceranId, this.listOfKamarRawatInapId);
+				response = this.createPembayaran(this.total_bayar, metode.toLowerCase(), false, this.listOfTindakan, this.listOfObatTebusId, this.listOfKamarRawatInapId);
 			}
+			this.print();
 		}
 
 		this.ngOnInit();
-		this.print();
 		console.log(metode.toLowerCase());
 	}
 
@@ -393,10 +382,14 @@ export class TransaksiDetailComponent implements OnInit {
 		};
 
 		console.log(request);
+		let response: any = null;
 		this.pembayaranService.createPembayaran(request)
 		.subscribe(data => {
 			console.log(data);
+			response = data;
 		});
+
+		return response;
 	}
 
 	print(): void {
