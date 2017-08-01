@@ -13,14 +13,14 @@
 							<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal Operasi">
 						</div>
 						<div class="col-md-6 pull-right">
-							<div class="input-group">							
+							<div class="input-group">
 							    <input type="text" class="form-control" [(ngModel)]="param" placeholder="No.Kamar/Nama Pasien/Nama Dokter"/>
 							</div>
 						</div>
 					</div>
 
 					<table class="table">
-                        
+
 						<thead>
 							<th>Nama Kamar</th>
                             <th>Nama Pasien</th>
@@ -30,7 +30,7 @@
 							<th></th>
 							<tr>
 						</thead>
-						
+
 						<tbody *ngFor="let kamaroperasi of allPemakaianKamarOperasi | filterWaktuKeluar: selectedDate">
 							<tr>
 								<td>{{kamaroperasi?.no_kamar}}</td>
@@ -57,7 +57,7 @@
 						</button>
 					</div>
 
-					
+
 					<div class="modal fade" tabindex="-1" role="dialog" id="createPemakaianKamarOperasiModal" aria-hidden="true" *ngIf="pemakaianKamarOperasiModal != null">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
@@ -72,9 +72,9 @@
 							<div class="modal-body">
 								<div class="form-group">
 									<label for="id_transaksi">Nama Pasien</label>
-									<input type="text" class="form-control" id="nama_pasien" required required [ngbTypeahead]="searchNamaPasien" [inputFormatter]="inputPasienFormatter" [resultFormatter]="resultPasienFormatter" (selectItem)="addPasien($event.item)" [(ngModel)]="pemakaianKamarOperasiModal.nama_pasien" name="nama_pasien">                   
+									<input type="text" class="form-control" id="nama_pasien" required required [ngbTypeahead]="searchNamaPasien" [inputFormatter]="inputPasienFormatter" [resultFormatter]="resultPasienFormatter" (selectItem)="addPasien($event.item)" [(ngModel)]="pemakaianKamarOperasiModal.nama_pasien" name="nama_pasien">
 								</div>
-								
+
 								<div class="form-group">
 									<label for="nama_pasien">Nama Kamar</label>
 									<select class="form-control" id="no_kamar" [(ngModel)]="pemakaianKamarOperasiModal.no_kamar">
@@ -83,22 +83,22 @@
 										</option>
 									</select>
 								</div>
-								
+
 								<div class="form-group">
 									<label for="nama_pasien">Nama Dokter Operasi</label>
 									<select class="form-control" id="no_pegawai" [(ngModel)]="no_pegawai"  multiple="multiple" (ngModelChange)="getTenagaMedis()">
 										<option *ngFor="let tenagaMedis of allTenagaMedis" [value]="tenagaMedis.no_pegawai">
-											{{tenagaMedis.nama}}
+											{{tenagaMedis.tenaga_medis.nama}} - {{tenagaMedis.spesialis}}
 										</option>
 									</select>
 								</div>
-								
+
 								<div class="form-group">
 									<label for="inputTindakan">Masukkan tindakan yang dilakukan (ICD-9-CM)</label>
 									<input [disabled]= "isTindakanAlreadySelected()" id="inputTindakan" class="form-control" [ngbTypeahead]="searchTindakan" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addSelectedTindakan($event.item)">
 								</div>
 
-								
+
 							</div>
 
 							<div class="modal-footer">
@@ -126,7 +126,7 @@
 									<label for="id_transaksi">Nama Pasien</label>
 									<span class="form-control" id="nama_pasien" required name="nama_pasien">
 										<b>{{pemakaianKamarOperasiModal.nama_pasien}}</b>
-									</span>                  
+									</span>
 								</div>
 
 								<div class="form-group">
@@ -135,14 +135,14 @@
 										<b>{{pemakaianKamarOperasiModal.id_transaksi}}</b>
 									</span>
 								</div>
-								
+
 								<div class="form-group">
 									<label for="nama_pasien">Nama Kamar</label>
 									<span class="form-control" id="no_kamar">
 										<b>{{pemakaianKamarOperasiModal.no_kamar}}</b>
 									</span>
 								</div>
-								
+
 								<div class="form-group">
 									<label for="nama_pasien">Tim Dokter Operasi</label>
 									<span class="form-control" id="no_kamar">
@@ -152,7 +152,7 @@
 										</span>
 									</span>
 								</div>
-								
+
 								<div class="form-group">
 									<label for="inputTindakan">Nama Tindakan (ICD-9-CM)</label>
 									<span class="form-control" id="inputTindakan">
@@ -161,14 +161,14 @@
 								</div>
 
 								<div class="form-group">
-									<label for="waktu_masuk">Waktu Masuk</label>           
+									<label for="waktu_masuk">Waktu Masuk</label>
 									<span class="form-control" id="waktu_masuk" name="waktu_masuk">
 										<b>{{pemakaianKamarOperasiModal.waktu_masuk | date:'d MMM y H:mm'}}</b>
 									</span>
 								</div>
 
 								<div class="form-group">
-									<label for="waktu_keluar">Waktu Keluar</label>           
+									<label for="waktu_keluar">Waktu Keluar</label>
 									<span class="form-control" id="waktu_keluar" name="waktu_keluar">
 										<b>{{pemakaianKamarOperasiModal.waktu_keluar | date:'d MMM y H:mm'}}</b>
 									</span>
@@ -183,7 +183,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 				</div>
 			</div>
 		</div>

@@ -64,7 +64,7 @@ export class BookingRawatinapComponent implements OnInit {
 
 
 	inputPasienFormatter = (value : Pasien) => value.nama_pasien;
-	resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.id;
+	resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.kode_pasien;
 
 	inputDokterFormatter = (value : Dokter) => value.tenaga_medis.nama;
 	resultDokterFormatter = (value: Dokter)	=> value.tenaga_medis.nama + ' - ' + value.spesialis + ' - ' + value.no_pegawai;

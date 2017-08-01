@@ -50,7 +50,7 @@ export class ICUListComponent implements OnInit {
 	rawatinap: Rawatinap;
 	
 	inputPasienFormatter = (value : Pasien) => value.nama_pasien;
-	resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.id;
+	resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.kode_pasien;
 
 	inputDokterFormatter = (value : Dokter) => value.tenaga_medis.nama;
 	resultDokterFormatter = (value: Dokter)	=> value.tenaga_medis.nama + ' - ' + value.spesialis + ' - ' + value.no_pegawai;

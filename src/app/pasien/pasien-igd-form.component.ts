@@ -34,7 +34,7 @@ export class PasienIGDFormComponent implements OnInit {
   fromAntrian: boolean = false;
   sub: any;
   asuransi: Asuransi;
-  pasien: Pasien;
+  pasien: Pasien = new Pasien();
   rujukan: Rujukan;
   rujukanChecked: boolean;
   asuransiChecked:boolean;
@@ -206,7 +206,7 @@ export class PasienIGDFormComponent implements OnInit {
               theme: 'bootstrap'
           };
           this.toastyService.success(toastOptions);
-          
+
           if (this.asuransiChecked)
             this.createAsuransi();
           else
