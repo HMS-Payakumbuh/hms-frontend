@@ -240,11 +240,6 @@ export class PemeriksaanOperasiComponent implements OnInit {
               this.allAlergi = JSON.parse(data.anamnesis).alergi.split(',');
               this.allRiwayat = JSON.parse(data.anamnesis).riwayat_penyakit.split(',');
             }
-
-            if(JSON.parse(data.perkembangan_pasien) != null) {
-              this.allPerkembanganPasien = JSON.parse(data.perkembangan_pasien).perkembangan.split(',');
-              this.allTanggalPerkembangan = JSON.parse(data.perkembangan_pasien).tanggal.split(',');
-            }
           }
           
         }
