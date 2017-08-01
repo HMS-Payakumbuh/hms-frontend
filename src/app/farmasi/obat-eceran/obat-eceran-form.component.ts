@@ -77,8 +77,8 @@ export class ObatEceranFormComponent {
 
 		// alert(JSON.stringify(this.obatEceran)); 
 		this.obatEceranService.createObatEceran(this.obatEceran).subscribe(
-	       	data => {
-	         	this.location.back();
+	       	data => {	         	  	
+	     		this.router.navigateByUrl('/transaksi-eksternal/' + data.id_transaksi);
 	         	return true;
 	       	},
 	       	error => {
