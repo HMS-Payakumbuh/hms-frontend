@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
 import { Antrian }                from './antrian';
 import { AntrianService }         from './antrian.service';
@@ -65,7 +66,9 @@ export class AntrianComponent implements OnInit {
     private poliklinikService: PoliklinikService,
     private laboratoriumService: LaboratoriumService,
     private transaksiService: TransaksiService,
-    private tenagaMedisService: TenagaMedisService
+    private tenagaMedisService: TenagaMedisService,
+    private toastyService: ToastyService,
+    private toastyConfig: ToastyConfig
   ) { this.socket = io('http://localhost') }
 
   ngOnInit() {
@@ -232,14 +235,24 @@ export class AntrianComponent implements OnInit {
   private periksa(no_pegawai, nama_poli, id_transaksi) {
     if (!this.isRujukan)
       this.proses('proses');
-      
+
     let request = {
       no_pegawai: no_pegawai,
       nama_poli: nama_poli,
       id_transaksi: id_transaksi
     }
     this.tenagaMedisService.periksa(request).subscribe(
-      data => {}
+      data => {
+        let toastOptions:ToastOptions = {
+            title: "Proses antrian berhasil",
+            msg: "Pasien sudah diteruskan ke " + nama_poli,
+            showClose: true,
+            timeout: 5000,
+            theme: 'bootstrap'
+        };
+
+        this.toastyService.success(toastOptions);
+      }
     )
   }
 

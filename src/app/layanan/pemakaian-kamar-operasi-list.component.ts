@@ -8,8 +8,9 @@ import * as _ from "lodash";
 
 import { PemakaianKamarOperasi } 				from './pemakaian-kamar-operasi';
 import { PemakaianKamarOperasiService }		    from './pemakaian-kamar-operasi.service';
-import { KamarOperasi } 				from './kamar-operasi';
+import { KamarOperasi } 				      from './kamar-operasi';
 import { KamarOperasiService }		    from './kamar-operasi.service';
+import { Dokter }                     from '../tenaga-medis/dokter';
 import { TenagaMedis } 				from '../tenaga-medis/tenaga-medis';
 import { TenagaMedisService }		    from '../tenaga-medis/tenaga-medis.service';
 import { TindakanReference } 				from './tindakan-reference';
@@ -41,7 +42,7 @@ import { PoliklinikService }		from './poliklinik.service';
 export class PemakaianKamarOperasiListComponent implements OnInit {
 	allPemakaianKamarOperasi: PemakaianKamarOperasi[];
 	allKamarOperasi: KamarOperasi[];
-	allTenagaMedis: TenagaMedis[];
+	allDokter: Dokter[];
 	allTindakanReference: TindakanReference[];
 
 	tanggalOperasi: Date;
@@ -50,7 +51,7 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 
     public allPasien: Pasien[];
     public pasien: Pasien;
-    
+
 	no_pegawai: string;
 	noTenagaMedis: string[];
 
@@ -72,8 +73,8 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 	tindakanOperasi : TindakanOperasi[];
 
     inputPasienFormatter = (value : Pasien) => value.nama_pasien;
-    resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.id;
-    
+    resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.kode_pasien;
+
     searchNamaPasien = (text$: Observable<string>) =>
 		text$
 			.debounceTime(200)
@@ -110,7 +111,7 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 		this.pemakaianKamarOperasiService.getAllPemakaianKamarOperasiNow().subscribe(
      		data => { this.allPemakaianKamarOperasi = data }
     	);
-		
+
 		this.kamarOperasiService.getAllKamarOperasi().subscribe(
 			data =>  { this.allKamarOperasi = data }
 		);
@@ -119,25 +120,26 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 			data => {  this.allTindakanReference = data }
 		);
 
-		this.tenagaMedisService.getAllTenagaMedis().
-            subscribe(data => this.allTenagaMedis = data);
-            
+		this.tenagaMedisService.getAllDokter().subscribe(
+      data => this.allDokter = data
+    );
+
         this.pasienService.getAllPasien().subscribe(
 			data => { this.allPasien = data }
 		);
 	}
 
-    private addPasien(pasien: Pasien) {	
+    private addPasien(pasien: Pasien) {
 		this.pasien = pasien;
 
 		this.transaksiService.getLatestOpenTransaksi(this.pasien.id).subscribe(
-			data => { 
+			data => {
 				this.transaksi = data;
 				this.pemakaianKamarOperasiModal.id_transaksi = this.transaksi.id;
 			}
 		);
     }
-    
+
 	newPemakaianKamarOperasi() {
 		this.pemakaianKamarOperasiModal = new PemakaianKamarOperasi();
 		this.pemakaianKamarOperasiModal.waktu_masuk_real = new Date().toISOString().slice(0, 10);
@@ -182,7 +184,7 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 		temp.nama_lab = null;
 		temp.nama_ambulans = null;
 		this.selectedTindakan.push(temp);
-		
+
 		this.noTenagaMedis.forEach(element => {
 			let temp2 = new TindakanOperasi();
 			temp2.id_tindakan = null;
@@ -219,17 +221,17 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 
 	createPemakaianKamarOperasi() {
 		this.tindakanService.saveTindakan(this.selectedTindakan).subscribe(
-			data => { 
+			data => {
 				console.log(data);
 				this.tindakanOperasiService.createTindakanOperasi(this.savedTindakanOperasi).subscribe(
-					data => { 
+					data => {
 						console.log(data);
 						this.pemakaianKamarOperasiService.createPemakaianKamarOperasi(this.pemakaianKamarOperasiModal).subscribe(
 							data => {
 								this.ngOnInit();
 							}
 						);
-					}	
+					}
 				);
 			}
 		);

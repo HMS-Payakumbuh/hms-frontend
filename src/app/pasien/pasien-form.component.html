@@ -1,4 +1,4 @@
-<div class="row">  
+<div class="row">
   <div class="col-md-12">
     <div class="card mb-3">
 
@@ -12,7 +12,7 @@
             <a class="nav-link active" data-toggle="tab" href="#baru" role="tab" style="color: black;">
               <i class="fa fa-address-book" aria-hidden="true"></i> Pasien Baru
             </a>
-          </li>             
+          </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#lama" role="tab" style="color: black;">
               <i class="fa fa-address-book-o" aria-hidden="true"></i> Pasien Lama
@@ -79,7 +79,7 @@
                     <label for="poliklinik">Poliklinik</label>
                     <select class="form-control" id="poliklinik" [disabled]="fromAntrian" [(ngModel)]="layanan" name="poliklinik" required>
                       <ng-container *ngFor="let poliklinik of allLayanan">
-                        <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}}</option>
+                        <option *ngIf="poliklinik.sisa_pelayanan > 0 && poliklinik.nama != 'IGD'" [value]="poliklinik.nama">{{poliklinik.nama}}</option>
                       </ng-container>
                     </select>
                   </div>
@@ -140,7 +140,7 @@
                     </div>
                     <div class="form-group">
                       <label for="keterangan">Keterangan</label>
-                      <textarea class="form-control" id="keterangan" [(ngModel)]="rujukan.keterangan" name="keterangan"></textarea> 
+                      <textarea class="form-control" id="keterangan" [(ngModel)]="rujukan.keterangan" name="keterangan"></textarea>
                     </div>
                   </div>
 
@@ -231,7 +231,7 @@
                     <label for="poliklinik">Poliklinik</label>
                     <select class="form-control" id="poliklinik" [disabled]="fromAntrian" [(ngModel)]="layanan" name="poliklinik" required>
                       <ng-container *ngFor="let poliklinik of allLayanan">
-                        <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}}</option>
+                        <option *ngIf="poliklinik.sisa_pelayanan > 0 && poliklinik.nama != 'IGD'" [value]="poliklinik.nama">{{poliklinik.nama}}</option>
                       </ng-container>
                     </select>
                   </div>
@@ -323,7 +323,7 @@
                     </div>
                     <div class="form-group">
                       <label for="keterangan">Keterangan</label>
-                      <textarea class="form-control" id="keterangan" [(ngModel)]="rujukan.keterangan" name="keterangan"></textarea> 
+                      <textarea class="form-control" id="keterangan" [(ngModel)]="rujukan.keterangan" name="keterangan"></textarea>
                     </div>
                   </div>
 
