@@ -15,6 +15,7 @@ import * as _ from "lodash";
 
 export class RekamMedisListComponent implements OnInit {
 	public allRekamMedis: RekamMedis[];
+	public allRekamMedisEksternal: any[];
 	public rekamMedis: RekamMedis = null;
 	public pasienId: number = null;
 	public layanan: string = '';
@@ -44,8 +45,14 @@ export class RekamMedisListComponent implements OnInit {
 				this.allRekamMedis = _.each(allRekamMedis, rekamMedis => {
 					if (rekamMedis.anamnesis)
 						_.set(rekamMedis, 'keluhan', JSON.parse(rekamMedis.anamnesis).keluhan);
+					else
+						_.set(rekamMedis, 'keluhan', '-');		
 				})
 			});
+		this.rekamMedisService.getAllRekamMedisEksternalOfPasien(this.pasienId)
+			.subscribe(allRekamMedis => {
+				this.allRekamMedisEksternal = allRekamMedis
+			});	
 	}
 
 	goBack() {

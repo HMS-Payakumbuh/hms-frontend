@@ -28,6 +28,7 @@ import { DaftarAntrianComponent }	    from './antrian/daftar-antrian.component';
 import { AntrianDashboardComponent }    from './antrian/antrian-dashboard.component';
 import { RekamMedisListComponent }		from './pasien/rekam-medis-list.component';
 import { RekamMedisDetailComponent }	from './pasien/rekam-medis-detail.component';
+import { RekamMedisEksternalDetailComponent } from './pasien/rekam-medis-eksternal-detail.component';
 
 import { PoliklinikListComponent }		from './layanan/poliklinik-list.component';
 import { PoliklinikPemeriksaanComponent }	from './layanan/poliklinik-pemeriksaan.component';
@@ -141,6 +142,7 @@ const routes: Routes = [
 	{ path: 'daftar-pasien/catatan-kematian-form', canActivate: [AuthGuard], component: CatatanKematianFormComponent},
 	{ path: 'rekam_medis/:namaLayanan/:idTransaksi/:idPasien', canActivate: [AuthGuard], component: RekamMedisListComponent},
 	{ path: 'rekam_medis/:idPasien/:noEntry', canActivate: [AuthGuard], component: RekamMedisDetailComponent},
+	{ path: 'rekam_medis_eksternal/:idPasien/:noEntry', canActivate: [AuthGuard], component: RekamMedisEksternalDetailComponent},
 
 	{ path: 'poliklinik', canActivate: [AuthGuard], component: PoliklinikListComponent },
 	{ path: 'poliklinik/:namaPoliklinik/:idTransaksi', canActivate: [AuthGuard], component: PoliklinikPemeriksaanComponent },

@@ -16,8 +16,8 @@ export class AuthenticationService {
     {no_pegawai: 'L001', name: 'Petugas Administrasi Lab', role: 'petugasLab', password: 'petugaslab', other: ''},
     {no_pegawai: 'L002', name: 'Petugas Lab', role: 'petugasLab', password: 'petugaslab', other: ''},
     {no_pegawai: 'A001', name: 'Admin', role: 'admin', password: 'admin', other: ''},
-    {no_pegawai: 'F001', name: 'Front Office', role: 'frontOffice', password: 'frontOffice', other: '{"kategori_antrian": "A"}'},
-    {no_pegawai: 'F002', name: 'Front Office', role: 'frontOffice', password: 'frontOffice', other: '{"kategori_antrian": "C"}'},
+    {no_pegawai: 'F001', name: 'Front Office A', role: 'frontOffice', password: 'frontOffice', other: '{"kategori_antrian": "A"}'},
+    {no_pegawai: 'F002', name: 'Front Office B', role: 'frontOffice', password: 'frontOffice', other: '{"kategori_antrian": "C"}'},
     {no_pegawai: 'AP001', name: 'Staf Apotek', role: 'stafApotek', password: 'stafapotek', other: ''},
     {no_pegawai: 'GU001', name: 'Gudang Utama', role: 'gudangUtama', password: 'gudangutama', other: ''},    
     {no_pegawai: 'K001', name: 'Kasir', role: 'kasir', password: 'kasir', other: ''}
