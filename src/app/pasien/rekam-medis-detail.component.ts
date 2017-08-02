@@ -56,6 +56,7 @@ export class RekamMedisDetailComponent implements OnInit {
 		private rekamMedisService: RekamMedisService,
 		private resepService: ResepService,
 		private diagnosisService: DiagnosisService,
+    private hasilLabService: HasilLabService,
 		private tindakanService: TindakanService,
 		private tenagaMedisService: TenagaMedisService,
 		private route: ActivatedRoute,
@@ -113,7 +114,7 @@ export class RekamMedisDetailComponent implements OnInit {
 									perkembangan = JSON.parse(rekamMedis.perkembangan_pasien)
 									allPerkembangan.push(perkembangan);
 								}
-								
+
 							}
 							let allAlergi: any[] = [];
 							let allRiwayat: any[] = [];
@@ -144,7 +145,7 @@ export class RekamMedisDetailComponent implements OnInit {
 								if (_.isEmpty(this.allTanggalPerkembangan))
 									this.allTanggalPerkembangan = ['Tidak ada perkembangan pasien yang tercatat.'];
 							}
-							
+
 
 							for (let anamnesis of allAnamnesis) {
 								if (anamnesis) {
@@ -187,6 +188,15 @@ export class RekamMedisDetailComponent implements OnInit {
 				}
 			});
 	}
+
+  downloadHasilLab(id: number) {
+    this.hasilLabService.downloadHasilLab(id).subscribe(
+      data => {
+        let url = window.URL.createObjectURL(data);
+        window.location.assign(url);
+      }
+    )
+  }
 
 	goBack(): void {
 		this.location.back();
