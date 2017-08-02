@@ -7,6 +7,7 @@ import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty
 
 import { Pasien }    from './pasien';
 import { PasienService }    from './pasien.service';
+import { RekamMedisService } from './rekam-medis.service';
 import { AntrianService }    from '../antrian/antrian.service';
 import { Asuransi }  from './asuransi';
 import { AsuransiService }  from './asuransi.service';
@@ -33,6 +34,7 @@ import { DiagnosisService }     from '../layanan/diagnosis.service';
     TransaksiService,
     TenagaMedisService,
     RujukanService,
+    RekamMedisService,
     NgbTypeaheadConfig
   ]
 })
@@ -43,6 +45,7 @@ export class PasienFormComponent implements OnInit {
 	search: string;
   searchDone: boolean;
   update: boolean;
+  nomor_pasien: string;
   fromAntrian: boolean = false;
   sub: any;
   asuransi: Asuransi;
@@ -67,6 +70,7 @@ export class PasienFormComponent implements OnInit {
     private transaksiService: TransaksiService,
     private tenagaMedisService: TenagaMedisService,
     private rujukanService: RujukanService,
+    private rekamMedisService: RekamMedisService,
     private config: NgbTypeaheadConfig,
     private toastyService: ToastyService, 
     private toastyConfig: ToastyConfig
@@ -230,6 +234,7 @@ export class PasienFormComponent implements OnInit {
     this.rujukan.id_transaksi = id_transaksi;
     this.rujukanService.createRujukan(this.rujukan).subscribe(
       data => {
+          this.rekamMedisService.importRekamMedisEksternal(this.pasien.id, this.nomor_pasien).subscribe();
           this.createAntrian(id_transaksi);
       }
     );

@@ -135,6 +135,10 @@
                       </div>
                     </div>
                     <div class="form-group">
+                      <label for="nomor_pasien">Nomor Kartu Pasien</label>
+                      <input type="string" class="form-control" id="nomor_pasien" [(ngModel)]="nomor_pasien" name="nomor_pasien" required>
+                    </div>
+                    <div class="form-group">
                       <label for="diagnosis">Diagnosis</label>
                       <input type="string" class="form-control" id="diagnosis" [ngbTypeahead]="searchDiagnosis" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addDiagnosis($event.item)" required>
                     </div>
@@ -316,6 +320,10 @@
                           <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="rujukan.no_rujukan" name="no_rujukan" required>
                         </div>
                       </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="nomor_pasien">Nomor Kartu Pasien</label>
+                      <input type="string" class="form-control" id="nomor_pasien" [(ngModel)]="nomor_pasien" name="nomor_pasien" required>
                     </div>
                     <div class="form-group">
                       <label for="diagnosis">Diagnosis</label>

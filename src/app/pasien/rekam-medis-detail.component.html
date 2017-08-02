@@ -146,13 +146,20 @@
 							<th><b>Nama</b></th>
 							<th><b>Keterangan</b></th>
 							<th><b>Dokter Penanggungjawab</b></th>
+							<th><b>Dokumen</b></th>
 						</thead>
 						<tbody>
 							<tr *ngFor="let tindakan of allTindakan">
 								<td>{{tindakan?.daftar_tindakan.kode}}</td>
 								<td>{{tindakan?.daftar_tindakan.nama}}</td>
-								<td>{{tindakan?.keterangan && tindakan?.keterangan || '-'}}</td>
+								<td>{{tindakan?.keterangan && tindakan?.keterangan || '--'}}</td>
 								<td>{{tindakan?.tenaga_medis.nama}}</td>
+								<td *ngIf="tindakan?.hasilLab"> 
+									<button type="button" class="btn btn-sm btn-info" (click)="downloadHasilLab(tindakan?.hasilLab.id)">
+					                    Lihat dokumen hasil
+				                    </button>
+				                </td>
+				                <td *ngIf="!tindakan?.hasilLab"> -- </td>
 							</tr>
 						</tbody>
 					</table>
@@ -171,7 +178,7 @@
 							<th><b>Perkembangan</b></th>
 						</thead>
 						<tbody>
-							<tr *ngFor="let perkembangan of perkembangan, let i = index;">
+							<tr *ngFor="let perkembangan of perkembangan, let i = index; ">
 								<td>{{tanggalPemeriksaan[i]}}</td>
 								<td>{{perkembangan}}</td>
 							</tr>
@@ -179,7 +186,7 @@
 					</table>
 				</div>
 			</div>
-			<div class="card mb-3">
+			<div class="card mb-3" *ngIf="allResep != null">
 				<div class="card-header card-info">
 					<h4>
 						<i class="fa fa-sticky-note-o" aria-hidden="true"></i> Resep

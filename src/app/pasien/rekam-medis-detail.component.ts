@@ -9,6 +9,7 @@ import { PasienService }			from './pasien.service';
 import { RekamMedisService }		from './rekam-medis.service';
 import { DiagnosisService }			from '../layanan/diagnosis.service';
 import { TindakanService }			from '../layanan/tindakan.service';
+import { HasilLabService }			from '../layanan/hasil-lab.service';
 import { TenagaMedisService }		from '../tenaga-medis/tenaga-medis.service';
 import { ResepService }				from '../farmasi/resep/resep.service';
 
@@ -19,6 +20,7 @@ import { ResepService }				from '../farmasi/resep/resep.service';
  				DiagnosisService,
  				TindakanService,
  				TenagaMedisService,
+ 				HasilLabService,
  				ResepService,
  				PasienService]
 })
@@ -47,7 +49,8 @@ export class RekamMedisDetailComponent implements OnInit {
 	allPerkembangan: any;
 	allTanggalPerkembangan: any;
 	allRiwayatPenyakit: any;
-	allResep: any;
+	allHasilLab: any[];
+	allResep: any[] = null;
 
 	constructor(
 		private rekamMedisService: RekamMedisService,
@@ -66,9 +69,11 @@ export class RekamMedisDetailComponent implements OnInit {
 				if (data) {
 					this.pasien = data.pasien;
 					this.hasilPemeriksaan = JSON.parse(data.hasil_pemeriksaan);
-					this.perkembanganPasien = JSON.parse(data.perkembangan_pasien);
-					this.perkembangan = this.perkembanganPasien.perkembangan.split(',');
-					this.tanggalPemeriksaan = this.perkembanganPasien.tanggal.split(',');
+					if (data.perkembanganPasien) {
+						this.perkembanganPasien = JSON.parse(data.perkembangan_pasien);
+						this.perkembangan = this.perkembanganPasien.perkembangan.split(',');
+						this.tanggalPemeriksaan = this.perkembanganPasien.tanggal.split(',');
+					}
 					this.anamnesis = JSON.parse(data.anamnesis);
 					this.tanggal = data.tanggal_waktu;
 					this.dokter = data.tenaga_medis;
@@ -92,8 +97,9 @@ export class RekamMedisDetailComponent implements OnInit {
 						});
 					this.resepService.getResepOfRekamMedis(data.id_pasien, data.tanggal_waktu)
 						.subscribe(data => {
-							this.allResep = data;
-						});	
+							if (!_.isEmpty(data))
+								this.allResep = data;
+						});			
 					this.rekamMedisService.getAllRekamMedisOfPasien(this.pasien.id)
 						.subscribe(allRekamMedis => {
 							let allAnamnesis: any[] = [];
@@ -101,38 +107,44 @@ export class RekamMedisDetailComponent implements OnInit {
 
 							for (let rekamMedis of allRekamMedis) {
 								let anamnesis: any = JSON.parse(rekamMedis.anamnesis);
-								let perkembangan: any = JSON.parse(rekamMedis.perkembangan_pasien)
 								allAnamnesis.push(anamnesis);
-								allPerkembangan.push(perkembangan);
+								let perkembangan: any = null;
+								if (rekamMedis.perkembangan_pasien) {
+									perkembangan = JSON.parse(rekamMedis.perkembangan_pasien)
+									allPerkembangan.push(perkembangan);
+								}
+								
 							}
 							let allAlergi: any[] = [];
 							let allRiwayat: any[] = [];
 							let allPerkembanganPasien: any[] = [];
 							let allTanggalPerkembangan: any[] = [];
+							if (!_.isEmpty(allPerkembangan)) {
+								for (let perkembangan of allPerkembangan) {
+									if (perkembangan) {
+										if (_.includes(perkembangan.perkembangan, ',')) {
+											let morePerkembangan: any[] = perkembangan.perkembangan.split(',');
+											allPerkembanganPasien = allPerkembanganPasien.concat(morePerkembangan);
+										} else if (perkembangan.perkembangan != '') {
+											allPerkembanganPasien.push(perkembangan.perkembangan_pasien);
+										}
 
-							for (let perkembangan of allPerkembangan) {
-								if (perkembangan) {
-									if (_.includes(perkembangan.perkembangan, ',')) {
-										let morePerkembangan: any[] = perkembangan.perkembangan.split(',');
-										allPerkembanganPasien = allPerkembanganPasien.concat(morePerkembangan);
-									} else if (perkembangan.perkembangan != '') {
-										allPerkembanganPasien.push(perkembangan.perkembangan_pasien);
-									}
-
-									if (_.includes(perkembangan.tanggal, ',')) {
-										let moreTanggalPerkembangan: any[] = perkembangan.tanggal.split(',');
-										allTanggalPerkembangan = allTanggalPerkembangan.concat(moreTanggalPerkembangan);
-									} else if (perkembangan.tanggal != '') {
-										allTanggalPerkembangan.push(perkembangan.tanggal);
+										if (_.includes(perkembangan.tanggal, ',')) {
+											let moreTanggalPerkembangan: any[] = perkembangan.tanggal.split(',');
+											allTanggalPerkembangan = allTanggalPerkembangan.concat(moreTanggalPerkembangan);
+										} else if (perkembangan.tanggal != '') {
+											allTanggalPerkembangan.push(perkembangan.tanggal);
+										}
 									}
 								}
+								this.allPerkembangan = _.uniq(allPerkembanganPasien, true);
+								this.allTanggalPerkembangan =  _.uniq(allTanggalPerkembangan, true);
+								if (_.isEmpty(this.allPerkembangan))
+									this.allPerkembangan = ['Tidak ada perkembangan pasien yang tercatat.'];
+								if (_.isEmpty(this.allTanggalPerkembangan))
+									this.allTanggalPerkembangan = ['Tidak ada perkembangan pasien yang tercatat.'];
 							}
-							this.allPerkembangan = _.uniq(allPerkembanganPasien, true);
-							this.allTanggalPerkembangan =  _.uniq(allTanggalPerkembangan, true);
-							if (_.isEmpty(this.allPerkembangan))
-								this.allPerkembangan = ['Tidak ada perkembangan pasien yang tercatat.'];
-							if (_.isEmpty(this.allTanggalPerkembangan))
-								this.allTanggalPerkembangan = ['Tidak ada perkembangan pasien yang tercatat.'];
+							
 
 							for (let anamnesis of allAnamnesis) {
 								if (anamnesis) {
