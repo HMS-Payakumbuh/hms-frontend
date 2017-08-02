@@ -4,6 +4,7 @@ export var ENV = {
 	registerUrl: baseUrl + "/register",
 
 	transaksiUrl: baseUrl + "/api/transaksi",
+	transaksiEksternalUrl: baseUrl + "/api/transaksi_eksternal",
 	pembayaranUrl: baseUrl + "/api/pembayaran",
 	klaimUrl: baseUrl + "/api/klaim",
 	settingsUrl: baseUrl + "/api/setting_bpjs",

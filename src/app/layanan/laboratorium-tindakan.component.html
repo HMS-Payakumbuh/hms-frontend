@@ -1,6 +1,13 @@
 <html>
   <div class="row">
     <div class="col-md-12">
+      <blockquote class="blockquote">
+        <p class="h4 mb-0"><b>Proses Tindakan Laboratorium</b></p>
+      </blockquote>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
 
       <div class="card mb-3">
         <div class="card-header card-info">
@@ -37,6 +44,7 @@
         <div class="card-block">
           <table class="table">
             <thead>
+              <th>Nama Pasien</th>
               <th>Nama Tindakan</th>
               <th>No Transaksi</th>
               <th>Tanggal</th>
@@ -44,6 +52,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let tindakan of allTindakan; index as i">
+                <td>{{tindakan.pasien.nama_pasien}}</td>
                 <td>{{tindakan.daftar_tindakan.nama}}</td>
                 <td>{{tindakan.transaksi.no_transaksi}}</td>
                 <td>{{tindakan.tanggal_waktu | date: 'dd-MMM-yyyy'}}</td>

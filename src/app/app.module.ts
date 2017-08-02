@@ -41,6 +41,7 @@ import { RegisterComponent }      from './auth/register.component';
 import { LoginComponent }         from './auth/login.component';
 
 import { HistoriTransaksiComponent }          from './transaksi/histori-transaksi.component';
+import { TransaksiEksternalDetailComponent }        from './transaksi/transaksi-eksternal-detail.component';
 import { TransaksiObatComponent }          from './transaksi/transaksi-obat.component';
 import { TransaksiObatDetailComponent }        from './transaksi/transaksi-obat-detail.component';
 import { TransaksiComponent }          from './transaksi/transaksi.component';
@@ -199,6 +200,7 @@ import { AppComponent }             from './app.component';
         LoginComponent,
 
         HistoriTransaksiComponent,
+        TransaksiEksternalDetailComponent,
         TransaksiObatComponent,
         TransaksiObatDetailComponent,
         TransaksiComponent,
