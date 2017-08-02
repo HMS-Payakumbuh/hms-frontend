@@ -154,12 +154,12 @@
 								<td>{{tindakan?.daftar_tindakan.nama}}</td>
 								<td>{{tindakan?.keterangan && tindakan?.keterangan || '--'}}</td>
 								<td>{{tindakan?.tenaga_medis.nama}}</td>
-								<td *ngIf="tindakan?.hasilLab"> 
-									<button type="button" class="btn btn-sm btn-info" (click)="downloadHasilLab(tindakan?.hasilLab.id)">
+								<td *ngIf="tindakan?.hasil_lab">
+									<button type="button" class="btn btn-sm btn-info" (click)="downloadHasilLab(tindakan?.hasil_lab.id)">
 					                    Lihat dokumen hasil
 				                    </button>
 				                </td>
-				                <td *ngIf="!tindakan?.hasilLab"> -- </td>
+				                <td *ngIf="!tindakan?.hasil_lab"> -- </td>
 							</tr>
 						</tbody>
 					</table>
@@ -214,7 +214,7 @@
 												</div>
 												<div *ngIf="resepItem.racikan_item.length > 0">
 													<div *ngFor="let racikanItem of resepItem.racikan_item">
-														{{racikanItem.jenis_obat.merek_obat}} 
+														{{racikanItem.jenis_obat.merek_obat}}
 													</div>
 												</div>
 											</td>
@@ -224,7 +224,7 @@
 												</div>
 												<div *ngIf="resepItem.racikan_item.length > 0">
 													<div *ngFor="let racikanItem of resepItem.racikan_item">
-		 												{{racikanItem.jenis_obat.nama_generik}} 
+		 												{{racikanItem.jenis_obat.nama_generik}}
 													</div>
 												</div>
 											</td>
@@ -234,7 +234,7 @@
 												</div>
 												<div *ngIf="resepItem.racikan_item.length > 0">
 													<div *ngFor="let racikanItem of resepItem.racikan_item">
-														{{racikanItem.jenis_obat.golongan}} 
+														{{racikanItem.jenis_obat.golongan}}
 													</div>
 												</div>
 											</td>
