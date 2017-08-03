@@ -15,6 +15,7 @@
 	<div class="row">
 		<div class="col-md-2 ml-4">
 			<div class="card">
+				
 				<div *ngIf="user == null" class="list-group list-group-flush">
 					<a routerLink="/daftar-antrian" class="list-group-item list-group-item-info">Pendaftaran Antrian</a>
 					<a routerLink="/register" class="list-group-item list-group-item-info">Register</a>
@@ -27,7 +28,6 @@
 					<a *ngIf="user.role == 'perawat'" [routerLink]="['/perawat-dashboard']" class="list-group-item list-group-item-info">Home</a>
 					<a *ngIf="user.role == 'admin'" [routerLink]="['/antrian-dashboard']" class="list-group-item list-group-item-info">Home</a>
 
-					<a *ngIf="user.role == 'frontOffice'" routerLink="/daftar-antrian" class="list-group-item list-group-item-info">Pendaftaran Antrian</a>
 					<a *ngIf="user.role == 'frontOffice'" routerLink="/antrian" class="list-group-item list-group-item-info">Antrian</a>
 					<a *ngIf="user.role == 'frontOffice' || user.role == 'admin'" routerLink="/daftar-pasien" class="list-group-item list-group-item-info">List Pasien</a>
 					<a *ngIf="user.role == 'frontOffice' || user.role == 'petugasLab'" routerLink="/pendaftaran" class="list-group-item list-group-item-info">Registrasi</a>

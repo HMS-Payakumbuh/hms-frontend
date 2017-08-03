@@ -210,6 +210,10 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
               this.keluhan = JSON.parse(data.anamnesis).keluhan;
               this.allAlergi = JSON.parse(data.anamnesis).alergi.split(',');
               this.allRiwayat = JSON.parse(data.anamnesis).riwayat_penyakit.split(',');
+              if (this.allRiwayat[0] === '')
+                this.allRiwayat = [];
+              if (this.allAlergi[0] === '')
+                this.allAlergi = [];  
             }
           }
         }
