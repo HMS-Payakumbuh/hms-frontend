@@ -36,6 +36,12 @@ export class RekamMedisEksternalDetailComponent implements OnInit {
 	allResep: any[] = [];
 	hasilPemeriksaan: any[] = [];
 
+	public filterQuery = "";
+ 	public rowsOnPage = 3;
+	public sortByTanggal = "tanggal";
+	public sortByNama = "nama";
+	public sortOrder = "asc";
+
 	constructor(
 		private rekamMedisService: RekamMedisService,
 		private route: ActivatedRoute,

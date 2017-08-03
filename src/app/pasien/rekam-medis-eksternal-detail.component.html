@@ -49,14 +49,35 @@
 					</table>
 				</div>
 			</div>
-			<div class="card mb-3">
+			<div class="card mb-3" *ngIf="hasilPemeriksaan">
 				<div class="card-header card-info">
 					<h4>
 						<i class="fa fa-clipboard" aria-hidden="true"></i> Hasil Pemeriksaan Awal
 					</h4>
 				</div>
 				<div class="card-block">
-					<table class="table">
+					<table class="table" [mfData]="hasilPemeriksaan" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortByTanggal" [(mfSortOrder)]="sortOrder">
+						<thead>
+							<th><mfDefaultSorter by="tanggal">Tanggal</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="tinggi">Tinggi Badan</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="berat">Berat Badan</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="tekanan">Tekanan Badan</mfDefaultSorter></th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let hasil of mf.data">
+								<td>{{hasil.tanggal}}</td>
+								<td *ngFor="let elements of hasil.elements">{{elements.nilai}}</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="5">
+									<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+					<!-- <table class="table">
 						<tbody>
 							<ng-container *ngFor="let hasil of hasilPemeriksaan">
 								<tr>
@@ -69,7 +90,7 @@
 								</tr>
 							</ng-container>
 						</tbody>
-					</table>
+					</table> -->
 				</div>
 			</div>
 			<div class="card mb-3">
@@ -105,85 +126,92 @@
 					</table>
 				</div>
 			</div>
-			<div class="card mb-3">
+			<div class="card mb-3" *ngIf="allDiagnosis">
 				<div class="card-header card-info">
 					<h4>
 						<i class="fa fa-stethoscope" aria-hidden="true"></i> Diagnosis
 					</h4>
 				</div>
 				<div class="card-block">
-					<table class="table">
+					<table class="table" [mfData]="allDiagnosis" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortOrder)]="sortOrder">
 						<thead>
-							<th><b>#</b></th>
-							<th><b>Diagnosis</b></th>
+							<th><mfDefaultSorter by="diagnosis">Diagnosis</mfDefaultSorter></th>
 						</thead>
 						<tbody>
-							<tr *ngFor="let diagnosis of allDiagnosis; index as i">
-								<td>{{i + 1}}</td>
+							<tr *ngFor="let diagnosis of mf.data; index as i">
 								<td>{{diagnosis}}</td>
 							</tr>
 						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="5">
+									<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+								</td>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</div>
-			<div class="card mb-3">
+			<div class="card mb-3" *ngIf="allTindakan">
 				<div class="card-header card-info">
 					<h4>
 						<i class="fa fa-medkit" aria-hidden="true"></i> Tindakan
 					</h4>
 				</div>
 				<div class="card-block">
-					<table class="table">
+					<table class="table" [mfData]="allTindakan" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortByTanggal" [(mfSortOrder)]="sortOrder">
 						<thead>
-							<th><b>#</b></th>
-							<th><b>Nama</b></th>
-							<th><b>Tanggal</b></th>
+							<th><mfDefaultSorter by="tindakan">Nama</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="tanggal">Tanggal</mfDefaultSorter></th>
 						</thead>
 						<tbody>
-							<tr *ngFor="let tindakan of allTindakan; index as i ">
-								<td>{{i + 1}}</td>
-								<td>{{tindakan?.nama}}</td>
-								<td>{{tindakan?.tanggal}}</td>
+							<tr *ngFor="let tindakan of mf.data; index as i">
+								<td>{{tindakan.nama}}</td>
+								<td>{{tindakan.tanggal}}</td>
 							</tr>
 						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="5">
+									<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+								</td>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</div>
-			<div class="card mb-3" *ngIf="allResep != null">
+			<div class="card mb-3" *ngIf="allResep">
 				<div class="card-header card-info">
 					<h4>
 						<i class="fa fa-sticky-note-o" aria-hidden="true"></i> Resep
 					</h4>
 				</div>
-				<div class="card-block">
-					<div>
-						<div class="card card-outline-info mb-3">
-					  		<div class="card-block">
-								<table class="table">
-									<thead>
-										<th>#</th>
-										<th>Jenis Obat</th>
-										<th>Aturan Pemakaian</th>
-										<th>Tanggal Mulai</th>
-										<th>Status</th>
-										<th>Indikasi Penyakit</th>
-										<th>Instruksi Lainnya</th>
-									</thead>
-									<tbody>
-										<tr *ngFor="let resep of allResep; index as i">
-											<td>{{i + 1}}</td>
-											<td>{{resep.jenis_obat}}</td>
-											<td>{{resep.petunjuk_pemakaian}}</td>
-											<td>{{resep.tanggal_mulai}}</td>
-											<td>{{resep.status}}</td>
-											<td>{{resep.indikasi_penyakit}}</td>
-											<td>{{resep.instruksi}}</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
+		  		<div class="card-block">
+			  		<table class="table" [mfData]="allResep" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortByTanggal" [(mfSortOrder)]="sortOrder">
+						<thead>
+							<th><mfDefaultSorter by="jenis_obat">Jenis Obat</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="petunjuk_pemakaian">Petunjuk Pemakaian</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="tanggal">Tanggal Resep</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="indikasi_penyakit">Indikasi Penyakit</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="instruksi">Instruksi Tambahan</mfDefaultSorter></th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let resep of mf.data; index as i">
+								<td>{{resep.jenis_obat}}</td>
+								<td>{{resep.petunjuk_pemakaian}}</td>
+								<td>{{resep.tanggal_mulai}}</td>
+								<td>{{resep.indikasi_penyakit}}</td>
+								<td>{{resep.instruksi}}</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="5">
+									<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
 				</div>
 			</div>
 		</div>
@@ -201,13 +229,24 @@
 				        </button>
 				    </div>
 				    <div class="modal-body">
-					    <div class="form-group">
-				  			<h6>Riwayat Penyakit :</h6>
-				  			<div *ngFor="let riwayat of allRiwayat; index as i ">
-					  			<div>{{i+1}}. {{riwayat}}</div>
-				  			</div>
-			  			</div>
-				    </div>
+			  			<table class="table" [mfData]="allRiwayat" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortOrder)]="sortOrder">
+							<thead>
+								<th><mfDefaultSorter by="riwayat">Riwayat</mfDefaultSorter></th>
+							</thead>
+							<tbody>
+								<tr *ngFor="let riwayat of allRiwayat; index as i">
+									<td>{{riwayat}}</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="5">
+										<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+		  			</div>
 			    </div>
 		    </div>
 	    </div>
@@ -222,21 +261,26 @@
 				        </button>
 				    </div>
 				    <div class="modal-body">
-					    <table class="table">
+					    <table class="table" [mfData]="allAlergi" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortByNama" [(mfSortOrder)]="sortOrder">
 							<thead>
-								<th>#</th>
-								<th>Nama</th>
-								<th>Reaksi</th>
-								<th>Status</th>
+								<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="reaksi">Reaksi</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="status">Status</mfDefaultSorter></th>
 							</thead>
 							<tbody>
 								<tr *ngFor="let alergi of allAlergi; index as i">
-									<td>{{i + 1}}</td>
 									<td>{{alergi.nama}}</td>
 									<td>{{alergi.reaksi}}</td>
 									<td>{{alergi.status}}</td>
 								</tr>
 							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="5">
+										<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+									</td>
+								</tr>
+							</tfoot>
 						</table>
 				    </div>
 			    </div>
