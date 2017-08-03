@@ -117,7 +117,7 @@ export class AntrianComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestory() {
+  ngOnDestroy() {
     this.observable.unsubscribe();
   }
 
