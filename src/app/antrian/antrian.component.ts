@@ -1,6 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input }  from '@angular/core';
-import { ActivatedRoute, Params }                             from '@angular/router';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
+import { Observable } from 'rxjs/Rx';
 
 import { Antrian }                from './antrian';
 import { AntrianService }         from './antrian.service';
@@ -33,15 +34,17 @@ import * as io from "socket.io-client";
     RekamMedisService
   ]
 })
-export class AntrianComponent implements OnInit {
+export class AntrianComponent implements OnInit, OnDestroy {
   allKategori: any[] = [];
   allAntrian: any[];
+  allAntrianSMS: any[] = [];
+  observable: any;
   kategori: string;
   selectedKategori: string;
   total: number = 0;
   antrian: any = { no_antrian: null };
   umum: boolean = true;
-  antrianEmpty:boolean;
+  antrianEmpty: boolean;
   isfrontoffice: boolean;
   isPoli: boolean;
   sub: any;
@@ -62,7 +65,8 @@ export class AntrianComponent implements OnInit {
 
   public filterQuery = "";
   public rowsOnPage = 4;
-  public sortBy = "no_transaksi";
+  public sortByRujukan = "no_transaksi";
+  public sortBySMS = "waktu_perjanjian";
   public sortOrder = "asc";
 
   constructor(
@@ -94,6 +98,19 @@ export class AntrianComponent implements OnInit {
       this.selectedKategori = this.kategori;
       this.socket.on('antrianFrontOffice'+this.kategori, this.updateAntrianFrontOffice.bind(this));
       this.updateAntrianFrontOffice();
+      this.observable = Observable.interval(5000 * 60).subscribe(x => {
+          this.antrianService.updateAntrianSMS().subscribe(data => {
+              let toastOptions:ToastOptions = {
+                  title: "Update Sukses !",
+                  msg: "Antrian SMS sudah diperbarui.",
+                  showClose: true,
+                  timeout: 5000,
+                  theme: 'bootstrap'
+              };
+
+              this.toastyService.success(toastOptions);
+            });
+        });
     }
     else {
       this.updateAntrian();
@@ -107,6 +124,10 @@ export class AntrianComponent implements OnInit {
       )
       this.socket.on('antrianLayanan'+this.layanan, this.updateAntrian.bind(this));
     }
+  }
+
+  ngOnDestroy() {
+    this.observable.unsubscribe();
   }
 
   public closeAlert(alert: IAlert) {
@@ -126,6 +147,13 @@ export class AntrianComponent implements OnInit {
           });
       }
     );
+  }
+
+  private updateAntrianSMS() {
+    this.antrianService.getAntrianSMSFrontOffice(this.kategori)
+      .subscribe(allAntrian => {
+        this.allAntrianSMS = allAntrian;
+      });
   }
 
   private updateAntrian() {
@@ -162,6 +190,7 @@ export class AntrianComponent implements OnInit {
         } else {
           this.antrianEmpty = false;
         }
+        this.updateAntrianSMS();
       });
   }
 

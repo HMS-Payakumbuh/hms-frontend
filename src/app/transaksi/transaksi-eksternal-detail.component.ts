@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/switchMap';
 import * as _ from "lodash";
 import { Component, Input, OnInit }	from '@angular/core';
-import { ActivatedRoute, Params }	from '@angular/router';
+import { ActivatedRoute, Params, Router }	from '@angular/router';
 import { Location }					from '@angular/common';
 
 import { PembayaranService }		from '../pembayaran/pembayaran.service';
@@ -45,7 +45,8 @@ export class TransaksiEksternalDetailComponent implements OnInit {
 		private transaksiEksternalService: TransaksiEksternalService,
 		private pembayaranService: PembayaranService,
 		private route: ActivatedRoute,
-		private location: Location
+		private location: Location,
+		private router: Router,
 	) {}
 
 	ngOnInit(): void {
@@ -93,31 +94,18 @@ export class TransaksiEksternalDetailComponent implements OnInit {
 	}
 
 	goBack(): void {
-		this.location.back();
+		this.router.navigateByUrl('/histori-transaksi');
 	}
 
 	initObatTebus(value): void {
 		for (let obatTebus of value) {
 			for (let item of obatTebus.obat_tebus_item) {
 				console.log(item);
-				let hitung = false;
-				if (this.transaksi.no_sep === null) {
-					this.listOfObatTebus.push(item);
-					hitung = true;
-				}
-				else {
-					if (item.jenis_obat.dicover_bpjs !== true) {
-						this.listOfObatTebus.push(item);
-						hitung = true;
-					}
-				}
-
-				if (hitung) {
-					if (item.id_pembayaran === null) {
-						this.printListOfObatTebus.push(item);
-						this.harga_total += item.jumlah * item.harga_jual_realisasi;
-						this.total_bayar = this.total_bayar + (parseInt(item.jumlah) * parseInt(item.harga_jual_realisasi));
-					}
+				this.listOfObatTebus.push(item);
+				if (item.id_pembayaran === null) {
+					this.printListOfObatTebus.push(item);
+					this.harga_total += item.jumlah * item.harga_jual_realisasi;
+					this.total_bayar = this.total_bayar + (parseInt(item.jumlah) * parseInt(item.harga_jual_realisasi));
 				}
 			}
 		}
@@ -164,13 +152,8 @@ export class TransaksiEksternalDetailComponent implements OnInit {
 		}
 
 		if (bayar) {
-			let response: any = this.createPembayaran(this.total_bayar, metode.toLowerCase(), false, null, this.listOfObatTebusId, this.listOfObatEceranId, null);
-			console.log(response);
-			this.no_pembayaran = response.no_pembayaran;
-			this.print();
+			this.createPembayaran(this.total_bayar, metode.toLowerCase(), false, null, this.listOfObatTebusId, this.listOfObatEceranId, null);
 		}
-
-		this.ngOnInit();
 		console.log(metode.toLowerCase());
 	}
 
@@ -198,16 +181,14 @@ export class TransaksiEksternalDetailComponent implements OnInit {
 		};
 
 		console.log(request);
-		let response: any = null;
 		this.pembayaranService.createPembayaran(request)
 		.subscribe(data => {
 			console.log(data);
-			response = data.pembayaran;
-			console.log(response);
+			this.no_pembayaran = data.pembayaran.no_pembayaran;
+			console.log(this.no_pembayaran);
+			setTimeout(() => this.print(), 1000);
+			setTimeout(() => this.ngOnInit(), 1000);
 		});
-
-		console.log(response);
-		return response;
 	}
 
 	print(): void {

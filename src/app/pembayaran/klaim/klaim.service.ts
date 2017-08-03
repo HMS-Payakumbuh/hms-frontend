@@ -28,4 +28,14 @@ export class KlaimService {
 		return this.http.get(url)
 			.map((res: Response) => res.json());
 	}
+
+	updateKlaim(klaim: any, id: number) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(klaim);
+
+		const url = `${this.klaimUrl}/${id}`
+		return this.http.put(url, body, options)
+			.map((res: Response) => res.json());
+	}
 }

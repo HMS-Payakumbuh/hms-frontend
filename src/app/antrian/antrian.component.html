@@ -37,6 +37,11 @@
 			                <div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="kategori">
 			                  	<input type="text" class="form-control" id="nomor" value="{{selectedKategori}}{{antrian?.no_antrian}} - {{antrian?.nama_pasien}}" name="nomor" disabled>
 			              	</div>
+			              	<label class="input-group mb-0 mr-sm-2 mb-sm-0 custom-checkbox" *ngIf="kategori">
+			                    <input type="checkbox" class="custom-control-input" [checked]="antrian.via_sms" disabled>
+			                    <span class="custom-control-indicator"></span>
+			                    <span class="custom-control-description">Via SMS</span>
+			                </label>
 			              	<div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="!isfrontoffice">
 			                  	<input type="text" class="form-control" id="nomor" value="{{selectedKategori}}{{antrian?.no_antrian}} - {{antrian?.transaksi?.pasien.nama_pasien}}" name="nomor" disabled>
 			              	</div>
@@ -60,11 +65,52 @@
 			</div>
 		</div>
 
+		<div class="card mb-3" *ngIf="isfrontoffice && allAntrianSMS.length > 0">
+			<div class="card-header card-info">
+				<h4 class="mb-0"><i class="fa fa-gear" aria-hidden="true"></i>Antrian SMS Siap Masuk</h4>
+			</div>
+			<div class="card-block">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table" [mfData]="allAntrianSMS" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+							<thead>
+								<th><mfDefaultSorter by="no_antrian">Nomor</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="nama">Nama Pasien</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="layanan">Layanan Tujuan</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="no_sms">Kontak</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="waktu_perjanjian">Waktu Perjanjian</mfDefaultSorter></th>
+								<th></th>
+							</thead>
+							<tbody>
+								<tr *ngFor="let antrian of mf.data">
+									<td>{{selectedKategori}}{{antrian.no_antrian}}</td>
+									<td>{{antrian.nama_pasien}}</td>
+									<td>{{antrian.nama_layanan}}</td>
+									<td>{{antrian.no_sms}}</td>
+									<td>{{antrian.waktu_perjanjian}}</td>
+									<td>
+										<button type="button" class="btn btn-success" [routerLink] = "['/pendaftaran', antrian.nama_layanan]" (click)="proses('proses')">Proses</button>
+									</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="5">
+										<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div class="card mb-3" *ngIf="!isfrontoffice">
 			<div class="card-header card-info">
-				<h4 class="mb-0" *ngIf="layanan == 'IGD'">Pasien IGD</h4>
-				<h4 class="mb-0" *ngIf="layanan != 'IGD' && layanan.indexOf('Lab ') == -1">Pasien Rujukan</h4>
-				<h4 class="mb-0" *ngIf="layanan != 'IGD' && layanan.indexOf('Lab ') != -1">Pasien Rawat Inap</h4>
+				<h4 class="mb-0" *ngIf="layanan == 'IGD'"><i class="fa fa-gear" aria-hidden="true"></i>Pasien IGD</h4>
+				<h4 class="mb-0" *ngIf="layanan != 'IGD' && layanan.indexOf('Lab ') == -1"><i class="fa fa-gear" aria-hidden="true"></i>Pasien Rujukan</h4>
+				<h4 class="mb-0" *ngIf="layanan != 'IGD' && layanan.indexOf('Lab ') != -1"><i class="fa fa-gear" aria-hidden="true"></i>Pasien Rawat Inap</h4>
 			</div>
 			<div class="card-block">
 				<div class="form-group">
@@ -84,7 +130,7 @@
 				<div *ngIf="transaksiRujukan != null">
 					<div class="row">
 						<div class="col-md-12">
-							<table class="table" [mfData]="transaksiRujukan.allTransaksi" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+							<table class="table" [mfData]="transaksiRujukan.allTransaksi" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortByRujukan" [(mfSortOrder)]="sortOrder">
 								<thead>
 									<th><mfDefaultSorter by="kode_pasien">Kode Pasien</mfDefaultSorter></th>
 									<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>

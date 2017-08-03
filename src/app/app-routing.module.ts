@@ -7,6 +7,7 @@ import { RegisterComponent }					from './auth/register.component';
 import { LoginComponent }							from './auth/login.component';
 
 import { HistoriTransaksiComponent }   			from './transaksi/histori-transaksi.component';
+import { RekapTransaksiComponent }   			from './transaksi/rekap-transaksi.component';
 import { TransaksiEksternalDetailComponent }        from './transaksi/transaksi-eksternal-detail.component';
 import { TransaksiObatComponent }   			from './transaksi/transaksi-obat.component';
 import { TransaksiObatDetailComponent }		from './transaksi/transaksi-obat-detail.component';
@@ -119,10 +120,12 @@ const routes: Routes = [
 
 	{ path: 'register', component: RegisterComponent },
 	{ path: 'login', component: LoginComponent },
+	{ path: 'daftar-antrian', component: DaftarAntrianComponent },
 	{ path: '', canActivate: [AuthGuard], component: HomeComponent },
 	{ path: 'transaksi', canActivate: [AuthGuard], component: TransaksiComponent },
 	{ path: 'transaksi-obat', canActivate: [AuthGuard], component: TransaksiObatComponent },
 	{ path: 'histori-transaksi', canActivate: [AuthGuard], component: HistoriTransaksiComponent },
+	{ path: 'rekap-transaksi', canActivate: [AuthGuard], component: RekapTransaksiComponent },
 	{ path: 'transaksi/:id', canActivate: [AuthGuard], component: TransaksiDetailComponent },
 	{ path: 'transaksi-obat/:id', canActivate: [AuthGuard], component: TransaksiObatDetailComponent },
 	{ path: 'transaksi-eksternal/:id', canActivate: [AuthGuard], component: TransaksiEksternalDetailComponent },
@@ -135,7 +138,6 @@ const routes: Routes = [
 	{ path: 'pendaftaran/:namaLayanan', canActivate: [AuthGuard], component: PasienFormComponent },
 	{ path: 'antrian', canActivate: [AuthGuard], component: AntrianComponent },
 	{ path: 'antrian/:namaLayanan', canActivate: [AuthGuard], component: AntrianComponent },
-	{ path: 'daftar-antrian', canActivate: [AuthGuard], component: DaftarAntrianComponent },
 	{ path: 'antrian-dashboard', canActivate: [AuthGuard], component: AntrianDashboardComponent },
 	{ path: 'daftar-pasien', canActivate: [AuthGuard], component: PasienListComponent },
 	{ path: 'pendaftaran', canActivate: [AuthGuard], component: PasienFormComponent},

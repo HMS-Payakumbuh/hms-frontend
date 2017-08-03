@@ -179,7 +179,7 @@ export class PasienFormComponent implements OnInit {
   }
 
   private cekAsuransi() {
-    if (this.asuransi.nama_asuransi === 'BPJS')
+    if (this.asuransi.nama_asuransi === 'bpjs')
       this.rujukanChecked = true;
   }
 
@@ -285,7 +285,7 @@ export class PasienFormComponent implements OnInit {
   }
 
   private createPasien() {
-    if (this.asuransi.nama_asuransi === 'BPJS' && !this.rujukanChecked) {
+    if (this.asuransi.nama_asuransi === 'bpjs' && !this.rujukanChecked) {
       let toastOptions:ToastOptions = {
           title: "Registrasi Pasien Gagal !",
           msg: "Pasien BPJS harus memasukkan nomor rujukan.",

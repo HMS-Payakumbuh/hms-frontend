@@ -55,11 +55,17 @@
 									<th></th>
 								</tr>
 								<tr *ngFor="let transaksi of mf.data | matchesStatus: status | filterNamaPasien: searchParam | filterTanggal: selectedDate | filterJenisPasien: jenis">
-									<td>{{transaksi.pasien.kode_pasien}}</td>
-									<td>{{transaksi.pasien.nama_pasien}}</td>
-									<td>{{transaksi.waktu_masuk_pasien | date: 'dd/MM/y HH:mm'}}</td>
-									<td>{{transaksi.asuransi_pasien.toUpperCase()}}</td>
-									<td><button type="button" class="btn btn-primary" [routerLink] = "['/transaksi', transaksi.id]">Details</button></td>
+									<td *ngIf="transaksi.pasien">{{transaksi.pasien.kode_pasien}}</td>
+									<td *ngIf="transaksi.pasien">{{transaksi.pasien.nama_pasien}}</td>
+									<td *ngIf="transaksi.pasien">{{transaksi.waktu_masuk_pasien | date: 'dd/MM/y HH:mm'}}</td>
+									<td *ngIf="transaksi.pasien">{{transaksi.asuransi_pasien.toUpperCase()}}</td>
+									<td *ngIf="transaksi.pasien"><button type="button" class="btn btn-primary" [routerLink] = "['/transaksi', transaksi.id]">Details</button></td>
+
+									<td *ngIf="!transaksi.pasien"></td>
+									<td *ngIf="!transaksi.pasien">{{transaksi.nama}}</td>
+									<td *ngIf="!transaksi.pasien">{{transaksi.created_at | date: 'dd/MM/y HH:mm'}}</td>
+									<td *ngIf="!transaksi.pasien">EKSTERNAL</td>
+									<td *ngIf="!transaksi.pasien"><button type="button" class="btn btn-primary" [routerLink] = "['/transaksi-eksternal', transaksi.id]">Details</button></td>
 								</tr>
 							</tbody>
 							<tfoot>
