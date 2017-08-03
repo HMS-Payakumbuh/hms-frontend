@@ -52,6 +52,14 @@ export class RekamMedisDetailComponent implements OnInit {
 	allHasilLab: any[];
 	allResep: any[] = null;
 
+	public filterQuery = "";
+ 	public rowsOnPage = 3;
+	public sortByKode = "kode";
+	public sortByTanggal = "tanggal";
+	public sortByAlergi = "nama";
+	public sortByRiwayat = "riwayat";
+	public sortOrder = "asc";
+
 	constructor(
 		private rekamMedisService: RekamMedisService,
 		private resepService: ResepService,

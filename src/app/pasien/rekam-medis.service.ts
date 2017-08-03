@@ -33,9 +33,17 @@ export class RekamMedisService {
 						rekamMedis.identitas_pasien = JSON.stringify(dokumen.ClinicalDocument.recordTarget.patientRole.patient);
 						rekamMedis.identitas_dokter = JSON.stringify(dokumen.ClinicalDocument.author);
 						rekamMedis.komponen = JSON.stringify(dokumen.ClinicalDocument.component.structuredBody.component);
-						this.createRekamMedisEksternal(rekamMedis).subscribe();
+						this.createRekamMedisEksternal(rekamMedis).subscribe(data => {
+							let response: any = {
+								status: '200'
+							}
+							return response;
+						});
 					} else {
-
+						let response: any = {
+							status: '500'
+						};
+						return response;
 					}
 				});
 	}

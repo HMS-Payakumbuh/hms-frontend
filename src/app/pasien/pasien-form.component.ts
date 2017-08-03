@@ -272,7 +272,30 @@ export class PasienFormComponent implements OnInit {
     this.rujukan.id_transaksi = id_transaksi;
     this.rujukanService.createRujukan(this.rujukan).subscribe(
       data => {
-          this.rekamMedisService.importRekamMedisEksternal(this.pasien.id, this.nomor_pasien, this.rujukan.no_rujukan).subscribe();
+          this.rekamMedisService.importRekamMedisEksternal(this.pasien.id, this.nomor_pasien, this.rujukan.no_rujukan)
+            .subscribe(data => {
+              if (data.status == '200') {
+                let toastOptions:ToastOptions = {
+                    title: "Pengambilan Berhasil !",
+                    msg: "Rekam medis sudah disimpan dan siap digunakan.",
+                    showClose: true,
+                    timeout: 5000,
+                    theme: 'bootstrap'
+                };
+
+                this.toastyService.success(toastOptions);
+              } else {
+                let toastOptions:ToastOptions = {
+                    title: "Pengambilan Gagal !",
+                    msg: "Rekam medis gagal diambil karena nomor rujukan / nomor kartu pasien tidak sesuai.",
+                    showClose: true,
+                    timeout: 5000,
+                    theme: 'bootstrap'
+                };
+
+                this.toastyService.error(toastOptions);
+              }
+            });
           this.createAntrian(id_transaksi);
       }
     );
