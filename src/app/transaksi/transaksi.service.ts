@@ -10,6 +10,7 @@ import { ENV }				from '../environment';
 @Injectable()
 export class TransaksiService {
 	private transaksiUrl = ENV.transaksiUrl;
+	private sepUrl = ENV.sepUrl;
 	private storedData: any = null;
 
 	constructor(private http:Http) {
@@ -48,6 +49,17 @@ export class TransaksiService {
 	getLatestOpenTransaksi(id_pasien : number): Observable<Transaksi> {
 		const url = `${this.transaksiUrl}` + '/' + "latest" + '/' + id_pasien;
 		return this.http.get(url)
+			.map((res: Response) => res.json());
+	}
+
+	getRujukan(no_rujukan : string): Observable<any> {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('fk', '1');
+
+		let requestOptions = new RequestOptions();
+		requestOptions.params = params;
+
+		return this.http.get(this.sepUrl + '/' + no_rujukan, requestOptions)
 			.map((res: Response) => res.json());
 	}
 

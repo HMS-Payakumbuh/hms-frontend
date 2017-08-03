@@ -12,6 +12,7 @@ export class Transaksi {
 	tanggal: Date;
 	pelunasan: Date;
 	status: string;
+	rujukan: boolean;
 	tindakan: any[];
 	obat: any[];
 }
