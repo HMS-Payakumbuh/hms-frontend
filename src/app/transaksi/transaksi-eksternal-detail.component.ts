@@ -154,8 +154,6 @@ export class TransaksiEksternalDetailComponent implements OnInit {
 		if (bayar) {
 			this.createPembayaran(this.total_bayar, metode.toLowerCase(), false, null, this.listOfObatTebusId, this.listOfObatEceranId, null);
 		}
-
-		this.ngOnInit();
 		console.log(metode.toLowerCase());
 	}
 
@@ -189,6 +187,7 @@ export class TransaksiEksternalDetailComponent implements OnInit {
 			this.no_pembayaran = data.pembayaran.no_pembayaran;
 			console.log(this.no_pembayaran);
 			setTimeout(() => this.print(), 1000);
+			setTimeout(() => this.ngOnInit(), 1000);
 		});
 	}
 

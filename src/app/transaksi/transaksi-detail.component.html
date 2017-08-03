@@ -45,7 +45,7 @@
 									<td>Rp. {{tindakan.harga | number: '.2-2'}}</td>
 									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs' && tindakan.id_pembayaran === null" type="checkbox" [id]="'tindakan' + tindakan.id" (change)="updateCheckedTindakan(tindakan)"></td>
 								</tr>
-								<tr *ngIf="listOfObatTebus?.length > 0 && transaksi_obat">
+								<tr *ngIf="listOfObatTebus?.length > 0">
 									<th>Obat</th>
 									<th></th>
 									<th></th>
@@ -107,7 +107,7 @@
 					<div class="row">
 						<div class="offset-md-6 col-md-6">
 							<button class="btn btn-danger" (click)="goBack()">Kembali</button>
-							<button *ngIf="transaksi.status === 'open' && !transaksi_eksternal" class="btn btn-success" (click)="close()">Tutup Transaksi</button>
+							<button *ngIf="transaksi.status === 'open' && !transaksi_eksternal && !transaksi_obat" class="btn btn-success" (click)="close()">Tutup Transaksi</button>
 							<button *ngIf="transaksi.status === 'open' && !transaksi_eksternal" data-toggle="modal"
 							[attr.data-target]="'#pilihMetodeBayarModal'" class="btn btn-success">Bayar</button>
 							<button *ngIf="transaksi.status === 'open' && transaksi_eksternal" class="btn btn-success" (click)="bayar()">Bayar</button>

@@ -115,6 +115,7 @@ export class TransaksiObatDetailComponent implements OnInit {
 
 				if (hitung) {
 					if (item.id_pembayaran === null) {
+						this.printListOfObatTebus.push(item);
 						this.harga_total += item.jumlah * item.harga_jual_realisasi;
 						this.total_bayar = this.total_bayar + (parseInt(item.jumlah) * parseInt(item.harga_jual_realisasi));
 					}
@@ -187,8 +188,6 @@ export class TransaksiObatDetailComponent implements OnInit {
 
 			this.createPembayaran(this.total_bayar, metode.toLowerCase(), false, null, this.listOfObatTebusId, null, null);
 		}
-
-		this.ngOnInit();
 		console.log(metode.toLowerCase());
 	}
 
@@ -222,7 +221,7 @@ export class TransaksiObatDetailComponent implements OnInit {
 			this.no_pembayaran = data.pembayaran.no_pembayaran;
 			console.log(this.no_pembayaran);
 			setTimeout(() => this.print(), 1000);
-
+			setTimeout(() => this.ngOnInit(), 1000);
 		});
 	}
 
