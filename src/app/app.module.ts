@@ -12,6 +12,7 @@ import { ToastyModule }             from 'ng2-toasty';
 import { MatchesStatusPipe }            from './pipe/matches-status.pipe';
 import { FilterPasienPipe }         from './pipe/filter-pasien.pipe';
 import { FilterNamaPasienPipe }         from './pipe/filter-nama-pasien.pipe';
+import { FilterKodePasienPipe }         from './pipe/filter-kode-pasien.pipe';
 import { FilterTanggalPipe }            from './pipe/filter-tanggal.pipe';
 import { FilterCreatedAtPipe }            from './pipe/filter-created-at.pipe';
 import { FilterWaktuMasukPipe }            from './pipe/filter-waktu-masuk.pipe';
@@ -174,6 +175,7 @@ import { AppComponent }             from './app.component';
         MatchesStatusPipe,
         FilterPasienPipe,
         FilterNamaPasienPipe,
+        FilterKodePasienPipe,
         FilterTanggalPipe,
         FilterCreatedAtPipe,
         FilterWaktuMasukPipe,

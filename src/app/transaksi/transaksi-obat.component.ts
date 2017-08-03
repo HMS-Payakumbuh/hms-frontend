@@ -51,7 +51,7 @@ export class TransaksiObatComponent {
 	}
 
 	private searchTransaksi() {
-		this.transaksiService.getAllTransaksi(this.kode_pasien, 'open')
+		this.transaksiService.getAllTransaksi(null, this.nama_pasien, 'open')
 			.subscribe(data => {
 				let allTransaksi: any[] = [];
 				this.response = data;

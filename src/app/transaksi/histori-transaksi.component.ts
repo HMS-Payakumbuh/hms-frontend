@@ -46,7 +46,7 @@ export class HistoriTransaksiComponent {
 		this.asuransiService.getAllAsuransi()
 			.subscribe(allAsuransi => this.initJenisList(allAsuransi.allAsuransi));
 
-		this.transaksiService.getAllTransaksi(null, 'closed')
+		this.transaksiService.getAllTransaksi(null, null, 'closed')
 			.subscribe(data => {
 				this.response = data;
 				this.allTransaksi = this.response.allTransaksi;

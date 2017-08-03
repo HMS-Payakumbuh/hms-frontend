@@ -35,7 +35,7 @@ export class RekapTransaksiComponent {
 		this.cari = false;
 		this.nama_pasien = null;
 		this.kode_pasien = null;
-		this.transaksiService.getAllTransaksi(null, 'closed')
+		this.transaksiService.getAllTransaksi(null, null, 'closed')
 			.subscribe(data => {
 				this.response = data;
 				this.allTransaksi = this.response.allTransaksi;
