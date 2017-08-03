@@ -75,8 +75,20 @@ export class PemakaianKamarListComponent implements OnInit {
 		this.PemakaianKamarModalId = id;
 		this.PemakaianKamarModal = Object.assign({}, PemakaianKamarRawatinap);
 		this.pemakaianKamarService.updatePemakaianKamar(this.PemakaianKamarModalId, this.PemakaianKamarModal.no_kamar, this.PemakaianKamarModal.no_tempat_tidur, this.PemakaianKamarModal).subscribe(
-			data => { this.ngOnInit() }
-		);
+			data => { 
+				let payload: any = {
+					status: 'closed'
+				};
+				let transaksi: any = {
+					transaksi: payload
+				};
+
+				this.transaksiService.updateTransaksi(transaksi, PemakaianKamarRawatinap.id_transaksi)
+				.subscribe(data => {
+					console.log(data);
+				});
+				this.ngOnInit();
+		});
 	}
 
 	destroyPemakaianKamarRawatinap(id: number, PemakaianKamarRawatinap: PemakaianKamar) {

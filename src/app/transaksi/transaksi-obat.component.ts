@@ -51,15 +51,16 @@ export class TransaksiObatComponent {
 	}
 
 	private searchTransaksi() {
-		this.transaksiService.getAllTransaksi(this.kode_pasien, 'open')
+		this.transaksiService.getAllTransaksi(null, this.nama_pasien, 'open')
 			.subscribe(data => {
 				let allTransaksi: any[] = [];
 				this.response = data;
 				allTransaksi = this.response.allTransaksi;
 				console.log(this.allTransaksi);
+				console.log(allTransaksi);
 				this.cari = true;
 				for (let transaksi of allTransaksi) {
-					if (transaksi.obat_tebus.length > 0 || transaksi.obat_eceran.length > 0) {
+					if (transaksi.obat_tebus.length > 0) {
 						this.allTransaksi.push(transaksi);
 					}
 				}

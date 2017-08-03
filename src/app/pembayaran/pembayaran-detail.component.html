@@ -71,7 +71,8 @@
 					<div class="row">
 						<div class="offset-md-6 col-md-6">
 							<button class="btn btn-danger" (click)="goBack()">Kembali</button>
-							<button class="btn btn-primary" [routerLink] = "['/transaksi', pembayaran.id_transaksi]">Lihat Transaksi</button>
+							<button *ngIf="pembayaran.id_transaksi !== null" class="btn btn-primary" [routerLink] = "['/transaksi', pembayaran.id_transaksi]">Lihat Transaksi</button>
+							<button *ngIf="pembayaran.id_transaksi === null" class="btn btn-primary" [routerLink] = "['/transaksi-eksternal', pembayaran.id_transaksi_eksternal]">Lihat Transaksi</button>
 							<button *ngIf="pembayaran.klaim != null" class="btn btn-primary" [routerLink] = "['/klaim', pembayaran.klaim.id]">Lihat Klaim</button>
 						</div>
 					</div>
