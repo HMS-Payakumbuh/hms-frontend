@@ -12,6 +12,7 @@ export var ENV = {
 
 	pasienUrl: baseUrl + "/api/pasien",
 	rekamMedisUrl: baseUrl + "/api/rekam_medis",
+	rekamMedisEksternalUrl: baseUrl + '/api/rekam_medis_eksternal',
 	antrianUrl: baseUrl + "/api/antrian",
 	antrianFrontOfficeUrl: baseUrl + "/api/antrian_front_office",
 	asuransiUrl: baseUrl + "/api/asuransi",

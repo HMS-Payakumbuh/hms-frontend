@@ -1,0 +1,246 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-plus-square" aria-hidden="true"></i> Informasi Rekam Medis
+					</h4>
+				</div>
+				<div class="card-block">
+					<div>
+						<b>Dokter Penanggungjawab : </b>{{dokter?.assignedPerson.name.given}} {{dokter?.assignedPerson.name.family}}
+				</div>
+			</div>
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-id-card-o" aria-hidden="true"></i> Data Pribadi Pasien
+					</h4>
+				</div>
+				<div class="card-block">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td><b>Nama</b></td>
+								<td>{{pasien?.nama_pasien}}</td>
+								<td><b>Jenis kelamin</b></td>
+								<td>{{pasien?.jender == 1 && 'Laki-laki' || 'Perempuan'}}</td>
+							</tr>
+							<tr>
+								<td><b>Tanggal Lahir</b></td>
+								<td>{{pasien?.tanggal_lahir}}</td>
+								<td><b>Kontak</b></td>
+								<td>{{pasien?.kontak}}</td>
+							</tr>
+							<tr>
+								<td><b>Agama</b></td>
+								<td>{{pasien?.agama}}</td>
+								<td><b>Golongan Darah</b></td>
+								<td>{{pasien?.gol_darah}}</td>
+							</tr>
+							<tr>
+								<td><b>Alamat</b></td>
+								<td>{{pasien?.alamat}}</td>
+								<td></td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-clipboard" aria-hidden="true"></i> Hasil Pemeriksaan Awal
+					</h4>
+				</div>
+				<div class="card-block">
+					<table class="table">
+						<tbody>
+							<ng-container *ngFor="let hasil of hasilPemeriksaan">
+								<tr>
+									<td><b>Tanggal</b></td>
+									<td>{{hasil.tanggal}}</td>
+									<ng-container *ngFor="let elements of hasil.elements">
+										<td><b>{{elements.nama}}</b></td>
+										<td>{{elements.nilai}}</td>
+									</ng-container>
+								</tr>
+							</ng-container>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-files-o" aria-hidden="true"></i> Anamnesis
+					</h4>
+				</div>
+				<div class="card-block">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td><b>Keluhan Utama</b></td>
+								<td>{{anamnesis?.keluhan}}</td>
+							</tr>
+							<tr>
+								<td><b>Alasan Perujukan</b></td>
+								<td>{{anamnesis?.alasan_rujukan}}</td>
+							</tr>
+							<tr>
+								<td><b>Riwayat Penyakit</b></td>
+								<td>
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#riwayatModal" [attr.data-target]="'#riwayatModal'">Detail</button>
+								</td>
+							</tr>
+							<tr>
+								<td><b>Alergi</b></td>
+								<td>
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#alergiModal" [attr.data-target]="'#alergiModal'">Detail</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-stethoscope" aria-hidden="true"></i> Diagnosis
+					</h4>
+				</div>
+				<div class="card-block">
+					<table class="table">
+						<thead>
+							<th><b>#</b></th>
+							<th><b>Diagnosis</b></th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let diagnosis of allDiagnosis; index as i">
+								<td>{{i + 1}}</td>
+								<td>{{diagnosis}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-medkit" aria-hidden="true"></i> Tindakan
+					</h4>
+				</div>
+				<div class="card-block">
+					<table class="table">
+						<thead>
+							<th><b>#</b></th>
+							<th><b>Nama</b></th>
+							<th><b>Tanggal</b></th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let tindakan of allTindakan; index as i ">
+								<td>{{i + 1}}</td>
+								<td>{{tindakan?.nama}}</td>
+								<td>{{tindakan?.tanggal}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="card mb-3" *ngIf="allResep != null">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-sticky-note-o" aria-hidden="true"></i> Resep
+					</h4>
+				</div>
+				<div class="card-block">
+					<div>
+						<div class="card card-outline-info mb-3">
+					  		<div class="card-block">
+								<table class="table">
+									<thead>
+										<th>#</th>
+										<th>Jenis Obat</th>
+										<th>Aturan Pemakaian</th>
+										<th>Tanggal Mulai</th>
+										<th>Status</th>
+										<th>Indikasi Penyakit</th>
+										<th>Instruksi Lainnya</th>
+									</thead>
+									<tbody>
+										<tr *ngFor="let resep of allResep; index as i">
+											<td>{{i + 1}}</td>
+											<td>{{resep.jenis_obat}}</td>
+											<td>{{resep.petunjuk_pemakaian}}</td>
+											<td>{{resep.tanggal_mulai}}</td>
+											<td>{{resep.status}}</td>
+											<td>{{resep.indikasi_penyakit}}</td>
+											<td>{{resep.instruksi}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="pull-right">
+			<button type="button" class="btn btn-warning" (click)="goBack()">Kembali</button>
+		</div>
+
+		<div class="modal fade" id="riwayatModal" tabindex="-1" role="dialog" aria-labelledby="riwayatModal" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				    <div class="modal-header">
+				        <h5 class="modal-title" id="riwayatModal">Rekap Kesehatan {{pasien?.nama_pasien}}</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <i class="fa fa-times" aria-hidden="true"></i>
+				        </button>
+				    </div>
+				    <div class="modal-body">
+					    <div class="form-group">
+				  			<h6>Riwayat Penyakit :</h6>
+				  			<div *ngFor="let riwayat of allRiwayat; index as i ">
+					  			<div>{{i+1}}. {{riwayat}}</div>
+				  			</div>
+			  			</div>
+				    </div>
+			    </div>
+		    </div>
+	    </div>
+
+	    <div class="modal fade" id="alergiModal" tabindex="-1" role="dialog" aria-labelledby="alergiModal" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				    <div class="modal-header">
+				        <h5 class="modal-title" id="alergiModal">Alergi yang diderita {{pasien?.nama_pasien}}</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <i class="fa fa-times" aria-hidden="true"></i>
+				        </button>
+				    </div>
+				    <div class="modal-body">
+					    <table class="table">
+							<thead>
+								<th>#</th>
+								<th>Nama</th>
+								<th>Reaksi</th>
+								<th>Status</th>
+							</thead>
+							<tbody>
+								<tr *ngFor="let alergi of allAlergi; index as i">
+									<td>{{i + 1}}</td>
+									<td>{{alergi.nama}}</td>
+									<td>{{alergi.reaksi}}</td>
+									<td>{{alergi.status}}</td>
+								</tr>
+							</tbody>
+						</table>
+				    </div>
+			    </div>
+		    </div>
+	    </div>
+	</div>
+</div>
