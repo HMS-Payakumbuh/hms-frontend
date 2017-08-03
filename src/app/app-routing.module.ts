@@ -119,6 +119,7 @@ const routes: Routes = [
 
 	{ path: 'register', component: RegisterComponent },
 	{ path: 'login', component: LoginComponent },
+	{ path: 'daftar-antrian', component: DaftarAntrianComponent },
 	{ path: '', canActivate: [AuthGuard], component: HomeComponent },
 	{ path: 'transaksi', canActivate: [AuthGuard], component: TransaksiComponent },
 	{ path: 'transaksi-obat', canActivate: [AuthGuard], component: TransaksiObatComponent },
@@ -135,7 +136,6 @@ const routes: Routes = [
 	{ path: 'pendaftaran/:namaLayanan', canActivate: [AuthGuard], component: PasienFormComponent },
 	{ path: 'antrian', canActivate: [AuthGuard], component: AntrianComponent },
 	{ path: 'antrian/:namaLayanan', canActivate: [AuthGuard], component: AntrianComponent },
-	{ path: 'daftar-antrian', canActivate: [AuthGuard], component: DaftarAntrianComponent },
 	{ path: 'antrian-dashboard', canActivate: [AuthGuard], component: AntrianDashboardComponent },
 	{ path: 'daftar-pasien', canActivate: [AuthGuard], component: PasienListComponent },
 	{ path: 'pendaftaran', canActivate: [AuthGuard], component: PasienFormComponent},
