@@ -47,81 +47,73 @@
 										</tr>
 										<tr>
 											<td>Tanggal Rawat: </td>
-											<td>Masuk: {{klaim.pembayaran.transaksi.waktu_masuk_pasien}} Pulang: {{klaim.pembayaran.transaksi.waktu_perubahan_terakhir}}</td>
+											<td>Masuk: {{status_klaim.tgl_masuk}} Pulang: {{status_klaim.tgl_pulang}}</td>
 											<td>Berat Lahir (gr)</td>
-											<td>0</td>
+											<td>{{status_klaim.berat_lahir}}</td>
+										</tr>
+										<tr *ngIf="klaim.pembayaran.transaksi.jenis_rawat === 2 && status_klaim.upgrade_class_ind === '1'">
+											<td>Naik Kelas:</td>
+											<td>{{status_klaim.upgrade_class_class}}</td>
+											<td>Lama:</td>
+											<td>{{status_klaim.upgrade_class_los}} Hari</td>
 										</tr>
 										<tr>
 											<td>LOS (hari)</td>
-											<td>0</td>
+											<td>{{status_klaim.los}}</td>
 											<td>Cara Pulang</td>
-											<td>Atas Persetujuan Dokter</td>
+											<td *ngIf="status_klaim.discharge_status === 1">Atas Persetujuan Dokter</td>
+											<td *ngIf="status_klaim.discharge_status === 2">Dirujuk</td>
+											<td *ngIf="status_klaim.discharge_status === 3">Atas Permintaan Sendiri</td>
+											<td *ngIf="status_klaim.discharge_status === 4">Meninggal</td>
+											<td *ngIf="status_klaim.discharge_status === 5">Lain-lain</td>
 										</tr>
 										<tr>
 											<td>ADL Score</td>
-											<td>Sub Acute: -  Chronic: -</td>
+											<td>Sub Acute: {{status_klaim.adl_sub_acute}}  Chronic: {{status_klaim.adl_chronic}}</td>
 											<td>Tarif Rumah Sakit</td>
-											<td>Rp. {{klaim.tarif_rs | number: '.2-2'}}</td>
+											<td>Rp. {{status_klaim.tarif_rs | number: '.2-2'}}</td>
 										</tr>
 										<tr>
 											<td>DPJP</td>
-											<td>RUDY, DR</td>
+											<td>{{status_klaim.nama_dokter}}</td>
 											<td>Jenis Tarif</td>
 											<td>{{displayJenisTarif}}</td>
 										</tr>
 									</tbody>
 								</table>
 							</div>
-							<div class="row">
+							<div *ngIf="listDiagnosis.length > 0" class="row">
 								<div class="col-md-12">
 									<b>Diagnosa (ICD-10)</b>
 									<br>
 									<ul class="list-group">
-										<li class="list-group-item">
-											<span>Open Wound of Hip S71.0</span>
+										<li *ngFor="let diagnosis of listDiagnosis" class="list-group-item">
+											<span>{{diagnosis.nama}} {{diagnosis.kode}}</span>
 										</li>
 									</ul>
 								</div>
 							</div>
-							<div class="row">
+							<div *ngIf="listTindakan.length > 0" class="row">
 								<div class="col-md-12">
 									<b>Prosedur (ICD-9-CM)</b>
 									<br>
 									<ul class="list-group">
-										<li class="list-group-item">
-											<span>Partial hip replacement 81.52</span>
+										<li *ngFor="let tindakan of listTindakan" class="list-group-item">
+											<span>{{tindakan.nama}} {{tindakan.kode}}</span>
 										</li>
 									</ul>
 								</div>
 							</div>
-							<div class="row">
+							<div class="row" *ngIf="grouping">
 								<table class="table">
 									<tbody>
 										<tr>
-											<td>Jenis Rawat</td>
-											<td>Rawat Jalan</td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
 											<td>Group</td>
-											<td>PROSEDUR PADA SENDI TUNGKAI BAWAH</td>
-											<td>M-1-04-II</td>
-											<td>Rp. 47119400</td>
+											<td>{{status_klaim.grouper.response.cbg.description}}</td>
+											<td>{{status_klaim.grouper.response.cbg.code}}</td>
+											<td>{{status_klaim.grouper.response.cbg.tariff | number: '.2-2'}}</td>
 										</tr>
-										<tr>
-											<td>Sub Acute</td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>Chronic</td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
+										<!-- <tr>
 											<td>Special Procedure</td>
 											<td>Hip Replacement / knee replacement</td>
 											<td>YY-01-II</td>
@@ -144,12 +136,12 @@
 											<td></td>
 											<td></td>
 											<td></td>
-										</tr>
+										</tr> -->
 										<tr>
 											<td></td>
 											<td></td>
 											<td><b>Tarif Klaim</b></td>
-											<td>Rp. {{klaim.tarif | number: '.2-2'}}</td>
+											<td>Rp. {{status_klaim.grouper.response.cbg.tariff | number: '.2-2'}}</td>
 										</tr>
 									</tbody>
 								</table>

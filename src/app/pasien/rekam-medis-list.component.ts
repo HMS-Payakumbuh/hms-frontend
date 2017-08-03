@@ -57,8 +57,8 @@ export class RekamMedisListComponent implements OnInit {
 			})
 		});
       	this.transaksiService.getTransaksi(this.transaksiId).subscribe(transaksi => {
-	        this.transaksi = transaksi;
-	        if (this.transaksi.transaksi.rujukan) {
+	        this.transaksi = transaksi.transaksi;
+	        if (this.transaksi.rujukan) {
 	        	this.rekamMedisService.getAllRekamMedisEksternalOfPasien(this.pasienId)
 				.subscribe(allRekamMedis => {
 					this.allRekamMedisEksternal = allRekamMedis
