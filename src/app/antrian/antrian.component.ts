@@ -1,10 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit, ChangeDetectionStrategy, Input }  from '@angular/core';
+import { ActivatedRoute, Params }                             from '@angular/router';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
 import { Antrian }                from './antrian';
 import { AntrianService }         from './antrian.service';
-import { LaboratoriumService }      from '../layanan/laboratorium.service';
+import { LaboratoriumService }    from '../layanan/laboratorium.service';
 import { PoliklinikService }      from '../layanan/poliklinik.service';
 import { Transaksi }              from '../transaksi/transaksi';
 import { TransaksiService }       from '../transaksi/transaksi.service'
@@ -12,6 +12,9 @@ import { JadwalDokter }           from '../tenaga-medis/jadwal-dokter';
 import { TenagaMedisService }     from '../tenaga-medis/tenaga-medis.service';
 import { User }                   from '../auth/user';
 import { AuthenticationService }  from '../auth/authentication.service';
+import { RekamMedis }             from '../pasien/rekam-medis';
+import { RekamMedisService }      from '../pasien/rekam-medis.service';
+import { HasilPemeriksaan }       from '../layanan/hasil-pemeriksaan';
 
 import * as _ from "lodash";
 import * as io from "socket.io-client";
@@ -26,7 +29,8 @@ import * as io from "socket.io-client";
     PoliklinikService,
     LaboratoriumService,
     TransaksiService,
-    TenagaMedisService
+    TenagaMedisService,
+    RekamMedisService
   ]
 })
 export class AntrianComponent implements OnInit {
@@ -44,12 +48,14 @@ export class AntrianComponent implements OnInit {
   layanan: string;
   socket: any = null;
   user: any;
+
   searchTransaksiRujukanTerm: string = '';
   transaksiRujukan: any = null;
   allAvailableDokter: JadwalDokter[] = [];
   selectedDokter: JadwalDokter = null;
   idTransaksi: number = null;
-  isRujukan:boolean = false;
+  isRujukan: boolean = false;
+  hasilPemeriksaan: HasilPemeriksaan = new HasilPemeriksaan();
 
   @Input()
   public alerts: Array<IAlert> = [];
@@ -67,9 +73,12 @@ export class AntrianComponent implements OnInit {
     private laboratoriumService: LaboratoriumService,
     private transaksiService: TransaksiService,
     private tenagaMedisService: TenagaMedisService,
+    private rekamMedisService: RekamMedisService,
     private toastyService: ToastyService,
     private toastyConfig: ToastyConfig
-  ) { this.socket = io('http://localhost') }
+  ) {
+    this.socket = io('http://localhost');
+  }
 
   ngOnInit() {
     this.sub = this.route.params
@@ -244,11 +253,11 @@ export class AntrianComponent implements OnInit {
     this.tenagaMedisService.periksa(request).subscribe(
       data => {
         let toastOptions:ToastOptions = {
-            title: "Proses antrian berhasil",
+            title: "Success",
             msg: "Pasien sudah diteruskan ke " + nama_poli,
             showClose: true,
             timeout: 5000,
-            theme: 'bootstrap'
+            theme: 'material'
         };
 
         this.toastyService.success(toastOptions);

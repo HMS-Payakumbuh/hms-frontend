@@ -127,14 +127,73 @@
 	      <div class="modal-content">
 
 	        <div class="modal-header bg-info text-white">
-	          <h5 class="modal-title">Assign Dokter</h5>
+	          <h5 class="modal-title">Proses Pasien</h5>
 	          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	            <i class="fa fa-times" aria-hidden="true"></i>
 	          </button>
 	        </div>
 
 	        <div class="modal-body">
-	          <label for="selectAmbulans">Pilih Dokter</label>
+						<blockquote class="blockquote">
+							<p class="h5 mb-0"><b>Pengecekan Awal</b></p>
+						</blockquote>
+						<div class="row">
+							<div class="form-group col-6">
+								<label for="tekananDarah">Tekanan Darah</label>
+								<div class="input-group">
+									<input type="text" class="form-control" id="tekananDarah" [(ngModel)]="hasilPemeriksaan.tekanan_darah" name="tekananDarah">
+									<div class="input-group-addon">mmHg</div>
+								</div>
+							</div>
+
+							<div class="form-group col-6">
+								<label for="nadi">Nadi</label>
+								<div class="input-group">
+									<input type="text" class="form-control" id="nadi" [(ngModel)]="hasilPemeriksaan.nadi" name="nadi">
+									<div class="input-group-addon">/min</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-6">
+								<label for="frekuensiNapas">Frekuensi Napas</label>
+								<div class="input-group">
+									<input type="text" class="form-control" id="frekuensiNapas" [(ngModel)]="hasilPemeriksaan.frekuensi_napas" name="frekuensiNapas">
+									<div class="input-group-addon">/min</div>
+								</div>
+							</div>
+
+							<div class="form-group col-6">
+								<label for="temperatur">Temperatur</label>
+								<div class="input-group">
+									<input type="text" class="form-control" id="temperatur" [(ngModel)]="hasilPemeriksaan.temperatur" name="temperatur">
+									<div class="input-group-addon">C</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-6">
+								<label for="beratBedan">Berat Badan</label>
+								<div class="input-group">
+									<input type="text" class="form-control" id="beratBadan" [(ngModel)]="hasilPemeriksaan.berat_badan" name="berat_badan">
+									<div class="input-group-addon">kg</div>
+								</div>
+							</div>
+
+							<div class="form-group col-6">
+								<label for="tinggiBadan">Tinggi Badan</label>
+								<div class="input-group">
+									<input type="text" class="form-control" id="tinggiBadan" [(ngModel)]="hasilPemeriksaan.tinggi_badan" name="tinggi_badan">
+									<div class="input-group-addon">cm</div>
+								</div>
+							</div>
+						</div>
+
+						<blockquote class="blockquote">
+							<p class="h5 mb-0"><b>Pilih Dokter *</b></p>
+						</blockquote>
 	          <select class="form-control mb-3" id="selectDokter" [(ngModel)]="selectedDokter" name="selectDokter">
 	            <option *ngFor="let jadwalDokter of allAvailableDokter" [ngValue]="jadwalDokter">
 								{{jadwalDokter.np_dokter}} - {{jadwalDokter.nama_dokter}}

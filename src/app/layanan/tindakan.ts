@@ -1,4 +1,5 @@
-import { ObatTindakan }		from '../farmasi/obat-tindakan/obat-tindakan';
+import { TindakanReference }	from './tindakan-reference';
+import { ObatTindakan }				from '../farmasi/obat-tindakan/obat-tindakan';
 
 export class Tindakan {
 	id: number = null;
@@ -13,5 +14,6 @@ export class Tindakan {
 	nama_poli: string = '';
 	nama_lab: string = '';
 	nama_ambulans: string = '';
+	tindakan_reference: TindakanReference = null;
 	obat_tindakan: ObatTindakan[] = [];
 }

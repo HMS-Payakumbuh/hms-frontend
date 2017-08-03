@@ -1,5 +1,7 @@
 import { Component, OnInit }		  from '@angular/core';
 import { Router }                 from '@angular/router';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
+
 import { Ambulans }               from '../layanan/ambulans';
 import { AmbulansService }        from '../layanan/ambulans.service';
 import { Poliklinik }             from '../layanan/poliklinik';
@@ -45,7 +47,9 @@ export class PerawatDashboardComponent implements OnInit {
     private ambulansService: AmbulansService,
 		private poliklinikService: PoliklinikService,
     private transaksiService: TransaksiService,
-    private tindakanService: TindakanService
+    private tindakanService: TindakanService,
+    private toastyService: ToastyService,
+    private toastyConfig: ToastyConfig
 	) { }
 
   ngOnInit() {
@@ -66,7 +70,20 @@ export class PerawatDashboardComponent implements OnInit {
   searchTransaksi() {
     if (this.searchKodePasien != '') {
       this.transaksiService.getAllTransaksi(this.searchKodePasien, 'open').subscribe(
-        data => this.transaksiAmbulans = data
+        data => {
+          this.transaksiAmbulans = data;
+          if (this.transaksiAmbulans.allTransaksi[0] == null) {
+            let toastOptions:ToastOptions = {
+                title: 'Error',
+                msg: 'Kode pasien tidak ditemukan',
+                showClose: true,
+                timeout: 5000,
+                theme: 'material'
+            };
+
+            this.toastyService.error(toastOptions);
+          }
+        }
       )
     }
   }
@@ -78,7 +95,7 @@ export class PerawatDashboardComponent implements OnInit {
     temp.id_transaksi = this.transaksiAmbulans.allTransaksi[0].id;
     temp.harga = 50000;
     temp.keterangan = '';
-    temp.kode_tindakan = '00.0';
+    temp.kode_tindakan = '00.00';
     temp.id_pasien = this.transaksiAmbulans.allTransaksi[0].id_pasien;
     temp.tanggal_waktu = this.transaksiAmbulans.allTransaksi[0].waktu_masuk_pasien;
     temp.np_tenaga_medis = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
@@ -89,7 +106,17 @@ export class PerawatDashboardComponent implements OnInit {
       data => {
         this.selectedAmbulans.status = "In Use";
         this.ambulansService.updateAmbulans(this.selectedAmbulans.nama, this.selectedAmbulans).subscribe(
-          data => {}
+          data => {
+            let toastOptions:ToastOptions = {
+                title: 'Success',
+                msg: 'Pemakaian ambulans berhasil',
+                showClose: true,
+                timeout: 5000,
+                theme: 'material'
+            };
+
+            this.toastyService.success(toastOptions);
+          }
         )
       }
     )

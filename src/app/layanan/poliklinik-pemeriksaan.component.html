@@ -231,7 +231,7 @@
 									<tr *ngFor="let tindakan of selectedTindakan; index as i">
 										<td style="vertical-align: middle;">{{i + 1}}</td>
 										<td style="vertical-align: middle;">{{tindakan.kode_tindakan}}</td>
-										<td style="vertical-align: middle; text-align: left;">{{selectedTindakanReference[i].nama}}</td>
+										<td style="vertical-align: middle; text-align: left;">{{tindakan.tindakan_reference.nama}}</td>
 										<td style="vertical-align: middle;">
 											<textarea class="form-control" rows="2" [(ngModel)]="tindakan.keterangan"></textarea>
 										</td>
@@ -493,7 +493,7 @@
 
 			<div class="pull-right">
 				<button type="button" class="btn btn-warning" (click)="goBack()">Kembali</button>
-				<button type="button" class="btn btn-success" data-toggle="modal" [attr.data-target]="'#rujukanModal'">Selesai</button>
+				<button type="button" class="btn btn-success" data-toggle="modal" [attr.data-target]="'#rujukanModal'" [disabled]="selectedTindakan.length == 0 || selectedDiagnosis.length == 0 || keluhan == ''">Selesai</button>
 			</div>
 
 		</div>
