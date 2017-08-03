@@ -32,8 +32,20 @@ export class HomeComponent implements OnInit {
         this.router.navigate(['/transaksi']);
         break;
       }
+      case 'stafApotek': {
+        this.router.navigate(['/stok-obat']);
+        break;
+      }
+      case 'gudangUtama': {
+        this.router.navigate(['/stok-obat']);
+        break;
+      }
+      case 'frontOffice': {
+        this.router.navigate(['/antrian']);
+        break;
+      }
       default: {
-        this.router.navigate(['/pendaftaran']);
+        this.router.navigate(['/daftar-antrian']);
         break;
       }
     }

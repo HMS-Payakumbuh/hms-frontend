@@ -14,7 +14,6 @@
 							<th><mfDefaultSorter by="kode">Kode</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="harga">Harga</mfDefaultSorter></th>
-							<th><mfDefaultSorter by="special">Special CMG</mfDefaultSorter></th>
 							<th></th>
 							<th></th>
 						</thead>
@@ -24,7 +23,6 @@
 								<td>{{tindakanReference.kode}}</td>
 								<td>{{tindakanReference.nama}}</td>
 								<td>Rp. {{tindakanReference.harga | number: '.2-2'}}</td>
-								<td>{{tindakanReference.special && 'Ya' || 'Tidak'}}</td>
 								<td>
 									<button type="button" class="btn btn-sm btn-info" data-toggle="modal"
 										[attr.data-target]="'#editTindakanReferenceModal'" (click)="editTindakanReference(tindakanReference.kode, tindakanReference)">
@@ -81,14 +79,6 @@
 								<label for="harga">Harga</label>
 								<input type="text" class="form-control" id="harga" required [(ngModel)]="tindakanReferenceModal.harga">
 							</div>
-
-							<div class="form-group">
-								<label for="harga">Special CMG</label>
-								<select class="form-control" id="special" required [(ngModel)]="tindakanReferenceModal.special">
-									<option value="true">Ya</option>
-									<option value="false">Tidak</option>
-								</select>
-							</div>
 						</div>
 
 						<div class="modal-footer">
@@ -125,14 +115,6 @@
 							<div class="form-group">
 								<label for="harga">Harga</label>
 								<input type="text" class="form-control" id="harga" required [(ngModel)]="tindakanReferenceModal.harga">
-							</div>
-
-							<div class="form-group">
-								<label for="harga">Special CMG</label>
-								<select class="form-control" id="special" required [(ngModel)]="tindakanReferenceModal.special">
-									<option value="true">Ya</option>
-									<option value="false">Tidak</option>
-								</select>
 							</div>
 						</div>
 

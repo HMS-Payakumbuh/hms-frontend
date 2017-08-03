@@ -29,6 +29,7 @@ import { DaftarAntrianComponent }	    from './antrian/daftar-antrian.component';
 import { AntrianDashboardComponent }    from './antrian/antrian-dashboard.component';
 import { RekamMedisListComponent }		from './pasien/rekam-medis-list.component';
 import { RekamMedisDetailComponent }	from './pasien/rekam-medis-detail.component';
+import { RekamMedisEksternalDetailComponent } from './pasien/rekam-medis-eksternal-detail.component';
 
 import { PoliklinikListComponent }		from './layanan/poliklinik-list.component';
 import { PoliklinikPemeriksaanComponent }	from './layanan/poliklinik-pemeriksaan.component';
@@ -119,6 +120,7 @@ const routes: Routes = [
 
 	{ path: 'register', component: RegisterComponent },
 	{ path: 'login', component: LoginComponent },
+	{ path: 'daftar-antrian', component: DaftarAntrianComponent },
 	{ path: '', canActivate: [AuthGuard], component: HomeComponent },
 	{ path: 'transaksi', canActivate: [AuthGuard], component: TransaksiComponent },
 	{ path: 'transaksi-obat', canActivate: [AuthGuard], component: TransaksiObatComponent },
@@ -136,13 +138,13 @@ const routes: Routes = [
 	{ path: 'pendaftaran/:namaLayanan', canActivate: [AuthGuard], component: PasienFormComponent },
 	{ path: 'antrian', canActivate: [AuthGuard], component: AntrianComponent },
 	{ path: 'antrian/:namaLayanan', canActivate: [AuthGuard], component: AntrianComponent },
-	{ path: 'daftar-antrian', canActivate: [AuthGuard], component: DaftarAntrianComponent },
 	{ path: 'antrian-dashboard', canActivate: [AuthGuard], component: AntrianDashboardComponent },
 	{ path: 'daftar-pasien', canActivate: [AuthGuard], component: PasienListComponent },
 	{ path: 'pendaftaran', canActivate: [AuthGuard], component: PasienFormComponent},
 	{ path: 'daftar-pasien/catatan-kematian-form', canActivate: [AuthGuard], component: CatatanKematianFormComponent},
 	{ path: 'rekam_medis/:namaLayanan/:idTransaksi/:idPasien', canActivate: [AuthGuard], component: RekamMedisListComponent},
 	{ path: 'rekam_medis/:idPasien/:noEntry', canActivate: [AuthGuard], component: RekamMedisDetailComponent},
+	{ path: 'rekam_medis_eksternal/:idPasien/:noEntry', canActivate: [AuthGuard], component: RekamMedisEksternalDetailComponent},
 
 	{ path: 'poliklinik', canActivate: [AuthGuard], component: PoliklinikListComponent },
 	{ path: 'poliklinik/:namaPoliklinik/:idTransaksi', canActivate: [AuthGuard], component: PoliklinikPemeriksaanComponent },

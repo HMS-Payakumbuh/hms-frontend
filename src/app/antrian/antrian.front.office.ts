@@ -4,5 +4,8 @@ export class AntrianFrontOffice {
 	jenis: number;
 	nama_pasien: string;
 	nama_layanan: string;
-	kategori_antrian: string
+	kategori_antrian: string;
+	via_sms: boolean;
+	waktu_perjanjian: string;
+	status: number;
 }
