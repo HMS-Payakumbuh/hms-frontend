@@ -218,6 +218,8 @@ export class PasienFormComponent implements OnInit {
     if (this.asuransi.nama_asuransi === 'bpjs') {
       this.rujukanChecked = true;
       this.isBpjs = true;
+    } else {
+      this.isBpjs = false;
     }
   }
 
@@ -242,7 +244,7 @@ export class PasienFormComponent implements OnInit {
 
     this.antrianService.createAntrian(request).subscribe(
       data => {
-        if(data.error) {
+        if(data.status == '200') {
           let toastOptions:ToastOptions = {
               title: "Pendaftaran Antrian Gagal !",
               msg: "Harap mencoba sekali lagi.",
@@ -272,18 +274,27 @@ export class PasienFormComponent implements OnInit {
     this.rujukan.id_transaksi = id_transaksi;
     this.rujukanService.createRujukan(this.rujukan).subscribe(
       data => {
-          this.rekamMedisService.importRekamMedisEksternal(this.pasien.id, this.nomor_pasien, this.rujukan.no_rujukan)
+          this.rekamMedisService.importRekamMedisEksternal(this.nomor_pasien, this.rujukan.no_rujukan)
             .subscribe(data => {
               if (data.status == '200') {
-                let toastOptions:ToastOptions = {
-                    title: "Pengambilan Berhasil !",
-                    msg: "Rekam medis sudah disimpan dan siap digunakan.",
-                    showClose: true,
-                    timeout: 5000,
-                    theme: 'bootstrap'
-                };
+                let rekamMedis: any = {};
+                rekamMedis.kode_pasien = this.nomor_pasien;
+                rekamMedis.id_pasien = this.pasien.id;
+                let dokumen: any = JSON.parse(data.data);
+                rekamMedis.identitas_pasien = JSON.stringify(dokumen.ClinicalDocument.recordTarget.patientRole.patient);
+                rekamMedis.identitas_dokter = JSON.stringify(dokumen.ClinicalDocument.author);
+                rekamMedis.komponen = JSON.stringify(dokumen.ClinicalDocument.component.structuredBody.component);
+                this.rekamMedisService.createRekamMedisEksternal(rekamMedis).subscribe(data => {
+                    let toastOptions:ToastOptions = {
+                      title: "Pengambilan Berhasil !",
+                      msg: "Rekam medis sudah disimpan dan siap digunakan.",
+                      showClose: true,
+                      timeout: 5000,
+                      theme: 'bootstrap'
+                    };
 
-                this.toastyService.success(toastOptions);
+                    this.toastyService.success(toastOptions);
+                  });
               } else {
                 let toastOptions:ToastOptions = {
                     title: "Pengambilan Gagal !",

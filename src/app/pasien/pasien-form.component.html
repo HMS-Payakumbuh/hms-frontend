@@ -126,7 +126,7 @@
                       <label for="no_rujukan">Nomor Rujukan</label>
                         <div class="input-group">
                           <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="rujukan.no_rujukan" name="no_rujukan" [disabled]="isVerified" required>
-                          <span class="input-group-btn">
+                          <span class="input-group-btn" *ngIf="isBpjs">
                             <button class="btn btn-secondary" type="button" (click)="getRujukan()">Verifikasi</button>
                           </span>
                         </div>

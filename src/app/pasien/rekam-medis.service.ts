@@ -21,31 +21,9 @@ export class RekamMedisService {
 		return Promise.reject(error.message || error);
 	}
 
-	importRekamMedisEksternal(id_pasien:number, kode_pasien: string, no_rujukan: string): Observable<any> {
+	importRekamMedisEksternal(kode_pasien: string, no_rujukan: string): Observable<any> {
 		return this.http.get(this.rekamMedisEksternalUrl + '/import/' + kode_pasien + '/' + no_rujukan)
-			.map((res: Response) => res.json())
-			.map(data => {
-					if (data.status == '200') {
-						let rekamMedis: any = {};
-						rekamMedis.kode_pasien = kode_pasien;
-						rekamMedis.id_pasien = id_pasien;
-						let dokumen: any = JSON.parse(data.data);
-						rekamMedis.identitas_pasien = JSON.stringify(dokumen.ClinicalDocument.recordTarget.patientRole.patient);
-						rekamMedis.identitas_dokter = JSON.stringify(dokumen.ClinicalDocument.author);
-						rekamMedis.komponen = JSON.stringify(dokumen.ClinicalDocument.component.structuredBody.component);
-						this.createRekamMedisEksternal(rekamMedis).subscribe(data => {
-							let response: any = {
-								status: '200'
-							}
-							return response;
-						});
-					} else {
-						let response: any = {
-							status: '500'
-						};
-						return response;
-					}
-				});
+			.map((res: Response) => res.json());
 	}
 
 	createRekamMedisEksternal(rekamMedis: any) {
