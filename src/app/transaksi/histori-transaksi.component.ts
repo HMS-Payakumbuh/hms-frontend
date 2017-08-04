@@ -53,12 +53,12 @@ export class HistoriTransaksiComponent {
 				console.log(this.allTransaksi);
 			});
 
-		this.transaksiEksternalService.getAllTransaksi('closed')
-			.subscribe(data => {
-				this.response = data;
-				this.allTransaksi = this.allTransaksi.concat(this.response.allTransaksi);
-				console.log(this.allTransaksi);
-			});
+		// this.transaksiEksternalService.getAllTransaksi('closed')
+		// 	.subscribe(data => {
+		// 		this.response = data;
+		// 		this.allTransaksi = this.allTransaksi.concat(this.response.allTransaksi);
+		// 		console.log(this.allTransaksi);
+		// 	});
 	}
 
 	private searchTransaksi() {
