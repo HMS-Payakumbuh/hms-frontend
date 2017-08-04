@@ -52,6 +52,7 @@ export class TransaksiDetailComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
+		this.asuransi = null;
 		this.transaksi_obat = false;
 		this.transaksi_eksternal = false;
 		this.harga_tambahan = 0;
