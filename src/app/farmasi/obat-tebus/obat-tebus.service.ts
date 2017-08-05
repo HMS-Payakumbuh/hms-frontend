@@ -1,5 +1,5 @@
 import { Injectable }		from '@angular/core';
-import { Headers, Http, Response, RequestOptions }		from '@angular/http';
+import { Headers, Http, Response, RequestOptions, URLSearchParams }		from '@angular/http';
 import { Observable }		from 'rxjs/Rx';
 
 import 'rxjs/add/operator/toPromise';
@@ -30,9 +30,22 @@ export class ObatTebusService {
 			.map(allObatTebus => allObatTebus.find(obat_tebus => obat_tebus.id == id));
 	}
 
-	getTodayObatTebus(id_stok_obat: number): Observable<ObatTebusItem[]> {
+	/* getTodayObatTebus(id_stok_obat: number): Observable<ObatTebusItem[]> {
 		return this.http.get(this.obatTebusUrl + '/today/' + id_stok_obat)
 			.map((res: Response) => res.json());
+	} */
+
+	getObatTebusByTime(waktu_mulai: Date, waktu_selesai: Date, id_stok_obat: number): Observable<ObatTebusItem[]> {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('id_stok_obat', ''+id_stok_obat);
+		params.set('waktu_mulai', waktu_mulai.toLocaleString());
+		params.set('waktu_selesai', waktu_selesai.toLocaleString());
+
+		let requestOptions = new RequestOptions();
+		requestOptions.params = params;
+
+		return this.http.get(this.obatTebusUrl+'/search_by_time', requestOptions)
+		    .map((res: Response) => res.json());		
 	}
 
 	createObatTebus(obatTebus: ObatTebus) {

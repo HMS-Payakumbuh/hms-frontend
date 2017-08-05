@@ -36,15 +36,17 @@
 								<th><mfDefaultSorter by="lokasi_data.nama">Lokasi</mfDefaultSorter></th>
 								<th></th>
 							</tr>
-							<tr *ngFor="let stokObat of mf.data">
-								<td>{{stokObat.barcode}}</td>
-								<td>{{stokObat.jenis_obat.merek_obat}}</td>
-								<td>Rp. {{stokObat.jenis_obat.harga_jual_satuan}}</td>	
-								<td>{{stokObat.kadaluarsa | date:'d MMM y'}}</td>	
-								<td>{{stokObat.jumlah}} {{stokObat.jenis_obat.satuan}}</td>						
-								<td>{{stokObat.lokasi_data.nama}}</td>		
-								<td><button type="button" class="btn btn-info" [routerLink] = "['/stok-obat', stokObat.id]">Detail</button></td>
-							</tr>						
+							<ng-template ngFor let-stokObat [ngForOf]="mf.data">
+								<tr *ngIf="stokObat.jumlah > 0">
+									<td>{{stokObat.barcode}}</td>
+									<td>{{stokObat.jenis_obat.merek_obat}}</td>
+									<td>Rp. {{stokObat.jenis_obat.harga_jual_satuan}}</td>	
+									<td>{{stokObat.kadaluarsa | date:'d MMM y'}}</td>	
+									<td>{{stokObat.jumlah}} {{stokObat.jenis_obat.satuan}}</td>						
+									<td>{{stokObat.lokasi_data.nama}}</td>		
+									<td><button type="button" class="btn btn-info" [routerLink] = "['/stok-obat', stokObat.id]">Detail</button></td>
+								</tr>
+							</ng-template>						
 						</tbody>	
 						<tfoot>
 			                <tr>
