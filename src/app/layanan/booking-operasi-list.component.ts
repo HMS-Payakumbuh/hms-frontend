@@ -177,7 +177,7 @@ export class BookingOperasiListComponent implements OnInit {
 		temp.id_pembayaran = null;
 		temp.kode_tindakan = tindakanReference.kode;
 		temp.id_pasien = this.transaksi.id_pasien;
-		temp.tanggal_waktu = this.transaksi.waktu_masuk;
+		temp.tanggal_waktu = this.transaksi.waktu_masuk_pasien;
 		temp.np_tenaga_medis = null;
 		temp.nama_poli = null;
 		temp.nama_lab = null;

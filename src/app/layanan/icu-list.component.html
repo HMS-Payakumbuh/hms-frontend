@@ -40,7 +40,7 @@
 							<tr>
 								<td>{{rawatinap?.no_kamar}}</td>
 								<td>{{rawatinap?.kelas}}</td>
-								<td>{{rawatinap?.harga_per_hari}}</td>
+								<td>{{rawatinap?.harga_per_hari | number: '.2-2'}}</td>
 								<td>{{rawatinap?.available_kamar}} / {{rawatinap?.kapasitas_kamar}}</td>
 								<td>
 									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#createPemakaianKamarModal'" (click)="newPemakaianKamar(rawatinap)">

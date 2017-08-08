@@ -12,6 +12,10 @@ import { TransaksiService }       from '../transaksi/transaksi.service';
 import { TenagaMedisService }     from './tenaga-medis.service';
 import { Tindakan }               from '../layanan/tindakan';
 import { TindakanService }        from '../layanan/tindakan.service';
+import { PemakaianKamar }  from '../layanan/pemakaian-kamar';
+import { PemakaianKamarService }  from '../layanan/pemakaian-kamar.service';
+import { PemakaianKamarOperasi }  from '../layanan/pemakaian-kamar-operasi';
+import { PemakaianKamarOperasiService }  from '../layanan/pemakaian-kamar-operasi.service';
 
 import * as io from "socket.io-client";
 
@@ -24,7 +28,9 @@ import * as io from "socket.io-client";
     PoliklinikService,
     TenagaMedisService,
     TransaksiService,
-    TindakanService
+    TindakanService,
+    PemakaianKamarService,
+    PemakaianKamarOperasiService
   ]
 })
 
@@ -38,13 +44,32 @@ export class DokterDashboardComponent implements OnInit {
   allProcessedAntrian: Antrian[] = [];
   allPoliklinik: Poliklinik[] = [];
 
+  allPemakaianRawatinap: any[] = [];
+  allPemakaianICU: any[] = [];
+  allPemakaianOperasi: any[] = [];
+
+  allDaftarPemakaianRawatinap: any[] = [];
+  allDaftarPemakaianICU: any[] = [];
+  allDaftarPemakaianOperasi: any[] = [];
+
+  allJasaDokterRawatinap: any[] = [];
+  allJasaDokterOperasi: any[] = [];
+
   poliklinikSelected: boolean = false;
+  rawatinapSelected: boolean = false;
+  icuSelected: boolean = false;
+  operasiSeleted: boolean = false;
   selectedPoliklinik: Poliklinik = new Poliklinik();
   selectedAmbulans: Ambulans = null;
+  selectedPemakaianRawatinap: any;
+  selectedPemakaianICU: any;
+  selectedPemakaianOperasi: any;
+  
   transaksiRujukan: Transaksi = null;
   transaksiAmbulans: any = null;
   nama_poli: string = null;
   searchKodePasien: string = '';
+  noPegawai: string
 
   public filterQuery = "";
   public rowsOnPage = 5;
@@ -58,12 +83,14 @@ export class DokterDashboardComponent implements OnInit {
 		private poliklinikService: PoliklinikService,
     private tenagaMedisService: TenagaMedisService,
     private transaksiService: TransaksiService,
-    private tindakanService: TindakanService
+    private tindakanService: TindakanService,
+    private pemakaianKamarService: PemakaianKamarService,
+    private pemakaianKamarOperasiService: PemakaianKamarOperasiService
 	) { this.socket = io('http://localhost') }
 
   ngOnInit() {
-    let noPegawai: string = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
-    this.tenagaMedisService.getDokter(noPegawai).subscribe(
+    this.noPegawai = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
+    this.tenagaMedisService.getDokter(this.noPegawai).subscribe(
       dokter => this.dokter = dokter
     );
 
@@ -75,7 +102,39 @@ export class DokterDashboardComponent implements OnInit {
       data => { this.allAmbulans = data }
     );
 
-    this.socket.on(noPegawai, (message) => this.updatePasienRujukan(message));
+    this.pemakaianKamarService.getJasaDokterRawatinap(this.noPegawai).subscribe(
+      data => {
+        this.allJasaDokterRawatinap = data;
+        this.pemakaianKamarService.getAllPemakaianKamarICUByNoPegawai(this.noPegawai).subscribe(
+          data => { 
+            this.allPemakaianICU = data;
+            this.pemakaianKamarService.getAllPemakaianKamarRawatinapByNoPegawai(this.noPegawai).subscribe(
+              data => {
+                this.allPemakaianRawatinap = data;
+                if(this.allJasaDokterRawatinap.length > 0) {
+                  this.allJasaDokterRawatinap.forEach(element => {
+                    this.pemakaianKamarService.getPemakaianKamar(element.id_pemakaian_kamar_rawatinap).subscribe(
+                      data=> {
+                        if(data.jenis_kamar == "Rawat Inap") 
+                          this.allPemakaianRawatinap.push(data);
+                        else if(data.jenis_kamar == "ICU")
+                          this.allPemakaianICU.push(data);
+                      }
+                    )
+                  });
+                }
+              }
+            )
+          }
+        )
+      }
+    )
+    
+    this.pemakaianKamarOperasiService.getAllPemakaianKamarOperasiNow().subscribe(
+     		data => { this.allPemakaianOperasi = data }
+    	);
+
+    this.socket.on(this.noPegawai, (message) => this.updatePasienRujukan(message));
   }
 
   onEnter(event) {
@@ -132,6 +191,52 @@ export class DokterDashboardComponent implements OnInit {
         )
       }
     )
+  }
+
+  showDaftarPasienRawatinap() {
+    this.pemakaianKamarService.getAllPemakaianKamarRawatinapByNoKamarAndNoPegawai(this.selectedPemakaianRawatinap.no_kamar, this.noPegawai).subscribe(
+      data => {
+        this.allDaftarPemakaianRawatinap = data;
+        this.rawatinapSelected = true;
+        if(this.allJasaDokterRawatinap.length > 0) {
+          this.allJasaDokterRawatinap.forEach(element => {
+            this.pemakaianKamarService.getPemakaianKamar(element.id_pemakaian_kamar_rawatinap).subscribe(
+              data=> {
+                if(data.jenis_kamar == "Rawat Inap")
+                  this.allDaftarPemakaianRawatinap.push(data);
+              }
+            )
+          });
+        }
+      }
+    )
+  }
+
+  showDaftarPasienICU() {
+    this.pemakaianKamarService.getAllPemakaianKamarICUByNoKamarAndNoPegawai(this.selectedPemakaianICU.no_kamar, this.noPegawai).subscribe(
+      data => {
+        this.allDaftarPemakaianICU = data;
+        this.icuSelected = true;
+        if(this.allJasaDokterRawatinap.length > 0) {
+          this.allJasaDokterRawatinap.forEach(element => {
+            this.pemakaianKamarService.getPemakaianKamar(element.id_pemakaian_kamar_rawatinap).subscribe(
+              data=> {
+                if(data.jenis_kamar == "ICU")
+                  this.allDaftarPemakaianRawatinap.push(data);
+              }
+            )
+          });
+        }
+      }
+    )
+  }
+
+  periksaRawatinap(id_transaksi:number, id_pemakaian: number) {
+    this.router.navigate(['/pemeriksaan/rawatinap', this.selectedPemakaianRawatinap.no_kamar, id_pemakaian, id_transaksi])
+  }
+
+  periksaICU(id_transaksi:number, id_pemakaian: number) {
+    this.router.navigate(['/pemeriksaan/icu', this.selectedPemakaianICU.no_kamar, id_pemakaian, id_transaksi])
   }
 
   prosesAntrian(id_transaksi: number, no_antrian: number) {

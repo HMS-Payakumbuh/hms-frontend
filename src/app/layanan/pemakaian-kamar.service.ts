@@ -9,6 +9,7 @@ import { Transaksi }			from '../transaksi/transaksi';
 @Injectable()
 export class PemakaianKamarService {
 	rawatinapUrl = ENV.rawatinapUrl;
+	jasaDokterRawatinapUrl = ENV.jasaDokterRawatinapUrl;
 	pemakaianKamarRawatinapUrl = ENV.pemakaianKamarRawatinapUrl;
 	transaksiUrl = ENV.transaksiUrl;
 
@@ -19,16 +20,52 @@ export class PemakaianKamarService {
 		return Promise.reject(error.message || error);
 	}
 
+	getJasaDokterRawatinap(no_pegawai: string): Observable<any[]> {
+		return this.http.get(this.jasaDokterRawatinapUrl + '/' + no_pegawai)
+			.map((res: Response) => res.json());
+	}
+
+	getJasaDokterRawatinapById(idPemakaian:number): Observable<any[]> {
+		return this.http.get(this.jasaDokterRawatinapUrl + '/pemakaian/' + idPemakaian)
+			.map((res: Response) => res.json());
+	}
+
+	createJasaDokterRawatinap(addedDokter: any, idPemakaian: number) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers});
+		let body = JSON.stringify(addedDokter);
+		return this.http.post(this.jasaDokterRawatinapUrl + '/' + idPemakaian , body, options)
+			.map((res: Response) => res.json());
+	}
+
+	deleteJasaDokterRawatinap(id:number) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+
+		return this.http.delete(this.jasaDokterRawatinapUrl + '/' + id, options)
+			.map((res: Response) => res.json());
+	}
+
 	getAllPemakaianKamar(): Observable<PemakaianKamar[]> {
 		return this.http.get(this.pemakaianKamarRawatinapUrl)
 			.map((res: Response) => res.json());
+	}
+
+	getAllPemakaianKamarRawatinapByNoPegawai(no_pegawai: string): Observable<PemakaianKamar[]> {
+		return this.getAllPemakaianKamar()
+			.map(allPemakaian => allPemakaian.filter(pemakaian => pemakaian.jenis_kamar == "Rawat Inap" && pemakaian.no_pegawai == no_pegawai))
+	}
+	
+	getAllPemakaianKamarICUByNoPegawai(no_pegawai: string): Observable<PemakaianKamar[]> {
+		return this.getAllPemakaianKamar()
+			.map(allPemakaian => allPemakaian.filter(pemakaian => pemakaian.jenis_kamar == "ICU" && pemakaian.no_pegawai == no_pegawai))
 	}
 
 	getAllPemakaianKamarRawatinap(): Observable<PemakaianKamar[]> {
 		return this.getAllPemakaianKamar()
 			.map(allPemakaian => allPemakaian.filter(pemakaian => pemakaian.jenis_kamar == "Rawat Inap"))
 	}
-
+		
 	getAllPemakaianKamarICU(): Observable<PemakaianKamar[]> {
 		return this.getAllPemakaianKamar()
 			.map(allPemakaian => allPemakaian.filter(pemakaian => pemakaian.jenis_kamar == "ICU"))
@@ -37,6 +74,16 @@ export class PemakaianKamarService {
 	getAllPemakaianKamarByNoKamar(no_kamar:string): Observable<PemakaianKamar[]> {
 		return this.http.get(this.pemakaianKamarRawatinapUrl + "/now/" + no_kamar)
 			.map((res: Response) => res.json());
+	}
+
+	getAllPemakaianKamarRawatinapByNoKamarAndNoPegawai(no_kamar:string, no_pegawai: string): Observable<PemakaianKamar[]> {
+		return this.getAllPemakaianKamarByNoKamar(no_kamar)
+			.map(allPemakaian => allPemakaian.filter(pemakaian => pemakaian.jenis_kamar == "Rawat Inap" && pemakaian.no_pegawai == no_pegawai))
+	}
+
+	getAllPemakaianKamarICUByNoKamarAndNoPegawai(no_kamar:string, no_pegawai: string): Observable<PemakaianKamar[]> {
+		return this.getAllPemakaianKamarByNoKamar(no_kamar)
+			.map(allPemakaian => allPemakaian.filter(pemakaian => pemakaian.jenis_kamar == "ICU" && pemakaian.no_pegawai == no_pegawai))
 	}
 	
 	getDaftarPemakaianKamarBooked(): Observable<PemakaianKamar[]> {

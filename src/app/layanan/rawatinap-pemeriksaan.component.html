@@ -68,6 +68,11 @@
 								<i class="fa fa-sticky-note-o" aria-hidden="true"></i> Resep
 							</a>
 						</li>
+						<li class="nav-item" *ngIf="pemakaianKamar.no_pegawai == noPegawai">
+							<a class="nav-link" data-toggle="tab" href="#dokter" role="tab" style="color: black;">
+								<i class="fa fa-bookmark" aria-hidden="true"></i> Pengaturan Dokter
+							</a>
+						</li>
 						<li class="nav-item">
 							<a class="nav-link" data-toggle="tab" href="#lain" role="tab" style="color: black;">
 								<i class="fa fa-bookmark" aria-hidden="true"></i> Lainnya
@@ -434,38 +439,46 @@
 								Tambah Resep
 							</button>
 						</div>
+						
 
-						<div class="tab-pane fade" id="lain" role="tabpanel">
+						<div class="tab-pane fade" id="dokter" role="tabpanel" *ngIf="pemakaianKamar.no_pegawai == noPegawai">
 							<form>
-								<!-- <div class="form-group">
+								<div class="form-group pb-4">
 									<label for="inputDokter">Tambah Jasa Dokter</label>
 									<input type="text" class="form-control" id="no_pegawai" required [ngbTypeahead]="searchNamaDokter" [inputFormatter]="inputDokterFormatter" [resultFormatter]="resultDokterFormatter" (selectItem)="addDokter($event.item)" name="no_pegawai">
 								</div>
 
-								<table class="table" *ngIf="addedDokter.length > 0">
+								<table *ngIf="allJasaDokter.length > 0" class="table">
 									<thead>
-										<th>#</th>
 										<th>No. Pegawai</th>
-										<th>Nama</th>
+										<th>Nama Dokter</th>
 										<th>Spesialis</th>
 										<th></th>
-										<th></th>
+										<tr>
 									</thead>
-									<tbody>
-										<tr *ngFor="let dokter of addedDokter; index as i">
-											<td style="vertical-align: middle;">{{i + 1}}</td>
-											<td style="vertical-align: middle;">{{addedDokter[i].no_pegawai}}</td>
-											<td style="vertical-align: middle;">{{addedDokter[i].tenaga_medis.nama}}</td>
-											<td style="vertical-align: middle;">{{addedDokter[i].spesialis}}</td>
-											<td style="vertical-align: middle;">
-												<button type="button" class="btn btn-sm btn-danger" (click)="removeAddedDokter(i)">
+									
+									
+									<tbody *ngFor="let jasadokter of allJasaDokter">
+										<tr>
+											<td>{{jasadokter.no_pegawai}}</td>
+											<td>{{jasadokter.nama}}</td>
+											<td>{{jasadokter.spesialis}}</td>
+											<td>
+												<button type="button" class="btn btn-sm btn-danger" (click)="deleteJasaDokter(jasadokter.id)">
 													Hapus
 												</button>
 											</td>
 										</tr>
 									</tbody>
-								</table> -->
+								</table>
 
+								
+							</form>
+						</div>
+
+
+						<div class="tab-pane fade" id="lain" role="tabpanel">
+							<form>
 								<div class="form-group">
 									<label for="tanggal">Perbarui Perkiraan Waktu Keluar</label>
 									<input [dpDayPicker]="config" theme="dp-material" class="form-control" id="tanggal" [(ngModel)]="perkiraan_waktu_keluar" (ngModelChange)="setTanggal()" name="tanggal">
