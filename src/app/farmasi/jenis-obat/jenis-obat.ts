@@ -7,7 +7,8 @@ export class JenisObat {
     public golongan: string = '',
     public satuan: string = '',
     public harga_jual_satuan: number = null,
-    public dicover_bpjs: boolean = false
+    public dicover_bpjs: boolean = false,    
+    public special_medicine: boolean = false
   ) {  }
 }
 

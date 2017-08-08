@@ -119,17 +119,24 @@
 					</h4>
 				</div>
 				<div class="card-block">
-					<table class="table">
+					<table class="table" [mfData]="allDiagnosis" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortByKode" [(mfSortOrder)]="sortOrder">
 						<thead>
-							<th><b>Kode</b></th>
-							<th><b>Nama</b></th>
+							<th><mfDefaultSorter by="kode">Kode</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
 						</thead>
 						<tbody>
-							<tr *ngFor="let diagnosis of allDiagnosis">
+							<tr *ngFor="let diagnosis of allDiagnosis; index as i">
 								<td>{{diagnosis?.daftar_diagnosis.kode}}</td>
 								<td>{{diagnosis?.daftar_diagnosis.nama}}</td>
 							</tr>
 						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="5">
+									<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+								</td>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</div>
@@ -140,21 +147,35 @@
 					</h4>
 				</div>
 				<div class="card-block">
-					<table class="table">
+					<table class="table" [mfData]="allTindakan" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortByKode" [(mfSortOrder)]="sortOrder">
 						<thead>
-							<th><b>Kode</b></th>
-							<th><b>Nama</b></th>
-							<th><b>Keterangan</b></th>
-							<th><b>Dokter Penanggungjawab</b></th>
+							<th><mfDefaultSorter by="kode">Kode</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="keterangan">Keterangan</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="dokter">Dokter Penanggungjawab</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="dokumen">Dokumen</mfDefaultSorter></th>
 						</thead>
 						<tbody>
-							<tr *ngFor="let tindakan of allTindakan">
+							<tr *ngFor="let tindakan of allTindakan; index as i">
 								<td>{{tindakan?.daftar_tindakan.kode}}</td>
 								<td>{{tindakan?.daftar_tindakan.nama}}</td>
-								<td>{{tindakan?.keterangan && tindakan?.keterangan || '-'}}</td>
+								<td>{{tindakan?.keterangan && tindakan?.keterangan || '--'}}</td>
 								<td>{{tindakan?.tenaga_medis.nama}}</td>
+								<td *ngIf="tindakan?.hasil_lab"> 
+									<button type="button" class="btn btn-sm btn-info" (click)="downloadHasilLab(tindakan?.hasil_lab.id)">
+					                    Lihat dokumen hasil
+				                    </button>
+				                </td>
+				                <td *ngIf="!tindakan?.hasil_lab"> -- </td>
 							</tr>
 						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="5">
+									<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+								</td>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</div>
@@ -165,21 +186,28 @@
 					</h4>
 				</div>
 				<div class="card-block">
-					<table class="table">
+					<table class="table" [mfData]="perkembangan" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortByTanggal" [(mfSortOrder)]="sortOrder">
 						<thead>
-							<th><b>Tanggal</b></th>
-							<th><b>Perkembangan</b></th>
+							<th><mfDefaultSorter by="tanggal">Tanggal</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="perkembangan">Perkembangan</mfDefaultSorter></th>
 						</thead>
 						<tbody>
-							<tr *ngFor="let perkembangan of perkembangan, let i = index;">
+							<tr *ngFor="let perkembangan of mf.data; index as i">
 								<td>{{tanggalPemeriksaan[i]}}</td>
 								<td>{{perkembangan}}</td>
 							</tr>
 						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="5">
+									<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+								</td>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</div>
-			<div class="card mb-3">
+			<div class="card mb-3" *ngIf="allResep != null">
 				<div class="card-header card-info">
 					<h4>
 						<i class="fa fa-sticky-note-o" aria-hidden="true"></i> Resep
@@ -207,7 +235,7 @@
 												</div>
 												<div *ngIf="resepItem.racikan_item.length > 0">
 													<div *ngFor="let racikanItem of resepItem.racikan_item">
-														{{racikanItem.jenis_obat.merek_obat}} 
+														{{racikanItem.jenis_obat.merek_obat}}
 													</div>
 												</div>
 											</td>
@@ -217,7 +245,7 @@
 												</div>
 												<div *ngIf="resepItem.racikan_item.length > 0">
 													<div *ngFor="let racikanItem of resepItem.racikan_item">
-		 												{{racikanItem.jenis_obat.nama_generik}} 
+		 												{{racikanItem.jenis_obat.nama_generik}}
 													</div>
 												</div>
 											</td>
@@ -227,7 +255,7 @@
 												</div>
 												<div *ngIf="resepItem.racikan_item.length > 0">
 													<div *ngFor="let racikanItem of resepItem.racikan_item">
-														{{racikanItem.jenis_obat.golongan}} 
+														{{racikanItem.jenis_obat.golongan}}
 													</div>
 												</div>
 											</td>
@@ -276,29 +304,55 @@
 				        </button>
 				    </div>
 				    <div class="modal-body">
-					    <div class="form-group">
-				  			<h6>Riwayat Penyakit :</h6>
-				  			<div *ngFor="let riwayat of allRiwayatPenyakit, let i = index; ">
-					  			<div>{{i+1}}. {{riwayat}}</div>
-				  			</div>
-			  			</div>
-				    	<div *ngFor="let riwayat of allRiwayat, let i = index, ">
-					    	<div class="card card-outline-info mb-3">
-						  		<div class="card-block">
-								    <div class="form-group">
-								  		<h5 class="btn btn-info form-control" data-toggle="collapse" [attr.data-target]="'#riwayat-collapse-' + i">Tercatat pada {{riwayat.tanggal_waktu}}</h5>
-							  		</div>
-							  		<div class="collapse" id="riwayat-collapse-{{i}}">
-								  		<div class="form-group">
-								  			<h6>Diagnosis :</h6>
-									    	<div *ngFor="let diagnosis of riwayat.allDiagnosis, let i = index; ">
-								  				<div>{{i+1}}. {{diagnosis.daftar_diagnosis.nama}}</div>
+					    <table class="table" [mfData]="allRiwayatPenyakit" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortOrder)]="sortOrder">
+							<thead>
+								<th><mfDefaultSorter by="riwayat">Riwayat</mfDefaultSorter></th>
+							</thead>
+							<tbody>
+								<tr *ngFor="let riwayat of allRiwayatPenyakit; index as i">
+									<td>{{riwayat}}</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="5">
+										<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+						<table class="table" [mfData]="allRiwayat" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortOrder)]="sortOrder">
+							<thead>
+								<th><mfDefaultSorter by="diagnosis">Histori Diagnosis</mfDefaultSorter></th>
+							</thead>
+							<tbody>
+								<tr *ngFor="let riwayat of allRiwayat, let i = index, ">
+							    	<div class="card card-outline-info mb-3">
+								  		<div class="card-block">
+										    <div class="form-group">
+										  		<h5 class="btn btn-info form-control" data-toggle="collapse" [attr.data-target]="'#riwayat-collapse-' + i">Tercatat pada {{riwayat.tanggal_waktu}}</h5>
+									  		</div>
+									  		<div class="collapse" id="riwayat-collapse-{{i}}">
+										  		<div class="form-group">
+										  			<h6>Diagnosis :</h6>
+											    	<div *ngFor="let diagnosis of riwayat.allDiagnosis, let i = index; ">
+										  				<div>{{i+1}}. {{diagnosis.daftar_diagnosis.nama}}</div>
+											    	</div>
+										    	</div>
 									    	</div>
 								    	</div>
 							    	</div>
-						    	</div>
-					    	</div>
-				    	</div>
+						    	</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="5">
+										<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+				    	
 				    </div>
 			    </div>
 		    </div>
@@ -314,11 +368,23 @@
 				        </button>
 				    </div>
 				    <div class="modal-body">
-				    	<div *ngFor="let alergi of allAlergi, let i = index; ">
-					  		<div class="form-group">
-				  				<div class="form-group">{{i+1}}. {{alergi}}</div>
-					    	</div>
-				    	</div>
+					    <table class="table" [mfData]="allAlergi" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortOrder)]="sortOrder">
+							<thead>
+								<th><mfDefaultSorter by="alergi">Alergi</mfDefaultSorter></th>
+							</thead>
+							<tbody>
+								<tr *ngFor="let alergi of allAlergi; index as i">
+									<td>{{alergi}}</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="5">
+										<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
 				    </div>
 			    </div>
 		    </div>

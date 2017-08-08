@@ -1,5 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, Input } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
+import { Observable } from 'rxjs/Rx';
 
 import { Antrian }                from './antrian';
 import { AntrianService }         from './antrian.service';
@@ -28,15 +30,17 @@ import * as io from "socket.io-client";
     TenagaMedisService
   ]
 })
-export class AntrianComponent implements OnInit {
+export class AntrianComponent implements OnInit, OnDestroy {
   allKategori: any[] = [];
   allAntrian: any[];
+  allAntrianSMS: any[] = [];
+  observable: any;
   kategori: string;
   selectedKategori: string;
   total: number = 0;
   antrian: any = { no_antrian: null };
   umum: boolean = true;
-  antrianEmpty:boolean;
+  antrianEmpty: boolean;
   isfrontoffice: boolean;
   isPoli: boolean;
   sub: any;
@@ -55,7 +59,8 @@ export class AntrianComponent implements OnInit {
 
   public filterQuery = "";
   public rowsOnPage = 4;
-  public sortBy = "no_transaksi";
+  public sortByRujukan = "no_transaksi";
+  public sortBySMS = "waktu_perjanjian";
   public sortOrder = "asc";
 
   constructor(
@@ -65,7 +70,9 @@ export class AntrianComponent implements OnInit {
     private poliklinikService: PoliklinikService,
     private laboratoriumService: LaboratoriumService,
     private transaksiService: TransaksiService,
-    private tenagaMedisService: TenagaMedisService
+    private tenagaMedisService: TenagaMedisService,
+    private toastyService: ToastyService,
+    private toastyConfig: ToastyConfig
   ) { this.socket = io('http://localhost') }
 
   ngOnInit() {
@@ -82,6 +89,19 @@ export class AntrianComponent implements OnInit {
       this.selectedKategori = this.kategori;
       this.socket.on('antrianFrontOffice'+this.kategori, this.updateAntrianFrontOffice.bind(this));
       this.updateAntrianFrontOffice();
+      this.observable = Observable.interval(5000 * 60).subscribe(x => {
+          this.antrianService.updateAntrianSMS().subscribe(data => {
+              let toastOptions:ToastOptions = {
+                  title: "Update Sukses !",
+                  msg: "Antrian SMS sudah diperbarui.",
+                  showClose: true,
+                  timeout: 5000,
+                  theme: 'bootstrap'
+              };
+
+              this.toastyService.success(toastOptions);
+            });
+        });
     }
     else {
       this.updateAntrian();
@@ -95,6 +115,10 @@ export class AntrianComponent implements OnInit {
       )
       this.socket.on('antrianLayanan'+this.layanan, this.updateAntrian.bind(this));
     }
+  }
+
+  ngOnDestroy() {
+    this.observable.unsubscribe();
   }
 
   public closeAlert(alert: IAlert) {
@@ -114,6 +138,13 @@ export class AntrianComponent implements OnInit {
           });
       }
     );
+  }
+
+  private updateAntrianSMS() {
+    this.antrianService.getAntrianSMSFrontOffice(this.kategori)
+      .subscribe(allAntrian => {
+        this.allAntrianSMS = allAntrian;
+      });
   }
 
   private updateAntrian() {
@@ -150,6 +181,7 @@ export class AntrianComponent implements OnInit {
         } else {
           this.antrianEmpty = false;
         }
+        this.updateAntrianSMS();
       });
   }
 
@@ -232,14 +264,24 @@ export class AntrianComponent implements OnInit {
   private periksa(no_pegawai, nama_poli, id_transaksi) {
     if (!this.isRujukan)
       this.proses('proses');
-      
+
     let request = {
       no_pegawai: no_pegawai,
       nama_poli: nama_poli,
       id_transaksi: id_transaksi
     }
     this.tenagaMedisService.periksa(request).subscribe(
-      data => {}
+      data => {
+        let toastOptions:ToastOptions = {
+            title: "Proses antrian berhasil",
+            msg: "Pasien sudah diteruskan ke " + nama_poli,
+            showClose: true,
+            timeout: 5000,
+            theme: 'bootstrap'
+        };
+
+        this.toastyService.success(toastOptions);
+      }
     )
   }
 

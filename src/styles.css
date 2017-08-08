@@ -20,3 +20,18 @@ td {
 .borderless td, .borderless th {
   border: none;
 }
+
+.input-group-addon.success {
+  background-color: #5cb85e;
+  color: white;
+}
+
+.input-group-addon.info {
+  background-color: #5bc0de;
+  color: white;
+}
+
+.input-group-addon.danger {
+  background-color: #d9534f;
+  color: white;
+}

@@ -1,0 +1,290 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-plus-square" aria-hidden="true"></i> Informasi Rekam Medis
+					</h4>
+				</div>
+				<div class="card-block">
+					<div>
+						<b>Dokter Penanggungjawab : </b>{{dokter?.assignedPerson.name.given}} {{dokter?.assignedPerson.name.family}}
+				</div>
+			</div>
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-id-card-o" aria-hidden="true"></i> Data Pribadi Pasien
+					</h4>
+				</div>
+				<div class="card-block">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td><b>Nama</b></td>
+								<td>{{pasien?.nama_pasien}}</td>
+								<td><b>Jenis kelamin</b></td>
+								<td>{{pasien?.jender == 1 && 'Laki-laki' || 'Perempuan'}}</td>
+							</tr>
+							<tr>
+								<td><b>Tanggal Lahir</b></td>
+								<td>{{pasien?.tanggal_lahir}}</td>
+								<td><b>Kontak</b></td>
+								<td>{{pasien?.kontak}}</td>
+							</tr>
+							<tr>
+								<td><b>Agama</b></td>
+								<td>{{pasien?.agama}}</td>
+								<td><b>Golongan Darah</b></td>
+								<td>{{pasien?.gol_darah}}</td>
+							</tr>
+							<tr>
+								<td><b>Alamat</b></td>
+								<td>{{pasien?.alamat}}</td>
+								<td></td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="card mb-3" *ngIf="hasilPemeriksaan">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-clipboard" aria-hidden="true"></i> Hasil Pemeriksaan Awal
+					</h4>
+				</div>
+				<div class="card-block">
+					<table class="table" [mfData]="hasilPemeriksaan" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortByTanggal" [(mfSortOrder)]="sortOrder">
+						<thead>
+							<th><mfDefaultSorter by="tanggal">Tanggal</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="tinggi">Tinggi Badan</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="berat">Berat Badan</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="tekanan">Tekanan Badan</mfDefaultSorter></th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let hasil of mf.data">
+								<td>{{hasil.tanggal}}</td>
+								<td *ngFor="let elements of hasil.elements">{{elements.nilai}}</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="5">
+									<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+					<!-- <table class="table">
+						<tbody>
+							<ng-container *ngFor="let hasil of hasilPemeriksaan">
+								<tr>
+									<td><b>Tanggal</b></td>
+									<td>{{hasil.tanggal}}</td>
+									<ng-container *ngFor="let elements of hasil.elements">
+										<td><b>{{elements.nama}}</b></td>
+										<td>{{elements.nilai}}</td>
+									</ng-container>
+								</tr>
+							</ng-container>
+						</tbody>
+					</table> -->
+				</div>
+			</div>
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-files-o" aria-hidden="true"></i> Anamnesis
+					</h4>
+				</div>
+				<div class="card-block">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td><b>Keluhan Utama</b></td>
+								<td>{{anamnesis?.keluhan}}</td>
+							</tr>
+							<tr>
+								<td><b>Alasan Perujukan</b></td>
+								<td>{{anamnesis?.alasan_rujukan}}</td>
+							</tr>
+							<tr>
+								<td><b>Riwayat Penyakit</b></td>
+								<td>
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#riwayatModal" [attr.data-target]="'#riwayatModal'">Detail</button>
+								</td>
+							</tr>
+							<tr>
+								<td><b>Alergi</b></td>
+								<td>
+									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#alergiModal" [attr.data-target]="'#alergiModal'">Detail</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="card mb-3" *ngIf="allDiagnosis">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-stethoscope" aria-hidden="true"></i> Diagnosis
+					</h4>
+				</div>
+				<div class="card-block">
+					<table class="table" [mfData]="allDiagnosis" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortOrder)]="sortOrder">
+						<thead>
+							<th><mfDefaultSorter by="diagnosis">Diagnosis</mfDefaultSorter></th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let diagnosis of mf.data; index as i">
+								<td>{{diagnosis}}</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="5">
+									<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+			<div class="card mb-3" *ngIf="allTindakan">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-medkit" aria-hidden="true"></i> Tindakan
+					</h4>
+				</div>
+				<div class="card-block">
+					<table class="table" [mfData]="allTindakan" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortByTanggal" [(mfSortOrder)]="sortOrder">
+						<thead>
+							<th><mfDefaultSorter by="tindakan">Nama</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="tanggal">Tanggal</mfDefaultSorter></th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let tindakan of mf.data; index as i">
+								<td>{{tindakan.nama}}</td>
+								<td>{{tindakan.tanggal}}</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="5">
+									<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+			<div class="card mb-3" *ngIf="allResep">
+				<div class="card-header card-info">
+					<h4>
+						<i class="fa fa-sticky-note-o" aria-hidden="true"></i> Resep
+					</h4>
+				</div>
+		  		<div class="card-block">
+			  		<table class="table" [mfData]="allResep" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortByTanggal" [(mfSortOrder)]="sortOrder">
+						<thead>
+							<th><mfDefaultSorter by="jenis_obat">Jenis Obat</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="petunjuk_pemakaian">Petunjuk Pemakaian</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="tanggal">Tanggal Resep</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="indikasi_penyakit">Indikasi Penyakit</mfDefaultSorter></th>
+							<th><mfDefaultSorter by="instruksi">Instruksi Tambahan</mfDefaultSorter></th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let resep of mf.data; index as i">
+								<td>{{resep.jenis_obat}}</td>
+								<td>{{resep.petunjuk_pemakaian}}</td>
+								<td>{{resep.tanggal_mulai}}</td>
+								<td>{{resep.indikasi_penyakit}}</td>
+								<td>{{resep.instruksi}}</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="5">
+									<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="pull-right">
+			<button type="button" class="btn btn-warning" (click)="goBack()">Kembali</button>
+		</div>
+
+		<div class="modal fade" id="riwayatModal" tabindex="-1" role="dialog" aria-labelledby="riwayatModal" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				    <div class="modal-header">
+				        <h5 class="modal-title" id="riwayatModal">Rekap Kesehatan {{pasien?.nama_pasien}}</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <i class="fa fa-times" aria-hidden="true"></i>
+				        </button>
+				    </div>
+				    <div class="modal-body">
+			  			<table class="table" [mfData]="allRiwayat" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortOrder)]="sortOrder">
+							<thead>
+								<th><mfDefaultSorter by="riwayat">Riwayat</mfDefaultSorter></th>
+							</thead>
+							<tbody>
+								<tr *ngFor="let riwayat of allRiwayat; index as i">
+									<td>{{riwayat}}</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="5">
+										<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+		  			</div>
+			    </div>
+		    </div>
+	    </div>
+
+	    <div class="modal fade" id="alergiModal" tabindex="-1" role="dialog" aria-labelledby="alergiModal" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				    <div class="modal-header">
+				        <h5 class="modal-title" id="alergiModal">Alergi yang diderita {{pasien?.nama_pasien}}</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <i class="fa fa-times" aria-hidden="true"></i>
+				        </button>
+				    </div>
+				    <div class="modal-body">
+					    <table class="table" [mfData]="allAlergi" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortByNama" [(mfSortOrder)]="sortOrder">
+							<thead>
+								<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="reaksi">Reaksi</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="status">Status</mfDefaultSorter></th>
+							</thead>
+							<tbody>
+								<tr *ngFor="let alergi of allAlergi; index as i">
+									<td>{{alergi.nama}}</td>
+									<td>{{alergi.reaksi}}</td>
+									<td>{{alergi.status}}</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="5">
+										<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+				    </div>
+			    </div>
+		    </div>
+	    </div>
+	</div>
+</div>

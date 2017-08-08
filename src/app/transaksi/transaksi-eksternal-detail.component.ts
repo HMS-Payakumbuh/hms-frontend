@@ -1,28 +1,30 @@
 import 'rxjs/add/operator/switchMap';
 import * as _ from "lodash";
 import { Component, Input, OnInit }	from '@angular/core';
-import { ActivatedRoute, Params }	from '@angular/router';
+import { ActivatedRoute, Params, Router }	from '@angular/router';
 import { Location }					from '@angular/common';
 
 import { PembayaranService }		from '../pembayaran/pembayaran.service';
-import { TransaksiService }			from './transaksi.service';
+import { TransaksiEksternalService }			from './transaksi-eksternal.service';
 import { Transaksi }				from './transaksi';
 import { Asuransi }				from '../pasien/asuransi';
 import { AsuransiService }		from '../pasien/asuransi.service';
 
 @Component({
- 	selector: 'transaksi-obat-detail-page',
+ 	selector: 'transaksi-eksternal-detail-page',
  	templateUrl: './transaksi-detail.component.html',
- 	providers: [TransaksiService, PembayaranService, AsuransiService]
+ 	providers: [TransaksiEksternalService, PembayaranService]
 })
 
-export class TransaksiObatDetailComponent implements OnInit {
+export class TransaksiEksternalDetailComponent implements OnInit {
 	response: any;
 	transaksi: any;
 	listOfObatTebus: any[] = [];
+	listOfObatEceran: any[] = [];
 	asuransi: Asuransi;
 	allAsuransi: Asuransi[];
 	listOfObatTebusId: number[] = [];
+	listOfObatEceranId: number[] = [];
 	allMetode = [];
 	nama_pasien: any;
 	jender_pasien: number = 0;
@@ -37,18 +39,19 @@ export class TransaksiObatDetailComponent implements OnInit {
 	no_pembayaran: string = '';
 
 	printListOfObatTebus: any[] = [];
+	printListOfObatEceran: any[] = [];
 
 	constructor(
-		private transaksiService: TransaksiService,
+		private transaksiEksternalService: TransaksiEksternalService,
 		private pembayaranService: PembayaranService,
-		private asuransiService: AsuransiService,
 		private route: ActivatedRoute,
-		private location: Location
+		private location: Location,
+		private router: Router,
 	) {}
 
 	ngOnInit(): void {
-		this.transaksi_obat = true;
-		this.transaksi_eksternal = false;
+		this.transaksi_obat = false;
+		this.transaksi_eksternal = true;
 		this.harga_tambahan = 0;
 		this.harga_total = 0;
 		this.perlu_bayar_tambahan = true;
@@ -60,35 +63,29 @@ export class TransaksiObatDetailComponent implements OnInit {
 		this.no_pembayaran = '';
 
 		this.listOfObatTebus = [];
+		this.listOfObatEceran = [];
 
 		this.listOfObatTebusId = [];
+		this.listOfObatEceranId = [];
 
 		this.printListOfObatTebus = [];
+		this.printListOfObatEceran = [];
 		
 		this.route.params
-			.switchMap((params: Params) => this.transaksiService.getTransaksi(+params['id']))
+			.switchMap((params: Params) => this.transaksiEksternalService.getTransaksi(+params['id']))
 			.subscribe(data => {
 				this.response = data;
 				this.transaksi = this.response.transaksi;
 				this.transaksi.tindakan = [];
-				if (this.transaksi.pasien !== null) {
-					this.nama_pasien = this.transaksi.pasien.nama_pasien;
-					this.jender_pasien = this.transaksi.pasien.jender;
-					this.calculateAge(this.transaksi.pasien.tanggal_lahir);
-					this.asuransiService.getAsuransi(this.transaksi.pasien.id)
-						.subscribe(listAsuransi => {
-							this.allAsuransi = listAsuransi;
-							this.initMetodeList(this.allAsuransi);
-						});
-				} else {
-					if (this.transaksi.obat_tebus.length > 0) {
-						this.nama_pasien = this.transaksi.obat_tebus[0].resep.nama;
-						this.umur_pasien = this.transaksi.obat_tebus[0].resep.umur;
-					}
-				}
+				this.nama_pasien = this.transaksi.nama;
+				this.umur_pasien = this.transaksi.umur;
 
 				if (this.transaksi.obat_tebus.length > 0) {
 					this.initObatTebus(this.transaksi.obat_tebus);
+				}
+
+				if (this.transaksi.obat_eceran.length > 0) {
+					this.initObatEceran(this.transaksi.obat_eceran);
 				}
 
 				console.log(this.transaksi);
@@ -97,73 +94,35 @@ export class TransaksiObatDetailComponent implements OnInit {
 	}
 
 	goBack(): void {
-		this.location.back();
+		this.router.navigateByUrl('/histori-transaksi');
 	}
 
 	initObatTebus(value): void {
 		for (let obatTebus of value) {
 			for (let item of obatTebus.obat_tebus_item) {
 				console.log(item);
-				let hitung = false;
-				if (item.jenis_obat.dicover_bpjs === true && this.transaksi.no_sep !== null) {
-					// code...
-				}
-				else {
-					this.listOfObatTebus.push(item);
-					hitung = true;
-				}
-
-				if (hitung) {
-					if (item.id_pembayaran === null) {
-						this.printListOfObatTebus.push(item);
-						this.harga_total += item.jumlah * item.harga_jual_realisasi;
-						this.total_bayar = this.total_bayar + (parseInt(item.jumlah) * parseInt(item.harga_jual_realisasi));
-					}
+				this.listOfObatTebus.push(item);
+				if (item.id_pembayaran === null) {
+					this.printListOfObatTebus.push(item);
+					this.harga_total += item.jumlah * item.harga_jual_realisasi;
+					this.total_bayar = this.total_bayar + (parseInt(item.jumlah) * parseInt(item.harga_jual_realisasi));
 				}
 			}
 		}
 	}
 
-	gantiAsuransi(value): void {
-		if (value == 'tunai') {
-			this.asuransi = new Asuransi(null, value, null);
-		}
-		else {
-			for (let asuransi of this.allAsuransi) {
-				if (asuransi.nama_asuransi == value) {
-					this.asuransi = asuransi;
+	initObatEceran(value): void {
+		for (let obatEceran of value) {
+			for (let item of obatEceran.obat_eceran_item) {
+				console.log(item);
+				this.listOfObatEceran.push(item);
+				if (item.id_pembayaran === null) {
+					this.printListOfObatEceran.push(item);
+					this.harga_total += item.jumlah * item.harga_jual_realisasi;
+					this.total_bayar = this.total_bayar + (parseInt(item.jumlah) * parseInt(item.harga_jual_realisasi));
 				}
 			}
 		}
-		console.log(value);
-		console.log(this.asuransi);
-	}
-
-	private initMetodeList(items: Asuransi[]): void {
-		for (let item of _.uniqBy(items, 'nama_asuransi')) {
-			this.allMetode.push(item.nama_asuransi);
-		}
-		let index = this.allMetode.indexOf('bpjs');
-		if (index >= 0) {
-			this.allMetode.splice(index, 1);
-		}
-	}
-
-	calculateAge(tanggal: string): void {
-		let birthDate: Date = new Date(tanggal);
-		let today: Date = new Date();
-		this.umur_pasien = today.getFullYear() - birthDate.getFullYear();
-		let m = today.getMonth() - birthDate.getMonth();
-		if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-		    this.umur_pasien--;
-		}
-		console.log(this.umur_pasien);
-	}
-
-	private createAsuransi(id: number) {
-		this.asuransi.id_pasien = id;
-		let asuransi:any = { asuransi: this.asuransi };
-		this.asuransiService.createAsuransi(asuransi).subscribe();
 	}
 
 	bayar(metode: string = 'tunai'): void {
@@ -177,23 +136,31 @@ export class TransaksiObatDetailComponent implements OnInit {
 			}
 		}
 
+		for (let i of this.listOfObatEceran) {
+			if (i.id_pembayaran === null) {
+				total_harga += parseInt(i.harga_jual_realisasi) * parseInt(i.jumlah);
+				this.listOfObatEceranId.push(i.id);
+			}
+		}
+
 		if (this.listOfObatTebusId.length > 0) {
 			bayar = true;
 		}
 
-		if (bayar) {
-			if (metode != 'tunai') {
-				this.createAsuransi(this.transaksi.id_pasien);
-			}
+		if (this.listOfObatEceranId.length > 0) {
+			bayar = true;
+		}
 
-			this.createPembayaran(this.total_bayar, metode.toLowerCase(), false, null, this.listOfObatTebusId, null, null);
+		if (bayar) {
+			this.createPembayaran(this.total_bayar, metode.toLowerCase(), false, null, this.listOfObatTebusId, this.listOfObatEceranId, null);
 		}
 		console.log(metode.toLowerCase());
 	}
 
 	createPembayaran(harga: number, metode: string, tambahan: boolean = false, listOfTindakan: number[] = null, listOfObatTebusId: number[] = null, listOfObatEceranId: number[] = null, listOfKamarRawatInapId: number[] = null): void {
 		let payload: any = {
-			id_transaksi: this.transaksi.id,
+			id_transaksi: 0,
+			id_transaksi_eksternal: this.transaksi.id,
 			harga_bayar: harga,
 			metode_bayar: metode,
 			tindakan: listOfTindakan,
@@ -214,7 +181,6 @@ export class TransaksiObatDetailComponent implements OnInit {
 		};
 
 		console.log(request);
-		let response: any = null;
 		this.pembayaranService.createPembayaran(request)
 		.subscribe(data => {
 			console.log(data);

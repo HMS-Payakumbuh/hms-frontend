@@ -28,7 +28,7 @@ export class PemakaianKamarOperasiService {
 
 	getAllPemakaianKamarOperasiNow(): Observable<PemakaianKamarOperasi[]> {
 		return this.getAllPemakaianKamarOperasi()
-			.map(allPemakaianKamarOperasi => allPemakaianKamarOperasi.filter(PemakaianKamarOperasi => PemakaianKamarOperasi.waktu_masuk_real != null));
+			.map(allPemakaianKamarOperasi => allPemakaianKamarOperasi.filter(PemakaianKamarOperasi => PemakaianKamarOperasi.waktu_masuk_real != null && PemakaianKamarOperasi.waktu_keluar_real == null ));
 	}
 
 	getPemakaianKamarOperasi(id: number): Observable<PemakaianKamarOperasi> {
@@ -42,6 +42,33 @@ export class PemakaianKamarOperasiService {
 		let body = JSON.stringify(PemakaianKamarOperasi);
 
 		return this.http.post(this.pemakaianKamarOperasiUrl, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	createPemakaianKamarOperasiBooked(PemakaianKamarOperasi: PemakaianKamarOperasi) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(PemakaianKamarOperasi);
+
+		return this.http.post(this.pemakaianKamarOperasiUrl + '/booking', body, options)
+			.map((res: Response) => res.json());
+	}
+
+	masuk(id: number, PemakaianKamarOperasi: PemakaianKamarOperasi) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(PemakaianKamarOperasi);
+
+		return this.http.put(this.pemakaianKamarOperasiUrl + '/booking/masuk/' + id, body, options)
+			.map((res: Response) => res.json());
+	}
+
+	keluar(id:number, PemakaianKamarOperasi: PemakaianKamarOperasi) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(PemakaianKamarOperasi);
+
+		return this.http.put(this.pemakaianKamarOperasiUrl + '/booking/keluar/' + id, body, options)
 			.map((res: Response) => res.json());
 	}
 

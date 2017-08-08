@@ -12,6 +12,7 @@ import { ToastyModule }             from 'ng2-toasty';
 import { MatchesStatusPipe }            from './pipe/matches-status.pipe';
 import { FilterPasienPipe }         from './pipe/filter-pasien.pipe';
 import { FilterNamaPasienPipe }         from './pipe/filter-nama-pasien.pipe';
+import { FilterKodePasienPipe }         from './pipe/filter-kode-pasien.pipe';
 import { FilterTanggalPipe }            from './pipe/filter-tanggal.pipe';
 import { FilterCreatedAtPipe }            from './pipe/filter-created-at.pipe';
 import { FilterWaktuMasukPipe }            from './pipe/filter-waktu-masuk.pipe';
@@ -41,6 +42,8 @@ import { RegisterComponent }      from './auth/register.component';
 import { LoginComponent }         from './auth/login.component';
 
 import { HistoriTransaksiComponent }          from './transaksi/histori-transaksi.component';
+import { RekapTransaksiComponent }          from './transaksi/rekap-transaksi.component';
+import { TransaksiEksternalDetailComponent }        from './transaksi/transaksi-eksternal-detail.component';
 import { TransaksiObatComponent }          from './transaksi/transaksi-obat.component';
 import { TransaksiObatDetailComponent }        from './transaksi/transaksi-obat-detail.component';
 import { TransaksiComponent }          from './transaksi/transaksi.component';
@@ -60,6 +63,7 @@ import { PasienListComponent }              from './pasien/pasien-list.component
 import { CatatanKematianFormComponent }     from './pasien/catatan-kematian-form.component';
 import { RekamMedisListComponent }          from './pasien/rekam-medis-list.component';
 import { RekamMedisDetailComponent }        from './pasien/rekam-medis-detail.component';
+import { RekamMedisEksternalDetailComponent } from './pasien/rekam-medis-eksternal-detail.component';
 
 import { PoliklinikListComponent }          from './layanan/poliklinik-list.component';
 import { PoliklinikPemeriksaanComponent }   from './layanan/poliklinik-pemeriksaan.component';
@@ -171,6 +175,7 @@ import { AppComponent }             from './app.component';
         MatchesStatusPipe,
         FilterPasienPipe,
         FilterNamaPasienPipe,
+        FilterKodePasienPipe,
         FilterTanggalPipe,
         FilterCreatedAtPipe,
         FilterWaktuMasukPipe,
@@ -198,6 +203,8 @@ import { AppComponent }             from './app.component';
         LoginComponent,
 
         HistoriTransaksiComponent,
+        RekapTransaksiComponent,
+        TransaksiEksternalDetailComponent,
         TransaksiObatComponent,
         TransaksiObatDetailComponent,
         TransaksiComponent,
@@ -212,6 +219,7 @@ import { AppComponent }             from './app.component';
         CatatanKematianFormComponent,
         RekamMedisListComponent,
         RekamMedisDetailComponent,
+        RekamMedisEksternalDetailComponent,
 
         PoliklinikListComponent,
         PoliklinikPemeriksaanComponent,

@@ -1,0 +1,44 @@
+<html lang="en">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header card-info mb-3">
+					<h4>
+						<i class="fa fa-money" aria-hidden="true"></i> Rekapitulasi Transaksi
+					</h4>
+				</div>
+				<div class="card-block">
+					<div>
+						<table class="table" [mfData]="allTransaksi" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+							<tbody>
+								<tr>
+									<th>Waktu Transaksi</th>
+									<th>Nomor Transaksi</th>
+									<th>Total Pembayaran Non-BPJS</th>
+									<th>Pembayaran BPJS</th>
+									<th>Tarif Klaim</th>
+									<th>Surplus Klaim</th>
+								</tr>
+								<tr *ngFor="let transaksi of mf.data">
+									<td>{{transaksi.waktu_perubahan_terakhir}}</td>
+									<td>{{transaksi.no_transaksi}}</td>
+									<td>Rp. {{transaksi.total_pembayaran | number: '.2-2'}}</td>
+									<td>Rp. {{transaksi.total_bpjs | number: '.2-2'}}</td>
+									<td>Rp. {{transaksi.total_klaim | number: '.2-2'}}</td>
+									<td>Rp. {{transaksi.total_klaim - transaksi.total_bpjs | number: '.2-2'}}</td>
+								</tr>
+							</tbody>
+							<tfoot>
+				                <tr>
+				                    <td colspan="7">
+				                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+				                    </td>
+				                </tr>
+			                </tfoot>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</html>

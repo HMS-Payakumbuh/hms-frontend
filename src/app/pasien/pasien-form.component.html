@@ -1,4 +1,4 @@
-<div class="row">  
+<div class="row">
   <div class="col-md-12">
     <div class="card mb-3">
 
@@ -12,7 +12,7 @@
             <a class="nav-link active" data-toggle="tab" href="#baru" role="tab" style="color: black;">
               <i class="fa fa-address-book" aria-hidden="true"></i> Pasien Baru
             </a>
-          </li>             
+          </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#lama" role="tab" style="color: black;">
               <i class="fa fa-address-book-o" aria-hidden="true"></i> Pasien Lama
@@ -79,7 +79,7 @@
                     <label for="poliklinik">Poliklinik</label>
                     <select class="form-control" id="poliklinik" [disabled]="fromAntrian" [(ngModel)]="layanan" name="poliklinik" required>
                       <ng-container *ngFor="let poliklinik of allLayanan">
-                        <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}}</option>
+                        <option *ngIf="poliklinik.sisa_pelayanan > 0 && poliklinik.nama != 'IGD'" [value]="poliklinik.nama">{{poliklinik.nama}}</option>
                       </ng-container>
                     </select>
                   </div>
@@ -123,24 +123,33 @@
 
                   <div *ngIf="rujukanChecked">
                     <div class="form-group">
-                      <div class="row">
-                        <div class="col md-6">
-                          <label for="asal_rujukan">Asal Rujukan</label>
-                          <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="rujukan.asal_rujukan" name="asal_rujukan" required>
+                      <label for="no_rujukan">Nomor Rujukan</label>
+                        <div class="input-group">
+                          <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="rujukan.no_rujukan" name="no_rujukan" [disabled]="isVerified" required>
+                          <span class="input-group-btn" *ngIf="isBpjs">
+                            <button class="btn btn-secondary" type="button" (click)="getRujukan()">Verifikasi</button>
+                          </span>
                         </div>
-                        <div class="col md-6">
-                          <label for="no_rujukan">Nomor Rujukan</label>
-                          <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="rujukan.no_rujukan" name="no_rujukan" required>
-                        </div>
-                      </div>
                     </div>
                     <div class="form-group">
+                        <label for="asal_rujukan">Asal Rujukan</label>
+                        <input type="string" class="form-control" id="asal_rujukan" [disabled]="isVerified" [(ngModel)]="rujukan.asal_rujukan" name="asal_rujukan" required>
+                      </div>
+                    <div class="form-group">
+                      <label for="nomor_pasien">Nomor Kartu Pasien</label>
+                      <input type="string" class="form-control" id="nomor_pasien" [disabled]="isVerified" [(ngModel)]="nomor_pasien" name="nomor_pasien" required>
+                    </div>
+                    <div class="form-group" *ngIf="!isBpjs">
                       <label for="diagnosis">Diagnosis</label>
                       <input type="string" class="form-control" id="diagnosis" [ngbTypeahead]="searchDiagnosis" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addDiagnosis($event.item)" required>
                     </div>
+                    <div class="form-group" *ngIf="isBpjs">
+                      <label for="diagnosis">Diagnosis</label>
+                      <input type="string" class="form-control" id="diagnosis" [(ngModel)]="rujukan.diagnosis" name="diagnosis" [disabled]="isVerified" required>
+                    </div>
                     <div class="form-group">
                       <label for="keterangan">Keterangan</label>
-                      <textarea class="form-control" id="keterangan" [(ngModel)]="rujukan.keterangan" name="keterangan"></textarea> 
+                      <textarea class="form-control" id="keterangan" [(ngModel)]="rujukan.keterangan" [disabled]="isVerified" name="keterangan"></textarea>
                     </div>
                   </div>
 
@@ -231,7 +240,7 @@
                     <label for="poliklinik">Poliklinik</label>
                     <select class="form-control" id="poliklinik" [disabled]="fromAntrian" [(ngModel)]="layanan" name="poliklinik" required>
                       <ng-container *ngFor="let poliklinik of allLayanan">
-                        <option *ngIf="poliklinik.sisa_pelayanan > 0" [value]="poliklinik.nama">{{poliklinik.nama}}</option>
+                        <option *ngIf="poliklinik.sisa_pelayanan > 0 && poliklinik.nama != 'IGD'" [value]="poliklinik.nama">{{poliklinik.nama}}</option>
                       </ng-container>
                     </select>
                   </div>
@@ -306,24 +315,33 @@
 
                   <div *ngIf="rujukanChecked">
                     <div class="form-group">
-                      <div class="row">
-                        <div class="col md-6">
-                          <label for="asal_rujukan">Asal Rujukan</label>
-                          <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="rujukan.asal_rujukan" name="asal_rujukan" required>
+                      <label for="no_rujukan">Nomor Rujukan</label>
+                        <div class="input-group">
+                          <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="rujukan.no_rujukan" name="no_rujukan" [disabled]="isVerified" required>
+                          <span class="input-group-btn" *ngIf="isBpjs">
+                            <button class="btn btn-secondary" type="button" (click)="getRujukan()">Verifikasi</button>
+                          </span>
                         </div>
-                        <div class="col md-6">
-                          <label for="no_rujukan">Nomor Rujukan</label>
-                          <input type="string" class="form-control" id="no_rujukan" [(ngModel)]="rujukan.no_rujukan" name="no_rujukan" required>
-                        </div>
-                      </div>
                     </div>
                     <div class="form-group">
+                        <label for="asal_rujukan">Asal Rujukan</label>
+                        <input type="string" class="form-control" id="asal_rujukan" [disabled]="isVerified" [(ngModel)]="rujukan.asal_rujukan" name="asal_rujukan" required>
+                      </div>
+                    <div class="form-group">
+                      <label for="nomor_pasien">Nomor Kartu Pasien</label>
+                      <input type="string" class="form-control" id="nomor_pasien" [disabled]="isVerified" [(ngModel)]="nomor_pasien" name="nomor_pasien" required>
+                    </div>
+                    <div class="form-group" *ngIf="!isBpjs">
                       <label for="diagnosis">Diagnosis</label>
                       <input type="string" class="form-control" id="diagnosis" [ngbTypeahead]="searchDiagnosis" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addDiagnosis($event.item)" required>
                     </div>
+                    <div class="form-group" *ngIf="isBpjs">
+                      <label for="diagnosis">Diagnosis</label>
+                      <input type="string" class="form-control" id="diagnosis" [(ngModel)]="rujukan.diagnosis" name="diagnosis" [disabled]="isVerified" required>
+                    </div>
                     <div class="form-group">
                       <label for="keterangan">Keterangan</label>
-                      <textarea class="form-control" id="keterangan" [(ngModel)]="rujukan.keterangan" name="keterangan"></textarea> 
+                      <textarea class="form-control" id="keterangan" [(ngModel)]="rujukan.keterangan" [disabled]="isVerified" name="keterangan"></textarea>
                     </div>
                   </div>
 

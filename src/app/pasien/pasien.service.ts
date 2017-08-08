@@ -45,7 +45,9 @@ export class PasienService {
 		let body = JSON.stringify(pasien);
 
 		return this.http.post(this.pasienUrl, body, options)
-			.map((res: Response) => res.json());
+			.map((res: Response) => { 
+				return { status: res.status, json: res.json() }
+			});
 	}
 
 	updatePasien(id: number, pasien: Pasien) {

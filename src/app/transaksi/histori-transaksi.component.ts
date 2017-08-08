@@ -3,6 +3,7 @@ import * as _ from "lodash";
 
 import { Transaksi }			from './transaksi';
 import { TransaksiService }		from './transaksi.service';
+import { TransaksiEksternalService }			from './transaksi-eksternal.service';
 import { Asuransi }				from '../pasien/asuransi';
 import { AsuransiService }		from '../pasien/asuransi.service';
 
@@ -10,7 +11,7 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 @Component({
  	selector: 'histori-transaksi-page',
  	templateUrl: './histori-transaksi.component.html',
- 	providers: [TransaksiService, AsuransiService]
+ 	providers: [TransaksiService, TransaksiEksternalService, AsuransiService]
 })
 
 export class HistoriTransaksiComponent {
@@ -29,6 +30,7 @@ export class HistoriTransaksiComponent {
 
 	constructor(
 		private transaksiService: TransaksiService,
+		private transaksiEksternalService: TransaksiEksternalService,
 		private asuransiService: AsuransiService
 	) {}
 
@@ -44,12 +46,19 @@ export class HistoriTransaksiComponent {
 		this.asuransiService.getAllAsuransi()
 			.subscribe(allAsuransi => this.initJenisList(allAsuransi.allAsuransi));
 
-		this.transaksiService.getAllTransaksi(null, 'closed')
+		this.transaksiService.getAllTransaksi(null, null, 'closed')
 			.subscribe(data => {
 				this.response = data;
 				this.allTransaksi = this.response.allTransaksi;
 				console.log(this.allTransaksi);
 			});
+
+		// this.transaksiEksternalService.getAllTransaksi('closed')
+		// 	.subscribe(data => {
+		// 		this.response = data;
+		// 		this.allTransaksi = this.allTransaksi.concat(this.response.allTransaksi);
+		// 		console.log(this.allTransaksi);
+		// 	});
 	}
 
 	private searchTransaksi() {

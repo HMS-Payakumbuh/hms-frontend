@@ -9,7 +9,8 @@ import * as _ from "lodash";
 import { PemakaianKamarOperasi } 				from './pemakaian-kamar-operasi';
 import { PemakaianKamarOperasiService }		    from './pemakaian-kamar-operasi.service';
 import { KamarOperasi } 				from './kamar-operasi';
-import { KamarOperasiService }		    from './kamar-operasi.service';
+import { KamarOperasiService }	from './kamar-operasi.service';
+import { Dokter }               from '../tenaga-medis/dokter';
 import { TenagaMedis } 				from '../tenaga-medis/tenaga-medis';
 import { TenagaMedisService }		    from '../tenaga-medis/tenaga-medis.service';
 import { TindakanReference } 				from './tindakan-reference';
@@ -28,35 +29,37 @@ import { PoliklinikService }		from './poliklinik.service';
 @Component({
  	selector: 'booking-operasi-list-page',
  	templateUrl: './booking-operasi-list.component.html',
- 	providers: [PemakaianKamarOperasiService,
-	 			TenagaMedisService,
-                TindakanService,
-                PasienService,
-				TindakanOperasiService,
-				TransaksiService,
-				KamarOperasiService]
+ 	providers: [
+    PemakaianKamarOperasiService,
+	 	TenagaMedisService,
+    TindakanService,
+    PasienService,
+		TindakanOperasiService,
+		TransaksiService,
+		KamarOperasiService
+  ]
 })
 
 export class BookingOperasiListComponent implements OnInit {
 	allPemakaianKamarOperasi: PemakaianKamarOperasi[];
 	allKamarOperasi: KamarOperasi[];
-	allTenagaMedis: TenagaMedis[];
+	allDokter: Dokter[];
 	allTindakanReference: TindakanReference[];
 
 	tanggalOperasi: Date;
 	waktuMasuk: string;
 	waktuKeluar: string;
 
-    public allPasien: Pasien[];
-    public pasien: Pasien;
-    
+  public allPasien: Pasien[];
+  public pasien: Pasien;
+
 	no_pegawai: string;
 	noTenagaMedis: string[];
 
-    public transaksi: any;
+  public transaksi: any;
 
 	pemakaianKamarOperasiModal: PemakaianKamarOperasi = null;
-    pemakaianKamarOperasiModalNama: string = null;
+  pemakaianKamarOperasiModalNama: string = null;
 
 	selectedTindakan: Tindakan[] = [];
 	savedTindakan: Tindakan[] = [];
@@ -70,8 +73,8 @@ export class BookingOperasiListComponent implements OnInit {
 	tindakanOperasi : TindakanOperasi[];
 
     inputPasienFormatter = (value : Pasien) => value.nama_pasien;
-    resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.id;
-    
+    resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.kode_pasien;
+
     searchNamaPasien = (text$: Observable<string>) =>
 		text$
 			.debounceTime(200)
@@ -94,8 +97,8 @@ export class BookingOperasiListComponent implements OnInit {
 	constructor(
 		private pemakaianKamarOperasiService: PemakaianKamarOperasiService,
 		private tenagaMedisService: TenagaMedisService,
-        private formBuilder: FormBuilder,
-        private pasienService: PasienService,
+    private formBuilder: FormBuilder,
+    private pasienService: PasienService,
 		private tindakanService: TindakanService,
 		private transaksiService: TransaksiService,
 		private kamarOperasiService: KamarOperasiService,
@@ -106,7 +109,7 @@ export class BookingOperasiListComponent implements OnInit {
 		this.pemakaianKamarOperasiService.getAllPemakaianKamarOperasiBooked().subscribe(
      		data => { this.allPemakaianKamarOperasi = data }
     	);
-		
+
 
 		this.kamarOperasiService.getAllKamarOperasi().subscribe(
 			data =>  { this.allKamarOperasi = data }
@@ -116,25 +119,26 @@ export class BookingOperasiListComponent implements OnInit {
 			data => {  this.allTindakanReference = data }
 		);
 
-		this.tenagaMedisService.getAllTenagaMedis().
-            subscribe(data => this.allTenagaMedis = data);
-            
+		this.tenagaMedisService.getAllDokter().subscribe(
+      data => this.allDokter = data
+    );
+
         this.pasienService.getAllPasien().subscribe(
 			data => { this.allPasien = data }
 		);
 	}
 
-    private addPasien(pasien: Pasien) {	
+    private addPasien(pasien: Pasien) {
 		this.pasien = pasien;
 
 		this.transaksiService.getLatestOpenTransaksi(this.pasien.id).subscribe(
-			data => { 
+			data => {
 				this.transaksi = data;
 				this.pemakaianKamarOperasiModal.id_transaksi = this.transaksi.id;
 			}
 		);
     }
-    
+
 	newPemakaianKamarOperasi() {
     	this.pemakaianKamarOperasiModal = new PemakaianKamarOperasi();
 
@@ -183,7 +187,7 @@ export class BookingOperasiListComponent implements OnInit {
 		temp.nama_lab = null;
 		temp.nama_ambulans = null;
 		this.selectedTindakan.push(temp);
-		
+
 		this.noTenagaMedis.forEach(element => {
 			let temp2 = new TindakanOperasi();
 			temp2.id_tindakan = null;
@@ -218,19 +222,25 @@ export class BookingOperasiListComponent implements OnInit {
 		control.removeAt(i);
 	}
 
+  masukKamarOperasi(id:number, pemakaianKamarOperasi: PemakaianKamarOperasi) {
+    this.pemakaianKamarOperasiService.masuk(id, pemakaianKamarOperasi).subscribe(
+      data=> { this.ngOnInit() }
+    )
+  }
+
 	createPemakaianKamarOperasi() {
 		this.tindakanService.saveTindakan(this.selectedTindakan).subscribe(
-			data => { 
+			data => {
 				console.log(data);
 				this.tindakanOperasiService.createTindakanOperasi(this.savedTindakanOperasi).subscribe(
-					data => { 
+					data => {
 						console.log(data);
-						this.pemakaianKamarOperasiService.createPemakaianKamarOperasi(this.pemakaianKamarOperasiModal).subscribe(
+						this.pemakaianKamarOperasiService.createPemakaianKamarOperasiBooked(this.pemakaianKamarOperasiModal).subscribe(
 							data => {
 								this.ngOnInit();
 							}
 						);
-					}	
+					}
 				);
 			}
 		);

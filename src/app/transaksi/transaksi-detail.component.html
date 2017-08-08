@@ -18,9 +18,9 @@
 									<p *ngIf="jender_pasien === 1">Laki-laki</p>
 									<p *ngIf="jender_pasien === 2">Perempuan</p>
 									<p>{{umur_pasien}} Tahun</p>
-									<p>No. Sep: {{transaksi.no_sep}}</p>
-									<p>Metode Bayar: {{transaksi.asuransi_pasien.toUpperCase()}}</p>
-									<p>Waktu Masuk: {{transaksi.waktu_masuk_pasien}}</p>
+									<p *ngIf="!transaksi_eksternal">No. Sep: {{transaksi.no_sep}}</p>
+									<p *ngIf="!transaksi_eksternal">Metode Bayar: {{transaksi.asuransi_pasien.toUpperCase()}}</p>
+									<p *ngIf="!transaksi_eksternal">Waktu Masuk: {{transaksi.waktu_masuk_pasien}}</p>
 									<p *ngIf="transaksi.status === 'closed'">Waktu Keluar: {{transaksi.waktu_perubahan_terakhir}}</p>
 								</div>
 							</div>
@@ -29,7 +29,7 @@
 					<div class="row">
 						<table class="table">
 							<tbody>
-								<tr *ngIf="transaksi.tindakan?.length > 0">
+								<tr *ngIf="transaksi.tindakan?.length > 0 && !transaksi_obat">
 									<th>Tindakan</th>
 									<th></th>
 									<th></th>
@@ -55,17 +55,21 @@
 								</tr>
 								<tr *ngFor="let obatTebus of listOfObatTebus">
 									<td>{{obatTebus.jenis_obat.merek_obat}}</td>
+									<td></td>
+									<td></td>
 									<td>{{obatTebus.jumlah}} {{obatTebus.jenis_obat.satuan}} @ Rp. {{obatTebus.harga_jual_realisasi | number: '.2-2'}}</td>
 									<td>Rp. {{obatTebus.jumlah * obatTebus.harga_jual_realisasi | number: '.2-2'}}</td>
-									<td><input *ngIf="(transaksi.asuransi_pasien !== 'bpjs' || obatTebus.jenis_obat.dicover_bpjs !== true) && obatTebus.id_pembayaran === null" type="checkbox" value="obatTebus.id"  [id]="'obatTebus' + obatTebus.id" (change)="updateCheckedObatTebus(obatTebus.id)"></td>
+									<td></td>
 								</tr>
 								<tr *ngFor="let obatEceran of listOfObatEceran">
 									<td>{{obatEceran.jenis_obat.merek_obat}}</td>
+									<td></td>
+									<td></td>
 									<td>{{obatEceran.jumlah}} {{obatEceran.jenis_obat.satuan}} @ Rp. {{obatEceran.harga_jual_realisasi | number: '.2-2'}}</td>
 									<td>Rp. {{obatEceran.jumlah * obatEceran.harga_jual_realisasi | number: '.2-2'}}</td>
-									<td><input *ngIf="(transaksi.asuransi_pasien !== 'bpjs' || obatTebus.jenis_obat.dicover_bpjs !== true) && obatEceran.id_pembayaran === null" type="checkbox" value="obatEceran.id"  [id]="'obatEceran' + obatEceran.id" (change)="updateCheckedObatEceran(obatEceran.id)"></td>
+									<td></td>
 								</tr>
-								<tr *ngIf="listOfKamarRawatInap?.length > 0">
+								<tr *ngIf="listOfKamarRawatInap?.length > 0 && !transaksi_obat">
 									<th>Kamar Rawat Inap</th>
 									<th>Waktu Masuk</th>
 									<th>Waktu Keluar</th>
@@ -78,11 +82,13 @@
 									<td>{{kamar.waktu_masuk}}</td>
 									<td>{{kamar.waktu_keluar}}</td>
 									<td>{{howLong(kamar.waktu_masuk, kamar.waktu_keluar)}} Hari @ Rp. {{kamar.kamar_rawatinap.harga_per_hari | number: '.2-2'}}</td>
-									<td>Rp. {{kamar.harga | number: '.2-2'}}</td>
+									<td>Rp. {{kamar.kamar_rawatinap.harga_per_hari * howLong(kamar.waktu_masuk, kamar.waktu_keluar) | number: '.2-2'}}</td>
 									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs' && kamar.id_pembayaran === null" type="checkbox" value="kamar.id"  [id]="'kamarRawatInap' + kamar.id" (change)="updateCheckedKamarRawatInap(kamar)"></td>
 								</tr>
-								<tr *ngIf = "harga_tambahan !== 0">
+								<tr *ngIf="harga_tambahan !== 0 && !transaksi_obat">
 									<td>Tambahan Biaya Naik Kelas</td>
+									<td></td>
+									<td></td>
 									<td></td>
 									<td>Rp. {{harga_tambahan | number: '.2-2'}}</td>
 									<td><input *ngIf="transaksi.asuransi_pasien === 'bpjs' && perlu_bayar_tambahan" value="1"  [id]="'bayarTambahan'" (change)="updateCheckedBayarTambahan()" type="checkbox"></td>
@@ -101,23 +107,13 @@
 					<div class="row">
 						<div class="offset-md-6 col-md-6">
 							<button class="btn btn-danger" (click)="goBack()">Kembali</button>
-							<button *ngIf="transaksi.status === 'open'" class="btn btn-success" (click)="close()">Tutup Transaksi</button>
-							<button *ngIf="transaksi.status === 'open'" data-toggle="modal"
+							<button *ngIf="transaksi.status === 'open' && !transaksi_eksternal && !transaksi_obat" class="btn btn-success" (click)="close()">Tutup Transaksi</button>
+							<button *ngIf="transaksi.status === 'open' && !transaksi_eksternal" data-toggle="modal"
 							[attr.data-target]="'#pilihMetodeBayarModal'" class="btn btn-success">Bayar</button>
+							<button *ngIf="transaksi.status === 'open' && transaksi_eksternal" class="btn btn-success" (click)="bayar()">Bayar</button>
 						</div>
 					</div>
 					<div *ngIf="transaksi.pembayaran?.length > 0" class="row">
-						<div class="col-md-12">
-							<div class="form-group">
-			                    <label class="custom-control custom-checkbox">
-			                    	<input type="checkbox" class="custom-control-input" [checked]="showPembayaran" (change)="showPembayaran = !showPembayaran">
-			                    	<span class="custom-control-indicator"></span>
-			                    	<span class="custom-control-description">Tampilkan Pembayaran</span>
-			                    </label>
-		                	</div>
-						</div>
-					</div>
-					<div *ngIf="showPembayaran" class="row">
 						<div class="col-md-12">
 							<ul class='list-group'>
 								<a *ngFor="let pembayaran of transaksi.pembayaran" [routerLink] = "['/pembayaran', pembayaran.id]">Pembayaran {{pembayaran.metode_bayar.toUpperCase()}} : {{pembayaran.created_at}}</a>
@@ -141,12 +137,13 @@
 							<div class="form-group">
 								<label><b>Total: </b>Rp. {{total_bayar | number: '.2-2'}}</label>
 								<br>
+								<br>
 								<label>Metode Bayar:</label>
 								<select class="form-control" id="metode" [(ngModel)]="metode_bayar" (ngModelChange)="gantiAsuransi($event)">
 									<option [value]="'tunai'" selected>TUNAI</option>
 			                    	<option [value]="metode" *ngFor="let metode of allMetode">{{metode.toUpperCase()}}</option>
 			                    </select>
-			                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+			                    <!-- <div class="input-group mb-2 mr-sm-2 mb-sm-0">
 									<div class="input-group mb-2 mr-sm-2 mb-sm-0">
 										<div class="input-group-addon">Nomor</div>
 										<input [(ngModel)]="this.asuransi.no_kartu" type="text" class="form-control" name="no_asuransi" value="{{this.asuransi.no_kartu}}">
@@ -155,7 +152,7 @@
 										<div class="input-group-addon">Nama</div>
 										<input [(ngModel)]="this.asuransi.nama_asuransi" type="text" class="form-control" name="nama_asuransi" value="{{this.asuransi.nama_asuransi}}">
 									</div>
-								</div>
+								</div> -->
 							</div>
 						</div>
 
@@ -177,10 +174,10 @@
 				</div>
 				<div *ngIf="transaksi" class="col-md-6">
 					<h3>Bukti Pembayaran</h3>
-					<p>No Transaksi: {{transaksi.no_transaksi}}<p>
+					<p>No Pembayaran: {{no_pembayaran}}<p>
 					<p>Nama Pasien: {{nama_pasien}}</p>
-					<p *ngIf="asuransi.nama_asuransi == 'tunai'">Metode Bayar: {{asuransi.nama_asuransi.toUpperCase()}}</p>
-					<p *ngIf="asuransi.nama_asuransi != 'tunai'">Metode Bayar: Asuransi {{asuransi.nama_asuransi.toUpperCase()}}</p>
+					<p *ngIf="asuransi.nama_asuransi == 'tunai' && !transaksi_eksternal">Metode Bayar: {{asuransi.nama_asuransi.toUpperCase()}}</p>
+					<p *ngIf="asuransi.nama_asuransi != 'tunai' && !transaksi_eksternal">Metode Bayar: Asuransi {{asuransi.nama_asuransi.toUpperCase()}}</p>
 				</div>
 				<div class="col-md-3">
 				</div>
@@ -191,30 +188,65 @@
 						<tr *ngIf="printListOfTindakan?.length > 0">
 							<th>Tindakan</th>
 							<th></th>
+							<th></th>
+							<th></th>
 							<th>Harga</th>
 						</tr>
 						<tr *ngFor="let tindakan of printListOfTindakan">
 							<td>{{tindakan.daftar_tindakan.nama}}</td>
 							<td></td>
+							<td></td>
+							<td></td>
 							<td>Rp. {{tindakan.harga | number: '.2-2'}}</td>
+						</tr>
+						<tr *ngIf="printListOfObatTebus?.length > 0 || printListOfObatEceran?.length > 0">
+							<th>Obat</th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+						</tr>
+						<tr *ngFor="let obatTebus of printListOfObatTebus">
+							<td>{{obatTebus.jenis_obat.merek_obat}}</td>
+							<td></td>
+							<td></td>
+							<td>{{obatTebus.jumlah}} {{obatTebus.jenis_obat.satuan}} @ Rp. {{obatTebus.harga_jual_realisasi | number: '.2-2'}}</td>
+							<td>Rp. {{obatTebus.jumlah * obatTebus.harga_jual_realisasi | number: '.2-2'}}</td>
+							<td></td>
+						</tr>
+						<tr *ngFor="let obatEceran of printListOfObatEceran">
+							<td>{{obatEceran.jenis_obat.merek_obat}}</td>
+							<td></td>
+							<td></td>
+							<td>{{obatEceran.jumlah}} {{obatEceran.jenis_obat.satuan}} @ Rp. {{obatEceran.harga_jual_realisasi | number: '.2-2'}}</td>
+							<td>Rp. {{obatEceran.jumlah * obatEceran.harga_jual_realisasi | number: '.2-2'}}</td>
+							<td></td>
 						</tr>
 						<tr *ngIf="printListOfKamarRawatInap?.length > 0">
 							<th>Kamar Rawat Inap</th>
-							<th></th>
+							<th>Waktu Masuk</th>
+							<th>Waktu Keluar</th>
 							<th></th>
 							<th></th>
 						</tr>
 						<tr *ngFor="let kamar of printListOfKamarRawatInap">
 							<td>{{kamar.kamar_rawatinap.jenis_kamar}} Kelas {{kamar.kamar_rawatinap.kelas}}</td>
+							<td>{{kamar.waktu_masuk}}</td>
+							<td>{{kamar.waktu_keluar}}</td>
 							<td>{{howLong(kamar.waktu_masuk, kamar.waktu_keluar)}} Hari @ Rp. {{kamar.kamar_rawatinap.harga_per_hari | number: '.2-2'}}</td>
 							<td>Rp. {{kamar.harga | number: '.2-2'}}</td>
 						</tr>
 						<tr *ngIf = "bayar_tambahan">
+							<td></td>
+							<td></td>
 							<td>Tambahan Biaya Naik Kelas</td>
 							<td></td>
 							<td>Rp. {{harga_tambahan | number: '.2-2'}}</td>
 						</tr>
 						<tr>
+							<td></td>
+							<td></td>
 							<td><b>Total Pembayaran</b></td>
 							<td></td>
 							<td>Rp. {{total_bayar | number: '.2-2'}}</td>

@@ -2,7 +2,7 @@ import { Component, OnInit }              from '@angular/core';
 import { ActivatedRoute, Params, Router }					from '@angular/router';
 import { Location }												from '@angular/common';
 import { Observable }											from 'rxjs/Observable';
-import { NgbTypeaheadConfig, NgbModal }   from '@ng-bootstrap/ng-bootstrap';
+import { NgbTypeaheadConfig }   from '@ng-bootstrap/ng-bootstrap';
 import * as _ from "lodash";
 
 import { Transaksi }						from '../transaksi/transaksi';
@@ -156,8 +156,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     private jenisObatService: JenisObatService,
     private obatMasukService: ObatMasukService,
     private stokObatService: StokObatService,
-		private config: NgbTypeaheadConfig,
-    private modalService: NgbModal
+		private config: NgbTypeaheadConfig
 	) {
 		config.editable = false;
 	}
@@ -211,6 +210,10 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
               this.keluhan = JSON.parse(data.anamnesis).keluhan;
               this.allAlergi = JSON.parse(data.anamnesis).alergi.split(',');
               this.allRiwayat = JSON.parse(data.anamnesis).riwayat_penyakit.split(',');
+              if (this.allRiwayat[0] === '')
+                this.allRiwayat = [];
+              if (this.allAlergi[0] === '')
+                this.allAlergi = [];  
             }
           }
         }

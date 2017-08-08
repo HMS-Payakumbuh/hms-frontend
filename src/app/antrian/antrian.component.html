@@ -1,5 +1,13 @@
 <div class="row">
 	<div class="col-md-12">
+		<blockquote class="blockquote">
+			<p class="h4 mb-0"><b>Proses Antrian {{layanan}}</b></p>
+		</blockquote>
+	</div>
+</div>
+<div class="row">
+	<ng2-toasty [position]="'bottom-center'"></ng2-toasty>
+	<div class="col-md-12">
 		<div class="card mb-3" *ngIf="layanan != 'IGD'">
 			<div class="card-header card-info">
 				<h4>
@@ -29,6 +37,11 @@
 			                <div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="kategori">
 			                  	<input type="text" class="form-control" id="nomor" value="{{selectedKategori}}{{antrian?.no_antrian}} - {{antrian?.nama_pasien}}" name="nomor" disabled>
 			              	</div>
+			              	<label class="input-group mb-0 mr-sm-2 mb-sm-0 custom-checkbox" *ngIf="kategori">
+			                    <input type="checkbox" class="custom-control-input" [checked]="antrian.via_sms" disabled>
+			                    <span class="custom-control-indicator"></span>
+			                    <span class="custom-control-description">Via SMS</span>
+			                </label>
 			              	<div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="!isfrontoffice">
 			                  	<input type="text" class="form-control" id="nomor" value="{{selectedKategori}}{{antrian?.no_antrian}} - {{antrian?.transaksi?.pasien.nama_pasien}}" name="nomor" disabled>
 			              	</div>
@@ -52,9 +65,52 @@
 			</div>
 		</div>
 
+		<div class="card mb-3" *ngIf="isfrontoffice && allAntrianSMS.length > 0">
+			<div class="card-header card-info">
+				<h4 class="mb-0"><i class="fa fa-gear" aria-hidden="true"></i>Antrian SMS Siap Masuk</h4>
+			</div>
+			<div class="card-block">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table" [mfData]="allAntrianSMS" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+							<thead>
+								<th><mfDefaultSorter by="no_antrian">Nomor</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="nama">Nama Pasien</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="layanan">Layanan Tujuan</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="no_sms">Kontak</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="waktu_perjanjian">Waktu Perjanjian</mfDefaultSorter></th>
+								<th></th>
+							</thead>
+							<tbody>
+								<tr *ngFor="let antrian of mf.data">
+									<td>{{selectedKategori}}{{antrian.no_antrian}}</td>
+									<td>{{antrian.nama_pasien}}</td>
+									<td>{{antrian.nama_layanan}}</td>
+									<td>{{antrian.no_sms}}</td>
+									<td>{{antrian.waktu_perjanjian}}</td>
+									<td>
+										<button type="button" class="btn btn-success" [routerLink] = "['/pendaftaran', antrian.nama_layanan]" (click)="proses('proses')">Proses</button>
+									</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="5">
+										<mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div class="card mb-3" *ngIf="!isfrontoffice">
 			<div class="card-header card-info">
-				<h4 class="mb-0">{{layanan != 'IGD' && 'Pasien Rujukan' || 'Pasien IGD'}}</h4>
+				<h4 class="mb-0" *ngIf="layanan == 'IGD'"><i class="fa fa-gear" aria-hidden="true"></i>Pasien IGD</h4>
+				<h4 class="mb-0" *ngIf="layanan != 'IGD' && layanan.indexOf('Lab ') == -1"><i class="fa fa-gear" aria-hidden="true"></i>Pasien Rujukan</h4>
+				<h4 class="mb-0" *ngIf="layanan != 'IGD' && layanan.indexOf('Lab ') != -1"><i class="fa fa-gear" aria-hidden="true"></i>Pasien Rawat Inap</h4>
 			</div>
 			<div class="card-block">
 				<div class="form-group">
@@ -74,7 +130,7 @@
 				<div *ngIf="transaksiRujukan != null">
 					<div class="row">
 						<div class="col-md-12">
-							<table class="table" [mfData]="transaksiRujukan.allTransaksi" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+							<table class="table" [mfData]="transaksiRujukan.allTransaksi" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortByRujukan" [(mfSortOrder)]="sortOrder">
 								<thead>
 									<th><mfDefaultSorter by="kode_pasien">Kode Pasien</mfDefaultSorter></th>
 									<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
@@ -140,86 +196,5 @@
 	      </div>
 	    </div>
 	  </div>
-
-		<!--<div *ngIf="kategori || !isfrontoffice">
-			<div class="card-header card-info">
-			    <ul class="nav nav-tabs card-header-tabs">
-		      <li class="nav-item">
-		        <a class="nav-link active" [ngClass]="{ 'active': umum, '': !umum }" data-toggle="tab" href="#umum" role="tab" style="color: black;">
-		          <i class="fa fa-drivers-license" aria-hidden="true"></i> Antrian Umum
-		        </a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link" [ngClass]="{ 'active': !umum, '': umum }" data-toggle="tab" href="#khusus" role="tab" style="color: black;">
-		          <i class="fa fa-drivers-license-o" aria-hidden="true"></i> Antrian Khusus
-		        </a>
-		      </li>
-		    </ul>
-			</div>
-
-			<div class="card-block">
-				<div class="tab-content">
-					<div [ngClass]="{ 'active': umum, '': !umum }" class="tab-pane fade show active" id="umum" role="tabpanel">
-						<div class="card-text">
-							<table class="table">
-								<tbody>
-									<tr>
-										<th>No Antrian</th>
-										<th *ngIf="isfrontoffice">Layanan Tujuan</th>
-										<th>Waktu Masuk</th>
-										<th></th>
-										<th></th>
-									</tr>
-									<tr *ngFor="let antrian of allAntrian | filterJenisAntrian : &quot;0&quot;">
-										<td>{{kategori}}{{antrian.no_antrian}}</td>
-										<td *ngIf="isfrontoffice">{{antrian.nama_layanan}}</td>
-										<td>{{antrian.waktu_perubahan_antrian}}</td>
-										<td>
-											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-danger': (active == antrian.no_antrian), 'btn-warning': (active != antrian.no_antrian) }" [disabled]= "(active != antrian.no_antrian)" (click)="proses('undur',antrian)">Undur</button>
-										</td>
-										<td *ngIf="isfrontoffice">
-											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-primary': (active == antrian.no_antrian), 'btn-warning': (active != antrian.no_antrian) }"[routerLink] = "['/pendaftaran', antrian.nama_layanan]" [disabled]= "(active != antrian.no_antrian)" (click)="proses('proses',antrian)">Proses</button>
-										</td>
-										<td *ngIf="!isfrontoffice">
-											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-primary': (active == antrian.no_antrian), 'btn-warning': (active != antrian.no_antrian) }"[routerLink] = "['/poliklinik', antrian.nama_layanan, antrian.id_transaksi]" [disabled]= "(active != antrian.no_antrian)" (click)="proses('proses',antrian)">Proses</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-
-					<div [ngClass]="{ 'active': !umum, '': umum }" class="tab-pane fade show active" id="khusus" role="tabpanel">
-						<div class="card-text">
-							<table class="table">
-								<tbody>
-									<tr>
-										<th>No Antrian</th>
-										<th *ngIf="isfrontoffice">Layanan Tujuan</th>
-										<th>Waktu Masuk</th>
-										<th></th>
-										<th></th>
-									</tr>
-									<tr *ngFor="let antrian of allAntrian | filterJenisAntrian : &quot;1&quot;">
-										<td>{{kategori}}{{antrian.no_antrian}}</td>
-										<td *ngIf="isfrontoffice">{{antrian.nama_layanan}}</td>
-										<td>{{antrian.waktu_perubahan_antrian}}</td>
-										<td>
-											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-danger': (active == antrian.no_antrian), 'btn-warning': (active != antrian.no_antrian) }" [disabled]= "(active != antrian.no_antrian)" (click)="proses('undur',antrian)">Undur</button>
-										</td>
-										<td *ngIf="isfrontoffice">
-											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-primary': (active == antrian.no_antrian), 'btn-warning': (active != antrian.no_antrian) }"[routerLink] = "['/pendaftaran', antrian.nama_layanan]" [disabled]= "(active != antrian.no_antrian)" (click)="proses('proses',antrian)">Proses</button>
-										</td>
-										<td *ngIf="!isfrontoffice">
-											<button type="button" class="btn btn-sm" [ngClass] = "{ 'btn-primary': (active == antrian.no_antrian), 'btn-warning': (active != antrian.no_antrian) }"[routerLink] = "['/poliklinik', antrian.nama_layanan, antrian.id_transaksi]" [disabled]= "(active != antrian.no_antrian)" (click)="proses('proses',antrian)">Proses</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>-->
 	</div>
 </div>

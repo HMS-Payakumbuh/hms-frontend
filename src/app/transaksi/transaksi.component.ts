@@ -50,7 +50,7 @@ export class TransaksiComponent {
 	}
 
 	private searchTransaksi() {
-		this.transaksiService.getAllTransaksi(this.kode_pasien, 'open')
+		this.transaksiService.getAllTransaksi(null, this.nama_pasien, 'open')
 			.subscribe(data => {
 				this.response = data;
 				this.allTransaksi = this.response.allTransaksi;

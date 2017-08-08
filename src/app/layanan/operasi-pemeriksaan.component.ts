@@ -165,7 +165,7 @@ export class PemeriksaanOperasiComponent implements OnInit {
 			.distinctUntilChanged()
 			.map(term => term.length < 2 ? []
         : this.allDokter.filter(dokter => dokter.tenaga_medis.nama.toLowerCase().indexOf(term.toLowerCase()) > -1));
-        
+
 	constructor(
 		private route: ActivatedRoute,
     private router: Router,
@@ -200,7 +200,7 @@ export class PemeriksaanOperasiComponent implements OnInit {
             );
         }
       );
-	
+
 		this.route.params
 			.switchMap((params: Params) => this.transaksiService.getTransaksi(params['idTransaksi']))
 			.subscribe(transaksi => {
@@ -210,7 +210,7 @@ export class PemeriksaanOperasiComponent implements OnInit {
 
     this.tenagaMedisService.getAllDokter().
       subscribe(data => this.allDokter = data);
-      
+
 		this.tindakanService.getAllTindakanReference().subscribe(
       data => { this.allTindakanReference = data }
     );
@@ -241,7 +241,7 @@ export class PemeriksaanOperasiComponent implements OnInit {
               this.allRiwayat = JSON.parse(data.anamnesis).riwayat_penyakit.split(',');
             }
           }
-          
+
         }
 
         if (this.rekamMedis == null) {
@@ -296,7 +296,7 @@ export class PemeriksaanOperasiComponent implements OnInit {
               if (_.isEmpty(this.allRiwayatPenyakit)) {
                 this.allRiwayatPenyakit = ['Tidak ada penyakit yang tercatat'];
                 this.riwayatEmpty = true;
-              } 
+              }
             });
   }
 
@@ -345,14 +345,14 @@ export class PemeriksaanOperasiComponent implements OnInit {
     temp.nama_lab = null;
     temp.nama_ambulans = null;
     this.selectedTindakan.push(temp);
-    
+
     let temp2 = new TindakanOperasi();
     temp2.id_tindakan = null;
     temp2.id_transaksi = this.transaksi.transaksi.id;
     temp2.np_tenaga_medis = this.user.no_pegawai;
     this.savedTindakanOperasi.push(temp2);
   }
-  
+
   // addDokter(dokter: Dokter) {
   //   this.addedDokter.push(dokter);
 	// }
@@ -491,6 +491,12 @@ export class PemeriksaanOperasiComponent implements OnInit {
     )
   }
 
+  selesaiOperasi(id:number, pemakaianKamarOperasi: PemakaianKamarOperasi) {
+    this.pemakaianKamarService.keluar(id,pemakaianKamarOperasi).subscribe(
+      data => {}
+    )
+  }
+
 	save() {
     let anamnesis: any = {
       keluhan: this.keluhan,
@@ -498,8 +504,8 @@ export class PemeriksaanOperasiComponent implements OnInit {
       alergi: this.allAlergi.toString()
     };
 
-    
-    
+
+
         if(this.selectedTindakan.length > 0) {
           this.tindakanService.saveTindakan(this.selectedTindakan).subscribe(
             data3 => {
@@ -512,7 +518,7 @@ export class PemeriksaanOperasiComponent implements OnInit {
             }
           );
         }
-      
-    
+
+
 	}
 }

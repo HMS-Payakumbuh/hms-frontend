@@ -30,6 +30,11 @@ export class AntrianService {
 		.map((res: Response) => res.json());
 	}
 
+	updateAntrianSMS() {
+		return this.http.get(this.antrianFrontOfficeUrl + '/update_sms')
+		.map((res: Response) => res.json());
+	}
+
 	getAllAntrianWithoutLayanan(): Observable<Antrian[]> {
 		return this.http.get(this.antrianUrl)
 			.map((res: Response) => res.json())
@@ -58,8 +63,25 @@ export class AntrianService {
 			.map((res: Response) => res.json());
 	}
 
+	getAllAntrianSMSFrontOfficeByKategori(kategori_antrian:string): Observable<AntrianFrontOffice[]> {
+		return this.http.get(this.antrianFrontOfficeUrl + '/sms/' + kategori_antrian)
+			.map((res: Response) => res.json());
+	}
+
 	getAntrianFrontOffice(kategori_antrian: string): Observable<AntrianFrontOffice[]> {
 		return this.getAllAntrianFrontOfficeByKategori(kategori_antrian)
+			.map(allAntrianFrontOffice =>
+				_.each(allAntrianFrontOffice, antrian => {
+					if (antrian.nama_layanan_poli)
+						_.set(antrian, 'nama_layanan', antrian.nama_layanan_poli);
+					else if (antrian.nama_layanan_lab)
+						_.set(antrian, 'nama_layanan', antrian.nama_layanan_lab);
+				})
+			);
+	}
+
+	getAntrianSMSFrontOffice(kategori_antrian: string): Observable<AntrianFrontOffice[]> {
+		return this.getAllAntrianSMSFrontOfficeByKategori(kategori_antrian)
 			.map(allAntrianFrontOffice =>
 				_.each(allAntrianFrontOffice, antrian => {
 					if (antrian.nama_layanan_poli)

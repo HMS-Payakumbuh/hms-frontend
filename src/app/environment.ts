@@ -4,13 +4,16 @@ export var ENV = {
 	registerUrl: baseUrl + "/register",
 
 	transaksiUrl: baseUrl + "/api/transaksi",
+	transaksiEksternalUrl: baseUrl + "/api/transaksi_eksternal",
 	pembayaranUrl: baseUrl + "/api/pembayaran",
 	klaimUrl: baseUrl + "/api/klaim",
 	settingsUrl: baseUrl + "/api/setting_bpjs",
 	rujukanUrl: baseUrl + "/api/rujukan",
+	sepUrl: baseUrl + "/api/sep",
 
 	pasienUrl: baseUrl + "/api/pasien",
 	rekamMedisUrl: baseUrl + "/api/rekam_medis",
+	rekamMedisEksternalUrl: baseUrl + '/api/rekam_medis_eksternal',
 	antrianUrl: baseUrl + "/api/antrian",
 	antrianFrontOfficeUrl: baseUrl + "/api/antrian_front_office",
 	asuransiUrl: baseUrl + "/api/asuransi",

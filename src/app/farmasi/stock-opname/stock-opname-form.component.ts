@@ -91,8 +91,15 @@ export class StockOpnameFormComponent {
     						temp.jumlah_akhir = stokObat.jumlah;
     						temp.jumlah_awal = stokObat.jumlah;
     						temp.jumlah_fisik = stokObat.jumlah;
-							    
-							this.obatMasukService.getTodayObatMasuk(stokObat.id).subscribe(
+						    
+						    let waktu_mulai = new Date(); // Waktu mulai set to midnight of today
+						    waktu_mulai.setHours(0);
+						    waktu_mulai.setMinutes(0);
+						    waktu_mulai.setSeconds(0);					 
+
+						    let waktu_selesai = new Date();	// Waktu selesai set to current time				    
+
+							this.obatMasukService.getObatMasukByTime(waktu_mulai, waktu_selesai, stokObat.id).subscribe(
 								data1 => {
 									stokObat.obat_masuk = data1;
 									for (let obatMasuk of stokObat.obat_masuk) {
@@ -100,7 +107,8 @@ export class StockOpnameFormComponent {
 									}
 								}
 							);
-							this.obatPindahService.getTodayObatPindahMasuk(stokObat.id).subscribe(
+
+							this.obatPindahService.getObatPindahMasukByTime(waktu_mulai, waktu_selesai, stokObat.id).subscribe(
 								data1 => {
 									stokObat.obat_pindah_masuk = data1;
 									for (let obatPindahMasuk of stokObat.obat_pindah_masuk) {
@@ -108,15 +116,17 @@ export class StockOpnameFormComponent {
 									}
 								}
 							);
-							this.obatPindahService.getTodayObatPindahKeluar(stokObat.id).subscribe(
+
+							this.obatPindahService.getObatPindahKeluarByTime(waktu_mulai, waktu_selesai, stokObat.id).subscribe(
 								data2 => {
 									stokObat.obat_pindah_keluar = data2;
 									for (let obatPindahKeluar of stokObat.obat_pindah_keluar) {
 										temp.jumlah_awal = temp.jumlah_awal + obatPindahKeluar.jumlah;
 									}
 								}
-							);   
-							this.obatRusakService.getTodayObatRusak(stokObat.id).subscribe(
+							);
+
+							this.obatRusakService.getObatRusakByTime(waktu_mulai, waktu_selesai, stokObat.id).subscribe(
 								data3 => {
 									stokObat.obat_rusak = data3;
 									for (let obatRusak of stokObat.obat_rusak) {
@@ -124,7 +134,8 @@ export class StockOpnameFormComponent {
 									}
 								}
 							);
-							this.obatTindakanService.getTodayObatTindakan(stokObat.id).subscribe(
+
+							this.obatTindakanService.getObatTindakanByTime(waktu_mulai, waktu_selesai, stokObat.id).subscribe(
 								data4 => {
 									stokObat.obat_tindakan = data4;
 									for (let obatTindakan of stokObat.obat_tindakan) {
@@ -132,7 +143,8 @@ export class StockOpnameFormComponent {
 									}
 								}
 							);
-							this.obatTebusService.getTodayObatTebus(stokObat.id).subscribe(
+
+							this.obatTebusService.getObatTebusByTime(waktu_mulai, waktu_selesai, stokObat.id).subscribe(
 								data5 => {
 									stokObat.obat_tebus_item = data5;
 									for (let obatTebusItem of stokObat.obat_tebus_item) {
@@ -140,7 +152,8 @@ export class StockOpnameFormComponent {
 									}
 								}
 							);
-							this.obatEceranService.getTodayObatEceran(stokObat.id).subscribe(
+
+							this.obatEceranService.getObatEceranByTime(waktu_mulai, waktu_selesai, stokObat.id).subscribe(
 								data6 => {
 									stokObat.obat_eceran_item = data6;
 									for (let obatEceranItem of stokObat.obat_eceran_item) {

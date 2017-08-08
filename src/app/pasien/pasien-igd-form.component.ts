@@ -34,7 +34,7 @@ export class PasienIGDFormComponent implements OnInit {
   fromAntrian: boolean = false;
   sub: any;
   asuransi: Asuransi;
-  pasien: Pasien;
+  pasien: Pasien = new Pasien();
   rujukan: Rujukan;
   rujukanChecked: boolean;
   asuransiChecked:boolean;
@@ -197,16 +197,16 @@ export class PasienIGDFormComponent implements OnInit {
     } else {
       this.pasienService.createPasien(this.pasien).subscribe(
         data => {
-          this.pasien = data;
+          this.pasien = data.json;
           let toastOptions: ToastOptions = {
               title: 'Pendaftaran IGD Sukses',
-              msg: 'Anda mendapat kode pasien: ' + data.kode_pasien,
+              msg: 'Anda mendapat kode pasien: ' + data.json.kode_pasien,
               showClose: true,
               timeout: 5000,
               theme: 'bootstrap'
           };
           this.toastyService.success(toastOptions);
-          
+
           if (this.asuransiChecked)
             this.createAsuransi();
           else
