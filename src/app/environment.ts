@@ -9,6 +9,7 @@ export var ENV = {
 	klaimUrl: baseUrl + "/api/klaim",
 	settingsUrl: baseUrl + "/api/setting_bpjs",
 	rujukanUrl: baseUrl + "/api/rujukan",
+	sepUrl: baseUrl + "/api/sep",
 
 	pasienUrl: baseUrl + "/api/pasien",
 	rekamMedisUrl: baseUrl + "/api/rekam_medis",

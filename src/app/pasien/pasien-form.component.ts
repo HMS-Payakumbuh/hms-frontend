@@ -45,7 +45,10 @@ export class PasienFormComponent implements OnInit {
 	search: string;
   searchDone: boolean;
   update: boolean;
+  isBpjs: boolean = false;
+  isVerified: boolean;
   nomor_pasien: string;
+  no_sep: string;
   fromAntrian: boolean = false;
   sub: any;
   asuransi: Asuransi;
@@ -178,9 +181,46 @@ export class PasienFormComponent implements OnInit {
     this.cekAsuransi();
   }
 
+  private getRujukan() {
+    this.transaksiService.getRujukan(this.rujukan.no_rujukan).subscribe(data => {
+        if (data.metadata.code == '200') {
+          this.isVerified = true;
+          this.rujukan.diagnosis = data.data_rujukan.response.item.diagnosa.kdDiag + '-' +  data.data_rujukan.response.item.diagnosa.nmDiag;
+          this.nomor_pasien = data.data_rujukan.response.item.peserta.noKartu;
+          this.rujukan.asal_rujukan = data.data_rujukan.response.item.provKunjungan.nmProvider;
+          this.rujukan.keterangan = data.data_rujukan.response.item.catatan;
+          this.no_sep = data.response;
+            let toastOptions:ToastOptions = {
+                title: "Verifikasi Sukses !",
+                msg: "Nomor rujukan yang dimasukkan valid.",
+                showClose: true,
+                timeout: 5000,
+                theme: 'bootstrap'
+            };
+
+            this.toastyService.success(toastOptions);
+          } else {
+            this.isVerified = false;
+            let toastOptions:ToastOptions = {
+                title: "Verifikasi Gagal !",
+                msg: "Nomor rujukan yang dimasukkan tidak valid.",
+                showClose: true,
+                timeout: 5000,
+                theme: 'bootstrap'
+            };
+
+            this.toastyService.error(toastOptions);
+          }
+      });
+  }
+
   private cekAsuransi() {
-    if (this.asuransi.nama_asuransi === 'bpjs')
+    if (this.asuransi.nama_asuransi === 'bpjs') {
       this.rujukanChecked = true;
+      this.isBpjs = true;
+    } else {
+      this.isBpjs = false;
+    }
   }
 
   private createAntrian(id_transaksi: number) {
@@ -204,7 +244,7 @@ export class PasienFormComponent implements OnInit {
 
     this.antrianService.createAntrian(request).subscribe(
       data => {
-        if(data.error) {
+        if(data.status == '200') {
           let toastOptions:ToastOptions = {
               title: "Pendaftaran Antrian Gagal !",
               msg: "Harap mencoba sekali lagi.",
@@ -234,7 +274,39 @@ export class PasienFormComponent implements OnInit {
     this.rujukan.id_transaksi = id_transaksi;
     this.rujukanService.createRujukan(this.rujukan).subscribe(
       data => {
-          this.rekamMedisService.importRekamMedisEksternal(this.pasien.id, this.nomor_pasien).subscribe();
+          this.rekamMedisService.importRekamMedisEksternal(this.nomor_pasien, this.rujukan.no_rujukan)
+            .subscribe(data => {
+              if (data.status == '200') {
+                let rekamMedis: any = {};
+                rekamMedis.kode_pasien = this.nomor_pasien;
+                rekamMedis.id_pasien = this.pasien.id;
+                let dokumen: any = JSON.parse(data.data);
+                rekamMedis.identitas_pasien = JSON.stringify(dokumen.ClinicalDocument.recordTarget.patientRole.patient);
+                rekamMedis.identitas_dokter = JSON.stringify(dokumen.ClinicalDocument.author);
+                rekamMedis.komponen = JSON.stringify(dokumen.ClinicalDocument.component.structuredBody.component);
+                this.rekamMedisService.createRekamMedisEksternal(rekamMedis).subscribe(data => {
+                    let toastOptions:ToastOptions = {
+                      title: "Pengambilan Berhasil !",
+                      msg: "Rekam medis sudah disimpan dan siap digunakan.",
+                      showClose: true,
+                      timeout: 5000,
+                      theme: 'bootstrap'
+                    };
+
+                    this.toastyService.success(toastOptions);
+                  });
+              } else {
+                let toastOptions:ToastOptions = {
+                    title: "Pengambilan Gagal !",
+                    msg: "Rekam medis gagal diambil karena nomor rujukan / nomor kartu pasien tidak sesuai.",
+                    showClose: true,
+                    timeout: 5000,
+                    theme: 'bootstrap'
+                };
+
+                this.toastyService.error(toastOptions);
+              }
+            });
           this.createAntrian(id_transaksi);
       }
     );
@@ -249,7 +321,7 @@ export class PasienFormComponent implements OnInit {
     if (this.asuransi.nama_asuransi == 'bpjs') {
       payload = {
         id_pasien: this.pasien.id,
-        no_sep: Math.random().toString(36).substring(7),
+        no_sep: this.no_sep,
         kode_jenis_pasien: kode_jenis_pasien,
         asuransi_pasien: this.asuransi.nama_asuransi,
         jenis_rawat: 2,
@@ -263,6 +335,11 @@ export class PasienFormComponent implements OnInit {
         jenis_rawat: 2,
       };
     }
+    if (this.rujukanChecked)
+      payload.rujukan = true;
+    else
+      payload.rujukan = false;  
+
     let request: any = {
       transaksi : payload
     }

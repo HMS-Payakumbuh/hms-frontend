@@ -137,12 +137,13 @@
 							<div class="form-group">
 								<label><b>Total: </b>Rp. {{total_bayar | number: '.2-2'}}</label>
 								<br>
+								<br>
 								<label>Metode Bayar:</label>
 								<select class="form-control" id="metode" [(ngModel)]="metode_bayar" (ngModelChange)="gantiAsuransi($event)">
 									<option [value]="'tunai'" selected>TUNAI</option>
 			                    	<option [value]="metode" *ngFor="let metode of allMetode">{{metode.toUpperCase()}}</option>
 			                    </select>
-			                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+			                    <!-- <div class="input-group mb-2 mr-sm-2 mb-sm-0">
 									<div class="input-group mb-2 mr-sm-2 mb-sm-0">
 										<div class="input-group-addon">Nomor</div>
 										<input [(ngModel)]="this.asuransi.no_kartu" type="text" class="form-control" name="no_asuransi" value="{{this.asuransi.no_kartu}}">
@@ -151,7 +152,7 @@
 										<div class="input-group-addon">Nama</div>
 										<input [(ngModel)]="this.asuransi.nama_asuransi" type="text" class="form-control" name="nama_asuransi" value="{{this.asuransi.nama_asuransi}}">
 									</div>
-								</div>
+								</div> -->
 							</div>
 						</div>
 
