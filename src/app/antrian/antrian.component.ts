@@ -58,10 +58,9 @@ export class AntrianComponent implements OnInit, OnDestroy {
   selectedDokter: JadwalDokter = null;
   idTransaksi: number = null;
   isRujukan: boolean = false;
-  hasilPemeriksaan: HasilPemeriksaan = new HasilPemeriksaan();
 
-  @Input()
-  public alerts: Array<IAlert> = [];
+  newRekamMedis: boolean = false;
+  hasilPemeriksaan: HasilPemeriksaan = new HasilPemeriksaan();
 
   public filterQuery = "";
   public rowsOnPage = 4;
@@ -105,7 +104,7 @@ export class AntrianComponent implements OnInit, OnDestroy {
                   msg: "Antrian SMS sudah diperbarui.",
                   showClose: true,
                   timeout: 5000,
-                  theme: 'bootstrap'
+                  theme: 'material'
               };
 
               this.toastyService.success(toastOptions);
@@ -128,11 +127,6 @@ export class AntrianComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.observable.unsubscribe();
-  }
-
-  public closeAlert(alert: IAlert) {
-    const index: number = this.alerts.indexOf(alert);
-    this.alerts.splice(index, 1);
   }
 
   private updateKategori() {
@@ -244,16 +238,20 @@ export class AntrianComponent implements OnInit, OnDestroy {
 
   private searchTransaksiRujukan() {
     if (this.searchTransaksiRujukanTerm != '') {
-      this.transaksiService.getAllTransaksi(this.searchTransaksiRujukanTerm, 'open').subscribe(
+      this.transaksiService.getAllTransaksi(this.searchTransaksiRujukanTerm, null, 'open').subscribe(
         data => {
           this.transaksiRujukan = data;
           if (this.transaksiRujukan.allTransaksi.length == 0) {
             this.transaksiRujukan = null;
-            this.alerts.pop();
-            this.alerts.push({id: 1, type: 'warning', message: 'Pasien tidak ditemukan'});
-          }
-          else {
-            this.alerts.pop();
+            let toastOptions:ToastOptions = {
+                title: 'Error',
+                msg: 'Kode Pasien tidak ditemukan',
+                showClose: true,
+                timeout: 5000,
+                theme: 'material'
+            };
+
+            this.toastyService.success(toastOptions);
           }
         }
       )
@@ -271,36 +269,60 @@ export class AntrianComponent implements OnInit, OnDestroy {
   }
 
   private periksa(no_pegawai, nama_poli, id_transaksi) {
-    if (!this.isRujukan)
+    if (!this.isRujukan) {
       this.proses('proses');
 
-    let request = {
-      no_pegawai: no_pegawai,
-      nama_poli: nama_poli,
-      id_transaksi: id_transaksi
+      let rekamMedis = new RekamMedis(
+        this.antrian.transaksi.id_pasien,
+        this.antrian.transaksi.waktu_masuk_pasien,
+        '',
+        JSON.stringify(this.hasilPemeriksaan),
+        '',
+        '',
+        ''
+      );
+      this.rekamMedisService.createRekamMedis(rekamMedis).subscribe(
+        data => {
+          let request = {
+            no_pegawai: no_pegawai,
+            nama_poli: nama_poli,
+            id_transaksi: id_transaksi
+          }
+          this.tenagaMedisService.periksa(request).subscribe(
+            data => {
+              let toastOptions:ToastOptions = {
+                  title: "Success",
+                  msg: "Pasien sudah diteruskan ke " + nama_poli,
+                  showClose: true,
+                  timeout: 5000,
+                  theme: 'material'
+              };
+
+              this.toastyService.success(toastOptions);
+            }
+          )
+        }
+      );
     }
-    this.tenagaMedisService.periksa(request).subscribe(
-      data => {
-        let toastOptions:ToastOptions = {
-            title: "Success",
-            msg: "Pasien sudah diteruskan ke " + nama_poli,
-            showClose: true,
-            timeout: 5000,
-            theme: 'material'
-        };
-
-        this.toastyService.success(toastOptions);
+    else {
+      let request = {
+        no_pegawai: no_pegawai,
+        nama_poli: nama_poli,
+        id_transaksi: id_transaksi
       }
-    )
+      this.tenagaMedisService.periksa(request).subscribe(
+        data => {
+          let toastOptions:ToastOptions = {
+              title: "Success",
+              msg: "Pasien sudah diteruskan ke " + nama_poli,
+              showClose: true,
+              timeout: 5000,
+              theme: 'material'
+          };
+
+          this.toastyService.success(toastOptions);
+        }
+      )
+    }
   }
-
-  submitted = false;
-
-  onSubmit() { this.submitted = true; }
-}
-
-export interface IAlert {
-  id: number;
-  type: string;
-  message: string;
 }

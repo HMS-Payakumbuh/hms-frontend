@@ -91,7 +91,7 @@ export class DokterDashboardComponent implements OnInit {
 
   searchTransaksi() {
     if (this.searchKodePasien != '') {
-      this.transaksiService.getAllTransaksi(this.searchKodePasien, 'open').subscribe(
+      this.transaksiService.getAllTransaksi(this.searchKodePasien, null, 'open').subscribe(
         data => {
           this.transaksiAmbulans = data
           if (this.transaksiAmbulans.allTransaksi[0] == null) {

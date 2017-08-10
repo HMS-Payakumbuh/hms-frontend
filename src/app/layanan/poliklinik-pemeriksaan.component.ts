@@ -85,7 +85,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
   rujuk: boolean = false;
   riwayatEmpty: boolean = false;
   alergiEmpty: boolean = false;
-  firstRekamMedis: boolean = false;
   namaPoliRujuk: string = null;
 
 	allDiagnosisReference: DiagnosisReference[];
@@ -218,7 +217,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
               if (this.allRiwayat[0] === '')
                 this.allRiwayat = [];
               if (this.allAlergi[0] === '')
-                this.allAlergi = [];  
+                this.allAlergi = [];
             }
           }
           else {
@@ -242,7 +241,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
             );
 
             this.rekamMedisService.createRekamMedis(this.rekamMedis).subscribe(
-              data => this.firstRekamMedis = true
+              data => {}
             );
           }
         }
@@ -267,7 +266,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
           );
 
           this.rekamMedisService.createRekamMedis(this.rekamMedis).subscribe(
-            data => this.firstRekamMedis = true
+            data => {}
           );
         }
       }
