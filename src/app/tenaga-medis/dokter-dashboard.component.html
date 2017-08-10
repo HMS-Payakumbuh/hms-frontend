@@ -6,6 +6,7 @@
       </blockquote>
     </div>
   </div>
+  <ng2-toasty [position]="'bottom-center'"></ng2-toasty>
   <div class="row">
 
     <div class="col-md-6">
@@ -18,7 +19,11 @@
             <div class="card-block">
               <label for="selectPoli">Pilih poliklinik</label>
               <select class="form-control mb-3" id="selectPoli" [(ngModel)]="selectedPoliklinik" name="selectPoli">
-                <option *ngFor="let poliklinik of allPoliklinik" [ngValue]="poliklinik">{{poliklinik.nama}}</option>
+                <ng-container *ngFor="let poliklinik of allPoliklinik">
+                  <option *ngIf="poliklinik.nama != 'IGD'" [ngValue]="poliklinik">
+                    {{poliklinik.nama}}
+                  </option>
+                </ng-container>
               </select>
 
               <div *ngIf="selectedPoliklinik != null">
@@ -67,7 +72,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-12">
           <div class="card mb-3">
             <div class="card-header card-info">
@@ -80,7 +85,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <div class="col-md-6">
@@ -230,7 +235,7 @@
             </div>
           </div>
           <div *ngIf="transaksiAmbulans != null">
-            <table class="table mb-3">
+            <table class="table mb-3" *ngIf="transaksiAmbulans.allTransaksi[0] != null">
               <tbody>
                 <tr>
                   <th scope="row" class="text-left">Nama Pasien</th>
@@ -242,7 +247,7 @@
                 </tr>
               </tbody>
             </table>
-            <div class="form-group">
+            <div class="form-group" *ngIf="transaksiAmbulans.allTransaksi[0] != null">
               <label for="selectAmbulans">Pilih Ambulans</label>
               <select class="form-control mb-3" id="selectAmbulans" [(ngModel)]="selectedAmbulans" name="selectAmbulans">
                 <option *ngFor="let ambulans of allAmbulans" [ngValue]="ambulans">{{ambulans.nama}}</option>
@@ -253,7 +258,7 @@
 
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-          <button type="button" class="btn btn-success" data-dismiss="modal" (click)="pemakaianAmbulans()">
+          <button type="button" class="btn btn-success" data-dismiss="modal" [disabled]="selectedAmbulans == null || transaksiAmbulans == null" (click)="pemakaianAmbulans()">
             Pakai Ambulans
           </button>
         </div>
