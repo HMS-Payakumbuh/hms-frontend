@@ -118,7 +118,9 @@ export class AntrianComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.observable.unsubscribe();
+    if (this.layanan === undefined) {
+      this.observable.unsubscribe();
+    }
   }
 
   public closeAlert(alert: IAlert) {
@@ -181,7 +183,6 @@ export class AntrianComponent implements OnInit, OnDestroy {
         } else {
           this.antrianEmpty = false;
         }
-        this.updateAntrianSMS();
       });
   }
 
