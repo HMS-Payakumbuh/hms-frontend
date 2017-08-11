@@ -7,28 +7,27 @@
 		</div>
 	</div>
 	<div class="row">
-	  <div class="col-md-12">
-
+	  <div class="col-md-6">
 			<div class="card mb-3">
 				<div class="card-header card-info">
-					<h4>
+					<h5 class="mb-0">
 						<i class="fa fa-id-card-o" aria-hidden="true"></i> Data Pasien
-					</h4>
+					</h5>
 				</div>
 				<div class="card-block">
-					<table class="table">
+					<table class="table table-striped">
 						<tbody>
 							<tr>
-								<td><b>Nama</b></td>
-								<td>{{transaksi?.transaksi.pasien.nama_pasien}}</td>
+								<th scope="row" class="text-left">Nama</th>
+								<td class="text-left">{{transaksi?.transaksi.pasien.nama_pasien}}</td>
 							</tr>
 							<tr>
-								<td><b>Jenis kelamin</b></td>
-								<td>{{transaksi?.transaksi.pasien.jender == 1 && 'Laki-laki' || 'Perempuan'}}</td>
+								<th scope="row" class="text-left">Jenis kelamin</th>
+								<td class="text-left">{{transaksi?.transaksi.pasien.jender == 1 && 'Laki-laki' || 'Perempuan'}}</td>
 							</tr>
 							<tr>
-								<td><b>Tanggal Lahir</b></td>
-								<td>{{transaksi?.transaksi.pasien.tanggal_lahir | date: 'dd-MMM-yyyy'}}</td>
+								<th scope="row" class="text-left">Tanggal Lahir</th>
+								<td class="text-left">{{transaksi?.transaksi.pasien.tanggal_lahir | date: 'dd-MMM-yyyy'}}</td>
 							</tr>
 							<tr>
 								<td colspan="2">
@@ -39,17 +38,56 @@
 					</table>
 				</div>
 			</div>
+		</div>
 
+		<div class="col-md-6">
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h5 class="mb-0">
+						<i class="fa fa-clipboard" aria-hidden="true"></i> Hasil Pengecekan Awal
+					</h5>
+				</div>
+				<div class="card-block">
+					<table class="table table-sm table-striped">
+						<tbody>
+							<tr>
+								<th scope="row" class="text-left">Tekanan Darah</th>
+								<td class="text-left">{{hasilPemeriksaan.tekanan_darah}} mmHg</td>
+							</tr>
+							<tr>
+								<th scope="row" class="text-left">Nadi</th>
+								<td class="text-left">{{hasilPemeriksaan.nadi}} /min</td>
+							</tr>
+							<tr>
+								<th scope="row" class="text-left">Frekuensi Napas</th>
+								<td class="text-left">{{hasilPemeriksaan.frekuensi_napas}} /min</td>
+							</tr>
+							<tr>
+								<th scope="row" class="text-left">Temperatur</th>
+								<td class="text-left">{{hasilPemeriksaan.temperatur}} C</td>
+							</tr>
+							<tr>
+								<th scope="row" class="text-left">Berat Badan</th>
+								<td class="text-left">{{hasilPemeriksaan.berat_badan}} kg</td>
+							</tr>
+							<tr>
+								<th scope="row" class="text-left">Tinggi Badan</th>
+								<td class="text-left">{{hasilPemeriksaan.tinggi_badan}} cm</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
 			<div class="card mb-3">
 				<div class="card-header card-info">
 					<ul class="nav nav-tabs card-header-tabs">
 						<li class="nav-item">
-							<a class="nav-link active" data-toggle="tab" href="#pengecekan" role="tab" style="color: black;">
-								<i class="fa fa-clipboard" aria-hidden="true"></i> Pengecekan
-							</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" data-toggle="tab" href="#anamnesis" role="tab" style="color: black;">
+							<a class="nav-link active" data-toggle="tab" href="#anamnesis" role="tab" style="color: black;">
 								<i class="fa fa-files-o" aria-hidden="true"></i> Anamnesis
 							</a>
 						</li>
@@ -78,46 +116,8 @@
 
 				<div class="card-block">
 					<div class="tab-content">
-						<div class="tab-pane fade show active" id="pengecekan" role="tabpanel">
 
-							<form>
-								<div class="form-group">
-									<div class="row mb-3">
-										<div class="col-4">
-											<label for="tekananDarah">TD (mmHg)</label>
-											<input type="text" class="form-control" id="inputTekananDarah" [(ngModel)]="hasilPemeriksaan.tekanan_darah" name="tekanan_darah">
-										</div>
-										<div class="col-4">
-											<label for="nadi">Nadi (x/min)</label>
-											<input type="text" class="form-control" id="inputNadi" [(ngModel)]="hasilPemeriksaan.nadi" name="nadi">
-										</div>
-										<div class="col-4">
-											<label for="frekuensiNapas">Frekuensi Napas (x/min)</label>
-											<input type="text" class="form-control" id="frekuensiNapas" [(ngModel)]="hasilPemeriksaan.frekuensi_napas" name="frekuensi_napas">
-										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-4">
-											<label for="temperatur">Temperatur (C)</label>
-											<input type="text" class="form-control" id="temperatur" [(ngModel)]="hasilPemeriksaan.temperatur" name="temperatur">
-										</div>
-										<div class="col-4">
-											<label for="beratBedan">Berat Badan (kg)</label>
-											<input type="text" class="form-control" id="beratBadan" [(ngModel)]="hasilPemeriksaan.berat_badan" name="berat_badan">
-										</div>
-										<div class="col-4">
-											<label for="tinggiBadan">Tinggi Badan (cm)</label>
-											<input type="text" class="form-control" id="tinggiBadan" [(ngModel)]="hasilPemeriksaan.tinggi_badan" name="tinggi_badan">
-										</div>
-									</div>
-								</div>
-							</form>
-
-						</div>
-
-						<div class="tab-pane fade" id="anamnesis" role="tabpanel">
-
+						<div class="tab-pane fade show active" id="anamnesis" role="tabpanel">
 							<form>
 								<div class="form-group">
 									<label for="keluhan">Keluhan Utama</label>
@@ -178,11 +178,9 @@
 									</div>
 								</div>
 							</form>
-
 						</div>
 
 						<div class="tab-pane fade" id="diagnosis" role="tabpanel">
-
 							<div class="form-group">
 								<label for="inputDiagnosis">Masukkan kode diagnosis pasien (ICD-10)</label>
 								<input id="inputDiagnosis" class="form-control" [ngbTypeahead]="searchDiagnosis" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addSelectedDiagnosis($event.item)">
@@ -208,11 +206,9 @@
 									</tr>
 								</tbody>
 							</table>
-
 						</div>
 
 						<div class="tab-pane fade" id="tindakan" role="tabpanel">
-
 							<div class="form-group">
 								<label for="inputTindakan">Masukkan tindakan yang dilakukan (ICD-9-CM)</label>
 								<input id="inputTindakan" class="form-control" [ngbTypeahead]="searchTindakan" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addSelectedTindakan($event.item)">
@@ -231,7 +227,7 @@
 									<tr *ngFor="let tindakan of selectedTindakan; index as i">
 										<td style="vertical-align: middle;">{{i + 1}}</td>
 										<td style="vertical-align: middle;">{{tindakan.kode_tindakan}}</td>
-										<td style="vertical-align: middle; text-align: left;">{{selectedTindakanReference[i].nama}}</td>
+										<td style="vertical-align: middle; text-align: left;">{{tindakan.tindakan_reference.nama}}</td>
 										<td style="vertical-align: middle;">
 											<textarea class="form-control" rows="2" [(ngModel)]="tindakan.keterangan"></textarea>
 										</td>
@@ -249,12 +245,10 @@
 									</tr>
 								</tbody>
 							</table>
-
 						</div>
 
 						<div class="tab-pane fade" id="resep" role="tabpanel">
 							<div *ngFor="let resep of allResep; index as i">
-
 								<div class="card mb-3">
 									<div class="card-header">
 										<div class="row">
@@ -493,107 +487,13 @@
 
 			<div class="pull-right">
 				<button type="button" class="btn btn-warning" (click)="goBack()">Kembali</button>
-				<button type="button" class="btn btn-success" data-toggle="modal" [attr.data-target]="'#rujukanModal'">Selesai</button>
-			</div>
-
-		</div>
-
-		<div class="modal fade" id="riwayatModal" tabindex="-1" role="dialog" aria-labelledby="riwayatModal" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-				    <div class="modal-header">
-				        <h5 class="modal-title" id="riwayatModal">Rekap Kesehatan {{transaksi?.transaksi.pasien.nama_pasien}}</h5>
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				          <i class="fa fa-times" aria-hidden="true"></i>
-				        </button>
-				    </div>
-				    <div class="modal-body">
-					    <div class="form-group">
-				  			<h6>Riwayat Penyakit :</h6>
-				  			<div *ngFor="let riwayat of allRiwayatPenyakit, let i = index; ">
-					  			<div>{{i+1}}. {{riwayat}}</div>
-				  			</div>
-			  			</div>
-				    	<div *ngFor="let riwayat of allRiwayatLama, let i = index; ">
-					    	<div class="card card-outline-info mb-3">
-						  		<div class="card-block">
-								    <div class="form-group">
-								  		<h5 class="btn btn-info form-control" data-toggle="collapse" [attr.data-target]="'#riwayat-collapse-' + i">Tercatat pada {{riwayat.tanggal_waktu}}</h5>
-							  		</div>
-							  		<div class="collapse" id="riwayat-collapse-{{i}}">
-								  		<div class="form-group">
-								  			<h6>Diagnosis :</h6>
-									    	<div *ngFor="let diagnosis of riwayat.allDiagnosis, let i = index; ">
-								  				<div>{{i+1}}. {{diagnosis.daftar_diagnosis.nama}}</div>
-									    	</div>
-								    	</div>
-							    	</div>
-						    	</div>
-					    	</div>
-				    	</div>
-				    </div>
-			    </div>
-		    </div>
-	    </div>
-
-	    <div class="modal fade" id="alergiModal" tabindex="-1" role="dialog" aria-labelledby="alergiModal" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-				    <div class="modal-header">
-				        <h5 class="modal-title" id="alergiModal">Alergi yang diderita {{transaksi?.transaksi.pasien.nama_pasien}}</h5>
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				          <i class="fa fa-times" aria-hidden="true"></i>
-				        </button>
-				    </div>
-				    <div class="modal-body">
-				    	<div *ngFor="let alergi of allAlergiLama, let i = index; ">
-					  		<div class="form-group">
-				  				<div class="form-group">{{i+1}}. {{alergi}}</div>
-					    	</div>
-				    	</div>
-				    </div>
-			    </div>
-		    </div>
-	    </div>
-
-		<div class="modal fade" tabindex="-1" role="dialog" id="rujukanModal" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header bg-info text-white">
-						<h5 class="modal-title mb-0">
-							Rujukan
-						</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<i class="fa fa-times" aria-hidden="true"></i>
-						</button>
-					</div>
-					<div class="modal-body">
-						<label for="selectRujuk">Apakah pasien perlu rujukan ke poli lain?</label>
-						<select class="form-control mb-3" id="selectRujuk" [(ngModel)]="rujuk" name="selectRujuk">
-							<option [ngValue]="false">Tidak</option>
-							<option [ngValue]="true">Ya</option>
-						</select>
-
-						<div *ngIf="rujuk" class="form-group">
-							<label for="selectPoliklinik">Pilih Poliklinik</label>
-							<select class="form-control" id="selectPoliklinik" [(ngModel)]="namaPoliRujuk" name="poliklinikRujuk">
-								<ng-container *ngFor="let p of allPoliklinik">
-									<option *ngIf="p.sisa_pelayanan > 0 && p.nama != poliklinik.nama && p.nama != 'IGD'" [value]="p.nama">{{p.nama}}</option>
-								</ng-container>
-							</select>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-success" data-dismiss="modal" (click)="save()">Selesai</button>
-					</div>
-				</div>
+				<button type="button" class="btn btn-success" data-toggle="modal" [attr.data-target]="'#rujukanModal'" [disabled]="selectedTindakan.length == 0 || selectedDiagnosis.length == 0 || keluhan == ''">Selesai</button>
 			</div>
 		</div>
 
 		<div *ngFor="let tindakan of selectedTindakan; index as i" class="modal fade" tabindex="-1" role="dialog" id="obatTindakanModal-{{i}}" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
-
 					<div class="modal-header bg-info text-white">
 						<h5 class="modal-title mb-0">
 							Pemakaian Obat untuk Tindakan {{tindakan.kode_tindakan}}
@@ -602,7 +502,6 @@
 							<i class="fa fa-times" aria-hidden="true"></i>
 						</button>
 					</div>
-
 					<div class="modal-body">
 						<div *ngFor="let obatTindakan of tindakan.obat_tindakan; index as j">
 							<div class="input-group mb-2">
@@ -640,14 +539,103 @@
 							</button>
 						</div>
 					</div>
-
 					<div class="modal-footer">
 						<button type="button" class="btn btn-success" data-dismiss="modal">Simpan</button>
 					</div>
-
 				</div>
 			</div>
 		</div>
+	</div>
 
+	<div class="modal fade" id="riwayatModal" tabindex="-1" role="dialog" aria-labelledby="riwayatModal" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="riwayatModal">Rekap Kesehatan {{transaksi?.transaksi.pasien.nama_pasien}}</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<i class="fa fa-times" aria-hidden="true"></i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<h6>Riwayat Penyakit :</h6>
+						<div *ngFor="let riwayat of allRiwayatPenyakit, let i = index; ">
+							<div>{{i+1}}. {{riwayat}}</div>
+						</div>
+					</div>
+					<div *ngFor="let riwayat of allRiwayatLama, let i = index; ">
+						<div class="card card-outline-info mb-3">
+							<div class="card-block">
+								<div class="form-group">
+									<h5 class="btn btn-info form-control" data-toggle="collapse" [attr.data-target]="'#riwayat-collapse-' + i">Tercatat pada {{riwayat.tanggal_waktu}}</h5>
+								</div>
+								<div class="collapse" id="riwayat-collapse-{{i}}">
+									<div class="form-group">
+										<h6>Diagnosis :</h6>
+										<div *ngFor="let diagnosis of riwayat.allDiagnosis, let i = index; ">
+											<div>{{i+1}}. {{diagnosis.daftar_diagnosis.nama}}</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="alergiModal" tabindex="-1" role="dialog" aria-labelledby="alergiModal" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+		    <div class="modal-header">
+		        <h5 class="modal-title" id="alergiModal">Alergi yang diderita {{transaksi?.transaksi.pasien.nama_pasien}}</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <i class="fa fa-times" aria-hidden="true"></i>
+		        </button>
+		    </div>
+		    <div class="modal-body">
+		    	<div *ngFor="let alergi of allAlergiLama, let i = index; ">
+			  		<div class="form-group">
+		  				<div class="form-group">{{i+1}}. {{alergi}}</div>
+			    	</div>
+		    	</div>
+		    </div>
+	    </div>
+    </div>
+  </div>
+
+	<div class="modal fade" tabindex="-1" role="dialog" id="rujukanModal" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-info text-white">
+					<h5 class="modal-title mb-0">
+						Rujukan
+					</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<i class="fa fa-times" aria-hidden="true"></i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<label for="selectRujuk">Apakah pasien perlu rujukan ke poli lain?</label>
+					<select class="form-control mb-3" id="selectRujuk" [(ngModel)]="rujuk" name="selectRujuk">
+						<option [ngValue]="false">Tidak</option>
+						<option [ngValue]="true">Ya</option>
+					</select>
+
+					<div *ngIf="rujuk" class="form-group">
+						<label for="selectPoliklinik">Pilih Poliklinik</label>
+						<select class="form-control" id="selectPoliklinik" [(ngModel)]="namaPoliRujuk" name="poliklinikRujuk">
+							<ng-container *ngFor="let p of allPoliklinik">
+								<option *ngIf="p.sisa_pelayanan > 0 && p.nama != poliklinik.nama && p.nama != 'IGD'" [value]="p.nama">{{p.nama}}</option>
+							</ng-container>
+						</select>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal" (click)="save()">Selesai</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </html>

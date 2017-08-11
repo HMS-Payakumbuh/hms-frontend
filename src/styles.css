@@ -17,6 +17,10 @@ td {
   vertical-align: middle !important;
 }
 
+.text-left {
+  text-align: left;
+}
+
 .borderless td, .borderless th {
   border: none;
 }

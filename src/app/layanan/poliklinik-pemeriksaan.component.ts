@@ -85,7 +85,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
   rujuk: boolean = false;
   riwayatEmpty: boolean = false;
   alergiEmpty: boolean = false;
-  firstRekamMedis: boolean = false;
   namaPoliRujuk: string = null;
 
 	allDiagnosisReference: DiagnosisReference[];
@@ -98,7 +97,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
   selectedDiagnosisReference: DiagnosisReference[] = [];
 
   selectedTindakan: Tindakan[] = [];
-  selectedTindakanReference: TindakanReference[] = [];
 
   resepItemModal: ResepItem = null;
   allResep: Resep[] = [];
@@ -184,10 +182,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
       data => { this.allPoliklinik = data }
     );
 
-		this.tindakanService.getAllTindakanReference().subscribe(
-      data => { this.allTindakanReference = data }
-    );
-
 		this.diagnosisService.getAllDiagnosisReference().subscribe(
       data => { this.allDiagnosisReference = data }
     )
@@ -203,6 +197,16 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
         if (data != null) {
           if (data.tanggal_waktu == this.transaksi.transaksi.waktu_masuk_pasien) {
             this.rekamMedis = data;
+
+            this.tindakanService.getAllTindakanReference().subscribe(
+              data => {
+                this.allTindakanReference = data;
+                this.addSelectedTindakan(
+                  this.allTindakanReference.find(tindakanReference => tindakanReference.kode === '89.03')
+                );
+              }
+            );
+
             if (JSON.parse(data.hasil_pemeriksaan) != null)
               this.hasilPemeriksaan = JSON.parse(data.hasil_pemeriksaan);
 
@@ -213,12 +217,35 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
               if (this.allRiwayat[0] === '')
                 this.allRiwayat = [];
               if (this.allAlergi[0] === '')
-                this.allAlergi = [];  
+                this.allAlergi = [];
             }
           }
-        }
+          else {
+            this.rekamMedis = new RekamMedis(
+              this.transaksi.transaksi.id_pasien,
+              this.transaksi.transaksi.waktu_masuk_pasien,
+              JSON.parse(localStorage.getItem('currentUser')).no_pegawai,
+              '',
+              '',
+              '',
+              ''
+            );
 
-        if (this.rekamMedis == null) {
+            this.tindakanService.getAllTindakanReference().subscribe(
+              data => {
+                this.allTindakanReference = data;
+                this.addSelectedTindakan(
+                  this.allTindakanReference.find(tindakanReference => tindakanReference.kode === '89.03')
+                );
+              }
+            );
+
+            this.rekamMedisService.createRekamMedis(this.rekamMedis).subscribe(
+              data => {}
+            );
+          }
+        }
+        else {
           this.rekamMedis = new RekamMedis(
             this.transaksi.transaksi.id_pasien,
             this.transaksi.transaksi.waktu_masuk_pasien,
@@ -229,8 +256,17 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
             ''
           );
 
+          this.tindakanService.getAllTindakanReference().subscribe(
+            data => {
+              this.allTindakanReference = data;
+              this.addSelectedTindakan(
+                this.allTindakanReference.find(tindakanReference => tindakanReference.kode === '89.03')
+              );
+            }
+          );
+
           this.rekamMedisService.createRekamMedis(this.rekamMedis).subscribe(
-            data => { this.firstRekamMedis = true; }
+            data => {}
           );
         }
       }
@@ -304,9 +340,8 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	}
 
 	addSelectedTindakan(tindakanReference: TindakanReference) {
-    this.selectedTindakanReference.push(tindakanReference);
-
     let temp = new Tindakan();
+    temp.tindakan_reference = tindakanReference;
     temp.id_transaksi = this.transaksi.transaksi.id;
     temp.harga = tindakanReference.harga;
     temp.keterangan = '';
@@ -323,7 +358,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 
 	removeSelectedTindakan(i: number) {
 		this.selectedTindakan.splice(i, 1);
-    this.selectedTindakanReference.splice(i, 1);
 	}
 
   addSelectedStokObat(obatTindakan: ObatTindakan, stokObat: StokObat) {
