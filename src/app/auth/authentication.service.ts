@@ -1,5 +1,6 @@
 import { Injectable }              from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 import { Observable }              from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import * as _ from "lodash";
@@ -19,17 +20,19 @@ export class AuthenticationService {
     {no_pegawai: 'F001', name: 'Front Office A', role: 'frontOffice', password: 'frontOffice', other: '{"kategori_antrian": "A"}'},
     {no_pegawai: 'F002', name: 'Front Office B', role: 'frontOffice', password: 'frontOffice', other: '{"kategori_antrian": "C"}'},
     {no_pegawai: 'AP001', name: 'Staf Apotek', role: 'stafApotek', password: 'stafapotek', other: ''},
-    {no_pegawai: 'GU001', name: 'Gudang Utama', role: 'gudangUtama', password: 'gudangutama', other: ''},    
+    {no_pegawai: 'GU001', name: 'Gudang Utama', role: 'gudangUtama', password: 'gudangutama', other: ''},
     {no_pegawai: 'K001', name: 'Kasir', role: 'kasir', password: 'kasir', other: ''}
   ]
 
-  public token: string;
   public registerUrl = ENV.registerUrl;
+  public loginUrl = ENV.loginUrl;
+  public getUserDetailsUrl = ENV.getUserDetailsUrl;
 
-  constructor(private http: Http) {
-    var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.token = currentUser && currentUser.token;
-  }
+  constructor(
+    private http: Http,
+    private toastyService: ToastyService,
+    private toastyConfig: ToastyConfig
+  ) { }
 
   isLoggedIn(): boolean {
     if (localStorage.getItem('currentUser') != null)
@@ -38,25 +41,67 @@ export class AuthenticationService {
       return false;
   }
 
-  login(no_pegawai: string, password: string): Observable<boolean> {
-    let user = this.users.find(user => user.no_pegawai == no_pegawai && user.password == password);
-    if (user != null) {
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      return Observable.of(true);
-    }
-    else {
-      return Observable.of(false);
-    }
+  register(data: any): Observable<boolean> {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({headers: headers});
+    let body = JSON.stringify(data);
+
+    return this.http.post(this.registerUrl, body, options)
+      .map((res: Response) => res.json());
   }
 
-  logout(): void {
-    this.token = null;
-    localStorage.removeItem('currentUser');
+  login(data: any) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({headers: headers});
+    let body = JSON.stringify(data);
+
+    this.http.post(this.loginUrl, body, options).subscribe(
+      response => {
+        this.getUserDetails(response.json().result);
+      },
+      error => {
+        let toastOptions: ToastOptions = {
+            title: "Error",
+            msg: error,
+            showClose: true,
+            timeout: 5000,
+            theme: 'material'
+        };
+        this.toastyService.error(toastOptions);
+      }
+    );
+  }
+
+  getUserDetails(token: string) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({headers: headers});
+    let data = { 'token': token };
+    let body = JSON.stringify(data);
+    this.http.post(this.getUserDetailsUrl, body, options).subscribe(
+      response => {
+        localStorage.setItem('currentUser', JSON.stringify(response.json().result));
+        window.location.assign('');
+      },
+      error => {
+        let toastOptions: ToastOptions = {
+            title: "Error",
+            msg: error,
+            showClose: true,
+            timeout: 5000,
+            theme: 'material'
+        };
+        this.toastyService.error(toastOptions);
+      }
+    )
   }
 
   setKategori(no_pegawai: string, kategori_antrian: string): void {
     let user = _.find(this.users, { 'no_pegawai': no_pegawai });
     user.other = '{"kategori_antrian": "' + kategori_antrian + '"}';
     localStorage.setItem('currentUser', JSON.stringify(user));
+  }
+
+  logout(): void {
+    localStorage.removeItem('currentUser');
   }
 }

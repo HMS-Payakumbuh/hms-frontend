@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-    let user = JSON.parse(localStorage.getItem('currentUser'));
+    let user: any = JSON.parse(localStorage.getItem('currentUser'));
 
     switch (user.role) {
       case 'dokter': {
