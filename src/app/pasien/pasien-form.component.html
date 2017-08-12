@@ -112,6 +112,9 @@
                         <div class="input-group-addon">Nomor</div>
                         <input type="string" class="form-control" id="no_asuransi" [(ngModel)]="asuransi.no_kartu" name="no_asuransi" required>
                       </div>
+                      <span class="input-group-btn" *ngIf="!isBpjsVerified">
+                        <button class="btn btn-secondary" type="button" (click)="cekBpjs()">Verifikasi</button>
+                      </span>
                     </div>
                   </div>
 
@@ -304,6 +307,9 @@
                         <div class="input-group-addon">Nomor</div>
                         <input type="string" class="form-control" id="no_asuransi" [(ngModel)]="asuransi.no_kartu" name="no_asuransi_dipakai" required>
                       </div>
+                      <span class="input-group-btn" *ngIf="!isBpjsVerified">
+                        <button class="btn btn-secondary" type="button" (click)="cekBpjs()">Verifikasi</button>
+                      </span>
                     </div>
                   </div>
 
