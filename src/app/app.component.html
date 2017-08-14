@@ -1,4 +1,5 @@
 <html>
+	<ng2-toasty [position]="'top-center'"></ng2-toasty>
 	<div class="row">
 		<div class="col-md-8 ml-4">
 			<h1>{{title}}</h1>
@@ -53,14 +54,14 @@
 						<a *ngIf="user.role == 'dokter'" routerLink="/pemeriksaan/rawatinap" class="list-group-item">Pemeriksaan Pasien Rawat Inap</a>
 					</div>
 
-					<a href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#ICUSubMenu">ICU</a>
+					<a href="" *ngIf="user.role == 'frontOffice' || user.role == 'dokter'" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#ICUSubMenu">ICU</a>
 					<div id="ICUSubMenu" class="collapse">
 						<a *ngIf="user.role == 'frontOffice'" routerLink="/icu" class="list-group-item">Pendaftaran ICU</a>
 						<a *ngIf="user.role == 'frontOffice'" routerLink="/pemakaianicu" class="list-group-item">Daftar Pemakaian ICU</a>
 						<a *ngIf="user.role == 'dokter'" routerLink="/pemeriksaan/icu" class="list-group-item">Pemeriksaan Pasien ICU</a>
 					</div>
 
-					<a href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#OperasiSubMenu">Operasi</a>
+					<a href="" *ngIf="user.role == 'frontOffice' || user.role == 'dokter'" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#OperasiSubMenu">Operasi</a>
 					<div id="OperasiSubMenu" class="collapse">
 						<a *ngIf="user.role == 'frontOffice'" routerLink="/operasi/booking" class="list-group-item">Pendaftaran Booking Kamar Operasi</a>
 						<a *ngIf="user.role == 'dokter' || user.role == 'frontOffice'" routerLink="/pemakaiankamaroperasi" class="list-group-item">Pemakaian Kamar Operasi Sekarang</a>
