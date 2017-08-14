@@ -183,12 +183,18 @@
                       <tr>
                         <th><mfDefaultSorter by="nama">Nama Pasien</mfDefaultSorter></th>
                         <th><mfDefaultSorter by="no_antrian">Nomor Antrian</mfDefaultSorter></th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr *ngFor="let antrian of mf.data">
                         <td class="text-left">{{antrian.transaksi.pasien.nama_pasien}}</td>
                         <td>{{antrian.no_antrian}}</td>
+                        <td>
+                          <button type="button" class="btn btn-sm btn-success" [routerLink] = "['/rekam_medis', selectedPoliklinik.nama, antrian.id_transaksi, antrian.transaksi.pasien.id]">
+                            Lihat Rekam Medis
+                          </button>
+                        </td>
                       </tr>
                     </tbody>
                     <tfoot>

@@ -4,6 +4,7 @@ export var ENV = {
 	registerUrl: baseUrl + "/api/register",
 	loginUrl: baseUrl + "/api/login",
 	getUserDetailsUrl: baseUrl + "/api/get_user_details",
+	updateUserKategoriUrl: baseUrl + "/api/update_user_kategori",
 
 	transaksiUrl: baseUrl + "/api/transaksi",
 	transaksiEksternalUrl: baseUrl + "/api/transaksi_eksternal",

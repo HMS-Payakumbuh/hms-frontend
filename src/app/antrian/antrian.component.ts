@@ -228,7 +228,14 @@ export class AntrianComponent implements OnInit, OnDestroy {
 
   private setKategori() {
     this.authenticationService.setKategori(this.user.no_pegawai, this.kategori);
-    this.ngOnInit();
+    setTimeout(() => 
+    {
+      this.user = JSON.parse(localStorage.getItem('currentUser'));
+      this.kategori = JSON.parse(this.user.other).kategori_antrian;
+      this.selectedKategori = this.kategori;
+      this.updateAntrianFrontOffice();
+    },
+    2000);
   }
 
   private onEnter(event) {

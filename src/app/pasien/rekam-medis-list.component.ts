@@ -58,15 +58,17 @@ export class RekamMedisListComponent implements OnInit {
 						_.set(rekamMedis, 'keluhan', '-');		
 				})
 			});
-	      	this.transaksiService.getTransaksi(this.transaksiId).subscribe(transaksi => {
-		        this.transaksi = transaksi.transaksi;
-		        if (this.transaksi.rujukan) {
-		        	this.rekamMedisService.getAllRekamMedisEksternalOfPasien(this.pasienId)
-					.subscribe(allRekamMedis => {
-						this.allRekamMedisEksternal = allRekamMedis
-					});
-		        }
-		    });
+			if (this.transaksiId != undefined) {
+				this.transaksiService.getTransaksi(this.transaksiId).subscribe(transaksi => {
+			        this.transaksi = transaksi.transaksi;
+			        if (this.transaksi.rujukan) {
+			        	this.rekamMedisService.getAllRekamMedisEksternalOfPasien(this.pasienId)
+						.subscribe(allRekamMedis => {
+							this.allRekamMedisEksternal = allRekamMedis
+						});
+			        }
+			    });
+			}
 	    }
 	}
 
