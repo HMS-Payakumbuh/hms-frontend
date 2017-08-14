@@ -57,7 +57,18 @@ export class AuthenticationService {
 
     this.http.post(this.loginUrl, body, options).subscribe(
       response => {
-        this.getUserDetails(response.json().result);
+        if (response.json().result.indexOf('salah') == -1)
+          this.getUserDetails(response.json().result);
+        else {
+          let toastOptions: ToastOptions = {
+            title: "Error",
+            msg: response.json().result,
+            showClose: true,
+            timeout: 5000,
+            theme: 'material'
+          };
+          this.toastyService.error(toastOptions);
+        }
       },
       error => {
         let toastOptions: ToastOptions = {
