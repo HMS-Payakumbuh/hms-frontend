@@ -197,7 +197,7 @@ export class PasienFormComponent implements OnInit {
               msg: "Nomor rujukan yang dimasukkan sudah valid.",
               showClose: true,
               timeout: 5000,
-              theme: 'bootstrap'
+              theme: 'material'
           };
 
           this.toastyService.success(toastOptions);
@@ -209,7 +209,7 @@ export class PasienFormComponent implements OnInit {
                 msg: "Nomor kartu bpjs yang dimasukkan tidak valid.",
                 showClose: true,
                 timeout: 5000,
-                theme: 'bootstrap'
+                theme: 'material'
               };
 
               this.toastyService.error(toastOptions);
@@ -225,7 +225,7 @@ export class PasienFormComponent implements OnInit {
               msg: "Nomor rujukan yang dimasukkan tidak valid.",
               showClose: true,
               timeout: 5000,
-              theme: 'bootstrap'
+              theme: 'material'
           };
 
           this.toastyService.error(toastOptions);
@@ -240,7 +240,7 @@ export class PasienFormComponent implements OnInit {
         msg: "Nomor kartu bpjs yang dimasukkan tidak valid.",
         showClose: true,
         timeout: 5000,
-        theme: 'bootstrap'
+        theme: 'material'
       };
 
       this.toastyService.error(toastOptions);
@@ -251,7 +251,7 @@ export class PasienFormComponent implements OnInit {
           msg: "Nomor kartu bpjs yang dimasukkan sudah valid.",
           showClose: true,
           timeout: 5000,
-          theme: 'bootstrap'
+          theme: 'material'
       };
 
       this.toastyService.success(toastOptions);
@@ -295,7 +295,7 @@ export class PasienFormComponent implements OnInit {
               msg: "Harap mencoba sekali lagi.",
               showClose: true,
               timeout: 5000,
-              theme: 'bootstrap'
+              theme: 'material'
           };
 
           this.toastyService.error(toastOptions);
@@ -304,8 +304,8 @@ export class PasienFormComponent implements OnInit {
               title: "Pendaftaran Antrian Sukses !",
               msg: "Pasien mendapat nomor antrian : "+data.no_antrian,
               showClose: true,
-              timeout: 5000,
-              theme: 'bootstrap'
+              timeout: 0,
+              theme: 'material'
           };
 
           this.toastyService.success(toastOptions);
@@ -335,7 +335,7 @@ export class PasienFormComponent implements OnInit {
                       msg: "Rekam medis sudah disimpan dan siap digunakan.",
                       showClose: true,
                       timeout: 5000,
-                      theme: 'bootstrap'
+                      theme: 'material'
                     };
 
                     this.toastyService.success(toastOptions);
@@ -346,7 +346,7 @@ export class PasienFormComponent implements OnInit {
                     msg: "Rekam medis gagal diambil karena nomor rujukan / nomor kartu pasien tidak sesuai.",
                     showClose: true,
                     timeout: 5000,
-                    theme: 'bootstrap'
+                    theme: 'material'
                 };
 
                 this.toastyService.error(toastOptions);
@@ -413,7 +413,7 @@ export class PasienFormComponent implements OnInit {
           msg: "Pasien BPJS harus memasukkan nomor rujukan.",
           showClose: true,
           timeout: 5000,
-          theme: 'bootstrap'
+          theme: 'material'
       };
 
       this.toastyService.error(toastOptions);
@@ -423,7 +423,7 @@ export class PasienFormComponent implements OnInit {
           msg: "Nomor bpjs masih belum valid.",
           showClose: true,
           timeout: 5000,
-          theme: 'bootstrap'
+          theme: 'material'
       };
 
       this.toastyService.error(toastOptions); 
@@ -448,8 +448,8 @@ export class PasienFormComponent implements OnInit {
                 title: "Registrasi Pasien Sukses !",
                 msg: "Pasien mendapat nomor pasien : "+data.json.kode_pasien,
                 showClose: true,
-                timeout: 5000,
-                theme: 'bootstrap'
+                timeout: 0,
+                theme: 'material'
               };
 
               this.toastyService.success(toastOptions);

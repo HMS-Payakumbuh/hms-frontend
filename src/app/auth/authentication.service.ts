@@ -10,20 +10,6 @@ import { User } from './user';
 
 @Injectable()
 export class AuthenticationService {
-  private users: User[] = [
-    {no_pegawai: 'D001', name: 'Dokter A', role: 'dokter', password: 'dokter', other: ''},
-    {no_pegawai: 'D002', name: 'Dokter B', role: 'dokter', password: 'dokter', other: ''},
-    {no_pegawai: 'P001', name: 'Perawat', role: 'perawat', password: 'perawat', other: ''},
-    {no_pegawai: 'L001', name: 'Petugas Administrasi Lab', role: 'petugasLab', password: 'petugaslab', other: ''},
-    {no_pegawai: 'L002', name: 'Petugas Lab', role: 'petugasLab', password: 'petugaslab', other: ''},
-    {no_pegawai: 'A001', name: 'Admin', role: 'admin', password: 'admin', other: ''},
-    {no_pegawai: 'F001', name: 'Front Office A', role: 'frontOffice', password: 'frontOffice', other: '{"kategori_antrian": "A"}'},
-    {no_pegawai: 'F002', name: 'Front Office B', role: 'frontOffice', password: 'frontOffice', other: '{"kategori_antrian": "C"}'},
-    {no_pegawai: 'AP001', name: 'Staf Apotek', role: 'stafApotek', password: 'stafapotek', other: ''},
-    {no_pegawai: 'GU001', name: 'Gudang Utama', role: 'gudangUtama', password: 'gudangutama', other: ''},
-    {no_pegawai: 'K001', name: 'Kasir', role: 'kasir', password: 'kasir', other: ''}
-  ]
-
   public registerUrl = ENV.registerUrl;
   public loginUrl = ENV.loginUrl;
   public getUserDetailsUrl = ENV.getUserDetailsUrl;
@@ -58,7 +44,18 @@ export class AuthenticationService {
 
     this.http.post(this.loginUrl, body, options).subscribe(
       response => {
-        this.getUserDetails(response.json().result);
+        if (response.json().result.indexOf('salah') == -1)
+          this.getUserDetails(response.json().result);
+        else {
+          let toastOptions: ToastOptions = {
+            title: "Error",
+            msg: response.json().result,
+            showClose: true,
+            timeout: 5000,
+            theme: 'material'
+          };
+          this.toastyService.error(toastOptions);
+        }
       },
       error => {
         let toastOptions: ToastOptions = {
@@ -107,7 +104,7 @@ export class AuthenticationService {
     this.http.post(this.updateUserKategoriUrl, body, options).subscribe(
       response => {
         localStorage.setItem('currentUser', JSON.stringify(response.json().result));
-        window.location.assign('');
+        //window.location.assign('/antrian');
       },
       error => {
         let toastOptions: ToastOptions = {

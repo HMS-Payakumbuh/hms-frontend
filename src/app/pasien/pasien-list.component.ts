@@ -26,8 +26,6 @@ export class PasienListComponent {
 
   	public bloodTypes = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
 
-  	user: any = JSON.parse(localStorage.getItem('currentUser'));
-
 	constructor(
 		private pasienService: PasienService
 	) {}
