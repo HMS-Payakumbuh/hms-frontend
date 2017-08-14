@@ -27,6 +27,7 @@ export class AuthenticationService {
   public registerUrl = ENV.registerUrl;
   public loginUrl = ENV.loginUrl;
   public getUserDetailsUrl = ENV.getUserDetailsUrl;
+  public updateUserKategoriUrl = ENV.updateUserKategoriUrl;
 
   constructor(
     private http: Http,
@@ -96,9 +97,29 @@ export class AuthenticationService {
   }
 
   setKategori(no_pegawai: string, kategori_antrian: string): void {
-    let user = _.find(this.users, { 'no_pegawai': no_pegawai });
-    user.other = '{"kategori_antrian": "' + kategori_antrian + '"}';
-    localStorage.setItem('currentUser', JSON.stringify(user));
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({headers: headers});
+    let data = { 
+      'no_pegawai': no_pegawai,
+      'kategori_antrian': kategori_antrian 
+    };
+    let body = JSON.stringify(data);
+    this.http.post(this.updateUserKategoriUrl, body, options).subscribe(
+      response => {
+        localStorage.setItem('currentUser', JSON.stringify(response.json().result));
+        window.location.assign('');
+      },
+      error => {
+        let toastOptions: ToastOptions = {
+            title: "Error",
+            msg: error,
+            showClose: true,
+            timeout: 5000,
+            theme: 'material'
+        };
+        this.toastyService.error(toastOptions);
+      }
+    )
   }
 
   logout(): void {

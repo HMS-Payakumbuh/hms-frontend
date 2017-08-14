@@ -28,7 +28,7 @@
 							<th><mfDefaultSorter by="alamat">Alamat</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="kontak">Kontak</mfDefaultSorter></th>
 							<th></th>
-							<!-- <th></th> -->
+							<th *ngIf="user.role == 'dokter'"></th>
 						</thead>
 						<tbody>
 							<tr *ngFor="let pasien of mf.data">
@@ -42,11 +42,11 @@
 								<td>
 									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#editPasienModal" [attr.data-target]="'#editPasienModal'" (click)="editPasien(pasien.id, pasien)">Edit</button>
 								</td>
-<!-- 								<td>
-									<button type="button" class="btn btn-sm btn-danger" (click)="destroyPasien(pasien.id)">
-										Hapus
+ 								<td *ngIf="user.role == 'dokter'">
+									<button type="button" class="btn btn-sm btn-success" [routerLink] = "['/rekam_medis', pasien.id]">
+										Lihat Rekam Medis
 									</button>
-								</td> -->
+								</td>
 							</tr>
 						</tbody>
 						<tfoot>
