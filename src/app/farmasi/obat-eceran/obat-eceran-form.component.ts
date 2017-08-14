@@ -3,6 +3,8 @@ import { Observable } 	from 'rxjs/Observable';
 import { Location }					from '@angular/common';
 import { Router }                     from '@angular/router';
 
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
+
 import { ObatEceran } from './obat-eceran';
 import { ObatEceranItem } from './obat-eceran-item';
 import { ObatEceranService } from './obat-eceran.service';
@@ -41,6 +43,8 @@ export class ObatEceranFormComponent {
 		private stokObatService: StokObatService,	
 		private obatEceranService: ObatEceranService,
 		private location: Location,
+    	private toastyService: ToastyService,
+    	private toastyConfig: ToastyConfig,
     	private router: Router
 	) {}
 
@@ -82,8 +86,15 @@ export class ObatEceranFormComponent {
 	         	return true;
 	       	},
 	       	error => {
-		         console.error("Error saving!");
-		         return Observable.throw(error);
+		        let toastOptions: ToastOptions = {
+		            title: "Error",
+		            msg: error,
+		            showClose: true,
+		            timeout: 5000,
+		            theme: 'material'
+		        };
+		        this.toastyService.error(toastOptions);
+		        return Observable.throw(error);
 	       	}
     	);
 	}

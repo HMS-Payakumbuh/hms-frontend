@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Observable } 	from 'rxjs/Observable';
 import { Location }					from '@angular/common';
 
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
+
 import { ObatPindah }	from './obat-pindah';
 import { ObatPindahService }		from './obat-pindah.service';
 
@@ -43,7 +45,9 @@ export class ObatPindahFormComponent {
 		private obatPindahService: ObatPindahService,
 		private lokasiObatService: LokasiObatService,
 		private stokObatService: StokObatService,
-		private location: Location
+		private location: Location,
+    	private toastyService: ToastyService,
+    	private toastyConfig: ToastyConfig
 	) {}
 
 	ngOnInit(): void {
@@ -71,8 +75,15 @@ export class ObatPindahFormComponent {
 	         	return true;
 	       	},
 	       	error => {
-		         console.error("Error saving!");
-		         return Observable.throw(error);
+		        let toastOptions: ToastOptions = {
+		            title: "Error",
+		            msg: error,
+		            showClose: true,
+		            timeout: 5000,
+		            theme: 'material'
+		        };
+		        this.toastyService.error(toastOptions);
+		        return Observable.throw(error);
 	       	}
     	);
 	}
