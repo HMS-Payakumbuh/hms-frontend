@@ -3,6 +3,8 @@ import { Observable } 	from 'rxjs/Observable';
 import { Location }					from '@angular/common';
 import { ActivatedRoute, Params, Router }	from '@angular/router';
 
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
+
 import { ObatTebus } from './obat-tebus';
 import { ObatTebusItem } from './obat-tebus-item';
 import { ObatTebusService } from './obat-tebus.service';
@@ -89,7 +91,9 @@ export class ObatTebusFormComponent {
 		private transaksiService: TransaksiService,
 		private resepService: ResepService,		
 		private location: Location,
-		private router: Router
+		private router: Router,
+    	private toastyService: ToastyService,
+    	private toastyConfig: ToastyConfig
 	) {}
 
 	ngOnInit(): void {
@@ -255,8 +259,15 @@ export class ObatTebusFormComponent {
 			         	return true;
 			       	},
 			       	error => {
-				        console.error("Error saving!");
 				        this.obatTebusItems = [];
+				        let toastOptions: ToastOptions = {
+				            title: "Error",
+				            msg: error,
+				            showClose: true,
+				            timeout: 5000,
+				            theme: 'material'
+				        };
+				        this.toastyService.error(toastOptions);
 				        return Observable.throw(error);
 			       	}
 			    )

@@ -59,12 +59,13 @@ export class RekamMedisDetailComponent implements OnInit {
 	public sortByAlergi = "nama";
 	public sortByRiwayat = "riwayat";
 	public sortOrder = "asc";
+	private user: any = JSON.parse(localStorage.getItem('currentUser'));
 
 	constructor(
 		private rekamMedisService: RekamMedisService,
 		private resepService: ResepService,
 		private diagnosisService: DiagnosisService,
-    private hasilLabService: HasilLabService,
+    	private hasilLabService: HasilLabService,
 		private tindakanService: TindakanService,
 		private tenagaMedisService: TenagaMedisService,
 		private route: ActivatedRoute,
@@ -72,7 +73,8 @@ export class RekamMedisDetailComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		this.route.params
+		if (this.user.role == 'dokter') {
+			this.route.params
 			.switchMap((params: Params) => this.rekamMedisService.getRekamMedisOfPasien(+params['idPasien'], +params['noEntry']))
 			.subscribe(data => {
 				if (data) {
@@ -181,6 +183,8 @@ export class RekamMedisDetailComponent implements OnInit {
 						});
 				}
 			});
+		}
+		
 	}
 
 	loadRiwayat(): void {

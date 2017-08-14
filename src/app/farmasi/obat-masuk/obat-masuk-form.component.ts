@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Observable } 	from 'rxjs/Observable';
 import { Location }					from '@angular/common';
 
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
+
 import { ObatMasuk }			from './obat-masuk';
 import { ObatMasukService }		from './obat-masuk.service';
 
@@ -32,7 +34,9 @@ export class ObatMasukFormComponent {
 	constructor(
 		private obatMasukService: ObatMasukService,
 		private jenisObatService: JenisObatService,
-		private location: Location
+		private location: Location,
+    	private toastyService: ToastyService,
+    	private toastyConfig: ToastyConfig
 	) {}
 
 	ngOnInit(): void {
@@ -53,8 +57,15 @@ export class ObatMasukFormComponent {
 	         	return true;
 	       	},
 	       	error => {
-		         console.error("Error saving!");
-		         return Observable.throw(error);
+		        let toastOptions: ToastOptions = {
+		            title: "Error",
+		            msg: error,
+		            showClose: true,
+		            timeout: 5000,
+		            theme: 'material'
+		        };
+		        this.toastyService.error(toastOptions);
+		        return Observable.throw(error);
 	       	}
     	);
 	}

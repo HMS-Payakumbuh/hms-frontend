@@ -14,12 +14,18 @@
 							<thead>
 								<th><mfDefaultSorter by="tanggal">Tanggal</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="keluhan">Keluhan Utama</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="diagnosis">Diagnosis</mfDefaultSorter></th>
 								<th></th>
 							</thead>
 							<tbody>
 								<tr *ngFor="let rekamMedis of mf.data; let i = index; ">
 									<td *ngIf="rekamMedis.keluhan != '-'">{{rekamMedis.tanggal_waktu}}</td>
 									<td *ngIf="rekamMedis.keluhan != '-'">{{rekamMedis.keluhan}}</td>
+									<td *ngIf="rekamMedis.keluhan != '-'">
+										<div *ngFor="let diagnosis of rekamMedis.diagnosis">
+											{{diagnosis.daftar_diagnosis.kode}} - {{diagnosis.daftar_diagnosis.nama}}
+										</div>
+									</td>
 									<td *ngIf="rekamMedis.keluhan != '-'">
 										<button type="button" class="btn btn-sm btn-info" [routerLink]="['/rekam_medis', pasienId, i]">Detail</button>
 									</td>
@@ -48,11 +54,13 @@
 						<table class="table" [mfData]="allRekamMedisEksternal" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 							<thead>
 								<th><mfDefaultSorter by="tanggal">Tanggal</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="keluhan">Keluhan</mfDefaultSorter></th>
 								<th></th>
 							</thead>
 							<tbody>
 								<tr *ngFor="let rekamMedis of mf.data; let i = index; ">
 									<td *ngIf="rekamMedis.keluhan != '-'">{{rekamMedis.tanggal_waktu}}</td>
+									<td *ngIf="rekamMedis.keluhan != '-'">{{rekamMedis.keluhan}}</td>
 									<td *ngIf="rekamMedis.keluhan != '-'">
 										<button type="button" class="btn btn-sm btn-info" [routerLink]="['/rekam_medis_eksternal', pasienId, i]">Detail</button>
 									</td>

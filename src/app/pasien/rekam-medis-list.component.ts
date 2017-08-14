@@ -27,6 +27,7 @@ export class RekamMedisListComponent implements OnInit {
 	public transaksi: Transaksi;
 	public transaksiId: number = null;
 	private sub: any;
+	private user: any = JSON.parse(localStorage.getItem('currentUser'));
 
 	public filterQuery = "";
  	public rowsOnPage = 10;
@@ -47,24 +48,28 @@ export class RekamMedisListComponent implements OnInit {
 	        this.layanan = params['namaLayanan'];
 	        this.transaksiId = params['idTransaksi'];
 	    });
-      	this.rekamMedisService.getAllRekamMedisOfPasien(this.pasienId)
-		.subscribe(allRekamMedis => {
-			this.allRekamMedis = _.each(allRekamMedis, rekamMedis => {
-				if (rekamMedis.anamnesis)
-					_.set(rekamMedis, 'keluhan', JSON.parse(rekamMedis.anamnesis).keluhan);
-				else
-					_.set(rekamMedis, 'keluhan', '-');		
-			})
-		});
-      	this.transaksiService.getTransaksi(this.transaksiId).subscribe(transaksi => {
-	        this.transaksi = transaksi.transaksi;
-	        if (this.transaksi.rujukan) {
-	        	this.rekamMedisService.getAllRekamMedisEksternalOfPasien(this.pasienId)
-				.subscribe(allRekamMedis => {
-					this.allRekamMedisEksternal = allRekamMedis
-				});
-	        }
-	    });
+	    if (this.user.role == 'dokter') {
+	    	this.rekamMedisService.getAllRekamMedisOfPasien(this.pasienId)
+			.subscribe(allRekamMedis => {
+				this.allRekamMedis = _.each(allRekamMedis, rekamMedis => {
+					if (rekamMedis.anamnesis)
+						_.set(rekamMedis, 'keluhan', JSON.parse(rekamMedis.anamnesis).keluhan);
+					else
+						_.set(rekamMedis, 'keluhan', '-');		
+				})
+			});
+			if (this.transaksiId != undefined) {
+				this.transaksiService.getTransaksi(this.transaksiId).subscribe(transaksi => {
+			        this.transaksi = transaksi.transaksi;
+			        if (this.transaksi.rujukan) {
+			        	this.rekamMedisService.getAllRekamMedisEksternalOfPasien(this.pasienId)
+						.subscribe(allRekamMedis => {
+							this.allRekamMedisEksternal = allRekamMedis
+						});
+			        }
+			    });
+			}
+	    }
 	}
 
 	goBack() {

@@ -1,4 +1,5 @@
 <html>
+	<ng2-toasty [position]="'top-center'"></ng2-toasty>
   <div class="row">
     <div class="col-md-12">
       <div class="card mb-3">
@@ -6,45 +7,33 @@
           <h4 class="mb-0">Register</h4>
         </div>
         <div class="card-block">
-          <form class="form-horizontal">
-            <div class="form-group">
-              <label for="no_pegawai" class="col-md-4 control-label">Nomor Pegawai</label>
-              <div class="col-md-6">
+          <div class="col-md-6">
+            <form class="mb-3">
+              <div class="form-group">
+                <label for="no_pegawai">No Pegawai</label>
                 <input id="no_pegawai" type="text" class="form-control" name="no_pegawai" [(ngModel)]="data.no_pegawai" required autofocus>
               </div>
-            </div>
-            <div class="form-group">
-              <label for="name" class="col-md-4 control-label">Nama</label>
-              <div class="col-md-6">
+              <div class="form-group">
+                <label for="nama">Nama</label>
                 <input id="name" type="text" class="form-control" name="name" [(ngModel)]="data.name" required autofocus>
               </div>
-            </div>
-            <div class="form-group">
-              <label for="name" class="col-md-4 control-label">Role</label>
-              <div class="col-md-6">
+              <div class="form-group">
+                <label for="role">Role</label>
                 <input id="role" type="text" class="form-control" name="role" [(ngModel)]="data.role" required autofocus>
               </div>
-            </div>
-            <div class="form-group">
-              <label for="password" class="col-md-4 control-label">Password</label>
-              <div class="col-md-6">
+              <div class="form-group">
+                <label for="password">Password</label>
                 <input id="password" type="password" class="form-control" name="password" [(ngModel)]="data.password" required>
               </div>
-            </div>
-            <div class="form-group">
-              <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-              <div class="col-md-6">
+              <div class="form-group">
+                <label for="password-confirm">Confirm Password</label>
                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
               </div>
-            </div>
-            <div class="form-group">
-              <div class="col-md-6 col-md-offset-4">
-                <button type="button" class="btn btn-success" (click)="register()">
-                Register
-                </button>
-              </div>
-            </div>
-          </form>
+              <button type="button" class="btn btn-success" (click)="register()">
+              Register
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

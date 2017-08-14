@@ -46,6 +46,7 @@ export class PasienFormComponent implements OnInit {
   searchDone: boolean;
   update: boolean;
   isBpjs: boolean = false;
+  isBpjsVerified: boolean = true;
   isVerified: boolean;
   nomor_pasien: string;
   no_sep: string;
@@ -190,28 +191,72 @@ export class PasienFormComponent implements OnInit {
           this.rujukan.asal_rujukan = data.data_rujukan.response.item.provKunjungan.nmProvider;
           this.rujukan.keterangan = data.data_rujukan.response.item.catatan;
           this.no_sep = data.response;
-            let toastOptions:ToastOptions = {
-                title: "Verifikasi Sukses !",
-                msg: "Nomor rujukan yang dimasukkan valid.",
-                showClose: true,
-                timeout: 5000,
-                theme: 'bootstrap'
-            };
 
-            this.toastyService.success(toastOptions);
-          } else {
-            this.isVerified = false;
-            let toastOptions:ToastOptions = {
+          let toastOptions:ToastOptions = {
+              title: "Verifikasi Berhasil !",
+              msg: "Nomor rujukan yang dimasukkan sudah valid.",
+              showClose: true,
+              timeout: 5000,
+              theme: 'material'
+          };
+
+          this.toastyService.success(toastOptions);
+
+          if (this.isBpjs) {
+            if (this.asuransi.no_kartu != this.nomor_pasien) {
+              let toastOptions:ToastOptions = {
                 title: "Verifikasi Gagal !",
-                msg: "Nomor rujukan yang dimasukkan tidak valid.",
+                msg: "Nomor kartu bpjs yang dimasukkan tidak valid.",
                 showClose: true,
                 timeout: 5000,
-                theme: 'bootstrap'
-            };
+                theme: 'material'
+              };
 
-            this.toastyService.error(toastOptions);
+              this.toastyService.error(toastOptions);
+              this.isBpjsVerified = false;
+            } else {
+              this.isBpjsVerified = true;
+            }
           }
+        } else {
+          this.isVerified = false;
+          let toastOptions:ToastOptions = {
+              title: "Verifikasi Gagal !",
+              msg: "Nomor rujukan yang dimasukkan tidak valid.",
+              showClose: true,
+              timeout: 5000,
+              theme: 'material'
+          };
+
+          this.toastyService.error(toastOptions);
+        }
       });
+  }
+
+  private cekBpjs() {
+    if (this.asuransi.no_kartu != this.nomor_pasien) {
+      let toastOptions:ToastOptions = {
+        title: "Verifikasi Gagal !",
+        msg: "Nomor kartu bpjs yang dimasukkan tidak valid.",
+        showClose: true,
+        timeout: 5000,
+        theme: 'material'
+      };
+
+      this.toastyService.error(toastOptions);
+      this.isBpjsVerified = false;
+    } else {
+      let toastOptions:ToastOptions = {
+          title: "Verifikasi Berhasil !",
+          msg: "Nomor kartu bpjs yang dimasukkan sudah valid.",
+          showClose: true,
+          timeout: 5000,
+          theme: 'material'
+      };
+
+      this.toastyService.success(toastOptions);
+      this.isBpjsVerified = true;
+    }
   }
 
   private cekAsuransi() {
@@ -250,7 +295,7 @@ export class PasienFormComponent implements OnInit {
               msg: "Harap mencoba sekali lagi.",
               showClose: true,
               timeout: 5000,
-              theme: 'bootstrap'
+              theme: 'material'
           };
 
           this.toastyService.error(toastOptions);
@@ -259,8 +304,8 @@ export class PasienFormComponent implements OnInit {
               title: "Pendaftaran Antrian Sukses !",
               msg: "Pasien mendapat nomor antrian : "+data.no_antrian,
               showClose: true,
-              timeout: 5000,
-              theme: 'bootstrap'
+              timeout: 0,
+              theme: 'material'
           };
 
           this.toastyService.success(toastOptions);
@@ -280,7 +325,7 @@ export class PasienFormComponent implements OnInit {
                 let rekamMedis: any = {};
                 rekamMedis.kode_pasien = this.nomor_pasien;
                 rekamMedis.id_pasien = this.pasien.id;
-                let dokumen: any = JSON.parse(data.data);
+                let dokumen: any = data.data;
                 rekamMedis.identitas_pasien = JSON.stringify(dokumen.ClinicalDocument.recordTarget.patientRole.patient);
                 rekamMedis.identitas_dokter = JSON.stringify(dokumen.ClinicalDocument.author);
                 rekamMedis.komponen = JSON.stringify(dokumen.ClinicalDocument.component.structuredBody.component);
@@ -290,7 +335,7 @@ export class PasienFormComponent implements OnInit {
                       msg: "Rekam medis sudah disimpan dan siap digunakan.",
                       showClose: true,
                       timeout: 5000,
-                      theme: 'bootstrap'
+                      theme: 'material'
                     };
 
                     this.toastyService.success(toastOptions);
@@ -301,7 +346,7 @@ export class PasienFormComponent implements OnInit {
                     msg: "Rekam medis gagal diambil karena nomor rujukan / nomor kartu pasien tidak sesuai.",
                     showClose: true,
                     timeout: 5000,
-                    theme: 'bootstrap'
+                    theme: 'material'
                 };
 
                 this.toastyService.error(toastOptions);
@@ -368,10 +413,20 @@ export class PasienFormComponent implements OnInit {
           msg: "Pasien BPJS harus memasukkan nomor rujukan.",
           showClose: true,
           timeout: 5000,
-          theme: 'bootstrap'
+          theme: 'material'
       };
 
       this.toastyService.error(toastOptions);
+    } else if (!this.isBpjsVerified) {
+      let toastOptions:ToastOptions = {
+          title: "Registrasi Pasien Gagal !",
+          msg: "Nomor bpjs masih belum valid.",
+          showClose: true,
+          timeout: 5000,
+          theme: 'material'
+      };
+
+      this.toastyService.error(toastOptions); 
     } else {
       if (this.update) {
         this.pasienService.updatePasien(this.pasien.id, this.pasien).subscribe(
@@ -393,8 +448,8 @@ export class PasienFormComponent implements OnInit {
                 title: "Registrasi Pasien Sukses !",
                 msg: "Pasien mendapat nomor pasien : "+data.json.kode_pasien,
                 showClose: true,
-                timeout: 5000,
-                theme: 'bootstrap'
+                timeout: 0,
+                theme: 'material'
               };
 
               this.toastyService.success(toastOptions);

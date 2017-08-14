@@ -3,6 +3,8 @@ import { ActivatedRoute, Params }	from '@angular/router';
 import { Location }					from '@angular/common';
 import { Observable } 	from 'rxjs/Observable';
 
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
+
 import { StokObat }			from '../stok-obat/stok-obat';
 import { StokObatService }		from '../stok-obat/stok-obat.service';
 
@@ -68,7 +70,9 @@ export class StockOpnameFormComponent {
 		private obatEceranService: ObatEceranService,
  		private	obatTebusService: ObatTebusService,
 		private route: ActivatedRoute,
-		private location: Location
+		private location: Location,
+    	private toastyService: ToastyService,
+    	private toastyConfig: ToastyConfig
 	) {}
 
 	ngOnInit(): void {
@@ -180,7 +184,14 @@ export class StockOpnameFormComponent {
 	         	return true;
 	       	},
 	       	error => {
-		        console.error("Error saving!");
+		        let toastOptions: ToastOptions = {
+		            title: "Error",
+		            msg: error,
+		            showClose: true,
+		            timeout: 5000,
+		            theme: 'material'
+		        };
+		        this.toastyService.error(toastOptions);
 		        return Observable.throw(error);
 	       	}
 	    )

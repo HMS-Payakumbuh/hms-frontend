@@ -42,6 +42,8 @@ export class RekamMedisEksternalDetailComponent implements OnInit {
 	public sortByNama = "nama";
 	public sortOrder = "asc";
 
+	private user: any = JSON.parse(localStorage.getItem('currentUser'));
+
 	constructor(
 		private rekamMedisService: RekamMedisService,
 		private route: ActivatedRoute,
@@ -49,7 +51,8 @@ export class RekamMedisEksternalDetailComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		this.route.params
+		if (this.user.role == 'dokter') {
+			this.route.params
 			.switchMap((params: Params) => this.rekamMedisService.getRekamMedisEksternalOfPasien(+params['idPasien'], +params['noEntry']))
 			.subscribe(data => {
 				if (data) {
@@ -177,6 +180,7 @@ export class RekamMedisEksternalDetailComponent implements OnInit {
 						this.first = true;	
 				}
 			});	
+		}
 	}
 
 	goBack(): void {

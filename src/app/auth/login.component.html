@@ -1,4 +1,5 @@
 <html>
+  <ng2-toasty [position]="'top-center'"></ng2-toasty>
   <div class="row">
     <div class="col-md-12">
 
@@ -23,10 +24,7 @@
                 Login
               </button>
             </form>
-            <p *ngFor="let alert of alerts">
-              <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
-            </p>
-        </div>
+          </div>
         </div>
       </div>
 

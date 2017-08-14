@@ -142,6 +142,7 @@ const routes: Routes = [
 	{ path: 'daftar-pasien', canActivate: [AuthGuard], component: PasienListComponent },
 	{ path: 'pendaftaran', canActivate: [AuthGuard], component: PasienFormComponent},
 	{ path: 'daftar-pasien/catatan-kematian-form', canActivate: [AuthGuard], component: CatatanKematianFormComponent},
+	{ path: 'rekam_medis/:idPasien', canActivate: [AuthGuard], component: RekamMedisListComponent},
 	{ path: 'rekam_medis/:namaLayanan/:idTransaksi/:idPasien', canActivate: [AuthGuard], component: RekamMedisListComponent},
 	{ path: 'rekam_medis/:idPasien/:noEntry', canActivate: [AuthGuard], component: RekamMedisDetailComponent},
 	{ path: 'rekam_medis_eksternal/:idPasien/:noEntry', canActivate: [AuthGuard], component: RekamMedisEksternalDetailComponent},
