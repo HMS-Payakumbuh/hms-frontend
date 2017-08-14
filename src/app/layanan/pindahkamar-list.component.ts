@@ -61,7 +61,7 @@ export class PindahKamarListComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.rawatinapService.getAllAvailableRawatinap().subscribe(
+		this.rawatinapService.getAllAvailable().subscribe(
      		data => { this.allRawatinap = data }
 		);
 		

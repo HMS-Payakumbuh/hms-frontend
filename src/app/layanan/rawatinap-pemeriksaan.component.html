@@ -481,7 +481,7 @@
 							<form>
 								<div class="form-group">
 									<label for="tanggal">Perbarui Perkiraan Waktu Keluar</label>
-									<input [dpDayPicker]="config" theme="dp-material" class="form-control" id="tanggal" [(ngModel)]="perkiraan_waktu_keluar" (ngModelChange)="setTanggal()" name="tanggal">
+									<input type="date" class="form-control" id="tanggal" [(ngModel)]="perkiraan_waktu_keluar" (ngModelChange)="setTanggal()" name="tanggal">
 								</div>
 							</form>
 						</div>

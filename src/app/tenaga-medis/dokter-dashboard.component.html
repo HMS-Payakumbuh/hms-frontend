@@ -247,7 +247,7 @@
                 </span>
               </div>
 
-              <div *ngIf="allDaftarPemakaianICU.length > 0" class="card card-outline-info mb-3">
+              <div *ngIf="icuSelected" class="card card-outline-info mb-3">
                 <div class="card-block">
                   <table class="table mt-3" [mfData]="allDaftarPemakaianICU" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
                     <thead class="thead" style="background-color: #5bc0de; text-color=#ffffff;">
@@ -329,7 +329,7 @@
                 </span>
               </div>
 
-              <div *ngIf="allDaftarPemakaianRawatinap.length > 0" class="card card-outline-info mb-3">
+              <div *ngIf="rawatinapSelected" class="card card-outline-info mb-3">
                 <div class="card-block">
                   <table class="table mt-3" [mfData]="allDaftarPemakaianRawatinap" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
                     <thead class="thead" style="background-color: #5bc0de; text-color=#ffffff;">
@@ -374,17 +374,14 @@
     <div class="col-md-12">
       <div class="card mb-3">
 				<div class="card-header card-info">
-					<h4>Jadwal Operasi</h4>
+          <h5 class="text-center mb-0"><b>Operasi</b></h5>
 				</div>
 
 				<div class="card-block">
           <div class="row">
 						<div class="col-md-6 pull-left">
-							<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal Operasi">
-						</div>
-						<div class="col-md-6 pull-right">
 							<div class="input-group">							
-							    <input type="text" class="form-control" [(ngModel)]="param" placeholder="No.Kamar/Nama Pasien/Nama Dokter"/>
+							    <input type="text" class="form-control" [(ngModel)]="param" placeholder="No.Kamar/Nama Pasien"/>
 							</div>
 						</div>
 					</div>
@@ -397,7 +394,6 @@
 							<th>Nama Tindakan</th>
 							<th>Waktu Masuk</th>
 							<th></th>
-							<th></th>
 							<tr>
 						</thead>
 						
@@ -408,8 +404,8 @@
 								<td>{{kamaroperasi?.nama_tindakan}}</td>
                 <td>{{kamaroperasi?.waktu_masuk_real | date:'d MMM y H:mm'}}</td>
                 
-                <button type="button" class="btn btn-sm btn-info" routerLink="{{kamaroperasi.no_kamar}}/{{kamaroperasi.id}}/{{kamaroperasi.id_transaksi}}">
-                  Operasi
+                <button type="button" class="btn btn-sm btn-info" (click)="operasi(kamaroperasi.no_kamar,kamaroperasi.id,kamaroperasi.id_transaksi)">
+                    Operasi
                 </button>
 							</tr>
 						</tbody>

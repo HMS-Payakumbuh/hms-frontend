@@ -12,6 +12,8 @@ import { TransaksiService }       from '../transaksi/transaksi.service';
 import { TenagaMedisService }     from './tenaga-medis.service';
 import { Tindakan }               from '../layanan/tindakan';
 import { TindakanService }        from '../layanan/tindakan.service';
+import { TindakanOperasi }               from '../layanan/tindakan-operasi';
+import { TindakanOperasiService }        from '../layanan/tindakan-operasi.service';
 import { PemakaianKamar }  from '../layanan/pemakaian-kamar';
 import { PemakaianKamarService }  from '../layanan/pemakaian-kamar.service';
 import { PemakaianKamarOperasi }  from '../layanan/pemakaian-kamar-operasi';
@@ -29,6 +31,7 @@ import * as io from "socket.io-client";
     TenagaMedisService,
     TransaksiService,
     TindakanService,
+    TindakanOperasiService,
     PemakaianKamarService,
     PemakaianKamarOperasiService
   ]
@@ -47,6 +50,7 @@ export class DokterDashboardComponent implements OnInit {
   allPemakaianRawatinap: any[] = [];
   allPemakaianICU: any[] = [];
   allPemakaianOperasi: any[] = [];
+  allPemakaianOperasiTemp:any[] = [];
 
   allDaftarPemakaianRawatinap: any[] = [];
   allDaftarPemakaianICU: any[] = [];
@@ -64,6 +68,8 @@ export class DokterDashboardComponent implements OnInit {
   selectedPemakaianRawatinap: any;
   selectedPemakaianICU: any;
   selectedPemakaianOperasi: any;
+
+  tindakanOperasi: any[];
   
   transaksiRujukan: Transaksi = null;
   transaksiAmbulans: any = null;
@@ -84,6 +90,7 @@ export class DokterDashboardComponent implements OnInit {
     private tenagaMedisService: TenagaMedisService,
     private transaksiService: TransaksiService,
     private tindakanService: TindakanService,
+    private tindakanOperasiService: TindakanOperasiService,
     private pemakaianKamarService: PemakaianKamarService,
     private pemakaianKamarOperasiService: PemakaianKamarOperasiService
 	) { this.socket = io('http://localhost') }
@@ -131,8 +138,23 @@ export class DokterDashboardComponent implements OnInit {
     )
     
     this.pemakaianKamarOperasiService.getAllPemakaianKamarOperasiNow().subscribe(
-     		data => { this.allPemakaianOperasi = data }
-    	);
+     		data => { 
+           this.allPemakaianOperasiTemp = data;
+           this.allPemakaianOperasiTemp.forEach(element => {
+              this.tindakanOperasiService.getTenagaMedisByTindakanOperasi(element.id).subscribe(
+                data => {	
+                  this.tindakanOperasi = data;
+                  this.tindakanOperasi.forEach(tindakanoperasi => {
+                    if(tindakanoperasi.no_pegawai == this.noPegawai) 
+                      this.allPemakaianOperasi.push(element);
+                  });  
+                }
+              );
+           });
+          }
+      );
+      
+    
 
     this.socket.on(this.noPegawai, (message) => this.updatePasienRujukan(message));
   }
@@ -222,13 +244,17 @@ export class DokterDashboardComponent implements OnInit {
             this.pemakaianKamarService.getPemakaianKamar(element.id_pemakaian_kamar_rawatinap).subscribe(
               data=> {
                 if(data.jenis_kamar == "ICU")
-                  this.allDaftarPemakaianRawatinap.push(data);
+                  this.allDaftarPemakaianICU.push(data);
               }
             )
           });
         }
       }
     )
+  }
+
+  operasi(no_kamar:string, id:number, id_transaksi:number) {
+    this.router.navigate(['/pemakaiankamaroperasi', no_kamar, id, id_transaksi ])
   }
 
   periksaRawatinap(id_transaksi:number, id_pemakaian: number) {

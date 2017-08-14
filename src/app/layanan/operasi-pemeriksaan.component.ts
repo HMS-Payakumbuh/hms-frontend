@@ -114,10 +114,14 @@ export class PemeriksaanOperasiComponent implements OnInit {
 
     savedTindakanOperasi: TindakanOperasi[] = [];
 
+    addedTindakanOperasi: TindakanOperasi[] = [];
+
     resepItemModal: ResepItem = null;
     allResep: Resep[] = [];
 
-  user : any;
+    tindakanOperasi: any[];
+
+    user : any;
 
 	inputFormatter = (value : any) => value.nama;
 	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
@@ -182,8 +186,8 @@ export class PemeriksaanOperasiComponent implements OnInit {
     private jenisObatService: JenisObatService,
     private obatMasukService: ObatMasukService,
     private stokObatService: StokObatService,
-        private config: NgbTypeaheadConfig,
-        private tindakanOperasiService : TindakanOperasiService,
+    private config: NgbTypeaheadConfig,
+    private tindakanOperasiService : TindakanOperasiService,
     private modalService: NgbModal
 	) {
 		config.editable = false;
@@ -195,6 +199,12 @@ export class PemeriksaanOperasiComponent implements OnInit {
 			.subscribe(
           data => {
             this.pemakaianKamar = data;
+            this.tindakanOperasiService.getTenagaMedisByTindakanOperasi(this.pemakaianKamar.id).subscribe(
+              data => {
+                this.tindakanOperasi = data;
+              }
+            )
+
             this.stokObatService.getStokObatByLocationType(5).subscribe(
               allStokObatAtLocation => this.allStokObatAtLocation = allStokObatAtLocation
             );
@@ -225,6 +235,18 @@ export class PemeriksaanOperasiComponent implements OnInit {
 
     this.user = JSON.parse(localStorage.getItem('currentUser'));
 	}
+
+  deleteTindakanOperasi(id: number) {
+    this.tindakanOperasiService.destroyTindakanOperasi(id).subscribe( 
+      data => {
+        this.tindakanOperasiService.getTenagaMedisByTindakanOperasi(this.pemakaianKamar.id).subscribe(
+          data => {
+            this.tindakanOperasi = data;
+          }
+        )
+      }
+    )
+  }
 
   checkRekamMedis() {
     this.rekamMedisService.getRekamMedisOfPasien(this.transaksi.transaksi.id_pasien, 0).subscribe(
@@ -353,13 +375,23 @@ export class PemeriksaanOperasiComponent implements OnInit {
     this.savedTindakanOperasi.push(temp2);
   }
 
-  // addDokter(dokter: Dokter) {
-  //   this.addedDokter.push(dokter);
-	// }
+  addDokter(dokter: Dokter) {
+    let temp = new TindakanOperasi();
+    temp.id_tindakan = this.pemakaianKamar.no_tindakan;
+    temp.id_transaksi = this.pemakaianKamar.id_transaksi;
+    temp.np_tenaga_medis = dokter.no_pegawai;
+    this.addedTindakanOperasi.push(temp);
 
-  // removeAddedDokter(i: number) {
-  //   this.addedDokter.splice(i,1);
-  // }
+    this.tindakanOperasiService.createTindakanOperasi(this.addedTindakanOperasi).subscribe(
+      data => {
+        this.tindakanOperasiService.getTenagaMedisByTindakanOperasi(this.pemakaianKamar.id).subscribe(
+          data => {
+            this.tindakanOperasi = data;
+          }
+        )
+      }
+    )
+	}
 
 	removeSelectedTindakan(i: number) {
 		this.selectedTindakan.splice(i, 1);

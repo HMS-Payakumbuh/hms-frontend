@@ -111,7 +111,7 @@ export class PemeriksaanRawatinapComponent implements OnInit {
   perkembangan_pasien: string = null;
 
   resepItemModal: ResepItem = null;
-  allResep: Resep[] = [];]
+  allResep: Resep[] = [];
 
   noPegawai:string;
 

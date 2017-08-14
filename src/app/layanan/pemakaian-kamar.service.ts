@@ -53,12 +53,12 @@ export class PemakaianKamarService {
 
 	getAllPemakaianKamarRawatinapByNoPegawai(no_pegawai: string): Observable<PemakaianKamar[]> {
 		return this.getAllPemakaianKamar()
-			.map(allPemakaian => allPemakaian.filter(pemakaian => pemakaian.jenis_kamar == "Rawat Inap" && pemakaian.no_pegawai == no_pegawai))
+			.map(allPemakaian => allPemakaian.filter(pemakaian => pemakaian.jenis_kamar == "Rawat Inap" && pemakaian.no_pegawai == no_pegawai && pemakaian.waktu_keluar == null))
 	}
 	
 	getAllPemakaianKamarICUByNoPegawai(no_pegawai: string): Observable<PemakaianKamar[]> {
 		return this.getAllPemakaianKamar()
-			.map(allPemakaian => allPemakaian.filter(pemakaian => pemakaian.jenis_kamar == "ICU" && pemakaian.no_pegawai == no_pegawai))
+			.map(allPemakaian => allPemakaian.filter(pemakaian => pemakaian.jenis_kamar == "ICU" && pemakaian.no_pegawai == no_pegawai && pemakaian.waktu_keluar == null))
 	}
 
 	getAllPemakaianKamarRawatinap(): Observable<PemakaianKamar[]> {
