@@ -384,6 +384,7 @@ export class PemeriksaanOperasiComponent implements OnInit {
 
     this.tindakanOperasiService.createTindakanOperasi(this.addedTindakanOperasi).subscribe(
       data => {
+        this.addedTindakanOperasi = [];
         this.tindakanOperasiService.getTenagaMedisByTindakanOperasi(this.pemakaianKamar.id).subscribe(
           data => {
             this.tindakanOperasi = data;

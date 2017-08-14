@@ -51,13 +51,18 @@ export class PemakaianKamarService {
 			.map((res: Response) => res.json());
 	}
 
+	getAllPemakaianKamarDokterDashboard(): Observable<PemakaianKamar[]> {
+		return this.http.get(this.pemakaianKamarRawatinapUrl + '/dashboard/dokter')
+			.map((res: Response) => res.json());
+	}
+
 	getAllPemakaianKamarRawatinapByNoPegawai(no_pegawai: string): Observable<PemakaianKamar[]> {
-		return this.getAllPemakaianKamar()
+		return this.getAllPemakaianKamarDokterDashboard()
 			.map(allPemakaian => allPemakaian.filter(pemakaian => pemakaian.jenis_kamar == "Rawat Inap" && pemakaian.no_pegawai == no_pegawai && pemakaian.waktu_keluar == null))
 	}
 	
 	getAllPemakaianKamarICUByNoPegawai(no_pegawai: string): Observable<PemakaianKamar[]> {
-		return this.getAllPemakaianKamar()
+		return this.getAllPemakaianKamarDokterDashboard()
 			.map(allPemakaian => allPemakaian.filter(pemakaian => pemakaian.jenis_kamar == "ICU" && pemakaian.no_pegawai == no_pegawai && pemakaian.waktu_keluar == null))
 	}
 
