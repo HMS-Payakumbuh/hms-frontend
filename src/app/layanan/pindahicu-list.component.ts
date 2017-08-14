@@ -61,7 +61,7 @@ export class PindahICUListComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.rawatinapService.getAllAvailableICU().subscribe(
+		this.rawatinapService.getAllAvailable().subscribe(
      		data => { this.allRawatinap = data }
 		);
 		

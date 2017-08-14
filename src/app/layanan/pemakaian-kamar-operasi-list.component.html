@@ -43,6 +43,11 @@
 									</button>
 								</td>
 								<td *ngIf="user.role == 'frontOffice'">
+									<button type="button" class="btn btn-sm btn-info" (click)="selesaiOperasi(kamaroperasi.id, kamaroperasi)">
+										Checkout
+									</button>
+								</td>
+								<td *ngIf="user.role == 'frontOffice'">
 									<button type="button" class="btn btn-sm btn-danger" (click)="destroyPemakaianKamarOperasi(kamaroperasi.id)">
 										Hapus
 									</button>
@@ -87,7 +92,7 @@
 								<div class="form-group">
 									<label for="nama_pasien">Nama Dokter Operasi</label>
 									<select class="form-control" id="no_pegawai" [(ngModel)]="no_pegawai"  multiple="multiple" (ngModelChange)="getTenagaMedis()">
-										<option *ngFor="let tenagaMedis of allTenagaMedis" [value]="tenagaMedis.no_pegawai">
+										<option *ngFor="let tenagaMedis of allDokter" [value]="tenagaMedis.no_pegawai">
 											{{tenagaMedis.tenaga_medis.nama}} - {{tenagaMedis.spesialis}}
 										</option>
 									</select>
@@ -103,7 +108,7 @@
 
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-								<button type="button" class="btn btn-success" (click)="createPemakaianKamarOperasi()">Simpan</button>
+								<button type="button" class="btn btn-success" data-dismiss="modal" (click)="createPemakaianKamarOperasi()">Simpan</button>
 							</div>
 
 						</div>
@@ -177,7 +182,7 @@
 
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-								<button type="button" class="btn btn-success" (click)="createPemakaianKamarOperasi()">Simpan</button>
+								<button type="button" class="btn btn-success" data-dismiss="modal" (click)="createPemakaianKamarOperasi()">Simpan</button>
 							</div>
 
 						</div>

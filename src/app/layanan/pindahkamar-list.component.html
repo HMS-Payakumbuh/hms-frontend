@@ -8,6 +8,36 @@
 				</div>
 
 				<div class="card-block">
+					<div class="row mb-3">
+						<div class="col-md-4 pull-left">
+							<div class="col-md-12 input-group">
+								<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="Nama Kamar">
+							</div>
+						</div>
+
+						<div class="col-md-4 pull-right">
+							<div class="col-md-12 input-group">
+								<span class="pt-2 pr-2"><b>Jenis :  </b></span>
+								<select class="form-control" [(ngModel)]="jenis" id="statusDropdown">
+									<option *ngFor="let jenis of allJenis">
+										{{jenis}}
+									</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="col-md-4 pull-right">
+							<div class="col-md-12 input-group">
+								<span class="pt-2 pr-2"><b>Kelas :  </b></span>
+								<select class="form-control" [(ngModel)]="kelas" id="statusDropdown">
+									<option *ngFor="let kelas of allKelas">
+										{{kelas}}
+									</option>
+								</select>
+							</div>
+						</div>
+					</div>	
+
 					<table class="table">
 						<thead>
 							<th>Nama Kamar</th>
@@ -15,33 +45,6 @@
 							<th>Kelas</th>
 							<th>Tempat Tidur Tersedia</th>
 							<th></th>
-							<tr>
-									<td>
-										<div class="col-md-12 input-group">
-											<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="Nama Kamar">
-										</div>
-									</td>
-									<td>
-										<div class="col-md-12 input-group">
-											<select class="form-control" [(ngModel)]="jenis" id="statusDropdown">
-												<option *ngFor="let jenis of allJenis">
-													{{jenis}}
-												</option>
-											</select>
-										</div>
-									</td>
-									<td>
-										<div class="col-md-12 input-group">
-											<select class="form-control" [(ngModel)]="kelas" id="statusDropdown">
-												
-												<option *ngFor="let kelas of allKelas">
-													{{kelas}}
-												</option>
-											</select>
-										</div>
-									</td>
-									<td></td>
-								</tr>
 						</thead>
 						
 						<tbody *ngFor="let rawatinap of allRawatinap | filterKelasKamar: kelas | filterNoKamar: searchParam | filterJenisKamar: jenis">

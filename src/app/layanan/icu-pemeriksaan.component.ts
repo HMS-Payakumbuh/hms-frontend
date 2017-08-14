@@ -97,6 +97,7 @@ export class PemeriksaanICUComponent implements OnInit {
   allStokObatAtLocation: StokObat[];
   allJenisObat: JenisObat[];
   allDokter: Dokter[];
+  allJasaDokter: any[];
 
   pemakaianKamar : PemakaianKamar;
 
@@ -114,6 +115,8 @@ export class PemeriksaanICUComponent implements OnInit {
 
   resepItemModal: ResepItem = null;
   allResep: Resep[] = [];
+
+  noPegawai:string;
 
 	inputFormatter = (value : any) => value.nama;
 	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
@@ -185,11 +188,16 @@ export class PemeriksaanICUComponent implements OnInit {
 	}
 
 	ngOnInit() {
+    this.noPegawai = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
+
     this.route.params
 			.switchMap((params: Params) => this.pemakaianKamarService.getPemakaianKamar(params['idPemakaian']))
 			.subscribe(
           data => {
             this.pemakaianKamar = data;
+            this.pemakaianKamarService.getJasaDokterRawatinapById(this.pemakaianKamar.id).subscribe(
+              data => { this.allJasaDokter = data}
+            )
             this.stokObatService.getStokObatByLocationType(4).subscribe(
               allStokObatAtLocation => this.allStokObatAtLocation = allStokObatAtLocation
             );
@@ -345,13 +353,25 @@ export class PemeriksaanICUComponent implements OnInit {
     this.selectedTindakan.push(temp);
   }
   
-  // addDokter(dokter: Dokter) {
-  //   this.addedDokter.push(dokter);
-	// }
+  addDokter(dokter:Dokter) {
+    this.pemakaianKamarService.createJasaDokterRawatinap(dokter, this.pemakaianKamar.id).subscribe(
+          data => { 
+            this.pemakaianKamarService.getJasaDokterRawatinapById(this.pemakaianKamar.id).subscribe(
+              data => { this.allJasaDokter = data}
+            )
+          }
+    )
+  }
 
-  // removeAddedDokter(i: number) {
-  //   this.addedDokter.splice(i,1);
-  // }
+  deleteJasaDokter(id:number) {
+    this.pemakaianKamarService.deleteJasaDokterRawatinap(id).subscribe(
+      data=> { 
+        this.pemakaianKamarService.getJasaDokterRawatinapById(this.pemakaianKamar.id).subscribe(
+          data => { this.allJasaDokter = data}
+        ) 
+      }
+    )
+  }
 
 	removeSelectedTindakan(i: number) {
 		this.selectedTindakan.splice(i, 1);

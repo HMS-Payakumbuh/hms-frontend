@@ -45,25 +45,25 @@
 						<a routerLink="/daftar-tindakan" class="list-group-item">Daftar Tindakan</a>
 					</div>
 
-					<a *ngIf="user.role == 'dokter' || user.role == 'perawat' || user.role =='frontOffice'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#RawatInapSubMenu">Rawat Inap</a>
+					<a *ngIf="user.role == 'perawat' || user.role =='frontOffice'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#RawatInapSubMenu">Rawat Inap</a>
 					<div id="RawatInapSubMenu" class="collapse">
 						<a *ngIf="user.role == 'frontOffice'" routerLink="/rawatinap" class="list-group-item">Pendaftaran Rawat Inap</a>
-						<a *ngIf="user.role == 'frontOffice'" routerLink="/rawatinap/booking/kamar" class="list-group-item">Pendaftaran Booking Kamar Rawat Inap</a>
-						<a *ngIf="user.role == 'frontOffice'" routerLink="/daftarbookingrawatinap" class="list-group-item">Daftar Booking Kamar Rawat Inap</a>
+						<a *ngIf="user.role == 'frontOffice'" routerLink="/rawatinap/booking/kamar" class="list-group-item">Pendaftaran Reservasi Kamar Rawat Inap</a>
+						<a *ngIf="user.role == 'frontOffice'" routerLink="/daftarbookingrawatinap" class="list-group-item">Daftar Reservasi Kamar Rawat Inap</a>
 						<a *ngIf="user.role == 'frontOffice'" routerLink="/pemakaiankamarrawatinap" class="list-group-item">Daftar Pemakaian Kamar Rawat Inap</a>
 						<a *ngIf="user.role == 'dokter'" routerLink="/pemeriksaan/rawatinap" class="list-group-item">Pemeriksaan Pasien Rawat Inap</a>
 					</div>
 
-					<a href="" *ngIf="user.role == 'frontOffice' || user.role == 'dokter'" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#ICUSubMenu">ICU</a>
+					<a href="" *ngIf="user.role == 'frontOffice'" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#ICUSubMenu">ICU</a>
 					<div id="ICUSubMenu" class="collapse">
 						<a *ngIf="user.role == 'frontOffice'" routerLink="/icu" class="list-group-item">Pendaftaran ICU</a>
 						<a *ngIf="user.role == 'frontOffice'" routerLink="/pemakaianicu" class="list-group-item">Daftar Pemakaian ICU</a>
 						<a *ngIf="user.role == 'dokter'" routerLink="/pemeriksaan/icu" class="list-group-item">Pemeriksaan Pasien ICU</a>
 					</div>
 
-					<a href="" *ngIf="user.role == 'frontOffice' || user.role == 'dokter'" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#OperasiSubMenu">Operasi</a>
+					<a href="" *ngIf="user.role == 'frontOffice'" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#OperasiSubMenu">Operasi</a>
 					<div id="OperasiSubMenu" class="collapse">
-						<a *ngIf="user.role == 'frontOffice'" routerLink="/operasi/booking" class="list-group-item">Pendaftaran Booking Kamar Operasi</a>
+						<a *ngIf="user.role == 'frontOffice'" routerLink="/operasi/booking" class="list-group-item">Pendaftaran Reservasi Kamar Operasi</a>
 						<a *ngIf="user.role == 'dokter' || user.role == 'frontOffice'" routerLink="/pemakaiankamaroperasi" class="list-group-item">Pemakaian Kamar Operasi Sekarang</a>
 					</div>
 
