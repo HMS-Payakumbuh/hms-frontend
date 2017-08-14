@@ -3,6 +3,8 @@ import { Observable } 	from 'rxjs/Observable';
 import { Location }					from '@angular/common';
 import { Router } from '@angular/router';
 
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
+
 import { Resep }                from '../resep/resep';
 import { ResepItem }            from '../resep/resep-item';
 import { RacikanItem }          from '../resep/racikan-item';
@@ -65,6 +67,8 @@ export class ResepEksternalFormComponent {
 		private pasienService: PasienService,
 		private transaksiService: TransaksiService,
    		private router: Router,
+    	private toastyService: ToastyService,
+    	private toastyConfig: ToastyConfig
 	) { }
 
 	ngOnInit() {
@@ -132,8 +136,15 @@ export class ResepEksternalFormComponent {
 		     	this.router.navigateByUrl('/obat-tebus-eksternal-form/' + data[0].id);
 		     	return true;
 	   		},
-		   	error => {
-		        console.error("Error saving!");
+		   	error => {		        
+		        let toastOptions: ToastOptions = {
+		            title: "Error",
+		            msg: error,
+		            showClose: true,
+		            timeout: 5000,
+		            theme: 'material'
+		        };
+		        this.toastyService.error(toastOptions);
 		        return Observable.throw(error);
 		   	}
 	    )

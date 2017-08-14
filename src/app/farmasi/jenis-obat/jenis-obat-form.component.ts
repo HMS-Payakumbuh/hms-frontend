@@ -2,6 +2,8 @@ import { Component } 	from '@angular/core';
 import { Observable } 	from 'rxjs/Observable';
 import { Location }					from '@angular/common';
 
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
+
 import { JenisObat }	from './jenis-obat';
 import { JenisObatService }		from './jenis-obat.service';
 
@@ -17,7 +19,9 @@ export class JenisObatFormComponent {
 
 	constructor(
 		private jenisObatService: JenisObatService,			
-		private location: Location
+		private location: Location,
+    	private toastyService: ToastyService,
+    	private toastyConfig: ToastyConfig
 	) {}
 
 	ngOnInit(): void {
@@ -31,9 +35,16 @@ export class JenisObatFormComponent {
 	         	this.location.back();
 	         	return true;
 	       	},
-	       	error => {
-		         console.error("Error saving!");
-		         return Observable.throw(error);
+	       	error => {	       		
+	       		let toastOptions: ToastOptions = {
+		            title: "Error",
+		            msg: error,
+		            showClose: true,
+		            timeout: 5000,
+		            theme: 'material'
+		        };
+		        this.toastyService.error(toastOptions);
+				return Observable.throw(error);
 	       	}
     	);
 	}
