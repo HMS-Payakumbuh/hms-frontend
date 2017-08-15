@@ -66,10 +66,10 @@ export class RekapTransaksiComponent {
 		};
 		for (let i of listPembayaran) {
 			if (i.metode_bayar == 'bpjs') {
+				hasil['total_bpjs'] += parseInt(i.harga_bayar);
 				if (i.klaim != null) {
 					if (i.klaim.tarif != null) {
-						hasil['total_klaim'] = parseInt(i.klaim.tarif);
-						hasil['total_bpjs'] = parseInt(i.harga_bayar);
+						hasil['total_klaim'] += parseInt(i.klaim.tarif);
 					}
 				}
 			}

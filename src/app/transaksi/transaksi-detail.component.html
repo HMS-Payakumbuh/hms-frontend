@@ -45,7 +45,7 @@
 									<td>Rp. {{tindakan.harga | number: '.2-2'}}</td>
 									<td><input *ngIf="transaksi.asuransi_pasien !== 'bpjs' && tindakan.id_pembayaran === null" type="checkbox" [id]="'tindakan' + tindakan.id" (change)="updateCheckedTindakan(tindakan)"></td>
 								</tr>
-								<tr *ngIf="listOfObatTebus?.length > 0">
+								<tr *ngIf="listOfObatTebus?.length > 0 || listOfObatEceran?.length > 0">
 									<th>Obat</th>
 									<th></th>
 									<th></th>
@@ -113,11 +113,28 @@
 							<button *ngIf="transaksi.status === 'open' && transaksi_eksternal" class="btn btn-success" (click)="bayar()">Bayar</button>
 						</div>
 					</div>
+					<br>
+					<br>
 					<div *ngIf="transaksi.pembayaran?.length > 0" class="row">
 						<div class="col-md-12">
-							<ul class='list-group'>
+							<h3>Pembayaran Atas Transaksi</h3>
+							<table class="table">
+								<tbody>
+									<tr>
+										<th>Metode Pembayaran</th>
+										<th>Waktu Pembayaran</th>
+										<th></th>
+									</tr>
+									<tr *ngFor="let pembayaran of transaksi.pembayaran">
+										<td>{{pembayaran.metode_bayar.toUpperCase()}}</td>
+										<td>{{pembayaran.created_at}}</td>
+										<td><button type="button" class="btn btn-primary" [routerLink] = "['/pembayaran', pembayaran.id]">Details</button></td>
+									</tr>
+								</tbody>
+							</table>
+							<!-- <ul class='list-group'>
 								<a *ngFor="let pembayaran of transaksi.pembayaran" [routerLink] = "['/pembayaran', pembayaran.id]">Pembayaran {{pembayaran.metode_bayar.toUpperCase()}} : {{pembayaran.created_at}}</a>
-							</ul>
+							</ul> -->
 						</div>
 					</div>
 				</div>
