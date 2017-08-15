@@ -7,7 +7,14 @@
 						<i class="fa fa-money" aria-hidden="true"></i> Informasi Klaim
 					</h4>
 				</div>
-				<div *ngIf="klaim" class="card-block">
+				<div class="row" *ngIf="loading">
+					<div class="col-md-12">
+						<div class="d-flex justify-content-center">
+							<i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="klaim && !loading" class="card-block">
 					<div class="row">
 						<div class="col-md-12">
 							<p>Nama Pasien &nbsp; : {{klaim.asuransi.pasien.nama_pasien}}</p>

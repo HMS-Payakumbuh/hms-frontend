@@ -18,6 +18,7 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 })
 
 export class TransaksiDetailComponent implements OnInit {
+	loading: boolean;
 	response: any;
 	transaksi: any;
 	listOfObatTebus: any[] = [];
@@ -55,6 +56,7 @@ export class TransaksiDetailComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
+		this.loading = true;
 		this.asuransi = null;
 		this.transaksi_obat = false;
 		this.transaksi_eksternal = false;
@@ -114,6 +116,7 @@ export class TransaksiDetailComponent implements OnInit {
 
 				console.log(this.transaksi);
 
+				this.loading = false;
 			});
 	}
 
@@ -216,12 +219,14 @@ export class TransaksiDetailComponent implements OnInit {
 	}
 
 	private initMetodeList(items: Asuransi[]): void {
-		for (let item of _.uniqBy(items, 'nama_asuransi')) {
-			this.allMetode.push(item.nama_asuransi);
-		}
-		let index = this.allMetode.indexOf('bpjs');
-		if (index >= 0) {
-			this.allMetode.splice(index, 1);
+		if (this.transaksi.asuransi_pasien !== 'tunai') {
+			for (let item of _.uniqBy(items, 'nama_asuransi')) {
+				this.allMetode.push(item.nama_asuransi);
+			}
+			let index = this.allMetode.indexOf('bpjs');
+			if (index >= 0) {
+				this.allMetode.splice(index, 1);
+			}
 		}
 	}
 
@@ -459,7 +464,9 @@ export class TransaksiDetailComponent implements OnInit {
 			this.no_pembayaran = data.pembayaran.no_pembayaran;
 			console.log(this.no_pembayaran);
 			this.toastyService.success(this.toast_success(this.no_pembayaran));
-			setTimeout(() => this.print(), 1000);
+			if (metode !== 'bpjs') {
+				setTimeout(() => this.print(), 1000);
+			}
 			setTimeout(() => this.ngOnInit(), 1000);
 		},
 		error => {

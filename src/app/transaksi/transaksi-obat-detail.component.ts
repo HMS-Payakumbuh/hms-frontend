@@ -20,6 +20,7 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 export class TransaksiObatDetailComponent implements OnInit {
 	response: any;
 	transaksi: any;
+	loading: boolean;
 	listOfObatTebus: any[] = [];
 	asuransi: Asuransi;
 	allAsuransi: Asuransi[];
@@ -50,6 +51,7 @@ export class TransaksiObatDetailComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
+		this.loading = true;
 		this.transaksi_obat = true;
 		this.transaksi_eksternal = false;
 		this.harga_tambahan = 0;
@@ -96,6 +98,7 @@ export class TransaksiObatDetailComponent implements OnInit {
 
 				console.log(this.transaksi);
 
+				this.loading = false;
 			});
 	}
 
@@ -143,12 +146,14 @@ export class TransaksiObatDetailComponent implements OnInit {
 	}
 
 	private initMetodeList(items: Asuransi[]): void {
-		for (let item of _.uniqBy(items, 'nama_asuransi')) {
-			this.allMetode.push(item.nama_asuransi);
-		}
-		let index = this.allMetode.indexOf('bpjs');
-		if (index >= 0) {
-			this.allMetode.splice(index, 1);
+		if (this.transaksi.asuransi_pasien !== 'tunai') {
+			for (let item of _.uniqBy(items, 'nama_asuransi')) {
+				this.allMetode.push(item.nama_asuransi);
+			}
+			let index = this.allMetode.indexOf('bpjs');
+			if (index >= 0) {
+				this.allMetode.splice(index, 1);
+			}
 		}
 	}
 

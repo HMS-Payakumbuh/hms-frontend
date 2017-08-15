@@ -8,19 +8,28 @@
 					</h4>
 				</div>
 				<div class="card-block">
-					<div>
+					<div class="row" *ngIf="loading">
+						<div class="col-md-12">
+							<div class="d-flex justify-content-center">
+								<i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i>
+							</div>
+						</div>
+					</div>
+					<div *ngIf="!loading">
 						<table class="table" [mfData]="allTransaksi" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 							<tbody>
 								<tr>
-									<th>Waktu Transaksi</th>
-									<th>Nomor Transaksi</th>
-									<th>Total Pembayaran Non-BPJS</th>
-									<th>Pembayaran BPJS</th>
-									<th>Tarif Klaim</th>
+									<th><mfDefaultSorter by="waktu_masuk_pasien">Waktu Transaksi</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="pasien.nama_pasien">Nama Pasien</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="no_transaksi">Nomor Transaksi</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="total_pembayaran">Total Pembayaran Non-BPJS</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="total_bpjs">Pembayaran BPJS</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="total_klaim">Tarif Klaim</mfDefaultSorter></th>
 									<th>Surplus Klaim</th>
 								</tr>
 								<tr *ngFor="let transaksi of mf.data">
-									<td>{{transaksi.waktu_perubahan_terakhir}}</td>
+									<td>{{transaksi.waktu_masuk_pasien}}</td>
+									<td>{{transaksi.pasien.nama_pasien}}</td>
 									<td>{{transaksi.no_transaksi}}</td>
 									<td>Rp. {{transaksi.total_pembayaran | number: '.2-2'}}</td>
 									<td>Rp. {{transaksi.total_bpjs | number: '.2-2'}}</td>

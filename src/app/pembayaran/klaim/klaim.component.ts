@@ -13,6 +13,7 @@ import { AsuransiService }		from '../../pasien/asuransi.service';
 })
 
 export class KlaimComponent {
+	loading: boolean;
 	response: any;
 	allKlaim: any[];
 	allAsuransi = ['', 'tunai'];
@@ -37,6 +38,7 @@ export class KlaimComponent {
 	}
 
 	ngOnInit(): void {
+		this.loading = true;
 		this.asuransiService.getAllAsuransi()
 			.subscribe(allAsuransi => this.initAsuransiList(allAsuransi));
 
@@ -45,6 +47,7 @@ export class KlaimComponent {
 				this.response = data;
 				this.allKlaim = this.response.allKlaim;
 				console.log(this.allKlaim);
+				this.loading = false;
 			});
 	}
 }
