@@ -69,7 +69,7 @@
 						</tbody>
 						<tfoot>
 	            <tr>
-	              <td colspan="5">
+	              <td colspan="6">
 	                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
 	              </td>
 	            </tr>
@@ -83,9 +83,6 @@
           <h5 class="mb-0"><b>Upload Hasil lab</b></h5>
         </div>
         <div class="card-block">
-          <p *ngFor="let alert of alerts">
-            <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
-          </p>
           <table class="table" *ngIf="allEmptyHasilLab.length > 0">
             <thead>
               <th>Nama Tindakan</th>

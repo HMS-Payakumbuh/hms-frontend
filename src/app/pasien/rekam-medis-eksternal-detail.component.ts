@@ -4,7 +4,7 @@ import { ActivatedRoute, Params }	from '@angular/router';
 import { Location }					from '@angular/common';
 
 import * as _ from "lodash";
-import { Pasien }					from './pasien';		
+import { Pasien }					from './pasien';
 import { PasienService }			from './pasien.service';
 import { RekamMedisService }		from './rekam-medis.service';
 
@@ -58,25 +58,26 @@ export class RekamMedisEksternalDetailComponent implements OnInit {
 				if (data) {
 					this.pasien = data.pasien;
 					let sections: any[] = JSON.parse(data.komponen);
+          console.log(sections);
 					for (let section of sections) {
-						console.log(section.section.code);
+						console.log(section.section.title);
 						if (section.section.title === 'Allergies, Adverse Reactions, Alerts') {
 							if (!_.isArray(section.section.text.table.tbody.tr)) {
 								let alergi: any = {};
 								alergi.nama = section.section.text.table.tbody.tr.td[0];
 								alergi.status = section.section.text.table.tbody.tr.td[2];
-								alergi.reaksi = section.section.text.table.tbody.tr.td[1].content.$;
+								//alergi.reaksi = section.section.text.table.tbody.tr.td[1].content;
 								this.allAlergi.push(alergi);
 							} else {
 								for (let alergis of section.section.text.table.tbody.tr) {
 									let alergi: any = {};
 									alergi.nama = alergis.td[0];
 									alergi.status = alergis.td[2];
-									alergi.reaksi = alergis.td[1].content.$;
+									//alergi.reaksi = alergis.td[1].content;
 									this.allAlergi.push(alergi);
 								}
 							}
-							
+
 						}
 						else if (section.section.title === 'ASSESSMENT') {
 							this.allDiagnosis = section.section.text.list.item;
@@ -90,40 +91,40 @@ export class RekamMedisEksternalDetailComponent implements OnInit {
 							this.allRiwayat = section.section.text.paragraph;
 							console.log(this.allRiwayat);
 						}
-						else if (section.section.title === 'Immunizations') {
-							if (!_.isArray(section.section.text.table.tbody.tr)) {
-								let vaksin: any = {};
-								vaksin.nama = section.section.text.table.tbody.tr.td[0].$;
-								vaksin.tanggal = section.section.text.table.tbody.tr.td[1];
-								this.allVaksin.push(vaksin);
-							} else {
-								for (let vaksins of section.section.text.table.tbody.tr) {
-									let vaksin: any = {};
-									vaksin.nama = vaksins.td[0].$;
-									vaksin.tanggal = vaksins.td[1];
-									this.allVaksin.push(vaksin);
-								}
-							}
-							console.log(this.allVaksin);
-						}
+						// else if (section.section.title === 'Immunizations') {
+						// 	if (!_.isArray(section.section.text.table.tbody.tr)) {
+						// 		let vaksin: any = {};
+						// 		vaksin.nama = section.section.text.table.tbody.tr.td[0].$;
+						// 		vaksin.tanggal = section.section.text.table.tbody.tr.td[1];
+						// 		this.allVaksin.push(vaksin);
+						// 	} else {
+						// 		for (let vaksins of section.section.text.table.tbody.tr) {
+						// 			let vaksin: any = {};
+						// 			vaksin.nama = vaksins.td[0].$;
+						// 			vaksin.tanggal = vaksins.td[1];
+						// 			this.allVaksin.push(vaksin);
+						// 		}
+						// 	}
+						// 	console.log(this.allVaksin);
+						// }
 						else if (section.section.title === 'MEDICATIONS') {
 							if (!_.isArray(section.section.text.table.tbody.tr)) {
 								let resep: any = {};
-								resep.jenis_obat = section.section.text.table.tbody.tr.td[0].content.$;
+								resep.jenis_obat = section.section.text.table.tbody.tr.td[0].content;
 								resep.petunjuk_pemakaian = section.section.text.table.tbody.tr.td[1];
 								resep.tanggal_mulai = section.section.text.table.tbody.tr.td[2];
 								resep.status = section.section.text.table.tbody.tr.td[3];
-								resep.indikasi_penyakit = section.section.text.table.tbody.tr.td[4];
+								//resep.indikasi_penyakit = section.section.text.table.tbody.tr.td[4];
 								resep.instruksi = section.section.text.table.tbody.tr.td[5];
 								this.allResep.push(resep);
 							} else {
 								for (let reseps of section.section.text.table.tbody.tr) {
 									let resep: any = {};
-									resep.jenis_obat = reseps.td[0].content.$;
+									resep.jenis_obat = reseps.td[0].content;
 									resep.petunjuk_pemakaian = reseps.td[1];
 									resep.tanggal_mulai = reseps.td[2];
 									resep.status = reseps.td[3];
-									resep.indikasi_penyakit = reseps.td[4];
+									//resep.indikasi_penyakit = reseps.td[4];
 									resep.instruksi = reseps.td[5];
 									this.allResep.push(resep);
 								}
@@ -133,13 +134,14 @@ export class RekamMedisEksternalDetailComponent implements OnInit {
 						else if (section.section.title === 'Procedures') {
 							if (!_.isArray(section.section.text.table.tbody.tr)) {
 								let tindakan: any = {};
-								tindakan.nama = section.section.text.table.tbody.tr.td[0].content.$;
+                console.log(section.section.text.table.tbody.tr.td[0]);
+								tindakan.nama = section.section.text.table.tbody.tr.td[0].content;
 								tindakan.tanggal = section.section.text.table.tbody.tr.td[1];
 								this.allTindakan.push(tindakan);
 							} else {
 								for (let tindakans of section.section.text.table.tbody.tr) {
 									let tindakan: any = {};
-									tindakan.nama = tindakans.td[0].content.$;
+									tindakan.nama = tindakans.td[0].content;
 									tindakan.tanggal = tindakans.td[1];
 									this.allTindakan.push(tindakan);
 								}
@@ -154,12 +156,12 @@ export class RekamMedisEksternalDetailComponent implements OnInit {
 							for (let i=1; i<section.section.text.table.thead.tr.th.length; i++) {
 								let hasil: any = {};
 								hasil.tanggal = section.section.text.table.thead.tr.th[i];
-								
+
 								let elements: any[] = [];
 								section.section.text.table.tbody.tr.forEach((hasil, j) => {
 									let element: any = {};
 									element.nama = hasil.th.$;
-									element.nilai = hasil.td[i-1].content.$;
+									element.nilai = hasil.td[i-1].content;
 									elements.push(element);
 								});
 								hasil.elements = elements;
@@ -177,9 +179,9 @@ export class RekamMedisEksternalDetailComponent implements OnInit {
 					if (this.noPrevEntry !== -1)
 						this.first = false;
 					else
-						this.first = true;	
+						this.first = true;
 				}
-			});	
+			});
 		}
 	}
 

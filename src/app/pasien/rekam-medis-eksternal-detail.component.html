@@ -192,7 +192,6 @@
 							<th><mfDefaultSorter by="jenis_obat">Jenis Obat</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="petunjuk_pemakaian">Petunjuk Pemakaian</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="tanggal">Tanggal Resep</mfDefaultSorter></th>
-							<th><mfDefaultSorter by="indikasi_penyakit">Indikasi Penyakit</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="instruksi">Instruksi Tambahan</mfDefaultSorter></th>
 						</thead>
 						<tbody>
@@ -200,7 +199,6 @@
 								<td>{{resep.jenis_obat}}</td>
 								<td>{{resep.petunjuk_pemakaian}}</td>
 								<td>{{resep.tanggal_mulai}}</td>
-								<td>{{resep.indikasi_penyakit}}</td>
 								<td>{{resep.instruksi}}</td>
 							</tr>
 						</tbody>
@@ -264,13 +262,11 @@
 					    <table class="table" [mfData]="allAlergi" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortByNama" [(mfSortOrder)]="sortOrder">
 							<thead>
 								<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
-								<th><mfDefaultSorter by="reaksi">Reaksi</mfDefaultSorter></th>
 								<th><mfDefaultSorter by="status">Status</mfDefaultSorter></th>
 							</thead>
 							<tbody>
 								<tr *ngFor="let alergi of allAlergi; index as i">
 									<td>{{alergi.nama}}</td>
-									<td>{{alergi.reaksi}}</td>
 									<td>{{alergi.status}}</td>
 								</tr>
 							</tbody>

@@ -68,14 +68,14 @@
                     </select>
                   </div>
 
-                  <div class="form-group">
+                  <div class="form-group" *ngIf="currentUser.role != 'petugasLab'">
                     <label for="layanan">Tipe Layanan</label>
                     <select class="form-control" id="layanan" [disabled]="fromAntrian" [(ngModel)]="tipe" (ngModelChange)="selectTipeLayanan()" name="layanan" required>
                       <option *ngFor="let layanan of allTipeLayanan" [value]="layanan">{{layanan}}</option>
                     </select>
                   </div>
 
-                  <div *ngIf="tipe === 'Poliklinik'" class="form-group">
+                  <div *ngIf="tipe === 'Poliklinik' && currentUser.role != 'petugasLab'" class="form-group">
                     <label for="poliklinik">Poliklinik</label>
                     <select class="form-control" id="poliklinik" [disabled]="fromAntrian" [(ngModel)]="layanan" name="poliklinik" required>
                       <ng-container *ngFor="let poliklinik of allLayanan">

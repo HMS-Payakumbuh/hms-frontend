@@ -65,7 +65,8 @@ import { ObatMasukService }		  from '../farmasi/obat-masuk/obat-masuk.service';
 })
 
 export class PoliklinikPemeriksaanComponent implements OnInit {
-	transaksi: any = null;
+  loading: boolean;
+  transaksi: any = null;
 	poliklinik: Poliklinik;
   rekamMedis: RekamMedis = null;
   hasilPemeriksaan: HasilPemeriksaan = new HasilPemeriksaan();
@@ -160,6 +161,8 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 	}
 
 	ngOnInit() {
+    this.loading = false;
+    
 		this.route.params
 			.switchMap((params: Params) => this.poliklinikService.getPoliklinik(params['namaPoliklinik']))
 			.subscribe(
@@ -488,6 +491,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
   }
 
 	save() {
+    this.loading = true;
     let anamnesis: any = {
       keluhan: this.keluhan,
       riwayat_penyakit: this.allRiwayat.toString(),
