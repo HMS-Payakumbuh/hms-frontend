@@ -53,6 +53,14 @@ export class ObatMasukFormComponent {
 
 		this.obatMasukService.createObatMasuk(this.obatMasuk).subscribe(
 	       	data => {
+	       		let toastOptions: ToastOptions = {
+		            title: "Success",
+		            msg: "Obat masuk berhasil ditambahkan",
+		            showClose: true,
+		            timeout: 5000,
+		            theme: 'material'
+		        };		        
+		        this.toastyService.success(toastOptions);
 	         	this.location.back();
 	         	return true;
 	       	},
