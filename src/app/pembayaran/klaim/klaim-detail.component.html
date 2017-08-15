@@ -39,11 +39,11 @@
 									<tbody>
 										<tr>
 											<td>Jenis Rawat:</td>
-											<td *ngIf="klaim.pembayaran.transaksi.jenis_rawat === 1">Jalan</td>
-											<td *ngIf="klaim.pembayaran.transaksi.jenis_rawat === 2">Inap</td>
+											<td *ngIf="klaim.pembayaran.transaksi.jenis_rawat === 2">Jalan</td>
+											<td *ngIf="klaim.pembayaran.transaksi.jenis_rawat === 1">Inap</td>
 											<td>Kelas Rawat</td>
-											<td *ngIf="klaim.pembayaran.transaksi.jenis_rawat === 1">Reguler</td>
-											<td *ngIf="klaim.pembayaran.transaksi.jenis_rawat === 2">Kelas {{klaim.pembayaran.transaksi.kelas_rawat}}</td>
+											<td *ngIf="klaim.pembayaran.transaksi.jenis_rawat === 2">Reguler</td>
+											<td *ngIf="klaim.pembayaran.transaksi.jenis_rawat === 1">Kelas {{klaim.pembayaran.transaksi.kelas_rawat}}</td>
 										</tr>
 										<tr>
 											<td>Tanggal Rawat: </td>
@@ -51,7 +51,7 @@
 											<td>Berat Lahir (gr)</td>
 											<td>{{status_klaim.berat_lahir}}</td>
 										</tr>
-										<tr *ngIf="klaim.pembayaran.transaksi.jenis_rawat === 2 && status_klaim.upgrade_class_ind === '1'">
+										<tr *ngIf="klaim.pembayaran.transaksi.jenis_rawat === 1 && status_klaim.upgrade_class_ind === '1'">
 											<td>Naik Kelas:</td>
 											<td>{{status_klaim.upgrade_class_class}}</td>
 											<td>Lama:</td>

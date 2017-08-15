@@ -3,6 +3,7 @@ import * as _ from "lodash";
 import { Component, Input, OnInit }	from '@angular/core';
 import { ActivatedRoute, Params, Router }	from '@angular/router';
 import { Location }					from '@angular/common';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
 import { PembayaranService }		from '../pembayaran/pembayaran.service';
 import { TransaksiEksternalService }			from './transaksi-eksternal.service';
@@ -44,6 +45,8 @@ export class TransaksiEksternalDetailComponent implements OnInit {
 	constructor(
 		private transaksiEksternalService: TransaksiEksternalService,
 		private pembayaranService: PembayaranService,
+		private toastyService: ToastyService, 
+		private toastyConfig: ToastyConfig,
 		private route: ActivatedRoute,
 		private location: Location,
 		private router: Router,
@@ -186,8 +189,13 @@ export class TransaksiEksternalDetailComponent implements OnInit {
 			console.log(data);
 			this.no_pembayaran = data.pembayaran.no_pembayaran;
 			console.log(this.no_pembayaran);
+			this.toastyService.success(this.toast_success(this.no_pembayaran));
 			setTimeout(() => this.print(), 1000);
 			setTimeout(() => this.ngOnInit(), 1000);
+		},
+		error => {
+			console.log(error);
+			this.toastyService.error(this.toast_fail(error));
 		});
 	}
 
@@ -221,5 +229,29 @@ export class TransaksiEksternalDetailComponent implements OnInit {
 			</html>
 		`);
 	    popupWin.document.close();
+	}
+
+	private toast_success(no_pembayaran) {
+		let toastOptions:ToastOptions = {
+			title: "Pembayaran Berhasil",
+			msg: no_pembayaran,
+			showClose: true,
+			timeout: 5000,
+			theme: 'material'
+		};
+
+		return toastOptions;
+	}
+
+	private toast_fail(error) {
+		let toastOptions:ToastOptions = {
+			title: "Pembayaran Gagal",
+			msg: error,
+			showClose: true,
+			timeout: 5000,
+			theme: 'material'
+		};
+
+		return toastOptions;
 	}
 }

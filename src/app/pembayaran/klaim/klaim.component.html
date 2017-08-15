@@ -12,13 +12,6 @@
 						<table class="table" [mfData]="allKlaim" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 							<tbody>
 								<tr>
-									<th><mfDefaultSorter by="nama_pasien">Nama Pasien</mfDefaultSorter></th>
-									<th><mfDefaultSorter by="created_at">Tanggal Klaim</mfDefaultSorter></th>
-									<th>Nama Asuransi</th>
-									<th>Status Klaim</th>
-									<th></th>
-								</tr>
-								<tr>
 									<td>
 										<div class="col-md-12 input-group">
 											<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="Nama Pasien">
@@ -49,6 +42,13 @@
 										</div>
 									</td>
 									<td></td>
+								</tr>
+								<tr>
+									<th><mfDefaultSorter by="nama_pasien">Nama Pasien</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="created_at">Tanggal Klaim</mfDefaultSorter></th>
+									<th>Nama Asuransi</th>
+									<th>Status Klaim</th>
+									<th></th>
 								</tr>
 								<tr *ngFor="let klaim of mf.data | filterNamaPasien: searchParam | filterCreatedAt: selectedDate | filterNamaAsuransi: nama_asuransi | matchesStatus: status">
 									<td>{{klaim.asuransi.pasien.nama_pasien}}</td>
