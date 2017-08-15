@@ -21,7 +21,14 @@
 							<input [(ngModel)]="kode" type="text" class="form-control" placeholder="Kode Pasien" aria-describedby="basic-addon1">
 						</div>
 					</div>
-					<div *ngIf="cari">
+					<div class="row" *ngIf="loading">
+						<div class="col-md-12">
+							<div class="d-flex justify-content-center">
+								<i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i>
+							</div>
+						</div>
+					</div>
+					<div *ngIf="cari && !loading">
 						<table class="table" [mfData]="allTransaksi" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 							<tbody>
 								<tr>

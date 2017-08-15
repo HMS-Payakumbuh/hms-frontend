@@ -19,6 +19,7 @@ import { TindakanReference }				from '../../layanan/tindakan-reference';
 })
 
 export class KlaimDetailComponent implements OnInit {
+	loading: boolean;
 	response: any;
 	klaim: any;
 	pembayaran: any;
@@ -52,6 +53,7 @@ export class KlaimDetailComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.loading = true;
 		this.grouping = false;
 		this.status_klaim = null;
 		this.displayJenisTarif = '';
@@ -109,6 +111,7 @@ export class KlaimDetailComponent implements OnInit {
 										});
 								}
 							}
+							this.loading = false;
 						});
 				}
 				console.log(this.klaim);
