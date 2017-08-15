@@ -15,6 +15,7 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 })
 
 export class HistoriTransaksiComponent {
+	loading: boolean;
 	nama_pasien: string;
 	kode_pasien: string;
 	response: any;
@@ -41,6 +42,7 @@ export class HistoriTransaksiComponent {
 	}
 
 	ngOnInit(): void {
+		this.loading = true;
 		this.nama_pasien = null;
 		this.kode_pasien = null;
 		this.asuransiService.getAllAsuransi()
@@ -51,6 +53,7 @@ export class HistoriTransaksiComponent {
 				this.response = data;
 				this.allTransaksi = this.response.allTransaksi;
 				console.log(this.allTransaksi);
+				this.loading = false;
 			});
 
 		// this.transaksiEksternalService.getAllTransaksi('closed')
@@ -62,11 +65,13 @@ export class HistoriTransaksiComponent {
 	}
 
 	private searchTransaksi() {
-		this.transaksiService.getAllTransaksi(this.kode_pasien, 'closed')
+		this.loading = true;
+		this.transaksiService.getAllTransaksi(null, this.nama_pasien, 'closed')
 			.subscribe(data => {
 				this.response = data;
 				this.allTransaksi = this.response.allTransaksi;
 				console.log(this.allTransaksi);
+				this.loading = false;
 			});
 	}
 }

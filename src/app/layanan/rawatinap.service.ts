@@ -56,6 +56,11 @@ export class RawatinapService {
 			.map((res: Response) => res.json());
 	}
 
+	getAllAvailable() : Observable<Rawatinap[]> {
+		return this.getAllRawatinap()
+		.map(allRawatinap => allRawatinap.filter(rawatinap => rawatinap.available_kamar != 0));
+	}
+
 	getAllAvailableRawatinap() : Observable<Rawatinap[]> {
 		return this.getAllRawatinap()
 		.map(allRawatinap => allRawatinap.filter(rawatinap => rawatinap.available_kamar != 0 && rawatinap.jenis_kamar == "Rawat Inap"));

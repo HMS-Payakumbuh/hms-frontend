@@ -71,6 +71,14 @@ export class ObatPindahFormComponent {
 		// alert(JSON.stringify(this.obatPindah)); 
 		this.obatPindahService.createObatPindah(this.obatPindah).subscribe(
 	       	data => {
+	       		let toastOptions: ToastOptions = {
+		            title: "Success",
+		            msg: "Pemindahan obat berhasil ditambahkan",
+		            showClose: true,
+		            timeout: 5000,
+		            theme: 'material'
+		        };		        
+		        this.toastyService.success(toastOptions);
 	         	this.location.back();
 	         	return true;
 	       	},

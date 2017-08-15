@@ -8,6 +8,7 @@ import * as _ from "lodash";
 
 import { PemakaianKamarOperasi } 				from './pemakaian-kamar-operasi';
 import { PemakaianKamarOperasiService }		    from './pemakaian-kamar-operasi.service';
+
 import { KamarOperasi } 				      from './kamar-operasi';
 import { KamarOperasiService }		    from './kamar-operasi.service';
 import { Dokter }                     from '../tenaga-medis/dokter';
@@ -121,8 +122,8 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 		);
 
 		this.tenagaMedisService.getAllDokter().subscribe(
-      data => this.allDokter = data
-    );
+      		data => this.allDokter = data
+   		 );
 
         this.pasienService.getAllPasien().subscribe(
 			data => { this.allPasien = data }
@@ -164,6 +165,11 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 		);
 	}
 
+	selesaiOperasi(id:number, pemakaianKamarOperasi: PemakaianKamarOperasi) {
+		this.pemakaianKamarOperasiService.keluar(id,pemakaianKamarOperasi).subscribe(
+		data => { this.ngOnInit() }
+		)
+	}
 
 	getTenagaMedis() {
 		this.noTenagaMedis = this.no_pegawai.toString().split(",");

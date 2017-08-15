@@ -3,6 +3,7 @@ import * as _ from "lodash";
 import { Component, Input, OnInit }	from '@angular/core';
 import { ActivatedRoute, Params }	from '@angular/router';
 import { Location }					from '@angular/common';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
 import { PembayaranService }		from '../pembayaran/pembayaran.service';
 import { TransaksiService }			from './transaksi.service';
@@ -19,6 +20,7 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 export class TransaksiObatDetailComponent implements OnInit {
 	response: any;
 	transaksi: any;
+	loading: boolean;
 	listOfObatTebus: any[] = [];
 	asuransi: Asuransi;
 	allAsuransi: Asuransi[];
@@ -42,11 +44,14 @@ export class TransaksiObatDetailComponent implements OnInit {
 		private transaksiService: TransaksiService,
 		private pembayaranService: PembayaranService,
 		private asuransiService: AsuransiService,
+		private toastyService: ToastyService, 
+		private toastyConfig: ToastyConfig,
 		private route: ActivatedRoute,
 		private location: Location
 	) {}
 
 	ngOnInit(): void {
+		this.loading = true;
 		this.transaksi_obat = true;
 		this.transaksi_eksternal = false;
 		this.harga_tambahan = 0;
@@ -93,6 +98,7 @@ export class TransaksiObatDetailComponent implements OnInit {
 
 				console.log(this.transaksi);
 
+				this.loading = false;
 			});
 	}
 
@@ -140,12 +146,14 @@ export class TransaksiObatDetailComponent implements OnInit {
 	}
 
 	private initMetodeList(items: Asuransi[]): void {
-		for (let item of _.uniqBy(items, 'nama_asuransi')) {
-			this.allMetode.push(item.nama_asuransi);
-		}
-		let index = this.allMetode.indexOf('bpjs');
-		if (index >= 0) {
-			this.allMetode.splice(index, 1);
+		if (this.transaksi.asuransi_pasien !== 'tunai') {
+			for (let item of _.uniqBy(items, 'nama_asuransi')) {
+				this.allMetode.push(item.nama_asuransi);
+			}
+			let index = this.allMetode.indexOf('bpjs');
+			if (index >= 0) {
+				this.allMetode.splice(index, 1);
+			}
 		}
 	}
 
@@ -220,8 +228,13 @@ export class TransaksiObatDetailComponent implements OnInit {
 			console.log(data);
 			this.no_pembayaran = data.pembayaran.no_pembayaran;
 			console.log(this.no_pembayaran);
+			this.toastyService.success(this.toast_success(this.no_pembayaran));
 			setTimeout(() => this.print(), 1000);
 			setTimeout(() => this.ngOnInit(), 1000);
+		},
+		error => {
+			console.log(error);
+			this.toastyService.error(this.toast_fail(error));
 		});
 	}
 
@@ -255,5 +268,29 @@ export class TransaksiObatDetailComponent implements OnInit {
 			</html>
 		`);
 	    popupWin.document.close();
+	}
+
+	private toast_success(no_pembayaran) {
+		let toastOptions:ToastOptions = {
+			title: "Pembayaran Berhasil",
+			msg: no_pembayaran,
+			showClose: true,
+			timeout: 5000,
+			theme: 'material'
+		};
+
+		return toastOptions;
+	}
+
+	private toast_fail(error) {
+		let toastOptions:ToastOptions = {
+			title: "Pembayaran Gagal",
+			msg: error,
+			showClose: true,
+			timeout: 5000,
+			theme: 'material'
+		};
+
+		return toastOptions;
 	}
 }

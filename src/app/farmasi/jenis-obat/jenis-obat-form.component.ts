@@ -32,6 +32,14 @@ export class JenisObatFormComponent {
 		// alert(JSON.stringify(this.jenisObat)); 
 		this.jenisObatService.createJenisObat(this.jenisObat).subscribe(
 	       	data => {
+	       		let toastOptions: ToastOptions = {
+		            title: "Success",
+		            msg: "Merek obat berhasil ditambahkan",
+		            showClose: true,
+		            timeout: 5000,
+		            theme: 'material'
+		        };		        
+		        this.toastyService.success(toastOptions);
 	         	this.location.back();
 	         	return true;
 	       	},

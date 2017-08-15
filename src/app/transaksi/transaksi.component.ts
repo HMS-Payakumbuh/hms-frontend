@@ -18,6 +18,7 @@ export class TransaksiComponent {
 	nama_pasien: string;
 	kode_pasien: string;
 	cari: boolean;
+	loading: boolean;
 	response: any;
 	allTransaksi: any[];
 	allJenis = ['', 'tunai'];
@@ -41,6 +42,7 @@ export class TransaksiComponent {
 	}
 
 	ngOnInit(): void {
+		this.loading = false;
 		this.transaksi_obat = false;
 		this.cari = false;
 		this.nama_pasien = null;
@@ -50,12 +52,14 @@ export class TransaksiComponent {
 	}
 
 	private searchTransaksi() {
+		this.loading = true;
 		this.transaksiService.getAllTransaksi(null, this.nama_pasien, 'open')
 			.subscribe(data => {
 				this.response = data;
 				this.allTransaksi = this.response.allTransaksi;
 				console.log(this.allTransaksi);
 				this.cari = true;
+				this.loading = false;
 			});
 	}
 }

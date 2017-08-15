@@ -4,7 +4,7 @@
 
 			<div class="card mb-3">
 				<div class="card-header card-info">
-					<h4>Daftar Booking Kamar Operasi</h4>
+					<h4>Daftar Reservasi Kamar Operasi</h4>
 				</div>
 
 				<div class="card-block">
@@ -38,7 +38,7 @@
                                 <td>{{kamaroperasi?.nama_pasien}}</td>
 								<td>{{kamaroperasi?.nama_tindakan}}</td>
 								<td>{{kamaroperasi?.waktu_masuk | date:'d MMM y H:mm'}}</td>
-                <td>{{kamaroperasi?.waktu_keluar | date:'d MMM y H:mm'}}</td>
+                				<td>{{kamaroperasi?.waktu_keluar | date:'d MMM y H:mm'}}</td>
 								<td>
 									<button type="button" class="btn btn-sm btn-info" (click)="masukKamarOperasi(kamaroperasi.id,kamaroperasi)">
 										Masuk
@@ -94,7 +94,7 @@
 								<div class="form-group">
 									<label for="nama_pasien">Nama Dokter Operasi</label>
 									<select class="form-control" id="no_pegawai" [(ngModel)]="no_pegawai"  multiple="multiple" (ngModelChange)="getTenagaMedis()">
-										<option *ngFor="let tenagaMedis of allTenagaMedis" [value]="tenagaMedis.no_pegawai">
+										<option *ngFor="let tenagaMedis of allDokter" [value]="tenagaMedis.no_pegawai">
 											{{tenagaMedis.tenaga_medis.nama}} - {{tenagaMedis.spesialis}}
 										</option>
 									</select>
@@ -197,7 +197,7 @@
 
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-								<button type="button" class="btn btn-success" (click)="createPemakaianKamarOperasi()">Simpan</button>
+								<button type="button" class="btn btn-success" data-dismiss="modal" (click)="createPemakaianKamarOperasi()">Simpan</button>
 							</div>
 
 						</div>

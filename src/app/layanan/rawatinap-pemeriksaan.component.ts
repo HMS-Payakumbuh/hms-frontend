@@ -97,6 +97,7 @@ export class PemeriksaanRawatinapComponent implements OnInit {
   allStokObatAtLocation: StokObat[];
   allJenisObat: JenisObat[];
   allDokter: Dokter[];
+  allJasaDokter: any[];
 
   pemakaianKamar : PemakaianKamar;
 
@@ -106,13 +107,13 @@ export class PemeriksaanRawatinapComponent implements OnInit {
   selectedTindakan: Tindakan[] = [];
   selectedTindakanReference: TindakanReference[] = [];
 
-  addedDokter: Dokter[] = [];
-
   perkiraan_waktu_keluar: string = null;
   perkembangan_pasien: string = null;
 
   resepItemModal: ResepItem = null;
   allResep: Resep[] = [];
+
+  noPegawai:string;
 
 	inputFormatter = (value : any) => value.nama;
 	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
@@ -184,11 +185,16 @@ export class PemeriksaanRawatinapComponent implements OnInit {
 	}
 
 	ngOnInit() {
+    this.noPegawai = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
+
     this.route.params
 			.switchMap((params: Params) => this.pemakaianKamarService.getPemakaianKamar(params['idPemakaian']))
 			.subscribe(
           data => {
             this.pemakaianKamar = data;
+            this.pemakaianKamarService.getJasaDokterRawatinapById(this.pemakaianKamar.id).subscribe(
+              data => { this.allJasaDokter = data}
+            )
             this.stokObatService.getStokObatByLocationType(3).subscribe(
               allStokObatAtLocation => this.allStokObatAtLocation = allStokObatAtLocation
             );
@@ -216,6 +222,8 @@ export class PemeriksaanRawatinapComponent implements OnInit {
     this.jenisObatService.getAllJenisObat().subscribe(
       data => { this.allJenisObat = data }
     )
+
+    
 	}
 
   checkRekamMedis() {
@@ -347,7 +355,17 @@ export class PemeriksaanRawatinapComponent implements OnInit {
 	removeSelectedTindakan(i: number) {
 		this.selectedTindakan.splice(i, 1);
     this.selectedTindakanReference.splice(i, 1);
-	}
+  }
+  
+  addDokter(dokter:Dokter) {
+    this.pemakaianKamarService.createJasaDokterRawatinap(dokter, this.pemakaianKamar.id).subscribe(
+          data => { 
+            this.pemakaianKamarService.getJasaDokterRawatinapById(this.pemakaianKamar.id).subscribe(
+              data => { this.allJasaDokter = data}
+            )
+          }
+    )
+  }
 
   addSelectedStokObat(obatTindakan: ObatTindakan, stokObat: StokObat) {
     obatTindakan.stok_obat = stokObat;
@@ -480,6 +498,16 @@ export class PemeriksaanRawatinapComponent implements OnInit {
     this.resepService.createResep(this.allResep).subscribe(
       data => {
         this.router.navigate(['']);
+      }
+    )
+  }
+
+  deleteJasaDokter(id:number) {
+    this.pemakaianKamarService.deleteJasaDokterRawatinap(id).subscribe(
+      data=> { 
+        this.pemakaianKamarService.getJasaDokterRawatinapById(this.pemakaianKamar.id).subscribe(
+          data => { this.allJasaDokter = data}
+        ) 
       }
     )
   }

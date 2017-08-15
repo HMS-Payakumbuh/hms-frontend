@@ -61,12 +61,12 @@ export class TindakanOperasiService {
 	// 		.map((res: Response) => res.json());
 	// }
 
-	// destroyTindakanReference(kode: string) {
-	// 	let headers = new Headers({ 'Content-Type': 'application/json' });
-	// 	let options = new RequestOptions({ headers: headers});
-	// 	return this.http.delete(this.tindakanReferenceUrl + '/' + kode, options)
-	// 		.map((res: Response) => res.json());
-	// }
+	destroyTindakanOperasi(id: number) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers});
+		return this.http.delete(this.tindakanOperasiUrl + '/' + id, options)
+			.map((res: Response) => res.json());
+	}
 
 	// saveTindakan (selectedTindakan: Tindakan[]) {
 	// 	let headers = new Headers({ 'Content-Type': 'application/json' });

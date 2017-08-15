@@ -42,13 +42,23 @@
 
 			<div class="card mb-3">
 				<div class="card-header card-info">
-                    <h4>
-						<i class="fa" aria-hidden="true"></i> Tindakan Operasi
-					</h4>
+					<ul class="nav nav-tabs card-header-tabs">
+						<li class="nav-item">
+							<a class="nav-link active" data-toggle="tab" href="#tindakan" role="tab" style="color: black;">
+								<i class="fa fa-medkit" aria-hidden="true"></i> Tindakan
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#dokter" role="tab" style="color: black;">
+								<i class="fa fa-bookmark" aria-hidden="true"></i> Pengaturan Dokter
+							</a>
+						</li>
+					</ul>
 				</div>
-
+				
 				<div class="card-block">
-
+					<div class="tab-content">
+						<div class="tab-pane fade show active" id="tindakan" role="tabpanel">
 
 							<div class="form-group">
 								<label for="inputTindakan">Masukkan tindakan yang dilakukan (ICD-9-CM)</label>
@@ -87,11 +97,52 @@
 								</tbody>
 							</table>
 
-							<button type="button" class="btn btn-sm btn-danger" (click)="selesaiOperasi(pemakaianKamar.id, pemakaianKamar)">
-								Selesaikan Operasi
-							</button>
+						</div>
+
+						<div class="tab-pane fade" id="dokter" role="tabpanel">
+							<form>
+								<div class="form-group pb-4">
+									<label for="inputDokter">Tambah Jasa Dokter</label>
+									<input type="text" class="form-control" id="no_pegawai" required [ngbTypeahead]="searchNamaDokter" [inputFormatter]="inputDokterFormatter" [resultFormatter]="resultDokterFormatter" (selectItem)="addDokter($event.item)" name="no_pegawai">
+								</div>
+
+								<table *ngIf="tindakanOperasi.length > 0" class="table">
+									<thead>
+										<th>No. Pegawai</th>
+										<th>Nama Dokter</th>
+										<th>Spesialis</th>
+										<th></th>
+										<tr>
+									</thead>
+									
+									
+									<tbody *ngFor="let jasadokter of tindakanOperasi">
+										<tr>
+											<td>{{jasadokter.no_pegawai}}</td>
+											<td>{{jasadokter.nama}}</td>
+											<td>{{jasadokter.spesialis}}</td>
+											<td>
+												<button type="button" class="btn btn-sm btn-danger" (click)="deleteTindakanOperasi(jasadokter.id)">
+													Hapus
+												</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+
+								
+							</form>
+						</div>
+
+
+
 
 					</div>
+				</div>
+
+			</div>
+
+							
 			<div class="pull-right">
 				<button type="button" class="btn btn-warning" (click)="goBack()">Kembali</button>
 				<button type="button" class="btn btn-success" (click)="save()">Selesai</button>
@@ -182,6 +233,5 @@
 			</div>
 		</div>
 
-    </div>
     </div>
 </html>

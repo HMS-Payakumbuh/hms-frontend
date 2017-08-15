@@ -82,6 +82,14 @@ export class ObatEceranFormComponent {
 		// alert(JSON.stringify(this.obatEceran)); 
 		this.obatEceranService.createObatEceran(this.obatEceran).subscribe(
 	       	data => {	         	  	
+	       		let toastOptions: ToastOptions = {
+		            title: "Success",
+		            msg: "Obat eceran berhasil ditambahkan",
+		            showClose: true,
+		            timeout: 5000,
+		            theme: 'material'
+		        };		        
+		        this.toastyService.success(toastOptions);
 	     		this.router.navigateByUrl('/transaksi-eksternal/' + data.id_transaksi);
 	         	return true;
 	       	},

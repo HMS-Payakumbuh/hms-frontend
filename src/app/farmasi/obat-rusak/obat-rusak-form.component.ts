@@ -71,6 +71,14 @@ export class ObatRusakFormComponent {
 		// alert(JSON.stringify(this.obatRusak)); 
 		this.obatRusakService.createObatRusak(this.obatRusak).subscribe(
 	       	data => {
+	       		let toastOptions: ToastOptions = {
+		            title: "Success",
+		            msg: "Obat rusak berhasil ditambahkan",
+		            showClose: true,
+		            timeout: 5000,
+		            theme: 'material'
+		        };		        
+		        this.toastyService.success(toastOptions);
 	         	this.location.back();
 	         	return true;
 	       	},

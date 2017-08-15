@@ -14,6 +14,7 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 })
 
 export class RekapTransaksiComponent {
+	loading: boolean;
 	transaksi_obat: boolean;
 	nama_pasien: string;
 	kode_pasien: string;
@@ -22,8 +23,8 @@ export class RekapTransaksiComponent {
 	allTransaksi: any[];
 
     public rowsOnPage = 10;
-    public sortBy = "tanggal";
-    public sortOrder = "desc";
+    public sortBy = "waktu_masuk_pasien";
+    public sortOrder = "asc";
 
 	constructor(
 		private transaksiService: TransaksiService,
@@ -31,6 +32,7 @@ export class RekapTransaksiComponent {
 	) {}
 
 	ngOnInit(): void {
+		this.loading = true;
 		this.transaksi_obat = false;
 		this.cari = false;
 		this.nama_pasien = null;
@@ -46,6 +48,7 @@ export class RekapTransaksiComponent {
 					transaksi['total_bpjs'] = hasil.total_bpjs;
 				}
 				console.log(this.allTransaksi);
+				this.loading = false;
 			});
 	}
 
@@ -66,10 +69,10 @@ export class RekapTransaksiComponent {
 		};
 		for (let i of listPembayaran) {
 			if (i.metode_bayar == 'bpjs') {
+				hasil['total_bpjs'] += parseInt(i.harga_bayar);
 				if (i.klaim != null) {
 					if (i.klaim.tarif != null) {
-						hasil['total_klaim'] = parseInt(i.klaim.tarif);
-						hasil['total_bpjs'] = parseInt(i.harga_bayar);
+						hasil['total_klaim'] += parseInt(i.klaim.tarif);
 					}
 				}
 			}
