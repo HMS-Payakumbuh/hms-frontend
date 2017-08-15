@@ -97,7 +97,7 @@ export class AntrianComponent implements OnInit, OnDestroy {
       this.selectedKategori = this.kategori;
       this.socket.on('antrianFrontOffice'+this.kategori, this.updateAntrianFrontOffice.bind(this));
       this.updateAntrianFrontOffice();
-      this.observable = Observable.interval(5000 * 60).subscribe(x => {
+      this.observable = Observable.interval(2000 * 60).subscribe(x => {
           this.antrianService.updateAntrianSMS().subscribe(data => {
               let toastOptions:ToastOptions = {
                   title: "Update Sukses !",
