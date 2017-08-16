@@ -89,10 +89,10 @@
 					<div id="TransaksiSubMenu" class="collapse">
 						<a routerLink="/transaksi" class="list-group-item">Transaksi Aktif</a>
 						<a routerLink="/transaksi-obat" class="list-group-item">Transaksi Obat</a>
-						<a *ngIf="user.role == 'admin'" routerLink="/histori-transaksi" class="list-group-item">Histori Transaksi</a>
-						<a *ngIf="user.role == 'admin'" routerLink="/rekap-transaksi" class="list-group-item">Rekap Transaksi</a>
+						<a *ngIf="user.role == 'admin' || user.role == 'petugasKeuangan'" routerLink="/histori-transaksi" class="list-group-item">Histori Transaksi</a>
+						<a *ngIf="user.role == 'admin' || user.role == 'petugasKeuangan'" routerLink="/rekap-transaksi" class="list-group-item">Rekap Transaksi</a>
 					</div>
-					<a *ngIf="user.role == 'admin'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#PembayaranSubMenu">Pembayaran</a>
+					<a *ngIf="user.role == 'admin' || user.role == 'petugasKeuangan'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#PembayaranSubMenu">Pembayaran</a>
 					<div id="PembayaranSubMenu" class="collapse">
 						<a routerLink="/pembayaran" class="list-group-item">Data Pembayaran</a>
 						<a routerLink="/klaim" class="list-group-item">Data Klaim</a>
