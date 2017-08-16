@@ -24,11 +24,13 @@ export class TransaksiDetailComponent implements OnInit {
 	listOfObatTebus: any[] = [];
 	listObat: any[] = [];
 	listOfKamarRawatInap: any[] = [];
+	listOfKamarJenazah: any[] = [];
 	asuransi: Asuransi;
 	allAsuransi: Asuransi[];
 	listOfTindakan: number[] = [];
 	listOfObatTebusId: number[] = [];
 	listOfKamarRawatInapId: number[] = [];
+	listOfKamarJenazahId: number[] = [];
 	allMetode = [];
 	nama_pasien: any;
 	jender_pasien: number = 0;
@@ -44,6 +46,7 @@ export class TransaksiDetailComponent implements OnInit {
 
 	printListOfTindakan: any[] = [];
 	printListOfKamarRawatInap: any[] = [];
+	printListOfKamarJenazah: any[] = [];
 
 	constructor(
 		private transaksiService: TransaksiService,
@@ -73,13 +76,16 @@ export class TransaksiDetailComponent implements OnInit {
 		this.listOfObatTebus = [];
 		this.listObat = [];
 		this.listOfKamarRawatInap = [];
+		this.listOfKamarJenazah = [];
 
 		this.listOfTindakan = [];
 		this.listOfObatTebusId = [];
 		this.listOfKamarRawatInapId = [];
+		this.listOfKamarJenazahId = [];
 
 		this.printListOfTindakan = [];
 		this.printListOfKamarRawatInap = [];
+		this.printListOfKamarJenazah = [];
 		
 		this.route.params
 			.switchMap((params: Params) => this.transaksiService.getTransaksi(+params['id']))
@@ -140,6 +146,17 @@ export class TransaksiDetailComponent implements OnInit {
 		for (let item of this.transaksi.tindakan) {
 			if (this.transaksi.no_sep === null) {
 				if (item.id_pembayaran === null) {
+					this.harga_total += parseInt(item.harga);
+				}
+			}
+		}
+	}
+
+	initKamarJenazah(value): void {
+		for (let item of value) {
+			this.listOfKamarJenazah.push(item);
+			if (this.transaksi.no_sep === null) {
+				if (item.no_pembayaran === null) {
 					this.harga_total += parseInt(item.harga);
 				}
 			}
@@ -279,6 +296,26 @@ export class TransaksiDetailComponent implements OnInit {
 		}
 		console.log(this.listOfKamarRawatInapId);
 		console.log(this.printListOfKamarRawatInap);
+		console.log(this.total_bayar);
+	}
+
+	updateCheckedKamarJenazah(value): void {
+		let html = <HTMLInputElement>document.getElementById('kamarJenazah' + value.id);
+		let harga = parseInt(value.harga);
+		if (html.checked == true) {
+			this.listOfKamarJenazahId.push(value.id);
+			this.printListOfKamarJenazah.push(value);
+			this.total_bayar = this.total_bayar + harga;
+		}
+		else if (html.checked == false) {
+			let index1 = this.listOfKamarJenazahId.indexOf(value.id);
+			let index2 = this.printListOfKamarJenazah.indexOf(value);
+			this.listOfKamarJenazahId.splice(index1, 1);
+			this.printListOfKamarJenazah.splice(index2, 1);
+			this.total_bayar = this.total_bayar - harga;
+		}
+		console.log(this.listOfKamarJenazahId);
+		console.log(this.printListOfKamarJenazah);
 		console.log(this.total_bayar);
 	}
 
@@ -434,7 +471,7 @@ export class TransaksiDetailComponent implements OnInit {
 		console.log(metode.toLowerCase());
 	}
 
-	createPembayaran(harga: number, metode: string, tambahan: boolean = false, listOfTindakan: number[] = null, listOfObatTebusId: number[] = null, listOfObatEceranId: number[] = null, listOfKamarRawatInapId: number[] = null): void {
+	createPembayaran(harga: number, metode: string, tambahan: boolean = false, listOfTindakan: number[] = null, listOfObatTebusId: number[] = null, listOfObatEceranId: number[] = null, listOfKamarRawatInapId: number[] = null, listOfKamarJenazah: number[] = null): void {
 		let payload: any = {
 			id_transaksi: this.transaksi.id,
 			harga_bayar: harga,
@@ -442,7 +479,8 @@ export class TransaksiDetailComponent implements OnInit {
 			tindakan: listOfTindakan,
 			obatTebus: listOfObatTebusId,
 			obatEceran: listOfObatEceranId,
-			kamarRawatInap: listOfKamarRawatInapId
+			kamarRawatInap: listOfKamarRawatInapId,
+			kamarJenazah: listOfKamarJenazah
 		};
 
 		if (tambahan) {
