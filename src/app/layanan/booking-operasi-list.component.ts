@@ -4,6 +4,8 @@ import { FormGroup, FormArray, FormBuilder, Validators }	from '@angular/forms';
 import { Location }																				from '@angular/common';
 import { Observable }																			from 'rxjs/Observable';
 import { NgbTypeaheadConfig } 														from '@ng-bootstrap/ng-bootstrap';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
+
 import * as _ from "lodash";
 
 import { PemakaianKamarOperasi } 				from './pemakaian-kamar-operasi';
@@ -31,12 +33,13 @@ import { PoliklinikService }		from './poliklinik.service';
  	templateUrl: './booking-operasi-list.component.html',
  	providers: [
     PemakaianKamarOperasiService,
-	 	TenagaMedisService,
-    TindakanService,
-    PasienService,
-		TindakanOperasiService,
-		TransaksiService,
-		KamarOperasiService
+	TenagaMedisService,
+	TindakanService,
+	PasienService,
+	TindakanOperasiService,
+	TransaksiService,
+	KamarOperasiService,
+	ToastyService
   ]
 })
 
@@ -50,16 +53,16 @@ export class BookingOperasiListComponent implements OnInit {
 	waktuMasuk: string;
 	waktuKeluar: string;
 
-  public allPasien: Pasien[];
-  public pasien: Pasien;
+	public allPasien: Pasien[];
+	public pasien: Pasien;
 
 	no_pegawai: string;
 	noTenagaMedis: string[];
 
-  public transaksi: any;
+  	public transaksi: any;
 
 	pemakaianKamarOperasiModal: PemakaianKamarOperasi = null;
-  pemakaianKamarOperasiModalNama: string = null;
+  	pemakaianKamarOperasiModalNama: string = null;
 
 	selectedTindakan: Tindakan[] = [];
 	savedTindakan: Tindakan[] = [];
@@ -97,12 +100,13 @@ export class BookingOperasiListComponent implements OnInit {
 	constructor(
 		private pemakaianKamarOperasiService: PemakaianKamarOperasiService,
 		private tenagaMedisService: TenagaMedisService,
-    private formBuilder: FormBuilder,
-    private pasienService: PasienService,
+		private formBuilder: FormBuilder,
+		private pasienService: PasienService,
 		private tindakanService: TindakanService,
 		private transaksiService: TransaksiService,
 		private kamarOperasiService: KamarOperasiService,
-		private tindakanOperasiService : TindakanOperasiService
+		private tindakanOperasiService : TindakanOperasiService,
+		private toastyService: ToastyService
 	) {}
 
 	ngOnInit() {
@@ -238,6 +242,15 @@ export class BookingOperasiListComponent implements OnInit {
 						this.pemakaianKamarOperasiService.createPemakaianKamarOperasiBooked(this.pemakaianKamarOperasiModal).subscribe(
 							data => {
 								this.ngOnInit();
+								let toastOptions:ToastOptions = {
+									title: "Success",
+									msg: "Reservasi kamar " + this.pemakaianKamarOperasiModal.no_kamar + " berhasil",
+									showClose: true,
+									timeout: 5000,
+									theme: 'material'
+								};
+
+								this.toastyService.success(toastOptions);
 							}
 						);
 					}

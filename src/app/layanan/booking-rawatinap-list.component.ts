@@ -1,4 +1,5 @@
 import { Component, OnInit }		from '@angular/core';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
 import { Rawatinap } 				from './rawatinap';
 import { RawatinapService }		    from './rawatinap.service';
@@ -12,7 +13,8 @@ import { PemakaianKamarService }		    from './pemakaian-kamar.service';
  	templateUrl: './booking-rawatinap-list.component.html',
 	 providers: [RawatinapService,
 				PemakaianKamarService,
-				TempattidurService]
+				TempattidurService,
+				ToastyService]
 })
 
 export class BookingRawatinapListComponent implements OnInit {
@@ -36,7 +38,8 @@ export class BookingRawatinapListComponent implements OnInit {
 	constructor(
 		private rawatinapService: RawatinapService,
 		private pemakaianKamarService: PemakaianKamarService,
-		private tempattidurService: TempattidurService
+		private tempattidurService: TempattidurService,
+		private toastyService: ToastyService
 	) {}
 
 	ngOnInit() {
@@ -111,7 +114,18 @@ export class BookingRawatinapListComponent implements OnInit {
 
     createPemakaianKamar(noKamar: string, noTempatTidur: number) {
     	this.pemakaianKamarService.createBookedKamar(this.selectedDate, this.pemakaianKamarModal).subscribe(
-      		data => { this.setTanggal() }
+      		data => { 
+				this.setTanggal();
+				let toastOptions:ToastOptions = {
+					title: "Success",
+					msg: "Reservasi kamar " + noKamar + " berhasil",
+					showClose: true,
+					timeout: 5000,
+					theme: 'material'
+				};
+
+				this.toastyService.success(toastOptions);
+			}
     	);
   	}
 }
