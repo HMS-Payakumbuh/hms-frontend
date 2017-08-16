@@ -1,6 +1,7 @@
 import { Component, OnInit }		from '@angular/core';
 import { Location }					from '@angular/common';
 import { Observable } 	from 'rxjs/Observable';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
 import { Transaksi }						from '../transaksi/transaksi';
 import { TransaksiService }			from '../transaksi/transaksi.service';
@@ -25,7 +26,8 @@ import { PasienService } from '../pasien/pasien.service';
 		 PemakaianKamarService,
          TransaksiService,
 		 TenagaMedisService,
-		 PasienService
+		 PasienService,
+		 ToastyService
 	]
 })
 
@@ -77,6 +79,7 @@ export class ICUListComponent implements OnInit {
 		private pemakaianKamarService: PemakaianKamarService,
 		private tenagaMedisService: TenagaMedisService,
 		private pasienService: PasienService,
+		private toastyService: ToastyService,
 		private location: Location
 	) {}
 
@@ -134,7 +137,18 @@ export class ICUListComponent implements OnInit {
     	this.pemakaianKamarService.createPemakaianKamar(noKamar,this.pemakaianKamarModal).subscribe(
       		data => {
 				this.tempattidurService.updateTempatTidur(this.tempatTidurModal, noKamar, noTempatTidur).subscribe(
-					data => { this.ngOnInit() }
+					data => { 
+						this.ngOnInit();
+						let toastOptions:ToastOptions = {
+							title: "Success",
+							msg: "Pasien sudah terdaftar di kamar  " + noKamar,
+							showClose: true,
+							timeout: 5000,
+							theme: 'material'
+						};
+
+						this.toastyService.success(toastOptions);
+					}
 				);
 			}
     	);

@@ -1,5 +1,6 @@
 <html>
 	<div class="row">
+		<ng2-toasty [position]="'top-center'"></ng2-toasty>
 		<div class="col-md-12">
 		<div class="card mb-3">
 			<div class="card-header card-info">
@@ -25,7 +26,7 @@
 						<table class="table">
 							<thead>
 								<th>Kelas</th>
-								<th>Sisa</th>
+								<th>Jumlah</th>
 							</thead>
 
 							<tbody *ngFor="let availablekamar of allAvailableKamarNow; let i=index">

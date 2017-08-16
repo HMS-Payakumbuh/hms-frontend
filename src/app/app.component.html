@@ -45,7 +45,7 @@
 						<a routerLink="/daftar-tindakan" class="list-group-item">Daftar Tindakan</a>
 					</div>
 
-					<a *ngIf="user.role == 'perawat' || user.role =='frontOffice'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#RawatInapSubMenu">Rawat Inap</a>
+					<a *ngIf="user.role =='frontOffice'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#RawatInapSubMenu">Rawat Inap</a>
 					<div id="RawatInapSubMenu" class="collapse">
 						<a *ngIf="user.role == 'frontOffice'" routerLink="/rawatinap" class="list-group-item">Pendaftaran Rawat Inap</a>
 						<a *ngIf="user.role == 'frontOffice'" routerLink="/rawatinap/booking/kamar" class="list-group-item">Pendaftaran Reservasi Kamar Rawat Inap</a>

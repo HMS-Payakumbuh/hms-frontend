@@ -6,6 +6,7 @@ import { Observable }																			from 'rxjs/Observable';
 import { NgbTypeaheadConfig } 														from '@ng-bootstrap/ng-bootstrap';
 import * as _ from "lodash";
 
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 import { PemakaianKamarOperasi } 				from './pemakaian-kamar-operasi';
 import { PemakaianKamarOperasiService }		    from './pemakaian-kamar-operasi.service';
 
@@ -37,7 +38,8 @@ import { PoliklinikService }		from './poliklinik.service';
 				TindakanOperasiService,
 				TransaksiService,
 				PasienService,
-				KamarOperasiService]
+				KamarOperasiService,
+				ToastyService]
 })
 
 export class PemakaianKamarOperasiListComponent implements OnInit {
@@ -103,7 +105,8 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 		private tindakanService: TindakanService,
 		private transaksiService: TransaksiService,
 		private kamarOperasiService: KamarOperasiService,
-		private tindakanOperasiService : TindakanOperasiService
+		private tindakanOperasiService : TindakanOperasiService,
+		private toastyService: ToastyService
 	) {}
 
 	ngOnInit() {
@@ -235,6 +238,15 @@ export class PemakaianKamarOperasiListComponent implements OnInit {
 						this.pemakaianKamarOperasiService.createPemakaianKamarOperasi(this.pemakaianKamarOperasiModal).subscribe(
 							data => {
 								this.ngOnInit();
+								let toastOptions:ToastOptions = {
+									title: "Success",
+									msg: "Pasien sudah terdaftar di kamar " + this.pemakaianKamarOperasiModal.no_kamar,
+									showClose: true,
+									timeout: 5000,
+									theme: 'material'
+								};
+
+								this.toastyService.success(toastOptions);
 							}
 						);
 					}
