@@ -57,6 +57,7 @@ export class PasienFormComponent implements OnInit {
   rujukan: Rujukan;
   rujukanChecked: boolean;
   asuransiChecked:boolean;
+  ambilRekamMedis: boolean = false;
   allAsuransi: Asuransi[];
   allLayanan: any[];
   allPasien: Pasien[] = [];
@@ -180,6 +181,11 @@ export class PasienFormComponent implements OnInit {
     this.asuransi.nama_asuransi = asuransi.nama_asuransi;
     this.asuransi.no_kartu = asuransi.no_kartu;
     this.cekAsuransi();
+  }
+
+  private confirmRekamMedis(ambilRekamMedis: boolean) {
+    this.ambilRekamMedis = ambilRekamMedis;
+    this.createPasien();
   }
 
   private getRujukan() {
@@ -319,6 +325,7 @@ export class PasienFormComponent implements OnInit {
     this.rujukan.id_transaksi = id_transaksi;
     this.rujukanService.createRujukan(this.rujukan).subscribe(
       data => {
+        if (this.ambilRekamMedis) {
           this.rekamMedisService.importRekamMedisEksternal(this.nomor_pasien, this.rujukan.no_rujukan)
             .subscribe(data => {
               if (data.status == '200') {
@@ -352,7 +359,9 @@ export class PasienFormComponent implements OnInit {
                 this.toastyService.error(toastOptions);
               }
             });
-          this.createAntrian(id_transaksi);
+        }
+          
+        this.createAntrian(id_transaksi);
       }
     );
   }

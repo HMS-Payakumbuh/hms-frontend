@@ -255,6 +255,14 @@ export class ObatTebusFormComponent {
 
 				this.obatTebusService.createObatTebus(this.obatTebus).subscribe(
 			       	data => {
+			       		let toastOptions: ToastOptions = {
+				            title: "Success",
+				            msg: "Obat tebus berhasil ditambahkan",
+				            showClose: true,
+				            timeout: 5000,
+				            theme: 'material'
+				        };		        
+				        this.toastyService.success(toastOptions);
 				     	this.router.navigateByUrl('/transaksi-obat/' + data.id_transaksi);
 			         	return true;
 			       	},

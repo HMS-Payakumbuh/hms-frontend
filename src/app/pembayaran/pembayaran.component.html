@@ -8,19 +8,20 @@
 					</h4>
 				</div>
 				<div class="card-block">
-					<div>
+					<div class="row" *ngIf="loading">
+						<div class="col-md-12">
+							<div class="d-flex justify-content-center">
+								<i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i>
+							</div>
+						</div>
+					</div>
+					<div *ngIf="!loading">
 						<table class="table" [mfData]="allPembayaran" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 							<tbody>
 								<tr>
-									<th><mfDefaultSorter by="nama_pasien">Nama Pasien</mfDefaultSorter></th>
-									<th><mfDefaultSorter by="created_at">Waktu Pembayaran</mfDefaultSorter></th>
-									<th>Metode Pembayaran</th>
-									<th></th>
-								</tr>
-								<tr>
 									<td>
 										<div class="col-md-12 input-group">
-											<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="Nomor Transaksi">
+											<input type="text" class="form-control" [(ngModel)]="searchParam" placeholder="Nama Pasien">
 										</div>
 									</td>
 									<td>
@@ -39,10 +40,16 @@
 									</td>
 									<td></td>
 								</tr>
+								<tr>
+									<th><mfDefaultSorter by="nama_pasien">Nama Pasien</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="created_at">Waktu Pembayaran</mfDefaultSorter></th>
+									<th>Metode Pembayaran</th>
+									<th></th>
+								</tr>
 								<tr *ngFor="let pembayaran of mf.data | filterNamaPasien: searchParam | filterNamaAsuransi: asuransi | filterCreatedAt: selectedDate">
-									<td *ngIf="pembayaran.transaksi.pasien !== null">{{pembayaran.transaksi.pasien.nama_pasien}}</td>
-									<td *ngIf="pembayaran.transaksi.pasien === null && pembayaran.transaksi.obat_tebus.length > 0">{{pembayaran.transaksi.obat_tebus[0].resep.nama}}</td>
-									<td *ngIf="pembayaran.transaksi.pasien === null && pembayaran.transaksi.obat_eceran.length > 0">{{pembayaran.transaksi.obat_eceran[0].nama_pembeli}}</td>								
+									<td *ngIf="pembayaran.transaksi !== null">{{pembayaran.transaksi.pasien.nama_pasien}}</td>
+									<!-- <td *ngIf="pembayaran.transaksi === null && pembayaran.transaksi.obat_tebus.length > 0">{{pembayaran.transaksi.obat_tebus[0].resep.nama}}</td>
+									<td *ngIf="pembayaran.transaksi === null && pembayaran.transaksi.obat_eceran.length > 0">{{pembayaran.transaksi.obat_eceran[0].nama_pembeli}}</td> -->								
 									<td>{{pembayaran.created_at}}</td>
 									<td>{{pembayaran.metode_bayar.toUpperCase()}}</td>
 									<td><button type="button" class="btn btn-primary" [routerLink] = "['/pembayaran', pembayaran.id]">Details</button></td>

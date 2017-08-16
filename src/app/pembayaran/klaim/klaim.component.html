@@ -8,16 +8,16 @@
 					</h4>
 				</div>
 				<div class="card-block">
-					<div>
+					<div class="row" *ngIf="loading">
+						<div class="col-md-12">
+							<div class="d-flex justify-content-center">
+								<i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i>
+							</div>
+						</div>
+					</div>
+					<div *ngIf="!loading">
 						<table class="table" [mfData]="allKlaim" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 							<tbody>
-								<tr>
-									<th><mfDefaultSorter by="nama_pasien">Nama Pasien</mfDefaultSorter></th>
-									<th><mfDefaultSorter by="created_at">Tanggal Klaim</mfDefaultSorter></th>
-									<th>Nama Asuransi</th>
-									<th>Status Klaim</th>
-									<th></th>
-								</tr>
 								<tr>
 									<td>
 										<div class="col-md-12 input-group">
@@ -49,6 +49,13 @@
 										</div>
 									</td>
 									<td></td>
+								</tr>
+								<tr>
+									<th><mfDefaultSorter by="nama_pasien">Nama Pasien</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="created_at">Tanggal Klaim</mfDefaultSorter></th>
+									<th>Nama Asuransi</th>
+									<th>Status Klaim</th>
+									<th></th>
 								</tr>
 								<tr *ngFor="let klaim of mf.data | filterNamaPasien: searchParam | filterCreatedAt: selectedDate | filterNamaAsuransi: nama_asuransi | matchesStatus: status">
 									<td>{{klaim.asuransi.pasien.nama_pasien}}</td>

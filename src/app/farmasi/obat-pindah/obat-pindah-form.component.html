@@ -23,23 +23,6 @@
                 </select>
               </div>    
 
-              <!--
-              <div class="form-group">
-                <label for="kode">Kode Obat *</label>
-                <div class="input-group">
-                  <input type="text" class="form-control" id="kode" required [(ngModel)] = "kode" name="kode"> 
-                  <span class="form-group-btn">
-                    <button class="btn btn-success" (click)="searchObat(kode, obatPindah.asal)">Cari</button>
-                  </span>
-                </div>                    
-              </div>
-
-              <div class="form-group">
-                <label for="id">ID Jenis Obat</label>
-                <input type="text" class="form-control" id="id" disabled [(ngModel)] = "stokObat.jenis_obat.id" name="id">
-              </div>
-              -->
-
               <div *ngIf="obatPindah.asal && obatPindah.tujuan">
                 <div class="form-group">
                   <label for="merek">Merek Obat</label>
@@ -73,22 +56,18 @@
 
                 <div class="form-group">
                   <label for="stok">Jumlah Stok</label>
-                  <div class="input-group">
-                    <input type="text" class="form-control" id="stok" disabled [(ngModel)] = "stokObat.jumlah" name="stok"> 
-                    <input type="text" class="form-control" id="satuan" disabled [(ngModel)] = "stokObat.jenis_obat.satuan" name="satuan">
+                  <div class="input-group">                    
+                    <input type="number" class="form-control" id="stok" disabled [(ngModel)] = "stokObat.jumlah" name="stok"> 
+                    <div class="input-group-addon">{{stokObat.jenis_obat.satuan}}</div>
                   </div>    
-                   
-                  <!-- TODO: Resize Col -->
                 </div>   
 
                 <div class="form-group">
                   <label for="jumlah">Jumlah Pindah *</label>
                   <div class="input-group">
-                    <input type="text" class="form-control" id="jumlah" required [(ngModel)] = "obatPindah.jumlah" name="jumlah"> 
-                    <input type="text" class="form-control" id="satuan" disabled [(ngModel)] = "stokObat.jenis_obat.satuan" name="satuan">
+                    <input type="number" class="form-control" id="jumlah" required [(ngModel)] = "obatPindah.jumlah" name="jumlah"> 
+                    <div class="input-group-addon">{{stokObat.jenis_obat.satuan}}</div>
                   </div>    
-                   
-                  <!-- TODO: Resize Col -->
                 </div>              
 
                 <div class="form-group">

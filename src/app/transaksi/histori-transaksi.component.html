@@ -11,13 +11,20 @@
 					<div class="form-group">
 						<label for="search">Cari Transaksi</label> <br>
 						<div class="input-group">
-							<input type="text" class="form-control" id="searchKode" [(ngModel)]="kode_pasien" placeholder="Kode Pasien" (keyup.enter)="searchTransaksi()">
+							<input type="text" class="form-control" id="searchKode" [(ngModel)]="nama_pasien" placeholder="Nama Pasien" (keyup.enter)="searchTransaksi()">
 							<span class="input-group-btn">
 								<button class="btn btn-secondary" type="button" (click)="searchTransaksi()">Cari</button>
 							</span>
 						</div>
 					</div>
-					<div>
+					<div class="row" *ngIf="loading">
+						<div class="col-md-12">
+							<div class="d-flex justify-content-center">
+								<i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i>
+							</div>
+						</div>
+					</div>
+					<div *ngIf="!loading">
 						<table class="table" [mfData]="allTransaksi" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 							<tbody>
 								<tr>

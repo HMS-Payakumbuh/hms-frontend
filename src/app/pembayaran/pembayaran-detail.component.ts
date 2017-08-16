@@ -13,6 +13,7 @@ import { Pembayaran }				from './pembayaran';
 })
 
 export class PembayaranDetailComponent implements OnInit {
+	loading: boolean;
 	response: any;
 	pembayaran: any;
 	nama_pasien: any = '';
@@ -24,6 +25,7 @@ export class PembayaranDetailComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
+		this.loading = true;
 		this.route.params
 			.switchMap((params: Params) => this.pembayaranService.getPembayaran(+params['id']))
 			.subscribe(data => {
@@ -40,6 +42,7 @@ export class PembayaranDetailComponent implements OnInit {
 					}
 				}
 				console.log(this.pembayaran);
+				this.loading = false;
 			});
 	}
 

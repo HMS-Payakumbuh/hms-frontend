@@ -3,6 +3,7 @@ import * as _ from "lodash";
 import { Component, Input, OnInit }	from '@angular/core';
 import { ActivatedRoute, Params }	from '@angular/router';
 import { Location }					from '@angular/common';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
 import { PembayaranService }		from '../pembayaran/pembayaran.service';
 import { TransaksiService }			from './transaksi.service';
@@ -17,16 +18,19 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 })
 
 export class TransaksiDetailComponent implements OnInit {
+	loading: boolean;
 	response: any;
 	transaksi: any;
 	listOfObatTebus: any[] = [];
 	listObat: any[] = [];
 	listOfKamarRawatInap: any[] = [];
+	listOfKamarJenazah: any[] = [];
 	asuransi: Asuransi;
 	allAsuransi: Asuransi[];
 	listOfTindakan: number[] = [];
 	listOfObatTebusId: number[] = [];
 	listOfKamarRawatInapId: number[] = [];
+	listOfKamarJenazahId: number[] = [];
 	allMetode = [];
 	nama_pasien: any;
 	jender_pasien: number = 0;
@@ -42,16 +46,20 @@ export class TransaksiDetailComponent implements OnInit {
 
 	printListOfTindakan: any[] = [];
 	printListOfKamarRawatInap: any[] = [];
+	printListOfKamarJenazah: any[] = [];
 
 	constructor(
 		private transaksiService: TransaksiService,
 		private pembayaranService: PembayaranService,
 		private asuransiService: AsuransiService,
+		private toastyService: ToastyService, 
+		private toastyConfig: ToastyConfig,
 		private route: ActivatedRoute,
 		private location: Location
 	) {}
 
 	ngOnInit(): void {
+		this.loading = true;
 		this.asuransi = null;
 		this.transaksi_obat = false;
 		this.transaksi_eksternal = false;
@@ -68,13 +76,16 @@ export class TransaksiDetailComponent implements OnInit {
 		this.listOfObatTebus = [];
 		this.listObat = [];
 		this.listOfKamarRawatInap = [];
+		this.listOfKamarJenazah = [];
 
 		this.listOfTindakan = [];
 		this.listOfObatTebusId = [];
 		this.listOfKamarRawatInapId = [];
+		this.listOfKamarJenazahId = [];
 
 		this.printListOfTindakan = [];
 		this.printListOfKamarRawatInap = [];
+		this.printListOfKamarJenazah = [];
 		
 		this.route.params
 			.switchMap((params: Params) => this.transaksiService.getTransaksi(+params['id']))
@@ -111,6 +122,7 @@ export class TransaksiDetailComponent implements OnInit {
 
 				console.log(this.transaksi);
 
+				this.loading = false;
 			});
 	}
 
@@ -134,6 +146,17 @@ export class TransaksiDetailComponent implements OnInit {
 		for (let item of this.transaksi.tindakan) {
 			if (this.transaksi.no_sep === null) {
 				if (item.id_pembayaran === null) {
+					this.harga_total += parseInt(item.harga);
+				}
+			}
+		}
+	}
+
+	initKamarJenazah(value): void {
+		for (let item of value) {
+			this.listOfKamarJenazah.push(item);
+			if (this.transaksi.no_sep === null) {
+				if (item.no_pembayaran === null) {
 					this.harga_total += parseInt(item.harga);
 				}
 			}
@@ -213,12 +236,14 @@ export class TransaksiDetailComponent implements OnInit {
 	}
 
 	private initMetodeList(items: Asuransi[]): void {
-		for (let item of _.uniqBy(items, 'nama_asuransi')) {
-			this.allMetode.push(item.nama_asuransi);
-		}
-		let index = this.allMetode.indexOf('bpjs');
-		if (index >= 0) {
-			this.allMetode.splice(index, 1);
+		if (this.transaksi.asuransi_pasien !== 'tunai') {
+			for (let item of _.uniqBy(items, 'nama_asuransi')) {
+				this.allMetode.push(item.nama_asuransi);
+			}
+			let index = this.allMetode.indexOf('bpjs');
+			if (index >= 0) {
+				this.allMetode.splice(index, 1);
+			}
 		}
 	}
 
@@ -271,6 +296,26 @@ export class TransaksiDetailComponent implements OnInit {
 		}
 		console.log(this.listOfKamarRawatInapId);
 		console.log(this.printListOfKamarRawatInap);
+		console.log(this.total_bayar);
+	}
+
+	updateCheckedKamarJenazah(value): void {
+		let html = <HTMLInputElement>document.getElementById('kamarJenazah' + value.id);
+		let harga = parseInt(value.harga);
+		if (html.checked == true) {
+			this.listOfKamarJenazahId.push(value.id);
+			this.printListOfKamarJenazah.push(value);
+			this.total_bayar = this.total_bayar + harga;
+		}
+		else if (html.checked == false) {
+			let index1 = this.listOfKamarJenazahId.indexOf(value.id);
+			let index2 = this.printListOfKamarJenazah.indexOf(value);
+			this.listOfKamarJenazahId.splice(index1, 1);
+			this.printListOfKamarJenazah.splice(index2, 1);
+			this.total_bayar = this.total_bayar - harga;
+		}
+		console.log(this.listOfKamarJenazahId);
+		console.log(this.printListOfKamarJenazah);
 		console.log(this.total_bayar);
 	}
 
@@ -379,7 +424,15 @@ export class TransaksiDetailComponent implements OnInit {
 			}
 		}
 		else {
-			alert("Masih ada komponen yang belum dibayar");
+			let toastOptions:ToastOptions = {
+				title: "Transaksi Belum Bisa Ditutup",
+				msg: "Masih terdapat komponen yang belum dibayar",
+				showClose: true,
+				timeout: 5000,
+				theme: 'material'
+			};
+
+			this.toastyService.error(toastOptions);
 		}
 	}
 
@@ -418,7 +471,7 @@ export class TransaksiDetailComponent implements OnInit {
 		console.log(metode.toLowerCase());
 	}
 
-	createPembayaran(harga: number, metode: string, tambahan: boolean = false, listOfTindakan: number[] = null, listOfObatTebusId: number[] = null, listOfObatEceranId: number[] = null, listOfKamarRawatInapId: number[] = null): void {
+	createPembayaran(harga: number, metode: string, tambahan: boolean = false, listOfTindakan: number[] = null, listOfObatTebusId: number[] = null, listOfObatEceranId: number[] = null, listOfKamarRawatInapId: number[] = null, listOfKamarJenazah: number[] = null): void {
 		let payload: any = {
 			id_transaksi: this.transaksi.id,
 			harga_bayar: harga,
@@ -426,7 +479,8 @@ export class TransaksiDetailComponent implements OnInit {
 			tindakan: listOfTindakan,
 			obatTebus: listOfObatTebusId,
 			obatEceran: listOfObatEceranId,
-			kamarRawatInap: listOfKamarRawatInapId
+			kamarRawatInap: listOfKamarRawatInapId,
+			kamarJenazah: listOfKamarJenazah
 		};
 
 		if (tambahan) {
@@ -447,8 +501,15 @@ export class TransaksiDetailComponent implements OnInit {
 			console.log(data);
 			this.no_pembayaran = data.pembayaran.no_pembayaran;
 			console.log(this.no_pembayaran);
-			setTimeout(() => this.print(), 1000);
+			this.toastyService.success(this.toast_success(this.no_pembayaran));
+			if (metode !== 'bpjs') {
+				setTimeout(() => this.print(), 1000);
+			}
 			setTimeout(() => this.ngOnInit(), 1000);
+		},
+		error => {
+			console.log(error);
+			this.toastyService.error(this.toast_fail(error));
 		});
 	}
 
@@ -482,5 +543,29 @@ export class TransaksiDetailComponent implements OnInit {
 			</html>
 		`);
 	    popupWin.document.close();
+	}
+
+	private toast_success(no_pembayaran) {
+		let toastOptions:ToastOptions = {
+			title: "Pembayaran Berhasil",
+			msg: no_pembayaran,
+			showClose: true,
+			timeout: 5000,
+			theme: 'material'
+		};
+
+		return toastOptions;
+	}
+
+	private toast_fail(error) {
+		let toastOptions:ToastOptions = {
+			title: "Pembayaran Gagal",
+			msg: error,
+			showClose: true,
+			timeout: 5000,
+			theme: 'material'
+		};
+
+		return toastOptions;
 	}
 }

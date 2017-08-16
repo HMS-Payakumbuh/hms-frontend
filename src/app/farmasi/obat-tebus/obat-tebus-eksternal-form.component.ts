@@ -262,7 +262,14 @@ export class ObatTebusEksternalFormComponent {
 
 				this.obatTebusService.createObatTebus(this.obatTebus).subscribe(
 			       	data => {			         	
-			     		console.log(data);
+			     		let toastOptions: ToastOptions = {
+				            title: "Success",
+				            msg: "Obat tebus berhasil ditambahkan",
+				            showClose: true,
+				            timeout: 5000,
+				            theme: 'material'
+				        };		        
+				        this.toastyService.success(toastOptions);
 			     		if (data.eksternal) {
 				     		this.router.navigateByUrl('/transaksi-eksternal/' + data.id_transaksi_eksternal);
 				     	} else {

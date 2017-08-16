@@ -13,6 +13,7 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 })
 
 export class PembayaranComponent {
+	loading: boolean;
 	response: any;
 	allPembayaran: any[];
 	allAsuransi = ['', 'tunai'];
@@ -36,6 +37,7 @@ export class PembayaranComponent {
 	}
 
 	ngOnInit(): void {
+		this.loading = true;
 		this.asuransiService.getAllAsuransi()
 			.subscribe(allAsuransi => this.initAsuransiList(allAsuransi));
 
@@ -44,6 +46,7 @@ export class PembayaranComponent {
 				this.response = data;
 				this.allPembayaran = this.response.allPembayaran;
 				console.log(this.allPembayaran);
+				this.loading = false;
 			});
 	}
 }
