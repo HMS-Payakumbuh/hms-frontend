@@ -1,4 +1,9 @@
 import { Component, OnInit }		from '@angular/core';
+import { ActivatedRoute, Params }													from '@angular/router';
+import { FormGroup, FormArray, FormBuilder, Validators }	from '@angular/forms';
+import { Location }																				from '@angular/common';
+import { Observable }																			from 'rxjs/Observable';
+import { NgbTypeaheadConfig } 														from '@ng-bootstrap/ng-bootstrap';
 import * as _ from "lodash";
 
 import { PemakaianKamarJenazah } 				from './pemakaian-kamar-jenazah';
@@ -11,6 +16,8 @@ import { TindakanReference } 				from './tindakan-reference';
 import { TindakanService }		    from './tindakan.service';
 import { Transaksi } 				from '../transaksi/transaksi';
 import { TransaksiService }		    from '../transaksi/transaksi.service';
+import { Pasien } from '../pasien/pasien';
+import { PasienService } from '../pasien/pasien.service';
 
 @Component({
  	selector: 'pemakaian-kamar-jenazah-list-page',
@@ -19,6 +26,7 @@ import { TransaksiService }		    from '../transaksi/transaksi.service';
 	 			TenagaMedisService, 
 				TindakanService,
 				TransaksiService,
+				PasienService,
 				KamarJenazahService]
 })
 
@@ -26,20 +34,34 @@ export class PemakaianKamarJenazahListComponent implements OnInit {
 	allPemakaianKamarJenazah: PemakaianKamarJenazah[];
 	allKamarJenazah: KamarJenazah[];
 
-	transaksi: Transaksi[];
+	transaksi: any;
+
+	public allPasien: Pasien[];
+  	public pasien: Pasien;
 
 	tanggalOperasi: Date;
 	waktuMasuk: Date;
 	waktuKeluar: Date;
 
 	pemakaianKamarJenazahModal: PemakaianKamarJenazah = null;
-    pemakaianKamarJenazahModalId: number = null;
+	pemakaianKamarJenazahModalId: number = null;
+	
+	inputPasienFormatter = (value : Pasien) => value.nama_pasien;
+    resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.kode_pasien;
+
+    searchNamaPasien = (text$: Observable<string>) =>
+		text$
+			.debounceTime(200)
+			.distinctUntilChanged()
+			.map(term => term.length < 2 ? []
+				: this.allPasien.filter(pasien => pasien.nama_pasien.toLowerCase().indexOf(term.toLowerCase()) > -1));
 	
 	constructor(
 		private PemakaianKamarJenazahService: PemakaianKamarJenazahService,
 		private tenagaMedisService: TenagaMedisService,
 		private tindakanService: TindakanService,
 		private transaksiService: TransaksiService,
+		private pasienService: PasienService,
 		private kamarJenazahService: KamarJenazahService
 	) {}
 	
@@ -51,8 +73,23 @@ export class PemakaianKamarJenazahListComponent implements OnInit {
 		this.kamarJenazahService.getAllKamarJenazah().subscribe(
 			data =>  { this.allKamarJenazah = data }
 		);
+
+		this.pasienService.getAllPasien().subscribe(
+			data => { this.allPasien = data }
+		);
 	}
 
+	private addPasien(pasien: Pasien) {
+		this.pasien = pasien;
+
+		this.transaksiService.getLatestOpenTransaksi(this.pasien.id).subscribe(
+			data => {
+				this.transaksi = data;
+				this.pemakaianKamarJenazahModal.id_transaksi = this.transaksi.id;
+			}
+		);
+	}
+	
 	newPemakaianKamarJenazah() {
     	this.pemakaianKamarJenazahModal = new PemakaianKamarJenazah();
 		this.pemakaianKamarJenazahModal.harga = 300000;
@@ -76,12 +113,5 @@ export class PemakaianKamarJenazahListComponent implements OnInit {
 		this.PemakaianKamarJenazahService.destroyPemakaianKamarJenazah(id).subscribe(
 			data => { this.ngOnInit() }
 		);
-	}
-
-	getRecentTransaksi(nama_pasien: string) {
-		this.transaksiService.getRecentTransaksi(nama_pasien).
-			subscribe(data => {
-				this.transaksi = data;
-			})
 	}
 }

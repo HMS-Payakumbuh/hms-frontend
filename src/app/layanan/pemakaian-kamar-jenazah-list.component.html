@@ -53,7 +53,7 @@
 
                     <div class="pull-left">
 						<button type="button" class="btn btn-info" data-toggle="modal" [attr.data-target]="'#createPemakaianKamarJenazahModal'" (click)="newPemakaianKamarJenazah()">
-							Buat Pemakaian Kamar Jenazah Baru
+							Daftar Pemakaian Kamar Jenazah Baru
 						</button>
 					</div>
 
@@ -63,7 +63,7 @@
 						<div class="modal-content">
 
 							<div class="modal-header bg-info text-white">
-								<h5 class="modal-title">Buat Pemakaian Kamar Jenazah Baru</h5>
+								<h5 class="modal-title">Daftar Pemakaian Kamar Jenazah Baru</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<i class="fa fa-times" aria-hidden="true"></i>
 								</button>
@@ -71,22 +71,8 @@
 
 							<div class="modal-body">
 								<div class="form-group">
-									<label for="id_transaksi">Nama Pasien *</label>
-									<div class="input-group">
-									<input type="text" class="form-control" id="nama_pasien" required name="nama_pasien" [(ngModel)]="pemakaianKamarJenazahModal.nama_pasien"> 
-									<span class="form-group-btn">
-										<button class="btn btn-success" (click)="getRecentTransaksi(pemakaianKamarJenazahModal.nama_pasien)">Cari</button>
-									</span>
-									</div>                    
-								</div>
-
-								<div class="form-group">
-									<label for="id_pasien">ID Transaksi</label>
-									<select class="form-control" required id="id_transaksi" [(ngModel)]="pemakaianKamarJenazahModal.id_transaksi">
-										<option *ngFor="let transaksi of transaksi" [value]="transaksi.id">
-											{{transaksi.id}}
-										</option>
-									</select>
+									<label for="id_transaksi">Nama Pasien</label>
+									<input type="text" class="form-control" id="nama_pasien" required required [ngbTypeahead]="searchNamaPasien" [inputFormatter]="inputPasienFormatter" [resultFormatter]="resultPasienFormatter" (selectItem)="addPasien($event.item)" [(ngModel)]="pemakaianKamarJenazahModal.nama_pasien" name="nama_pasien">
 								</div>
 								
 								<div class="form-group">
