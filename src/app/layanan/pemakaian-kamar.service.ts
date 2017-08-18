@@ -46,13 +46,13 @@ export class PemakaianKamarService {
 			.map((res: Response) => res.json());
 	}
 
-	getAllPemakaianKamar(): Observable<PemakaianKamar[]> {
-		return this.http.get(this.pemakaianKamarRawatinapUrl)
+	getAllPemakaianKamarDokterDashboard(): Observable<PemakaianKamar[]> {
+		return this.http.get(this.pemakaianKamarRawatinapUrl + '/dashboard/dokte')
 			.map((res: Response) => res.json());
 	}
 
-	getAllPemakaianKamarDokterDashboard(): Observable<PemakaianKamar[]> {
-		return this.http.get(this.pemakaianKamarRawatinapUrl + '/dashboard/dokter')
+	getAllPemakaianKamar(): Observable<PemakaianKamar[]> {
+		return this.http.get(this.pemakaianKamarRawatinapUrl)
 			.map((res: Response) => res.json());
 	}
 
@@ -60,7 +60,7 @@ export class PemakaianKamarService {
 		return this.getAllPemakaianKamarDokterDashboard()
 			.map(allPemakaian => allPemakaian.filter(pemakaian => pemakaian.jenis_kamar == "Rawat Inap" && pemakaian.no_pegawai == no_pegawai && pemakaian.waktu_keluar == null))
 	}
-	
+
 	getAllPemakaianKamarICUByNoPegawai(no_pegawai: string): Observable<PemakaianKamar[]> {
 		return this.getAllPemakaianKamarDokterDashboard()
 			.map(allPemakaian => allPemakaian.filter(pemakaian => pemakaian.jenis_kamar == "ICU" && pemakaian.no_pegawai == no_pegawai && pemakaian.waktu_keluar == null))
@@ -70,7 +70,7 @@ export class PemakaianKamarService {
 		return this.getAllPemakaianKamar()
 			.map(allPemakaian => allPemakaian.filter(pemakaian => pemakaian.jenis_kamar == "Rawat Inap"))
 	}
-		
+
 	getAllPemakaianKamarICU(): Observable<PemakaianKamar[]> {
 		return this.getAllPemakaianKamar()
 			.map(allPemakaian => allPemakaian.filter(pemakaian => pemakaian.jenis_kamar == "ICU"))
@@ -90,7 +90,7 @@ export class PemakaianKamarService {
 		return this.getAllPemakaianKamarByNoKamar(no_kamar)
 			.map(allPemakaian => allPemakaian.filter(pemakaian => pemakaian.jenis_kamar == "ICU" && pemakaian.no_pegawai == no_pegawai))
 	}
-	
+
 	getDaftarPemakaianKamarBooked(): Observable<PemakaianKamar[]> {
 		return this.http.get(this.pemakaianKamarRawatinapUrl + '/search' + '/booked')
 			.map((res: Response) => res.json());

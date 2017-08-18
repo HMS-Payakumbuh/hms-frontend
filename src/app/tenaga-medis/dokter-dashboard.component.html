@@ -297,7 +297,7 @@
 
   </div>
 
-  <div class="row" *ngIf="allPemakaianRawatinap.length > 0">
+  <div class="row" *ngIf="allPemakaianRawat.length > 0">
 
     <div class="col-md-6">
       <div class="row">
@@ -309,7 +309,7 @@
             <div class="card-block">
               <label for="selectPoli">Pilih Kamar Rawat Inap</label>
               <select class="form-control mb-3" id="selectRawatinap" [(ngModel)]="selectedPemakaianRawatinap" name="selectRawatinap">
-                <option *ngFor="let rawatinap of allPemakaianRawatinap" [ngValue]="rawatinap">{{rawatinap.no_kamar}}</option>
+                <option *ngFor="let rawatinap of allPemakaianRawat" [ngValue]="rawatinap">{{rawatinap.no_kamar}}</option>
               </select>
 
               <button type="button mr-3" class="btn btn-info" (click)="showDaftarPasienRawatinap()">
