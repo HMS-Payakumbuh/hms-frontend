@@ -62,6 +62,7 @@ export class PasienFormComponent implements OnInit {
   allLayanan: any[];
   allPasien: Pasien[] = [];
   allDiagnosisReference: DiagnosisReference[];
+  currentUser: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -77,7 +78,7 @@ export class PasienFormComponent implements OnInit {
     private rujukanService: RujukanService,
     private rekamMedisService: RekamMedisService,
     private config: NgbTypeaheadConfig,
-    private toastyService: ToastyService, 
+    private toastyService: ToastyService,
     private toastyConfig: ToastyConfig
   ) {
     config.editable = false;
@@ -111,13 +112,17 @@ export class PasienFormComponent implements OnInit {
     this.pasien = new Pasien();
     this.asuransi = new Asuransi();
     this.rujukan = new Rujukan();
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
 
     this.sub = this.route.params
       .subscribe(params => {
         this.layanan = params['namaLayanan'];
     });
     if (this.layanan === undefined) {
-
+      if (this.currentUser.role == 'petugasLab') {
+        this.tipe = 'Laboratorium';
+        this.selectTipeLayanan();
+      }
     } else {
       this.fromAntrian = true;
       if (this.layanan.indexOf("Poli") >= 0)
@@ -392,7 +397,7 @@ export class PasienFormComponent implements OnInit {
     if (this.rujukanChecked)
       payload.rujukan = true;
     else
-      payload.rujukan = false;  
+      payload.rujukan = false;
 
     let request: any = {
       transaksi : payload
@@ -435,7 +440,7 @@ export class PasienFormComponent implements OnInit {
           theme: 'material'
       };
 
-      this.toastyService.error(toastOptions); 
+      this.toastyService.error(toastOptions);
     } else {
       if (this.update) {
         this.pasienService.updatePasien(this.pasien.id, this.pasien).subscribe(
@@ -463,7 +468,7 @@ export class PasienFormComponent implements OnInit {
 
               this.toastyService.success(toastOptions);
             }
-            
+
             if (this.asuransiChecked)
               this.createAsuransi();
             else

@@ -49,7 +49,7 @@ export class DokterDashboardComponent implements OnInit {
   allProcessedAntrian: Antrian[] = [];
   allPoliklinik: Poliklinik[] = [];
 
-  allPemakaianRawatinap: any[] = [];
+  allPemakaianRawat: any[] = [];
   allPemakaianICU: any[] = [];
   allPemakaianOperasi: any[] = [];
   allPemakaianOperasiTemp:any[] = [];
@@ -72,7 +72,7 @@ export class DokterDashboardComponent implements OnInit {
   selectedPemakaianOperasi: any;
 
   tindakanOperasi: any[];
-  
+
   transaksiRujukan: Transaksi = null;
   transaksiAmbulans: any = null;
   nama_poli: string = null;
@@ -115,52 +115,60 @@ export class DokterDashboardComponent implements OnInit {
       data => { this.allAmbulans = data }
     );
 
-    this.pemakaianKamarService.getJasaDokterRawatinap(this.noPegawai).subscribe(
+    this.pemakaianKamarService.getAllPemakaianKamarDokterDashboard().subscribe(
       data => {
-        this.allJasaDokterRawatinap = data;
-        this.pemakaianKamarService.getAllPemakaianKamarICUByNoPegawai(this.noPegawai).subscribe(
-          data => { 
-            this.allPemakaianICU = data;
-            this.pemakaianKamarService.getAllPemakaianKamarRawatinapByNoPegawai(this.noPegawai).subscribe(
-              data => {
-                this.allPemakaianRawatinap = data;
-                if(this.allJasaDokterRawatinap.length > 0) {
-                  this.allJasaDokterRawatinap.forEach(element => {
-                    this.pemakaianKamarService.getPemakaianKamar(element.id_pemakaian_kamar_rawatinap).subscribe(
-                      data=> {
-                        if(data.jenis_kamar == "Rawat Inap") 
-                          this.allPemakaianRawatinap.push(data);
-                        else if(data.jenis_kamar == "ICU")
-                          this.allPemakaianICU.push(data);
-                      }
-                    )
-                  });
-                }
-              }
-            )
-          }
-        )
+        this.allPemakaianRawat = data;
+        console.log(data);
+        console.log('a');
       }
-    )
-    
+    );
+
+    // this.pemakaianKamarService.getJasaDokterRawatinap(this.noPegawai).subscribe(
+    //   data => {
+    //     this.allJasaDokterRawatinap = data;
+    //     this.pemakaianKamarService.getAllPemakaianKamarICUByNoPegawai(this.noPegawai).subscribe(
+    //       data => {
+    //         this.allPemakaianICU = data;
+    //         this.pemakaianKamarService.getAllPemakaianKamarRawatinapByNoPegawai(this.noPegawai).subscribe(
+    //           data => {
+    //             this.allPemakaianRawat = data;
+    //             if(this.allJasaDokterRawatinap.length > 0) {
+    //               this.allJasaDokterRawatinap.forEach(element => {
+    //                 this.pemakaianKamarService.getPemakaianKamar(element.id_pemakaian_kamar_rawatinap).subscribe(
+    //                   data=> {
+    //                     if(data.jenis_kamar == "Rawat Inap")
+    //                       this.allPemakaianRawat.push(data);
+    //                     else if(data.jenis_kamar == "ICU")
+    //                       this.allPemakaianICU.push(data);
+    //                   }
+    //                 )
+    //               });
+    //             }
+    //           }
+    //         )
+    //       }
+    //     )
+    //   }
+    // )
+
     this.pemakaianKamarOperasiService.getAllPemakaianKamarOperasiNow().subscribe(
-     		data => { 
+     		data => {
            this.allPemakaianOperasiTemp = data;
            this.allPemakaianOperasiTemp.forEach(element => {
               this.tindakanOperasiService.getTenagaMedisByTindakanOperasi(element.id).subscribe(
-                data => {	
+                data => {
                   this.tindakanOperasi = data;
                   this.tindakanOperasi.forEach(tindakanoperasi => {
-                    if(tindakanoperasi.no_pegawai == this.noPegawai) 
+                    if(tindakanoperasi.no_pegawai == this.noPegawai)
                       this.allPemakaianOperasi.push(element);
-                  });  
+                  });
                 }
               );
            });
           }
       );
-      
-    
+
+
 
     this.socket.on(this.noPegawai, (message) => this.updatePasienRujukan(message));
   }

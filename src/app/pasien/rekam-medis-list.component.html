@@ -4,12 +4,12 @@
 			<div class="card mb-3" *ngIf="allRekamMedis">
 				<div class="card-header card-info">
 					<h4>
-						<i class="fa fa-list-alt" aria-hidden="true"></i> List Rekam Medis 
+						<i class="fa fa-list-alt" aria-hidden="true"></i> List Rekam Medis
 					</h4>
 				</div>
 
 				<div class="card-block">
-					<div class="card-text">	
+					<div class="card-text">
 						<table class="table" [mfData]="allRekamMedis" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 							<thead>
 								<th><mfDefaultSorter by="tanggal">Tanggal</mfDefaultSorter></th>
@@ -50,11 +50,11 @@
 				</div>
 
 				<div class="card-block">
-					<div class="card-text">	
+					<div class="card-text">
 						<table class="table" [mfData]="allRekamMedisEksternal" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 							<thead>
 								<th><mfDefaultSorter by="tanggal">Tanggal</mfDefaultSorter></th>
-								<th><mfDefaultSorter by="keluhan">Keluhan</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="keluhan">Diagnosis</mfDefaultSorter></th>
 								<th></th>
 							</thead>
 							<tbody>
@@ -79,8 +79,8 @@
 			</div>
 		</div>
 		<div class="pull-right">
-			<button *ngIf="layanan != 'rawatinap'" type="button" class="btn btn-warning" [routerLink]="['/poliklinik', layanan, transaksiId]">Kembali</button>
-			<button *ngIf="layanan == 'rawatinap'" type="button" class="btn btn-warning" (click)="goBack()">Kembali</button>
+			<button *ngIf="layanan == undefined || layanan == 'rawatinap'" type="button" class="btn btn-warning" (click)="goBack()">Kembali</button>
+			<button *ngIf="layanan != undefined && layanan != 'rawatinap'" type="button" class="btn btn-warning" [routerLink]="['/poliklinik', layanan, transaksiId]">Kembali</button>
 		</div>
 	</div>
 </div>

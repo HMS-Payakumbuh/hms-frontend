@@ -116,6 +116,18 @@ export class PerawatDashboardComponent implements OnInit {
             };
 
             this.toastyService.success(toastOptions);
+            this.ngOnInit();
+          },
+          error => {
+            let toastOptions:ToastOptions = {
+                title: 'Error',
+                msg: 'Pemakaian ambulans gagal',
+                showClose: true,
+                timeout: 5000,
+                theme: 'material'
+            };
+
+            this.toastyService.error(toastOptions);
           }
         )
       }

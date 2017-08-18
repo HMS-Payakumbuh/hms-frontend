@@ -29,7 +29,7 @@ export class DaftarAntrianComponent {
     private poliklinikService: PoliklinikService,
     private laboratoriumService: LaboratoriumService,
     private antrianService: AntrianService,
-    private toastyService: ToastyService, 
+    private toastyService: ToastyService,
     private toastyConfig: ToastyConfig
   ) {}
 
@@ -72,7 +72,7 @@ export class DaftarAntrianComponent {
             msg: "Layanan yang Anda tuju sudah habis.",
             showClose: true,
             timeout: 5000,
-            theme: 'bootstrap'
+            theme: 'material'
             };
 
             this.toastyService.error(toastOptions);
@@ -82,12 +82,12 @@ export class DaftarAntrianComponent {
             msg: "Anda mendapat nomor antrian : "+data.kategori_antrian+""+data.no_antrian,
             showClose: true,
             timeout: 5000,
-            theme: 'bootstrap'
+            theme: 'material'
             };
 
             this.toastyService.success(toastOptions);
           }
-          
+
         }
       );
   }

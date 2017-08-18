@@ -27,18 +27,26 @@ import { DiagnosisService }     from '../layanan/diagnosis.service';
   ]
 })
 export class PasienIGDFormComponent implements OnInit {
-	tipe: string;
+  tipe: string;
+  layanan: string;
+  dokter: string;
 	search: string;
   searchDone: boolean;
   update: boolean;
+  isBpjs: boolean = false;
+  isBpjsVerified: boolean = true;
+  isVerified: boolean;
+  nomor_pasien: string;
+  no_sep: string;
   fromAntrian: boolean = false;
   sub: any;
   asuransi: Asuransi;
-  pasien: Pasien = new Pasien();
+  pasien: Pasien;
   rujukan: Rujukan;
   rujukanChecked: boolean;
   asuransiChecked:boolean;
   allAsuransi: Asuransi[];
+  allLayanan: any[];
   allPasien: Pasien[] = [];
   allDiagnosisReference: DiagnosisReference[];
 
@@ -60,7 +68,7 @@ export class PasienIGDFormComponent implements OnInit {
   genders = [{id: 1, nama: 'Laki-laki'}, {id: 2, nama: 'Perempuan'}];
   religions = ['Islam', 'Protestan', 'Katolik', 'Buddha', 'Hindu', 'Konghucu'];
   bloodTypes = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
-  allNamaAsuransi = ['BPJS', 'Bumidaya', 'Prudential', 'AIG'];
+  allNamaAsuransi = ['bpjs', 'bumidaya', 'prudential', 'aig'];
 
   inputFormatter = (value : any) => value.nama;
   resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
@@ -121,6 +129,93 @@ export class PasienIGDFormComponent implements OnInit {
   private pakaiAsuransi(asuransi: Asuransi) {
     this.asuransi.nama_asuransi = asuransi.nama_asuransi;
     this.asuransi.no_kartu = asuransi.no_kartu;
+    this.cekAsuransi();
+  }
+
+  private getRujukan() {
+    this.transaksiService.getRujukan(this.rujukan.no_rujukan).subscribe(data => {
+        if (data.metadata.code == '200') {
+          this.isVerified = true;
+          this.rujukan.diagnosis = data.data_rujukan.response.item.diagnosa.kdDiag + '-' +  data.data_rujukan.response.item.diagnosa.nmDiag;
+          this.nomor_pasien = data.data_rujukan.response.item.peserta.noKartu;
+          this.rujukan.asal_rujukan = data.data_rujukan.response.item.provKunjungan.nmProvider;
+          this.rujukan.keterangan = data.data_rujukan.response.item.catatan;
+          this.no_sep = data.response;
+
+          let toastOptions:ToastOptions = {
+              title: "Verifikasi Berhasil !",
+              msg: "Nomor rujukan yang dimasukkan sudah valid.",
+              showClose: true,
+              timeout: 5000,
+              theme: 'material'
+          };
+
+          this.toastyService.success(toastOptions);
+
+          if (this.isBpjs) {
+            if (this.asuransi.no_kartu != this.nomor_pasien) {
+              let toastOptions:ToastOptions = {
+                title: "Verifikasi Gagal !",
+                msg: "Nomor kartu bpjs yang dimasukkan tidak valid.",
+                showClose: true,
+                timeout: 5000,
+                theme: 'material'
+              };
+
+              this.toastyService.error(toastOptions);
+              this.isBpjsVerified = false;
+            } else {
+              this.isBpjsVerified = true;
+            }
+          }
+        } else {
+          this.isVerified = false;
+          let toastOptions:ToastOptions = {
+              title: "Verifikasi Gagal !",
+              msg: "Nomor rujukan yang dimasukkan tidak valid.",
+              showClose: true,
+              timeout: 5000,
+              theme: 'material'
+          };
+
+          this.toastyService.error(toastOptions);
+        }
+      });
+  }
+
+  private cekBpjs() {
+    if (this.asuransi.no_kartu != this.nomor_pasien) {
+      let toastOptions:ToastOptions = {
+        title: "Verifikasi Gagal !",
+        msg: "Nomor kartu bpjs yang dimasukkan tidak valid.",
+        showClose: true,
+        timeout: 5000,
+        theme: 'material'
+      };
+
+      this.toastyService.error(toastOptions);
+      this.isBpjsVerified = false;
+    } else {
+      let toastOptions:ToastOptions = {
+          title: "Verifikasi Berhasil !",
+          msg: "Nomor kartu bpjs yang dimasukkan sudah valid.",
+          showClose: true,
+          timeout: 5000,
+          theme: 'material'
+      };
+
+      this.toastyService.success(toastOptions);
+      this.isBpjsVerified = true;
+    }
+  }
+
+  private cekAsuransi() {
+    if (this.asuransi.nama_asuransi === 'bpjs') {
+      this.rujukanChecked = true;
+      this.isBpjs = true;
+    } else {
+      this.isBpjs = false;
+    }
   }
 
   private createRujukan(id_transaksi: number) {
@@ -139,7 +234,7 @@ export class PasienIGDFormComponent implements OnInit {
     if (this.asuransi.nama_asuransi == 'bpjs') {
       payload = {
         id_pasien: this.pasien.id,
-        no_sep: Math.random().toString(36).substring(7),
+        no_sep: this.no_sep,
         kode_jenis_pasien: kode_jenis_pasien,
         asuransi_pasien: this.asuransi.nama_asuransi,
         jenis_rawat: 2,
@@ -153,6 +248,11 @@ export class PasienIGDFormComponent implements OnInit {
         jenis_rawat: 2,
       };
     }
+    if (this.rujukanChecked)
+      payload.rujukan = true;
+    else
+      payload.rujukan = false;
+        
     let request: any = {
       transaksi : payload
     }
@@ -175,44 +275,66 @@ export class PasienIGDFormComponent implements OnInit {
   }
 
   private createPasien() {
-    if (this.update) {
-      this.pasienService.updatePasien(this.pasien.id, this.pasien).subscribe(
-        data => {
-          this.pasien = data;
-          let toastOptions: ToastOptions = {
-              title: 'Pendaftaran IGD Sukses',
-              msg: 'Anda mendapat kode pasien: ' + data.kode_pasien,
-              showClose: true,
-              timeout: 5000,
-              theme: 'bootstrap'
-          };
-          this.toastyService.success(toastOptions);
+    if (this.asuransi.nama_asuransi === 'bpjs' && !this.rujukanChecked) {
+      let toastOptions:ToastOptions = {
+          title: "Registrasi Pasien Gagal !",
+          msg: "Pasien BPJS harus memasukkan nomor rujukan.",
+          showClose: true,
+          timeout: 5000,
+          theme: 'material'
+      };
 
-          if (this.asuransiChecked)
-            this.createAsuransi();
-          else
-            this.createTransaksi();
-        }
-      );
+      this.toastyService.error(toastOptions);
+    } else if (!this.isBpjsVerified) {
+      let toastOptions:ToastOptions = {
+          title: "Registrasi Pasien Gagal !",
+          msg: "Nomor bpjs masih belum valid.",
+          showClose: true,
+          timeout: 5000,
+          theme: 'material'
+      };
+
+      this.toastyService.error(toastOptions);
     } else {
-      this.pasienService.createPasien(this.pasien).subscribe(
-        data => {
-          this.pasien = data.json;
-          let toastOptions: ToastOptions = {
-              title: 'Pendaftaran IGD Sukses',
-              msg: 'Anda mendapat kode pasien: ' + data.json.kode_pasien,
-              showClose: true,
-              timeout: 5000,
-              theme: 'bootstrap'
-          };
-          this.toastyService.success(toastOptions);
+      if (this.update) {
+        this.pasienService.updatePasien(this.pasien.id, this.pasien).subscribe(
+          data => {
+            this.pasien = data;
+            let toastOptions: ToastOptions = {
+                title: 'Pendaftaran IGD Sukses',
+                msg: 'Anda mendapat kode pasien: ' + data.kode_pasien,
+                showClose: true,
+                timeout: 5000,
+                theme: 'material'
+            };
+            this.toastyService.success(toastOptions);
 
-          if (this.asuransiChecked)
-            this.createAsuransi();
-          else
-            this.createTransaksi();
-        }
-      );
+            if (this.asuransiChecked)
+              this.createAsuransi();
+            else
+              this.createTransaksi();
+          }
+        );
+      } else {
+        this.pasienService.createPasien(this.pasien).subscribe(
+          data => {
+            this.pasien = data.json;
+            let toastOptions: ToastOptions = {
+                title: 'Pendaftaran IGD Sukses',
+                msg: 'Anda mendapat kode pasien: ' + data.json.kode_pasien,
+                showClose: true,
+                timeout: 5000,
+                theme: 'material'
+            };
+            this.toastyService.success(toastOptions);
+
+            if (this.asuransiChecked)
+              this.createAsuransi();
+            else
+              this.createTransaksi();
+          }
+        );
+      }
     }
   }
 }
