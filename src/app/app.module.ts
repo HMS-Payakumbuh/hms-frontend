@@ -5,7 +5,6 @@ import { ReactiveFormsModule }      from '@angular/forms';
 import { HttpModule }               from '@angular/http';
 import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
 import { DpDatePickerModule }       from 'ng2-date-picker';
-import { AutocompleteModule}        from 'ng2-input-autocomplete';
 import { DataTableModule }          from 'angular2-datatable';
 import { ToastyModule }             from 'ng2-toasty';
 
@@ -166,7 +165,6 @@ import { AppComponent }             from './app.component';
         HttpModule,
         NgbModule.forRoot(),
         DpDatePickerModule,
-        AutocompleteModule.forRoot(),
         ToastyModule.forRoot(),
         DataTableModule
     ],
@@ -251,7 +249,7 @@ import { AppComponent }             from './app.component';
         PindahICUListComponent,
 
         BookingOperasiListComponent,
-        
+
         PemakaianKamarListComponent,
         PemakaianICUListComponent,
         PemakaianKamarOperasiListComponent,
