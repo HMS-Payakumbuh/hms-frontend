@@ -36,7 +36,7 @@ export class ObatEceranFormComponent {
 			.debounceTime(200)
 			.distinctUntilChanged()
 			.map(term => term.length < 2 ? []
-				: this.allStokObatAtLocation.filter(stokObat => stokObat.jenis_obat.merek_obat.toLowerCase().indexOf(term.toLowerCase()) > -1));
+				: this.allStokObatAtLocation.filter(stokObat => (stokObat.jenis_obat.merek_obat + ' ' + stokObat.nomor_batch).toLowerCase().indexOf(term.toLowerCase()) > -1));
 
 	constructor (		
 		private changeDetectorRef: ChangeDetectorRef,		

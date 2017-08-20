@@ -50,17 +50,26 @@
 
               <div class="form-group">
                 <label for="harga_beli_satuan">Harga beli satuan</label>
-                <input type="text" class="form-control" id="harga_beli_satuan" required [(ngModel)] = "obatMasuk.harga_beli_satuan" name="harga_beli_satuan">
+                <div class="input-group">
+                  <div class="input-group-addon">Rp.</div>
+                  <input type="text" class="form-control" id="harga_beli_satuan" required [(ngModel)] = "obatMasuk.harga_beli_satuan" name="harga_beli_satuan">
+                </div>
               </div>
 
               <div class="form-group">
                 <label for="harga_total">Harga beli total</label>
-                <input type="text" class="form-control" id="harga_total" disabled [(ngModel)] = "obatMasuk.harga_beli_satuan*obatMasuk.jumlah" name="harga_total">
+                <div class="input-group">
+                  <div class="input-group-addon">Rp.</div>
+                  <input type="text" class="form-control" id="harga_total" disabled [(ngModel)] = "obatMasuk.harga_beli_satuan*obatMasuk.jumlah" name="harga_total">
+                </div>
               </div>
 
               <div class="form-group">
                 <label for="harga_jual">Harga jual satuan</label>
-                <input type="text" class="form-control" id="harga_jual" disabled [(ngModel)] = "jenisObat.harga_jual_satuan" name="harga_jual">
+                <div class="input-group">
+                  <div class="input-group-addon">Rp.</div>
+                  <input type="text" class="form-control" id="harga_jual" disabled [(ngModel)] = "jenisObat.harga_jual_satuan" name="harga_jual">
+                </div>
               </div>
 
               <button type="submit" class="btn btn-success" (click)="save()">Simpan</button>
