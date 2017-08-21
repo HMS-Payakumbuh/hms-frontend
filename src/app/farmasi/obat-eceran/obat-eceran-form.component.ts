@@ -28,7 +28,7 @@ export class ObatEceranFormComponent {
 
 	public allStokObatAtLocation: StokObat[];
 
-	inputFormatter = (value : StokObat) => value.jenis_obat.merek_obat + ' - ' + value.nomor_batch;
+	inputFormatter = (value : StokObat) => '';
 	resultFormatter = (value: StokObat)	=> value.jenis_obat.merek_obat + ' - ' + value.nomor_batch;	
 
 	searchStokObat = (text$: Observable<string>) =>

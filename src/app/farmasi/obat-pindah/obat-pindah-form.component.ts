@@ -68,37 +68,62 @@ export class ObatPindahFormComponent {
 		this.obatPindah.id_jenis_obat = this.stokObat.jenis_obat.id;
 		this.obatPindah.id_stok_obat_asal = this.stokObat.id;
 
-		// alert(JSON.stringify(this.obatPindah)); 
-		this.obatPindahService.createObatPindah(this.obatPindah).subscribe(
-	       	data => {
-	       		let toastOptions: ToastOptions = {
-		            title: "Success",
-		            msg: "Pemindahan obat berhasil ditambahkan",
-		            showClose: true,
-		            timeout: 5000,
-		            theme: 'material'
-		        };		        
-		        this.toastyService.success(toastOptions);
-	         	this.location.back();
-	         	return true;
-	       	},
-	       	error => {
-		        let toastOptions: ToastOptions = {
-		            title: "Error",
-		            msg: error,
-		            showClose: true,
-		            timeout: 5000,
-		            theme: 'material'
-		        };
-		        this.toastyService.error(toastOptions);
-		        return Observable.throw(error);
-	       	}
-    	);
+		if (this.validateInput()) {
+			this.obatPindahService.createObatPindah(this.obatPindah).subscribe(
+		       	data => {
+		       		let toastOptions: ToastOptions = {
+			            title: "Success",
+			            msg: "Pemindahan obat berhasil ditambahkan",
+			            showClose: true,
+			            timeout: 5000,
+			            theme: 'material'
+			        };		        
+			        this.toastyService.success(toastOptions);
+		         	this.location.back();
+		         	return true;
+		       	},
+		       	error => {
+			        this.handleError(error);
+			        return Observable.throw(error);
+		       	}
+	    	);
+    	} else {
+			return false;
+		}
 	}
 
 	private addSelectedStokObat(stokObat: StokObat) {
 	    this.stokObat = stokObat;
 	    this.tempKadaluarsa = new Date(this.stokObat.kadaluarsa);
 		this.formattedKadaluarsa = this.tempKadaluarsa.toISOString().split('T')[0];
+	}
+
+	private validateInput(): boolean {
+		if	(this.obatPindah.asal == null) {
+			this.handleError("Lokasi asal wajib diisi");
+			return false;
+		} else if (this.obatPindah.tujuan == null) {
+			this.handleError("Tujuan wajib diisi");
+			return false;
+		} else if (this.obatPindah.id_jenis_obat == null) {
+			this.handleError("Merek obat wajib diisi");
+			return false;
+		} else if (this.obatPindah.jumlah == null) {
+			this.handleError("Jumlah pindah wajib diisi");
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	private handleError(error: any) {
+		let toastOptions: ToastOptions = {
+	        title: "Error",
+	        msg: error,
+	        showClose: true,
+	        timeout: 5000,
+	        theme: 'material'
+	    };
+    	this.toastyService.error(toastOptions);
 	}
 }
