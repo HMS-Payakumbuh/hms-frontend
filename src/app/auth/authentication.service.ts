@@ -2,6 +2,7 @@ import { Injectable }              from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 import { Observable }              from 'rxjs/Rx';
+import { AuthHttp }                from 'angular2-jwt';
 import 'rxjs/add/operator/map';
 import * as _ from "lodash";
 
@@ -17,6 +18,7 @@ export class AuthenticationService {
 
   constructor(
     private http: Http,
+    private authHttp: AuthHttp,
     private toastyService: ToastyService,
     private toastyConfig: ToastyConfig
   ) { }
@@ -44,8 +46,10 @@ export class AuthenticationService {
 
     this.http.post(this.loginUrl, body, options).subscribe(
       response => {
-        if (response.json().result.indexOf('salah') == -1)
+        if (response.json().result.indexOf('salah') == -1) {
+          localStorage.setItem('token', response.json().result);
           this.getUserDetails(response.json().result);
+        }
         else {
           let toastOptions: ToastOptions = {
             title: "Error",
@@ -71,11 +75,11 @@ export class AuthenticationService {
   }
 
   getUserDetails(token: string) {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({headers: headers});
-    let data = { 'token': token };
-    let body = JSON.stringify(data);
-    this.http.post(this.getUserDetailsUrl, body, options).subscribe(
+    // let headers = new Headers({ 'Content-Type': 'application/json' });
+    // let options = new RequestOptions({headers: headers});
+    // let data = { 'token': token };
+    // let body = JSON.stringify(data);
+    this.authHttp.get(this.getUserDetailsUrl).subscribe(
       response => {
         localStorage.setItem('currentUser', JSON.stringify(response.json().result));
         window.location.assign('');
@@ -96,9 +100,9 @@ export class AuthenticationService {
   setKategori(no_pegawai: string, kategori_antrian: string): void {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({headers: headers});
-    let data = { 
+    let data = {
       'no_pegawai': no_pegawai,
-      'kategori_antrian': kategori_antrian 
+      'kategori_antrian': kategori_antrian
     };
     let body = JSON.stringify(data);
     this.http.post(this.updateUserKategoriUrl, body, options).subscribe(
@@ -120,6 +124,7 @@ export class AuthenticationService {
   }
 
   logout(): void {
+    localStorage.removeItem('token');
     localStorage.removeItem('currentUser');
   }
 }

@@ -18,7 +18,7 @@
             </div>
             <div class="card-block">
               <label for="selectPoli">Pilih poliklinik</label>
-              <select class="form-control mb-3" id="selectPoli" [(ngModel)]="selectedPoliklinik" name="selectPoli">
+              <select class="form-control mb-3" id="selectPoli" [(ngModel)]="selectedPoliklinik" (ngModelChange)="setShowPoliButton(true)" name="selectPoli">
                 <ng-container *ngFor="let poliklinik of allPoliklinik">
                   <option *ngIf="poliklinik.nama != 'IGD'" [ngValue]="poliklinik">
                     {{poliklinik.nama}}
@@ -27,7 +27,7 @@
               </select>
 
               <div *ngIf="selectedPoliklinik != null">
-                <button type="button mr-3" class="btn btn-info" (click)="showDaftarPasien()">
+                <button type="button mr-3" class="btn btn-info" *ngIf="showPoliButton" (click)="showDaftarPasien()">
                   Lihat Daftar Pasien {{selectedPoliklinik.nama}}
                 </button>
               </div>
