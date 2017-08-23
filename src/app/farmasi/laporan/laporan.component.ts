@@ -20,7 +20,7 @@ export class LaporanComponent implements OnInit {
 	private obatRusakUrl = ENV.obatRusakUrl;
 	private obatEceranUrl = ENV.obatEceranUrl;
 	private obatTebusUrl = ENV.obatTebusUrl;
-  private obatTindakanUrl = ENV.obatTindakanUrl;
+  	private obatTindakanUrl = ENV.obatTindakanUrl;
 
 	public jenis: string;
 
@@ -40,15 +40,15 @@ export class LaporanComponent implements OnInit {
 			data => { this.allLokasiObat = data }
 		);
 
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
-    
-    this.tanggal_mulai = yyyy + '-' + mm + '-' + dd;
-    this.tanggal_selesai = yyyy + '-' +mm + '-' + dd;
-    this.lokasi = 0;
-  }
+	    var today = new Date();
+	    var dd = today.getDate();
+	    var mm = today.getMonth()+1; //January is 0!
+	    var yyyy = today.getFullYear();
+	    
+	    this.tanggal_mulai = yyyy + '-' + mm + '-' + dd;
+	    this.tanggal_selesai = yyyy + '-' +mm + '-' + dd;
+	    this.lokasi = 0;
+  	}
 
   downloadLaporanStokObat() {  	
     window.location.href = this.stokObatUrl + '/export/' + this.lokasi;
