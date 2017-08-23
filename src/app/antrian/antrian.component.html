@@ -37,11 +37,9 @@
 			                <div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="kategori">
 			                  	<input type="text" class="form-control" id="nomor" value="{{selectedKategori}}{{antrian?.no_antrian}} - {{antrian?.nama_pasien}}" name="nomor" disabled>
 			              	</div>
-			              	<label class="input-group mb-0 mr-sm-2 mb-sm-0 custom-checkbox" *ngIf="kategori">
-			                    <input type="checkbox" class="custom-control-input" [checked]="antrian.via_sms" disabled>
-			                    <span class="custom-control-indicator"></span>
-			                    <span class="custom-control-description">Via SMS</span>
-			                </label>
+			              	<div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="kategori && antrian.via_sms">
+			                    <button type="button" class="btn btn-secondary" disabled>Via SMS</button>
+			                </div>
 			              	<div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="!isfrontoffice">
 			                  	<input type="text" class="form-control" id="nomor" value="{{selectedKategori}}{{antrian?.no_antrian}} - {{antrian?.transaksi?.pasien.nama_pasien}}" name="nomor" disabled>
 			              	</div>
