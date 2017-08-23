@@ -32,7 +32,7 @@
 						<tbody>
 							<tr *ngFor="let pasien of mf.data">
 								<td>{{pasien.nama_pasien}}</td>
-								<td>{{pasien.tanggal_lahir}}</td>
+								<td>{{pasien.tanggal_lahir | date: 'dd-MM-yyyy'}}</td>
 								<td>{{pasien.jender == 1 && 'L' || 'P'}}</td>
 								<td>{{pasien.agama}}</td>
 								<td>{{pasien.gol_darah}}</td>
@@ -106,8 +106,8 @@
 	                    </form>
 				      </div>
 				      <div class="modal-footer">
-				        <button type="button" class="btn btn-danger" data-dismiss="modal" routerLink="catatan-kematian-form">Catat Kematian</button>
-				        <button type="button" class="btn btn-primary" (click)="updatePasien()" [disabled]="!pasienForm.form.valid">Simpan</button>
+				        <!-- <button type="button" class="btn btn-danger" data-dismiss="modal" routerLink="catatan-kematian-form">Catat Kematian</button> -->
+				        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updatePasien()" [disabled]="!pasienForm.form.valid">Simpan</button>
 				      </div>
 				    </div>
 				  </div>

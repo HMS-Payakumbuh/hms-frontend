@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location }               from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Observable }             from 'rxjs/Observable';
 import { NgbTypeaheadConfig }   from '@ng-bootstrap/ng-bootstrap';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
@@ -62,6 +63,7 @@ export class PasienFormComponent implements OnInit {
   allPasien: Pasien[] = [];
   allDiagnosisReference: DiagnosisReference[];
   currentUser: any;
+  datePipe: any = new DatePipe('id');
 
   constructor(
     private route: ActivatedRoute,
@@ -161,6 +163,7 @@ export class PasienFormComponent implements OnInit {
 
   private selectPasien() {
     this.asuransiService.getAsuransi(this.pasien.id).subscribe(allAsuransi => this.allAsuransi = allAsuransi);
+    this.pasien.tanggal_lahir = this.datePipe.transform(this.pasien.tanggal_lahir, 'dd-MM-yyyy');
     this.searchDone = true;
   }
 
