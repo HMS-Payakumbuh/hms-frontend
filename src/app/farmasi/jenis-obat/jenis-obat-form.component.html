@@ -7,6 +7,11 @@
       </div>
 
       <div class="card-block">
+
+        <div class="pull-right">
+          * Wajib diisi
+        </div>
+        
         <div class="card-text">
           <form #jenisObatForm="ngForm">
             <div class="form-group">
@@ -36,7 +41,10 @@
 
             <div class="form-group">
               <label for="harga_jual_satuan">Harga jual satuan *</label>
-              <input type="text" class="form-control" id="harga_jual_satuan" required [(ngModel)] = "jenisObat.harga_jual_satuan" name="harga_jual_satuan">
+              <div class="input-group">
+                  <div class="input-group-addon">Rp.</div>
+                  <input type="text" class="form-control" id="harga_jual_satuan" required [(ngModel)] = "jenisObat.harga_jual_satuan" name="harga_jual_satuan">
+              </div>
             </div>
 
             <div class="form-group">

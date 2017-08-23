@@ -7,6 +7,11 @@
       </div>
 
       <div class="card-block">
+
+        <div class="pull-right">
+          * Wajib diisi
+        </div>
+
         <div class="card-text">
             <form #obatPindahForm="ngForm">
               <div class="form-group">
@@ -25,7 +30,7 @@
 
               <div *ngIf="obatPindah.asal && obatPindah.tujuan">
                 <div class="form-group">
-                  <label for="merek">Merek Obat</label>
+                  <label for="merek">Merek Obat *</label>
                   <input type="text" class="form-control" id="merek" required [ngbTypeahead]="searchStokObat" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addSelectedStokObat($event.item)" [(ngModel)] = "stokObat.jenis_obat.merek_obat" name="merek">
                 </div>
 
