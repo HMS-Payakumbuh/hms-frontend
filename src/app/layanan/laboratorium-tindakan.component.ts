@@ -52,6 +52,16 @@ export class LaboratoriumTindakanComponent implements OnInit {
         data => {
           if (data.length > 0) {
             this.allTindakan = data;
+
+            let toastOptions:ToastOptions = {
+                title: 'Success',
+                msg: 'Terdapat ' + data.length + ' tindakan yang perlu diproses',
+                showClose: true,
+                timeout: 5000,
+                theme: 'material'
+            };
+
+            this.toastyService.success(toastOptions);
           }
           else {
             this.allTindakan = [];

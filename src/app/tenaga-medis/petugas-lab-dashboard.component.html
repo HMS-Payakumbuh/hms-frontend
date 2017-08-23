@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-12">
       <blockquote class="blockquote">
-        <p class="h4 mb-0"><b>Dashboard Petugas Lab</b></p>
+        <p class="h4 mb-0"><b>Dasbor Petugas Lab</b></p>
       </blockquote>
     </div>
   </div>
@@ -29,86 +29,168 @@
 
       <div class="card mb-3">
 				<div class="card-header card-info">
-					<h5 class="mb-0"><b>Lihat Hasil Lab</b></h5>
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+							<a class="nav-link active" data-toggle="tab" href="#upload" role="tab" style="color: black;">
+								Upload Hasil Lab
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#lihat" role="tab" style="color: black;">
+								Lihat Hasil Lab
+							</a>
+						</li>
+          </ul>
 				</div>
 				<div class="card-block">
-          <div class="form-group">
-            <label for="search">Cari hasil lab dengan kode pasien</label>
-            <div class="input-group">
-              <input type="text" class="form-control" id="search" [(ngModel)]="searchTerm" (keydown)="onEnter($event)">
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-success" (click)="searchHasilLab()">
-                  Cari
-                </button>
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="upload" role="tabpanel">
+              <table class="table" *ngIf="allEmptyHasilLab.length > 0">
+                <thead>
+                  <th>Nama Tindakan</th>
+                  <th>Nama Pasien</th>
+                  <th>Tanggal</th>
+                  <th></th>
+                  <th></th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let hasilLab of allEmptyHasilLab; index as i">
+                    <td>{{hasilLab.tindakan.daftar_tindakan.nama}}</td>
+                    <td>{{hasilLab.tindakan.pasien.nama_pasien}}</td>
+                    <td>{{hasilLab.tindakan.tanggal_waktu | date: 'dd-MMM-yyyy'}}</td>
+                    <td>
+                      <input type="file" (change)="onChange($event, hasilLab.id)" class="form-control-file" accept="application/pdf" name="dokumen">
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-sm btn-success" data-toggle="modal" (click)="showUploadModal(hasilLab.id)" [attr.data-target]="'#uploadConfirmationModal'">
+                        Upload
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <span *ngIf="allEmptyHasilLab.length == 0">
+                Tidak ada hasil lab yang perlu diupload
               </span>
             </div>
-          </div>
 
-					<table class="table" *ngIf="allHasilLab.length > 0" [mfData]="allHasilLab" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
-						<thead>
-							<th><mfDefaultSorter by="nama_tindakan">Tindakan</mfDefaultSorter></th>
-							<th><mfDefaultSorter by="nama_pasien">Pasien</mfDefaultSorter></th>
-              <th><mfDefaultSorter by="no_pegawai">Petugas Lab</mfDefaultSorter></th>
-							<th><mfDefaultSorter by="no_transaksi">No Transaksi</mfDefaultSorter></th>
-							<th><mfDefaultSorter by="tanggal_waktu">Tanggal</mfDefaultSorter></th>
-              <th></th>
-						</thead>
-						<tbody *ngFor="let hasilLab of mf.data">
-							<tr>
-								<td>{{hasilLab.tindakan.daftar_tindakan.nama}}</td>
-								<td>{{hasilLab.tindakan.pasien.nama_pasien}}</td>
-                <td>{{hasilLab.tindakan.tenaga_medis.no_pegawai}}</td>
-								<td>{{hasilLab.transaksi.no_transaksi}}</td>
-								<td>{{hasilLab.tindakan.tanggal_waktu | date: 'dd-MMM-yyyy'}}</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-info" (click)="downloadHasilLab(hasilLab.id)">
-                    Lihat dokumen hasil
-                  </button>
-                </td>
-							</tr>
-						</tbody>
-						<tfoot>
-	            <tr>
-	              <td colspan="6">
-	                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
-	              </td>
-	            </tr>
-	          </tfoot>
-					</table>
+            <div class="tab-pane fade" id="lihat" role="tabpanel">
+              <div class="form-group">
+                <label for="search">Cari hasil lab dengan kode pasien</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="search" [(ngModel)]="searchTerm" (keydown)="onEnter($event)">
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-success" (click)="searchHasilLab()">
+                      Cari
+                    </button>
+                  </span>
+                </div>
+              </div>
+
+              <table class="table" *ngIf="allHasilLab.length > 0" [mfData]="allHasilLab" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+    						<thead>
+    							<th><mfDefaultSorter by="nama_tindakan">Tindakan</mfDefaultSorter></th>
+    							<th><mfDefaultSorter by="nama_pasien">Pasien</mfDefaultSorter></th>
+    							<th><mfDefaultSorter by="tanggal_waktu">Tanggal</mfDefaultSorter></th>
+                  <th></th>
+                  <th></th>
+    						</thead>
+    						<tbody *ngFor="let hasilLab of mf.data">
+    							<tr>
+    								<td>{{hasilLab.tindakan.daftar_tindakan.nama}}</td>
+    								<td>{{hasilLab.tindakan.pasien.nama_pasien}}</td>
+    								<td>{{hasilLab.tindakan.tanggal_waktu | date: 'dd-MMM-yyyy'}}</td>
+                    <td>
+                      <button type="button" class="btn btn-sm btn-info" (click)="downloadHasilLab(hasilLab.id)">
+                        Lihat dokumen hasil
+                      </button>
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-sm btn-success" data-toggle="modal" [attr.data-target]="'#reUploadModal'" (click)="showUploadModal(hasilLab.id)">
+                        Upload ulang
+                      </button>
+                    </td>
+    							</tr>
+    						</tbody>
+    						<tfoot>
+    	            <tr>
+    	              <td colspan="6">
+    	                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+    	              </td>
+    	            </tr>
+    	          </tfoot>
+    					</table>
+            </div>
+          </div>
 				</div>
 			</div>
 
-      <div class="card mb-3">
-        <div class="card-header card-info">
-          <h5 class="mb-0"><b>Upload Hasil lab</b></h5>
+    </div>
+  </div>
+
+  <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="uploadConfirmationModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title">Konfirmasi Upload Hasil Lab</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
         </div>
-        <div class="card-block">
-          <table class="table" *ngIf="allEmptyHasilLab.length > 0">
-            <thead>
-              <th>Nama Tindakan</th>
-              <th>Nama Pasien</th>
-              <th>Nomor Transaksi</th>
-              <th>Tanggal</th>
-              <th></th>
-            </thead>
-            <tbody>
-              <tr *ngFor="let hasilLab of allEmptyHasilLab; index as i">
-                <td>{{hasilLab.tindakan.daftar_tindakan.nama}}</td>
-                <td>{{hasilLab.tindakan.pasien.nama_pasien}}</td>
-                <td>{{hasilLab.transaksi.no_transaksi}}</td>
-                <td>{{hasilLab.tindakan.tanggal_waktu | date: 'dd-MMM-yyyy'}}</td>
-                <td>
-                    <input type="file" (change)="uploadHasilLab($event, hasilLab.id)" class="form-control-file" accept="application/pdf" name="dokumen">
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <span *ngIf="allEmptyHasilLab.length == 0">
-            Tidak ada hasil lab yang perlu diupload
-          </span>
+
+        <div class="modal-body">
+          <div class="row" *ngIf="hasilLabMap.get(hasilLabId) == null">
+            <div class="col-md-12">
+              File belum dipilih
+            </div>
+          </div>
+          <div class="row" *ngIf="hasilLabMap.get(hasilLabId) != null">
+            <div class="col-md-12">
+              File berikut akan diupload:
+              <b>
+                {{hasilLabMap.get(hasilLabId).target.files[0].name}}
+              </b>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button *ngIf="hasilLabMap.get(hasilLabId) != null" type="button" class="btn btn-success mr-2" (click)="uploadHasilLab(hasilLabMap.get(hasilLabId), hasilLabId)" data-dismiss="modal">
+            Upload
+          </button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">
+            Batal
+          </button>
         </div>
       </div>
+    </div>
+  </div>
 
+  <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="reUploadModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title">Upload Ulang Hasil Lab</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <input type="file" (change)="onChange($event, hasilLabId)" class="form-control-file" accept="application/pdf" name="dokumen">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success mr-2" (click)="uploadHasilLab(hasilLabMap.get(hasilLabId), hasilLabId)" data-dismiss="modal">
+            Upload
+          </button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">
+            Batal
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </html>

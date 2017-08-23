@@ -1,8 +1,9 @@
-import { Injectable }              from '@angular/core';
+import { Injectable }               from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import { Router }                   from '@angular/router'
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
-import { Observable }              from 'rxjs/Rx';
-import { AuthHttp }                from 'angular2-jwt';
+import { Observable }               from 'rxjs/Rx';
+import { AuthHttp }                 from 'angular2-jwt';
 import 'rxjs/add/operator/map';
 import * as _ from "lodash";
 
@@ -19,15 +20,18 @@ export class AuthenticationService {
   constructor(
     private http: Http,
     private authHttp: AuthHttp,
+    private router: Router,
     private toastyService: ToastyService,
     private toastyConfig: ToastyConfig
   ) { }
 
   isLoggedIn(): boolean {
-    if (localStorage.getItem('currentUser') != null)
+    if (localStorage.getItem('currentUser') != null) {
       return true;
-    else
+    }
+    else {
       return false;
+    }
   }
 
   register(data: any): Observable<boolean> {
@@ -74,15 +78,16 @@ export class AuthenticationService {
     );
   }
 
+  getCurrentUser(): any {
+    if (this.isLoggedIn())
+      return JSON.parse(localStorage.getItem('currentUser'));
+  }
+
   getUserDetails(token: string) {
-    // let headers = new Headers({ 'Content-Type': 'application/json' });
-    // let options = new RequestOptions({headers: headers});
-    // let data = { 'token': token };
-    // let body = JSON.stringify(data);
     this.authHttp.get(this.getUserDetailsUrl).subscribe(
       response => {
         localStorage.setItem('currentUser', JSON.stringify(response.json().result));
-        window.location.assign('');
+        this.router.navigate(['/']);
       },
       error => {
         let toastOptions: ToastOptions = {
@@ -126,5 +131,6 @@ export class AuthenticationService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('currentUser');
+    this.router.navigate(['/login']);
   }
 }
