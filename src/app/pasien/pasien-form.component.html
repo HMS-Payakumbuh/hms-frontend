@@ -157,8 +157,7 @@
                   </div>
 
                   <div class="form-group">
-                    <button type="button" *ngIf="isBpjs" class="btn btn-success" [disabled]="!pasienBaruForm.valid" data-toggle="modal" data-target="#confirmRekamMedisModal" [attr.data-target]="'#confirmRekamMedisModal'">Daftarkan</button>
-                    <button type="button" *ngIf="!isBpjs" class="btn btn-success" [disabled]="!pasienBaruForm.valid" (click) = "createPasien()">Daftarkan</button>
+                    <button type="button" class="btn btn-success" [disabled]="!pasienBaruForm.valid" (click) = "createPasien()">Daftarkan</button>
                   </div>
                 </form>
             </div>
@@ -353,35 +352,13 @@
                   </div>
 
                   <div class="form-group">
-                    <button type="button" *ngIf="isBpjs" class="btn btn-success" [disabled]="(!pasienLamaForm.valid && !searchDone) && (!pasienLamaForm.valid && asuransiChecked)" data-toggle="modal" data-target="#confirmRekamMedisModal" [attr.data-target]="'#confirmRekamMedisModal'">Daftarkan</button>
-                    <button type="button" *ngIf="!isBpjs" class="btn btn-success" (click)="createPasien()" [disabled]="(!pasienLamaForm.valid && !searchDone) && (!pasienLamaForm.valid && asuransiChecked)">Daftarkan</button>
+                    <button type="button" class="btn btn-success" (click)="createPasien()" [disabled]="(!pasienLamaForm.valid && !searchDone) && (!pasienLamaForm.valid && asuransiChecked)">Daftarkan</button>
                   </div>
                 </form>
             </div>
           </div>
         </div>
       </div>
-      <div class="modal fade" id="confirmRekamMedisModal" tabindex="-1" role="dialog" aria-labelledby="confirmRekamMedisModal" aria-hidden="true" *ngIf="pasien">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="confirmRekamMedisModal">Konfirmasi</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="form-group">
-                  <label for="name">Apakah pasien setuju untuk mengambil rekam medis dari puskesmas ?</label>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="confirmRekamMedis(true)">Ya</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="confirmRekamMedis(false)">Tidak</button>
-              </div>
-            </div>
-          </div>
-        </div>
     </div>
   </div>
 </div>

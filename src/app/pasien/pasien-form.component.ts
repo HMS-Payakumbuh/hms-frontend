@@ -57,7 +57,6 @@ export class PasienFormComponent implements OnInit {
   rujukan: Rujukan;
   rujukanChecked: boolean;
   asuransiChecked:boolean;
-  ambilRekamMedis: boolean = false;
   allAsuransi: Asuransi[];
   allLayanan: any[];
   allPasien: Pasien[] = [];
@@ -188,11 +187,6 @@ export class PasienFormComponent implements OnInit {
     this.cekAsuransi();
   }
 
-  private confirmRekamMedis(ambilRekamMedis: boolean) {
-    this.ambilRekamMedis = ambilRekamMedis;
-    this.createPasien();
-  }
-
   private getRujukan() {
     this.transaksiService.getRujukan(this.rujukan.no_rujukan).subscribe(data => {
         if (data.metadata.code == '200') {
@@ -311,9 +305,15 @@ export class PasienFormComponent implements OnInit {
 
           this.toastyService.error(toastOptions);
         } else {
+          let nama_layanan:string;
+          if (data.nama_layanan_poli)
+            nama_layanan = data.nama_layanan_poli;
+          else if (data.nama_layanan_lab)
+            nama_layanan = data.nama_layanan_lab;
+
           let toastOptions:ToastOptions = {
               title: "Pendaftaran Antrian Sukses !",
-              msg: "Pasien mendapat nomor antrian : "+data.no_antrian,
+              msg: "Pasien mendaftar ke "+nama_layanan+" dan mendapat nomor antrian "+data.no_antrian,
               showClose: true,
               timeout: 0,
               theme: 'material'
@@ -330,7 +330,7 @@ export class PasienFormComponent implements OnInit {
     this.rujukan.id_transaksi = id_transaksi;
     this.rujukanService.createRujukan(this.rujukan).subscribe(
       data => {
-        if (this.ambilRekamMedis) {
+        if (this.isBpjs) {
           this.rekamMedisService.importRekamMedisEksternal(this.nomor_pasien, this.rujukan.no_rujukan)
             .subscribe(data => {
               if (data.status == '200') {
