@@ -7,6 +7,7 @@ import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
 import { DpDatePickerModule }       from 'ng2-date-picker';
 import { DataTableModule }          from 'angular2-datatable';
 import { ToastyModule }             from 'ng2-toasty';
+import { AuthModule }               from './auth/auth.module';
 
 import { MatchesStatusPipe }            from './pipe/matches-status.pipe';
 import { FilterPasienPipe }         from './pipe/filter-pasien.pipe';
@@ -166,7 +167,8 @@ import { AppComponent }             from './app.component';
         NgbModule.forRoot(),
         DpDatePickerModule,
         ToastyModule.forRoot(),
-        DataTableModule
+        DataTableModule,
+        AuthModule
     ],
     declarations: [
         AppComponent,

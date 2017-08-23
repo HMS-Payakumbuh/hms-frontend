@@ -1,4 +1,4 @@
-import { Component, OnInit, Input }		  from '@angular/core';
+import { Component, OnInit }		  from '@angular/core';
 import { Headers, Http, Response, RequestOptions }		from '@angular/http';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
@@ -28,7 +28,6 @@ import { ENV }										from '../environment';
 })
 
 export class PetugasLabDashboardComponent implements OnInit {
-
   public filterQuery = "";
   public rowsOnPage = 10;
   public sortBy = "nama_pasien";
@@ -43,6 +42,8 @@ export class PetugasLabDashboardComponent implements OnInit {
   allLaboratorium: Laboratorium[] = [];
 
   selectedLaboratorium: Laboratorium = null;
+  hasilLabMap: Map<number, any> = new Map();
+  hasilLabId: number = null;
 
   constructor(
     private tindakanService: TindakanService,
@@ -90,6 +91,14 @@ export class PetugasLabDashboardComponent implements OnInit {
         window.location.assign(url);
       }
     )
+  }
+
+  onChange(event: any, id: number) {
+    this.hasilLabMap.set(id, event);
+  }
+
+  showUploadModal(id: number) {
+    this.hasilLabId = id;
   }
 
   uploadHasilLab(event: any, id: number) {
