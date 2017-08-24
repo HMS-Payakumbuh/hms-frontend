@@ -30,6 +30,11 @@ export class LaporanComponent implements OnInit {
 	public tanggal_mulai: String;
 	public tanggal_selesai: String;
 
+	public asal: number;
+	public tujuan: number;
+
+	public alasan: String;
+
 	constructor(
 		private laporanService: LaporanService,
 		private lokasiObatService: LokasiObatService
@@ -66,11 +71,11 @@ export class LaporanComponent implements OnInit {
 	}
 
 	downloadLaporanObatPindah() {
-  	window.location.href = this.obatPindahUrl + '/export?tanggal_mulai=' + this.tanggal_mulai + '&tanggal_selesai=' + this.tanggal_selesai;
+  	window.location.href = this.obatPindahUrl + '/export?tanggal_mulai=' + this.tanggal_mulai + '&tanggal_selesai=' + this.tanggal_selesai + '&asal=' + this.asal + '&tujuan=' + this.tujuan;
 	}  	
 
 	downloadLaporanObatRusak() {
-  	window.location.href = this.obatRusakUrl + '/export?tanggal_mulai=' + this.tanggal_mulai + '&tanggal_selesai=' + this.tanggal_selesai;
+  	window.location.href = this.obatRusakUrl + '/export?tanggal_mulai=' + this.tanggal_mulai + '&tanggal_selesai=' + this.tanggal_selesai + '&alasan=' + this.alasan;
 	}
 
 	downloadLaporanObatEceran() {
