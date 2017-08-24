@@ -27,6 +27,7 @@ import { FilterStokObatPipe }     from './pipe/filter-stok-obat.pipe';
 import { FilterObatMasukPipe }     from './pipe/filter-obat-masuk.pipe';
 import { FilterObatTebusPipe }     from './pipe/filter-obat-tebus.pipe';
 import { FilterObatEceranPipe }     from './pipe/filter-obat-eceran.pipe';
+import { FilterObatTindakanPipe }     from './pipe/filter-obat-tindakan.pipe';
 import { FilterObatRusakPipe }     from './pipe/filter-obat-rusak.pipe';
 import { FilterObatPindahPipe }     from './pipe/filter-obat-pindah.pipe';
 import { FilterJenisAntrianPipe }     from './pipe/filter-jenis-antrian.pipe';
@@ -137,6 +138,9 @@ import { DaftarObatPindahComponent }      from './farmasi/obat-pindah/daftar-oba
 import { DetailObatPindahComponent }      from './farmasi/obat-pindah/detail-obat-pindah.component';
 import { ObatPindahFormComponent }      from './farmasi/obat-pindah/obat-pindah-form.component';
 
+import { DaftarObatTindakanComponent }      from './farmasi/obat-tindakan/daftar-obat-tindakan.component';
+import { DetailObatTindakanComponent }      from './farmasi/obat-tindakan/detail-obat-tindakan.component';
+
 import { DaftarObatRusakComponent }      from './farmasi/obat-rusak/daftar-obat-rusak.component';
 import { DetailObatRusakComponent }      from './farmasi/obat-rusak/detail-obat-rusak.component';
 import { ObatRusakFormComponent }      from './farmasi/obat-rusak/obat-rusak-form.component';
@@ -191,6 +195,7 @@ import { AppComponent }             from './app.component';
         FilterObatTebusPipe,
         FilterObatEceranPipe,
         FilterObatRusakPipe,
+        FilterObatTindakanPipe,
         FilterObatPindahPipe,
         FilterJenisAntrianPipe,
         FilterJenisKamarPipe,
@@ -300,6 +305,9 @@ import { AppComponent }             from './app.component';
         DaftarObatPindahComponent,
         DetailObatPindahComponent,
         ObatPindahFormComponent,
+
+        DaftarObatTindakanComponent,
+        DetailObatTindakanComponent,
 
         DaftarObatRusakComponent,
         DetailObatRusakComponent,
