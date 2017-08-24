@@ -1,6 +1,7 @@
 import { Injectable }		from '@angular/core';
-import { Headers, Http, Response, RequestOptions }		from '@angular/http';
+import { Headers, Response, RequestOptions }		from '@angular/http';
 import { Observable }			from 'rxjs/Rx';
+import { AuthHttp }				from 'angular2-jwt';
 import * as _ from "lodash";
 
 import { ENV }						from '../environment';
@@ -11,7 +12,7 @@ import { Asuransi }  from './asuransi';
 export class PasienService {
 	private pasienUrl = ENV.pasienUrl;
 
-	constructor(private http:Http) { }
+	constructor(private authHttp: AuthHttp) { }
 
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
@@ -19,7 +20,7 @@ export class PasienService {
 	}
 
 	getAllPasien(): Observable<Pasien[]> {
-		return this.http.get(this.pasienUrl)
+		return this.authHttp.get(this.pasienUrl)
 			.map((res: Response) => res.json());
 	}
 
@@ -44,7 +45,7 @@ export class PasienService {
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(pasien);
 
-		return this.http.post(this.pasienUrl, body, options)
+		return this.authHttp.post(this.pasienUrl, body, options)
 			.map((res: Response) => { 
 				return { status: res.status, json: res.json() }
 			});
@@ -55,7 +56,7 @@ export class PasienService {
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(pasien);
 
-		return this.http.put(this.pasienUrl + '/' + id, body, options)
+		return this.authHttp.put(this.pasienUrl + '/' + id, body, options)
 			.map((res: Response) => res.json());
 	}
 
@@ -63,7 +64,7 @@ export class PasienService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 
-		return this.http.delete(this.pasienUrl + '/' + id, options)
+		return this.authHttp.delete(this.pasienUrl + '/' + id, options)
 			.map((res: Response) => res.json());
 	}
 }

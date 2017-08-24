@@ -1,5 +1,6 @@
-import { Component, OnInit, Input }		  from '@angular/core';
+import { Component, OnInit }		  from '@angular/core';
 import { Headers, Http, Response, RequestOptions }		from '@angular/http';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
 import { TenagaMedis }            from './tenaga-medis';
 import { TenagaMedisService }     from './tenaga-medis.service';
@@ -27,9 +28,6 @@ import { ENV }										from '../environment';
 })
 
 export class PetugasLabDashboardComponent implements OnInit {
-  @Input()
-  public alerts: Array<IAlert> = [];
-
   public filterQuery = "";
   public rowsOnPage = 10;
   public sortBy = "nama_pasien";
@@ -44,18 +42,17 @@ export class PetugasLabDashboardComponent implements OnInit {
   allLaboratorium: Laboratorium[] = [];
 
   selectedLaboratorium: Laboratorium = null;
+  hasilLabMap: Map<number, any> = new Map();
+  hasilLabId: number = null;
 
   constructor(
     private tindakanService: TindakanService,
     private tenagaMedisService: TenagaMedisService,
 		private laboratoriumService: LaboratoriumService,
-    private hasilLabService: HasilLabService
+    private hasilLabService: HasilLabService,
+    private toastyService: ToastyService,
+    private toastyConfig: ToastyConfig
 	) {}
-
-  public closeAlert(alert: IAlert) {
-    const index: number = this.alerts.indexOf(alert);
-    this.alerts.splice(index, 1);
-  }
 
   ngOnInit() {
     let noPegawai: string = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
@@ -96,23 +93,39 @@ export class PetugasLabDashboardComponent implements OnInit {
     )
   }
 
+  onChange(event: any, id: number) {
+    this.hasilLabMap.set(id, event);
+  }
+
+  showUploadModal(id: number) {
+    this.hasilLabId = id;
+  }
+
   uploadHasilLab(event: any, id: number) {
     this.hasilLabService.uploadHasilLab(event, id).subscribe(
       data => {
         this.ngOnInit();
-        this.alerts.pop();
-        this.alerts.push({id: 1, type: 'success', message: 'Upload berhasil'});
+        let toastOptions:ToastOptions = {
+            title: 'Success',
+            msg: 'Upload hasil lab berhasil',
+            showClose: true,
+            timeout: 5000,
+            theme: 'material'
+        };
+
+        this.toastyService.success(toastOptions);
       },
       error => {
-        this.alerts.pop();
-        this.alerts.push({id: 1, type: 'warning', message: 'Upload gagal'});
+        let toastOptions:ToastOptions = {
+            title: 'Error',
+            msg: 'Upload hasil lab gagal',
+            showClose: true,
+            timeout: 5000,
+            theme: 'material'
+        };
+
+        this.toastyService.error(toastOptions);
       }
     );
   }
-}
-
-export interface IAlert {
-  id: number;
-  type: string;
-  message: string;
 }

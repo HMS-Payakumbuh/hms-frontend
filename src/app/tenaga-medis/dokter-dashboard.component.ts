@@ -1,6 +1,7 @@
 import { Component, OnInit }		  from '@angular/core';
 import { Router }                 from '@angular/router';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
+import { Observable }             from 'rxjs/Observable';
 
 import { Ambulans }               from '../layanan/ambulans';
 import { AmbulansService }        from '../layanan/ambulans.service';
@@ -49,7 +50,7 @@ export class DokterDashboardComponent implements OnInit {
   allProcessedAntrian: Antrian[] = [];
   allPoliklinik: Poliklinik[] = [];
 
-  allPemakaianRawatinap: any[] = [];
+  allPemakaianRawat: any[] = [];
   allPemakaianICU: any[] = [];
   allPemakaianOperasi: any[] = [];
   allPemakaianOperasiTemp:any[] = [];
@@ -61,6 +62,7 @@ export class DokterDashboardComponent implements OnInit {
   allJasaDokterRawatinap: any[] = [];
   allJasaDokterOperasi: any[] = [];
 
+  showPoliButton: boolean = true;
   poliklinikSelected: boolean = false;
   rawatinapSelected: boolean = false;
   icuSelected: boolean = false;
@@ -72,7 +74,7 @@ export class DokterDashboardComponent implements OnInit {
   selectedPemakaianOperasi: any;
 
   tindakanOperasi: any[];
-  
+
   transaksiRujukan: Transaksi = null;
   transaksiAmbulans: any = null;
   nama_poli: string = null;
@@ -103,64 +105,79 @@ export class DokterDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.noPegawai = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
-    this.tenagaMedisService.getDokter(this.noPegawai).subscribe(
-      dokter => this.dokter = dokter
-    );
 
-    this.poliklinikService.getAllPoliklinik().subscribe(
-      data => { this.allPoliklinik = data }
+    let observables = [];
+
+    observables.push(this.tenagaMedisService.getDokter(this.noPegawai));
+    observables.push(this.poliklinikService.getAllPoliklinik());
+
+    Observable.forkJoin(observables).subscribe(
+      data => {
+        this.dokter = data[0] as Dokter;
+        this.allPoliklinik = data[1] as Poliklinik[];
+        this.allPoliklinik = this.allPoliklinik.filter((poliklinik) => poliklinik.nama.indexOf(this.dokter.spesialis) > -1);
+
+        if (this.allPoliklinik.length > 0) {
+          this.selectedPoliklinik = this.allPoliklinik[0];
+          this.showDaftarPasien();
+        }
+      }
     );
 
     this.ambulansService.getAllAvailableAmbulans().subscribe(
       data => { this.allAmbulans = data }
     );
 
-    this.pemakaianKamarService.getJasaDokterRawatinap(this.noPegawai).subscribe(
-      data => {
-        this.allJasaDokterRawatinap = data;
-        this.pemakaianKamarService.getAllPemakaianKamarICUByNoPegawai(this.noPegawai).subscribe(
-          data => { 
-            this.allPemakaianICU = data;
-            this.pemakaianKamarService.getAllPemakaianKamarRawatinapByNoPegawai(this.noPegawai).subscribe(
-              data => {
-                this.allPemakaianRawatinap = data;
-                if(this.allJasaDokterRawatinap.length > 0) {
-                  this.allJasaDokterRawatinap.forEach(element => {
-                    this.pemakaianKamarService.getPemakaianKamar(element.id_pemakaian_kamar_rawatinap).subscribe(
-                      data=> {
-                        if(data.jenis_kamar == "Rawat Inap") 
-                          this.allPemakaianRawatinap.push(data);
-                        else if(data.jenis_kamar == "ICU")
-                          this.allPemakaianICU.push(data);
-                      }
-                    )
-                  });
-                }
-              }
-            )
-          }
-        )
-      }
-    )
-    
+    this.pemakaianKamarService.getAllPemakaianKamarDokterDashboard().subscribe(
+      data => { this.allPemakaianRawat = data }
+    );
+
+    // this.pemakaianKamarService.getJasaDokterRawatinap(this.noPegawai).subscribe(
+    //   data => {
+    //     this.allJasaDokterRawatinap = data;
+    //     this.pemakaianKamarService.getAllPemakaianKamarICUByNoPegawai(this.noPegawai).subscribe(
+    //       data => {
+    //         this.allPemakaianICU = data;
+    //         this.pemakaianKamarService.getAllPemakaianKamarRawatinapByNoPegawai(this.noPegawai).subscribe(
+    //           data => {
+    //             this.allPemakaianRawat = data;
+    //             if(this.allJasaDokterRawatinap.length > 0) {
+    //               this.allJasaDokterRawatinap.forEach(element => {
+    //                 this.pemakaianKamarService.getPemakaianKamar(element.id_pemakaian_kamar_rawatinap).subscribe(
+    //                   data=> {
+    //                     if(data.jenis_kamar == "Rawat Inap")
+    //                       this.allPemakaianRawat.push(data);
+    //                     else if(data.jenis_kamar == "ICU")
+    //                       this.allPemakaianICU.push(data);
+    //                   }
+    //                 )
+    //               });
+    //             }
+    //           }
+    //         )
+    //       }
+    //     )
+    //   }
+    // )
+
     this.pemakaianKamarOperasiService.getAllPemakaianKamarOperasiNow().subscribe(
-     		data => { 
+     		data => {
            this.allPemakaianOperasiTemp = data;
            this.allPemakaianOperasiTemp.forEach(element => {
               this.tindakanOperasiService.getTenagaMedisByTindakanOperasi(element.id).subscribe(
-                data => {	
+                data => {
                   this.tindakanOperasi = data;
                   this.tindakanOperasi.forEach(tindakanoperasi => {
-                    if(tindakanoperasi.no_pegawai == this.noPegawai) 
+                    if(tindakanoperasi.no_pegawai == this.noPegawai)
                       this.allPemakaianOperasi.push(element);
-                  });  
+                  });
                 }
               );
            });
           }
       );
-      
-    
+
+
 
     this.socket.on(this.noPegawai, (message) => this.updatePasienRujukan(message));
   }
@@ -225,7 +242,12 @@ export class DokterDashboardComponent implements OnInit {
     )
   }
 
+  setShowPoliButton(val: boolean) {
+    this.showPoliButton = val;
+  }
+
   showDaftarPasien() {
+    this.showPoliButton = false;
     this.antrianService.getAllAntrian(this.selectedPoliklinik.nama).subscribe(
       data => {
         this.allAntrian = data;

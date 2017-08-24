@@ -20,7 +20,7 @@ export class LaporanComponent implements OnInit {
 	private obatRusakUrl = ENV.obatRusakUrl;
 	private obatEceranUrl = ENV.obatEceranUrl;
 	private obatTebusUrl = ENV.obatTebusUrl;
-  private obatTindakanUrl = ENV.obatTindakanUrl;
+  	private obatTindakanUrl = ENV.obatTindakanUrl;
 
 	public jenis: string;
 
@@ -29,6 +29,11 @@ export class LaporanComponent implements OnInit {
 
 	public tanggal_mulai: String;
 	public tanggal_selesai: String;
+
+	public asal: number;
+	public tujuan: number;
+
+	public alasan: String;
 
 	constructor(
 		private laporanService: LaporanService,
@@ -40,15 +45,15 @@ export class LaporanComponent implements OnInit {
 			data => { this.allLokasiObat = data }
 		);
 
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
-    
-    this.tanggal_mulai = yyyy + '-' + mm + '-' + dd;
-    this.tanggal_selesai = yyyy + '-' +mm + '-' + dd;
-    this.lokasi = 0;
-  }
+	    var today = new Date();
+	    var dd = today.getDate();
+	    var mm = today.getMonth()+1; //January is 0!
+	    var yyyy = today.getFullYear();
+	    
+	    this.tanggal_mulai = yyyy + '-' + mm + '-' + dd;
+	    this.tanggal_selesai = yyyy + '-' +mm + '-' + dd;
+	    this.lokasi = 0;
+  	}
 
   downloadLaporanStokObat() {  	
     window.location.href = this.stokObatUrl + '/export/' + this.lokasi;
@@ -66,11 +71,11 @@ export class LaporanComponent implements OnInit {
 	}
 
 	downloadLaporanObatPindah() {
-  	window.location.href = this.obatPindahUrl + '/export?tanggal_mulai=' + this.tanggal_mulai + '&tanggal_selesai=' + this.tanggal_selesai;
+  	window.location.href = this.obatPindahUrl + '/export?tanggal_mulai=' + this.tanggal_mulai + '&tanggal_selesai=' + this.tanggal_selesai + '&asal=' + this.asal + '&tujuan=' + this.tujuan;
 	}  	
 
 	downloadLaporanObatRusak() {
-  	window.location.href = this.obatRusakUrl + '/export?tanggal_mulai=' + this.tanggal_mulai + '&tanggal_selesai=' + this.tanggal_selesai;
+  	window.location.href = this.obatRusakUrl + '/export?tanggal_mulai=' + this.tanggal_mulai + '&tanggal_selesai=' + this.tanggal_selesai + '&alasan=' + this.alasan;
 	}
 
 	downloadLaporanObatEceran() {

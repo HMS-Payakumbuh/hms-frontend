@@ -24,7 +24,7 @@ export class RekamMedisListComponent implements OnInit {
 	public rekamMedis: RekamMedis = null;
 	public pasienId: number = null;
 	public layanan: string = '';
-	public transaksi: Transaksi;
+	public transaksi: any;
 	public transaksiId: number = null;
 	private sub: any;
 	private user: any = JSON.parse(localStorage.getItem('currentUser'));
@@ -55,7 +55,7 @@ export class RekamMedisListComponent implements OnInit {
 					if (rekamMedis.anamnesis)
 						_.set(rekamMedis, 'keluhan', JSON.parse(rekamMedis.anamnesis).keluhan);
 					else
-						_.set(rekamMedis, 'keluhan', '-');		
+						_.set(rekamMedis, 'keluhan', '-');
 				})
 			});
 			if (this.transaksiId != undefined) {
@@ -64,7 +64,9 @@ export class RekamMedisListComponent implements OnInit {
 			        if (this.transaksi.rujukan) {
 			        	this.rekamMedisService.getAllRekamMedisEksternalOfPasien(this.pasienId)
 						.subscribe(allRekamMedis => {
-							this.allRekamMedisEksternal = allRekamMedis
+							this.allRekamMedisEksternal = _.each(allRekamMedis, rekamMedis => {
+      						_.set(rekamMedis, 'keluhan', this.transaksi.rujukan_pasien.diagnosis);
+                })
 						});
 			        }
 			    });

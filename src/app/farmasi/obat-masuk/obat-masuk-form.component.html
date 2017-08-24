@@ -7,11 +7,16 @@
       </div>
 
       <div class="card-block">
+        
+        <div class="pull-right">
+          * Wajib diisi
+        </div>
+
         <div class="card-text">
             <form #obatMasukForm="ngForm">
 
               <div class="form-group">
-                <label for="merek">Merek Obat</label>
+                <label for="merek">Merek Obat *</label>
                 <input type="text" class="form-control" id="merek" required [ngbTypeahead]="searchJenisObat" [inputFormatter]="inputFormatter" [resultFormatter]="inputFormatter" (selectItem)="addSelectedJenisObat($event.item)" [(ngModel)] = "jenisObat.merek_obat" name="merek">
               </div>
 
@@ -31,12 +36,12 @@
               </div>
 
               <div class="form-group">
-                <label for="nomor_batch">Nomor Batch</label>
+                <label for="nomor_batch">Nomor Batch *</label>
                 <input type="text" class="form-control" id="no_batch" required [(ngModel)] = "obatMasuk.nomor_batch" name="nomor_batch">
               </div>
 
               <div class="form-group">
-                <label for="jumlah">Jumlah</label>
+                <label for="jumlah">Jumlah *</label>
                 <div class="input-group">
                   <input type="number" class="form-control" id="jumlah" required [(ngModel)] = "obatMasuk.jumlah" name="jumlah"> 
                   <div class="input-group-addon">{{jenisObat.satuan}}</div>
@@ -44,23 +49,32 @@
               </div>
 
               <div class="form-group">
-                <label for="kadaluarsa">Tanggal Kadaluarsa</label>
+                <label for="kadaluarsa">Tanggal Kadaluarsa *</label>
                 <input type="date" class="form-control" id="kadaluarsa" [(ngModel)] = "obatMasuk.kadaluarsa" name="kadaluarsa">
               </div>
 
               <div class="form-group">
-                <label for="harga_beli_satuan">Harga beli satuan</label>
-                <input type="text" class="form-control" id="harga_beli_satuan" required [(ngModel)] = "obatMasuk.harga_beli_satuan" name="harga_beli_satuan">
+                <label for="harga_beli_satuan">Harga beli satuan *</label>
+                <div class="input-group">
+                  <div class="input-group-addon">Rp.</div>
+                  <input type="text" class="form-control" id="harga_beli_satuan" required [(ngModel)] = "obatMasuk.harga_beli_satuan" name="harga_beli_satuan">
+                </div>
               </div>
 
               <div class="form-group">
                 <label for="harga_total">Harga beli total</label>
-                <input type="text" class="form-control" id="harga_total" disabled [(ngModel)] = "obatMasuk.harga_beli_satuan*obatMasuk.jumlah" name="harga_total">
+                <div class="input-group">
+                  <div class="input-group-addon">Rp.</div>
+                  <input type="text" class="form-control" id="harga_total" disabled [(ngModel)] = "obatMasuk.harga_beli_satuan*obatMasuk.jumlah" name="harga_total">
+                </div>
               </div>
 
               <div class="form-group">
                 <label for="harga_jual">Harga jual satuan</label>
-                <input type="text" class="form-control" id="harga_jual" disabled [(ngModel)] = "jenisObat.harga_jual_satuan" name="harga_jual">
+                <div class="input-group">
+                  <div class="input-group-addon">Rp.</div>
+                  <input type="text" class="form-control" id="harga_jual" disabled [(ngModel)] = "jenisObat.harga_jual_satuan" name="harga_jual">
+                </div>
               </div>
 
               <button type="submit" class="btn btn-success" (click)="save()">Simpan</button>

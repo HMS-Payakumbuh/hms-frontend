@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 import { Pasien }	from './pasien';
 import { PasienService }		from './pasien.service';
@@ -14,6 +15,7 @@ export class PasienListComponent {
 	public pasien: Pasien = null;
 	public pasienId: number= null;
 	public search: string;
+	public datePipe: any = new DatePipe('id');
 
 	public filterQuery = "";
  	public rowsOnPage = 10;
@@ -33,17 +35,18 @@ export class PasienListComponent {
 	private editPasien(id: number, pasien: Pasien): void {
 		this.pasienId = id;
 		this.pasien = Object.assign({}, pasien);
+		this.pasien.tanggal_lahir = this.datePipe.transform(this.pasien.tanggal_lahir, 'dd-MM-yyyy');
 	}
 
 	private updatePasien() {
 	    this.pasienService.updatePasien(this.pasienId, this.pasien).subscribe(
-	      data => { window.location.reload() }
+	      data => { this.searchPasien() }
 	    );
 	}
 
 	private destroyPasien(id: number) {
 	    this.pasienService.destroyPasien(id).subscribe(
-	      data => { window.location.reload() }
+	      data => { this.searchPasien() }
 	    );
 	}
 

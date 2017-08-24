@@ -6,6 +6,7 @@ export class StockOpname {
     public id: number = null,
     public lokasi: number = null,
     public lokasi_data: LokasiObat = new LokasiObat(),
+    public created_at: Date = null,
     public stock_opname_item: StockOpnameItem[] = []
   ) {  }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location }               from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Observable }             from 'rxjs/Observable';
 import { NgbTypeaheadConfig }   from '@ng-bootstrap/ng-bootstrap';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
@@ -57,11 +58,12 @@ export class PasienFormComponent implements OnInit {
   rujukan: Rujukan;
   rujukanChecked: boolean;
   asuransiChecked:boolean;
-  ambilRekamMedis: boolean = false;
   allAsuransi: Asuransi[];
   allLayanan: any[];
   allPasien: Pasien[] = [];
   allDiagnosisReference: DiagnosisReference[];
+  currentUser: any;
+  datePipe: any = new DatePipe('id');
 
   constructor(
     private route: ActivatedRoute,
@@ -77,7 +79,7 @@ export class PasienFormComponent implements OnInit {
     private rujukanService: RujukanService,
     private rekamMedisService: RekamMedisService,
     private config: NgbTypeaheadConfig,
-    private toastyService: ToastyService, 
+    private toastyService: ToastyService,
     private toastyConfig: ToastyConfig
   ) {
     config.editable = false;
@@ -111,13 +113,17 @@ export class PasienFormComponent implements OnInit {
     this.pasien = new Pasien();
     this.asuransi = new Asuransi();
     this.rujukan = new Rujukan();
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
 
     this.sub = this.route.params
       .subscribe(params => {
         this.layanan = params['namaLayanan'];
     });
     if (this.layanan === undefined) {
-
+      if (this.currentUser.role == 'petugasLab') {
+        this.tipe = 'Laboratorium';
+        this.selectTipeLayanan();
+      }
     } else {
       this.fromAntrian = true;
       if (this.layanan.indexOf("Poli") >= 0)
@@ -157,6 +163,7 @@ export class PasienFormComponent implements OnInit {
 
   private selectPasien() {
     this.asuransiService.getAsuransi(this.pasien.id).subscribe(allAsuransi => this.allAsuransi = allAsuransi);
+    this.pasien.tanggal_lahir = this.datePipe.transform(this.pasien.tanggal_lahir, 'dd-MM-yyyy');
     this.searchDone = true;
   }
 
@@ -181,11 +188,6 @@ export class PasienFormComponent implements OnInit {
     this.asuransi.nama_asuransi = asuransi.nama_asuransi;
     this.asuransi.no_kartu = asuransi.no_kartu;
     this.cekAsuransi();
-  }
-
-  private confirmRekamMedis(ambilRekamMedis: boolean) {
-    this.ambilRekamMedis = ambilRekamMedis;
-    this.createPasien();
   }
 
   private getRujukan() {
@@ -306,9 +308,15 @@ export class PasienFormComponent implements OnInit {
 
           this.toastyService.error(toastOptions);
         } else {
+          let nama_layanan:string;
+          if (data.nama_layanan_poli)
+            nama_layanan = data.nama_layanan_poli;
+          else if (data.nama_layanan_lab)
+            nama_layanan = data.nama_layanan_lab;
+
           let toastOptions:ToastOptions = {
               title: "Pendaftaran Antrian Sukses !",
-              msg: "Pasien mendapat nomor antrian : "+data.no_antrian,
+              msg: "Pasien mendaftar ke "+nama_layanan+" dan mendapat nomor antrian "+data.no_antrian,
               showClose: true,
               timeout: 0,
               theme: 'material'
@@ -325,7 +333,7 @@ export class PasienFormComponent implements OnInit {
     this.rujukan.id_transaksi = id_transaksi;
     this.rujukanService.createRujukan(this.rujukan).subscribe(
       data => {
-        if (this.ambilRekamMedis) {
+        if (this.isBpjs) {
           this.rekamMedisService.importRekamMedisEksternal(this.nomor_pasien, this.rujukan.no_rujukan)
             .subscribe(data => {
               if (data.status == '200') {
@@ -392,7 +400,7 @@ export class PasienFormComponent implements OnInit {
     if (this.rujukanChecked)
       payload.rujukan = true;
     else
-      payload.rujukan = false;  
+      payload.rujukan = false;
 
     let request: any = {
       transaksi : payload
@@ -435,7 +443,7 @@ export class PasienFormComponent implements OnInit {
           theme: 'material'
       };
 
-      this.toastyService.error(toastOptions); 
+      this.toastyService.error(toastOptions);
     } else {
       if (this.update) {
         this.pasienService.updatePasien(this.pasien.id, this.pasien).subscribe(
@@ -463,7 +471,7 @@ export class PasienFormComponent implements OnInit {
 
               this.toastyService.success(toastOptions);
             }
-            
+
             if (this.asuransiChecked)
               this.createAsuransi();
             else

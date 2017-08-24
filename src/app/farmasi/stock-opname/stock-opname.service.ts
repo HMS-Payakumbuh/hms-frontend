@@ -40,6 +40,17 @@ export class StockOpnameService {
 		    .map((res: Response) => res.json());			
 	}
 
+	getLatestStockOpnameByLocation(lokasi: number): Observable<StockOpname> {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('lokasi', ''+lokasi);
+
+		let requestOptions = new RequestOptions();
+		requestOptions.params = params;
+
+		return this.http.get(this.stockOpnameUrl+'/latest_by_location', requestOptions)
+		    .map((res: Response) => res.text() ? res.json() : res);			
+	}
+
 	createStockOpname(stockOpname: StockOpname) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });

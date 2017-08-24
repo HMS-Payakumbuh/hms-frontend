@@ -32,11 +32,7 @@
           </div>
         </div>
       </div>
-
-      <p *ngFor="let alert of alerts">
-        <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
-      </p>
-
+      
       <div class="card mb-3" *ngIf="allTindakan.length > 0">
         <div class="card-header card-info">
           <h5 class="mb-0"><b>Tindakan Pasien {{searchTerm}} pada {{selectedLaboratorium.nama}}</b></h5>

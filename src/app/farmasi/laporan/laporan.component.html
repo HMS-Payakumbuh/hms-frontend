@@ -35,7 +35,34 @@
 						  			<option [value]="0"></option>
 						  			<option *ngFor="let lokasiObat of allLokasiObat" [value]="lokasiObat.id">{{lokasiObat.nama}}</option>
 						  		</select>						  		
+							</div>
+
+							<div *ngIf="jenis == 'Obat Pindah'" class="form-group">
+							  	<label for="asal"><b>Asal</b></label>
+						  		<select class="form-control" [(ngModel)]="asal">
+						  			<option [value]="0">Semua</option>
+						  			<option *ngFor="let lokasiObat of allLokasiObat" [value]="lokasiObat.id">{{lokasiObat.nama}}</option>
+						  		</select>							  		
 							</div>				
+
+							<div *ngIf="jenis == 'Obat Pindah'" class="form-group">
+								<label for="tujuan"><b>Tujuan</b></label>
+						  		<select class="form-control" [(ngModel)]="tujuan">
+						  			<option [value]="0">Semua</option>
+						  			<option *ngFor="let lokasiObat of allLokasiObat" [value]="lokasiObat.id">{{lokasiObat.nama}}</option>
+						  		</select>	
+						  	</div>		
+
+						  	<div *ngIf="jenis == 'Obat Rusak'" class="form-group">
+								<label for="alasan"><b>Alasan</b></label>
+						  		<select class="form-control" [(ngModel)]="alasan">
+						  			<option>Semua</option>
+						  			<option>Kadaluarsa</option>
+					                <option>Hilang</option>
+					                <option>Rusak</option>
+					                <option>Selisih</option>
+					            </select>
+						  	</div>		
 						</div>
 
 					</div>	

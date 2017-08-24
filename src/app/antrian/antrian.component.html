@@ -37,11 +37,9 @@
 			                <div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="kategori">
 			                  	<input type="text" class="form-control" id="nomor" value="{{selectedKategori}}{{antrian?.no_antrian}} - {{antrian?.nama_pasien}}" name="nomor" disabled>
 			              	</div>
-			              	<label class="input-group mb-0 mr-sm-2 mb-sm-0 custom-checkbox" *ngIf="kategori">
-			                    <input type="checkbox" class="custom-control-input" [checked]="antrian.via_sms" disabled>
-			                    <span class="custom-control-indicator"></span>
-			                    <span class="custom-control-description">Via SMS</span>
-			                </label>
+			              	<div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="kategori && antrian.via_sms">
+			                    <button type="button" class="btn btn-secondary" disabled>Via SMS</button>
+			                </div>
 			              	<div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="!isfrontoffice">
 			                  	<input type="text" class="form-control" id="nomor" value="{{selectedKategori}}{{antrian?.no_antrian}} - {{antrian?.transaksi?.pasien.nama_pasien}}" name="nomor" disabled>
 			              	</div>
@@ -177,59 +175,61 @@
 	        </div>
 
 	        <div class="modal-body">
-						<blockquote class="blockquote">
-							<p class="h5 mb-0"><b>Pengecekan Awal</b></p>
-						</blockquote>
-						<div class="row">
-							<div class="form-group col-6">
-								<label for="tekananDarah">Tekanan Darah</label>
-								<div class="input-group">
-									<input type="text" class="form-control" id="tekananDarah" [(ngModel)]="hasilPemeriksaan.tekanan_darah" name="tekananDarah">
-									<div class="input-group-addon">mmHg</div>
+						<div *ngIf="!isRujukan">
+							<blockquote class="blockquote">
+								<p class="h5 mb-0"><b>Pengecekan Awal</b></p>
+							</blockquote>
+							<div class="row">
+								<div class="form-group col-6">
+									<label for="tekananDarah">Tekanan Darah</label>
+									<div class="input-group">
+										<input type="text" class="form-control" id="tekananDarah" [(ngModel)]="hasilPemeriksaan.tekanan_darah" name="tekananDarah">
+										<div class="input-group-addon">mmHg</div>
+									</div>
+								</div>
+
+								<div class="form-group col-6">
+									<label for="nadi">Nadi</label>
+									<div class="input-group">
+										<input type="text" class="form-control" id="nadi" [(ngModel)]="hasilPemeriksaan.nadi" name="nadi">
+										<div class="input-group-addon">/min</div>
+									</div>
 								</div>
 							</div>
 
-							<div class="form-group col-6">
-								<label for="nadi">Nadi</label>
-								<div class="input-group">
-									<input type="text" class="form-control" id="nadi" [(ngModel)]="hasilPemeriksaan.nadi" name="nadi">
-									<div class="input-group-addon">/min</div>
+							<div class="row">
+								<div class="form-group col-6">
+									<label for="frekuensiNapas">Frekuensi Napas</label>
+									<div class="input-group">
+										<input type="text" class="form-control" id="frekuensiNapas" [(ngModel)]="hasilPemeriksaan.frekuensi_napas" name="frekuensiNapas">
+										<div class="input-group-addon">/min</div>
+									</div>
 								</div>
-							</div>
-						</div>
 
-						<div class="row">
-							<div class="form-group col-6">
-								<label for="frekuensiNapas">Frekuensi Napas</label>
-								<div class="input-group">
-									<input type="text" class="form-control" id="frekuensiNapas" [(ngModel)]="hasilPemeriksaan.frekuensi_napas" name="frekuensiNapas">
-									<div class="input-group-addon">/min</div>
-								</div>
-							</div>
-
-							<div class="form-group col-6">
-								<label for="temperatur">Temperatur</label>
-								<div class="input-group">
-									<input type="text" class="form-control" id="temperatur" [(ngModel)]="hasilPemeriksaan.temperatur" name="temperatur">
-									<div class="input-group-addon">C</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="form-group col-6">
-								<label for="beratBedan">Berat Badan</label>
-								<div class="input-group">
-									<input type="text" class="form-control" id="beratBadan" [(ngModel)]="hasilPemeriksaan.berat_badan" name="berat_badan">
-									<div class="input-group-addon">kg</div>
+								<div class="form-group col-6">
+									<label for="temperatur">Temperatur</label>
+									<div class="input-group">
+										<input type="text" class="form-control" id="temperatur" [(ngModel)]="hasilPemeriksaan.temperatur" name="temperatur">
+										<div class="input-group-addon">C</div>
+									</div>
 								</div>
 							</div>
 
-							<div class="form-group col-6">
-								<label for="tinggiBadan">Tinggi Badan</label>
-								<div class="input-group">
-									<input type="text" class="form-control" id="tinggiBadan" [(ngModel)]="hasilPemeriksaan.tinggi_badan" name="tinggi_badan">
-									<div class="input-group-addon">cm</div>
+							<div class="row">
+								<div class="form-group col-6">
+									<label for="beratBedan">Berat Badan</label>
+									<div class="input-group">
+										<input type="text" class="form-control" id="beratBadan" [(ngModel)]="hasilPemeriksaan.berat_badan" name="berat_badan">
+										<div class="input-group-addon">kg</div>
+									</div>
+								</div>
+
+								<div class="form-group col-6">
+									<label for="tinggiBadan">Tinggi Badan</label>
+									<div class="input-group">
+										<input type="text" class="form-control" id="tinggiBadan" [(ngModel)]="hasilPemeriksaan.tinggi_badan" name="tinggi_badan">
+										<div class="input-group-addon">cm</div>
+									</div>
 								</div>
 							</div>
 						</div>

@@ -1,6 +1,7 @@
 import { Injectable }		  from '@angular/core';
-import { Headers, Http, Response, RequestOptions }		from '@angular/http';
+import { Headers, Response, RequestOptions }		from '@angular/http';
 import { Observable }			from 'rxjs/Rx';
+import { AuthHttp }				from 'angular2-jwt';
 
 import { ENV }						from '../environment';
 import { Pasien }	        from './pasien';
@@ -14,7 +15,9 @@ export class RekamMedisService {
     private rekamMedisUrl = ENV.rekamMedisUrl;
     private rekamMedisEksternalUrl = ENV.rekamMedisEksternalUrl;
 
-	constructor(private http:Http) { }
+	constructor(
+		private authHttp: AuthHttp
+	) { }
 
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
@@ -22,7 +25,7 @@ export class RekamMedisService {
 	}
 
 	importRekamMedisEksternal(kode_pasien: string, no_rujukan: string): Observable<any> {
-		return this.http.get(this.rekamMedisEksternalUrl + '/import/' + kode_pasien + '/' + no_rujukan)
+		return this.authHttp.get(this.rekamMedisEksternalUrl + '/import/' + kode_pasien + '/' + no_rujukan)
 			.map((res: Response) => res.json());
 	}
 
@@ -30,12 +33,12 @@ export class RekamMedisService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(rekamMedis);
-		return this.http.post(this.rekamMedisEksternalUrl, body, options)
+		return this.authHttp.post(this.rekamMedisEksternalUrl, body, options)
 			.map((res: Response) => res.json());
 	}
 
 	getAllRekamMedisEksternalOfPasien(id_pasien: number): Observable<any[]> {
-		return this.http.get(this.rekamMedisEksternalUrl + '/' + id_pasien)
+		return this.authHttp.get(this.rekamMedisEksternalUrl + '/' + id_pasien)
 			.map((res: Response) => res.json());
 	}
 
@@ -45,12 +48,12 @@ export class RekamMedisService {
 	}
 
 	getAllRekamMedis(): Observable<RekamMedis[]> {
-		return this.http.get(this.rekamMedisUrl)
+		return this.authHttp.get(this.rekamMedisUrl)
 			.map((res: Response) => res.json());
 	}
 
 	getAllRekamMedisOfPasien(id_pasien: number): Observable<RekamMedis[]> {
-		return this.http.get(this.rekamMedisUrl + '/' + id_pasien)
+		return this.authHttp.get(this.rekamMedisUrl + '/' + id_pasien)
 			.map((res: Response) => res.json());
 	}
 
@@ -63,7 +66,7 @@ export class RekamMedisService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(rekamMedis);
-		return this.http.post(this.rekamMedisUrl, body, options)
+		return this.authHttp.post(this.rekamMedisUrl, body, options)
 			.map((res: Response) => res.json());
 	}
 
@@ -71,14 +74,14 @@ export class RekamMedisService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(rekamMedis);
-		return this.http.put(this.rekamMedisUrl + '/' + rekamMedis.id_pasien + '/' + rekamMedis.tanggal_waktu, body, options)
+		return this.authHttp.put(this.rekamMedisUrl + '/' + rekamMedis.id_pasien + '/' + rekamMedis.tanggal_waktu, body, options)
 			.map((res: Response) => res.json());
 	}
 
 	destroyRekamMedis(id_pasien: number, tanggal_waktu: string) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
-		return this.http.delete(this.pasienUrl + '/' + id_pasien + '/' + tanggal_waktu, options)
+		return this.authHttp.delete(this.pasienUrl + '/' + id_pasien + '/' + tanggal_waktu, options)
 			.map((res: Response) => res.json());
 	}
 }
