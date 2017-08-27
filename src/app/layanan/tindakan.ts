@@ -1,19 +1,23 @@
 import { TindakanReference }	from './tindakan-reference';
 import { ObatTindakan }				from '../farmasi/obat-tindakan/obat-tindakan';
+import { Pasien }				from '../pasien/pasien';
 
 export class Tindakan {
-	id: number = null;
-	id_transaksi: number = null;
-	harga: number = null;
-	keterangan: string = '';
-	id_pembayaran: number = null;
-	kode_tindakan: string = '';
-	id_pasien: number = null;
-	tanggal_waktu: string = '';
-	np_tenaga_medis: string = '';
-	nama_poli: string = '';
-	nama_lab: string = '';
-	nama_ambulans: string = '';
-	tindakan_reference: TindakanReference = null;
-	obat_tindakan: ObatTindakan[] = [];
+	constructor(
+	public id: number = null,
+	public id_transaksi: number = null,
+	public harga: number = null,
+	public keterangan: string = '',
+	public id_pembayaran: number = null,
+	public kode_tindakan: string = '',
+	public id_pasien: number = null,
+	public tanggal_waktu: string = '',
+	public np_tenaga_medis: string = '',
+	public nama_poli: string = '',
+	public nama_lab: string = '',
+	public nama_ambulans: string = '',
+	public tindakan_reference: TindakanReference = null,
+	public obat_tindakan: ObatTindakan[] = [],
+	public pasien: Pasien = null
+	) { }
 }
