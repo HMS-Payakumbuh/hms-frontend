@@ -26,12 +26,22 @@ export class PasienService {
 
 	getPasien(kode_pasien: string): Observable<Pasien> {
 		return this.getAllPasien()
+			.map(allPasien => 
+				_.filter(allPasien, pasien => 
+					pasien.catatan_kematian === null
+				)
+			)
 			.map(allPasien => allPasien.find(pasien => pasien.kode_pasien === kode_pasien))
 			.catch(this.handleError);
 	}
 
 	getPasienByName(key: string): Observable<Pasien[]> {
 		return this.getAllPasien()
+			.map(allPasien => 
+				_.filter(allPasien, pasien => 
+					pasien.catatan_kematian === null
+				)
+			)
 			.map(allPasien => 
 				_.filter(allPasien, pasien => 
 					pasien.nama_pasien.match(new RegExp(key, 'gi'))

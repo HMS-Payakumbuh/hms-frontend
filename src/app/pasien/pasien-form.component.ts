@@ -44,6 +44,7 @@ export class PasienFormComponent implements OnInit {
   layanan: string;
   dokter: string;
 	search: string;
+  no_antrian: number;
   searchDone: boolean;
   update: boolean;
   isBpjs: boolean = false;
@@ -276,6 +277,38 @@ export class PasienFormComponent implements OnInit {
     }
   }
 
+  private print(): void {
+      let printContents, popupWin;
+      printContents = document.getElementById('invoice').innerHTML;
+      popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=100%');
+      popupWin.document.open();
+      popupWin.document.write(`
+      <html>
+        <head>
+        <title>Informasi Registrasi</title>
+        <script src="node_modules/core-js/client/shim.min.js"></script>
+
+        <script src="node_modules/zone.js/dist/zone.js"></script>
+        <script src="node_modules/systemjs/dist/system.src.js"></script>
+        <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
+
+        <script src="systemjs.config.js"></script>
+        <script>
+          System.import('main.js').catch(function(err){ console.error(err); });
+        </script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link rel="stylesheet" href="styles.css">
+        </head>
+        <body onload="window.print();window.close()">
+          ${printContents}
+        </body>
+      </html>
+    `);
+      popupWin.document.close();
+  }
+
   private createAntrian(id_transaksi: number) {
     let request: any = null;
     if (this.tipe === 'Poliklinik') {
@@ -297,10 +330,10 @@ export class PasienFormComponent implements OnInit {
 
     this.antrianService.createAntrian(request).subscribe(
       data => {
-        if(data.status == '200') {
+        if(data.error) {
           let toastOptions:ToastOptions = {
               title: "Pendaftaran Antrian Gagal !",
-              msg: "Harap mencoba sekali lagi.",
+              msg: data.error,
               showClose: true,
               timeout: 5000,
               theme: 'material'
@@ -308,6 +341,7 @@ export class PasienFormComponent implements OnInit {
 
           this.toastyService.error(toastOptions);
         } else {
+          this.no_antrian = data.no_antrian;
           let nama_layanan:string;
           if (data.nama_layanan_poli)
             nama_layanan = data.nama_layanan_poli;
@@ -323,7 +357,8 @@ export class PasienFormComponent implements OnInit {
           };
 
           this.toastyService.success(toastOptions);
-          this.ngOnInit();
+          setTimeout(() => this.print(), 1000);
+          setTimeout(() => this.ngOnInit(), 1000);
         }
       }
     );
