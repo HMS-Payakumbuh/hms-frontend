@@ -111,9 +111,10 @@ import { JadwalDokterListComponent }      from './tenaga-medis/jadwal-dokter-lis
 import { DiagnosisReferenceListComponent }from './layanan/diagnosis-reference-list.component';
 import { TindakanReferenceListComponent } from './layanan/tindakan-reference-list.component';
 
-import { DokterDashboardComponent }   from './tenaga-medis/dokter-dashboard.component';
-import { PetugasLabDashboardComponent }   from './tenaga-medis/petugas-lab-dashboard.component';
-import { PerawatDashboardComponent }		from './tenaga-medis/perawat-dashboard.component';
+import { DokterDashboardComponent }           from './tenaga-medis/dokter-dashboard.component';
+import { PerawatDashboardComponent }		      from './tenaga-medis/perawat-dashboard.component';
+import { PetugasLabDashboardComponent }       from './tenaga-medis/petugas-lab-dashboard.component';
+import { DaftarPemakaianAmbulansComponent }	from './layanan/daftar-pemakaian-ambulans.component';
 
 import { DaftarStokObatComponent }            from './farmasi/stok-obat/daftar-stok-obat.component';
 import { DetailStokObatComponent }            from './farmasi/stok-obat/detail-stok-obat.component';
@@ -274,8 +275,9 @@ import { AppComponent }             from './app.component';
         TindakanReferenceListComponent,
 
         DokterDashboardComponent,
-        PetugasLabDashboardComponent,
         PerawatDashboardComponent,
+        PetugasLabDashboardComponent,
+        DaftarPemakaianAmbulansComponent,
 
         MatchesStatusPipe,
         FilterNamaPasienPipe,

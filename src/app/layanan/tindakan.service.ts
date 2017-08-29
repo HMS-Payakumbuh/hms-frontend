@@ -23,8 +23,8 @@ export class TindakanService {
 		return Promise.reject(error.message || error);
 	}
 
-	getTindakanWithoutHasilLab(nama_lab: string, kode_pasien: string): Observable<Tindakan[]> {
-		return this.http.get(this.tindakanUrl + '/hasil_lab/' + nama_lab + '/' + kode_pasien)
+	getTindakanWithoutHasilLab(nama_lab: string): Observable<Tindakan[]> {
+		return this.http.get(this.tindakanUrl + '/hasil_lab/' + nama_lab)
 			.map((res: Response) => res.json());
 	}
 

@@ -25,9 +25,12 @@
 
 				<div *ngIf="authenticationService.isLoggedIn()" class="list-group list-group-flush">
 					<a *ngIf="authenticationService.getCurrentUser().role == 'dokter'" [routerLink]="['/dokter-dashboard']" class="list-group-item list-group-item-info">Beranda</a>
-					<a *ngIf="authenticationService.getCurrentUser().role == 'petugasLab'" [routerLink]="['/petugas-lab-dashboard']" class="list-group-item list-group-item-info">Beranda</a>
 					<a *ngIf="authenticationService.getCurrentUser().role == 'perawat'" [routerLink]="['/perawat-dashboard']" class="list-group-item list-group-item-info">Beranda</a>
+					<a *ngIf="authenticationService.getCurrentUser().role == 'petugasLab'" [routerLink]="['/petugas-lab-dashboard']" class="list-group-item list-group-item-info">Beranda</a>
+					<a *ngIf="authenticationService.getCurrentUser().role == 'petugasAmbulans'" [routerLink]="['/daftar-pemakaian-ambulans']" class="list-group-item list-group-item-info">Pemakaian Ambulans</a>
+					<a *ngIf="authenticationService.getCurrentUser().role == 'petugasAmbulans'" [routerLink]="['/ambulans']" class="list-group-item list-group-item-info">Daftar Ambulans</a>
 					<a *ngIf="authenticationService.getCurrentUser().role == 'admin'" [routerLink]="['/antrian-dashboard']" class="list-group-item list-group-item-info">Beranda</a>
+
 
 					<a *ngIf="authenticationService.getCurrentUser().role == 'frontOffice'" routerLink="/antrian" class="list-group-item list-group-item-info">Antrian</a>
 					<a *ngIf="authenticationService.getCurrentUser().role == 'frontOffice' || authenticationService.getCurrentUser().role == 'admin'" routerLink="/daftar-pasien" class="list-group-item list-group-item-info">List Pasien</a>
@@ -105,7 +108,7 @@
 						<a *ngIf="authenticationService.getCurrentUser().role == 'stafApotek' || authenticationService.getCurrentUser().role == 'admin' || authenticationService.getCurrentUser().role == 'gudangUtama'" routerLink="/stok-obat" class="list-group-item">Stok Obat</a>
 						<a *ngIf="authenticationService.getCurrentUser().role == 'admin' || authenticationService.getCurrentUser().role == 'gudangUtama'" routerLink="/obat-masuk" class="list-group-item">Obat Masuk</a>
 						<a *ngIf="authenticationService.getCurrentUser().role == 'stafApotek' || authenticationService.getCurrentUser().role == 'admin'" routerLink="/obat-tebus" class="list-group-item">Obat Tebus</a>
-						<a *ngIf="authenticationService.getCurrentUser().role == 'stafApotek' || authenticationService.getCurrentUser().role == 'admin'" routerLink="/obat-eceran" class="list-group-item">Obat Eceran</a>						
+						<a *ngIf="authenticationService.getCurrentUser().role == 'stafApotek' || authenticationService.getCurrentUser().role == 'admin'" routerLink="/obat-eceran" class="list-group-item">Obat Eceran</a>
 						<a *ngIf="authenticationService.getCurrentUser().role == 'admin' || authenticationService.getCurrentUser().role == 'gudangUtama'" routerLink="/obat-tindakan" class="list-group-item">Obat Tindakan</a>
 						<a routerLink="/obat-pindah" class="list-group-item">Obat Pindah</a>
 						<a routerLink="/obat-rusak" class="list-group-item">Obat Rusak/Hilang</a>
