@@ -1,0 +1,52 @@
+  <div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-list-alt" aria-hidden="true"></i> Daftar Obat Tindakan
+				</h4>
+			</div>
+			<div class="card-block">
+				<div class="card-text">
+					<div class="row">
+						<div class="col-md-12 pull-right">
+							<input [dpDayPicker]="config" [(ngModel)]="selectedDate" class="form-control" theme="dp-material" placeholder="Tanggal keluar">
+						</div>
+					</div>
+
+					<div class="row">			
+						<div class="col-md-12 pull-right">						
+						    <input class="form-control" [(ngModel)]="param" placeholder="Cari kode/nama obat"/>
+						</div>
+					</div>
+
+					<table class="table" [mfData]="allObatTindakan | filterObatTindakan : param | filterWaktuKeluar : selectedDate" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+						<tbody>
+							<tr>								
+								<th><mfDefaultSorter by="waktu_keluar">Waktu Keluar</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="stok_obat.barcode">Kode Obat</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="jenis_obat.merek_obat">Merek Obat</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="stok_obat.kadaluarsa">Kadaluarsa</mfDefaultSorter></th>
+								<th><mfDefaultSorter by="jumlah">Jumlah</mfDefaultSorter></th>
+								<th></th>
+							</tr>
+							<tr *ngFor="let obatTindakan of mf.data">
+								<td>{{obatTindakan.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>	
+								<td>{{obatTindakan.stok_obat.barcode}}</td>
+								<td>{{obatTindakan.jenis_obat.merek_obat}}</td>	
+								<td>{{obatTindakan.stok_obat.kadaluarsa | date:'d MMM y'}}</td>
+								<td>{{obatTindakan.jumlah}} {{obatTindakan.jenis_obat.satuan}}</td>	
+								<td><button type="button" class="btn btn-info" [routerLink] = "['/obat-tindakan', obatTindakan.id]">Detail</button></td>
+							</tr>	
+						</tbody>	
+						<tfoot>
+			                <tr>
+			                    <td colspan="8">
+			                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+			                    </td>
+			                </tr>
+		                </tfoot>					
+					</table>
+				</div>
+			</div>	
+		</div>
+	</div>

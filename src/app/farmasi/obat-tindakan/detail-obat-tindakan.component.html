@@ -1,0 +1,63 @@
+  <div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-newspaper-o" aria-hidden="true"></i> Detail Obat
+				</h4>
+			</div>
+			<div *ngIf="obatTindakan" class="card-block">
+				<div class="card-text">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td><b>Kode Obat</b></td>
+								<td>{{obatTindakan.stok_obat.barcode}}</td>	
+							</tr>
+							<tr>
+								<td><b>ID Jenis Obat</b></td>
+								<td>{{obatTindakan.id_jenis_obat}}</td>	
+							</tr>
+							<tr>
+								<td><b>Merek Obat</b></td>								
+								<td>{{obatTindakan.jenis_obat.merek_obat}}</td>								
+							</tr>
+							<tr>
+								<td><b>Nama Generik</b></td>
+								<td>{{obatTindakan.jenis_obat.nama_generik}}</td>								
+							</tr>
+							<tr>
+								<td><b>Pembuat</b></td>
+								<td>{{obatTindakan.jenis_obat.pembuat}}</td>								
+							</tr>
+							<tr>
+								<td><b>Golongan</b></td>
+								<td>{{obatTindakan.jenis_obat.golongan}}</td>
+							</tr>
+							<tr>
+								<td><b>Nomor Batch</b></td>								
+								<td>{{obatTindakan.stok_obat.nomor_batch}}</td>
+							</tr>
+							<tr>
+								<td><b>Kadaluarsa</b></td>								
+								<td>{{obatTindakan.stok_obat.kadaluarsa | date:'d MMM y'}}</td>
+							</tr>
+							<tr>
+								<td><b>Waktu Keluar</b></td>								
+								<td>{{obatTindakan.waktu_keluar | date:'d MMM y H:mm:ss'}}</td>
+							</tr>
+							<tr>
+								<td><b>Jumlah Keluar</b></td>								
+								<td>{{obatTindakan.jumlah}} {{obatTindakan.jenis_obat.satuan}}</td>
+							</tr>						
+						</tbody>
+					</table>
+
+					<div class="row">
+						<div class="offset-md-10 col-md-2">
+							<button class="btn btn-danger" (click)="goBack()">Kembali</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

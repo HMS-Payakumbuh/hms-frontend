@@ -342,39 +342,55 @@ export class PasienIGDFormComponent implements OnInit {
       if (this.update) {
         this.pasienService.updatePasien(this.pasien.id, this.pasien).subscribe(
           data => {
-            this.pasien = data;
-            let toastOptions: ToastOptions = {
-                title: 'Pendaftaran IGD Sukses',
-                msg: 'Kode pasien: ' + data.kode_pasien,
+            if (data.status === 202) {
+              let toastOptions:ToastOptions = {
+                title: "Registrasi Pasien Gagal !",
+                msg: data.json.error,
                 showClose: true,
                 timeout: 5000,
                 theme: 'material'
-            };
-            this.toastyService.success(toastOptions);
+              };
 
-            if (this.asuransiChecked)
-              this.createAsuransi();
-            else
-              this.createTransaksi();
+              this.toastyService.error(toastOptions);
+            } else {
+              this.pasien = data.json;
+              if (this.asuransiChecked)
+                this.createAsuransi();
+              else
+                this.createTransaksi();
+            }
           }
         );
       } else {
         this.pasienService.createPasien(this.pasien).subscribe(
           data => {
             this.pasien = data.json;
-            let toastOptions: ToastOptions = {
-                title: 'Pendaftaran IGD Sukses',
-                msg: 'Kode pasien: ' + data.json.kode_pasien,
+            if (data.status === 201) {
+              let toastOptions: ToastOptions = {
+                  title: 'Registrasi Pasien Sukses !',
+                  msg: 'Anda mendapat kode pasien: ' + data.json.kode_pasien,
+                  showClose: true,
+                  timeout: 5000,
+                  theme: 'material'
+              };
+              this.toastyService.success(toastOptions);
+            }
+            if (data.status === 202) {
+              let toastOptions:ToastOptions = {
+                title: "Registrasi Pasien Gagal !",
+                msg: data.json.error,
                 showClose: true,
                 timeout: 5000,
                 theme: 'material'
-            };
-            this.toastyService.success(toastOptions);
+              };
 
-            if (this.asuransiChecked)
-              this.createAsuransi();
-            else
-              this.createTransaksi();
+              this.toastyService.error(toastOptions);
+            } else {
+              if (this.asuransiChecked)
+                this.createAsuransi();
+              else
+                this.createTransaksi();
+            }
           }
         );
       }

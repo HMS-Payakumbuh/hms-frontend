@@ -2,11 +2,16 @@
     <div class="card mb-3">
       <div class="card-header card-info">
         <h4>
-          <i class="fa fa-newspaper-o" aria-hidden="true"></i> Obat Rusak/Hilang
+          <i class="fa fa-newspaper-o" aria-hidden="true"></i> Obat Rusak/Hilang/Kadaluarsa
         </h4>
       </div>
 
       <div class="card-block">
+
+        <div class="pull-right">
+          * Wajib diisi
+        </div>
+
         <div class="card-text">
             <form #obatRusakForm="ngForm">
               <div class="form-group">
@@ -25,25 +30,8 @@
                 </select>
               </div>    
 
-              <!--
               <div class="form-group">
-                <label for="kode">Kode Obat *</label>
-                <div class="input-group">
-                  <input type="text" class="form-control" id="kode" required [(ngModel)] = "kode" name="kode"> 
-                  <span class="form-group-btn">
-                    <a href="#"><button class="btn btn-success" (click)="searchObat(kode, obatRusak.asal)">Cari</button></a>
-                  </span>
-                </div>                    
-              </div>
-
-              <div class="form-group">
-                <label for="id">ID Jenis Obat</label>
-                <input type="text" class="form-control" id="id" disabled [(ngModel)] = "obatRusak.id_jenis_obat" [(value)] = "stokObat.jenis_obat.id" name="id">
-              </div>
-              -->
-
-              <div class="form-group">
-                <label for="merek">Merek Obat</label>
+                <label for="merek">Merek Obat *</label>
                 <input type="text" class="form-control" id="merek" required [ngbTypeahead]="searchStokObat" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addSelectedStokObat($event.item)" [(ngModel)] = "stokObat.jenis_obat.merek_obat" name="merek">
               </div>
 
@@ -89,7 +77,7 @@
               </div>              
 
               <div class="form-group">
-                <label for="keterangan" >Keterangan</label>
+                <label for="keterangan">Keterangan</label>
                 <input type="text" class="form-control" id="keterangan" [(ngModel)] = "obatRusak.keterangan" name="keterangan">
               </div>
 

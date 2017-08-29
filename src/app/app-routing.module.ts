@@ -100,6 +100,9 @@ import { DaftarObatPindahComponent }      from './farmasi/obat-pindah/daftar-oba
 import { DetailObatPindahComponent }      from './farmasi/obat-pindah/detail-obat-pindah.component';
 import { ObatPindahFormComponent }		from './farmasi/obat-pindah/obat-pindah-form.component';
 
+import { DaftarObatTindakanComponent }      from './farmasi/obat-tindakan/daftar-obat-tindakan.component';
+import { DetailObatTindakanComponent }      from './farmasi/obat-tindakan/detail-obat-tindakan.component';
+
 import { DaftarObatRusakComponent }      from './farmasi/obat-rusak/daftar-obat-rusak.component';
 import { DetailObatRusakComponent }      from './farmasi/obat-rusak/detail-obat-rusak.component';
 import { ObatRusakFormComponent }      from './farmasi/obat-rusak/obat-rusak-form.component';
@@ -223,6 +226,9 @@ const routes: Routes = [
 	{ path: 'obat-pindah', canActivate: [AuthGuard], component: DaftarObatPindahComponent },
 	{ path: 'obat-pindah/:id', canActivate: [AuthGuard], component: DetailObatPindahComponent },
 	{ path: 'obat-pindah-form', canActivate: [AuthGuard], component: ObatPindahFormComponent },
+
+	{ path: 'obat-tindakan', canActivate: [AuthGuard], component: DaftarObatTindakanComponent },
+	{ path: 'obat-tindakan/:id', canActivate: [AuthGuard], component: DetailObatTindakanComponent },
 
 	{ path: 'obat-rusak', canActivate: [AuthGuard], component: DaftarObatRusakComponent },
 	{ path: 'obat-rusak/:id', canActivate: [AuthGuard], component: DetailObatRusakComponent },

@@ -8,6 +8,8 @@
 			</div>
 			<div class="card-block">
 				<div *ngIf="allStokObat" class="card-text">
+					<b> Stock opname terakhir: </b> {{latestStockOpname.created_at}}
+
 					<table class="table" [mfData]="allStockOpnameItem" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 						<tbody>
 							<tr>
