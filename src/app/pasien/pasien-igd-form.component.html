@@ -38,9 +38,11 @@
                     </select>
                   </div>
 
-                  <div>
-                    <label for="dob">Tanggal Lahir</label>
-                    <input [dpDayPicker]="config" [(ngModel)]="pasien.tanggal_lahir" id="dob" class="form-control" theme="dp-material" name="dob">
+                  <div class="form-group">
+                    <label for="blood">Golongan Darah</label>
+                    <select class="form-control" id="blood" [(ngModel)]="pasien.gol_darah" name="blood">
+                      <option *ngFor="let blood of bloodTypes" [value]="blood">{{blood}}</option>
+                    </select>
                   </div>
 
                   <label class="custom-control custom-checkbox">
@@ -107,7 +109,9 @@
                   </div>
 
                   <div class="form-group">
-                    <button type="button" class="btn btn-success" (click) = "createPasien()" [disabled]="!pasienBaruForm.valid">Periksa</button>
+                    <button type="button" class="btn btn-success" [disabled]="!pasienBaruForm.valid" data-toggle="modal" [attr.data-target]="'#pemeriksaanAwalModal'">
+                      Daftarkan
+                    </button>
                   </div>
                 </form>
             </div>
@@ -153,9 +157,11 @@
                     </select>
                   </div>
 
-                  <div>
-                    <label for="dob">Tanggal Lahir</label>
-                    <input [dpDayPicker]="config" [disabled]="!update" [(ngModel)]="pasien.tanggal_lahir" id="dob" class="form-control" theme="dp-material" name="dob">
+                  <div class="form-group">
+                    <label for="blood">Golongan Darah</label>
+                    <select class="form-control" id="blood" [disabled]="!update" [(ngModel)]="pasien.gol_darah" name="blood">
+                      <option *ngFor="let blood of bloodTypes" [value]="blood">{{blood}}</option>
+                    </select>
                   </div>
 
                   <div *ngIf="asuransiChecked">
@@ -253,7 +259,9 @@
                   </div>
 
                   <div class="form-group">
-                    <button type="button" class="btn btn-success" (click)="createPasien()" [disabled]="(!pasienLamaForm.valid && !searchDone) && (!pasienLamaForm.valid && asuransiChecked)">Periksa</button>
+                    <button type="button" class="btn btn-success" [disabled]="(!pasienLamaForm.valid && !searchDone) && (!pasienLamaForm.valid && asuransiChecked)" data-toggle="modal" [attr.data-target]="'#pemeriksaanAwalModal'">
+                      Daftarkan
+                    </button>
                   </div>
                 </form>
             </div>
@@ -262,5 +270,83 @@
       </div>
     </div>
 
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="pemeriksaanAwalModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header bg-info text-white">
+        <h5 class="modal-title">Pemeriksaan Awal</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <div class="form-group col-6">
+            <label for="tekananDarah">Tekanan Darah</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="tekananDarah" [(ngModel)]="hasilPemeriksaan.tekanan_darah" name="tekananDarah">
+              <div class="input-group-addon">mmHg</div>
+            </div>
+          </div>
+
+          <div class="form-group col-6">
+            <label for="nadi">Nadi</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="nadi" [(ngModel)]="hasilPemeriksaan.nadi" name="nadi">
+              <div class="input-group-addon">/min</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-6">
+            <label for="frekuensiNapas">Frekuensi Napas</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="frekuensiNapas" [(ngModel)]="hasilPemeriksaan.frekuensi_napas" name="frekuensiNapas">
+              <div class="input-group-addon">/min</div>
+            </div>
+          </div>
+
+          <div class="form-group col-6">
+            <label for="temperatur">Temperatur</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="temperatur" [(ngModel)]="hasilPemeriksaan.temperatur" name="temperatur">
+              <div class="input-group-addon">C</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-6">
+            <label for="beratBedan">Berat Badan</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="beratBadan" [(ngModel)]="hasilPemeriksaan.berat_badan" name="berat_badan">
+              <div class="input-group-addon">kg</div>
+            </div>
+          </div>
+
+          <div class="form-group col-6">
+            <label for="tinggiBadan">Tinggi Badan</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="tinggiBadan" [(ngModel)]="hasilPemeriksaan.tinggi_badan" name="tinggi_badan">
+              <div class="input-group-addon">cm</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal" (click)="createPasien()">
+          Daftarkan
+        </button>
+      </div>
+
+    </div>
   </div>
 </div>

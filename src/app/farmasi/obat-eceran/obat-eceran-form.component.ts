@@ -28,7 +28,7 @@ export class ObatEceranFormComponent {
 
 	public allStokObatAtLocation: StokObat[];
 
-	inputFormatter = (value : StokObat) => value.jenis_obat.merek_obat + ' - ' + value.nomor_batch;
+	inputFormatter = (value : StokObat) => '';
 	resultFormatter = (value: StokObat)	=> value.jenis_obat.merek_obat + ' - ' + value.nomor_batch;	
 
 	searchStokObat = (text$: Observable<string>) =>
@@ -36,7 +36,7 @@ export class ObatEceranFormComponent {
 			.debounceTime(200)
 			.distinctUntilChanged()
 			.map(term => term.length < 2 ? []
-				: this.allStokObatAtLocation.filter(stokObat => stokObat.jenis_obat.merek_obat.toLowerCase().indexOf(term.toLowerCase()) > -1));
+				: this.allStokObatAtLocation.filter(stokObat => (stokObat.jenis_obat.merek_obat + ' ' + stokObat.nomor_batch).toLowerCase().indexOf(term.toLowerCase()) > -1));
 
 	constructor (		
 		private changeDetectorRef: ChangeDetectorRef,		

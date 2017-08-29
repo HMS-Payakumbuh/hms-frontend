@@ -1,6 +1,7 @@
 import { Component, OnInit }		  from '@angular/core';
 import { Router }                 from '@angular/router';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
+import { Observable }             from 'rxjs/Observable';
 
 import { Ambulans }               from '../layanan/ambulans';
 import { AmbulansService }        from '../layanan/ambulans.service';
@@ -61,6 +62,7 @@ export class DokterDashboardComponent implements OnInit {
   allJasaDokterRawatinap: any[] = [];
   allJasaDokterOperasi: any[] = [];
 
+  showPoliButton: boolean = true;
   poliklinikSelected: boolean = false;
   rawatinapSelected: boolean = false;
   icuSelected: boolean = false;
@@ -103,12 +105,23 @@ export class DokterDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.noPegawai = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
-    this.tenagaMedisService.getDokter(this.noPegawai).subscribe(
-      dokter => this.dokter = dokter
-    );
 
-    this.poliklinikService.getAllPoliklinik().subscribe(
-      data => { this.allPoliklinik = data }
+    let observables = [];
+
+    observables.push(this.tenagaMedisService.getDokter(this.noPegawai));
+    observables.push(this.poliklinikService.getAllPoliklinik());
+
+    Observable.forkJoin(observables).subscribe(
+      data => {
+        this.dokter = data[0] as Dokter;
+        this.allPoliklinik = data[1] as Poliklinik[];
+        this.allPoliklinik = this.allPoliklinik.filter((poliklinik) => poliklinik.nama.indexOf(this.dokter.spesialis) > -1);
+
+        if (this.allPoliklinik.length > 0) {
+          this.selectedPoliklinik = this.allPoliklinik[0];
+          this.showDaftarPasien();
+        }
+      }
     );
 
     this.ambulansService.getAllAvailableAmbulans().subscribe(
@@ -116,11 +129,7 @@ export class DokterDashboardComponent implements OnInit {
     );
 
     this.pemakaianKamarService.getAllPemakaianKamarDokterDashboard().subscribe(
-      data => {
-        this.allPemakaianRawat = data;
-        console.log(data);
-        console.log('a');
-      }
+      data => { this.allPemakaianRawat = data }
     );
 
     // this.pemakaianKamarService.getJasaDokterRawatinap(this.noPegawai).subscribe(
@@ -233,7 +242,12 @@ export class DokterDashboardComponent implements OnInit {
     )
   }
 
+  setShowPoliButton(val: boolean) {
+    this.showPoliButton = val;
+  }
+
   showDaftarPasien() {
+    this.showPoliButton = false;
     this.antrianService.getAllAntrian(this.selectedPoliklinik.nama).subscribe(
       data => {
         this.allAntrian = data;
