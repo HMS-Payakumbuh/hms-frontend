@@ -9,7 +9,7 @@ import { User }						from './auth/user';
 })
 
 export class AppComponent {
-	title = 'Hospital Management System';
+	title = 'Sistem Manajemen Rumah Sakit';
 
 	constructor(
 		private authenticationService: AuthenticationService

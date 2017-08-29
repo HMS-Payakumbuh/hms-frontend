@@ -1,5 +1,6 @@
 import { Injectable }			from '@angular/core';
 import { Headers, Http, Response, RequestOptions, ResponseContentType }		from '@angular/http';
+import { AuthHttp }				from 'angular2-jwt';
 import { Observable }			from 'rxjs/Rx';
 
 import { ENV }										from '../environment';
@@ -10,7 +11,10 @@ export class HasilLabService {
 
 	private hasilLabUrl = ENV.hasilLabUrl;
 
-	constructor(private http:Http) { }
+	constructor(
+		private http: Http,
+		private authHttp: AuthHttp
+	) { }
 
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
@@ -18,12 +22,12 @@ export class HasilLabService {
 	}
 
 	getHasilLab(kode_pasien: string): Observable<HasilLab[]> {
-		return this.http.get(this.hasilLabUrl + '/' + kode_pasien)
+		return this.authHttp.get(this.hasilLabUrl + '/' + kode_pasien)
       .map((res: Response) => res.json());
 	}
 
 	getEmptyHasilLab(no_pegawai: string): Observable<HasilLab[]> {
-		return this.http.get(this.hasilLabUrl + '/empty/' + no_pegawai)
+		return this.authHttp.get(this.hasilLabUrl + '/empty/' + no_pegawai)
 			.map((res: Response) => res.json());
 	}
 
@@ -32,7 +36,7 @@ export class HasilLabService {
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(hasilLab);
 
-		return this.http.post(this.hasilLabUrl, body, options)
+		return this.authHttp.post(this.hasilLabUrl, body, options)
 			.map((res: Response) => res.json());
 	}
 
@@ -47,13 +51,13 @@ export class HasilLabService {
       headers.append('enctype', 'multipart/form-data');
       headers.append('Accept', 'application/json');
       let options = new RequestOptions({ headers: headers });
-      return this.http.post(this.hasilLabUrl + '/upload/' + id, formData, options)
+      return this.authHttp.post(this.hasilLabUrl + '/upload/' + id, formData, options)
         .map((res: Response) => res.json());
     }
 	}
 
 	downloadHasilLab(id: number) {
-		return this.http.get(this.hasilLabUrl + '/download/' + id,  { responseType: ResponseContentType.Blob })
+		return this.authHttp.get(this.hasilLabUrl + '/download/' + id,  { responseType: ResponseContentType.Blob })
 			.map((res) => {
 				return new Blob([res.blob()], { type: res.headers.get('Content-Type') });
 			})

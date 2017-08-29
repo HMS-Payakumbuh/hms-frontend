@@ -59,7 +59,8 @@ import { AntrianComponent }         		from './antrian/antrian.component';
 import { DaftarAntrianComponent }         	from './antrian/daftar-antrian.component';
 import { AntrianDashboardComponent }        from './antrian/antrian-dashboard.component';
 import { PasienFormComponent }      		from './pasien/pasien-form.component';
-import { PasienIGDFormComponent }      		from './pasien/pasien-igd-form.component';
+import { PasienIGDFormComponent }      		  from './pasien/pasien-igd-form.component';
+import { DaftarPasienIGDComponent }      		  from './antrian/daftar-pasien-igd.component';
 import { PasienListComponent }              from './pasien/pasien-list.component';
 import { CatatanKematianFormComponent }     from './pasien/catatan-kematian-form.component';
 import { RekamMedisListComponent }          from './pasien/rekam-medis-list.component';
@@ -110,9 +111,10 @@ import { JadwalDokterListComponent }      from './tenaga-medis/jadwal-dokter-lis
 import { DiagnosisReferenceListComponent }from './layanan/diagnosis-reference-list.component';
 import { TindakanReferenceListComponent } from './layanan/tindakan-reference-list.component';
 
-import { DokterDashboardComponent }   from './tenaga-medis/dokter-dashboard.component';
-import { PetugasLabDashboardComponent }   from './tenaga-medis/petugas-lab-dashboard.component';
-import { PerawatDashboardComponent }		from './tenaga-medis/perawat-dashboard.component';
+import { DokterDashboardComponent }           from './tenaga-medis/dokter-dashboard.component';
+import { PerawatDashboardComponent }		      from './tenaga-medis/perawat-dashboard.component';
+import { PetugasLabDashboardComponent }       from './tenaga-medis/petugas-lab-dashboard.component';
+import { DaftarPemakaianAmbulansComponent }	from './layanan/daftar-pemakaian-ambulans.component';
 
 import { DaftarStokObatComponent }            from './farmasi/stok-obat/daftar-stok-obat.component';
 import { DetailStokObatComponent }            from './farmasi/stok-obat/detail-stok-obat.component';
@@ -220,6 +222,7 @@ import { AppComponent }             from './app.component';
         KlaimDetailComponent,
         PasienFormComponent,
         PasienIGDFormComponent,
+        DaftarPasienIGDComponent,
         PasienListComponent,
         CatatanKematianFormComponent,
         RekamMedisListComponent,
@@ -272,8 +275,9 @@ import { AppComponent }             from './app.component';
         TindakanReferenceListComponent,
 
         DokterDashboardComponent,
-        PetugasLabDashboardComponent,
         PerawatDashboardComponent,
+        PetugasLabDashboardComponent,
+        DaftarPemakaianAmbulansComponent,
 
         MatchesStatusPipe,
         FilterNamaPasienPipe,

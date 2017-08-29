@@ -24,7 +24,6 @@ export class LaboratoriumTindakanComponent implements OnInit {
   allLaboratorium: Laboratorium[] = [];
   allTindakan: Tindakan[] = [];
   selectedLaboratorium: Laboratorium = null;
-  searchTerm: string = '';
 
   constructor (
     private laboratoriumService: LaboratoriumService,
@@ -47,7 +46,7 @@ export class LaboratoriumTindakanComponent implements OnInit {
   }
 
   search() {
-    this.tindakanService.getTindakanWithoutHasilLab(this.selectedLaboratorium.nama, this.searchTerm)
+    this.tindakanService.getTindakanWithoutHasilLab(this.selectedLaboratorium.nama)
       .subscribe(
         data => {
           if (data.length > 0) {
@@ -67,7 +66,7 @@ export class LaboratoriumTindakanComponent implements OnInit {
             this.allTindakan = [];
             let toastOptions:ToastOptions = {
                 title: 'Warning',
-                msg: 'Tidak ada tindakan lab untuk pasien dengan kode tersebut',
+                msg: 'Tidak ada tindakan yang perlu diproses',
                 showClose: true,
                 timeout: 5000,
                 theme: 'material'

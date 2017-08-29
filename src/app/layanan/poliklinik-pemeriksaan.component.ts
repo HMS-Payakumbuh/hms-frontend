@@ -162,7 +162,7 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 
 	ngOnInit() {
     this.loading = false;
-    
+
 		this.route.params
 			.switchMap((params: Params) => this.poliklinikService.getPoliklinik(params['namaPoliklinik']))
 			.subscribe(
@@ -200,6 +200,9 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
         if (data != null) {
           if (data.tanggal_waktu == this.transaksi.transaksi.waktu_masuk_pasien) {
             this.rekamMedis = data;
+            if (this.rekamMedis.np_dokter == null) {
+              this.rekamMedis.np_dokter = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
+            }
 
             this.tindakanService.getAllTindakanReference().subscribe(
               data => {
