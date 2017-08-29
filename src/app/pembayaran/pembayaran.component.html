@@ -66,11 +66,11 @@
 														<th></th>
 													</tr>
 													<tr *ngFor="let pembayaran of mf.data | filterNamaPasien: searchParam | filterNamaAsuransi: asuransi | filterCreatedAt: selectedDate">
-														<td *ngIf="pembayaran.transaksi !== null">{{pembayaran.transaksi.pasien.nama_pasien}}</td>
+														<td class="text-left" *ngIf="pembayaran.transaksi !== null">{{pembayaran.transaksi.pasien.nama_pasien}}</td>
 														<!-- <td *ngIf="pembayaran.transaksi === null && pembayaran.transaksi.obat_tebus.length > 0">{{pembayaran.transaksi.obat_tebus[0].resep.nama}}</td>
 														<td *ngIf="pembayaran.transaksi === null && pembayaran.transaksi.obat_eceran.length > 0">{{pembayaran.transaksi.obat_eceran[0].nama_pembeli}}</td> -->								
-														<td>{{pembayaran.created_at}}</td>
-														<td>{{pembayaran.metode_bayar.toUpperCase()}}</td>
+														<td class="text-left">{{pembayaran.created_at}}</td>
+														<td class="text-left">{{pembayaran.metode_bayar.toUpperCase()}}</td>
 														<td><button type="button" class="btn btn-primary" [routerLink] = "['/pembayaran', pembayaran.id]">Details</button></td>
 													</tr>
 												</tbody>

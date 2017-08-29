@@ -38,9 +38,9 @@
 									<th></th>
 								</tr>
 								<tr *ngFor="let transaksi of mf.data | filterKodePasien: kode">
-									<td>{{transaksi.pasien.kode_pasien}}</td>
-									<td>{{transaksi.pasien.nama_pasien}}</td>
-									<td>{{transaksi.waktu_masuk_pasien | date: 'dd/MM/y HH:mm'}}</td>
+									<td class="text-left">{{transaksi.pasien.kode_pasien}}</td>
+									<td class="text-left">{{transaksi.pasien.nama_pasien}}</td>
+									<td class="text-left">{{transaksi.waktu_masuk_pasien | date: 'dd/MM/y HH:mm'}}</td>
 									<td *ngIf="!transaksi_obat"><button type="button" class="btn btn-primary" [routerLink] = "['/transaksi', transaksi.id]">Details</button></td>
 									<td *ngIf="transaksi_obat"><button type="button" class="btn btn-primary" [routerLink] = "['/transaksi-obat', transaksi.id]">Details</button></td>
 								</tr>
