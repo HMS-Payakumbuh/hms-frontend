@@ -21,6 +21,12 @@ td {
   text-align: left;
 }
 
+.text-right {
+  text-align: right;
+  white-space: nowrap;
+  width: 1%;
+}
+
 .borderless td, .borderless th {
   border: none;
 }

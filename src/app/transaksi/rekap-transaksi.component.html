@@ -49,13 +49,13 @@
 																<th>Surplus Klaim</th>
 															</tr>
 															<tr *ngFor="let transaksi of mf.data">
-																<td>{{transaksi.waktu_masuk_pasien}}</td>
-																<td>{{transaksi.pasien.nama_pasien}}</td>
-																<td>{{transaksi.no_transaksi}}</td>
-																<td>Rp. {{transaksi.total_pembayaran | number: '.2-2'}}</td>
-																<td>Rp. {{transaksi.total_bpjs | number: '.2-2'}}</td>
-																<td>Rp. {{transaksi.total_klaim | number: '.2-2'}}</td>
-																<td>Rp. {{transaksi.total_klaim - transaksi.total_bpjs | number: '.2-2'}}</td>
+																<td class="text-left">{{transaksi.waktu_masuk_pasien}}</td>
+																<td class="text-left">{{transaksi.pasien.nama_pasien}}</td>
+																<td class="text-left">{{transaksi.no_transaksi}}</td>
+																<td class="text-right">Rp. {{transaksi.total_pembayaran | number: '.2-2'}}</td>
+																<td class="text-right">Rp. {{transaksi.total_bpjs | number: '.2-2'}}</td>
+																<td class="text-right">Rp. {{transaksi.total_klaim | number: '.2-2'}}</td>
+																<td class="text-right">Rp. {{transaksi.total_klaim - transaksi.total_bpjs | number: '.2-2'}}</td>
 															</tr>
 														</tbody>
 														<tfoot>
