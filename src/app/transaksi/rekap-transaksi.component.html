@@ -15,36 +15,77 @@
 							</div>
 						</div>
 					</div>
-					<div *ngIf="!loading">
-						<table class="table" [mfData]="allTransaksi" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
-							<tbody>
-								<tr>
-									<th><mfDefaultSorter by="waktu_masuk_pasien">Waktu Transaksi</mfDefaultSorter></th>
-									<th><mfDefaultSorter by="pasien.nama_pasien">Nama Pasien</mfDefaultSorter></th>
-									<th><mfDefaultSorter by="no_transaksi">Nomor Transaksi</mfDefaultSorter></th>
-									<th><mfDefaultSorter by="total_pembayaran">Total Pembayaran Non-BPJS</mfDefaultSorter></th>
-									<th><mfDefaultSorter by="total_bpjs">Pembayaran BPJS</mfDefaultSorter></th>
-									<th><mfDefaultSorter by="total_klaim">Tarif Klaim</mfDefaultSorter></th>
-									<th>Surplus Klaim</th>
-								</tr>
-								<tr *ngFor="let transaksi of mf.data">
-									<td>{{transaksi.waktu_masuk_pasien}}</td>
-									<td>{{transaksi.pasien.nama_pasien}}</td>
-									<td>{{transaksi.no_transaksi}}</td>
-									<td>Rp. {{transaksi.total_pembayaran | number: '.2-2'}}</td>
-									<td>Rp. {{transaksi.total_bpjs | number: '.2-2'}}</td>
-									<td>Rp. {{transaksi.total_klaim | number: '.2-2'}}</td>
-									<td>Rp. {{transaksi.total_klaim - transaksi.total_bpjs | number: '.2-2'}}</td>
-								</tr>
-							</tbody>
-							<tfoot>
-				                <tr>
-				                    <td colspan="7">
-				                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
-				                    </td>
-				                </tr>
-			                </tfoot>
-						</table>
+					<div class="row" *ngIf="!loading">
+						<div class="col-md-12">
+							<div class="card mb-3">
+								<div class="card-header card-info mb-3">
+									<ul class="nav nav-tabs card-header-tabs">
+										<li class="nav-item">
+											<a class="nav-link active" data-toggle="tab" href="#data_rekap" role="tab" style="color: black;">
+												<i class="fa fa-files-o" aria-hidden="true"></i> Data Rekapitulasi Transaksi
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" data-toggle="tab" href="#export" role="tab" style="color: black;">
+												<i class="fa fa-files-o" aria-hidden="true"></i> Export Data Rekap
+											</a>
+										</li>
+									</ul>
+								</div>
+								<div class="card-block">
+									<div class="tab-content">
+										<div class="tab-pane fade show active" id="data_rekap" role="tabpanel">
+											<div class="container-fluid">
+												<div class="row flex-row flex-nowrap" style="overflow-x:auto;">
+													<table class="table" [mfData]="allTransaksi" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+														<tbody>
+															<tr>
+																<th><mfDefaultSorter by="waktu_masuk_pasien">Waktu Transaksi</mfDefaultSorter></th>
+																<th><mfDefaultSorter by="pasien.nama_pasien">Nama Pasien</mfDefaultSorter></th>
+																<th><mfDefaultSorter by="no_transaksi">Nomor Transaksi</mfDefaultSorter></th>
+																<th><mfDefaultSorter by="total_pembayaran">Total Pembayaran Non-BPJS</mfDefaultSorter></th>
+																<th><mfDefaultSorter by="total_bpjs">Pembayaran BPJS</mfDefaultSorter></th>
+																<th><mfDefaultSorter by="total_klaim">Tarif Klaim</mfDefaultSorter></th>
+																<th>Surplus Klaim</th>
+															</tr>
+															<tr *ngFor="let transaksi of mf.data">
+																<td>{{transaksi.waktu_masuk_pasien}}</td>
+																<td>{{transaksi.pasien.nama_pasien}}</td>
+																<td>{{transaksi.no_transaksi}}</td>
+																<td>Rp. {{transaksi.total_pembayaran | number: '.2-2'}}</td>
+																<td>Rp. {{transaksi.total_bpjs | number: '.2-2'}}</td>
+																<td>Rp. {{transaksi.total_klaim | number: '.2-2'}}</td>
+																<td>Rp. {{transaksi.total_klaim - transaksi.total_bpjs | number: '.2-2'}}</td>
+															</tr>
+														</tbody>
+														<tfoot>
+											                <tr>
+											                    <td colspan="7">
+											                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+											                    </td>
+											                </tr>
+										                </tfoot>
+													</table>
+												</div>
+											</div>
+										</div>
+										<div class="tab-pane fade" id="export" role="tabpanel">
+											<div class="form-group">
+								                <label for="tanggal_awal"><b>Tanggal Mulai</b></label>
+								                <input id="tanggal_awal" [dpDayPicker]="config" [(ngModel)]="tanggal_awal" class="form-control" theme="dp-material" placeholder="Tanggal Awal" required="true">
+				             				</div>
+				             				<div class="form-group">
+								                <label for="tanggal_akhir"><b>Tanggal Selesai</b></label>
+								                <input id="tanggal_akhir" [dpDayPicker]="config" [(ngModel)]="tanggal_akhir" class="form-control" theme="dp-material" placeholder="Tanggal Akhir" required="true">
+				             				</div>
+				             				<div>
+				         						<button type="button" class="btn btn-info" (click)="download()">Unduh Rekap Transaksi</button>
+				             				</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
