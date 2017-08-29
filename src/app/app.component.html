@@ -32,7 +32,8 @@
 					<a *ngIf="authenticationService.getCurrentUser().role == 'frontOffice'" routerLink="/antrian" class="list-group-item list-group-item-info">Antrian</a>
 					<a *ngIf="authenticationService.getCurrentUser().role == 'frontOffice' || authenticationService.getCurrentUser().role == 'admin'" routerLink="/daftar-pasien" class="list-group-item list-group-item-info">List Pasien</a>
 					<a *ngIf="authenticationService.getCurrentUser().role == 'frontOffice' || authenticationService.getCurrentUser().role == 'petugasLab'" routerLink="/pendaftaran" class="list-group-item list-group-item-info">Registrasi</a>
-					<a *ngIf="authenticationService.getCurrentUser().role == 'dokter'" routerLink="/pendaftaran-igd" class="list-group-item list-group-item-info">IGD</a>
+					<a *ngIf="authenticationService.getCurrentUser().role == 'dokter'" routerLink="/daftar-pasien-igd" class="list-group-item list-group-item-info">IGD</a>
+					<a *ngIf="authenticationService.getCurrentUser().role == 'perawat'" routerLink="/pendaftaran-igd" class="list-group-item list-group-item-info">IGD</a>
 
 					<a *ngIf="authenticationService.getCurrentUser().role == 'petugasLab'" [routerLink]="['/laboratorium/tindakan']" class="list-group-item list-group-item-info">Proses Tindakan</a>
 

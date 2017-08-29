@@ -22,6 +22,7 @@ import { KlaimDetailComponent }   		from './pembayaran/klaim/klaim-detail.compon
 
 import { PasienFormComponent }			from './pasien/pasien-form.component';
 import { PasienIGDFormComponent }		from './pasien/pasien-igd-form.component';
+import { DaftarPasienIGDComponent }	from './antrian/daftar-pasien-igd.component';
 import { PasienListComponent }			from './pasien/pasien-list.component';
 import { CatatanKematianFormComponent } from './pasien/catatan-kematian-form.component';
 import { AntrianComponent }				from './antrian/antrian.component';
@@ -135,6 +136,7 @@ const routes: Routes = [
 	{ path: 'klaim/:id', canActivate: [AuthGuard], component: KlaimDetailComponent },
 	{ path: 'pendaftaran', canActivate: [AuthGuard], component: PasienFormComponent },
 	{ path: 'pendaftaran-igd', canActivate: [AuthGuard], component: PasienIGDFormComponent },
+	{ path: 'daftar-pasien-igd', canActivate: [AuthGuard], component: DaftarPasienIGDComponent },
 	{ path: 'pendaftaran/:namaLayanan', canActivate: [AuthGuard], component: PasienFormComponent },
 	{ path: 'antrian', canActivate: [AuthGuard], component: AntrianComponent },
 	{ path: 'antrian/:namaLayanan', canActivate: [AuthGuard], component: AntrianComponent },

@@ -58,7 +58,8 @@ import { AntrianComponent }         		from './antrian/antrian.component';
 import { DaftarAntrianComponent }         	from './antrian/daftar-antrian.component';
 import { AntrianDashboardComponent }        from './antrian/antrian-dashboard.component';
 import { PasienFormComponent }      		from './pasien/pasien-form.component';
-import { PasienIGDFormComponent }      		from './pasien/pasien-igd-form.component';
+import { PasienIGDFormComponent }      		  from './pasien/pasien-igd-form.component';
+import { DaftarPasienIGDComponent }      		  from './antrian/daftar-pasien-igd.component';
 import { PasienListComponent }              from './pasien/pasien-list.component';
 import { CatatanKematianFormComponent }     from './pasien/catatan-kematian-form.component';
 import { RekamMedisListComponent }          from './pasien/rekam-medis-list.component';
@@ -215,6 +216,7 @@ import { AppComponent }             from './app.component';
         KlaimDetailComponent,
         PasienFormComponent,
         PasienIGDFormComponent,
+        DaftarPasienIGDComponent,
         PasienListComponent,
         CatatanKematianFormComponent,
         RekamMedisListComponent,

@@ -4,13 +4,17 @@ import { Observable }             from 'rxjs/Observable';
 import { NgbTypeaheadConfig }   from '@ng-bootstrap/ng-bootstrap';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
-import { Pasien }    from './pasien';
-import { PasienService }    from './pasien.service';
-import { Asuransi }  from './asuransi';
-import { AsuransiService }  from './asuransi.service';
-import { Rujukan }  from '../transaksi/rujukan';
-import { RujukanService }  from '../transaksi/rujukan.service';
-import { TransaksiService}  from '../transaksi/transaksi.service';
+import { Pasien }               from './pasien';
+import { PasienService }        from './pasien.service';
+import { RekamMedis }           from './rekam-medis';
+import { RekamMedisService }    from './rekam-medis.service';
+import { HasilPemeriksaan }     from '../layanan/hasil-pemeriksaan';
+import { AntrianService }       from '../antrian/antrian.service';
+import { Asuransi }             from './asuransi';
+import { AsuransiService }      from './asuransi.service';
+import { Rujukan }              from '../transaksi/rujukan';
+import { RujukanService }       from '../transaksi/rujukan.service';
+import { TransaksiService}      from '../transaksi/transaksi.service';
 import { DiagnosisReference }   from '../layanan/diagnosis-reference';
 import { DiagnosisService }     from '../layanan/diagnosis.service';
 
@@ -20,6 +24,8 @@ import { DiagnosisService }     from '../layanan/diagnosis.service';
   providers: [
     DiagnosisService,
     PasienService,
+    RekamMedisService,
+    AntrianService,
     AsuransiService,
     TransaksiService,
     RujukanService,
@@ -28,7 +34,6 @@ import { DiagnosisService }     from '../layanan/diagnosis.service';
 })
 export class PasienIGDFormComponent implements OnInit {
   tipe: string;
-  layanan: string;
   dokter: string;
 	search: string;
   searchDone: boolean;
@@ -46,14 +51,16 @@ export class PasienIGDFormComponent implements OnInit {
   rujukanChecked: boolean;
   asuransiChecked:boolean;
   allAsuransi: Asuransi[];
-  allLayanan: any[];
   allPasien: Pasien[] = [];
   allDiagnosisReference: DiagnosisReference[];
+  hasilPemeriksaan: HasilPemeriksaan = new HasilPemeriksaan();
 
   constructor(
     private router: Router,
     private diagnosisService: DiagnosisService,
     private pasienService: PasienService,
+    private rekamMedisService: RekamMedisService,
+    private antrianService: AntrianService,
     private asuransiService: AsuransiService,
     private transaksiService: TransaksiService,
     private rujukanService: RujukanService,
@@ -218,10 +225,46 @@ export class PasienIGDFormComponent implements OnInit {
     }
   }
 
-  private createRujukan(id_transaksi: number) {
+  private createRekamMedis(id_pasien: number, waktu_masuk_pasien: string) {
+    let rekamMedis = new RekamMedis(
+      id_pasien,
+      waktu_masuk_pasien,
+      '',
+      JSON.stringify(this.hasilPemeriksaan),
+      '',
+      '',
+      ''
+    );
+
+    this.rekamMedisService.createRekamMedis(rekamMedis).subscribe(
+      data => {
+        this.ngOnInit();
+      }
+    );
+  }
+
+  private createAntrian(id_transaksi: number, id_pasien: number, waktu_masuk_pasien: string) {
+    let request: any = {
+      id_transaksi: id_transaksi,
+      nama_layanan_poli: 'IGD',
+      kesempatan: 3,
+      id_pasien: this.pasien.id
+    };
+
+    this.antrianService.createAntrian(request).subscribe(
+      data => {
+        this.createRekamMedis(id_pasien, waktu_masuk_pasien);
+      },
+      error => {}
+    );
+  }
+
+  private createRujukan(id_transaksi: number, id_pasien: number, waktu_masuk_pasien: string) {
     this.rujukan.id_transaksi = id_transaksi;
     this.rujukanService.createRujukan(this.rujukan).subscribe(
-      data => this.router.navigate(['/poliklinik', 'IGD', id_transaksi])
+      data => {
+        this.createAntrian(id_transaksi, id_pasien, waktu_masuk_pasien);
+      }
     );
   }
 
@@ -252,16 +295,16 @@ export class PasienIGDFormComponent implements OnInit {
       payload.rujukan = true;
     else
       payload.rujukan = false;
-        
+
     let request: any = {
       transaksi : payload
     }
     this.transaksiService.createTransaksi(request).subscribe(
       data => {
         if (this.rujukanChecked)
-          this.createRujukan(data.transaksi.id);
+          this.createRujukan(data.transaksi.id, data.transaksi.id_pasien, data.transaksi.waktu_masuk_pasien);
         else
-          this.router.navigate(['/poliklinik', 'IGD', data.transaksi.id])
+          this.createAntrian(data.transaksi.id, data.transaksi.id_pasien, data.transaksi.waktu_masuk_pasien);
       }
     );
   }
@@ -302,7 +345,7 @@ export class PasienIGDFormComponent implements OnInit {
             this.pasien = data;
             let toastOptions: ToastOptions = {
                 title: 'Pendaftaran IGD Sukses',
-                msg: 'Anda mendapat kode pasien: ' + data.kode_pasien,
+                msg: 'Kode pasien: ' + data.kode_pasien,
                 showClose: true,
                 timeout: 5000,
                 theme: 'material'
@@ -321,7 +364,7 @@ export class PasienIGDFormComponent implements OnInit {
             this.pasien = data.json;
             let toastOptions: ToastOptions = {
                 title: 'Pendaftaran IGD Sukses',
-                msg: 'Anda mendapat kode pasien: ' + data.json.kode_pasien,
+                msg: 'Kode pasien: ' + data.json.kode_pasien,
                 showClose: true,
                 timeout: 5000,
                 theme: 'material'
