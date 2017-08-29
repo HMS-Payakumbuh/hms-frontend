@@ -62,7 +62,10 @@
 
 								<div class="form-group">
 									<label for="status">Status</label>
-									<input type="text" class="form-control" id="status" required [(ngModel)]="ambulansModal.status" name="status">
+									<select class="form-control mb-3" id="status" [(ngModel)]="ambulansModal.status" name="status">
+										<option value="Available">Available</option>
+										<option value="In Use">In Use</option>
+		              </select>
 								</div>
 							</div>
 

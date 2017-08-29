@@ -1,5 +1,6 @@
 import { Component, OnInit, Input }		from '@angular/core';
 import { Router }                     from '@angular/router';
+import { AuthenticationService }      from './auth/authentication.service';
 
 @Component({
  	selector: 'home-page',
@@ -9,23 +10,26 @@ import { Router }                     from '@angular/router';
 export class HomeComponent implements OnInit {
 
 	constructor(
-    private router: Router
+    private router: Router,
+    private authenticationService: AuthenticationService
 	) {}
 
 	ngOnInit() {
-    let user: any = JSON.parse(localStorage.getItem('currentUser'));
-
-    switch (user.role) {
+    switch (this.authenticationService.getCurrentUser().role) {
       case 'dokter': {
         this.router.navigate(['/dokter-dashboard']);
+        break;
+      }
+      case 'perawat': {
+        this.router.navigate(['/perawat-dashboard']);
         break;
       }
       case 'petugasLab': {
         this.router.navigate(['/petugas-lab-dashboard']);
         break;
       }
-      case 'perawat': {
-        this.router.navigate(['/perawat-dashboard']);
+      case 'petugasAmbulans': {
+        this.router.navigate(['/daftar-pemakaian-ambulans']);
         break;
       }
       case 'kasir': {

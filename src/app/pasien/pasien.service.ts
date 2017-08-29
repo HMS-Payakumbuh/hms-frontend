@@ -67,7 +67,9 @@ export class PasienService {
 		let body = JSON.stringify(pasien);
 
 		return this.authHttp.put(this.pasienUrl + '/' + id, body, options)
-			.map((res: Response) => res.json());
+			.map((res: Response) => { 
+				return { status: res.status, json: res.json() }
+			});
 	}
 
 	destroyPasien(id: number) {

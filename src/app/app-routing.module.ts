@@ -22,6 +22,7 @@ import { KlaimDetailComponent }   		from './pembayaran/klaim/klaim-detail.compon
 
 import { PasienFormComponent }			from './pasien/pasien-form.component';
 import { PasienIGDFormComponent }		from './pasien/pasien-igd-form.component';
+import { DaftarPasienIGDComponent }	from './antrian/daftar-pasien-igd.component';
 import { PasienListComponent }			from './pasien/pasien-list.component';
 import { CatatanKematianFormComponent } from './pasien/catatan-kematian-form.component';
 import { AntrianComponent }				from './antrian/antrian.component';
@@ -71,9 +72,10 @@ import { JadwalDokterListComponent }	from './tenaga-medis/jadwal-dokter-list.com
 import { DiagnosisReferenceListComponent }	from './layanan/diagnosis-reference-list.component';
 import { TindakanReferenceListComponent }		from './layanan/tindakan-reference-list.component';
 
-import { DokterDashboardComponent }			from './tenaga-medis/dokter-dashboard.component';
-import { PetugasLabDashboardComponent }	from './tenaga-medis/petugas-lab-dashboard.component';
-import { PerawatDashboardComponent }		from './tenaga-medis/perawat-dashboard.component';
+import { DokterDashboardComponent }						from './tenaga-medis/dokter-dashboard.component';
+import { PerawatDashboardComponent }					from './tenaga-medis/perawat-dashboard.component';
+import { PetugasLabDashboardComponent }				from './tenaga-medis/petugas-lab-dashboard.component';
+import { DaftarPemakaianAmbulansComponent }	from './layanan/daftar-pemakaian-ambulans.component';
 
 import { DaftarStokObatComponent }			from './farmasi/stok-obat/daftar-stok-obat.component';
 import { DetailStokObatComponent }			from './farmasi/stok-obat/detail-stok-obat.component';
@@ -138,6 +140,7 @@ const routes: Routes = [
 	{ path: 'klaim/:id', canActivate: [AuthGuard], component: KlaimDetailComponent },
 	{ path: 'pendaftaran', canActivate: [AuthGuard], component: PasienFormComponent },
 	{ path: 'pendaftaran-igd', canActivate: [AuthGuard], component: PasienIGDFormComponent },
+	{ path: 'daftar-pasien-igd', canActivate: [AuthGuard], component: DaftarPasienIGDComponent },
 	{ path: 'pendaftaran/:namaLayanan', canActivate: [AuthGuard], component: PasienFormComponent },
 	{ path: 'antrian', canActivate: [AuthGuard], component: AntrianComponent },
 	{ path: 'antrian/:namaLayanan', canActivate: [AuthGuard], component: AntrianComponent },
@@ -198,8 +201,9 @@ const routes: Routes = [
 	{ path: 'daftar-tindakan', canActivate: [AuthGuard], component: TindakanReferenceListComponent },
 
 	{ path: 'dokter-dashboard', canActivate: [AuthGuard], component: DokterDashboardComponent },
-	{ path: 'petugas-lab-dashboard', canActivate: [AuthGuard], component: PetugasLabDashboardComponent },
 	{ path: 'perawat-dashboard', canActivate: [AuthGuard], component: PerawatDashboardComponent },
+	{ path: 'petugas-lab-dashboard', canActivate: [AuthGuard], component: PetugasLabDashboardComponent },
+	{ path: 'daftar-pemakaian-ambulans', canActivate: [AuthGuard], component: DaftarPemakaianAmbulansComponent },
 
 	{ path: 'stok-obat', canActivate: [AuthGuard], component: DaftarStokObatComponent },
 	{ path: 'stok-obat/:id', canActivate: [AuthGuard], component: DetailStokObatComponent },
