@@ -371,11 +371,11 @@ export class PasienFormComponent implements OnInit {
         if (this.isBpjs) {
           this.rekamMedisService.importRekamMedisEksternal(this.nomor_pasien, this.rujukan.no_rujukan)
             .subscribe(data => {
-              if (data.status == '200') {
+              if (data.status == 200) {
                 let rekamMedis: any = {};
                 rekamMedis.kode_pasien = this.nomor_pasien;
                 rekamMedis.id_pasien = this.pasien.id;
-                let dokumen: any = data.data;
+                let dokumen: any = data.json;
                 rekamMedis.identitas_pasien = JSON.stringify(dokumen.ClinicalDocument.recordTarget.patientRole.patient);
                 rekamMedis.identitas_dokter = JSON.stringify(dokumen.ClinicalDocument.author);
                 rekamMedis.komponen = JSON.stringify(dokumen.ClinicalDocument.component.structuredBody.component);
@@ -390,10 +390,10 @@ export class PasienFormComponent implements OnInit {
 
                     this.toastyService.success(toastOptions);
                   });
-              } else {
+              } else if (data.status == 202){
                 let toastOptions:ToastOptions = {
                     title: "Pengambilan Gagal !",
-                    msg: "Rekam medis gagal diambil karena nomor rujukan / nomor kartu pasien tidak sesuai.",
+                    msg: data.json,
                     showClose: true,
                     timeout: 5000,
                     theme: 'material'
@@ -483,11 +483,23 @@ export class PasienFormComponent implements OnInit {
       if (this.update) {
         this.pasienService.updatePasien(this.pasien.id, this.pasien).subscribe(
           data => {
-            this.pasien = data;
-            if (this.asuransiChecked)
-              this.createAsuransi();
-            else
-              this.createTransaksi();
+            if (data.status === 202) {
+              let toastOptions:ToastOptions = {
+                title: "Registrasi Pasien Gagal !",
+                msg: data.json.error,
+                showClose: true,
+                timeout: 5000,
+                theme: 'material'
+              };
+
+              this.toastyService.error(toastOptions);
+            } else {
+              this.pasien = data.json;
+              if (this.asuransiChecked)
+                this.createAsuransi();
+              else
+                this.createTransaksi();
+            }
           }
         );
       } else {
@@ -506,11 +518,22 @@ export class PasienFormComponent implements OnInit {
 
               this.toastyService.success(toastOptions);
             }
+            if (data.status === 202) {
+              let toastOptions:ToastOptions = {
+                title: "Registrasi Pasien Gagal !",
+                msg: data.json.error,
+                showClose: true,
+                timeout: 5000,
+                theme: 'material'
+              };
 
-            if (this.asuransiChecked)
-              this.createAsuransi();
-            else
-              this.createTransaksi();
+              this.toastyService.error(toastOptions);
+            } else {
+              if (this.asuransiChecked)
+                this.createAsuransi();
+              else
+                this.createTransaksi();
+            }
           }
         );
       }
