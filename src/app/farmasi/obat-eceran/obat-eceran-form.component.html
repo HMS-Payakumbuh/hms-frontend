@@ -51,15 +51,31 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let obat_eceran_item of obatEceranItems; index as i">
-                      <td><input type="text" class="form-control" id="merek-{{i}}" disabled [value]="obat_eceran_item.jenis_obat.merek_obat" name="merek-{{i}}"></td>
+                      <td>
+                        <input type="text" class="form-control" id="merek-{{i}}" disabled [value]="obat_eceran_item.jenis_obat.merek_obat" name="merek-{{i}}">
+                      </td>
+
                       <td>
                         <div class="input-group">
                           <input type="number" class="form-control" id="jumlah-{{i}}" [(ngModel)]="obat_eceran_item.jumlah" name="jumlah-{{i}}">
                           <div class="input-group-addon">{{obat_eceran_item.jenis_obat.satuan}}</div>
                         </div>
                       </td>
-                      <td><input type="text" class="form-control" id="harga-{{i}}" [(ngModel)]="obat_eceran_item.harga_jual_realisasi" name="harga-{{i}}"></td>
-                      <td><input type="text" class="form-control" id="harga_total-{{i}}" disabled [value]="obat_eceran_item.jumlah*obat_eceran_item.harga_jual_realisasi" name="harga_total-{{i}}"></td> 
+
+                      <td>
+                        <div class="input-group">
+                          <div class="input-group-addon">Rp.</div>
+                          <input type="text" class="form-control" id="harga-{{i}}" [(ngModel)]="obat_eceran_item.harga_jual_realisasi" name="harga-{{i}}">
+                        </div>
+                      </td>
+
+                      <td>
+                        <div class="input-group">
+                          <div class="input-group-addon">Rp.</div>
+                          <input type="text" class="form-control" id="harga_total-{{i}}" disabled [value]="obat_eceran_item.jumlah*obat_eceran_item.harga_jual_realisasi" name="harga_total-{{i}}">
+                        </div>
+                      </td> 
+
                       <td><button class="btn btn-danger" (click)="removeObatItem(index)">Hapus</button></td>
                     </tr>
                   </tbody>    

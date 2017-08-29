@@ -9,15 +9,13 @@ import { User }						from './auth/user';
 })
 
 export class AppComponent {
-	title = 'Hospital Management System';
-	user: any = JSON.parse(localStorage.getItem('currentUser'));
+	title = 'Sistem Manajemen Rumah Sakit';
 
 	constructor(
 		private authenticationService: AuthenticationService
-	) { }
+	) {}
 
 	logout() {
 		this.authenticationService.logout();
-		window.location.assign('login');
 	}
 }

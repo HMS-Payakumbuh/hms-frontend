@@ -5,9 +5,9 @@ import { ReactiveFormsModule }      from '@angular/forms';
 import { HttpModule }               from '@angular/http';
 import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
 import { DpDatePickerModule }       from 'ng2-date-picker';
-import { AutocompleteModule}        from 'ng2-input-autocomplete';
 import { DataTableModule }          from 'angular2-datatable';
 import { ToastyModule }             from 'ng2-toasty';
+import { AuthModule }               from './auth/auth.module';
 
 import { MatchesStatusPipe }            from './pipe/matches-status.pipe';
 import { FilterPasienPipe }         from './pipe/filter-pasien.pipe';
@@ -27,6 +27,7 @@ import { FilterStokObatPipe }     from './pipe/filter-stok-obat.pipe';
 import { FilterObatMasukPipe }     from './pipe/filter-obat-masuk.pipe';
 import { FilterObatTebusPipe }     from './pipe/filter-obat-tebus.pipe';
 import { FilterObatEceranPipe }     from './pipe/filter-obat-eceran.pipe';
+import { FilterObatTindakanPipe }     from './pipe/filter-obat-tindakan.pipe';
 import { FilterObatRusakPipe }     from './pipe/filter-obat-rusak.pipe';
 import { FilterObatPindahPipe }     from './pipe/filter-obat-pindah.pipe';
 import { FilterJenisAntrianPipe }     from './pipe/filter-jenis-antrian.pipe';
@@ -58,7 +59,8 @@ import { AntrianComponent }         		from './antrian/antrian.component';
 import { DaftarAntrianComponent }         	from './antrian/daftar-antrian.component';
 import { AntrianDashboardComponent }        from './antrian/antrian-dashboard.component';
 import { PasienFormComponent }      		from './pasien/pasien-form.component';
-import { PasienIGDFormComponent }      		from './pasien/pasien-igd-form.component';
+import { PasienIGDFormComponent }      		  from './pasien/pasien-igd-form.component';
+import { DaftarPasienIGDComponent }      		  from './antrian/daftar-pasien-igd.component';
 import { PasienListComponent }              from './pasien/pasien-list.component';
 import { CatatanKematianFormComponent }     from './pasien/catatan-kematian-form.component';
 import { RekamMedisListComponent }          from './pasien/rekam-medis-list.component';
@@ -109,9 +111,10 @@ import { JadwalDokterListComponent }      from './tenaga-medis/jadwal-dokter-lis
 import { DiagnosisReferenceListComponent }from './layanan/diagnosis-reference-list.component';
 import { TindakanReferenceListComponent } from './layanan/tindakan-reference-list.component';
 
-import { DokterDashboardComponent }   from './tenaga-medis/dokter-dashboard.component';
-import { PetugasLabDashboardComponent }   from './tenaga-medis/petugas-lab-dashboard.component';
-import { PerawatDashboardComponent }		from './tenaga-medis/perawat-dashboard.component';
+import { DokterDashboardComponent }           from './tenaga-medis/dokter-dashboard.component';
+import { PerawatDashboardComponent }		      from './tenaga-medis/perawat-dashboard.component';
+import { PetugasLabDashboardComponent }       from './tenaga-medis/petugas-lab-dashboard.component';
+import { DaftarPemakaianAmbulansComponent }	from './layanan/daftar-pemakaian-ambulans.component';
 
 import { DaftarStokObatComponent }            from './farmasi/stok-obat/daftar-stok-obat.component';
 import { DetailStokObatComponent }            from './farmasi/stok-obat/detail-stok-obat.component';
@@ -136,6 +139,9 @@ import { ObatTebusEksternalFormComponent }           from './farmasi/obat-tebus/
 import { DaftarObatPindahComponent }      from './farmasi/obat-pindah/daftar-obat-pindah.component';
 import { DetailObatPindahComponent }      from './farmasi/obat-pindah/detail-obat-pindah.component';
 import { ObatPindahFormComponent }      from './farmasi/obat-pindah/obat-pindah-form.component';
+
+import { DaftarObatTindakanComponent }      from './farmasi/obat-tindakan/daftar-obat-tindakan.component';
+import { DetailObatTindakanComponent }      from './farmasi/obat-tindakan/detail-obat-tindakan.component';
 
 import { DaftarObatRusakComponent }      from './farmasi/obat-rusak/daftar-obat-rusak.component';
 import { DetailObatRusakComponent }      from './farmasi/obat-rusak/detail-obat-rusak.component';
@@ -166,9 +172,9 @@ import { AppComponent }             from './app.component';
         HttpModule,
         NgbModule.forRoot(),
         DpDatePickerModule,
-        AutocompleteModule.forRoot(),
         ToastyModule.forRoot(),
-        DataTableModule
+        DataTableModule,
+        AuthModule
     ],
     declarations: [
         AppComponent,
@@ -191,6 +197,7 @@ import { AppComponent }             from './app.component';
         FilterObatTebusPipe,
         FilterObatEceranPipe,
         FilterObatRusakPipe,
+        FilterObatTindakanPipe,
         FilterObatPindahPipe,
         FilterJenisAntrianPipe,
         FilterJenisKamarPipe,
@@ -215,6 +222,7 @@ import { AppComponent }             from './app.component';
         KlaimDetailComponent,
         PasienFormComponent,
         PasienIGDFormComponent,
+        DaftarPasienIGDComponent,
         PasienListComponent,
         CatatanKematianFormComponent,
         RekamMedisListComponent,
@@ -251,7 +259,7 @@ import { AppComponent }             from './app.component';
         PindahICUListComponent,
 
         BookingOperasiListComponent,
-        
+
         PemakaianKamarListComponent,
         PemakaianICUListComponent,
         PemakaianKamarOperasiListComponent,
@@ -267,8 +275,9 @@ import { AppComponent }             from './app.component';
         TindakanReferenceListComponent,
 
         DokterDashboardComponent,
-        PetugasLabDashboardComponent,
         PerawatDashboardComponent,
+        PetugasLabDashboardComponent,
+        DaftarPemakaianAmbulansComponent,
 
         MatchesStatusPipe,
         FilterNamaPasienPipe,
@@ -300,6 +309,9 @@ import { AppComponent }             from './app.component';
         DaftarObatPindahComponent,
         DetailObatPindahComponent,
         ObatPindahFormComponent,
+
+        DaftarObatTindakanComponent,
+        DetailObatTindakanComponent,
 
         DaftarObatRusakComponent,
         DetailObatRusakComponent,

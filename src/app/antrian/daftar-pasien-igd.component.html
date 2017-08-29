@@ -1,0 +1,50 @@
+<html>
+
+  <div class="row">
+    <div class="col-md-12">
+      <blockquote class="blockquote">
+        <p class="h4 mb-0"><b>Daftar Pasien IGD</b></p>
+      </blockquote>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mb-3">
+        <div class="card-header card-info">
+          <h4 class="mb-0">Daftar Pasien IGD</h4>
+        </div>
+        <div class="card-block">
+          <table class="table" *ngIf="allAntrian.length > 0" [mfData]="allAntrian" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+            <thead>
+              <th><mfDefaultSorter by="nama_pasien">Nama</mfDefaultSorter></th>
+              <th><mfDefaultSorter by="kode_pasien">Kode Pasien</mfDefaultSorter></th>
+              <th><mfDefaultSorter by="waktu_masuk">Waktu Masuk</mfDefaultSorter></th>
+              <th></th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let antrian of mf.data">
+                <td>{{antrian.transaksi.pasien.nama_pasien}}</td>
+                <td>{{antrian.transaksi.pasien.kode_pasien}}</td>
+                <td>{{antrian.waktu_masuk_antrian}}</td>
+                <td>
+                  <button type="button" class="btn btn-success" (click)="periksa(antrian.id_transaksi, antrian.no_antrian)">
+                    Periksa
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4">
+                  <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</html>
