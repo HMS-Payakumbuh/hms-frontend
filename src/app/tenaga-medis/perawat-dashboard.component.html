@@ -89,18 +89,12 @@
                 </tr>
               </tbody>
             </table>
-            <div class="form-group" *ngIf="transaksiAmbulans.allTransaksi[0] != null">
-              <label for="selectAmbulans">Pilih Ambulans</label>
-              <select class="form-control mb-3" id="selectAmbulans" [(ngModel)]="selectedAmbulans" name="selectAmbulans">
-                <option *ngFor="let ambulans of allAmbulans" [ngValue]="ambulans">{{ambulans.nama}}</option>
-              </select>
-            </div>
           </div>
         </div>
 
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-          <button type="button" class="btn btn-success" data-dismiss="modal" [disabled]="selectedAmbulans == null || transaksiAmbulans == null" (click)="pemakaianAmbulans()">
+          <button type="button" class="btn btn-success" data-dismiss="modal" [disabled]="transaksiAmbulans == null" (click)="pemakaianAmbulans()">
             Pakai Ambulans
           </button>
         </div>

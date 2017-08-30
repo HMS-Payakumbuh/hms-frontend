@@ -79,31 +79,58 @@ export class ObatEceranFormComponent {
 	private save() {
 		this.obatEceran.obat_eceran_item = this.obatEceranItems;
 
-		// alert(JSON.stringify(this.obatEceran)); 
-		this.obatEceranService.createObatEceran(this.obatEceran).subscribe(
-	       	data => {	         	  	
-	       		let toastOptions: ToastOptions = {
-		            title: "Success",
-		            msg: "Obat eceran berhasil ditambahkan",
-		            showClose: true,
-		            timeout: 5000,
-		            theme: 'material'
-		        };		        
-		        this.toastyService.success(toastOptions);
-	     		this.router.navigateByUrl('/transaksi-eksternal/' + data.id_transaksi);
-	         	return true;
-	       	},
-	       	error => {
-		        let toastOptions: ToastOptions = {
-		            title: "Error",
-		            msg: error,
-		            showClose: true,
-		            timeout: 5000,
-		            theme: 'material'
-		        };
-		        this.toastyService.error(toastOptions);
-		        return Observable.throw(error);
-	       	}
-    	);
+		if (this.validateInput()) {
+			this.obatEceranService.createObatEceran(this.obatEceran).subscribe(
+		       	data => {	         	  	
+		       		let toastOptions: ToastOptions = {
+			            title: "Success",
+			            msg: "Obat eceran berhasil ditambahkan",
+			            showClose: true,
+			            timeout: 5000,
+			            theme: 'material'
+			        };		        
+			        this.toastyService.success(toastOptions);
+		     		this.router.navigateByUrl('/transaksi-eksternal/' + data.id_transaksi);
+		         	return true;
+		       	},
+		       	error => {
+			        this.handleError(error);
+			        return Observable.throw(error);
+		       	}
+	    	);
+	    } else {
+	    	return false;
+	    }
+	}
+
+	private validateInput(): boolean {
+		for (let obat_eceran_item of this.obatEceran.obat_eceran_item) {
+			if (obat_eceran_item.jumlah == null) {
+				this.handleError("Jumlah wajib diisi");
+				return false;
+			} else if (obat_eceran_item.jumlah <= 0) {				
+				this.handleError("Jumlah tidak boleh kurang dari 1");
+				return false;				
+			} else if (obat_eceran_item.harga_jual_realisasi == null) {				
+				this.handleError("Harga wajib diisi");
+				return false;
+			} else if (obat_eceran_item.harga_jual_realisasi <= 0) {				
+				this.handleError("Harga tidak boleh kurang dari 1");
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private handleError(error: any) {
+		let toastOptions: ToastOptions = {
+	        title: "Error",
+	        msg: error,
+	        showClose: true,
+	        timeout: 5000,
+	        theme: 'material'
+	    };
+    	this.toastyService.error(toastOptions);
 	}
 }
