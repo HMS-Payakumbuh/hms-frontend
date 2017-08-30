@@ -442,10 +442,22 @@ export class PasienFormComponent implements OnInit {
     }
     this.transaksiService.createTransaksi(request).subscribe(
       data => {
-        if (this.rujukanChecked)
-          this.createRujukan(data.transaksi.id);
-        else
-          this.createAntrian(data.transaksi.id);
+        if (data.code === 500) {
+          let toastOptions:ToastOptions = {
+            title: "Registrasi Pasien Gagal !",
+            msg: data.message,
+            showClose: true,
+            timeout: 5000,
+            theme: 'material'
+          };
+
+          this.toastyService.error(toastOptions);
+        } else {
+          if (this.rujukanChecked)
+            this.createRujukan(data.transaksi.id);
+          else
+            this.createAntrian(data.transaksi.id);
+        }
       }
     );
   }
