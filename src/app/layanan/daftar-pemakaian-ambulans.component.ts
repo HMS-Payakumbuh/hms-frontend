@@ -19,10 +19,7 @@ import { TindakanService }        from '../layanan/tindakan.service';
 export class DaftarPemakaianAmbulansComponent implements OnInit {
 
   allAmbulans: Ambulans[] = [];
-
-  selectedAmbulans: Ambulans = null;
-
-  transaksiAmbulans: any = null;
+  allTindakan: Tindakan[] = [];
 
   public filterQuery = "";
   public rowsOnPage = 5;
@@ -41,5 +38,44 @@ export class DaftarPemakaianAmbulansComponent implements OnInit {
     this.ambulansService.getAllAvailableAmbulans().subscribe(
       data => { this.allAmbulans = data }
     );
+
+    this.tindakanService.getTindakanWithoutAmbulans().subscribe(
+      data => { this.allTindakan = data }
+    )
+  }
+
+  pilihAmbulans(tindakan: Tindakan) {
+    this.tindakanService.updateTindakan(tindakan).subscribe(
+      data => {
+        this.ngOnInit();
+
+        let ambulans: Ambulans = this.allAmbulans.find(ambulans => ambulans.nama == tindakan.nama_ambulans);
+        ambulans.status = 'In Use';
+        this.ambulansService.updateAmbulans(ambulans.nama, ambulans).subscribe(
+          data => {
+            let toastOptions:ToastOptions = {
+              title: 'Success',
+              msg: 'Pemilihan ambulans berhasil',
+              showClose: true,
+              timeout: 5000,
+              theme: 'material'
+            };
+    
+            this.toastyService.success(toastOptions);
+          }
+        )
+      },
+      error => {
+        let toastOptions:ToastOptions = {
+          title: 'Error',
+          msg: 'Pemilihan ambulans gagal',
+          showClose: true,
+          timeout: 5000,
+          theme: 'material'
+        };
+
+        this.toastyService.error(toastOptions);
+      }
+    )
   }
 }

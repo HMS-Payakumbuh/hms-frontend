@@ -31,7 +31,6 @@ export class PerawatDashboardComponent implements OnInit {
 
   poliklinikSelected: boolean = false;
   selectedPoliklinik: Poliklinik = null;
-  selectedAmbulans: Ambulans = null;
   nama_poli: string = null;
 
   transaksiAmbulans: any = null;
@@ -89,42 +88,42 @@ export class PerawatDashboardComponent implements OnInit {
   }
 
   pemakaianAmbulans() {
-    let tindakan: Tindakan[] = [];
-    let temp: Tindakan = new Tindakan();
-
-    temp.id_transaksi = this.transaksiAmbulans.allTransaksi[0].id;
-    temp.harga = 50000;
-    temp.keterangan = '';
-    temp.kode_tindakan = '00.00';
-    temp.id_pasien = this.transaksiAmbulans.allTransaksi[0].id_pasien;
-    temp.tanggal_waktu = this.transaksiAmbulans.allTransaksi[0].waktu_masuk_pasien;
-    temp.np_tenaga_medis = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
-    temp.nama_ambulans = this.selectedAmbulans.nama;
-    tindakan.push(temp);
-
-    this.tindakanService.saveTindakan(tindakan).subscribe(
+    this.tindakanService.getTindakanReference('00.00').subscribe(
       data => {
-        this.selectedAmbulans.status = "In Use";
-        this.ambulansService.updateAmbulans(this.selectedAmbulans.nama, this.selectedAmbulans).subscribe(
+        let tindakan: Tindakan[] = [];
+        let temp: Tindakan = new Tindakan();
+        
+        temp.id_transaksi = this.transaksiAmbulans.allTransaksi[0].id;
+        temp.harga = data.harga;
+        temp.keterangan = '';
+        temp.kode_tindakan = data.kode;
+        temp.id_pasien = this.transaksiAmbulans.allTransaksi[0].id_pasien;
+        temp.tanggal_waktu = this.transaksiAmbulans.allTransaksi[0].waktu_masuk_pasien;
+        temp.np_tenaga_medis = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
+        temp.nama_ambulans = 'Ambulans belum dipilih';
+        tindakan.push(temp);
+    
+        this.tindakanService.saveTindakan(tindakan).subscribe(
           data => {
             let toastOptions:ToastOptions = {
-                title: 'Success',
-                msg: 'Pemakaian ambulans berhasil',
-                showClose: true,
-                timeout: 5000,
-                theme: 'material'
+              title: 'Success',
+              msg: 'Permintaan pemakaian ambulans sudah diteruskan ke petugas ambulans',
+              showClose: true,
+              timeout: 5000,
+              theme: 'material'
             };
 
             this.toastyService.success(toastOptions);
-            this.ngOnInit();
+            this.transaksiAmbulans = null;
+            this.searchKodePasien = '';
           },
           error => {
             let toastOptions:ToastOptions = {
-                title: 'Error',
-                msg: 'Pemakaian ambulans gagal',
-                showClose: true,
-                timeout: 5000,
-                theme: 'material'
+              title: 'Error',
+              msg: 'Permintaan pemakaian ambulans gagal dibuat',
+              showClose: true,
+              timeout: 5000,
+              theme: 'material'
             };
 
             this.toastyService.error(toastOptions);

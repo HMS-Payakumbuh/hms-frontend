@@ -1,6 +1,7 @@
 import { Injectable }			from '@angular/core';
-import { Headers, Http, Response, RequestOptions }		from '@angular/http';
+import { Headers, Response, RequestOptions }		from '@angular/http';
 import { Observable }			from 'rxjs/Rx';
+import { AuthHttp }				from 'angular2-jwt';
 
 import { ENV }										from '../environment';
 import { Transaksi }							from '../transaksi/transaksi';
@@ -16,7 +17,7 @@ export class TindakanService {
 	tindakanInstances: Tindakan[] = [];
 	i: number;
 
-	constructor(private http:Http) { }
+	constructor(private authHttp: AuthHttp) { }
 
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
@@ -24,17 +25,22 @@ export class TindakanService {
 	}
 
 	getTindakanWithoutHasilLab(nama_lab: string): Observable<Tindakan[]> {
-		return this.http.get(this.tindakanUrl + '/hasil_lab/' + nama_lab)
+		return this.authHttp.get(this.tindakanUrl + '/hasil_lab/' + nama_lab)
+			.map((res: Response) => res.json());
+	}
+
+	getTindakanWithoutAmbulans(): Observable<Tindakan[]> {
+		return this.authHttp.get(this.tindakanUrl + '/no_ambulans')
 			.map((res: Response) => res.json());
 	}
 
 	getTindakanOfRekamMedis(id_pasien: number, tanggal_waktu: string): Observable<Tindakan[]> {
-		return this.http.get(this.tindakanUrl + '/rekam_medis/' + id_pasien + '/' + tanggal_waktu)
+		return this.authHttp.get(this.tindakanUrl + '/rekam_medis/' + id_pasien + '/' + tanggal_waktu)
 			.map((res: Response) => res.json());
 	}
 
 	getTindakanOfLabByKodePasien(nama_lab: string, kode_pasien: string): Observable<Tindakan[]> {
-		return this.http.get(this.tindakanUrl + '/laboratorium/' + nama_lab + '/' + kode_pasien)
+		return this.authHttp.get(this.tindakanUrl + '/laboratorium/' + nama_lab + '/' + kode_pasien)
 			.map((res: Response) => res.json());
 	}
 
@@ -42,7 +48,7 @@ export class TindakanService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers});
 		let body = JSON.stringify(tindakan);
-		return this.http.put(this.tindakanUrl + '/' + tindakan.id, body, options)
+		return this.authHttp.put(this.tindakanUrl + '/' + tindakan.id, body, options)
 			.map((res: Response) => res.json());
 	}
 
@@ -50,17 +56,17 @@ export class TindakanService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers});
 		let body = JSON.stringify(selectedTindakan);
-		return this.http.post(this.tindakanUrl, body, options)
+		return this.authHttp.post(this.tindakanUrl, body, options)
 			.map((res: Response) => res.json());
 	}
 
 	getAllTindakanReference(): Observable<TindakanReference[]> {
-		return this.http.get(this.tindakanReferenceUrl)
+		return this.authHttp.get(this.tindakanReferenceUrl)
 			.map((res: Response) => res.json());
 	}
 
 	getTindakanReference(kode: string): Observable<TindakanReference> {
-		return this.http.get(this.tindakanReferenceUrl + '/' + kode)
+		return this.authHttp.get(this.tindakanReferenceUrl + '/' + kode)
 			.map((res: Response) => res.json());
 	}
 
@@ -68,7 +74,7 @@ export class TindakanService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers});
 		let body = JSON.stringify(tindakanReference);
-		return this.http.post(this.tindakanReferenceUrl, body, options)
+		return this.authHttp.post(this.tindakanReferenceUrl, body, options)
 			.map((res: Response) => res.json());
 	}
 
@@ -76,14 +82,14 @@ export class TindakanService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers});
 		let body = JSON.stringify(tindakanReference);
-		return this.http.put(this.tindakanReferenceUrl + '/' + kode, body, options)
+		return this.authHttp.put(this.tindakanReferenceUrl + '/' + kode, body, options)
 			.map((res: Response) => res.json());
 	}
 
 	destroyTindakanReference(kode: string) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers});
-		return this.http.delete(this.tindakanReferenceUrl + '/' + kode, options)
+		return this.authHttp.delete(this.tindakanReferenceUrl + '/' + kode, options)
 			.map((res: Response) => res.json());
 	}
 }

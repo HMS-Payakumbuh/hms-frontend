@@ -1,6 +1,7 @@
 import { Injectable }			from '@angular/core';
 import { Headers, Http, Response, RequestOptions }		from '@angular/http';
 import { Observable }			from 'rxjs/Rx';
+import { AuthHttp }				from 'angular2-jwt';
 
 import { ENV }							from '../environment';
 import { Ambulans }			from './ambulans';
@@ -9,7 +10,9 @@ import { Ambulans }			from './ambulans';
 export class AmbulansService {
 	ambulansUrl = ENV.ambulansUrl;
 
-	constructor(private http:Http) { }
+	constructor(
+		private authHttp: AuthHttp
+	) { }
 
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
@@ -17,12 +20,12 @@ export class AmbulansService {
 	}
 
 	getAllAmbulans(): Observable<Ambulans[]> {
-		return this.http.get(this.ambulansUrl)
+		return this.authHttp.get(this.ambulansUrl)
 			.map((res: Response) => res.json());
 	}
 
 	getAllAvailableAmbulans(): Observable<Ambulans[]> {
-		return this.http.get(this.ambulansUrl + '/available')
+		return this.authHttp.get(this.ambulansUrl + '/available')
 			.map((res: Response) => res.json());
 	}
 
@@ -36,7 +39,7 @@ export class AmbulansService {
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(ambulans);
 
-		return this.http.post(this.ambulansUrl, body, options)
+		return this.authHttp.post(this.ambulansUrl, body, options)
 			.map((res: Response) => res.json());
 	}
 
@@ -45,7 +48,7 @@ export class AmbulansService {
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(ambulans);
 
-		return this.http.put(this.ambulansUrl + '/' + nama, body, options)
+		return this.authHttp.put(this.ambulansUrl + '/' + nama, body, options)
 			.map((res: Response) => res.json());
 	}
 
@@ -53,7 +56,7 @@ export class AmbulansService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 
-		return this.http.delete(this.ambulansUrl + '/' + nama, options)
+		return this.authHttp.delete(this.ambulansUrl + '/' + nama, options)
 			.map((res: Response) => res.json());
 	}
 }

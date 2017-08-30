@@ -1,5 +1,6 @@
 import { Component, OnInit }		from '@angular/core';
 
+import { AuthenticationService }  from '../auth/authentication.service';
 import { Ambulans } 					from './ambulans';
 import { AmbulansService }		from './ambulans.service';
 
@@ -20,14 +21,24 @@ export class AmbulansListComponent implements OnInit {
   public sortOrder = "asc";
 
 	constructor(
-		private ambulansService: AmbulansService
+    private authenticationService: AuthenticationService,
+    private ambulansService: AmbulansService
 	) {}
 
 	ngOnInit() {
 		this.ambulansService.getAllAmbulans().subscribe(
-      data => { this.allAmbulans = data }
+      data => {
+        this.allAmbulans = data.filter(ambulans => ambulans.nama != 'Ambulans belum dipilih')
+      }
     );
-	}
+  }
+  
+  makeAvailable(ambulans: Ambulans) {
+    ambulans.status = 'Available';
+    this.ambulansService.updateAmbulans(ambulans.nama, ambulans).subscribe(
+      data => { this.ngOnInit() }
+    );
+  }
 
   newAmbulans() {
     this.ambulansModal = new Ambulans();
