@@ -301,10 +301,22 @@ export class PasienIGDFormComponent implements OnInit {
     }
     this.transaksiService.createTransaksi(request).subscribe(
       data => {
-        if (this.rujukanChecked)
-          this.createRujukan(data.transaksi.id, data.transaksi.id_pasien, data.transaksi.waktu_masuk_pasien);
-        else
-          this.createAntrian(data.transaksi.id, data.transaksi.id_pasien, data.transaksi.waktu_masuk_pasien);
+         if (data.code === 500) {
+          let toastOptions:ToastOptions = {
+            title: "Registrasi Pasien Gagal !",
+            msg: data.message,
+            showClose: true,
+            timeout: 5000,
+            theme: 'material'
+          };
+
+          this.toastyService.error(toastOptions);
+        } else {
+          if (this.rujukanChecked)
+            this.createRujukan(data.transaksi.id, data.transaksi.id_pasien, data.transaksi.waktu_masuk_pasien);
+          else
+            this.createAntrian(data.transaksi.id, data.transaksi.id_pasien, data.transaksi.waktu_masuk_pasien);
+        }
       }
     );
   }
