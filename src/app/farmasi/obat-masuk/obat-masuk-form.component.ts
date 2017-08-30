@@ -79,22 +79,31 @@ export class ObatMasukFormComponent {
 	}
 
 	private validateInput(): boolean {
+		let today = new Date();	
+		let kadaluarsa = new Date(this.obatMasuk.kadaluarsa);
+
 		if	(this.obatMasuk.id_jenis_obat == null) {
 			this.handleError("Merek obat wajib diisi");
 			return false;
-		} else if (this.obatMasuk.nomor_batch == '') {
+		} else if (this.obatMasuk.nomor_batch == '') { // Apakah nomor batch pasti ada?
 			this.handleError("Nomor batch wajib diisi");
 			return false;
 		} else if (this.obatMasuk.jumlah == null) {
 			this.handleError("Jumlah wajib diisi");
 			return false;
-		} else if (this.obatMasuk.kadaluarsa == null) { // TO-DO: Kadaluarsa comparison move to here
+		} else if (this.obatMasuk.jumlah <= 0) {
+			this.handleError("Jumlah tidak boleh kurang dari 1");
+			return false;
+		} else if (this.obatMasuk.kadaluarsa == null) {
 			this.handleError("Kadaluarsa wajib diisi");
+			return false;
+		} else if (kadaluarsa.getTime() <= today.getTime()) {
+			this.handleError("Kadaluarsa tidak boleh hari ini atau lebih dahulu");
 			return false;
 		} else if (this.obatMasuk.harga_beli_satuan <= 0) {
 			this.handleError("Harga beli satuan wajib diisi");
 			return false;
-		} else {
+		} else {			
 			return true;
 		}
 	}
