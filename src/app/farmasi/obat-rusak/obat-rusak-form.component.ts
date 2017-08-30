@@ -111,6 +111,12 @@ export class ObatRusakFormComponent {
 		} else if (this.obatRusak.jumlah == null) {
 			this.handleError("Jumlah keluar wajib diisi");
 			return false;
+		} else if (this.obatRusak.jumlah <= 0) {
+			this.handleError("Jumlah keluar tidak boleh kurang dari 1");
+			return false;
+		} else if (this.obatRusak.jumlah > this.stokObat.jumlah) {
+			this.handleError("Jumlah keluar tidak boleh lebih besar dari jumlah stok");
+			return false;
 		} else {
 			return true;
 		}

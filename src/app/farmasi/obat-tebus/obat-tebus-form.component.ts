@@ -164,12 +164,6 @@ export class ObatTebusFormComponent {
 		);
 	}
 
-	/* private onTanggalResepChange(tanggal_resep: Date) {
-		this.resepService.getResepByPasienAndTanggal(this.pasien.id, tanggal_resep).subscribe(
-			data => { this.allResepOfTanggal = data }
-		);
-	} */
-
 	private onResepChange(id_resep: number) {
 		this.resepService.getResep(id_resep).subscribe(
 			data => { 
@@ -204,7 +198,7 @@ export class ObatTebusFormComponent {
 		}
 	}
 
-	private save() { // STILL NEEDS REPAIR
+	private save() {
 		let observables = [];
 		let stokObat = new StokObat();
 
@@ -238,7 +232,7 @@ export class ObatTebusFormComponent {
 					    	temp.harga_jual_realisasi = this.harga_jual_realisasi[i][j];
 					    	temp.asal = 2;
 					    	temp.id_resep_item = this.id_resep_item[i][j];
-					    	temp.id_racikan_item = this.id_racikan_item[i][j];	  
+					    	temp.id_racikan_item = this.id_racikan_item[i][j];	 
 
 					    	this.obatTebusItems.push(temp);
 
@@ -251,35 +245,65 @@ export class ObatTebusFormComponent {
 				this.obatTebus.id_resep = this.resep.id;
 				this.obatTebus.obat_tebus_item = this.obatTebusItems;
 
-				// alert(JSON.stringify(this.obatTebus)); 
-
-				this.obatTebusService.createObatTebus(this.obatTebus).subscribe(
-			       	data => {
-			       		let toastOptions: ToastOptions = {
-				            title: "Success",
-				            msg: "Obat tebus berhasil ditambahkan",
-				            showClose: true,
-				            timeout: 5000,
-				            theme: 'material'
-				        };		        
-				        this.toastyService.success(toastOptions);
-				     	this.router.navigateByUrl('/transaksi-obat/' + data.id_transaksi);
-			         	return true;
-			       	},
-			       	error => {
-				        this.obatTebusItems = [];
-				        let toastOptions: ToastOptions = {
-				            title: "Error",
-				            msg: error,
-				            showClose: true,
-				            timeout: 5000,
-				            theme: 'material'
-				        };
-				        this.toastyService.error(toastOptions);
-				        return Observable.throw(error);
-			       	}
-			    )
+				if (this.validateInput()) {
+					this.obatTebusService.createObatTebus(this.obatTebus).subscribe(
+				       	data => {
+				       		let toastOptions: ToastOptions = {
+					            title: "Success",
+					            msg: "Obat tebus berhasil ditambahkan",
+					            showClose: true,
+					            timeout: 5000,
+					            theme: 'material'
+					        };		        
+					        this.toastyService.success(toastOptions);
+					     	this.router.navigateByUrl('/transaksi-obat/' + data.id_transaksi);
+				         	return true;
+				       	},
+				       	error => {
+					        this.obatTebusItems = [];				        
+				        	this.handleError(error);
+					        return Observable.throw(error);
+				       	}
+				    );
+			    } else {
+			    	return false;
+			    }
+	    	},
+	    	error => {
+	    		this.handleError("Nomor batch tidak terdaftar dalam stok obat");
+			    return Observable.throw(error);
 	    	}
 		);
+	}
+
+	private validateInput(): boolean {
+		for (let obat_tebus_item of this.obatTebus.obat_tebus_item) {
+			if (obat_tebus_item.jumlah == null) {
+				this.handleError("Jumlah wajib diisi");
+				return false;
+			} else if (obat_tebus_item.jumlah <= 0) {				
+				this.handleError("Jumlah tidak boleh kurang dari 1");
+				return false;				
+			} else if (obat_tebus_item.harga_jual_realisasi == null) {				
+				this.handleError("Harga wajib diisi");
+				return false;
+			} else if (obat_tebus_item.harga_jual_realisasi <= 0) {				
+				this.handleError("Harga tidak boleh kurang dari 1");
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private handleError(error: any) {
+		let toastOptions: ToastOptions = {
+	        title: "Error",
+	        msg: error,
+	        showClose: true,
+	        timeout: 5000,
+	        theme: 'material'
+	    };
+    	this.toastyService.error(toastOptions);
 	}
 }

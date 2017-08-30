@@ -100,16 +100,25 @@ export class ObatPindahFormComponent {
 
 	private validateInput(): boolean {
 		if	(this.obatPindah.asal == null) {
-			this.handleError("Lokasi asal wajib diisi");
+			this.handleError("Asal wajib diisi");
 			return false;
 		} else if (this.obatPindah.tujuan == null) {
 			this.handleError("Tujuan wajib diisi");
+			return false;
+		} else if (this.obatPindah.asal == this.obatPindah.tujuan) {
+			this.handleError("Asal dan tujuan tidak boleh sama");
 			return false;
 		} else if (this.obatPindah.id_jenis_obat == null) {
 			this.handleError("Merek obat wajib diisi");
 			return false;
 		} else if (this.obatPindah.jumlah == null) {
 			this.handleError("Jumlah pindah wajib diisi");
+			return false;
+		} else if (this.obatPindah.jumlah <= 0) {
+			this.handleError("Jumlah pindah tidak boleh kurang dari 1");
+			return false;
+		} else if (this.obatPindah.jumlah > this.stokObat.jumlah) {
+			this.handleError("Jumlah pindah tidak boleh lebih besar dari jumlah stok");
 			return false;
 		} else {
 			return true;
