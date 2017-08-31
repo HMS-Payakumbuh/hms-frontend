@@ -21,7 +21,7 @@ export class PoliklinikService {
 	}
 
 	getAllPoliklinik(): Observable<Poliklinik[]> {
-		return this.authHttp.get(this.poliklinikUrl)
+		return this.http.get(this.poliklinikUrl)
 			.map((res: Response) => res.json());
 	}
 
