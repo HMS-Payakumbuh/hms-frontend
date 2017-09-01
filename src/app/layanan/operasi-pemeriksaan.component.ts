@@ -551,7 +551,8 @@ export class PemeriksaanOperasiComponent implements OnInit {
             }
           );
         }
-
-
+        else { 
+          this.goBack();
+        }
 	}
 }
