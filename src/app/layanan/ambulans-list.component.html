@@ -14,16 +14,22 @@
 							<th><mfDefaultSorter by="status">Status</mfDefaultSorter></th>
 							<th></th>
 							<th></th>
+							<th></th>
 						</thead>
 						<tbody *ngFor="let ambulans of mf.data">
 							<tr>
 								<td>{{ambulans?.nama}}</td>
 								<td>{{ambulans?.status}}</td>
 								<td>
-									<button type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#editAmbulansModal'" (click)="editAmbulans(ambulans.nama, ambulans)">Edit</button>
+									<button *ngIf="ambulans.status != 'Available'" type="button" class="btn btn-sm btn-success" (click)="makeAvailable(ambulans)">
+										Ubah status menjadi available
+									</button>
 								</td>
 								<td>
-									<button type="button" class="btn btn-sm btn-danger" (click)="destroyAmbulans(ambulans.nama)">
+									<button *ngIf="authenticationService.getCurrentUser().role == 'admin'" type="button" class="btn btn-sm btn-info" data-toggle="modal" [attr.data-target]="'#editAmbulansModal'" (click)="editAmbulans(ambulans.nama, ambulans)">Edit</button>
+								</td>
+								<td>
+									<button *ngIf="authenticationService.getCurrentUser().role == 'admin'" type="button" class="btn btn-sm btn-danger" (click)="destroyAmbulans(ambulans.nama)">
 										Hapus
 									</button>
 								</td>
@@ -31,7 +37,7 @@
 						</tbody>
 						<tfoot>
 	            <tr>
-	              <td colspan="7">
+	              <td colspan="5">
 	                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
 	              </td>
 	            </tr>
@@ -62,7 +68,10 @@
 
 								<div class="form-group">
 									<label for="status">Status</label>
-									<input type="text" class="form-control" id="status" required [(ngModel)]="ambulansModal.status" name="status">
+									<select class="form-control mb-3" id="status" [(ngModel)]="ambulansModal.status" name="status">
+										<option value="Available">Available</option>
+										<option value="In Use">In Use</option>
+		              </select>
 								</div>
 							</div>
 

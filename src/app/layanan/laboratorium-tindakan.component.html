@@ -19,27 +19,15 @@
             <option *ngFor="let laboratorium of allLaboratorium" [ngValue]="laboratorium">{{laboratorium.nama}}</option>
           </select>
 
-          <div *ngIf="selectedLaboratorium != null" class="form-group">
-            <label for="search">Cari tindakan dengan kode pasien</label>
-            <div class="input-group">
-              <input type="text" class="form-control" [(ngModel)]="searchTerm" (keydown)="onEnter($event)" id="search" name="search">
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-success" (click)="search()">
-                  Cari
-                </button>
-              </span>
-            </div>
-          </div>
+          <button type="button" class="btn btn-success" (click)="search()">
+            Cari
+          </button>
         </div>
       </div>
 
-      <p *ngFor="let alert of alerts">
-        <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
-      </p>
-
       <div class="card mb-3" *ngIf="allTindakan.length > 0">
         <div class="card-header card-info">
-          <h5 class="mb-0"><b>Tindakan Pasien {{searchTerm}} pada {{selectedLaboratorium.nama}}</b></h5>
+          <h5 class="mb-0"><b>Tindakan {{selectedLaboratorium.nama}} yang perlu diproses</b></h5>
         </div>
         <div class="card-block">
           <table class="table">

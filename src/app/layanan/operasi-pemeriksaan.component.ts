@@ -237,7 +237,7 @@ export class PemeriksaanOperasiComponent implements OnInit {
 	}
 
   deleteTindakanOperasi(id: number) {
-    this.tindakanOperasiService.destroyTindakanOperasi(id).subscribe( 
+    this.tindakanOperasiService.destroyTindakanOperasi(id).subscribe(
       data => {
         this.tindakanOperasiService.getTenagaMedisByTindakanOperasi(this.pemakaianKamar.id).subscribe(
           data => {

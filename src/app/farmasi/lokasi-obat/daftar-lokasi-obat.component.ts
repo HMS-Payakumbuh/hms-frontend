@@ -1,5 +1,7 @@
 import { Component, OnInit }		from '@angular/core';
 
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
+
 import { LokasiObat } 					from './lokasi-obat';
 import { LokasiObatService }		from './lokasi-obat.service';
 
@@ -20,7 +22,9 @@ export class DaftarLokasiObatComponent implements OnInit {
   public sortOrder = "asc";
 
 	constructor(
-		private lokasiObatService: LokasiObatService
+		private lokasiObatService: LokasiObatService,
+      private toastyService: ToastyService,
+      private toastyConfig: ToastyConfig
 	) {}
 
 	ngOnInit() {
@@ -35,7 +39,20 @@ export class DaftarLokasiObatComponent implements OnInit {
 
   createLokasiObat() {
     this.lokasiObatService.createLokasiObat(this.lokasiObatModal).subscribe(
-      data => this.ngOnInit()
+      data => {
+        this.ngOnInit();
+        let toastOptions: ToastOptions = {
+            title: "Success",
+            msg: "Lokasi obat berhasil ditambahkan",
+            showClose: true,
+            timeout: 5000,
+            theme: 'material'
+        };            
+        this.toastyService.success(toastOptions);
+      },
+      error => {
+        this.handleError(error);
+      }
     );
   }
   
@@ -46,13 +63,50 @@ export class DaftarLokasiObatComponent implements OnInit {
   
   updateLokasiObat() {
     this.lokasiObatService.updateLokasiObat(this.lokasiObatModalId, this.lokasiObatModal).subscribe(
-      data => this.ngOnInit()
+      data => {
+        this.ngOnInit();
+        let toastOptions: ToastOptions = {
+            title: "Success",
+            msg: "Lokasi obat berhasil diperbarui",
+            showClose: true,
+            timeout: 5000,
+            theme: 'material'
+        };            
+        this.toastyService.success(toastOptions);
+      },
+      error => {
+        this.handleError(error);
+      }
     );
   }
 
   destroyLokasiObat(id: number) {
     this.lokasiObatService.destroyLokasiObat(id).subscribe(
-      data => this.ngOnInit()
+      data => {
+        this.ngOnInit();
+        let toastOptions: ToastOptions = {
+            title: "Success",
+            msg: "Lokasi obat berhasil dihapus",
+            showClose: true,
+            timeout: 5000,
+            theme: 'material'
+        };            
+        this.toastyService.success(toastOptions);
+      },
+      error => {
+        this.handleError(error);
+      }
     );
+  }
+
+  private handleError(error: any) {
+    let toastOptions: ToastOptions = {
+          title: "Error",
+          msg: error,
+          showClose: true,
+          timeout: 5000,
+          theme: 'material'
+      };
+      this.toastyService.error(toastOptions);
   }
 }

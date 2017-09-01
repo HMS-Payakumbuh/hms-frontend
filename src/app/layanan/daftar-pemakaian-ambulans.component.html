@@ -1,0 +1,52 @@
+<html>
+  <div class="row">
+    <div class="col-md-12">
+      <blockquote class="blockquote">
+        <p class="h4 mb-0"><b>Daftar Pemakaian Ambulans</b></p>
+      </blockquote>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div *ngIf="allTindakan.length == 0">
+        Tidak ada request ambulans
+      </div>
+      <div class="card mb-3" *ngIf="allTindakan.length > 0">
+        <table class="table" [mfData]="allTindakan" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+          <thead class="card-header card-info">
+            <th><mfDefaultSorter by="nama_pasien">Nama Pasien</mfDefaultSorter></th>
+            <th><mfDefaultSorter by="kode_pasien">Kode Pasien</mfDefaultSorter></th>
+            <th>Pilih ambulans</th>
+            <th></th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tindakan of mf.data">
+              <td>{{tindakan.pasien.nama_pasien}}</td>
+              <td>{{tindakan.pasien.kode_pasien}}</td>
+              <td>
+                <select class="form-control" [(ngModel)]="tindakan.nama_ambulans" name="selectAmbulans">
+                  <option *ngFor="let ambulans of allAmbulans" [(ngValue)]="ambulans.nama">
+                    {{ambulans.nama}}
+                  </option>
+                </select>
+              </td>
+              <td>
+                <button type="button" class="btn btn-success" *ngIf="tindakan.nama_ambulans != 'Ambulans belum dipilih'" (click)="pilihAmbulans(tindakan)">
+                  Pilih Ambulans
+                </button>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3">
+                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</html>

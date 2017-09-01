@@ -2,11 +2,10 @@
   <div class="row">
     <div class="col-md-12">
       <blockquote class="blockquote">
-        <p class="h4 mb-0"><b>Dashboard Dokter</b></p>
+        <p class="h4 mb-0"><b>Dasbor Dokter</b></p>
       </blockquote>
     </div>
   </div>
-  <ng2-toasty [position]="'top-center'"></ng2-toasty>
   <div class="row">
 
     <div class="col-md-6">
@@ -18,7 +17,7 @@
             </div>
             <div class="card-block">
               <label for="selectPoli">Pilih poliklinik</label>
-              <select class="form-control mb-3" id="selectPoli" [(ngModel)]="selectedPoliklinik" name="selectPoli">
+              <select class="form-control mb-3" id="selectPoli" [(ngModel)]="selectedPoliklinik" (ngModelChange)="setShowPoliButton(true)" name="selectPoli">
                 <ng-container *ngFor="let poliklinik of allPoliklinik">
                   <option *ngIf="poliklinik.nama != 'IGD'" [ngValue]="poliklinik">
                     {{poliklinik.nama}}
@@ -27,7 +26,7 @@
               </select>
 
               <div *ngIf="selectedPoliklinik != null">
-                <button type="button mr-3" class="btn btn-info" (click)="showDaftarPasien()">
+                <button type="button mr-3" class="btn btn-info" *ngIf="showPoliButton" (click)="showDaftarPasien()">
                   Lihat Daftar Pasien {{selectedPoliklinik.nama}}
                 </button>
               </div>
@@ -40,7 +39,7 @@
         <div class="col-md-12">
           <div class="card mb-3">
             <div class="card-header card-info">
-              <h5 class="text-center mb-0"><b>Pasien rujukan</b></h5>
+              <h5 class="text-center mb-0"><b>Pasien Rujukan dari Poli Lain</b></h5>
             </div>
             <div class="card-block">
               <div class="card card-outline-info">
@@ -59,7 +58,7 @@
                       <tr>
                         <td colspan="2">
                           <button type="button" class="btn btn-success" [routerLink]="['/poliklinik', nama_poli, transaksiRujukan.transaksi.id]">
-                            Proses
+                            Periksa
                           </button>
                         </td>
                       </tr>
@@ -114,7 +113,7 @@
                   <table class="table mt-3" [mfData]="allOnProcessAntrian" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
                     <thead class="thead" style="background-color: #5bc0de; text-color=#ffffff;">
                       <tr>
-                        <th colspan="3">Pasien yang harus diproses</th>
+                        <th colspan="3">Pasien yang harus diperiksa</th>
                       </tr>
                       <tr>
                         <th><mfDefaultSorter by="nama">Nama Pasien</mfDefaultSorter></th>
@@ -128,7 +127,7 @@
                         <td>{{antrian.no_antrian}}</td>
                         <td>
                           <button type="button" class="btn btn-sm btn-success" (click)="prosesAntrian(antrian.transaksi.id, antrian.no_antrian)">
-                            Proses
+                            Periksa
                           </button>
                         </td>
                       </tr>
@@ -178,7 +177,7 @@
                   <table class="table mt-3" [mfData]="allProcessedAntrian" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
                     <thead class="thead" style="background-color: #5bc0de; text-color=#ffffff;">
                       <tr>
-                        <th colspan="2">Pasien yang sudah diproses</th>
+                        <th colspan="3">Pasien yang sudah diperiksa</th>
                       </tr>
                       <tr>
                         <th><mfDefaultSorter by="nama">Nama Pasien</mfDefaultSorter></th>
@@ -191,7 +190,7 @@
                         <td class="text-left">{{antrian.transaksi.pasien.nama_pasien}}</td>
                         <td>{{antrian.no_antrian}}</td>
                         <td>
-                          <button type="button" class="btn btn-sm btn-success" [routerLink] = "['/rekam_medis', selectedPoliklinik.nama, antrian.id_transaksi, antrian.transaksi.pasien.id]">
+                          <button type="button" class="btn btn-sm btn-success" [routerLink] = "['/rekam_medis', antrian.transaksi.pasien.id]">
                             Lihat Rekam Medis
                           </button>
                         </td>
@@ -199,7 +198,7 @@
                     </tbody>
                     <tfoot>
                       <tr>
-                        <td colspan="2">
+                        <td colspan="3">
                           <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
                         </td>
                       </tr>
@@ -233,7 +232,7 @@
               <button type="button mr-3" class="btn btn-info" (click)="showDaftarPasienICU()">
                 Lihat Daftar Pasien
               </button>
-              
+
             </div>
           </div>
         </div>
@@ -294,10 +293,10 @@
         </div>
       </div>
     </div>
-    
+
   </div>
 
-  <div class="row" *ngIf="allPemakaianRawatinap.length > 0"> 
+  <div class="row" *ngIf="allPemakaianRawat.length > 0">
 
     <div class="col-md-6">
       <div class="row">
@@ -309,13 +308,13 @@
             <div class="card-block">
               <label for="selectPoli">Pilih Kamar Rawat Inap</label>
               <select class="form-control mb-3" id="selectRawatinap" [(ngModel)]="selectedPemakaianRawatinap" name="selectRawatinap">
-                <option *ngFor="let rawatinap of allPemakaianRawatinap" [ngValue]="rawatinap">{{rawatinap.no_kamar}}</option>
+                <option *ngFor="let rawatinap of allPemakaianRawat" [ngValue]="rawatinap">{{rawatinap.no_kamar}}</option>
               </select>
 
               <button type="button mr-3" class="btn btn-info" (click)="showDaftarPasienRawatinap()">
                 Lihat Daftar Pasien
               </button>
-              
+
             </div>
           </div>
         </div>
@@ -376,12 +375,12 @@
         </div>
       </div>
     </div>
-    
+
   </div>
 
 
 
-  <div class="row" *ngIf="allPemakaianOperasi.length > 0"> 
+  <div class="row" *ngIf="allPemakaianOperasi.length > 0">
     <div class="col-md-12">
       <div class="card mb-3">
 				<div class="card-header card-info">
@@ -391,14 +390,14 @@
 				<div class="card-block">
           <div class="row">
 						<div class="col-md-6 pull-left">
-							<div class="input-group">							
+							<div class="input-group">
 							    <input type="text" class="form-control" [(ngModel)]="param" placeholder="No.Kamar/Nama Pasien"/>
 							</div>
 						</div>
 					</div>
 
 					<table class="table">
-                        
+
 						<thead>
 							<th>Nama Kamar</th>
               <th>Nama Pasien</th>
@@ -407,14 +406,14 @@
 							<th></th>
 							<tr>
 						</thead>
-						
+
 						<tbody *ngFor="let kamaroperasi of allPemakaianOperasi | filterWaktuKeluar: selectedDate">
 							<tr>
 								<td>{{kamaroperasi?.no_kamar}}</td>
                 <td>{{kamaroperasi?.nama_pasien}}</td>
 								<td>{{kamaroperasi?.nama_tindakan}}</td>
                 <td>{{kamaroperasi?.waktu_masuk_real | date:'d MMM y H:mm'}}</td>
-                
+
                 <button type="button" class="btn btn-sm btn-info" (click)="operasi(kamaroperasi.no_kamar,kamaroperasi.id,kamaroperasi.id_transaksi)">
                     Operasi
                 </button>
@@ -426,11 +425,11 @@
   </div>
   </div>
 
-  
 
 
 
-  
+
+
 
 
   <div class="modal fade" tabindex="-1" role="dialog" id="pemakaianAmbulansModal" aria-hidden="true">

@@ -1,5 +1,7 @@
 import { JenisObat }    from '../jenis-obat/jenis-obat';
-import { StokObat }			from '../stok-obat/stok-obat';
+import { StokObat }		from '../stok-obat/stok-obat';
+import { Tindakan }     from '../../layanan/tindakan';
+import { Transaksi }     from '../../transaksi/transaksi';
 
 export class ObatTindakan {
 	constructor(
@@ -13,6 +15,9 @@ export class ObatTindakan {
     public harga_jual_realisasi: number = null,
     public id_transaksi: number = null,
     public id_tindakan: number = null,
-	public stok_obat: StokObat = null
+	public stok_obat: StokObat = new StokObat(),
+    public jenis_obat: JenisObat = new JenisObat(),
+    public tindakan: Tindakan = new Tindakan(),
+    public transaksi: Transaksi = null
   ) {  }
 }

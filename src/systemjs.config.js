@@ -27,7 +27,7 @@
       // other libraries
       'rxjs':                      'npm:rxjs',
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
-      
+
       // ng-bootstrap
       '@ng-bootstrap/ng-bootstrap': 'npm:@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
 
@@ -38,15 +38,12 @@
       // lodash
       'lodash': 'npm:lodash',
 
-      // ng2-input-autocomplete
-      'ng2-input-autocomplete': 'npm:ng2-input-autocomplete/bundles/',
-
       // angular2-datatable
       'angular2-datatable':'npm:angular2-datatable',
 
       //socket.io
       "socket.io-client": 'npm:socket.io-client',
-      
+
       //ng2-toasty
       'ng2-toasty': 'node_modules/ng2-toasty/bundles/index.umd.js'
 
@@ -82,10 +79,6 @@
       },
       'moment' : {
         main: './moment.js',
-        defaultExtension: 'js'
-      },
-      'ng2-input-autocomplete' : {
-        main: './ng2-input-autocomplete.js',
         defaultExtension: 'js'
       },
       'angular2-datatable': {

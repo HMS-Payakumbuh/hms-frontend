@@ -1,4 +1,5 @@
 import { Component, OnInit, Input }		from '@angular/core';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
 import { Laboratorium }         from './laboratorium';
 import { LaboratoriumService }  from './laboratorium.service';
@@ -23,21 +24,14 @@ export class LaboratoriumTindakanComponent implements OnInit {
   allLaboratorium: Laboratorium[] = [];
   allTindakan: Tindakan[] = [];
   selectedLaboratorium: Laboratorium = null;
-  searchTerm: string = '';
-
-  @Input()
-  public alerts: Array<IAlert> = [];
 
   constructor (
     private laboratoriumService: LaboratoriumService,
     private hasilLabService: HasilLabService,
-    private tindakanService: TindakanService
+    private tindakanService: TindakanService,
+    private toastyService: ToastyService,
+    private toastyConfig: ToastyConfig
   ) {}
-
-  public closeAlert(alert: IAlert) {
-    const index: number = this.alerts.indexOf(alert);
-    this.alerts.splice(index, 1);
-  }
 
   ngOnInit() {
     this.laboratoriumService.getAllLaboratorium().subscribe(
@@ -52,17 +46,33 @@ export class LaboratoriumTindakanComponent implements OnInit {
   }
 
   search() {
-    this.tindakanService.getTindakanWithoutHasilLab(this.selectedLaboratorium.nama, this.searchTerm)
+    this.tindakanService.getTindakanWithoutHasilLab(this.selectedLaboratorium.nama)
       .subscribe(
         data => {
           if (data.length > 0) {
             this.allTindakan = data;
-            this.alerts.pop();
+
+            let toastOptions:ToastOptions = {
+                title: 'Success',
+                msg: 'Terdapat ' + data.length + ' tindakan yang perlu diproses',
+                showClose: true,
+                timeout: 5000,
+                theme: 'material'
+            };
+
+            this.toastyService.success(toastOptions);
           }
           else {
             this.allTindakan = [];
-            this.alerts.pop();
-            this.alerts.push({id: 1, type: 'warning', message: 'Tidak ada tindakan'});
+            let toastOptions:ToastOptions = {
+                title: 'Warning',
+                msg: 'Tidak ada tindakan yang perlu diproses',
+                showClose: true,
+                timeout: 5000,
+                theme: 'material'
+            };
+
+            this.toastyService.warning(toastOptions);
           }
         }
       )
@@ -82,18 +92,19 @@ export class LaboratoriumTindakanComponent implements OnInit {
       data => {
         this.hasilLabService.createHasilLab(hasilLab).subscribe(
           data => {
-            this.alerts.pop();
-            this.alerts.push({id: 1, type: 'success', message: 'Tindakan sudah dilakukan, hasil lab dapat diupload pada halaman Home'});
+            let toastOptions:ToastOptions = {
+                title: 'Success',
+                msg: 'Tindakan sudah dilakukan, hasil lab dapat diupload pada halaman Home',
+                showClose: true,
+                timeout: 5000,
+                theme: 'material'
+            };
+
+            this.toastyService.success(toastOptions);
             this.allTindakan.splice(this.allTindakan.indexOf(tindakan), 1);
           }
         )
       }
     );
   }
-}
-
-export interface IAlert {
-  id: number;
-  type: string;
-  message: string;
 }

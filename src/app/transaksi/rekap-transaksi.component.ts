@@ -1,10 +1,12 @@
 import { Component }				from '@angular/core';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 import * as _ from "lodash";
 
 import { Transaksi }			from './transaksi';
 import { TransaksiService }		from './transaksi.service';
 import { Asuransi }				from '../pasien/asuransi';
 import { AsuransiService }		from '../pasien/asuransi.service';
+import { ENV }					from '../environment';
 
 
 @Component({
@@ -14,6 +16,10 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 })
 
 export class RekapTransaksiComponent {
+	private transaksiUrl = ENV.transaksiUrl;
+
+	tanggal_awal: string;
+	tanggal_akhir: string;
 	loading: boolean;
 	transaksi_obat: boolean;
 	nama_pasien: string;
@@ -21,6 +27,9 @@ export class RekapTransaksiComponent {
 	cari: boolean;
 	response: any;
 	allTransaksi: any[];
+	config = {
+		"format": "YYYY-MM-DD"
+	};
 
     public rowsOnPage = 10;
     public sortBy = "waktu_masuk_pasien";
@@ -28,10 +37,14 @@ export class RekapTransaksiComponent {
 
 	constructor(
 		private transaksiService: TransaksiService,
-		private asuransiService: AsuransiService
+		private asuransiService: AsuransiService,
+		private toastyService: ToastyService, 
+		private toastyConfig: ToastyConfig
 	) {}
 
 	ngOnInit(): void {
+		this.tanggal_awal = null;
+		this.tanggal_akhir = null;
 		this.loading = true;
 		this.transaksi_obat = false;
 		this.cari = false;
@@ -78,5 +91,62 @@ export class RekapTransaksiComponent {
 			}
 		}
 		return hasil;
+	}
+
+	public download() {
+		if ((this.tanggal_awal === null || this.tanggal_awal === '') && (this.tanggal_akhir === null || this.tanggal_akhir === '')) {
+			this.toastyService.error(this.toast_fail(3));
+		}
+		else {
+			if (this.tanggal_awal === null || this.tanggal_awal === '') {
+				this.toastyService.error(this.toast_fail(1));
+			}
+			else {
+				if (this.tanggal_akhir === null || this.tanggal_akhir === '') {
+					this.toastyService.error(this.toast_fail(2));
+				}
+				else {
+				    window.location.href = this.transaksiUrl + '/export?tanggal_awal=' + this.tanggal_awal + '&tanggal_akhir=' + this.tanggal_akhir;
+					this.toastyService.success(this.toast_success());
+					this.ngOnInit();
+				}
+			}
+		}
+	}
+
+	private toast_success() {
+		let toastOptions:ToastOptions = {
+			title: "Mengunduh...",
+			msg: '',
+			showClose: true,
+			timeout: 1000,
+			theme: 'material'
+		};
+
+		return toastOptions;
+	}
+
+	private toast_fail(value) {
+		let title: string = ''
+		if (value === 1) {
+			title = 'Tanggal mulai tidak boleh kosong';
+		} 
+		else {
+			if (value === 2) {
+				title = 'Tanggal selesai tidak boleh kosong';
+			}
+			else {
+				title = 'Tanggal mulai dan tanggal selesai tidak boleh kosong';
+			}
+		}
+		let toastOptions:ToastOptions = {
+			title: title,
+			msg: '',
+			showClose: true,
+			timeout: 5000,
+			theme: 'material'
+		};
+
+		return toastOptions;
 	}
 }

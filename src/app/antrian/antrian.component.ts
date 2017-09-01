@@ -98,17 +98,7 @@ export class AntrianComponent implements OnInit, OnDestroy {
       this.socket.on('antrianFrontOffice'+this.kategori, this.updateAntrianFrontOffice.bind(this));
       this.updateAntrianFrontOffice();
       this.observable = Observable.interval(2000 * 60).subscribe(x => {
-          this.antrianService.updateAntrianSMS().subscribe(data => {
-              let toastOptions:ToastOptions = {
-                  title: "Update Sukses !",
-                  msg: "Antrian SMS sudah diperbarui.",
-                  showClose: true,
-                  timeout: 5000,
-                  theme: 'material'
-              };
-
-              this.toastyService.success(toastOptions);
-            });
+          this.antrianService.updateAntrianSMS().subscribe(data => {});
         });
     }
     else {
@@ -228,7 +218,7 @@ export class AntrianComponent implements OnInit, OnDestroy {
 
   private setKategori() {
     this.authenticationService.setKategori(this.user.no_pegawai, this.kategori);
-    setTimeout(() => 
+    setTimeout(() =>
     {
       this.user = JSON.parse(localStorage.getItem('currentUser'));
       this.kategori = JSON.parse(this.user.other).kategori_antrian;
@@ -259,7 +249,7 @@ export class AntrianComponent implements OnInit, OnDestroy {
                 theme: 'material'
             };
 
-            this.toastyService.success(toastOptions);
+            this.toastyService.error(toastOptions);
           }
         }
       )

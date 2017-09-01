@@ -1,6 +1,7 @@
 import { Injectable }			from '@angular/core';
 import { Headers, Http, Response, RequestOptions }		from '@angular/http';
 import { Observable }			from 'rxjs/Rx';
+import { AuthHttp }				from 'angular2-jwt';
 
 import { ENV }						from '../environment';
 import { Poliklinik }			from './poliklinik';
@@ -9,7 +10,10 @@ import { Poliklinik }			from './poliklinik';
 export class PoliklinikService {
 	poliklinikUrl = ENV.poliklinikUrl;
 
-	constructor(private http:Http) { }
+	constructor(
+		private http: Http,
+		private authHttp: AuthHttp
+	) { }
 
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
@@ -22,7 +26,7 @@ export class PoliklinikService {
 	}
 
 	getPoliklinik(nama: string): Observable<Poliklinik> {
-		return this.http.get(this.poliklinikUrl + '/' + nama)
+		return this.authHttp.get(this.poliklinikUrl + '/' + nama)
 			.map((res: Response) => res.json());
 	}
 
@@ -31,7 +35,7 @@ export class PoliklinikService {
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(poliklinik);
 
-		return this.http.post(this.poliklinikUrl, body, options)
+		return this.authHttp.post(this.poliklinikUrl, body, options)
 			.map((res: Response) => res.json());
 	}
 
@@ -40,7 +44,7 @@ export class PoliklinikService {
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(poliklinik);
 
-		return this.http.put(this.poliklinikUrl + '/' + nama, body, options)
+		return this.authHttp.put(this.poliklinikUrl + '/' + nama, body, options)
 			.map((res: Response) => res.json());
 	}
 
@@ -48,7 +52,7 @@ export class PoliklinikService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 
-		return this.http.delete(this.poliklinikUrl + '/' + nama, options)
+		return this.authHttp.delete(this.poliklinikUrl + '/' + nama, options)
 			.map((res: Response) => res.json());
 	}
 }
