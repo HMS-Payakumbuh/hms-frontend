@@ -84,7 +84,7 @@ export class ObatEceranFormComponent {
 		       	data => {	         	  	
 		       		let toastOptions: ToastOptions = {
 			            title: "Success",
-			            msg: "Obat eceran berhasil ditambahkan",
+			            msg: "Pembelian obat eceran berhasil ditambahkan",
 			            showClose: true,
 			            timeout: 5000,
 			            theme: 'material'

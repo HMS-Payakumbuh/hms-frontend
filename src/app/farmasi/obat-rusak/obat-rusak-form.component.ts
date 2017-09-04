@@ -95,12 +95,16 @@ export class ObatRusakFormComponent {
 	private addSelectedStokObat(stokObat: StokObat) {
 	    this.stokObat = stokObat;
 	    this.tempKadaluarsa = new Date(this.stokObat.kadaluarsa);
+	    this.tempKadaluarsa.setDate(this.tempKadaluarsa.getDate() + 1); // Somehow the date displayed is off by 1 day so I have to add this
 		this.formattedKadaluarsa = this.tempKadaluarsa.toISOString().split('T')[0];
 	}
 
 	private validateInput(): boolean {
+		let today = new Date();	
+		let kadaluarsa = new Date(this.stokObat.kadaluarsa);
+
 		if	(this.obatRusak.asal == null) {
-			this.handleError("Lokasi asal wajib diisi");
+			this.handleError("Asal wajib diisi");
 			return false;
 		} else if (this.obatRusak.alasan == '') {
 			this.handleError("Alasan wajib diisi");
@@ -116,6 +120,9 @@ export class ObatRusakFormComponent {
 			return false;
 		} else if (this.obatRusak.jumlah > this.stokObat.jumlah) {
 			this.handleError("Jumlah keluar tidak boleh lebih besar dari jumlah stok");
+			return false;
+		} else if ((this.obatRusak.alasan == 'Kadaluarsa') && (kadaluarsa.getTime() > today.getTime())) {
+			this.handleError("Obat belum kadaluarsa");
 			return false;
 		} else {
 			return true;
