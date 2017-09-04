@@ -250,7 +250,7 @@ export class ObatTebusFormComponent {
 				       	data => {
 				       		let toastOptions: ToastOptions = {
 					            title: "Success",
-					            msg: "Obat tebus berhasil ditambahkan",
+					            msg: "Pembelian obat tebus berhasil ditambahkan",
 					            showClose: true,
 					            timeout: 5000,
 					            theme: 'material'

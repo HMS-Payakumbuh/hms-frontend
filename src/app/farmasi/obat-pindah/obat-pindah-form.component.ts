@@ -94,7 +94,8 @@ export class ObatPindahFormComponent {
 
 	private addSelectedStokObat(stokObat: StokObat) {
 	    this.stokObat = stokObat;
-	    this.tempKadaluarsa = new Date(this.stokObat.kadaluarsa);
+	    this.tempKadaluarsa = new Date(this.stokObat.kadaluarsa);	    
+	    this.tempKadaluarsa.setDate(this.tempKadaluarsa.getDate() + 1); // Somehow the date displayed is off by 1 day so I have to add this
 		this.formattedKadaluarsa = this.tempKadaluarsa.toISOString().split('T')[0];
 	}
 
