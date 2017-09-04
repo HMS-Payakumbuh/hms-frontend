@@ -9,6 +9,10 @@
 
   <div class="row">
     <div class="col-md-12">
+      <button class="btn mb-3" (click)="ngOnInit()">
+        <i class="fa fa-refresh"></i>
+      </button>
+      
       <div *ngIf="allTindakan.length == 0">
         Tidak ada request ambulans
       </div>
@@ -40,7 +44,7 @@
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="3">
+              <td colspan="4">
                 <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
               </td>
             </tr>
