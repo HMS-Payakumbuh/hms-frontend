@@ -1,6 +1,7 @@
 import { Injectable }		from '@angular/core';
 import { Headers, Http, Response, RequestOptions, URLSearchParams }		from '@angular/http';
 import { Observable }		from 'rxjs/Rx';
+import { AuthHttp }				from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -11,16 +12,18 @@ import { ENV }				from '../../environment';
 export class StockOpnameService {
 	private stockOpnameUrl = ENV.stockOpnameUrl;
 	
-	constructor(private http:Http) { }
+	constructor(
+		private http: Http,
+		private authHttp: AuthHttp
+	) { }
 
-	// TO-DO: Convert into Observable?
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
 		return Promise.reject(error.message || error);
 	}
 
 	getAllStockOpname(): Observable<StockOpname[]> {
-		return this.http.get(this.stockOpnameUrl)
+		return this.authHttp.get(this.stockOpnameUrl)
 			.map((res: Response) => res.json());
 	}
 
@@ -36,7 +39,7 @@ export class StockOpnameService {
 		let requestOptions = new RequestOptions();
 		requestOptions.params = params;
 
-		return this.http.get(this.stockOpnameUrl+'/search_by_location', requestOptions)
+		return this.authHttp.get(this.stockOpnameUrl+'/search_by_location', requestOptions)
 		    .map((res: Response) => res.json());			
 	}
 
@@ -47,7 +50,7 @@ export class StockOpnameService {
 		let requestOptions = new RequestOptions();
 		requestOptions.params = params;
 
-		return this.http.get(this.stockOpnameUrl+'/latest_by_location', requestOptions)
+		return this.authHttp.get(this.stockOpnameUrl+'/latest_by_location', requestOptions)
 		    .map((res: Response) => res.text() ? res.json() : res);			
 	}
 
@@ -55,6 +58,6 @@ export class StockOpnameService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });
     	let body = JSON.stringify(stockOpname);
-    	return this.http.post(this.stockOpnameUrl, body, options ).map((res: Response) => res.json());
+    	return this.authHttp.post(this.stockOpnameUrl, body, options ).map((res: Response) => res.json());
 	}
 }

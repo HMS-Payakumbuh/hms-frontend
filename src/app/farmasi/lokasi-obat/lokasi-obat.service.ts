@@ -1,6 +1,7 @@
 import { Injectable }		from '@angular/core';
 import { Headers, Http, Response, RequestOptions }		from '@angular/http';
 import { Observable }		from 'rxjs/Rx';
+import { AuthHttp }				from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -11,16 +12,18 @@ import { ENV }				from '../../environment';
 export class LokasiObatService {
 	private lokasiObatUrl = ENV.lokasiObatUrl;
 
-	constructor(private http:Http) { }
+	constructor(
+		private http: Http,
+		private authHttp: AuthHttp
+	) { }
 
-	// TO-DO: Convert into Observable?
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
 		return Promise.reject(error.message || error);
 	}
 
 	getAllLokasiObat(): Observable<LokasiObat[]> {
-		return this.http.get(this.lokasiObatUrl)
+		return this.authHttp.get(this.lokasiObatUrl)
 			.map((res: Response) => res.json());
 	}
 
@@ -33,7 +36,7 @@ export class LokasiObatService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });
     	let body = JSON.stringify(lokasiObat);
-    	return this.http.post(this.lokasiObatUrl, body, options ).map((res: Response) => res.json());
+    	return this.authHttp.post(this.lokasiObatUrl, body, options ).map((res: Response) => res.json());
 	}
 
 	updateLokasiObat(id: number, lokasiObat: LokasiObat) {
@@ -41,7 +44,7 @@ export class LokasiObatService {
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(lokasiObat);
 
-		return this.http.put(this.lokasiObatUrl + '/' + id, body, options)
+		return this.authHttp.put(this.lokasiObatUrl + '/' + id, body, options)
 			.map((res: Response) => res.json());
 	}
 
@@ -49,7 +52,7 @@ export class LokasiObatService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 
-		return this.http.delete(this.lokasiObatUrl + '/' + id, options)
+		return this.authHttp.delete(this.lokasiObatUrl + '/' + id, options)
 			.map((res: Response) => res.json());
 	}
 }
