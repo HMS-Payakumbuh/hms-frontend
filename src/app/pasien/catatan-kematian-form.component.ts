@@ -25,6 +25,7 @@ export class CatatanKematianFormComponent implements OnInit {
   catatanKematian: CatatanKematian;	
   allPasien: Pasien[];
   datePipe: any = new DatePipe('id');
+  config: any;
 
   genders = [{id: 1, nama: 'Laki-laki'}, {id: 2, nama: 'Perempuan'}];
 
@@ -59,7 +60,7 @@ export class CatatanKematianFormComponent implements OnInit {
     });
   }
 
-  private searchPasien() {
+  searchPasien() {
     if (this.search) {
       if (this.search.match(/\d/)) {
         this.allPasien = [];
@@ -78,12 +79,12 @@ export class CatatanKematianFormComponent implements OnInit {
     }
   }
 
-  private selectPasien() {
+  selectPasien() {
     this.pasien.tanggal_lahir = this.datePipe.transform(this.pasien.tanggal_lahir, 'dd-MM-yyyy');
     this.searchDone = true;
   }
 
-  private createCatatanKematian() {
+  createCatatanKematian() {
     this.catatanKematian.id_pasien = this.pasien.id;
     this.catatanKematian.waktu_kematian = this.tanggal_kematian + ' ' + this.waktu_kematian;
     this.pasienService.createCatatanKematian(this.catatanKematian).subscribe(
