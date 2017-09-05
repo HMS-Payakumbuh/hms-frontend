@@ -33,7 +33,7 @@ export class DaftarAntrianComponent {
     private toastyConfig: ToastyConfig
   ) {}
 
-  private selectTipeLayanan() {
+  selectTipeLayanan() {
     if (this.tipe === 'Poliklinik') {
       this.poliklinikService.getAllPoliklinik().subscribe(
         data => { this.allLayanan = data }
@@ -45,7 +45,7 @@ export class DaftarAntrianComponent {
     }
   }
 
-  public daftar() {
+  daftar() {
     let request: any = null;
     if (this.tipe === 'Poliklinik') {
       request = {

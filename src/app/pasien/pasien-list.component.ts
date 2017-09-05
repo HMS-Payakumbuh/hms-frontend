@@ -32,25 +32,25 @@ export class PasienListComponent {
 		private pasienService: PasienService
 	) {}
 
-	private editPasien(id: number, pasien: Pasien): void {
+	editPasien(id: number, pasien: Pasien): void {
 		this.pasienId = id;
 		this.pasien = Object.assign({}, pasien);
 		this.pasien.tanggal_lahir = this.datePipe.transform(this.pasien.tanggal_lahir, 'dd-MM-yyyy');
 	}
 
-	private updatePasien() {
+	updatePasien() {
 	    this.pasienService.updatePasien(this.pasienId, this.pasien).subscribe(
 	      data => { this.searchPasien() }
 	    );
 	}
 
-	private destroyPasien(id: number) {
+	destroyPasien(id: number) {
 	    this.pasienService.destroyPasien(id).subscribe(
 	      data => { this.searchPasien() }
 	    );
 	}
 
-	private searchPasien() {
+	searchPasien() {
 	if (this.search) {
 		if (this.search.match(/\d/)) {
 	      this.allPasien = [];

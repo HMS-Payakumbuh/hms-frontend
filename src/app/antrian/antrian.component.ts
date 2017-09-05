@@ -122,7 +122,7 @@ export class AntrianComponent implements OnInit, OnDestroy {
     }
   }
 
-  private updateKategori() {
+  updateKategori() {
     this.poliklinikService.getAllPoliklinik().subscribe(
       data => {
         for(let dat of data) {
@@ -136,14 +136,14 @@ export class AntrianComponent implements OnInit, OnDestroy {
     );
   }
 
-  private updateAntrianSMS() {
+  updateAntrianSMS() {
     this.antrianService.getAntrianSMSFrontOffice(this.kategori)
       .subscribe(allAntrian => {
         this.allAntrianSMS = allAntrian;
       });
   }
 
-  private updateAntrian() {
+  updateAntrian() {
     this.route.params
         .switchMap((params: Params) => this.antrianService.getAntrian(params['namaLayanan']))
         .subscribe(allAntrian => {
@@ -162,7 +162,7 @@ export class AntrianComponent implements OnInit, OnDestroy {
         });
   }
 
-  private updateAntrianFrontOffice() {
+  updateAntrianFrontOffice() {
     this.antrianService.getAntrianFrontOffice(this.kategori)
       .subscribe(allAntrian => {
         this.allAntrian = allAntrian;
@@ -180,7 +180,7 @@ export class AntrianComponent implements OnInit, OnDestroy {
       });
   }
 
-  private proses(jenis:string) {
+  proses(jenis:string) {
     if (jenis === 'undur') {
       if (this.isfrontoffice) {
         this.antrianService.updateAntrianFrontOffice(this.antrian.nama_layanan, this.antrian.no_antrian).subscribe(data => {
@@ -204,7 +204,7 @@ export class AntrianComponent implements OnInit, OnDestroy {
     }
   }
 
-  private nextAntrian(umum: boolean) {
+  nextAntrian(umum: boolean) {
     if (umum) {
       return _.find(this.allAntrian, {jenis: 1}) ? _.find(this.allAntrian, {jenis: 1}): null;
     } else {
@@ -212,12 +212,12 @@ export class AntrianComponent implements OnInit, OnDestroy {
     }
   }
 
-  private changeKategori() {
+  changeKategori() {
     this.socket.on('antrianFrontOffice'+this.kategori, this.updateAntrianFrontOffice.bind(this));
     this.updateAntrianFrontOffice();
   }
 
-  private setKategori() {
+  setKategori() {
     this.authenticationService.setKategori(this.user.no_pegawai, this.kategori);
     setTimeout(() =>
     {
@@ -229,13 +229,13 @@ export class AntrianComponent implements OnInit, OnDestroy {
     2000);
   }
 
-  private onEnter(event) {
+  onEnter(event) {
     if (event.keyCode == 13) {
       this.searchTransaksiRujukan();
     }
   }
 
-  private searchTransaksiRujukan() {
+  searchTransaksiRujukan() {
     if (this.searchTransaksiRujukanTerm != '') {
       this.transaksiService.getAllTransaksi(this.searchTransaksiRujukanTerm, null, 'open').subscribe(
         data => {
@@ -257,17 +257,17 @@ export class AntrianComponent implements OnInit, OnDestroy {
     }
   }
 
-  private setIdTransaksi(id: number) {
+  setIdTransaksi(id: number) {
     this.idTransaksi = id;
     this.isRujukan = true;
   }
 
-  private setRujukan(value: boolean) {
+  setRujukan(value: boolean) {
     this.idTransaksi = this.antrian.id_transaksi;
     this.isRujukan = value;
   }
 
-  private checkHasilPemeriksaan() {
+  checkHasilPemeriksaan() {
     if (this.hasilPemeriksaan.berat_badan == '' || parseInt(this.hasilPemeriksaan.berat_badan) <= 0 || parseInt(this.hasilPemeriksaan.berat_badan) > 300) {
       return false;
     }
@@ -294,7 +294,7 @@ export class AntrianComponent implements OnInit, OnDestroy {
     return true;
   }
 
-  private periksa(no_pegawai, nama_poli, id_transaksi) {
+  periksa(no_pegawai, nama_poli, id_transaksi) {
     if (this.checkHasilPemeriksaan()) {
       if (!this.isRujukan) {
         this.proses('proses');
