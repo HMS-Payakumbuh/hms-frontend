@@ -17,6 +17,11 @@ export class DaftarObatRusakComponent {
     public sortBy = "id";
     public sortOrder = "desc";
 
+    public selectedDate;
+    public param1;
+    public param2;
+    public config;
+
 	constructor(
 		private ObatRusakService: ObatRusakService
 	) {}

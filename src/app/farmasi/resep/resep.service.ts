@@ -1,6 +1,7 @@
 import { Injectable }		from '@angular/core';
 import { Headers, Http, Response, RequestOptions, URLSearchParams }		from '@angular/http';
 import { Observable }		from 'rxjs/Rx';
+import { AuthHttp }				from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -11,16 +12,18 @@ import { ENV }				from '../../environment';
 export class ResepService {
 	private resepUrl = ENV.resepUrl;
 
-	constructor(private http:Http) { }
+	constructor(
+		private http: Http,
+		private authHttp: AuthHttp
+	) { }
 
-	// TO-DO: Convert into Observable?
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
 		return Promise.reject(error.message || error);
 	}
 
 	getAllResep(): Observable<Resep[]> {
-		return this.http.get(this.resepUrl)
+		return this.authHttp.get(this.resepUrl)
 			.map((res: Response) => res.json());
 	}
 
@@ -30,7 +33,7 @@ export class ResepService {
 	}
 
 	getResepOfRekamMedis(id_pasien: number, tanggal_waktu: number): Observable<Resep[]> {
-		return this.http.get(this.resepUrl + '/rekam_medis/' + id_pasien + '/' + tanggal_waktu)
+		return this.authHttp.get(this.resepUrl + '/rekam_medis/' + id_pasien + '/' + tanggal_waktu)
 			.map((res: Response) => res.json());
 	}
 
@@ -38,39 +41,15 @@ export class ResepService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });
     	let body = JSON.stringify(resep);
-    	return this.http.post(this.resepUrl, body, options ).map((res: Response) => res.json());
+    	return this.authHttp.post(this.resepUrl, body, options ).map((res: Response) => res.json());
 	}
 
 	createSingleResep(resep: Resep) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });
     	let body = JSON.stringify(resep);
-    	return this.http.post(this.resepUrl, body, options ).map((res: Response) => res.json());
+    	return this.authHttp.post(this.resepUrl, body, options ).map((res: Response) => res.json());
 	}
-
-	/* getResepByTransaksi(id_transaksi: number): Observable<Resep[]> {
-		let params: URLSearchParams = new URLSearchParams();
-		params.set('id_transaksi', ''+id_transaksi);
-
-		let requestOptions = new RequestOptions();
-		requestOptions.params = params;
-
-		return this.http.get(this.resepUrl+'/search_by_transaksi', requestOptions)
-		    .map((res: Response) => res.json());			
-	} */
-
-	/* getResepByPasienAndTanggal(id_pasien: number, tanggal_resep: Date) {
-		let params: URLSearchParams = new URLSearchParams();
-		params.set('id_pasien', ''+id_pasien);
-		params.set('tanggal_resep', tanggal_resep.toString());
-
-		let requestOptions = new RequestOptions();
-		requestOptions.params = params;
-
-		return this.http.get(this.resepUrl+'/search_by_pasien_and_tanggal', requestOptions)
-		    .map((res: Response) => res.json());		
-
-	} */
 
 	getResepByPasien(id_pasien: number) {
 		let params: URLSearchParams = new URLSearchParams();
@@ -79,7 +58,7 @@ export class ResepService {
 		let requestOptions = new RequestOptions();
 		requestOptions.params = params;
 
-		return this.http.get(this.resepUrl+'/search_by_pasien', requestOptions)
+		return this.authHttp.get(this.resepUrl+'/search_by_pasien', requestOptions)
 		    .map((res: Response) => res.json());		
 
 	}

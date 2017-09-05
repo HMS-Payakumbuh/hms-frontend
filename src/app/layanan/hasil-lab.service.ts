@@ -1,5 +1,5 @@
 import { Injectable }			from '@angular/core';
-import { Headers, Http, Response, RequestOptions, ResponseContentType }		from '@angular/http';
+import { Headers, Response, RequestOptions, ResponseContentType }		from '@angular/http';
 import { AuthHttp }				from 'angular2-jwt';
 import { Observable }			from 'rxjs/Rx';
 
@@ -12,7 +12,6 @@ export class HasilLabService {
 	private hasilLabUrl = ENV.hasilLabUrl;
 
 	constructor(
-		private http: Http,
 		private authHttp: AuthHttp
 	) { }
 

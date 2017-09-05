@@ -58,13 +58,13 @@ export class ObatPindahFormComponent {
 		this.stokObat = new StokObat();		
 	}
 
-	private onChange(asal: number) {
+	onChange(asal: number) {
 		this.stokObatService.getStokObatByLocation(asal).subscribe(
 			data => { this.allStokObatAtLocation = data }
 		);
 	}
 
-	private save() {
+	save() {
 		this.obatPindah.id_jenis_obat = this.stokObat.jenis_obat.id;
 		this.obatPindah.id_stok_obat_asal = this.stokObat.id;
 
@@ -94,7 +94,8 @@ export class ObatPindahFormComponent {
 
 	private addSelectedStokObat(stokObat: StokObat) {
 	    this.stokObat = stokObat;
-	    this.tempKadaluarsa = new Date(this.stokObat.kadaluarsa);
+	    this.tempKadaluarsa = new Date(this.stokObat.kadaluarsa);	    
+	    this.tempKadaluarsa.setDate(this.tempKadaluarsa.getDate() + 1); // Somehow the date displayed is off by 1 day so I have to add this
 		this.formattedKadaluarsa = this.tempKadaluarsa.toISOString().split('T')[0];
 	}
 

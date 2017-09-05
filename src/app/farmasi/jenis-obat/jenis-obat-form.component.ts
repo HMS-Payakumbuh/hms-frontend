@@ -28,7 +28,7 @@ export class JenisObatFormComponent {
 		this.jenisObat = new JenisObat();
 	}
 
-	private save() {
+	save() {
 		if (this.validateInput()) {
 			this.jenisObatService.createJenisObat(this.jenisObat).subscribe(
 		       	data => {

@@ -168,7 +168,7 @@ export class ObatTebusEksternalFormComponent {
 
 	}
 
-	private onTebusChange(e, i : number, j: number, ) {
+	onTebusChange(e, i : number, j: number, ) {
 		var isChecked = e.target.checked;
 		if (isChecked) {
 			this.tebus[i][j] = true;
@@ -177,7 +177,7 @@ export class ObatTebusEksternalFormComponent {
 		}
 	}
 
-	private save() {
+	save() {
 		let observables = [];
 		let stokObat = new StokObat();
 
@@ -231,7 +231,7 @@ export class ObatTebusEksternalFormComponent {
 				       	data => {			         	
 				     		let toastOptions: ToastOptions = {
 					            title: "Success",
-					            msg: "Obat tebus berhasil ditambahkan",
+					            msg: "Pembelian obat tebus berhasil ditambahkan",
 					            showClose: true,
 					            timeout: 5000,
 					            theme: 'material'

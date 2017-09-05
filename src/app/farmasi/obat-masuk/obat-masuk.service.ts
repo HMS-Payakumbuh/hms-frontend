@@ -1,6 +1,7 @@
 import { Injectable }		from '@angular/core';
 import { Headers, Http, Response, RequestOptions, URLSearchParams }		from '@angular/http';
 import { Observable }		from 'rxjs/Rx';
+import { AuthHttp }				from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -12,16 +13,18 @@ export class ObatMasukService {
 	private obatMasukUrl = ENV.obatMasukUrl;	
 	private jenisObatUrl = ENV.jenisObatUrl;
 
-	constructor(private http:Http) { }
+	constructor(
+		private http: Http,
+		private authHttp: AuthHttp
+	) { }
 
-	// TO-DO: Convert into Observable?
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
 		return Promise.reject(error.message || error);
 	}
 
 	getAllObatMasuk(): Observable<ObatMasuk[]> {
-		return this.http.get(this.obatMasukUrl)
+		return this.authHttp.get(this.obatMasukUrl)
 			.map((res: Response) => res.json());
 	}
 
@@ -29,11 +32,6 @@ export class ObatMasukService {
 		return this.getAllObatMasuk()
 			.map(allObatMasuk => allObatMasuk.find(obat_masuk => obat_masuk.id == id));
 	}
-
-	/* getTodayObatMasuk(id_stok_obat: number): Observable<ObatMasuk[]> {
-		return this.http.get(this.obatMasukUrl + '/today/' + id_stok_obat)
-			.map((res: Response) => res.json());
-	} */
 
 	getObatMasukByTime(waktu_mulai: Date, waktu_selesai: Date, id_stok_obat: number): Observable<ObatMasuk[]> {
 		let params: URLSearchParams = new URLSearchParams();
@@ -44,7 +42,7 @@ export class ObatMasukService {
 		let requestOptions = new RequestOptions();
 		requestOptions.params = params;
 
-		return this.http.get(this.obatMasukUrl+'/search_by_time', requestOptions)
+		return this.authHttp.get(this.obatMasukUrl+'/search_by_time', requestOptions)
 		    .map((res: Response) => res.json());		
 	}
 
@@ -52,7 +50,7 @@ export class ObatMasukService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });
     	let body = JSON.stringify(obatMasuk);
-    	return this.http.post(this.obatMasukUrl, body, options ).map((res: Response) => res.json());
+    	return this.authHttp.post(this.obatMasukUrl, body, options ).map((res: Response) => res.json());
 	}
 
 	searchObatMasuk(barcode: string): Observable<ObatMasuk> {
@@ -62,8 +60,7 @@ export class ObatMasukService {
 		let requestOptions = new RequestOptions();
 		requestOptions.params = params;
 
-		return this.http.get(this.obatMasukUrl+'/search', requestOptions)
+		return this.authHttp.get(this.obatMasukUrl+'/search', requestOptions)
 		    .map((res: Response) => res.json());		
-		  	
 	}
 }

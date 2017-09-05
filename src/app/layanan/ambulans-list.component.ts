@@ -1,4 +1,5 @@
 import { Component, OnInit }		from '@angular/core';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
 import { AuthenticationService }  from '../auth/authentication.service';
 import { Ambulans } 					from './ambulans';
@@ -22,7 +23,9 @@ export class AmbulansListComponent implements OnInit {
 
 	constructor(
     private authenticationService: AuthenticationService,
-    private ambulansService: AmbulansService
+    private ambulansService: AmbulansService,
+    private toastyService: ToastyService,
+    private toastyConfig: ToastyConfig
 	) {}
 
 	ngOnInit() {
@@ -36,7 +39,29 @@ export class AmbulansListComponent implements OnInit {
   makeAvailable(ambulans: Ambulans) {
     ambulans.status = 'Available';
     this.ambulansService.updateAmbulans(ambulans.nama, ambulans).subscribe(
-      data => { this.ngOnInit() }
+      data => {
+        this.ngOnInit();
+        let toastOptions:ToastOptions = {
+          title: 'Success',
+          msg: 'Status ambulans berhasil diubah',
+          showClose: true,
+          timeout: 5000,
+          theme: 'material'
+        };
+
+        this.toastyService.success(toastOptions);
+      },
+      error => {
+        let toastOptions:ToastOptions = {
+          title: 'Error',
+          msg: 'Status ambulans gagal diubah',
+          showClose: true,
+          timeout: 5000,
+          theme: 'material'
+        };
+
+        this.toastyService.error(toastOptions);
+      }
     );
   }
 
