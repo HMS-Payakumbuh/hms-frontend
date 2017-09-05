@@ -52,6 +52,9 @@ export class ObatTebusFormComponent {
 	public resepItemCount: number;	
 	public racikanItemCount: number[];
 
+	public id_resep;
+	public nama_pasien;
+
 	inputPasienFormatter = (value : Pasien) => value.nama_pasien;
 	resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.id;	
 
@@ -156,7 +159,7 @@ export class ObatTebusFormComponent {
 
 	}
 
-	private addPasien(pasien: Pasien) {	
+	addPasien(pasien: Pasien) {	
 		this.pasien = pasien;
 
 		this.resepService.getResepByPasien(this.pasien.id).subscribe(
@@ -164,7 +167,7 @@ export class ObatTebusFormComponent {
 		);
 	}
 
-	private onResepChange(id_resep: number) {
+	onResepChange(id_resep: number) {
 		this.resepService.getResep(id_resep).subscribe(
 			data => { 
 				this.resep = data; 
@@ -189,7 +192,7 @@ export class ObatTebusFormComponent {
 		);		
 	}
 
-	private onTebusChange(e, i : number, j: number, ) {
+	onTebusChange(e, i : number, j: number, ) {
 		var isChecked = e.target.checked;
 		if (isChecked) {
 			this.tebus[i][j] = true;
@@ -198,7 +201,7 @@ export class ObatTebusFormComponent {
 		}
 	}
 
-	private save() {
+	save() {
 		let observables = [];
 		let stokObat = new StokObat();
 

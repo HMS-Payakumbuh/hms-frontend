@@ -76,7 +76,7 @@ export class ObatEceranFormComponent {
 	    this.obatEceranItems.splice(i, 1);
 	}
 
-	private save() {
+	save() {
 		this.obatEceran.obat_eceran_item = this.obatEceranItems;
 
 		if (this.validateInput()) {

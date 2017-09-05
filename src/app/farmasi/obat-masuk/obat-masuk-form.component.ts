@@ -47,7 +47,7 @@ export class ObatMasukFormComponent {
     	)
 	}
 
-	private save() {
+	save() {
 		this.obatMasuk.id_jenis_obat = this.jenisObat.id;
 
 		if (this.validateInput()) {
@@ -74,7 +74,7 @@ export class ObatMasukFormComponent {
 	    }
 	}
 
-	private addSelectedJenisObat(jenisObat: JenisObat) {
+	addSelectedJenisObat(jenisObat: JenisObat) {
 	    this.jenisObat = jenisObat;
 	}
 

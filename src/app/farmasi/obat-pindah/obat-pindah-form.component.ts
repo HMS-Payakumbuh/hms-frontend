@@ -58,13 +58,13 @@ export class ObatPindahFormComponent {
 		this.stokObat = new StokObat();		
 	}
 
-	private onChange(asal: number) {
+	onChange(asal: number) {
 		this.stokObatService.getStokObatByLocation(asal).subscribe(
 			data => { this.allStokObatAtLocation = data }
 		);
 	}
 
-	private save() {
+	save() {
 		this.obatPindah.id_jenis_obat = this.stokObat.jenis_obat.id;
 		this.obatPindah.id_stok_obat_asal = this.stokObat.id;
 
