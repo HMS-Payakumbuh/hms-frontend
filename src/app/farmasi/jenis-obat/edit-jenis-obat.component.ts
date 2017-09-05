@@ -32,8 +32,7 @@ export class EditJenisObatComponent {
 		this.location.back();
 	}
 
-	private save() {
-		// alert(JSON.stringify(this.jenisObat)); 
+	save() {
 		this.jenisObatService.updateJenisObat(this.jenisObat.id, this.jenisObat).subscribe(
 	       	data => {
 	         	this.location.back();

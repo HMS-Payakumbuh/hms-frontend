@@ -17,6 +17,11 @@ export class DaftarObatTebusComponent {
     public sortBy = "id";
     public sortOrder = "desc";
 
+    public selectedDate;
+    public selectedDate2;
+    public param;
+    public config;
+
 	constructor(
 		private ObatTebusService: ObatTebusService
 	) {}

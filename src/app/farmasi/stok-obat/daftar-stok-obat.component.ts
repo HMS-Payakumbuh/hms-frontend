@@ -21,6 +21,10 @@ export class DaftarStokObatComponent {
     public sortBy = "id";
     public sortOrder = "asc";
 
+    public lokasi;
+    public param;
+    public config;
+
 	constructor(
 		private stokObatService: StokObatService,
 		private lokasiObatService: LokasiObatService
