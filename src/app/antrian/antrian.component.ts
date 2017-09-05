@@ -104,13 +104,14 @@ export class AntrianComponent implements OnInit, OnDestroy {
     else {
       this.updateAntrian();
       this.isfrontoffice = false;
-      if (this.layanan.substring(0, 4) === 'Poli')
+      if (this.layanan.substring(0, 4) === 'Poli') {
         this.isPoli = true;
+        this.tenagaMedisService.getAllDokterOfSpesialis(this.layanan.substring(5)).subscribe(
+          data => this.allDokter = data
+        )
+      }
       else
         this.isPoli = false;
-      this.tenagaMedisService.getAllDokterOfSpesialis(this.layanan.substring(5)).subscribe(
-        data => this.allDokter = data
-      )
       this.socket.on('antrianLayanan'+this.layanan, this.updateAntrian.bind(this));
     }
   }
