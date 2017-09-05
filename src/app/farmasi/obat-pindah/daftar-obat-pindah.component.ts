@@ -21,6 +21,13 @@ export class DaftarObatPindahComponent {
     public sortBy = "id";
     public sortOrder = "desc";
 
+    public selectedDate;
+    public param;
+    public config;
+
+    public asal;
+    public tujuan;
+
 	constructor(
 		private obatPindahService: ObatPindahService,		
 		private lokasiObatService: LokasiObatService

@@ -17,6 +17,8 @@ export class DaftarJenisObatComponent {
     public sortBy = "id";
     public sortOrder = "asc";
 
+    public param;
+
 	constructor(
 		private JenisObatService: JenisObatService
 	) {}
