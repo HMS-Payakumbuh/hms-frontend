@@ -381,7 +381,7 @@ export class PasienFormComponent implements OnInit {
                 rekamMedis.komponen = JSON.stringify(dokumen.ClinicalDocument.component.structuredBody.component);
                 this.rekamMedisService.createRekamMedisEksternal(rekamMedis).subscribe(data => {
                     let toastOptions:ToastOptions = {
-                      title: "Pengambilan Berhasil !",
+                      title: "Pengambilan Rekam Medis Berhasil !",
                       msg: "Rekam medis sudah disimpan dan siap digunakan.",
                       showClose: true,
                       timeout: 5000,
@@ -392,7 +392,7 @@ export class PasienFormComponent implements OnInit {
                   });
               } else if (data.status == 202){
                 let toastOptions:ToastOptions = {
-                    title: "Pengambilan Gagal !",
+                    title: "Pengambilan Rekam Medis Gagal !",
                     msg: data.json,
                     showClose: true,
                     timeout: 5000,
@@ -444,7 +444,7 @@ export class PasienFormComponent implements OnInit {
       data => {
         if (data.code === 500) {
           let toastOptions:ToastOptions = {
-            title: "Registrasi Pasien Gagal !",
+            title: "Pendaftaran Antrian Gagal !",
             msg: data.message,
             showClose: true,
             timeout: 5000,

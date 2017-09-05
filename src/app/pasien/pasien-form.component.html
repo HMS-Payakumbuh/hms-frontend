@@ -134,25 +134,25 @@
                           </span>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="isBpjs">
                         <label for="asal_rujukan">Asal Rujukan</label>
-                        <input type="string" class="form-control" id="asal_rujukan" [disabled]="isVerified" [(ngModel)]="rujukan.asal_rujukan" name="asal_rujukan" required>
+                        <input type="string" class="form-control" id="asal_rujukan" disabled [(ngModel)]="rujukan.asal_rujukan" name="asal_rujukan" required>
                       </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="isBpjs">
                       <label for="nomor_pasien">Nomor Kartu Pasien</label>
-                      <input type="string" class="form-control" id="nomor_pasien" [disabled]="isVerified" [(ngModel)]="nomor_pasien" name="nomor_pasien" required>
+                      <input type="string" class="form-control" id="nomor_pasien" disabled [(ngModel)]="nomor_pasien" name="nomor_pasien" required>
                     </div>
-                    <div class="form-group" *ngIf="!isBpjs">
+                    <!-- <div class="form-group" *ngIf="!isBpjs">
                       <label for="diagnosis">Diagnosis</label>
                       <input type="string" class="form-control" id="diagnosis" [ngbTypeahead]="searchDiagnosis" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addDiagnosis($event.item)" required>
-                    </div>
+                    </div> -->
                     <div class="form-group" *ngIf="isBpjs">
                       <label for="diagnosis">Diagnosis</label>
-                      <input type="string" class="form-control" id="diagnosis" [(ngModel)]="rujukan.diagnosis" name="diagnosis" [disabled]="isVerified" required>
+                      <input type="string" class="form-control" id="diagnosis" [(ngModel)]="rujukan.diagnosis" name="diagnosis" disabled required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="isBpjs">
                       <label for="keterangan">Keterangan</label>
-                      <textarea class="form-control" id="keterangan" [(ngModel)]="rujukan.keterangan" [disabled]="isVerified" name="keterangan"></textarea>
+                      <textarea class="form-control" id="keterangan" [(ngModel)]="rujukan.keterangan" disabled name="keterangan"></textarea>
                     </div>
                   </div>
 
@@ -329,25 +329,25 @@
                           </span>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="isBpjs">
                         <label for="asal_rujukan">Asal Rujukan</label>
-                        <input type="string" class="form-control" id="asal_rujukan" [disabled]="isVerified" [(ngModel)]="rujukan.asal_rujukan" name="asal_rujukan" required>
+                        <input type="string" class="form-control" id="asal_rujukan" disabled [(ngModel)]="rujukan.asal_rujukan" name="asal_rujukan" required>
                       </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="isBpjs">
                       <label for="nomor_pasien">Nomor Kartu Pasien</label>
-                      <input type="string" class="form-control" id="nomor_pasien" [disabled]="isVerified" [(ngModel)]="nomor_pasien" name="nomor_pasien" required>
+                      <input type="string" class="form-control" id="nomor_pasien" disabled [(ngModel)]="nomor_pasien" name="nomor_pasien" required>
                     </div>
-                    <div class="form-group" *ngIf="!isBpjs">
+                    <!-- <div class="form-group" *ngIf="!isBpjs">
                       <label for="diagnosis">Diagnosis</label>
                       <input type="string" class="form-control" id="diagnosis" [ngbTypeahead]="searchDiagnosis" [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" (selectItem)="addDiagnosis($event.item)" required>
-                    </div>
+                    </div> -->
                     <div class="form-group" *ngIf="isBpjs">
                       <label for="diagnosis">Diagnosis</label>
-                      <input type="string" class="form-control" id="diagnosis" [(ngModel)]="rujukan.diagnosis" name="diagnosis" [disabled]="isVerified" required>
+                      <input type="string" class="form-control" id="diagnosis" [(ngModel)]="rujukan.diagnosis" name="diagnosis" disabled required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="isBpjs">
                       <label for="keterangan">Keterangan</label>
-                      <textarea class="form-control" id="keterangan" [(ngModel)]="rujukan.keterangan" [disabled]="isVerified" name="keterangan"></textarea>
+                      <textarea class="form-control" id="keterangan" [(ngModel)]="rujukan.keterangan" disabled name="keterangan"></textarea>
                     </div>
                   </div>
 

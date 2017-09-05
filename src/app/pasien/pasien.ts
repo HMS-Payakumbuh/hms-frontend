@@ -5,7 +5,7 @@ export class Pasien {
     public nama_pasien: string = '',
     public tanggal_lahir: string = '',
     public umur: number = null,
-    public jender: number = 1,
+    public jender: number = null,
     public agama: string = '',
     public alamat: string = '',
     public kontak: string = '',
