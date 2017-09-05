@@ -4,6 +4,7 @@ import { FormGroup, FormArray, FormBuilder, Validators }	from '@angular/forms';
 import { Location }																				from '@angular/common';
 import { Observable }																			from 'rxjs/Observable';
 import { NgbTypeaheadConfig } 														from '@ng-bootstrap/ng-bootstrap';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
 import { Transaksi }						from '../transaksi/transaksi';
 import { TransaksiService }			from '../transaksi/transaksi.service';
@@ -67,7 +68,9 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 		private laboratoriumService: LaboratoriumService,
 		private tindakanService: TindakanService,
     private hasilLabService: HasilLabService,
-		private config: NgbTypeaheadConfig
+    private config: NgbTypeaheadConfig,
+    private toastyService: ToastyService,
+    private toastyConfig: ToastyConfig
 	) {
 		config.editable = false;
 	}
@@ -165,7 +168,29 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 
   save() {
 		this.tindakanService.saveTindakan(this.selectedTindakan).subscribe(
-      data => this.router.navigate([''])
+      data => {
+        let toastOptions:ToastOptions = {
+          title: 'Success',
+          msg: 'Tindakan lab berhasil dipilih',
+          showClose: true,
+          timeout: 5000,
+          theme: 'material'
+        };
+
+        this.toastyService.success(toastOptions);
+        this.router.navigate(['']);
+      },
+      error => {
+        let toastOptions:ToastOptions = {
+          title: 'Error',
+          msg: 'Tindakan lab gagal dipilih',
+          showClose: true,
+          timeout: 5000,
+          theme: 'material'
+        };
+
+        this.toastyService.error(toastOptions);
+      }
     );
 	}
 }

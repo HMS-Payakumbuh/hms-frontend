@@ -334,5 +334,15 @@ export class DokterDashboardComponent implements OnInit {
         data => this.transaksiRujukan = data
       )
     }
+
+    let toastOptions:ToastOptions = {
+      title: 'Attention',
+      msg: 'Terdapat pasien yang harus diperiksa',
+      showClose: true,
+      timeout: 5000,
+      theme: 'material'
+    };
+
+    this.toastyService.info(toastOptions);
   }
 }

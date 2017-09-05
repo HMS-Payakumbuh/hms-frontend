@@ -1,6 +1,7 @@
 import { Injectable }		from '@angular/core';
 import { Headers, Http, Response, RequestOptions, URLSearchParams }		from '@angular/http';
 import { Observable }		from 'rxjs/Rx';
+import { AuthHttp }			from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -13,7 +14,10 @@ export class TransaksiService {
 	private sepUrl = ENV.sepUrl;
 	private storedData: any = null;
 
-	constructor(private http:Http) {
+	constructor(
+		private http: Http,
+		private authHttp: AuthHttp
+	) {
 		this.storedData = null;
 	}
 
@@ -31,25 +35,25 @@ export class TransaksiService {
 		let requestOptions = new RequestOptions();
 		requestOptions.params = params;
 
-		return this.http.get(this.transaksiUrl, requestOptions)
+		return this.authHttp.get(this.transaksiUrl, requestOptions)
 			.map((res: Response) => res.json());
 	}
 
 	getTransaksi(id: number): Observable<any> {
 		const url = `${this.transaksiUrl}/${id}`;
-		return this.http.get(url)
+		return this.authHttp.get(url)
 			.map((res: Response) => res.json());
 	}
 
 	getRecentTransaksi(nama_pasien : string): Observable<any[]> {
 		const url = `${this.transaksiUrl}` + '/' + "search" + '/' + nama_pasien;
-		return this.http.get(url)
+		return this.authHttp.get(url)
 			.map((res: Response) => res.json());
 	}
 
 	getLatestOpenTransaksi(id_pasien : number): Observable<Transaksi> {
 		const url = `${this.transaksiUrl}` + '/' + "latest" + '/' + id_pasien;
-		return this.http.get(url)
+		return this.authHttp.get(url)
 			.map((res: Response) => res.json());
 	}
 
@@ -60,7 +64,7 @@ export class TransaksiService {
 		let requestOptions = new RequestOptions();
 		requestOptions.params = params;
 
-		return this.http.get(this.sepUrl + '/' + no_rujukan, requestOptions)
+		return this.authHttp.get(this.sepUrl + '/' + no_rujukan, requestOptions)
 			.map((res: Response) => res.json());
 	}
 
@@ -70,7 +74,7 @@ export class TransaksiService {
 		let body = JSON.stringify(transaksi);
 
 		const url = `${this.transaksiUrl}/${id}`
-		return this.http.put(url, body, options)
+		return this.authHttp.put(url, body, options)
 			.map((res: Response) => res.json());
 	}
 
@@ -80,7 +84,7 @@ export class TransaksiService {
 		let body = JSON.stringify(transaksi);
 		console.log(body);
 
-		return this.http.post(this.transaksiUrl, body, options)
+		return this.authHttp.post(this.transaksiUrl, body, options)
 			.map((res: Response) => res.json());
 	}
 
@@ -91,13 +95,13 @@ export class TransaksiService {
 		let requestOptions = new RequestOptions();
 		requestOptions.params = params;
 
-		return this.http.get(this.transaksiUrl+'/search_by_pasien', requestOptions)
+		return this.authHttp.get(this.transaksiUrl+'/search_by_pasien', requestOptions)
 		    .map((res: Response) => res.json());
 	}
 
 	getStatusBpjs(id: number): Observable<any> {
 		const url = `${this.transaksiUrl}/${id}/bpjs`;
-		return this.http.get(url)
+		return this.authHttp.get(url)
 			.map((res: Response) => res.json());
 	}
 }
