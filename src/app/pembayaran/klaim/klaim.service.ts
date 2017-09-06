@@ -1,6 +1,7 @@
 import { Injectable }		from '@angular/core';
 import { Headers, Http, Response, RequestOptions}		from '@angular/http';
 import { Observable }		from 'rxjs/Rx';
+import { AuthHttp }				from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -11,7 +12,10 @@ import { ENV }				from '../../environment';
 export class KlaimService {
 	private klaimUrl = ENV.klaimUrl;
 
-	constructor(private http:Http) { }
+	constructor(
+		private http:Http,
+		private authHttp: AuthHttp
+	) { }
 
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
@@ -19,13 +23,13 @@ export class KlaimService {
 	}
 
 	getAllKlaim(): Observable<any[]> {
-		return this.http.get(this.klaimUrl)
+		return this.authHttp.get(this.klaimUrl)
 			.map((res: Response) => res.json());
 	}
 
 	getKlaim(id: number): Observable<any> {
 		const url = `${this.klaimUrl}/${id}`;
-		return this.http.get(url)
+		return this.authHttp.get(url)
 			.map((res: Response) => res.json());
 	}
 
@@ -35,7 +39,7 @@ export class KlaimService {
 		let body = JSON.stringify(klaim);
 
 		const url = `${this.klaimUrl}/${id}`
-		return this.http.put(url, body, options)
+		return this.authHttp.put(url, body, options)
 			.map((res: Response) => res.json());
 	}
 }

@@ -21,6 +21,7 @@ export class TransaksiObatDetailComponent implements OnInit {
 	response: any;
 	transaksi: any;
 	loading: boolean;
+	loading_bpjs: boolean;
 	listOfObatTebus: any[] = [];
 	asuransi: Asuransi;
 	allAsuransi: Asuransi[];
@@ -37,8 +38,13 @@ export class TransaksiObatDetailComponent implements OnInit {
 	transaksi_obat: boolean;
 	transaksi_eksternal: boolean;
 	no_pembayaran: string = '';
+	metode_bayar: any;
 
 	printListOfObatTebus: any[] = [];
+	printListOfObatEceran: any[] = [];
+	printListOfTindakan: any[] = [];
+	printListOfKamarRawatInap: any[] = [];
+	printListOfKamarJenazah: any[] = [];
 
 	constructor(
 		private transaksiService: TransaksiService,
@@ -52,6 +58,7 @@ export class TransaksiObatDetailComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.loading = true;
+		this.loading_bpjs = false;
 		this.transaksi_obat = true;
 		this.transaksi_eksternal = false;
 		this.harga_tambahan = 0;

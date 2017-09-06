@@ -21,6 +21,7 @@ export class TransaksiEksternalDetailComponent implements OnInit {
 	response: any;
 	transaksi: any;
 	loading: boolean;
+	loading_bpjs: boolean;
 	listOfObatTebus: any[] = [];
 	listOfObatEceran: any[] = [];
 	asuransi: Asuransi;
@@ -38,9 +39,14 @@ export class TransaksiEksternalDetailComponent implements OnInit {
 	transaksi_obat: boolean;
 	transaksi_eksternal: boolean;
 	no_pembayaran: string = '';
+	metode_bayar: any;
+	allMetode = [];
 
 	printListOfObatTebus: any[] = [];
 	printListOfObatEceran: any[] = [];
+	printListOfTindakan: any[] = [];
+	printListOfKamarRawatInap: any[] = [];
+	printListOfKamarJenazah: any[] = [];
 
 	constructor(
 		private transaksiEksternalService: TransaksiEksternalService,
@@ -54,6 +60,7 @@ export class TransaksiEksternalDetailComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.loading = true;
+		this.loading_bpjs = false;
 		this.transaksi_obat = false;
 		this.transaksi_eksternal = true;
 		this.harga_tambahan = 0;
@@ -100,6 +107,10 @@ export class TransaksiEksternalDetailComponent implements OnInit {
 
 	goBack(): void {
 		this.router.navigateByUrl('/histori-transaksi');
+	}
+
+	gantiAsuransi(value): void {
+
 	}
 
 	initObatTebus(value): void {
