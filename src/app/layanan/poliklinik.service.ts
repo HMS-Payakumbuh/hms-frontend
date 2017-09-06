@@ -1,5 +1,5 @@
 import { Injectable }			from '@angular/core';
-import { Headers, Response, RequestOptions }		from '@angular/http';
+import { Headers, Response, RequestOptions, Http }		from '@angular/http';
 import { Observable }			from 'rxjs/Rx';
 import { AuthHttp }				from 'angular2-jwt';
 
@@ -11,7 +11,8 @@ export class PoliklinikService {
 	poliklinikUrl = ENV.poliklinikUrl;
 
 	constructor(
-		private authHttp: AuthHttp
+		private authHttp: AuthHttp,
+		private http: Http
 	) { }
 
 	private handleError(error: any): Promise<any> {
@@ -20,7 +21,7 @@ export class PoliklinikService {
 	}
 
 	getAllPoliklinik(): Observable<Poliklinik[]> {
-		return this.authHttp.get(this.poliklinikUrl)
+		return this.http.get(this.poliklinikUrl)
 			.map((res: Response) => res.json());
 	}
 
