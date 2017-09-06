@@ -1,0 +1,64 @@
+<html>
+  <div class="row">
+    <div class="col-md-12">
+      <blockquote class="blockquote">
+        <p class="h4 mb-0"><b>Dasbor Dokter - Operasi</b></p>
+      </blockquote>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mb-3">
+				<div class="card-header card-info">
+          <h5 class="text-center mb-0"><b>Operasi</b></h5>
+				</div>
+
+				<div class="card-block">
+                    <div class="row mb-4">
+						<div class="col-md-6 pull-left">
+							<div class="input-group">
+							    <input type="text" class="form-control" [(ngModel)]="param" placeholder="No.Kamar/Nama Pasien"/>
+							</div>
+						</div>
+					</div>
+                    
+                    <span *ngIf="allPemakaianOperasi.length <= 0">
+                        Tidak ada penugasan operasi untuk saat ini
+                    </span>
+
+					<table class="table" *ngIf="allPemakaianOperasi.length > 0" [mfData]="allPemakaianOperasi | filterNoKamar : param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+                        <tr>
+                            <th><mfDefaultSorter by="no_kamar">Nama Kamar</mfDefaultSorter></th>
+                            <th><mfDefaultSorter by="nama_pasien">Nama Pasien</mfDefaultSorter></th>
+                            <th><mfDefaultSorter by="namaTindakan">Nama Tindakan</mfDefaultSorter></th>
+                            <th><mfDefaultSorter by="waktuMasuk">Waktu Masuk</mfDefaultSorter></th>
+                            <th></th>
+                        </tr>
+
+						<tbody *ngFor="let kamaroperasi of mf.data">
+							<tr>
+                                <td>{{kamaroperasi?.no_kamar}}</td>
+                                <td>{{kamaroperasi?.nama_pasien}}</td>
+                                <td>{{kamaroperasi?.nama_tindakan}}</td>
+                                <td>{{kamaroperasi?.waktu_masuk_real | date:'d MMM y H:mm'}}</td>
+
+                                <button type="button" class="btn btn-sm btn-success mt-2" (click)="operasi(kamaroperasi.no_kamar,kamaroperasi.id,kamaroperasi.id_transaksi)">
+                                Operasi
+                                </button>
+							</tr>
+						</tbody>
+                        <tfoot>
+                      <tr>
+                        <td colspan="5">
+                          <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+        </div>
+      </div>
+  </div>
+  </div>
+
+</html>

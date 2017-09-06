@@ -15,6 +15,10 @@ export class KamarJenazahListComponent implements OnInit {
 
     kamarJenazahModal : KamarJenazah = null;
 	kamarJenazahModalNama : string;
+	
+	public selectedDate;
+	public param;
+	public config;
 
 	constructor(
 		private kamarJenazahService: KamarJenazahService

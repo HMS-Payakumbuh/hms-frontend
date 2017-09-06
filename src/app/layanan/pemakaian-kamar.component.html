@@ -1,5 +1,6 @@
 <html>
 	<div class="row">
+		<ng2-toasty [position]="'top-center'"></ng2-toasty>
 		<div class="col-md-12">
 
 			<div class="card mb-3">
@@ -63,79 +64,7 @@
 					</table>
 
 
-					<div class="modal fade" tabindex="-1" role="dialog" id="pindahModal" aria-hidden="true" *ngIf="pemakaianKamarModal != null">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
 
-							<div class="modal-header bg-info text-white">
-								<h5 class="modal-title">Pindah Kamar</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<i class="fa fa-times" aria-hidden="true"></i>
-								</button>
-							</div>
-
-							<div class="modal-body">
-
-								<div class="form-group">
-									<label for="id_transaksi">Nama Pasien</label>
-									<div class="input-group">
-									<input type="text" class="form-control" id="nama_pasien" required name="nama_pasien" [(ngModel)]="pemakaianKamarModal.nama_pasien"> 
-									<span class="form-group-btn">
-										<button class="btn btn-success" (click)="getRecentTransaksi(pemakaianKamarModal.nama_pasien)">Cari</button>
-									</span>
-									</div>                    
-								</div>
-
-								<div class="form-group">
-									<label for="id_pasien">ID Transaksi</label>
-									<input type="text" class="form-control" disabled id="id_transaksi" required name="id_transaksi" [(ngModel)]="pemakaianKamarModal.id_transaksi"> 
-								</div>
-
-								<div class="form-group">
-									<label for="nama_pasien">Nama Kamar</label>
-									<input type="text" class="form-control" id="nama_pasien" disabled name="no_kamar" [(ngModel)]="pemakaianKamarModal.no_kamar">
-								</div>
-
-								<div class="form-group">
-									<label for="nama_pasien">No. Tempat Tidur</label>
-									<input type="text" class="form-control" id="no_tempat_tidur" disabled name="no_tempat_tidur" [(ngModel)]="pemakaianKamarModal.no_tempat_tidur">
-								</div>
-
-								<div class="form-group">
-									<label for="nama_pasien">Harga</label>
-									<input type="text" class="form-control" id="harga" disabled name="harga" [(ngModel)]="pemakaianKamarModal.harga">
-								</div>
-
-								<div class="form-group">
-									<label for="nama_pasien">Nama Dokter Penanggungjawab</label>
-									<input type="text" class="form-control" disabled id="nama_dokter" required name="nama_dokter" [(ngModel)]="pemakaianKamarModal.nama">
-								</div>
-							</div>
-
-							<div class="modal-footer">
-								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-								<button type="button" class="btn btn-success" (click)="createPemakaianKamar(rawatinap.no_kamar, selectedTempatTidur)">Simpan</button>
-							</div>
-						</div>
-					</div>
-					</div>
-
-
-					<!--<div class="modal fade" tabindex="-1" role="dialog" id="checkoutModal" aria-hidden="true" *ngIf="PemakaianKamarModal != null">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-body text-center">
-								Apakah anda yakin ?
-							</div>
-							
-							<div class="modal-footer">
-								<button type="button" class="btn btn-danger text-center" data-dismiss="modal">Tutup</button>
-								<button type="button" class="btn btn-success text-center" (click)="updatePemakaianKamarRawatinap()">Ya</button>
-							</div>
-
-						</div>
-					</div>
-					</div>-->
 			</div>
 		</div>
 	</div>

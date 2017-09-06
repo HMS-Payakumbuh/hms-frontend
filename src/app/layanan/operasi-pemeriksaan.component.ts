@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router }					from '@angular/router';
 import { Location }												from '@angular/common';
 import { Observable }											from 'rxjs/Observable';
 import { NgbTypeaheadConfig, NgbModal }   from '@ng-bootstrap/ng-bootstrap';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 import * as _ from "lodash";
 
 import { Transaksi }						from '../transaksi/transaksi';
@@ -65,7 +66,8 @@ import { ObatMasukService }		  from '../farmasi/obat-masuk/obat-masuk.service';
     JenisObatService,
     StokObatService,
     ObatMasukService,
-    NgbTypeaheadConfig
+    NgbTypeaheadConfig,
+    ToastyService
 	]
 })
 
@@ -120,8 +122,11 @@ export class PemeriksaanOperasiComponent implements OnInit {
     allResep: Resep[] = [];
 
     tindakanOperasi: any[];
+    tindakan:any;
 
     user : any;
+
+    public loading;
 
 	inputFormatter = (value : any) => value.nama;
 	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
@@ -188,7 +193,8 @@ export class PemeriksaanOperasiComponent implements OnInit {
     private stokObatService: StokObatService,
     private config: NgbTypeaheadConfig,
     private tindakanOperasiService : TindakanOperasiService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private toastyService: ToastyService
 	) {
 		config.editable = false;
 	}
@@ -202,6 +208,12 @@ export class PemeriksaanOperasiComponent implements OnInit {
             this.tindakanOperasiService.getTenagaMedisByTindakanOperasi(this.pemakaianKamar.id).subscribe(
               data => {
                 this.tindakanOperasi = data;
+              }
+            )
+
+            this.tindakanService.getTindakan(this.pemakaianKamar.id_tindakan).subscribe(
+              data => {
+                this.tindakan = data;
               }
             )
 
@@ -242,6 +254,15 @@ export class PemeriksaanOperasiComponent implements OnInit {
         this.tindakanOperasiService.getTenagaMedisByTindakanOperasi(this.pemakaianKamar.id).subscribe(
           data => {
             this.tindakanOperasi = data;
+            let toastOptions:ToastOptions = {
+									title: "Success",
+									msg: "Jasa dokter berhasil dihapus",
+									showClose: true,
+									timeout: 5000,
+									theme: 'material'
+								};
+
+								this.toastyService.success(toastOptions);
           }
         )
       }
@@ -388,8 +409,28 @@ export class PemeriksaanOperasiComponent implements OnInit {
         this.tindakanOperasiService.getTenagaMedisByTindakanOperasi(this.pemakaianKamar.id).subscribe(
           data => {
             this.tindakanOperasi = data;
-          }
+            let toastOptions:ToastOptions = {
+									title: "Success",
+									msg: "Dokter " + dokter.tenaga_medis.nama + " berhasil ditambahkan",
+									showClose: true,
+									timeout: 5000,
+									theme: 'material'
+								};
+
+								this.toastyService.success(toastOptions);
+          },
         )
+      },
+      error => {
+            let toastOptions:ToastOptions = {
+									title: "Gagal",
+									msg: error.status + " : Penambahan jasa dokter gagal",
+									showClose: true,
+									timeout: 5000,
+									theme: 'material'
+								};
+
+								this.toastyService.error(toastOptions);
       }
     )
 	}

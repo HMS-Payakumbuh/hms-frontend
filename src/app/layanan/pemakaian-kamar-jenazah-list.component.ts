@@ -6,6 +6,7 @@ import { Observable }																			from 'rxjs/Observable';
 import { NgbTypeaheadConfig } 														from '@ng-bootstrap/ng-bootstrap';
 import * as _ from "lodash";
 
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 import { PemakaianKamarJenazah } 				from './pemakaian-kamar-jenazah';
 import { PemakaianKamarJenazahService }		    from './pemakaian-kamar-jenazah.service';
 import { KamarJenazah } 				from './kamar-jenazah';
@@ -27,7 +28,8 @@ import { PasienService } from '../pasien/pasien.service';
 				TindakanService,
 				TransaksiService,
 				PasienService,
-				KamarJenazahService]
+				KamarJenazahService,
+				ToastyService]
 })
 
 export class PemakaianKamarJenazahListComponent implements OnInit {
@@ -45,6 +47,10 @@ export class PemakaianKamarJenazahListComponent implements OnInit {
 
 	pemakaianKamarJenazahModal: PemakaianKamarJenazah = null;
 	pemakaianKamarJenazahModalId: number = null;
+
+	public selectedDate;
+	public param;
+	public config;
 	
 	inputPasienFormatter = (value : Pasien) => value.nama_pasien;
     resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.kode_pasien;
@@ -62,7 +68,8 @@ export class PemakaianKamarJenazahListComponent implements OnInit {
 		private tindakanService: TindakanService,
 		private transaksiService: TransaksiService,
 		private pasienService: PasienService,
-		private kamarJenazahService: KamarJenazahService
+		private kamarJenazahService: KamarJenazahService,
+		private toastyService: ToastyService
 	) {}
 	
 	ngOnInit() {
@@ -86,6 +93,16 @@ export class PemakaianKamarJenazahListComponent implements OnInit {
 			data => {
 				this.transaksi = data;
 				this.pemakaianKamarJenazahModal.id_transaksi = this.transaksi.id;
+			},
+			error => {
+				let toastOptions: ToastOptions = {
+					title: "Error",
+					msg: "Pasien tidak mempunyai transaksi yang open, masukkan pasien lain",
+					showClose: true,
+					timeout: 5000,
+					theme: 'material'
+				};
+				this.toastyService.error(toastOptions);
 			}
 		);
 	}
@@ -97,7 +114,18 @@ export class PemakaianKamarJenazahListComponent implements OnInit {
 
     createPemakaianKamarJenazah() {
     	this.PemakaianKamarJenazahService.createPemakaianKamarJenazah(this.pemakaianKamarJenazahModal).subscribe(
-      		data => { this.ngOnInit() }
+			data => { 
+				  this.ngOnInit();
+				  let toastOptions:ToastOptions = {
+					title: "Success",
+					msg: "Pendaftaran pemakaian kamar jenazah berhasil",
+					showClose: true,
+					timeout: 5000,
+					theme: 'material'
+				};
+
+				this.toastyService.success(toastOptions);
+			}
     	);
   	}
 

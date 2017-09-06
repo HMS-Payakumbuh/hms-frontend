@@ -82,7 +82,7 @@ import { PemeriksaanRawatinapComponent }		from './layanan/rawatinap-pemeriksaan.
 
 import { BookingRawatinapComponent }		from './layanan/booking-rawatinap.component';
 import { BookingRawatinapListComponent }		from './layanan/booking-rawatinap-list.component';
-import { BookingRawatinapDetailComponent }		from './layanan/booking-rawatinap-detail.component';
+
 
 import { ICUListComponent }		from './layanan/icu-list.component';
 import { PemeriksaanICUComponent }		from './layanan/icu-pemeriksaan.component';
@@ -90,9 +90,7 @@ import { PemeriksaanICUKamarListComponent }		from './layanan/icu-pemeriksaan-kam
 import { PemeriksaanICUPasienListComponent }		from './layanan/icu-pemeriksaan-pasien-list.component';
 
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
-import { RawatinapDetailComponent } 	from './layanan/rawatinap-detail.component';
 import { PindahKamarListComponent }		from './layanan/pindahkamar-list.component';
-import { PindahKamarDetailComponent }	    from './layanan/pindahkamar-detail.component';
 import { PindahICUListComponent }		from './layanan/pindahicu-list.component';
 
 import { KamarRawatinapListComponent } 	from './layanan/kamar-rawatinap-list.component';
@@ -112,6 +110,8 @@ import { DiagnosisReferenceListComponent }from './layanan/diagnosis-reference-li
 import { TindakanReferenceListComponent } from './layanan/tindakan-reference-list.component';
 
 import { DokterDashboardComponent }           from './tenaga-medis/dokter-dashboard.component';
+import { DokterDashboardRawatinapComponent }           from './tenaga-medis/dokter-dashboard-rawatinap.component';
+import { DokterDashboardOperasiComponent }           from './tenaga-medis/dokter-dashboard-operasi.component';
 import { PerawatDashboardComponent }		      from './tenaga-medis/perawat-dashboard.component';
 import { PetugasLabDashboardComponent }       from './tenaga-medis/petugas-lab-dashboard.component';
 import { DaftarPemakaianAmbulansComponent }	from './layanan/daftar-pemakaian-ambulans.component';
@@ -248,14 +248,11 @@ import { AppComponent }             from './app.component';
 
         BookingRawatinapComponent,
         BookingRawatinapListComponent,
-        BookingRawatinapDetailComponent,
 
         RawatinapListComponent,
         ICUListComponent,
-        RawatinapDetailComponent,
 
         PindahKamarListComponent,
-        PindahKamarDetailComponent,
         PindahICUListComponent,
 
         BookingOperasiListComponent,
@@ -275,6 +272,8 @@ import { AppComponent }             from './app.component';
         TindakanReferenceListComponent,
 
         DokterDashboardComponent,
+        DokterDashboardRawatinapComponent,
+        DokterDashboardOperasiComponent,
         PerawatDashboardComponent,
         PetugasLabDashboardComponent,
         DaftarPemakaianAmbulansComponent,

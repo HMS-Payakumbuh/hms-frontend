@@ -13,6 +13,9 @@ export class PemeriksaanRawatinapKamarListComponent implements OnInit {
 	allRawatinap: Rawatinap[];
 	allJenis = ['', 'Rawat Inap', 'ICU'];
 	allKelas = ['', 'VIP', '1', '2', '3'];
+
+	public kelas;
+	public searchParam;
 	
 	constructor(
 		private rawatinapService: RawatinapService

@@ -93,9 +93,18 @@
 								</div>
 
 								<div class="form-group">
+									<label for="nama_pasien">Dokter Operasi PJ</label>
+									<select class="form-control" id="dokter" [(ngModel)]="nomorPegawaiDokterPJ">
+										<option *ngFor="let tenagaMedis of allDokter" [value]="tenagaMedis.no_pegawai">
+											{{tenagaMedis.tenaga_medis.nama}} - {{tenagaMedis.spesialis}}
+										</option>
+									</select>
+								</div>
+
+								<div class="form-group">
 									<label for="nama_pasien">Nama Dokter Operasi</label>
 									<select class="form-control" id="no_pegawai" [(ngModel)]="no_pegawai"  multiple="multiple" (ngModelChange)="getTenagaMedis()">
-										<option *ngFor="let tenagaMedis of allDokter" [value]="tenagaMedis.no_pegawai">
+										<option *ngFor="let tenagaMedis of allDokter" [selected]="nomorPegawaiDokterPJ == tenagaMedis.no_pegawai" [value]="tenagaMedis.no_pegawai">
 											{{tenagaMedis.tenaga_medis.nama}} - {{tenagaMedis.spesialis}}
 										</option>
 									</select>
@@ -124,7 +133,7 @@
 
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-								<button type="button" class="btn btn-success" (click)="createPemakaianKamarOperasi()">Simpan</button>
+								<button type="button" class="btn btn-success" data-dismiss="modal" (click)="createPemakaianKamarOperasi()">Simpan</button>
 							</div>
 
 						</div>
@@ -163,7 +172,7 @@
 										<b>{{pemakaianKamarOperasiModal.no_kamar}}</b>
 									</span>
 								</div>
-
+								
 								<div class="form-group">
 									<label for="nama_pasien">Tim Dokter Operasi</label>
 									<span class="form-control" id="no_kamar">
@@ -198,7 +207,7 @@
 
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-								<button type="button" class="btn btn-success" data-dismiss="modal" (click)="createPemakaianKamarOperasi()">Simpan</button>
+								<button type="button" class="btn btn-success" (click)="createPemakaianKamarOperasi()">Simpan</button>
 							</div>
 
 						</div>

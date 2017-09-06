@@ -1,36 +1,45 @@
 <html>
 	<div class="row">
+		<ng2-toasty [position]="'top-center'"></ng2-toasty>
+		<div class="col-md-12">
+			<blockquote class="blockquote">
+				<p class="h4 mb-0"><b>{{pemakaianKamar.no_kamar}}</b></p>
+			</blockquote>
+		</div>
+	</div>
 
-	  <div class="col-md-12">
+	<div class="row" *ngIf="loading">
+		<div class="col-md-12">
+			<div class="d-flex justify-content-center">
+				<i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i>
+			</div>
+		</div>
+	</div>
 
-	  	<div class="card card-outline-info mb-3">
-	  		<div class="card-block">
-		  		<h3 class="mb-0">{{pemakaianKamar.no_kamar}}</h3>
-	  		</div>
-	  	</div>
-
+	<div class="row" *ngIf="!loading">
+	  <div class="col-md-6">
 			<div class="card mb-3">
 				<div class="card-header card-info">
-					<h4>
+					<h5 class="mb-0">
 						<i class="fa fa-id-card-o" aria-hidden="true"></i> Data Pasien
-					</h4>
+					</h5>
 				</div>
 				<div class="card-block">
-					<table class="table">
+					<table class="table table-striped">
 						<tbody>
 							<tr>
-								<td><b>Nama</b></td>
-								<td>{{transaksi?.transaksi.pasien.nama_pasien}}</td>
+								<th scope="row" class="text-left">Nama</th>
+								<td class="text-left">{{transaksi?.transaksi.pasien.nama_pasien}}</td>
 							</tr>
 							<tr>
-								<td><b>Jenis kelamin</b></td>
-								<td>{{transaksi?.transaksi.pasien.jender == 1 && 'Laki-laki' || 'Perempuan'}}</td>
+								<th scope="row" class="text-left">Jenis kelamin</th>
+								<td class="text-left">{{transaksi?.transaksi.pasien.jender == 1 && 'Laki-laki' || 'Perempuan'}}</td>
 							</tr>
 							<tr>
-								<td><b>Golongan Darah</b></td>
-								<td>{{transaksi?.transaksi.pasien.gol_darah}}</td>
+								<th scope="row" class="text-left">Golongan Darah</th>
+								<td class="text-left">{{transaksi?.transaksi.pasien.gol_darah}}</td>
 							</tr>
-							<tr *ngIf="!firstRekamMedis">
+							<tr>
 								<td colspan="2">
 									<button type="button" class="btn btn-outline-primary" [routerLink]="['/rekam_medis', 'rawatinap', transaksi?.transaksi.id, transaksi?.transaksi.pasien.id]">Lihat Rekam Medis</button>
 								</td>
@@ -39,7 +48,50 @@
 					</table>
 				</div>
 			</div>
+		</div>
 
+		<div class="col-md-6">
+			<div class="card mb-3">
+				<div class="card-header card-info">
+					<h5 class="mb-0">
+						<i class="fa fa-clipboard" aria-hidden="true"></i> Hasil Pengecekan Awal
+					</h5>
+				</div>
+				<div class="card-block">
+					<table class="table table-sm table-striped">
+						<tbody>
+							<tr>
+								<th scope="row" class="text-left">Tekanan Darah</th>
+								<td class="text-left">{{hasilPemeriksaan.tekanan_darah != '' && hasilPemeriksaan.tekanan_darah + ' mmHg' || '--'}}</td>
+							</tr>
+							<tr>
+								<th scope="row" class="text-left">Nadi</th>
+								<td class="text-left">{{hasilPemeriksaan.nadi != '' && hasilPemeriksaan.nadi + ' / min' || '--'}}</td>
+							</tr>
+							<tr>
+								<th scope="row" class="text-left">Frekuensi Napas</th>
+								<td class="text-left">{{hasilPemeriksaan.frekuensi_napas != '' && hasilPemeriksaan.frekuensi_napas + ' / min' || '--'}}</td>
+							</tr>
+							<tr>
+								<th scope="row" class="text-left">Temperatur</th>
+								<td class="text-left">{{hasilPemeriksaan.temperatur != '' && hasilPemeriksaan.temperatur + ' C' || '--'}}</td>
+							</tr>
+							<tr>
+								<th scope="row" class="text-left">Berat Badan</th>
+								<td class="text-left">{{hasilPemeriksaan.berat_badan != '' && hasilPemeriksaan.berat_badan + ' kg' || '--'}} </td>
+							</tr>
+							<tr>
+								<th scope="row" class="text-left">Tinggi Badan</th>
+								<td class="text-left">{{hasilPemeriksaan.tinggi_badan != '' && hasilPemeriksaan.tinggi_badan + ' cm' || '--'}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+		<div class="col-md-12">
 			<div class="card mb-3">
 				<div class="card-header card-info">
 					<ul class="nav nav-tabs card-header-tabs">
@@ -233,5 +285,5 @@
 			</div>
 		</div>
 
-    </div>
+    
 </html>

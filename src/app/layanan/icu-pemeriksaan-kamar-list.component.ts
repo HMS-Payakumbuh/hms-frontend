@@ -14,6 +14,9 @@ export class PemeriksaanICUKamarListComponent implements OnInit {
 	allJenis = ['', 'Rawat Inap', 'ICU'];
 	allKelas = ['', 'VIP', '1', '2', '3'];
 	
+	public searchParam;
+	public kelas;
+
 	constructor(
 		private rawatinapService: RawatinapService
 	) {}
