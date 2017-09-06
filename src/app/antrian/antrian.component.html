@@ -45,7 +45,7 @@
 			              	</div>
 			              	<div class="input-group mb-0 mr-sm-2 mb-sm-0" *ngIf="kategori || !isfrontoffice">
 				              	<div>
-					              	<button type="button" class="btn btn-warning mr-2" (click)="proses('undur')">Undur</button>
+					              	<button type="button" class="btn btn-warning mr-2" (click)="proses('undur')">Lewati</button>
 				              	</div>
 				              	<div *ngIf="isfrontoffice">
 									<button type="button" class="btn btn-success" [routerLink] = "['/pendaftaran', antrian.nama_layanan]" (click)="proses('proses')">Proses</button>
@@ -177,7 +177,7 @@
 	        <div class="modal-body">
 						<div *ngIf="!isRujukan">
 							<blockquote class="blockquote">
-								<p class="h5 mb-0"><b>Pengecekan Awal</b></p>
+								<p class="h5 mb-0"><b>Pemeriksaan Awal</b></p>
 							</blockquote>
 							<div class="row">
 								<div class="form-group col-6">

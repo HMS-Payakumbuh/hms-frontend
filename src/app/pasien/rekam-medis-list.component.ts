@@ -51,12 +51,15 @@ export class RekamMedisListComponent implements OnInit {
 	    if (this.user.role == 'dokter') {
 	    	this.rekamMedisService.getAllRekamMedisOfPasien(this.pasienId)
 			.subscribe(allRekamMedis => {
-				this.allRekamMedis = _.each(allRekamMedis, rekamMedis => {
-					if (rekamMedis.anamnesis)
-						_.set(rekamMedis, 'keluhan', JSON.parse(rekamMedis.anamnesis).keluhan);
-					else
-						_.set(rekamMedis, 'keluhan', '-');
-				})
+				this.allRekamMedis = _.filter(
+					_.each(allRekamMedis, rekamMedis => {
+						if (rekamMedis.anamnesis)
+							_.set(rekamMedis, 'keluhan', JSON.parse(rekamMedis.anamnesis).keluhan);
+						else
+							_.set(rekamMedis, 'keluhan', '-');
+					}),
+					rekamMedis => rekamMedis.keluhan != '-'
+				)
 			});
 			if (this.transaksiId != undefined) {
 				this.transaksiService.getTransaksi(this.transaksiId).subscribe(transaksi => {
