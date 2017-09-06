@@ -1,6 +1,7 @@
 import { Injectable }		from '@angular/core';
 import { Headers, Http, Response, RequestOptions}		from '@angular/http';
 import { Observable }		from 'rxjs/Rx';
+import { AuthHttp }				from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -13,7 +14,10 @@ import { ENV }				from '../environment';
 export class PembayaranService {
 	private pembayaranUrl = ENV.pembayaranUrl;
 
-	constructor(private http:Http) { }
+	constructor(
+		private http:Http,
+		private authHttp: AuthHttp
+	) { }
 
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
@@ -21,13 +25,13 @@ export class PembayaranService {
 	}
 
 	getAllPembayaran(): Observable<any[]> {
-		return this.http.get(this.pembayaranUrl)
+		return this.authHttp.get(this.pembayaranUrl)
 			.map((res: Response) => res.json());
 	}
 
 	getPembayaran(id: number): Observable<any> {
 		const url = `${this.pembayaranUrl}/${id}`;
-		return this.http.get(url)
+		return this.authHttp.get(url)
 			.map((res: Response) => res.json());
 	}
 
@@ -36,7 +40,7 @@ export class PembayaranService {
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(pembayaran);
 
-		return this.http.post(this.pembayaranUrl, body, options)
+		return this.authHttp.post(this.pembayaranUrl, body, options)
 			.map((res: Response) => res.json());
 	}
 }

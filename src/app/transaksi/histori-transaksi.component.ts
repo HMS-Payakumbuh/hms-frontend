@@ -64,7 +64,7 @@ export class HistoriTransaksiComponent {
 		// 	});
 	}
 
-	private searchTransaksi() {
+	public searchTransaksi() {
 		this.loading = true;
 		this.transaksiService.getAllTransaksi(null, this.nama_pasien, 'closed')
 			.subscribe(data => {
