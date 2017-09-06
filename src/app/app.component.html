@@ -25,6 +25,8 @@
 
 				<div *ngIf="authenticationService.isLoggedIn()" class="list-group list-group-flush">
 					<a *ngIf="authenticationService.getCurrentUser().role == 'dokter'" [routerLink]="['/dokter-dashboard']" class="list-group-item list-group-item-info">Beranda</a>
+					<a *ngIf="authenticationService.getCurrentUser().role == 'dokter'" [routerLink]="['/dokter-rawatinap-dashboard']" class="list-group-item list-group-item-info">Rawat Inap</a>
+					<a *ngIf="authenticationService.getCurrentUser().role == 'dokter'" [routerLink]="['/dokter-operasi-dashboard']" class="list-group-item list-group-item-info">Operasi</a>
 					<a *ngIf="authenticationService.getCurrentUser().role == 'perawat'" [routerLink]="['/perawat-dashboard']" class="list-group-item list-group-item-info">Beranda</a>
 					<a *ngIf="authenticationService.getCurrentUser().role == 'petugasLab'" [routerLink]="['/petugas-lab-dashboard']" class="list-group-item list-group-item-info">Beranda</a>
 					<a *ngIf="authenticationService.getCurrentUser().role == 'petugasAmbulans'" [routerLink]="['/daftar-pemakaian-ambulans']" class="list-group-item list-group-item-info">Pemakaian Ambulans</a>

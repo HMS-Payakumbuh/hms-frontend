@@ -3,6 +3,7 @@ import { ActivatedRoute, Params }													from '@angular/router';
 import { FormGroup, FormArray, FormBuilder, Validators }	from '@angular/forms';
 import { Location }																				from '@angular/common';
 import { Observable }																			from 'rxjs/Observable';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 import { NgbTypeaheadConfig } 														from '@ng-bootstrap/ng-bootstrap';
 import * as _ from "lodash";
 
@@ -26,7 +27,8 @@ import { PoliklinikService }		from './poliklinik.service';
  	providers: [PemakaianKamarService, 
 	 			TenagaMedisService, 
 				TindakanService,
-				TransaksiService]
+				TransaksiService,
+				ToastyService]
 })
 
 export class PemakaianKamarListComponent implements OnInit {
@@ -48,13 +50,18 @@ export class PemakaianKamarListComponent implements OnInit {
 	poliklinik: Poliklinik;
 	addForm: FormGroup;
 
+	public selectedDate;
+	public param;
+	public config;
+
 
 	constructor(
 		private pemakaianKamarService: PemakaianKamarService,
 		private tenagaMedisService: TenagaMedisService,
 		private formBuilder: FormBuilder,
 		private tindakanService: TindakanService,
-		private transaksiService: TransaksiService
+		private transaksiService: TransaksiService,
+		private toastyService: ToastyService
 	) {}
 
 	ngOnInit() {
@@ -88,6 +95,16 @@ export class PemakaianKamarListComponent implements OnInit {
 					console.log(data);
 				});
 				this.ngOnInit();
+
+				let toastOptions:ToastOptions = {
+					title: "Success",
+					msg: "Checkout berhasil",
+					showClose: true,
+					timeout: 5000,
+					theme: 'material'
+				};
+
+				this.toastyService.success(toastOptions);
 		});
 	}
 

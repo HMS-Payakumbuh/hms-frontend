@@ -16,6 +16,10 @@ export class KamarOperasiListComponent implements OnInit {
     kamarOperasiModal : KamarOperasi = null;
 	kamarOperasiModalNama : string;
 
+	public selectedDate;
+	public param;
+	public config;
+	
 	constructor(
 		private kamarOperasiService: KamarOperasiService
 	) {}

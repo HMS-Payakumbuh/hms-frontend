@@ -9,6 +9,10 @@ export class FilterNomorKamarPipe implements PipeTransform {
   	if (!items || !param) {
   		return items;
   	}
-    return items.filter(item => item.no_kamar.toLowerCase().indexOf(param.toLowerCase()) > -1);
+		 return items.filter(function(item){
+              var paramInNamaKamar = item.no_kamar.toString().toLowerCase().indexOf(param.toLowerCase()) > -1;
+              var paramInNamaPasien = item.nama_pasien.toLowerCase().indexOf(param.toLowerCase()) > -1;              
+              return paramInNamaKamar || paramInNamaPasien;
+  	})
   }
 }

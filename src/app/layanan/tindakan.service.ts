@@ -1,5 +1,5 @@
 import { Injectable }			from '@angular/core';
-import { Headers, Response, RequestOptions }		from '@angular/http';
+import { Headers, Http, Response, RequestOptions }		from '@angular/http';
 import { Observable }			from 'rxjs/Rx';
 import { AuthHttp }				from 'angular2-jwt';
 
@@ -12,16 +12,22 @@ import { TindakanReference }			from './tindakan-reference';
 export class TindakanService {
 	private tindakanReferenceUrl = ENV.tindakanReferenceUrl;
 	private tindakanUrl = ENV.tindakanUrl;
+	private tindakanOperasiUrl = ENV.tindakanOperasiUrl;
 
 	tindakan: Tindakan;
 	tindakanInstances: Tindakan[] = [];
 	i: number;
 
-	constructor(private authHttp: AuthHttp) { }
+	constructor(private http: Http,private authHttp: AuthHttp) { }
 
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
 		return Promise.reject(error.message || error);
+	}
+
+	getTindakan(id: number) : Observable<Tindakan> {
+		return this.http.get(this.tindakanOperasiUrl + '/id/' + id)
+			.map((res: Response) => res.json());
 	}
 
 	getTindakanWithoutHasilLab(nama_lab: string): Observable<Tindakan[]> {

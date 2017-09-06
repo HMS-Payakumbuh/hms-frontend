@@ -1,0 +1,112 @@
+<html>
+  <div class="row">
+    <div class="col-md-12">
+      <blockquote class="blockquote">
+        <p class="h4 mb-0"><b>Dasbor Dokter - Rawat Inap</b></p>
+      </blockquote>
+    </div>
+  </div>
+  
+    <div class="row">
+    <div class="col-md-12">
+      <div class="card mb-3">
+				<div class="card-header card-info">
+          <h5 class="text-center mb-0"><b>Rawat Inap</b></h5>
+				</div>
+
+				<div class="card-block">
+                    <div class="row mb-4">
+						<div class="col-md-6 pull-left">
+							<div class="input-group">
+							    <input type="text" class="form-control" [(ngModel)]="param" placeholder="Nama Kamar/Nama Pasien"/>
+							</div>
+						</div>
+					</div>
+                    
+                    <span *ngIf="allPemakaianRawat.length <= 0">
+                        Tidak ada penugasan di rawat inap untuk saat ini
+                    </span>
+                   
+					<table class="table" *ngIf="allPemakaianRawat.length > 0" [mfData]="allPemakaianRawat | filterNoKamar: param" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+                        <tr>
+                            <th><mfDefaultSorter by="no_kamar">Nama Kamar</mfDefaultSorter></th>
+                            <th><mfDefaultSorter by="noTempatTidur">No. Tempat Tidur</mfDefaultSorter></th>
+                            <th><mfDefaultSorter by="nama_pasien">Nama Pasien</mfDefaultSorter></th>
+                            <th></th>
+                        </tr>
+
+						<tbody *ngFor="let rawatinap of mf.data">
+							<tr>
+								<td>{{rawatinap?.no_kamar}}</td>
+                                <td>{{rawatinap?.no_tempat_tidur}}</td>
+								<td>{{rawatinap?.nama_pasien}}</td>
+                                <button type="button" class="btn btn-sm btn-success mt-2" (click)="periksaRawatinap(rawatinap.no_kamar, rawatinap.id_transaksi, rawatinap.id)">
+                                    Periksa
+                                </button>
+							</tr>
+						</tbody>
+                        <tfoot>
+                      <tr>
+                        <td colspan="4">
+                          <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+        </div>
+      </div>
+  </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mb-3">
+				<div class="card-header card-info">
+          <h5 class="text-center mb-0"><b>ICU</b></h5>
+				</div>
+
+				<div class="card-block">
+                    <div class="row mb-4">
+						<div class="col-md-6 pull-left">
+							<div class="input-group">
+							    <input type="text" class="form-control" [(ngModel)]="param2" placeholder="Nama Kamar/Nama Pasien"/>
+							</div>
+						</div>
+					</div>
+
+                    <span *ngIf="allPemakaianICU.length <= 0">
+                        Tidak ada penugasan di ICU untuk saat ini
+                    </span>
+
+					<table class="table" *ngIf="allPemakaianICU.length > 0" [mfData]="allPemakaianICU | filterNoKamar: param2" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+                        <tr>
+                            <th><mfDefaultSorter by="no_kamar">Nama Kamar</mfDefaultSorter></th>
+                            <th><mfDefaultSorter by="noTempatTidur">No. Tempat Tidur</mfDefaultSorter></th>
+                            <th><mfDefaultSorter by="nama_pasien">Nama Pasien</mfDefaultSorter></th>
+                            <th></th>
+                        </tr>
+
+						<tbody *ngFor="let icu of mf.data | filterWaktuKeluar: selectedDate">
+							<tr>
+								<td>{{icu?.no_kamar}}</td>
+                                <td>{{icu?.no_tempat_tidur}}</td>
+								<td>{{icu?.nama_pasien}}</td>
+                                <button type="button" class="btn btn-sm btn-success mt-2" (click)="periksaICU(icu.no_kamar, icu.id_transaksi, icu.id)">
+                                    Periksa
+                                </button>
+							</tr>
+						</tbody>
+                        <tfoot>
+                      <tr>
+                        <td colspan="4">
+                          <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+        </div>
+      </div>
+  </div>
+  </div>
+
+</html>

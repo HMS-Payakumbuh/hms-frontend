@@ -1,5 +1,6 @@
 import { Injectable }			from '@angular/core';
 import { Headers, Http, Response, RequestOptions }	from '@angular/http';
+import { AuthHttp } from 'angular2-jwt';
 import { Observable }			from 'rxjs/Rx';
 
 import { ENV }						from '../environment';
@@ -9,7 +10,7 @@ import { Rawatinap }			from './rawatinap';
 export class RawatinapService {
 	rawatinapUrl = ENV.rawatinapUrl;
 
-	constructor(private http:Http) { }
+	constructor(private http:Http, private authHttp: AuthHttp) { }
 
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);

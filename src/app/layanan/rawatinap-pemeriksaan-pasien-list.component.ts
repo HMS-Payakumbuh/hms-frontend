@@ -50,6 +50,10 @@ export class PemeriksaanRawatinapPasienListComponent implements OnInit {
 	poliklinik: Poliklinik;
 	addForm: FormGroup;
 
+	public param;
+	public selectedDate;
+	
+
 	constructor(
 		private pemakaianKamarService: PemakaianKamarService,
 		private tenagaMedisService: TenagaMedisService,

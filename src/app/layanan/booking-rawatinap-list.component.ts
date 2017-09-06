@@ -35,6 +35,9 @@ export class BookingRawatinapListComponent implements OnInit {
 
 	isTanggalSelected : boolean;
 	
+	public config;
+
+	
 	constructor(
 		private rawatinapService: RawatinapService,
 		private pemakaianKamarService: PemakaianKamarService,
@@ -110,22 +113,51 @@ export class BookingRawatinapListComponent implements OnInit {
     	this.pemakaianKamarModal = new PemakaianKamar();
 		this.pemakaianKamarModal.no_kamar = rawatinap.no_kamar;
 		this.pemakaianKamarModal.harga = rawatinap.harga_per_hari;
- 	}
+	 }
+	
+	private validateInput(): boolean {
+		if	(this.pemakaianKamarModal.nama_booking == null) {
+			this.handleError("Nama wajib diisi");
+			return false;
+		} else if (this.pemakaianKamarModal.kontak_booking == null) {
+			this.handleError("Kontak wajib diisi");
+			return false;
+		} else if (this.pemakaianKamarModal.no_tempat_tidur == null) {
+			this.handleError("No. tempat tidur wajib diisi");
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
+	private handleError(error: any) {
+		let toastOptions: ToastOptions = {
+	        title: "Error",
+	        msg: error,
+	        showClose: true,
+	        timeout: 5000,
+	        theme: 'material'
+	    };
+    	this.toastyService.error(toastOptions);
+	}
 
     createPemakaianKamar(noKamar: string, noTempatTidur: number) {
-    	this.pemakaianKamarService.createBookedKamar(this.selectedDate, this.pemakaianKamarModal).subscribe(
-      		data => { 
-				this.setTanggal();
-				let toastOptions:ToastOptions = {
-					title: "Success",
-					msg: "Reservasi kamar " + noKamar + " berhasil",
-					showClose: true,
-					timeout: 5000,
-					theme: 'material'
-				};
+		if(this.validateInput()) {
+			this.pemakaianKamarService.createBookedKamar(this.selectedDate, this.pemakaianKamarModal).subscribe(
+				data => { 
+					this.setTanggal();
+					let toastOptions:ToastOptions = {
+						title: "Success",
+						msg: "Reservasi kamar " + noKamar + " berhasil",
+						showClose: true,
+						timeout: 5000,
+						theme: 'material'
+					};
 
-				this.toastyService.success(toastOptions);
-			}
-    	);
-  	}
+					this.toastyService.success(toastOptions);
+				}
+			);
+		}
+	}
 }

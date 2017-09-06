@@ -74,6 +74,11 @@ export class BookingOperasiListComponent implements OnInit {
 	addForm: FormGroup;
 
 	tindakanOperasi : TindakanOperasi[];
+	nomorPegawaiDokterPJ: any;
+
+	public selectedDate;
+	public param;
+	public config;
 
     inputPasienFormatter = (value : Pasien) => value.nama_pasien;
     resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.kode_pasien;
@@ -139,6 +144,16 @@ export class BookingOperasiListComponent implements OnInit {
 			data => {
 				this.transaksi = data;
 				this.pemakaianKamarOperasiModal.id_transaksi = this.transaksi.id;
+			},
+			error => {
+				let toastOptions: ToastOptions = {
+					title: "Error",
+					msg: "Pasien tidak mempunyai transaksi yang open, masukkan pasien lain",
+					showClose: true,
+					timeout: 5000,
+					theme: 'material'
+				};
+				this.toastyService.error(toastOptions);
 			}
 		);
     }
@@ -186,7 +201,7 @@ export class BookingOperasiListComponent implements OnInit {
 		temp.kode_tindakan = tindakanReference.kode;
 		temp.id_pasien = this.transaksi.id_pasien;
 		temp.tanggal_waktu = this.transaksi.waktu_masuk_pasien;
-		temp.np_tenaga_medis = null;
+		temp.np_tenaga_medis = this.nomorPegawaiDokterPJ;
 		temp.nama_poli = null;
 		temp.nama_lab = null;
 		temp.nama_ambulans = null;
@@ -232,30 +247,74 @@ export class BookingOperasiListComponent implements OnInit {
     )
   }
 
-	createPemakaianKamarOperasi() {
-		this.tindakanService.saveTindakan(this.selectedTindakan).subscribe(
-			data => {
-				console.log(data);
-				this.tindakanOperasiService.createTindakanOperasi(this.savedTindakanOperasi).subscribe(
-					data => {
-						console.log(data);
-						this.pemakaianKamarOperasiService.createPemakaianKamarOperasiBooked(this.pemakaianKamarOperasiModal).subscribe(
-							data => {
-								this.ngOnInit();
-								let toastOptions:ToastOptions = {
-									title: "Success",
-									msg: "Reservasi kamar " + this.pemakaianKamarOperasiModal.no_kamar + " berhasil",
-									showClose: true,
-									timeout: 5000,
-									theme: 'material'
-								};
+  private validateInput(): boolean {
+		if	(this.pemakaianKamarOperasiModal.id_transaksi == null) {
+			this.handleError("Nama pasien wajib diisi");
+			return false;
+		} else if (this.pemakaianKamarOperasiModal.no_kamar == null) {
+			this.handleError("Nama kamar wajib diisi");
+			return false;
+		} else if (this.nomorPegawaiDokterPJ == null) {
+			this.handleError("Nama dokter PJ wajib diisi");
+			return false;
+		} else if (this.no_pegawai == null) {
+			this.handleError("Nama dokter operasi wajib diisi");
+			return false;
+		} else if (this.selectedTindakanReference == null) {
+			this.handleError("Nama tindakan wajib diisi");
+			return false;
+		} else if (this.tanggalOperasi == null) {
+			this.handleError("Tanggal operasi wajib diisi");
+			return false;
+		} else if (this.waktuMasuk == null) {
+			this.handleError("Waktu masuk wajib diisi");
+			return false;
+		} else if (this.waktuKeluar == null) {
+			this.handleError("Waktu keluar wajib diisi");
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
 
-								this.toastyService.success(toastOptions);
-							}
-						);
-					}
-				);
-			}
-		);
+	private handleError(error: any) {
+		let toastOptions: ToastOptions = {
+	        title: "Error",
+	        msg: error,
+	        showClose: true,
+	        timeout: 5000,
+	        theme: 'material'
+	    };
+    	this.toastyService.error(toastOptions);
+	}
+
+	createPemakaianKamarOperasi() {
+		if(this.validateInput()) {
+			this.tindakanService.saveTindakan(this.selectedTindakan).subscribe(
+				data => {
+					console.log(data);
+					this.tindakanOperasiService.createTindakanOperasi(this.savedTindakanOperasi).subscribe(
+						data => {
+							console.log(data);
+							this.pemakaianKamarOperasiService.createPemakaianKamarOperasiBooked(this.pemakaianKamarOperasiModal).subscribe(
+								data => {
+									this.ngOnInit();
+									let toastOptions:ToastOptions = {
+										title: "Success",
+										msg: "Reservasi kamar " + this.pemakaianKamarOperasiModal.no_kamar + " berhasil",
+										showClose: true,
+										timeout: 5000,
+										theme: 'material'
+									};
+
+									this.toastyService.success(toastOptions);
+								}
+							);
+						}
+					);
+				}
+			);
+		}
 	}
 }
