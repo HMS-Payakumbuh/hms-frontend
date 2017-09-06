@@ -1,7 +1,7 @@
 import { Injectable }		from '@angular/core';
 import { Headers, Http, Response, RequestOptions, URLSearchParams }		from '@angular/http';
 import { Observable }		from 'rxjs/Rx';
-import { AuthHttp }				from 'angular2-jwt';
+import { AuthHttp }			from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -15,7 +15,7 @@ export class TransaksiService {
 	private storedData: any = null;
 
 	constructor(
-		private http:Http,
+		private http: Http,
 		private authHttp: AuthHttp
 	) {
 		this.storedData = null;

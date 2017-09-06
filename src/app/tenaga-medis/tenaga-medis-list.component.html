@@ -13,6 +13,7 @@
 							<th><mfDefaultSorter by="no_pegawai">No Pegawai</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="nama">Nama</mfDefaultSorter></th>
 							<th><mfDefaultSorter by="jabatan">Jabatan</mfDefaultSorter></th>
+							<th>Spesialis</th>
 							<th></th>
 							<th></th>
 						</thead>
@@ -21,6 +22,7 @@
 								<td>{{tenagaMedis?.no_pegawai}}</td>
 								<td>{{tenagaMedis?.nama}}</td>
 								<td>{{tenagaMedis?.jabatan}}</td>
+								<td>{{tenagaMedis?.spesialis != null && tenagaMedis?.spesialis || '-'}}</td>
 								<td>
 									<button type="button" class="btn btn-sm btn-info" data-toggle="modal"
 									[attr.data-target]="'#editTenagaMedisModal'" (click)="editTenagaMedis(tenagaMedis.no_pegawai, tenagaMedis)">
@@ -36,7 +38,7 @@
 						</tbody>
 						<tfoot>
 	            <tr>
-	              <td colspan="7">
+	              <td colspan="6">
 	                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
 	              </td>
 	            </tr>

@@ -6,11 +6,13 @@ import * as _ from "lodash";
 
 import { ENV }						from '../environment';
 import { Pasien }	from './pasien';
+import { CatatanKematian } from './catatan-kematian';
 import { Asuransi }  from './asuransi';
 
 @Injectable()
 export class PasienService {
 	private pasienUrl = ENV.pasienUrl;
+	private catatanKematianUrl = ENV.catatanKematianUrl;
 
 	constructor(private authHttp: AuthHttp) { }
 
@@ -32,6 +34,17 @@ export class PasienService {
 				)
 			)
 			.map(allPasien => allPasien.find(pasien => pasien.kode_pasien === kode_pasien))
+			.catch(this.handleError);
+	}
+
+	getPasienById(id_pasien: number): Observable<Pasien> {
+		return this.getAllPasien()
+			.map(allPasien => 
+				_.filter(allPasien, pasien => 
+					pasien.catatan_kematian === null
+				)
+			)
+			.map(allPasien => allPasien.find(pasien => pasien.id === id_pasien))
 			.catch(this.handleError);
 	}
 
@@ -78,5 +91,16 @@ export class PasienService {
 
 		return this.authHttp.delete(this.pasienUrl + '/' + id, options)
 			.map((res: Response) => res.json());
+	}
+
+	createCatatanKematian(catatanKematian: CatatanKematian) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(catatanKematian);
+
+		return this.authHttp.post(this.catatanKematianUrl, body, options)
+			.map((res: Response) => { 
+				return { status: res.status, json: res.json() }
+			});
 	}
 }

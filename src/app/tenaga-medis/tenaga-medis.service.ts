@@ -1,6 +1,7 @@
 import { Injectable }			from '@angular/core';
 import { Headers, Http, Response, RequestOptions }		from '@angular/http';
 import { Observable }			from 'rxjs/Rx';
+import { AuthHttp }				from 'angular2-jwt';
 
 import { ENV }						from '../environment';
 import { Dokter }					from './dokter';
@@ -15,7 +16,10 @@ export class TenagaMedisService {
 	private dokterUrl = ENV.dokterUrl;
 	private jadwalDokterUrl = ENV.jadwalDokterUrl;
 
-	constructor(private http:Http) { }
+	constructor(
+		private http: Http,
+		private authHttp: AuthHttp
+	) { }
 
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
@@ -59,12 +63,17 @@ export class TenagaMedisService {
 	}
 
 	getAllDokter(): Observable<Dokter[]> {
-		return this.http.get(this.dokterUrl)
+		return this.authHttp.get(this.dokterUrl)
 			.map((res: Response) => res.json());
 	}
 
 	getDokter(noPegawai: string): Observable<Dokter> {
-		return this.http.get(this.dokterUrl + '/' + noPegawai)
+		return this.authHttp.get(this.dokterUrl + '/' + noPegawai)
+			.map((res: Response) => res.json());
+	}
+
+	getAllDokterOfSpesialis(spesialis: string): Observable<Dokter[]> {
+		return this.authHttp.get(this.dokterUrl + '/' + spesialis)
 			.map((res: Response) => res.json());
 	}
 
@@ -109,7 +118,7 @@ export class TenagaMedisService {
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(request);
 
-		return this.http.post(this.dokterUrl + '/periksa', body, options)
+		return this.authHttp.post(this.dokterUrl + '/periksa', body, options)
 			.map((res: Response) => res.json());
 	}
 }

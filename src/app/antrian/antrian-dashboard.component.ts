@@ -16,17 +16,18 @@ import * as io from "socket.io-client";
 })
 
 export class AntrianDashboardComponent implements OnInit {
-	private allLayanan: any[];
-	private allAntrian: any[] = [];
-	private socket: any;
-	private frontOfficeChecked: boolean = true;
-	private layananChecked: boolean = false;
-	private loadFinished: boolean;
+	allLayanan: any[];
+	allAntrian: any[] = [];
+	socket: any;
+	frontOfficeChecked: boolean = true;
+	layananChecked: boolean = false;
+	loadFinished: boolean;
 
 	public filterQuery = "";
  	public rowsOnPage = 10;
 	public sortBy = "kategori";
 	public sortOrder = "asc";
+	public param;
 
 	constructor(
 		private antrianService : AntrianService,

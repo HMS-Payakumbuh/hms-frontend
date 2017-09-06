@@ -92,7 +92,7 @@
 
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-								<button type="button" class="btn btn-success" (click)="createPemakaianKamarJenazah()">Simpan</button>
+								<button type="button" class="btn btn-success" data-dismiss="modal" [routerLink] = "['/catatan-kematian', pasien.kode_pasien]" (click)="createPemakaianKamarJenazah()">Simpan</button>
 							</div>
 
 						</div>

@@ -1,7 +1,7 @@
 export class CatatanKematian {
-	id: number;
-    id_pasien: number;
-    waktu_kematian: Date;
-    tempat_kematian: string;
-    perkiraan_penyebab: string;
+	id: number = null;
+    id_pasien: number = null;
+    waktu_kematian: string = '';
+    tempat_kematian: string = '';
+    perkiraan_penyebab: string = '';
 }
