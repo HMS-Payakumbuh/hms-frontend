@@ -20,6 +20,7 @@ export var ENV = {
 	antrianUrl: baseUrl + "/api/antrian",
 	antrianFrontOfficeUrl: baseUrl + "/api/antrian_front_office",
 	asuransiUrl: baseUrl + "/api/asuransi",
+	catatanKematianUrl: baseUrl + "/api/catatan_kematian",
 
 	diagnosisReferenceUrl: baseUrl + "/api/daftar_diagnosis",
 	tindakanReferenceUrl: baseUrl + "/api/daftar_tindakan",

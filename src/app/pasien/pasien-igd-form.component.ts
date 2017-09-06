@@ -101,11 +101,11 @@ export class PasienIGDFormComponent implements OnInit {
     )
   }
 
-  private addDiagnosis(diagnosisReference: DiagnosisReference) {
+  addDiagnosis(diagnosisReference: DiagnosisReference) {
     this.rujukan.diagnosis = diagnosisReference.nama;
   }
 
-  private searchPasien() {
+  searchPasien() {
     if (this.search) {
       if (this.search.match(/\d/)) {
         this.allPasien = [];
@@ -124,22 +124,22 @@ export class PasienIGDFormComponent implements OnInit {
     }
   }
 
-  private selectPasien() {
+  selectPasien() {
     this.asuransiService.getAsuransi(this.pasien.id).subscribe(allAsuransi => this.allAsuransi = allAsuransi);
     this.searchDone = true;
   }
 
-  private customTrackBy(index: number, obj: any): any {
+  customTrackBy(index: number, obj: any): any {
     return index;
   }
 
-  private pakaiAsuransi(asuransi: Asuransi) {
+  pakaiAsuransi(asuransi: Asuransi) {
     this.asuransi.nama_asuransi = asuransi.nama_asuransi;
     this.asuransi.no_kartu = asuransi.no_kartu;
     this.cekAsuransi();
   }
 
-  private getRujukan() {
+  getRujukan() {
     this.transaksiService.getRujukan(this.rujukan.no_rujukan).subscribe(data => {
         if (data.metadata.code == '200') {
           this.isVerified = true;
@@ -190,7 +190,7 @@ export class PasienIGDFormComponent implements OnInit {
       });
   }
 
-  private cekBpjs() {
+  cekBpjs() {
     if (this.asuransi.no_kartu != this.nomor_pasien) {
       let toastOptions:ToastOptions = {
         title: "Verifikasi Gagal !",
@@ -216,7 +216,7 @@ export class PasienIGDFormComponent implements OnInit {
     }
   }
 
-  private cekAsuransi() {
+  cekAsuransi() {
     if (this.asuransi.nama_asuransi === 'bpjs') {
       this.rujukanChecked = true;
       this.isBpjs = true;
@@ -225,7 +225,7 @@ export class PasienIGDFormComponent implements OnInit {
     }
   }
 
-  private createRekamMedis(id_pasien: number, waktu_masuk_pasien: string) {
+  createRekamMedis(id_pasien: number, waktu_masuk_pasien: string) {
     let rekamMedis = new RekamMedis(
       id_pasien,
       waktu_masuk_pasien,
@@ -243,7 +243,7 @@ export class PasienIGDFormComponent implements OnInit {
     );
   }
 
-  private createAntrian(id_transaksi: number, id_pasien: number, waktu_masuk_pasien: string) {
+  createAntrian(id_transaksi: number, id_pasien: number, waktu_masuk_pasien: string) {
     let request: any = {
       id_transaksi: id_transaksi,
       nama_layanan_poli: 'IGD',
@@ -259,7 +259,7 @@ export class PasienIGDFormComponent implements OnInit {
     );
   }
 
-  private createRujukan(id_transaksi: number, id_pasien: number, waktu_masuk_pasien: string) {
+  createRujukan(id_transaksi: number, id_pasien: number, waktu_masuk_pasien: string) {
     this.rujukan.id_transaksi = id_transaksi;
     this.rujukanService.createRujukan(this.rujukan).subscribe(
       data => {
@@ -268,7 +268,7 @@ export class PasienIGDFormComponent implements OnInit {
     );
   }
 
-  private createTransaksi() {
+  createTransaksi() {
     let kode_jenis_pasien:number = 1;
     let payload: any;
     if (this.asuransiChecked) {
@@ -321,7 +321,7 @@ export class PasienIGDFormComponent implements OnInit {
     );
   }
 
-  private createAsuransi() {
+  createAsuransi() {
     this.asuransi.id_pasien = this.pasien.id;
     let asuransi:any = { asuransi: this.asuransi };
     this.asuransiService.createAsuransi(asuransi).subscribe(
@@ -329,7 +329,7 @@ export class PasienIGDFormComponent implements OnInit {
     );
   }
 
-  private createPasien() {
+  createPasien() {
     if (this.asuransi.nama_asuransi === 'bpjs' && !this.rujukanChecked) {
       let toastOptions:ToastOptions = {
           title: "Registrasi Pasien Gagal !",

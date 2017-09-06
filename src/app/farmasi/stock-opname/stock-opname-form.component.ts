@@ -191,6 +191,14 @@ export class StockOpnameFormComponent {
 
 		this.stockOpnameService.createStockOpname(this.stockOpname).subscribe(
 	       	data => {
+	       		let toastOptions: ToastOptions = {
+			            title: "Success",
+			            msg: "Catatan stock opname berhasil ditambahkan",
+			            showClose: true,
+			            timeout: 5000,
+			            theme: 'material'
+			        };		        
+			        this.toastyService.success(toastOptions);
 	         	this.location.back();
 	         	return true;
 	       	},

@@ -1,6 +1,7 @@
 import { Injectable }		from '@angular/core';
 import { Headers, Http, Response, RequestOptions, URLSearchParams }		from '@angular/http';
 import { Observable }		from 'rxjs/Rx';
+import { AuthHttp }				from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -11,16 +12,18 @@ import { ENV }			from '../../environment';
 export class StokObatService {
 	private stokObatUrl = ENV.stokObatUrl;
 
-	constructor(private http:Http) { }
+	constructor(
+		private http: Http,
+		private authHttp: AuthHttp
+	) { }
 
-	// TO-DO: Convert into Observable?
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
 		return Promise.reject(error.message || error);
 	}
 
 	getAllStokObat(): Observable<StokObat[]> {
-		return this.http.get(this.stokObatUrl)
+		return this.authHttp.get(this.stokObatUrl)
 			.map((res: Response) => res.json());
 	}
 
@@ -36,7 +39,7 @@ export class StokObatService {
 		let requestOptions = new RequestOptions();
 		requestOptions.params = params;
 
-		return this.http.get(this.stokObatUrl+'/search_by_location', requestOptions)
+		return this.authHttp.get(this.stokObatUrl+'/search_by_location', requestOptions)
 		    .map((res: Response) => res.json());			
 	}
 
@@ -47,7 +50,7 @@ export class StokObatService {
 		let requestOptions = new RequestOptions();
 		requestOptions.params = params;
 
-		return this.http.get(this.stokObatUrl+'/search_by_location_type', requestOptions)
+		return this.authHttp.get(this.stokObatUrl+'/search_by_location_type', requestOptions)
 		    .map((res: Response) => res.json());			
 	}
 
@@ -55,7 +58,7 @@ export class StokObatService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });
     	let body = JSON.stringify(stokObat);
-    	return this.http.post(this.stokObatUrl, body, options ).map((res: Response) => res.json());
+    	return this.authHttp.post(this.stokObatUrl, body, options ).map((res: Response) => res.json());
 	}
 	
 	getStokObatByJenisObatAndBatch(id_jenis_obat: number, nomor_batch: string, jenis_lokasi: number): Observable<StokObat> {
@@ -67,8 +70,7 @@ export class StokObatService {
 		let requestOptions = new RequestOptions();
 		requestOptions.params = params;
 
-		return this.http.get(this.stokObatUrl+'/search_by_jenis_obat_and_batch', requestOptions)
+		return this.authHttp.get(this.stokObatUrl+'/search_by_jenis_obat_and_batch', requestOptions)
 		    .map((res: Response) => res.json());			
-	}
-	
+	}	
 }

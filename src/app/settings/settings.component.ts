@@ -32,7 +32,7 @@ export class SettingsComponent {
 			});
 	}
 
-	private save() {
+	save() {
 		let request: any = {
 			setting_bpjs: this.settings
 		}; 

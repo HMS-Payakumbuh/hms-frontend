@@ -1,5 +1,5 @@
 import { Injectable }			from '@angular/core';
-import { Headers, Http, Response, RequestOptions }		from '@angular/http';
+import { Headers, Response, RequestOptions, Http }		from '@angular/http';
 import { Observable }			from 'rxjs/Rx';
 import { AuthHttp }				from 'angular2-jwt';
 
@@ -11,8 +11,8 @@ export class PoliklinikService {
 	poliklinikUrl = ENV.poliklinikUrl;
 
 	constructor(
-		private http: Http,
-		private authHttp: AuthHttp
+		private authHttp: AuthHttp,
+		private http: Http
 	) { }
 
 	private handleError(error: any): Promise<any> {

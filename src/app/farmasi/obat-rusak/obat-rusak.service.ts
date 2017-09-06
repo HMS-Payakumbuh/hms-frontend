@@ -1,6 +1,7 @@
 import { Injectable }		from '@angular/core';
 import { Headers, Http, Response, RequestOptions, URLSearchParams }		from '@angular/http';
 import { Observable }		from 'rxjs/Rx';
+import { AuthHttp }				from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -11,16 +12,19 @@ import { ENV }				from '../../environment';
 export class ObatRusakService {
 	private obatRusakUrl = ENV.obatRusakUrl;
 
-	constructor(private http:Http) { }
+	constructor(
+		private http: Http,
+		private authHttp: AuthHttp
+	) { }
 
-	// TO-DO: Convert into Observable?
+
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
 		return Promise.reject(error.message || error);
 	}
 
 	getAllObatRusak(): Observable<ObatRusak[]> {
-		return this.http.get(this.obatRusakUrl)
+		return this.authHttp.get(this.obatRusakUrl)
 			.map((res: Response) => res.json());
 	}
 
@@ -28,11 +32,6 @@ export class ObatRusakService {
 		return this.getAllObatRusak()
 			.map(allObatRusak => allObatRusak.find(obat_rusak => obat_rusak.id == id));
 	}
-
-	/* getTodayObatRusak(id_stok_obat: number): Observable<ObatRusak[]> {
-		return this.http.get(this.obatRusakUrl + '/today/' + id_stok_obat)
-			.map((res: Response) => res.json());
-	} */
 
 	getObatRusakByTime(waktu_mulai: Date, waktu_selesai: Date, id_stok_obat: number): Observable<ObatRusak[]> {
 		let params: URLSearchParams = new URLSearchParams();
@@ -43,7 +42,7 @@ export class ObatRusakService {
 		let requestOptions = new RequestOptions();
 		requestOptions.params = params;
 
-		return this.http.get(this.obatRusakUrl+'/search_by_time', requestOptions)
+		return this.authHttp.get(this.obatRusakUrl+'/search_by_time', requestOptions)
 		    .map((res: Response) => res.json());		
 	}
 
@@ -51,6 +50,6 @@ export class ObatRusakService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });
     	let body = JSON.stringify(obatRusak);
-    	return this.http.post(this.obatRusakUrl, body, options ).map((res: Response) => res.json());
+    	return this.authHttp.post(this.obatRusakUrl, body, options ).map((res: Response) => res.json());
 	}
 }

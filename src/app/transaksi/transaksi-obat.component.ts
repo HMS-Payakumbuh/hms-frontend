@@ -14,6 +14,8 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 })
 
 export class TransaksiObatComponent {
+	kode: any;
+	loading: boolean;
 	transaksi_obat: boolean;
 	nama_pasien: string;
 	kode_pasien: string;
@@ -50,7 +52,7 @@ export class TransaksiObatComponent {
 			.subscribe(allAsuransi => this.initJenisList(allAsuransi.allAsuransi));
 	}
 
-	private searchTransaksi() {
+	public searchTransaksi() {
 		this.transaksiService.getAllTransaksi(null, this.nama_pasien, 'open')
 			.subscribe(data => {
 				let allTransaksi: any[] = [];

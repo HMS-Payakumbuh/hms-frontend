@@ -91,7 +91,7 @@
 						<a routerLink="/kamar-jenazah" class="list-group-item">Daftar Kamar Jenazah</a>
 					</div>
 
-					<a *ngIf="authenticationService.getCurrentUser().role == 'kasir' || authenticationService.getCurrentUser().role == 'admin'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#TransaksiSubMenu">Transaksi</a>
+					<a *ngIf="authenticationService.getCurrentUser().role == 'kasir' || authenticationService.getCurrentUser().role == 'admin' || authenticationService.getCurrentUser().role == 'petugasKeuangan'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#TransaksiSubMenu">Transaksi</a>
 					<div id="TransaksiSubMenu" class="collapse">
 						<a routerLink="/transaksi" class="list-group-item">Transaksi Aktif</a>
 						<a routerLink="/transaksi-obat" class="list-group-item">Transaksi Obat</a>

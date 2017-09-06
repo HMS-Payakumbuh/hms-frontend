@@ -1,6 +1,7 @@
 import { Injectable }		from '@angular/core';
 import { Headers, Http, Response, RequestOptions, URLSearchParams }		from '@angular/http';
 import { Observable }		from 'rxjs/Rx';
+import { AuthHttp }				from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -12,16 +13,18 @@ import { ENV }				from '../../environment';
 export class ObatTebusService {
 	private obatTebusUrl = ENV.obatTebusUrl;
 
-	constructor(private http:Http) { }
+	constructor(
+		private http: Http,
+		private authHttp: AuthHttp
+	) { }
 
-	// TO-DO: Convert into Observable?
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
 		return Promise.reject(error.message || error);
 	}
 
 	getAllObatTebus(): Observable<ObatTebus[]> {
-		return this.http.get(this.obatTebusUrl)
+		return this.authHttp.get(this.obatTebusUrl)
 			.map((res: Response) => res.json());
 	}
 
@@ -29,11 +32,6 @@ export class ObatTebusService {
 		return this.getAllObatTebus()
 			.map(allObatTebus => allObatTebus.find(obat_tebus => obat_tebus.id == id));
 	}
-
-	/* getTodayObatTebus(id_stok_obat: number): Observable<ObatTebusItem[]> {
-		return this.http.get(this.obatTebusUrl + '/today/' + id_stok_obat)
-			.map((res: Response) => res.json());
-	} */
 
 	getObatTebusByTime(waktu_mulai: Date, waktu_selesai: Date, id_stok_obat: number): Observable<ObatTebusItem[]> {
 		let params: URLSearchParams = new URLSearchParams();
@@ -44,7 +42,7 @@ export class ObatTebusService {
 		let requestOptions = new RequestOptions();
 		requestOptions.params = params;
 
-		return this.http.get(this.obatTebusUrl+'/search_by_time', requestOptions)
+		return this.authHttp.get(this.obatTebusUrl+'/search_by_time', requestOptions)
 		    .map((res: Response) => res.json());		
 	}
 
@@ -52,6 +50,6 @@ export class ObatTebusService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });
     	let body = JSON.stringify(obatTebus);
-    	return this.http.post(this.obatTebusUrl, body, options ).map((res: Response) => res.json());
+    	return this.authHttp.post(this.obatTebusUrl, body, options ).map((res: Response) => res.json());
 	}
 }
