@@ -12,7 +12,7 @@ export class AppComponent {
 	title = 'Sistem Manajemen Rumah Sakit';
 
 	constructor(
-		private authenticationService: AuthenticationService
+		public authenticationService: AuthenticationService
 	) {}
 
 	logout() {
