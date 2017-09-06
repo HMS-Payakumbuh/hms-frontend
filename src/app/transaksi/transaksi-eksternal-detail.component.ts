@@ -39,9 +39,14 @@ export class TransaksiEksternalDetailComponent implements OnInit {
 	transaksi_obat: boolean;
 	transaksi_eksternal: boolean;
 	no_pembayaran: string = '';
+	metode_bayar: any;
+	allMetode = [];
 
 	printListOfObatTebus: any[] = [];
 	printListOfObatEceran: any[] = [];
+	printListOfTindakan: any[] = [];
+	printListOfKamarRawatInap: any[] = [];
+	printListOfKamarJenazah: any[] = [];
 
 	constructor(
 		private transaksiEksternalService: TransaksiEksternalService,
@@ -102,6 +107,10 @@ export class TransaksiEksternalDetailComponent implements OnInit {
 
 	goBack(): void {
 		this.router.navigateByUrl('/histori-transaksi');
+	}
+
+	gantiAsuransi(value): void {
+
 	}
 
 	initObatTebus(value): void {
