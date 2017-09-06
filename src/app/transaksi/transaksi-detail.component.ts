@@ -19,6 +19,7 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 
 export class TransaksiDetailComponent implements OnInit {
 	loading: boolean;
+	loading_bpjs: boolean;
 	response: any;
 	transaksi: any;
 	listOfObatTebus: any[] = [];
@@ -60,6 +61,7 @@ export class TransaksiDetailComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.loading = true;
+		this.loading_bpjs = false;
 		this.asuransi = null;
 		this.transaksi_obat = false;
 		this.transaksi_eksternal = false;
@@ -175,18 +177,17 @@ export class TransaksiDetailComponent implements OnInit {
 			let keluar_ms = keluar.getTime();
 
 			let days = Math.round((keluar_ms - masuk_ms)/one_day);
-
-			if (days > 0) {
-				this.listOfKamarRawatInap.push(item);
-				if (this.transaksi.no_sep === null) {
-					if (item.id_pembayaran === null) {
-						this.harga_total += parseInt(item.kamar_rawatinap.harga_per_hari) * this.howLong(item.waktu_masuk, item.waktu_keluar);
-					}
+			
+			this.listOfKamarRawatInap.push(item);
+			if (this.transaksi.no_sep === null) {
+				if (item.id_pembayaran === null) {
+					this.harga_total += parseInt(item.kamar_rawatinap.harga_per_hari) * this.howLong(item.waktu_masuk, item.waktu_keluar);
 				}
 			}
 		}
 
 		if (this.transaksi.no_sep !== null) {
+			this.loading_bpjs = true;
 			let total_tambahan = 0;
 			if (this.transaksi.pembayaran.length > 0) {
 				for (let item of this.transaksi.pembayaran) {
@@ -215,6 +216,7 @@ export class TransaksiDetailComponent implements OnInit {
 						}
 						console.log(this.harga_total);
 						console.log(this.harga_tambahan);
+						this.loading_bpjs = false;
 					}
 				});
 		}
@@ -354,6 +356,7 @@ export class TransaksiDetailComponent implements OnInit {
 
 	close(): void {
 		let tutup = true;
+		let checkout = true;
 		let bayar = false;
 		let total_harga = 0;
 		let listOfTindakanId: any[] = [];
@@ -396,13 +399,16 @@ export class TransaksiDetailComponent implements OnInit {
 					tutup = false;
 				}
 			}
+			if (i.waktu_keluar === null) {
+				checkout = false;
+			}
 		}
 
 		if (this.perlu_bayar_tambahan) {
 			tutup = false;
 		}
 
-		if (tutup) {
+		if (tutup && checkout) {
 
 			let payload: any = {
 				status: 'closed'
@@ -424,15 +430,28 @@ export class TransaksiDetailComponent implements OnInit {
 			}
 		}
 		else {
-			let toastOptions:ToastOptions = {
-				title: "Transaksi Belum Bisa Ditutup",
-				msg: "Masih terdapat komponen yang belum dibayar",
-				showClose: true,
-				timeout: 5000,
-				theme: 'material'
-			};
+			if (!tutup) {
+				let toastOptions:ToastOptions = {
+					title: "Transaksi Belum Dapat Ditutup",
+					msg: "Masih terdapat komponen yang belum dibayar",
+					showClose: true,
+					timeout: 5000,
+					theme: 'material'
+				};
 
-			this.toastyService.error(toastOptions);
+				this.toastyService.error(toastOptions);
+			}
+			if (!checkout) {
+				let toastOptions:ToastOptions = {
+					title: "Transaksi Belum Dapat Ditutup",
+					msg: "Belum Checkout Kamar",
+					showClose: true,
+					timeout: 5000,
+					theme: 'material'
+				};
+
+				this.toastyService.error(toastOptions);
+			}
 		}
 	}
 

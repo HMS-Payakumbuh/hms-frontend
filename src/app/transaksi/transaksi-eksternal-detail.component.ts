@@ -21,6 +21,7 @@ export class TransaksiEksternalDetailComponent implements OnInit {
 	response: any;
 	transaksi: any;
 	loading: boolean;
+	loading_bpjs: boolean;
 	listOfObatTebus: any[] = [];
 	listOfObatEceran: any[] = [];
 	asuransi: Asuransi;
@@ -54,6 +55,7 @@ export class TransaksiEksternalDetailComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.loading = true;
+		this.loading_bpjs = false;
 		this.transaksi_obat = false;
 		this.transaksi_eksternal = true;
 		this.harga_tambahan = 0;
