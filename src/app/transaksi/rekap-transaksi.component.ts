@@ -106,9 +106,19 @@ export class RekapTransaksiComponent {
 					this.toastyService.error(this.toast_fail(2));
 				}
 				else {
-				    window.location.href = this.transaksiUrl + '/export?tanggal_awal=' + this.tanggal_awal + '&tanggal_akhir=' + this.tanggal_akhir;
-					this.toastyService.success(this.toast_success());
-					this.ngOnInit();
+					let awal: Date = new Date(this.tanggal_awal);
+					let akhir: Date = new Date(this.tanggal_akhir);
+					let awal_ms = awal.getTime();
+					let akhir_ms = akhir.getTime();
+
+					if (awal_ms > akhir_ms) {
+						this.toastyService.error(this.toast_fail(4));
+					}
+					else {
+					    window.location.href = this.transaksiUrl + '/export?tanggal_awal=' + this.tanggal_awal + '&tanggal_akhir=' + this.tanggal_akhir;
+						this.toastyService.success(this.toast_success());
+						this.ngOnInit();
+					}
 				}
 			}
 		}
@@ -129,14 +139,19 @@ export class RekapTransaksiComponent {
 	private toast_fail(value) {
 		let title: string = ''
 		if (value === 1) {
-			title = 'Tanggal mulai tidak boleh kosong';
+			title = 'Tanggal awal tidak boleh kosong';
 		} 
 		else {
 			if (value === 2) {
-				title = 'Tanggal selesai tidak boleh kosong';
+				title = 'Tanggal akhir tidak boleh kosong';
 			}
 			else {
-				title = 'Tanggal mulai dan tanggal selesai tidak boleh kosong';
+				if (value === 4) {
+					title = 'Tanggal akhir tidak boleh lebih kecil dari tanggal awal';
+				}
+				else {
+					title = 'Tanggal awal dan tanggal akhir tidak boleh kosong';
+				}
 			}
 		}
 		let toastOptions:ToastOptions = {
