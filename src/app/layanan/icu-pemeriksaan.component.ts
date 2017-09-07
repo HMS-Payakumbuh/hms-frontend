@@ -68,6 +68,7 @@ import { ObatMasukService }		  from '../farmasi/obat-masuk/obat-masuk.service';
 })
 
 export class PemeriksaanICUComponent implements OnInit {
+  loading: boolean;
 	transaksi: any = null;
   rekamMedis: RekamMedis = null;
   hasilPemeriksaan: HasilPemeriksaan = new HasilPemeriksaan();
@@ -121,7 +122,7 @@ export class PemeriksaanICUComponent implements OnInit {
   noPegawai:string;
 
   public setTanggal;
-  public loading;
+  
 
 	inputFormatter = (value : any) => value.nama;
 	resultFormatter = (value : any) => value.kode + ' - ' + value.nama;
@@ -194,6 +195,7 @@ export class PemeriksaanICUComponent implements OnInit {
 	}
 
 	ngOnInit() {
+    this.loading = false;
     this.noPegawai = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
 
     this.route.params
@@ -219,10 +221,6 @@ export class PemeriksaanICUComponent implements OnInit {
 
     this.tenagaMedisService.getAllDokter().
       subscribe(data => this.allDokter = data);
-      
-		this.tindakanService.getAllTindakanReference().subscribe(
-      data => { this.allTindakanReference = data }
-    );
 
 		this.diagnosisService.getAllDiagnosisReference().subscribe(
       data => { this.allDiagnosisReference = data }
@@ -239,6 +237,19 @@ export class PemeriksaanICUComponent implements OnInit {
         if (data != null) {
           if (data.tanggal_waktu == this.transaksi.transaksi.waktu_masuk_pasien) {
             this.rekamMedis = data;
+            if (this.rekamMedis.np_dokter == null) {
+              this.rekamMedis.np_dokter = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
+            }
+
+            this.tindakanService.getAllTindakanReference().subscribe(
+              data => {
+                this.allTindakanReference = data;
+                this.addSelectedTindakan(
+                  this.allTindakanReference.find(tindakanReference => tindakanReference.kode === '89.03')
+                );
+              }
+            );
+
             if (JSON.parse(data.hasil_pemeriksaan) != null)
               this.hasilPemeriksaan = JSON.parse(data.hasil_pemeriksaan);
 
@@ -246,17 +257,38 @@ export class PemeriksaanICUComponent implements OnInit {
               this.keluhan = JSON.parse(data.anamnesis).keluhan;
               this.allAlergi = JSON.parse(data.anamnesis).alergi.split(',');
               this.allRiwayat = JSON.parse(data.anamnesis).riwayat_penyakit.split(',');
-            }
-
-            if(JSON.parse(data.perkembangan_pasien) != null) {
-              this.allPerkembanganPasien = JSON.parse(data.perkembangan_pasien).perkembangan.split(',');
-              this.allTanggalPerkembangan = JSON.parse(data.perkembangan_pasien).tanggal.split(',');
+              if (this.allRiwayat[0] === '')
+                this.allRiwayat = [];
+              if (this.allAlergi[0] === '')
+                this.allAlergi = [];
             }
           }
-          
-        }
+          else {
+            this.rekamMedis = new RekamMedis(
+              this.transaksi.transaksi.id_pasien,
+              this.transaksi.transaksi.waktu_masuk_pasien,
+              JSON.parse(localStorage.getItem('currentUser')).no_pegawai,
+              '',
+              '',
+              '',
+              ''
+            );
 
-        if (this.rekamMedis == null) {
+            this.tindakanService.getAllTindakanReference().subscribe(
+              data => {
+                this.allTindakanReference = data;
+                this.addSelectedTindakan(
+                  this.allTindakanReference.find(tindakanReference => tindakanReference.kode === '89.03')
+                );
+              }
+            );
+
+            this.rekamMedisService.createRekamMedis(this.rekamMedis).subscribe(
+              data => {}
+            );
+          }
+        }
+        else {
           this.rekamMedis = new RekamMedis(
             this.transaksi.transaksi.id_pasien,
             this.transaksi.transaksi.waktu_masuk_pasien,
@@ -267,8 +299,17 @@ export class PemeriksaanICUComponent implements OnInit {
             ''
           );
 
+          this.tindakanService.getAllTindakanReference().subscribe(
+            data => {
+              this.allTindakanReference = data;
+              this.addSelectedTindakan(
+                this.allTindakanReference.find(tindakanReference => tindakanReference.kode === '89.03')
+              );
+            }
+          );
+
           this.rekamMedisService.createRekamMedis(this.rekamMedis).subscribe(
-            data => { this.firstRekamMedis = true; }
+            data => {}
           );
         }
       }
@@ -308,7 +349,7 @@ export class PemeriksaanICUComponent implements OnInit {
               if (_.isEmpty(this.allRiwayatPenyakit)) {
                 this.allRiwayatPenyakit = ['Tidak ada penyakit yang tercatat'];
                 this.riwayatEmpty = true;
-              } 
+              }
             });
   }
 
@@ -553,6 +594,7 @@ export class PemeriksaanICUComponent implements OnInit {
   }
 
 	save() {
+    this.loading = true;
     let anamnesis: any = {
       keluhan: this.keluhan,
       riwayat_penyakit: this.allRiwayat.toString(),

@@ -133,7 +133,18 @@ export class PemakaianKamarJenazahListComponent implements OnInit {
 		this.pemakaianKamarJenazahModalId = id;
 		this.pemakaianKamarJenazahModal = Object.assign({}, PemakaianKamarJenazah);
 		this.PemakaianKamarJenazahService.updatePemakaianKamarJenazah(this.pemakaianKamarJenazahModalId, this.pemakaianKamarJenazahModal).subscribe(
-			data => { this.ngOnInit() }
+			data => { 
+				this.ngOnInit();
+				let toastOptions:ToastOptions = {
+					title: 'Success',
+					msg: 'Checkout berhasil',
+					showClose: true,
+					timeout: 5000,
+					theme: 'material'
+				};
+
+				this.toastyService.success(toastOptions);
+				}
 		);
 	}
 
