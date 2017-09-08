@@ -76,6 +76,8 @@ export class BookingOperasiListComponent implements OnInit {
 	tindakanOperasi : TindakanOperasi[];
 	nomorPegawaiDokterPJ: any;
 
+	today: string;
+
 	public selectedDate;
 	public param;
 	public config;
@@ -135,6 +137,8 @@ export class BookingOperasiListComponent implements OnInit {
         this.pasienService.getAllPasien().subscribe(
 			data => { this.allPasien = data }
 		);
+
+		this.today = new Date().toISOString().slice(0, 10);
 	}
 
     private addPasien(pasien: Pasien) {

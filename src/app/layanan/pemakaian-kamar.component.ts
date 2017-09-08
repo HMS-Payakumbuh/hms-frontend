@@ -34,6 +34,7 @@ import { PoliklinikService }		from './poliklinik.service';
 export class PemakaianKamarListComponent implements OnInit {
 	allPemakaianKamar: PemakaianKamar[];
 	allTenagaMedis: TenagaMedis[];
+	checkTransaksi: PemakaianKamar[];
 
 	transaksi: Transaksi[];
 
@@ -67,7 +68,7 @@ export class PemakaianKamarListComponent implements OnInit {
 	ngOnInit() {
 		this.pemakaianKamarService.getAllPemakaianKamarRawatinap().subscribe(
      		data => { this.allPemakaianKamar = data }
-    	);
+		);
 
 		this.tenagaMedisService.getAllTenagaMedis().
 			subscribe(data => this.allTenagaMedis = data);

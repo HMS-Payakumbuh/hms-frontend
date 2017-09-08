@@ -44,12 +44,14 @@ export class RawatinapListComponent implements OnInit {
 	allTempatTidur: Tempattidur[];
 	allDokter: Dokter[];
 	allPemakaianKamarBooked : PemakaianKamar[];
+	checkTransaksi: PemakaianKamar[];
 
 	pemakaianKamarModal: PemakaianKamar = null;
 	tempatTidurModal : Tempattidur = null;
     pemakaianKamarModalNama: string = null;
 
 	rawatinap: Rawatinap;
+	isCheckPasien: boolean = false;
 
 	public searchParam;
 	public kelas;
@@ -96,6 +98,10 @@ export class RawatinapListComponent implements OnInit {
 			data => { this.allPasien = data }
 		);
 
+		this.pemakaianKamarService.getAllPemakaianKamarCheckTransaksi().subscribe(
+     		data => { this.checkTransaksi = data }
+    	);
+
 		this.tenagaMedisService.getAllDokter().
 			subscribe(data => this.allDokter = data);
 
@@ -109,6 +115,11 @@ export class RawatinapListComponent implements OnInit {
 			data => {
 				this.transaksi = data;
 				this.pemakaianKamarModal.id_transaksi = this.transaksi.id;
+				this.checkTransaksi.forEach(element => {
+					if(element.id_transaksi == this.pemakaianKamarModal.id_transaksi) {
+						this.isCheckPasien = true;
+					}
+				});
 			},
 			error => {
 				let toastOptions: ToastOptions = {
@@ -156,6 +167,10 @@ export class RawatinapListComponent implements OnInit {
 			return false;
 		} else if (this.pemakaianKamarModal.no_pegawai == null) {
 			this.handleError("Nama dokter wajib diisi");
+			return false;
+		} else if (this.isCheckPasien == true) {
+			this.handleError("Pasien sudah terdaftar");
+			this.isCheckPasien = false;
 			return false;
 		}
 		else {

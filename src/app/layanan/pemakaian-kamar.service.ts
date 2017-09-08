@@ -52,6 +52,11 @@ export class PemakaianKamarService {
 			.map((res: Response) => res.json());
 	}
 
+	getAllPemakaianKamarCheckTransaksi(): Observable<PemakaianKamar[]> {
+		return this.http.get(this.pemakaianKamarRawatinapUrl + '/check/transaksi')
+			.map((res: Response) => res.json());
+	}
+
 	getAllPemakaianKamar(): Observable<PemakaianKamar[]> {
 		return this.http.get(this.pemakaianKamarRawatinapUrl)
 			.map((res: Response) => res.json());
