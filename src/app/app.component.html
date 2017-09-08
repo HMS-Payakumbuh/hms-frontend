@@ -77,12 +77,8 @@
 					<div id="JenazahSubMenu" class="collapse">
 						<a  routerLink="/pemakaiankamarjenazah" class="list-group-item">Pemakaian Kamar Jenazah</a>
 					</div>
-
-					<a *ngIf="authenticationService.getCurrentUser().role == 'admin'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#TenagaMedisSubMenu">Tenaga Medis</a>
-					<div id="TenagaMedisSubMenu" class="collapse">
-						<a routerLink="/tenaga-medis" class="list-group-item">Daftar Tenaga Medis</a>
-						<a routerLink="/jadwal-dokter" class="list-group-item">Daftar Jadwal Dokter</a>
-					</div>
+					
+					<a *ngIf="authenticationService.getCurrentUser().role == 'admin'" class="list-group-item list-group-item-info" routerLink="/tenaga-medis">Tenaga Medis</a>
 
 					<a *ngIf="authenticationService.getCurrentUser().role == 'admin'" href="" class="list-group-item list-group-item-info" data-toggle="collapse" data-target="#KamarSubMenu">Kamar</a>
 					<div id="KamarSubMenu" class="collapse">

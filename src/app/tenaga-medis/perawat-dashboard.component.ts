@@ -33,8 +33,9 @@ export class PerawatDashboardComponent implements OnInit {
   selectedPoliklinik: Poliklinik = null;
   nama_poli: string = null;
 
-  transaksiAmbulans: any = null;
-  searchKodePasien: string = '';
+  transaksiAmbulans: any;
+  searchTerm: string;
+  searchResult: any;
 
   public filterQuery = "";
   public rowsOnPage = 5;
@@ -52,6 +53,10 @@ export class PerawatDashboardComponent implements OnInit {
 	) { }
 
   ngOnInit() {
+    this.searchTerm = '';
+    this.searchResult = null;
+    this.transaksiAmbulans = null;    
+
     this.poliklinikService.getAllPoliklinik().subscribe(
       data => { this.allPoliklinik = data }
     );
@@ -67,23 +72,65 @@ export class PerawatDashboardComponent implements OnInit {
   }
 
   searchTransaksi() {
-    if (this.searchKodePasien != '') {
-      this.transaksiService.getAllTransaksi(this.searchKodePasien, null, 'open').subscribe(
-        data => {
-          this.transaksiAmbulans = data;
-          if (this.transaksiAmbulans.allTransaksi[0] == null) {
-            let toastOptions:ToastOptions = {
-                title: 'Error',
-                msg: 'Kode pasien tidak ditemukan',
+    if (this.searchTerm != '') {
+      if (this.searchTerm.match(/[a-z]/i)) {
+        this.transaksiService.getAllTransaksi(null, this.searchTerm, 'open').subscribe(
+          data => {
+            this.searchResult = data;
+            if (this.searchResult.allTransaksi[0] == null) {
+              let toastOptions:ToastOptions = {
+                  title: 'Error',
+                  msg: 'Nama pasien tidak ditemukan',
+                  showClose: true,
+                  timeout: 3000,
+                  theme: 'material'
+              };
+              this.toastyService.error(toastOptions);
+            }
+            else {
+              this.transaksiAmbulans = this.searchResult.allTransaksi[0];
+              let toastOptions:ToastOptions = {
+                title: 'Info',
+                msg: 'Ditemukan ' + this.searchResult.allTransaksi.length + ' hasil',
                 showClose: true,
-                timeout: 5000,
+                timeout: 3000,
                 theme: 'material'
             };
-
-            this.toastyService.error(toastOptions);
+            this.toastyService.info(toastOptions);
+            }
           }
-        }
-      )
+        )
+      }
+      else {
+        this.transaksiService.getAllTransaksi(this.searchTerm, null, 'open').subscribe(
+          data => {
+            this.searchResult = data;
+            if (this.searchResult.allTransaksi[0] == null) {
+              let toastOptions:ToastOptions = {
+                  title: 'Error',
+                  msg: 'Kode pasien tidak ditemukan',
+                  showClose: true,
+                  timeout: 3000,
+                  theme: 'material'
+              };
+              this.toastyService.error(toastOptions);
+            }
+            else {
+              this.transaksiAmbulans = this.searchResult.allTransaksi[0];
+            }
+          }
+        )
+      }      
+    }
+    else {
+      let toastOptions:ToastOptions = {
+        title: 'Warning',
+        msg: 'Kata kunci pencarian kosong',
+        showClose: true,
+        timeout: 3000,
+        theme: 'material'
+    };
+    this.toastyService.warning(toastOptions);
     }
   }
 
@@ -93,12 +140,12 @@ export class PerawatDashboardComponent implements OnInit {
         let tindakan: Tindakan[] = [];
         let temp: Tindakan = new Tindakan();
         
-        temp.id_transaksi = this.transaksiAmbulans.allTransaksi[0].id;
+        temp.id_transaksi = this.transaksiAmbulans.id;
         temp.harga = data.harga;
         temp.keterangan = '';
         temp.kode_tindakan = data.kode;
-        temp.id_pasien = this.transaksiAmbulans.allTransaksi[0].id_pasien;
-        temp.tanggal_waktu = this.transaksiAmbulans.allTransaksi[0].waktu_masuk_pasien;
+        temp.id_pasien = this.transaksiAmbulans.id_pasien;
+        temp.tanggal_waktu = this.transaksiAmbulans.waktu_masuk_pasien;
         temp.np_tenaga_medis = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
         temp.nama_ambulans = 'Ambulans belum dipilih';
         tindakan.push(temp);
@@ -109,20 +156,19 @@ export class PerawatDashboardComponent implements OnInit {
               title: 'Success',
               msg: 'Permintaan pemakaian ambulans sudah diteruskan ke petugas ambulans',
               showClose: true,
-              timeout: 5000,
+              timeout: 3000,
               theme: 'material'
             };
 
             this.toastyService.success(toastOptions);
-            this.transaksiAmbulans = null;
-            this.searchKodePasien = '';
+            this.ngOnInit();
           },
           error => {
             let toastOptions:ToastOptions = {
               title: 'Error',
               msg: 'Permintaan pemakaian ambulans gagal dibuat',
               showClose: true,
-              timeout: 5000,
+              timeout: 3000,
               theme: 'material'
             };
 

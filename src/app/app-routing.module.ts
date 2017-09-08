@@ -65,7 +65,6 @@ import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-o
 import { PemakaianKamarJenazahListComponent }		from './layanan/pemakaian-kamar-jenazah-list.component';
 
 import { TenagaMedisListComponent } 	from './tenaga-medis/tenaga-medis-list.component';
-import { JadwalDokterListComponent }	from './tenaga-medis/jadwal-dokter-list.component';
 import { DiagnosisReferenceListComponent }	from './layanan/diagnosis-reference-list.component';
 import { TindakanReferenceListComponent }		from './layanan/tindakan-reference-list.component';
 
@@ -192,7 +191,6 @@ const routes: Routes = [
 	{ path: 'pemakaiankamarjenazah', canActivate: [AuthGuard], component: PemakaianKamarJenazahListComponent },
 
 	{ path: 'tenaga-medis', canActivate: [AuthGuard], component: TenagaMedisListComponent },
-	{ path: 'jadwal-dokter', canActivate: [AuthGuard], component: JadwalDokterListComponent },
 	{ path: 'daftar-diagnosis', canActivate: [AuthGuard], component: DiagnosisReferenceListComponent },
 	{ path: 'daftar-tindakan', canActivate: [AuthGuard], component: TindakanReferenceListComponent },
 
