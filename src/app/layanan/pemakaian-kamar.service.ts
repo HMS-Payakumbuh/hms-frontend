@@ -1,5 +1,6 @@
 import { Injectable }			from '@angular/core';
 import { Headers, Http, Response, RequestOptions }	from '@angular/http';
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { Observable }			from 'rxjs/Rx';
 
 import { ENV }						from '../environment';
@@ -13,7 +14,7 @@ export class PemakaianKamarService {
 	pemakaianKamarRawatinapUrl = ENV.pemakaianKamarRawatinapUrl;
 	transaksiUrl = ENV.transaksiUrl;
 
-	constructor(private http:Http) { }
+	constructor(private http:Http, private authHttp: AuthHttp) { }
 
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
@@ -48,6 +49,11 @@ export class PemakaianKamarService {
 
 	getAllPemakaianKamarDokterDashboard(): Observable<PemakaianKamar[]> {
 		return this.http.get(this.pemakaianKamarRawatinapUrl + '/dashboard/dokte')
+			.map((res: Response) => res.json());
+	}
+
+	getAllPemakaianKamarCheckTransaksi(): Observable<PemakaianKamar[]> {
+		return this.http.get(this.pemakaianKamarRawatinapUrl + '/check/transaksi')
 			.map((res: Response) => res.json());
 	}
 

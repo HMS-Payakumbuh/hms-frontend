@@ -6,6 +6,7 @@ import { Observable }																			from 'rxjs/Observable';
 import { NgbTypeaheadConfig } 														from '@ng-bootstrap/ng-bootstrap';
 import * as _ from "lodash";
 
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 import { PemakaianKamar } 				from './pemakaian-kamar';
 import { PemakaianKamarService }		    from './pemakaian-kamar.service';
 import { TenagaMedis } 				from '../tenaga-medis/tenaga-medis';
@@ -32,7 +33,8 @@ import { PoliklinikService }		from './poliklinik.service';
 				TindakanService,
 				PasienService,
 				TempattidurService,
-				TransaksiService]
+				TransaksiService,
+				ToastyService]
 })
 
 export class BookingRawatinapComponent implements OnInit {
@@ -62,6 +64,10 @@ export class BookingRawatinapComponent implements OnInit {
 
 	today: string;
 
+	public selectedDate;
+	public param;
+	public config;
+
 
 	inputPasienFormatter = (value : Pasien) => value.nama_pasien;
 	resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.kode_pasien;
@@ -90,7 +96,8 @@ export class BookingRawatinapComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private tindakanService: TindakanService,
 		private transaksiService: TransaksiService,
-		private pasienService: PasienService
+		private pasienService: PasienService,
+		private toastyService: ToastyService
 	) {}
 
 	ngOnInit() {
@@ -115,6 +122,16 @@ export class BookingRawatinapComponent implements OnInit {
 			data => { 
 				this.transaksi = data;
 				this.pemakaianKamarModal.id_transaksi = this.transaksi.id;
+			},
+			error => {
+				let toastOptions: ToastOptions = {
+					title: "Error",
+					msg: "Pasien tidak mempunyai transaksi yang open, masukkan pasien lain",
+					showClose: true,
+					timeout: 5000,
+					theme: 'material'
+				};
+				this.toastyService.error(toastOptions);
 			}
 		);
 	}

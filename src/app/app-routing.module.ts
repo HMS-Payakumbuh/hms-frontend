@@ -50,12 +50,9 @@ import { PemeriksaanRawatinapPasienListComponent }		from './layanan/rawatinap-pe
 import { PemeriksaanRawatinapComponent }		from './layanan/rawatinap-pemeriksaan.component';
 import { BookingRawatinapComponent }		from './layanan/booking-rawatinap.component';
 import { BookingRawatinapListComponent }		from './layanan/booking-rawatinap-list.component';
-import { BookingRawatinapDetailComponent }		from './layanan/booking-rawatinap-detail.component';
 import { RawatinapListComponent }		from './layanan/rawatinap-list.component';
 import { ICUListComponent }		from './layanan/icu-list.component';
-import { RawatinapDetailComponent }	    from './layanan/rawatinap-detail.component';
 import { PindahKamarListComponent }		from './layanan/pindahkamar-list.component';
-import { PindahKamarDetailComponent }	    from './layanan/pindahkamar-detail.component';
 import { PindahICUListComponent }		from './layanan/pindahicu-list.component';
 import { KamarOperasiListComponent }		from './layanan/kamar-operasi-list.component';
 import { KamarJenazahListComponent }		from './layanan/kamar-jenazah-list.component';
@@ -69,11 +66,12 @@ import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-o
 import { PemakaianKamarJenazahListComponent }		from './layanan/pemakaian-kamar-jenazah-list.component';
 
 import { TenagaMedisListComponent } 	from './tenaga-medis/tenaga-medis-list.component';
-import { JadwalDokterListComponent }	from './tenaga-medis/jadwal-dokter-list.component';
 import { DiagnosisReferenceListComponent }	from './layanan/diagnosis-reference-list.component';
 import { TindakanReferenceListComponent }		from './layanan/tindakan-reference-list.component';
 
 import { DokterDashboardComponent }						from './tenaga-medis/dokter-dashboard.component';
+import { DokterDashboardRawatinapComponent }						from './tenaga-medis/dokter-dashboard-rawatinap.component';
+import { DokterDashboardOperasiComponent }           from './tenaga-medis/dokter-dashboard-operasi.component';
 import { PerawatDashboardComponent }					from './tenaga-medis/perawat-dashboard.component';
 import { PetugasLabDashboardComponent }				from './tenaga-medis/petugas-lab-dashboard.component';
 import { DaftarPemakaianAmbulansComponent }	from './layanan/daftar-pemakaian-ambulans.component';
@@ -166,7 +164,6 @@ const routes: Routes = [
 
 	{ path: 'rawatinap', canActivate: [AuthGuard], component: RawatinapListComponent },
 	{ path: 'icu', canActivate: [AuthGuard],component: ICUListComponent },
-	{ path: 'rawatinap/:noKamar', canActivate: [AuthGuard], component: RawatinapDetailComponent },
 
 	{ path: 'pemeriksaan/icu', canActivate: [AuthGuard], component: PemeriksaanICUKamarListComponent },
 	{ path: 'pemeriksaan/icu/:noKamar', canActivate: [AuthGuard], component: PemeriksaanICUPasienListComponent },
@@ -177,12 +174,10 @@ const routes: Routes = [
 	{ path: 'pemeriksaan/rawatinap/:noKamar/:idPemakaian/:idTransaksi', canActivate: [AuthGuard], component: PemeriksaanRawatinapComponent },
 
 	{ path: 'rawatinap/booking/kamar', canActivate: [AuthGuard], component: BookingRawatinapListComponent },
-	{ path: 'rawatinap/booking/kamar/:tanggal/:noKamar', canActivate: [AuthGuard], component: BookingRawatinapDetailComponent },
 
 	{ path: 'daftarbookingrawatinap', canActivate: [AuthGuard], component: BookingRawatinapComponent },
 
 	{ path: 'rawatinap/pindah/:idPemakaian', canActivate: [AuthGuard], component: PindahKamarListComponent },
-	{ path: 'rawatinap/pindah/:idPemakaian/:noKamar', canActivate: [AuthGuard], component: PindahKamarDetailComponent },
 	{ path: 'icu/pindah/:idPemakaian', canActivate: [AuthGuard], component: PindahICUListComponent },
 
 	{ path: 'kamar-rawatinap', canActivate: [AuthGuard], component: KamarRawatinapListComponent },
@@ -198,11 +193,12 @@ const routes: Routes = [
 	{ path: 'pemakaiankamarjenazah', canActivate: [AuthGuard], component: PemakaianKamarJenazahListComponent },
 
 	{ path: 'tenaga-medis', canActivate: [AuthGuard], component: TenagaMedisListComponent },
-	{ path: 'jadwal-dokter', canActivate: [AuthGuard], component: JadwalDokterListComponent },
 	{ path: 'daftar-diagnosis', canActivate: [AuthGuard], component: DiagnosisReferenceListComponent },
 	{ path: 'daftar-tindakan', canActivate: [AuthGuard], component: TindakanReferenceListComponent },
 
 	{ path: 'dokter-dashboard', canActivate: [AuthGuard], component: DokterDashboardComponent },
+	{ path: 'dokter-rawatinap-dashboard', canActivate: [AuthGuard], component: DokterDashboardRawatinapComponent },
+	{ path: 'dokter-operasi-dashboard', canActivate: [AuthGuard], component: DokterDashboardOperasiComponent },
 	{ path: 'perawat-dashboard', canActivate: [AuthGuard], component: PerawatDashboardComponent },
 	{ path: 'petugas-lab-dashboard', canActivate: [AuthGuard], component: PetugasLabDashboardComponent },
 	{ path: 'daftar-pemakaian-ambulans', canActivate: [AuthGuard], component: DaftarPemakaianAmbulansComponent },

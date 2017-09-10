@@ -2,6 +2,7 @@ export class PemakaianKamarOperasi {
     id: number;
     no_kamar: string;
     id_transaksi: number;
+    id_tindakan: number;
     no_pembayaran: number;
 	waktu_masuk : string;
     waktu_keluar : string;

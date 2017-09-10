@@ -1,6 +1,7 @@
 import { Injectable }			from '@angular/core';
-import { Headers, Http, Response, RequestOptions }		from '@angular/http';
+import { Headers, Response, RequestOptions }		from '@angular/http';
 import { Observable }			from 'rxjs/Rx';
+import { AuthHttp }				from 'angular2-jwt';
 
 import { ENV }										from '../environment';
 import { Diagnosis }							from './diagnosis';
@@ -12,7 +13,7 @@ export class DiagnosisService {
 	private diagnosisUrl = ENV.diagnosisUrl;
 	private diagnosisReferenceUrl = ENV.diagnosisReferenceUrl;
 
-	constructor(private http:Http) { }
+	constructor(private authHttp:AuthHttp) { }
 
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
@@ -20,17 +21,17 @@ export class DiagnosisService {
 	}
 
 	getDiagnosisOfPasien(id_pasien: number): Observable<Diagnosis[]> {
-		return this.http.get(this.diagnosisUrl + '/' + id_pasien)
+		return this.authHttp.get(this.diagnosisUrl + '/' + id_pasien)
 			.map((res: Response) => res.json());
 	}
 
 	getDiagnosisOfRekamMedis(id_pasien: number, tanggal_waktu: string): Observable<Diagnosis[]> {
-		return this.http.get(this.diagnosisUrl + '/rekam_medis/' + id_pasien + '/' + tanggal_waktu)
+		return this.authHttp.get(this.diagnosisUrl + '/rekam_medis/' + id_pasien + '/' + tanggal_waktu)
 			.map((res: Response) => res.json());
 	}
 
 	getAllDiagnosisReference(): Observable<DiagnosisReference[]> {
-		return this.http.get(this.diagnosisReferenceUrl)
+		return this.authHttp.get(this.diagnosisReferenceUrl)
 			.map((res: Response) => res.json());
 	}
 
@@ -43,7 +44,7 @@ export class DiagnosisService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers});
 		let body = JSON.stringify(diagnosisReference);
-		return this.http.post(this.diagnosisReferenceUrl, body, options)
+		return this.authHttp.post(this.diagnosisReferenceUrl, body, options)
 			.map((res: Response) => res.json());
 	}
 
@@ -51,14 +52,14 @@ export class DiagnosisService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers});
 		let body = JSON.stringify(diagnosisReference);
-		return this.http.put(this.diagnosisReferenceUrl + '/' + kode, body, options)
+		return this.authHttp.put(this.diagnosisReferenceUrl + '/' + kode, body, options)
 			.map((res: Response) => res.json());
 	}
 
 	destroyDiagnosisReference(kode: string) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers});
-		return this.http.delete(this.diagnosisReferenceUrl + '/' + kode, options)
+		return this.authHttp.delete(this.diagnosisReferenceUrl + '/' + kode, options)
 			.map((res: Response) => res.json());
 	}
 
@@ -66,7 +67,7 @@ export class DiagnosisService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers});
 		let body = JSON.stringify(selectedDiagnosis);
-		return this.http.post(this.diagnosisUrl, body, options)
+		return this.authHttp.post(this.diagnosisUrl, body, options)
 			.map((res: Response) => res.json());
 	}
 }

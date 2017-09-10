@@ -65,10 +65,10 @@
         <div class="modal-body">
           <div class="form-group mb-3">
             <label for="searchTransaksi">
-              Cari transaksi dengan kode pasien
+              Cari transaksi dengan nama atau kode pasien
             </label>
             <div class="input-group">
-              <input type="text" class="form-control" [(ngModel)]="searchKodePasien" id="searchTransaksi" name="searchTransaksi" (keydown)="onEnter($event)">
+              <input type="text" class="form-control" [(ngModel)]="searchTerm" id="searchTransaksi" name="searchTransaksi" (keydown)="onEnter($event)">
               <div class="input-group-btn">
                 <button type="button" class="btn btn-success" (click)="searchTransaksi()">
                   Cari
@@ -76,19 +76,14 @@
               </div>
             </div>
           </div>
-          <div *ngIf="transaksiAmbulans != null">
-            <table class="table mb-3" *ngIf="transaksiAmbulans.allTransaksi[0] != null">
-              <tbody>
-                <tr>
-                  <th scope="row" class="text-left">Nama Pasien</th>
-                  <td>{{transaksiAmbulans.allTransaksi[0].pasien.nama_pasien}}</td>
-                </tr>
-                <tr>
-                  <th scope="row" class="text-left">Nomor Transaksi</th>
-                  <td>{{transaksiAmbulans.allTransaksi[0].no_transaksi}}</td>
-                </tr>
-              </tbody>
-            </table>
+          
+          <div *ngIf="searchResult != null">
+            <label *ngIf="searchResult.allTransaksi[0] != null" for="selectTransaksi">Pilih transaksi:</label>
+            <select *ngIf="searchResult.allTransaksi[0] != null" [(ngModel)]="transaksiAmbulans" id="selectTransaksi" class="form-control">
+              <option *ngFor="let transaksi of searchResult.allTransaksi; let i = index" [ngValue]="transaksi">
+                {{transaksi.pasien.nama_pasien}} - {{transaksi.no_transaksi}}
+              </option>
+            </select>
           </div>
         </div>
 

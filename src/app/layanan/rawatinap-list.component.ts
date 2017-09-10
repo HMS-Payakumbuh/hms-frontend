@@ -44,12 +44,18 @@ export class RawatinapListComponent implements OnInit {
 	allTempatTidur: Tempattidur[];
 	allDokter: Dokter[];
 	allPemakaianKamarBooked : PemakaianKamar[];
+	checkTransaksi: PemakaianKamar[];
 
 	pemakaianKamarModal: PemakaianKamar = null;
 	tempatTidurModal : Tempattidur = null;
     pemakaianKamarModalNama: string = null;
 
 	rawatinap: Rawatinap;
+	isCheckPasien: boolean = false;
+
+	public searchParam;
+	public kelas;
+	
 
 	inputPasienFormatter = (value : Pasien) => value.nama_pasien;
 	resultPasienFormatter = (value: Pasien)	=> value.nama_pasien + ' - ' + value.kode_pasien;
@@ -92,6 +98,10 @@ export class RawatinapListComponent implements OnInit {
 			data => { this.allPasien = data }
 		);
 
+		this.pemakaianKamarService.getAllPemakaianKamarCheckTransaksi().subscribe(
+     		data => { this.checkTransaksi = data }
+    	);
+
 		this.tenagaMedisService.getAllDokter().
 			subscribe(data => this.allDokter = data);
 
@@ -105,6 +115,21 @@ export class RawatinapListComponent implements OnInit {
 			data => {
 				this.transaksi = data;
 				this.pemakaianKamarModal.id_transaksi = this.transaksi.id;
+				this.checkTransaksi.forEach(element => {
+					if(element.id_transaksi == this.pemakaianKamarModal.id_transaksi) {
+						this.isCheckPasien = true;
+					}
+				});
+			},
+			error => {
+				let toastOptions: ToastOptions = {
+					title: "Error",
+					msg: "Pasien tidak mempunyai transaksi yang open, masukkan pasien lain",
+					showClose: true,
+					timeout: 5000,
+					theme: 'material'
+				};
+				this.toastyService.error(toastOptions);
 			}
 		);
 	}
@@ -133,24 +158,57 @@ export class RawatinapListComponent implements OnInit {
 		this.tempatTidurModal.no_tempat_tidur = this.pemakaianKamarModal.no_tempat_tidur;
 	}
 
-    createPemakaianKamar(noKamar: string, noTempatTidur: number) {
-    	this.pemakaianKamarService.createPemakaianKamar(noKamar,this.pemakaianKamarModal).subscribe(
-      		data => {
-				this.tempattidurService.updateTempatTidur(this.tempatTidurModal, noKamar, noTempatTidur).subscribe(
-					data => {
-						this.ngOnInit();
-						let toastOptions:ToastOptions = {
-							title: "Success",
-							msg: "Pasien sudah terdaftar di kamar  " + noKamar,
-							showClose: true,
-							timeout: 5000,
-							theme: 'material'
-						};
+	private validateInput(): boolean {
+		if	(this.pemakaianKamarModal.id_transaksi == null) {
+			this.handleError("Nama pasien wajib diisi");
+			return false;
+		} else if (this.pemakaianKamarModal.no_tempat_tidur == null) {
+			this.handleError("No. tempat tidur wajib diisi");
+			return false;
+		} else if (this.pemakaianKamarModal.no_pegawai == null) {
+			this.handleError("Nama dokter wajib diisi");
+			return false;
+		} else if (this.isCheckPasien == true) {
+			this.handleError("Pasien sudah terdaftar");
+			this.isCheckPasien = false;
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
 
-						this.toastyService.success(toastOptions);
-					}
-				);
-			}
-    	);
-  	}
+	private handleError(error: any) {
+		let toastOptions: ToastOptions = {
+	        title: "Error",
+	        msg: error,
+	        showClose: true,
+	        timeout: 5000,
+	        theme: 'material'
+	    };
+    	this.toastyService.error(toastOptions);
+	}
+
+    createPemakaianKamar(noKamar: string, noTempatTidur: number) {
+		if(this.validateInput()) {
+			this.pemakaianKamarService.createPemakaianKamar(noKamar,this.pemakaianKamarModal).subscribe(
+				data => {
+					this.tempattidurService.updateTempatTidur(this.tempatTidurModal, noKamar, noTempatTidur).subscribe(
+						data => {
+							this.ngOnInit();
+							let toastOptions:ToastOptions = {
+								title: "Success",
+								msg: "Pasien sudah terdaftar di kamar  " + noKamar,
+								showClose: true,
+								timeout: 5000,
+								theme: 'material'
+							};
+
+							this.toastyService.success(toastOptions);
+						}
+					);
+				}
+			);
+		}
+	}
 }

@@ -16,6 +16,10 @@ export class KamarRawatinapListComponent implements OnInit {
     kamarRawatinapModal : Rawatinap = null;
 	kamarRawatinapModalNama: string;
 
+	public selectedDate;
+	public param;
+	public config;
+
 	constructor(
 		private kamarRawatinapService: RawatinapService
 	) {}

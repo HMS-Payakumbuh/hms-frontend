@@ -48,6 +48,9 @@ export class PemakaianICUListComponent implements OnInit {
 	poliklinik: Poliklinik;
 	addForm: FormGroup;
 
+	public selectedDate;
+	public param;
+	public config;
 
 	constructor(
 		private pemakaianKamarService: PemakaianKamarService,

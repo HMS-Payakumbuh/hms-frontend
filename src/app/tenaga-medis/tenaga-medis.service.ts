@@ -1,11 +1,10 @@
 import { Injectable }			from '@angular/core';
-import { Headers, Http, Response, RequestOptions }		from '@angular/http';
+import { Headers, Response, RequestOptions }		from '@angular/http';
 import { Observable }			from 'rxjs/Rx';
 import { AuthHttp }				from 'angular2-jwt';
 
 import { ENV }						from '../environment';
 import { Dokter }					from './dokter';
-import { JadwalDokter }		from './jadwal-dokter';
 import { TenagaMedis }		from './tenaga-medis';
 
 import * as _ from "lodash";
@@ -14,10 +13,8 @@ import * as _ from "lodash";
 export class TenagaMedisService {
 	private tenagaMedisUrl = ENV.tenagaMedisUrl;
 	private dokterUrl = ENV.dokterUrl;
-	private jadwalDokterUrl = ENV.jadwalDokterUrl;
 
 	constructor(
-		private http: Http,
 		private authHttp: AuthHttp
 	) { }
 
@@ -27,12 +24,12 @@ export class TenagaMedisService {
 	}
 
 	getAllTenagaMedis(): Observable<TenagaMedis[]> {
-		return this.http.get(this.tenagaMedisUrl)
+		return this.authHttp.get(this.tenagaMedisUrl)
 			.map((res: Response) => res.json());
 	}
 
 	getTenagaMedis(no_pegawai: string): Observable<TenagaMedis> {
-		return this.http.get(this.tenagaMedisUrl + '/' + no_pegawai)
+		return this.authHttp.get(this.tenagaMedisUrl + '/' + no_pegawai)
 			.map((res: Response) => res.json());
 	}
 
@@ -41,7 +38,7 @@ export class TenagaMedisService {
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(tenagaMedis);
 
-		return this.http.post(this.tenagaMedisUrl, body, options)
+		return this.authHttp.post(this.tenagaMedisUrl, body, options)
 			.map((res: Response) => res.json());
 	}
 
@@ -50,7 +47,7 @@ export class TenagaMedisService {
 		let options = new RequestOptions({headers: headers});
 		let body = JSON.stringify(tenagaMedis);
 
-		return this.http.put(this.tenagaMedisUrl + '/' + no_pegawai, body, options)
+		return this.authHttp.put(this.tenagaMedisUrl + '/' + no_pegawai, body, options)
 			.map((res: Response) => res.json());
 	}
 
@@ -58,7 +55,7 @@ export class TenagaMedisService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 
-		return this.http.delete(this.tenagaMedisUrl + '/' + no_pegawai, options)
+		return this.authHttp.delete(this.tenagaMedisUrl + '/' + no_pegawai, options)
 			.map((res: Response) => res.json());
 	}
 
@@ -109,8 +106,7 @@ export class TenagaMedisService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 
-		return this.http.delete(this.jadwalDokterUrl + '/' + nama_poli + '/' + np_dokter + '/' + tanggal, options)
-			.map((res: Response) => res.json());
+		return this.http.delete(this.jadwalDokterUrl + '/' + nama_poli + '/' + np_dokter + '/' + tanggal, options);
 	}
 
 	periksa(request: any) {

@@ -2,6 +2,7 @@ import { Component, OnInit }		from '@angular/core';
 import { Location }					from '@angular/common';
 import { ActivatedRoute, Params }	from '@angular/router';
 import { Observable } 	from 'rxjs/Observable';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
 import { Transaksi }						from '../transaksi/transaksi';
 import { TransaksiService }			from '../transaksi/transaksi.service';
@@ -25,7 +26,8 @@ import { PasienService } from '../pasien/pasien.service';
 		 PemakaianKamarService,
          TransaksiService,
 		 TenagaMedisService,
-		 PasienService]
+		 PasienService,
+		 ToastyService]
 })
 
 export class PindahICUListComponent implements OnInit {
@@ -49,6 +51,10 @@ export class PindahICUListComponent implements OnInit {
 	rawatinap: Rawatinap;
 	pemakaianKamar : PemakaianKamar;
 
+	public searchParam;
+	public jenis;
+	public kelas; 
+
 	constructor(
 		private rawatinapService: RawatinapService,
 		private transaksiService: TransaksiService,
@@ -57,7 +63,8 @@ export class PindahICUListComponent implements OnInit {
 		private tenagaMedisService: TenagaMedisService,
 		private pasienService: PasienService,
 		private route: ActivatedRoute,
-		private location: Location
+		private location: Location,
+		private toastyService: ToastyService
 	) {}
 
 	ngOnInit() {
@@ -91,13 +98,47 @@ export class PindahICUListComponent implements OnInit {
 		this.tempatTidurModal.no_tempat_tidur = this.pemakaianKamarModal.no_tempat_tidur;
 	}
 
+	private validateInput(): boolean {
+		if (this.pemakaianKamarModal.no_tempat_tidur == null) {
+			this.handleError("No. tempat tidur wajib diisi");
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
+	private handleError(error: any) {
+		let toastOptions: ToastOptions = {
+	        title: "Error",
+	        msg: error,
+	        showClose: true,
+	        timeout: 5000,
+	        theme: 'material'
+	    };
+    	this.toastyService.error(toastOptions);
+	}
+
     pindahPemakaianKamar(noKamar: string, noTempatTidur: number) {
-    	this.pemakaianKamarService.pindahPemakaianKamar(this.pemakaianKamar.id, this.pemakaianKamar).subscribe(
-      		data => {
-				this.tempattidurService.updateTempatTidur(this.tempatTidurModal, noKamar, noTempatTidur).subscribe(
-					data => { this.ngOnInit() }
-				);
-			}
-    	);
+		if(this.validateInput()) {
+			this.pemakaianKamarService.pindahPemakaianKamar(this.pemakaianKamar.id, this.pemakaianKamar).subscribe(
+				data => {
+					this.tempattidurService.updateTempatTidur(this.tempatTidurModal, noKamar, noTempatTidur).subscribe(
+						data => { 
+							this.ngOnInit();
+							let toastOptions:ToastOptions = {
+								title: "Success",
+								msg: "Pindah Kamar berhasil",
+								showClose: true,
+								timeout: 5000,
+								theme: 'material'
+							};
+
+							this.toastyService.success(toastOptions);
+						}
+					);
+				}
+			);
+		}
   	}
 }

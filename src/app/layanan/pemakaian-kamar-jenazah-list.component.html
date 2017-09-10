@@ -1,5 +1,6 @@
 <html>
 	<div class="row">
+		<ng2-toasty [position]="'top-center'"></ng2-toasty>
 		<div class="col-md-12">
 
 			<div class="card mb-3">
@@ -92,7 +93,7 @@
 
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-								<button type="button" class="btn btn-success" data-dismiss="modal" [routerLink] = "['/catatan-kematian', pasien.kode_pasien]" (click)="createPemakaianKamarJenazah()">Simpan</button>
+								<button type="button" class="btn btn-success" (click)="createPemakaianKamarJenazah()" data-dismiss="modal">Simpan</button>
 							</div>
 
 						</div>

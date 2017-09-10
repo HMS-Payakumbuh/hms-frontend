@@ -9,6 +9,7 @@ export class PemakaianKamar {
     perkiraan_waktu_keluar: string;
     nama_booking : string;
     kontak_booking : string;
+    nama_pasien: string;
     tanggal_booking : Date;
     harga: number;
     jenis_kamar: string;

@@ -25,8 +25,8 @@ import { PemakaianKamarOperasiService }  from '../layanan/pemakaian-kamar-operas
 import * as io from "socket.io-client";
 
 @Component({
-  selector: 'dokter-dashboard-page',
-  templateUrl: './dokter-dashboard.component.html',
+  selector: 'dokter-dashboard-operasi-page',
+  templateUrl: './dokter-dashboard-operasi.component.html',
   providers: [
     AntrianService,
     AmbulansService,
@@ -40,7 +40,7 @@ import * as io from "socket.io-client";
   ]
 })
 
-export class DokterDashboardComponent implements OnInit {
+export class DokterDashboardOperasiComponent implements OnInit {
   dokter: Dokter = null;
   socket: any = null;
 
@@ -79,7 +79,10 @@ export class DokterDashboardComponent implements OnInit {
   transaksiAmbulans: any = null;
   nama_poli: string = null;
   searchKodePasien: string = '';
-  noPegawai: string
+  noPegawai: string;
+
+  public param;
+  public param2;
 
   public filterQuery = "";
   public rowsOnPage = 5;
@@ -109,26 +112,23 @@ export class DokterDashboardComponent implements OnInit {
     let observables = [];
 
     observables.push(this.tenagaMedisService.getDokter(this.noPegawai));
-    observables.push(this.poliklinikService.getAllPoliklinik());
 
-    Observable.forkJoin(observables).subscribe(
-      data => {
-        this.dokter = data[0] as Dokter;
-        this.allPoliklinik = data[1] as Poliklinik[];
-        this.allPoliklinik = this.allPoliklinik.filter((poliklinik) => poliklinik.nama.indexOf(this.dokter.spesialis) > -1);
-
-        if (this.allPoliklinik.length > 0) {
-          this.selectedPoliklinik = this.allPoliklinik[0];
-          this.showDaftarPasien();
-        }
-      }
-    );
-
-    this.ambulansService.getAllAvailableAmbulans().subscribe(
-      data => { this.allAmbulans = data }
-    );
-
-    this.socket.on(this.noPegawai, (message) => this.updatePasienRujukan(message));
+    this.pemakaianKamarOperasiService.getAllPemakaianKamarOperasiNow().subscribe(
+     		data => {
+           this.allPemakaianOperasiTemp = data;
+           this.allPemakaianOperasiTemp.forEach(element => {
+              this.tindakanOperasiService.getTenagaMedisByTindakanOperasi(element.id).subscribe(
+                data => {
+                  this.tindakanOperasi = data;
+                  this.tindakanOperasi.forEach(tindakanoperasi => {
+                    if(tindakanoperasi.no_pegawai == this.noPegawai)
+                      this.allPemakaianOperasi.push(element);
+                  });
+                }
+              );
+           });
+          }
+      );
   }
 
   onEnter(event) {
@@ -283,15 +283,5 @@ export class DokterDashboardComponent implements OnInit {
         data => this.transaksiRujukan = data
       )
     }
-
-    let toastOptions:ToastOptions = {
-      title: 'Attention',
-      msg: 'Terdapat pasien yang harus diperiksa',
-      showClose: true,
-      timeout: 5000,
-      theme: 'material'
-    };
-
-    this.toastyService.info(toastOptions);
   }
 }
