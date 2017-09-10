@@ -74,41 +74,6 @@ export class TenagaMedisService {
 			.map((res: Response) => res.json());
 	}
 
-	getAllJadwalDokter(): Observable<JadwalDokter[]> {
-		return this.http.get(this.jadwalDokterUrl)
-			.map((res: Response) => res.json());
-	}
-
-	getAllAvailableJadwalDokter(nama_poli: string): Observable<JadwalDokter[]> {
-		return this.http.get(this.jadwalDokterUrl + '/' + nama_poli)
-			.map((res: Response) => res.json());
-	}
-
-	createJadwalDokter(jadwalDokter: JadwalDokter) {
-		let headers = new Headers({ 'Content-Type': 'application/json' });
-		let options = new RequestOptions({headers: headers});
-		let body = JSON.stringify(jadwalDokter);
-
-		return this.http.post(this.jadwalDokterUrl, body, options)
-			.map((res: Response) => res.json());
-	}
-
-	updateJadwalDokter(nama_poli: string, np_dokter: string, tanggal: string, jadwalDokter: JadwalDokter) {
-		let headers = new Headers({ 'Content-Type': 'application/json' });
-		let options = new RequestOptions({headers: headers});
-		let body = JSON.stringify(jadwalDokter);
-
-		return this.http.put(this.jadwalDokterUrl + '/' + nama_poli + '/' + np_dokter + '/' + tanggal, body, options)
-			.map((res: Response) => res.json());
-	}
-
-	destroyJadwalDokter(nama_poli: string, np_dokter: string, tanggal: string) {
-		let headers = new Headers({ 'Content-Type': 'application/json' });
-		let options = new RequestOptions({headers: headers});
-
-		return this.http.delete(this.jadwalDokterUrl + '/' + nama_poli + '/' + np_dokter + '/' + tanggal, options);
-	}
-
 	periksa(request: any) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
