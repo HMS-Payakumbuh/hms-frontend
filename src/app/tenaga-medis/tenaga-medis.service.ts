@@ -73,7 +73,7 @@ export class TenagaMedisService {
 	}
 
 	getAllDokterOfSpesialis(spesialis: string): Observable<Dokter[]> {
-		return this.authHttp.get(this.dokterUrl + '/' + spesialis)
+		return this.authHttp.get(this.dokterUrl + '/spesialis/' + spesialis)
 			.map((res: Response) => res.json());
 	}
 
