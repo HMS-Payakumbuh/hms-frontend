@@ -58,6 +58,7 @@ import { KlaimDetailComponent }        		from './pembayaran/klaim/klaim-detail.c
 import { AntrianComponent }         		from './antrian/antrian.component';
 import { DaftarAntrianComponent }         	from './antrian/daftar-antrian.component';
 import { AntrianDashboardComponent }        from './antrian/antrian-dashboard.component';
+import { AntrianTampilanComponent }        from './antrian/antrian-tampilan.component';
 import { PasienFormComponent }      		from './pasien/pasien-form.component';
 import { PasienIGDFormComponent }      		  from './pasien/pasien-igd-form.component';
 import { DaftarPasienIGDComponent }      		  from './antrian/daftar-pasien-igd.component';
@@ -282,6 +283,7 @@ import { AppComponent }             from './app.component';
         AntrianComponent,
         DaftarAntrianComponent,
         AntrianDashboardComponent,
+        AntrianTampilanComponent,
 
         DaftarStokObatComponent,
         DetailStokObatComponent,

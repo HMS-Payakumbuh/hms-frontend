@@ -1,0 +1,32 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header card-info">
+				<h4>
+					<i class="fa fa-gear" aria-hidden="true"></i> Tampilan Antrian
+				</h4>
+			</div>
+			<ng2-toasty [position]="'top-center'"></ng2-toasty>
+			<div class="card-block">
+				<div class="card-text">
+					<div class="form-group">
+	                    <label for="kategori">Pilih Kategori Antrian</label>
+	                    <div class="input-group">
+		                    <select class="form-control" id="kategori" [(ngModel)]="kategori" (ngModelChange)="changeKategori(kategori)" name="kategori">
+		                      <option *ngFor="let kategori of allKategori" [value]="kategori.kategori_antrian">{{kategori.kategori_antrian}}</option>
+		                    </select>
+	                    </div>
+	                </div>
+	                <div class="form-group" *ngIf="kategori">
+	                    <label for="total">Panjang Antrian Kategori {{selectedKategori}}</label>
+	                    <input type="text" class="form-control" id="total" [value]="total" name="total" disabled>
+	                </div>
+	                <div class="form-group" *ngIf="kategori && !antrianEmpty">
+		                <label for="nomor">Antrian yang Dilayani</label>
+	                  	<input type="text" class="form-control" id="nomor" value="{{selectedKategori}}{{antrian?.no_antrian}} - {{antrian?.nama_pasien}}" name="nomor" disabled>
+	              	</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

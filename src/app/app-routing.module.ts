@@ -28,6 +28,7 @@ import { CatatanKematianFormComponent } from './pasien/catatan-kematian-form.com
 import { AntrianComponent }				from './antrian/antrian.component';
 import { DaftarAntrianComponent }	    from './antrian/daftar-antrian.component';
 import { AntrianDashboardComponent }    from './antrian/antrian-dashboard.component';
+import { AntrianTampilanComponent }    from './antrian/antrian-tampilan.component';
 import { RekamMedisListComponent }		from './pasien/rekam-medis-list.component';
 import { RekamMedisDetailComponent }	from './pasien/rekam-medis-detail.component';
 import { RekamMedisEksternalDetailComponent } from './pasien/rekam-medis-eksternal-detail.component';
@@ -124,6 +125,7 @@ const routes: Routes = [
 	{ path: 'register', component: RegisterComponent },
 	{ path: 'login', component: LoginComponent },
 	{ path: 'daftar-antrian', component: DaftarAntrianComponent },
+	{ path: 'antrian-tampilan', component: AntrianTampilanComponent },
 	{ path: '', canActivate: [AuthGuard], component: HomeComponent },
 	{ path: 'transaksi', canActivate: [AuthGuard], component: TransaksiComponent },
 	{ path: 'transaksi-obat', canActivate: [AuthGuard], component: TransaksiObatComponent },
