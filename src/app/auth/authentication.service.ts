@@ -3,7 +3,7 @@ import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Router }                   from '@angular/router'
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 import { Observable }               from 'rxjs/Rx';
-import { AuthHttp }                 from 'angular2-jwt';
+import { AuthHttp, tokenNotExpired }      from 'angular2-jwt';
 import 'rxjs/add/operator/map';
 import * as _ from "lodash";
 
@@ -23,15 +23,17 @@ export class AuthenticationService {
     private router: Router,
     private toastyService: ToastyService,
     private toastyConfig: ToastyConfig
-  ) { }
+  ) {}
 
   isLoggedIn(): boolean {
-    if (localStorage.getItem('currentUser') != null) {
-      return true;
+    if (tokenNotExpired()) {
+      if (localStorage.getItem('currentUser') != null)
+        return true;
+      else
+        return false;
     }
-    else {
+    else
       return false;
-    }
   }
 
   register(data: any): Observable<boolean> {

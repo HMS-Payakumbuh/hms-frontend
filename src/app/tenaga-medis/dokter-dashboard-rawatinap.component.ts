@@ -293,10 +293,10 @@ export class DokterDashboardRawatinapComponent implements OnInit {
     this.router.navigate(['/pemeriksaan/icu', no_kamar, id_pemakaian, id_transaksi])
   }
 
-  prosesAntrian(id_transaksi: number, no_antrian: number) {
-    this.antrianService.processAntrian(id_transaksi, no_antrian).subscribe(
+  prosesAntrian(id: number) {
+    this.antrianService.processAntrian(id).subscribe(
       data => {
-        this.router.navigate(['/poliklinik', this.selectedPoliklinik.nama, id_transaksi])
+        this.router.navigate(['/poliklinik', this.selectedPoliklinik.nama, data.id_transaksi])
       }
     )
   }
