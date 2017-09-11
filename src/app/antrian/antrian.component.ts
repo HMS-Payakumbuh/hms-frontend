@@ -154,10 +154,12 @@ export class AntrianComponent implements OnInit, OnDestroy {
             this.antrian = this.nextAntrian(!this.umum);
           else
             this.umum = !this.umum;
+          
           if (allAntrian.length == 0) {
             this.antrianEmpty = true;
           } else {
             this.antrianEmpty = false;
+            this.checkRekamMedis();
           }
         });
   }
@@ -187,7 +189,7 @@ export class AntrianComponent implements OnInit, OnDestroy {
           this.updateAntrianFrontOffice();
         });
       } else {
-        this.antrianService.updateAntrian(this.antrian.id_transaksi, this.antrian.no_antrian).subscribe(data => {
+        this.antrianService.updateAntrian(this.antrian.id).subscribe(data => {
           this.updateAntrian();
         });
       }
@@ -197,7 +199,7 @@ export class AntrianComponent implements OnInit, OnDestroy {
           this.updateAntrianFrontOffice();
         });
       } else {
-        this.antrianService.destroyAntrian(this.antrian.id_transaksi, this.antrian.no_antrian).subscribe(data => {
+        this.antrianService.destroyAntrian(this.antrian.id).subscribe(data => {
           this.updateAntrian();
         });
       }
@@ -294,44 +296,90 @@ export class AntrianComponent implements OnInit, OnDestroy {
     return true;
   }
 
+  checkRekamMedis(){
+    this.rekamMedisService.getRekamMedisOfPasien(this.antrian.transaksi.id_pasien, 0).subscribe(
+      data => {
+        if (data != null) {
+          if (data.tanggal_waktu == this.antrian.transaksi.waktu_masuk_pasien) {
+
+            if (JSON.parse(data.hasil_pemeriksaan) != null)
+              this.hasilPemeriksaan = JSON.parse(data.hasil_pemeriksaan);
+
+            this.newRekamMedis = false;
+          }
+          else {
+            this.newRekamMedis = true;;
+          }
+        }
+        else {
+          this.newRekamMedis = true;
+        }
+      }
+    )
+  }
+
   periksa(no_pegawai, nama_poli, id_transaksi) {
     if (this.checkHasilPemeriksaan()) {
       if (!this.isRujukan) {
-        this.proses('proses');
-  
-        let rekamMedis = new RekamMedis(
-          this.antrian.transaksi.id_pasien,
-          this.antrian.transaksi.waktu_masuk_pasien,
-          '',
-          JSON.stringify(this.hasilPemeriksaan),
-          '',
-          '',
-          ''
-        );
-        this.rekamMedisService.createRekamMedis(rekamMedis).subscribe(
-          data => {
-            let request = {
-              no_pegawai: no_pegawai,
-              nama_poli: nama_poli,
-              id_transaksi: id_transaksi
-            }
-            this.tenagaMedisService.periksa(request).subscribe(
-              data => {
-                let toastOptions:ToastOptions = {
-                    title: "Success",
-                    msg: "Pasien sudah diteruskan ke " + nama_poli,
-                    showClose: true,
-                    timeout: 5000,
-                    theme: 'material'
-                };
-  
-                this.toastyService.success(toastOptions);
+        if (this.newRekamMedis) {
+          this.proses('proses');
+
+          let rekamMedis = new RekamMedis(
+            this.antrian.transaksi.id_pasien,
+            this.antrian.transaksi.waktu_masuk_pasien,
+            '',
+            JSON.stringify(this.hasilPemeriksaan),
+            '',
+            '',
+            ''
+          );
+
+          this.rekamMedisService.createRekamMedis(rekamMedis).subscribe(
+            data => {
+              let request = {
+                no_pegawai: no_pegawai,
+                nama_poli: nama_poli,
+                id_transaksi: id_transaksi
               }
-            )
+              this.tenagaMedisService.periksa(request).subscribe(
+                data => {
+                  let toastOptions:ToastOptions = {
+                      title: "Success",
+                      msg: "Pasien sudah diteruskan ke " + nama_poli,
+                      showClose: true,
+                      timeout: 5000,
+                      theme: 'material'
+                  };
+    
+                  this.toastyService.success(toastOptions);
+                }
+              )
+            }
+          );
+        }
+        else {
+          this.proses('proses');
+          let request = {
+            no_pegawai: no_pegawai,
+            nama_poli: nama_poli,
+            id_transaksi: id_transaksi
           }
-        );
+          this.tenagaMedisService.periksa(request).subscribe(
+            data => {
+              let toastOptions:ToastOptions = {
+                  title: "Success",
+                  msg: "Pasien sudah diteruskan ke " + nama_poli,
+                  showClose: true,
+                  timeout: 5000,
+                  theme: 'material'
+              };
+
+              this.toastyService.success(toastOptions);
+            }
+          )
+        }
       }
-      else {
+      else { // pasien rujukan
         let request = {
           no_pegawai: no_pegawai,
           nama_poli: nama_poli,
