@@ -116,28 +116,28 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 			.debounceTime(200)
 			.distinctUntilChanged()
 			.map(term => term.length < 2 ? []
-				: this.allTindakanReference.filter(tindakanReference => tindakanReference.nama.toLowerCase().indexOf(term.toLowerCase()) > -1));
+				: this.allTindakanReference.filter(tindakanReference => tindakanReference.nama.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10));
 
 	searchDiagnosis = (text$: Observable<string>) =>
 		text$
 			.debounceTime(200)
 			.distinctUntilChanged()
 			.map(term => term.length < 2 ? []
-				: this.allDiagnosisReference.filter(diagnosisReference => diagnosisReference.nama.toLowerCase().indexOf(term.toLowerCase()) > -1));
+				: this.allDiagnosisReference.filter(diagnosisReference => diagnosisReference.nama.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10));
 
   searchStokObat = (text$: Observable<string>) =>
 		text$
 			.debounceTime(200)
 			.distinctUntilChanged()
 			.map(term => term.length < 2 ? []
-				: this.allStokObatAtLocation.filter(stokObat => stokObat.jenis_obat.merek_obat.toLowerCase().indexOf(term.toLowerCase()) > -1));
+				: this.allStokObatAtLocation.filter(stokObat => stokObat.jenis_obat.merek_obat.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10));
 
   searchJenisObat = (text$: Observable<string>) =>
     text$
       .debounceTime(200)
       .distinctUntilChanged()
       .map(term => term.length < 2 ? []
-        : this.allJenisObat.filter(jenisObat => jenisObat.merek_obat.toLowerCase().indexOf(term.toLowerCase()) > -1));
+        : this.allJenisObat.filter(jenisObat => jenisObat.merek_obat.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10));
 
 	constructor(
 		private route: ActivatedRoute,
