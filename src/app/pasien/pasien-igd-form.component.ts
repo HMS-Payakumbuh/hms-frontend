@@ -408,4 +408,42 @@ export class PasienIGDFormComponent implements OnInit {
       }
     }
   }
+
+  checkHasilPemeriksaan() {
+    if (this.hasilPemeriksaan.berat_badan == '' || parseInt(this.hasilPemeriksaan.berat_badan) <= 0 || parseInt(this.hasilPemeriksaan.berat_badan) > 300) {
+      return false;
+    }
+    else if (this.hasilPemeriksaan.tinggi_badan == '' || parseInt(this.hasilPemeriksaan.tinggi_badan) <= 0 || parseInt(this.hasilPemeriksaan.nadi) > 300) {
+      return false;
+    }
+    else if (this.hasilPemeriksaan.frekuensi_napas == '' || parseInt(this.hasilPemeriksaan.frekuensi_napas) <= 0 || parseInt(this.hasilPemeriksaan.frekuensi_napas) > 150) {
+      return false;
+    }
+    else if (this.hasilPemeriksaan.nadi == '' || parseInt(this.hasilPemeriksaan.nadi) <= 0 || parseInt(this.hasilPemeriksaan.nadi) > 150) {
+      return false;
+    }
+    else if (this.hasilPemeriksaan.temperatur == '' || parseInt(this.hasilPemeriksaan.temperatur) <= 0 || parseInt(this.hasilPemeriksaan.temperatur) > 45) {
+      return false;
+    }
+    else if (this.hasilPemeriksaan.tekanan_darah == '')
+      return false;
+    else
+      return true;
+  }
+
+  daftarkan() {
+    if (this.checkHasilPemeriksaan()) {
+      this.createPasien();
+    }
+    else {
+      let toastOptions:ToastOptions = {
+        title: 'Error',
+        msg: 'Hasil pemeriksaan awal kosong atau tidak tepat',
+        showClose: true,
+        timeout: 5000,
+        theme: 'material'
+      };
+      this.toastyService.error(toastOptions);
+    }
+  }
 }
