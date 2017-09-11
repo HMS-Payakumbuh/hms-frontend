@@ -183,7 +183,7 @@
 								<div class="form-group col-6">
 									<label for="tekananDarah">Tekanan Darah</label>
 									<div class="input-group">
-										<input type="text" class="form-control" id="tekananDarah" [(ngModel)]="hasilPemeriksaan.tekanan_darah" name="tekananDarah">
+										<input type="text" class="form-control" id="tekananDarah" [(ngModel)]="hasilPemeriksaan.tekanan_darah" name="tekananDarah" [disabled]="!newRekamMedis">
 										<div class="input-group-addon">mmHg</div>
 									</div>
 								</div>
@@ -191,7 +191,7 @@
 								<div class="form-group col-6">
 									<label for="nadi">Nadi</label>
 									<div class="input-group">
-										<input type="number" class="form-control" id="nadi" [(ngModel)]="hasilPemeriksaan.nadi" name="nadi">
+										<input type="number" class="form-control" id="nadi" [(ngModel)]="hasilPemeriksaan.nadi" name="nadi" [disabled]="!newRekamMedis">
 										<div class="input-group-addon">/min</div>
 									</div>
 								</div>
@@ -201,7 +201,7 @@
 								<div class="form-group col-6">
 									<label for="frekuensiNapas">Frekuensi Napas</label>
 									<div class="input-group">
-										<input type="number" class="form-control" id="frekuensiNapas" [(ngModel)]="hasilPemeriksaan.frekuensi_napas" name="frekuensiNapas">
+										<input type="number" class="form-control" id="frekuensiNapas" [(ngModel)]="hasilPemeriksaan.frekuensi_napas" name="frekuensiNapas" [disabled]="!newRekamMedis">
 										<div class="input-group-addon">/min</div>
 									</div>
 								</div>
@@ -209,7 +209,7 @@
 								<div class="form-group col-6">
 									<label for="temperatur">Temperatur</label>
 									<div class="input-group">
-										<input type="number" class="form-control" id="temperatur" [(ngModel)]="hasilPemeriksaan.temperatur" name="temperatur">
+										<input type="number" class="form-control" id="temperatur" [(ngModel)]="hasilPemeriksaan.temperatur" name="temperatur" [disabled]="!newRekamMedis">
 										<div class="input-group-addon">C</div>
 									</div>
 								</div>
@@ -219,7 +219,7 @@
 								<div class="form-group col-6">
 									<label for="beratBedan">Berat Badan</label>
 									<div class="input-group">
-										<input type="number" class="form-control" id="beratBadan" [(ngModel)]="hasilPemeriksaan.berat_badan" name="berat_badan">
+										<input type="number" class="form-control" id="beratBadan" [(ngModel)]="hasilPemeriksaan.berat_badan" name="berat_badan" [disabled]="!newRekamMedis">
 										<div class="input-group-addon">kg</div>
 									</div>
 								</div>
@@ -227,7 +227,7 @@
 								<div class="form-group col-6">
 									<label for="tinggiBadan">Tinggi Badan</label>
 									<div class="input-group">
-										<input type="number" class="form-control" id="tinggiBadan" [(ngModel)]="hasilPemeriksaan.tinggi_badan" name="tinggi_badan">
+										<input type="number" class="form-control" id="tinggiBadan" [(ngModel)]="hasilPemeriksaan.tinggi_badan" name="tinggi_badan" [disabled]="!newRekamMedis">
 										<div class="input-group-addon">cm</div>
 									</div>
 								</div>
