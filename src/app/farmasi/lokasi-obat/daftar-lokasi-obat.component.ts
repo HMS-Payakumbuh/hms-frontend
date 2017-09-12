@@ -51,7 +51,7 @@ export class DaftarLokasiObatComponent implements OnInit {
         this.toastyService.success(toastOptions);
       },
       error => {
-        this.handleError(error);
+        this.handleError("Lokasi obat gagal ditambahkan");
       }
     );
   }
@@ -75,7 +75,7 @@ export class DaftarLokasiObatComponent implements OnInit {
         this.toastyService.success(toastOptions);
       },
       error => {
-        this.handleError(error);
+        this.handleError("Lokasi obat gagal diperbarui");
       }
     );
   }
@@ -94,7 +94,7 @@ export class DaftarLokasiObatComponent implements OnInit {
         this.toastyService.success(toastOptions);
       },
       error => {
-        this.handleError(error);
+        this.handleError("Lokasi obat gagal dihapus");
       }
     );
   }

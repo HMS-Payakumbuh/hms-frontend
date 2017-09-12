@@ -32,7 +32,10 @@ export class DaftarStokObatComponent {
 
 	ngOnInit(): void {
 		this.stokObatService.getAllStokObat().subscribe(
-			data => { this.allStokObat = data }
+			data => { 
+				this.allStokObat = data;
+				this.allStokObat = this.allStokObat.filter(stokObat => stokObat.jumlah > 0); 
+			}
 		);
 		this.lokasiObatService.getAllLokasiObat().subscribe(
 			data => { this.allLokasiObat = data }
