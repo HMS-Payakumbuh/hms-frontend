@@ -82,4 +82,13 @@ export class TenagaMedisService {
 		return this.authHttp.post(this.dokterUrl + '/periksa', body, options)
 			.map((res: Response) => res.json());
 	}
+
+	rujukan(request: any) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(request);
+
+		return this.authHttp.post(this.dokterUrl + '/rujukan', body, options)
+			.map((res: Response) => res.json());
+	}
 }
