@@ -339,7 +339,8 @@ export class AntrianComponent implements OnInit, OnDestroy {
               let request = {
                 no_pegawai: no_pegawai,
                 nama_poli: nama_poli,
-                id_transaksi: id_transaksi
+                id_transaksi: id_transaksi,
+                antrian: true
               }
               this.tenagaMedisService.periksa(request).subscribe(
                 data => {
@@ -362,7 +363,8 @@ export class AntrianComponent implements OnInit, OnDestroy {
           let request = {
             no_pegawai: no_pegawai,
             nama_poli: nama_poli,
-            id_transaksi: id_transaksi
+            id_transaksi: id_transaksi,
+            antrian: true
           }
           this.tenagaMedisService.periksa(request).subscribe(
             data => {
@@ -383,7 +385,8 @@ export class AntrianComponent implements OnInit, OnDestroy {
         let request = {
           no_pegawai: no_pegawai,
           nama_poli: nama_poli,
-          id_transaksi: id_transaksi
+          id_transaksi: id_transaksi,
+          antrian: false
         }
         this.tenagaMedisService.periksa(request).subscribe(
           data => {

@@ -481,6 +481,13 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
     Observable.forkJoin(observables).subscribe(
       data => {
         this.saveResep();
+        let request = {
+          nama_poli: this.namaPoliRujuk
+        }
+
+        this.tenagaMedisService.rujukan(request).subscribe(
+          data => {}
+        );
       }
     )
   }
