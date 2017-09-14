@@ -132,10 +132,10 @@ export class AntrianService {
 		.map((res: Response) => res.json());
 	}
 
-	processAntrian(id_transaksi: number, no_antrian: number) {
+	processAntrian(id: number) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
-		return this.http.put(this.antrianUrl + '/process/' + id_transaksi + '/' + no_antrian, options)
+		return this.http.put(this.antrianUrl + '/process/' + id, options)
 		.map((res: Response) => res.json());
 	}
 
@@ -149,17 +149,17 @@ export class AntrianService {
 			.map((res: Response) => res.json());
 	}
 
-	destroyAntrian(id_transaksi: number, no_antrian: number) {
+	destroyAntrian(id: number) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
-		return this.http.delete(this.antrianUrl + '/' + id_transaksi + '/' + no_antrian, options)
+		return this.http.delete(this.antrianUrl + '/' + id, options)
 		.map((res: Response) => res.json());
 	}
 
-	updateAntrian(id_transaksi: number, no_antrian: number) {
+	updateAntrian(id: number) {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
-		return this.http.put(this.antrianUrl + '/' + id_transaksi + '/' + no_antrian, options)
+		return this.http.put(this.antrianUrl + '/' + id, options)
 		.map((res: Response) => res.json());
 	}
 }

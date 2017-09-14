@@ -36,9 +36,9 @@ export class DaftarPasienIGDComponent implements OnInit {
     );
   }
 
-  periksa(id_transaksi: number, no_antrian: number) {
-    this.antrianService.destroyAntrian(id_transaksi, no_antrian).subscribe(
-      data => this.router.navigate(['/poliklinik', 'IGD', id_transaksi])
+  periksa(id: number) {
+    this.antrianService.destroyAntrian(id).subscribe(
+      data => this.router.navigate(['/poliklinik', 'IGD', data.id_transaksi])
     )
   }
 }

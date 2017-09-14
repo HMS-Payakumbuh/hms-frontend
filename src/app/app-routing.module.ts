@@ -28,6 +28,7 @@ import { CatatanKematianFormComponent } from './pasien/catatan-kematian-form.com
 import { AntrianComponent }				from './antrian/antrian.component';
 import { DaftarAntrianComponent }	    from './antrian/daftar-antrian.component';
 import { AntrianDashboardComponent }    from './antrian/antrian-dashboard.component';
+import { AntrianTampilanComponent }    from './antrian/antrian-tampilan.component';
 import { RekamMedisListComponent }		from './pasien/rekam-medis-list.component';
 import { RekamMedisDetailComponent }	from './pasien/rekam-medis-detail.component';
 import { RekamMedisEksternalDetailComponent } from './pasien/rekam-medis-eksternal-detail.component';
@@ -65,7 +66,6 @@ import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-o
 import { PemakaianKamarJenazahListComponent }		from './layanan/pemakaian-kamar-jenazah-list.component';
 
 import { TenagaMedisListComponent } 	from './tenaga-medis/tenaga-medis-list.component';
-import { JadwalDokterListComponent }	from './tenaga-medis/jadwal-dokter-list.component';
 import { DiagnosisReferenceListComponent }	from './layanan/diagnosis-reference-list.component';
 import { TindakanReferenceListComponent }		from './layanan/tindakan-reference-list.component';
 
@@ -125,6 +125,7 @@ const routes: Routes = [
 	{ path: 'register', component: RegisterComponent },
 	{ path: 'login', component: LoginComponent },
 	{ path: 'daftar-antrian', component: DaftarAntrianComponent },
+	{ path: 'antrian-tampilan', component: AntrianTampilanComponent },
 	{ path: '', canActivate: [AuthGuard], component: HomeComponent },
 	{ path: 'transaksi', canActivate: [AuthGuard], component: TransaksiComponent },
 	{ path: 'transaksi-obat', canActivate: [AuthGuard], component: TransaksiObatComponent },
@@ -192,7 +193,6 @@ const routes: Routes = [
 	{ path: 'pemakaiankamarjenazah', canActivate: [AuthGuard], component: PemakaianKamarJenazahListComponent },
 
 	{ path: 'tenaga-medis', canActivate: [AuthGuard], component: TenagaMedisListComponent },
-	{ path: 'jadwal-dokter', canActivate: [AuthGuard], component: JadwalDokterListComponent },
 	{ path: 'daftar-diagnosis', canActivate: [AuthGuard], component: DiagnosisReferenceListComponent },
 	{ path: 'daftar-tindakan', canActivate: [AuthGuard], component: TindakanReferenceListComponent },
 

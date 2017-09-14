@@ -14,7 +14,6 @@ import { Asuransi }  from './asuransi';
 import { AsuransiService }  from './asuransi.service';
 import { PoliklinikService }    from '../layanan/poliklinik.service';
 import { LaboratoriumService }    from '../layanan/laboratorium.service';
-import { JadwalDokter }   from '../tenaga-medis/jadwal-dokter';
 import { TenagaMedisService}  from '../tenaga-medis/tenaga-medis.service';
 import { Rujukan }  from '../transaksi/rujukan';
 import { RujukanService }  from '../transaksi/rujukan.service';

@@ -179,16 +179,22 @@ export class StockOpnameFormComponent {
 		                    }			
 						);
 					}
-				)	
-				
-				
+				)		
 			}
 		);	
 	}
 
 	private save() {
-		this.stockOpname.stock_opname_item = this.allStockOpnameItem;
+		this.allStockOpnameItem = this.allStockOpnameItem.filter(stockOpnameItem => ((stockOpnameItem.jumlah_awal != 0) || (stockOpnameItem.jumlah_akhir != 0)))
+		
+		for (let stockOpnameItem of this.allStockOpnameItem) {
+			if (stockOpnameItem.jumlah_fisik > stockOpnameItem.jumlah_akhir) {
+				this.handleError("Jumlah fisik tidak boleh lebih besar dari jumlah akhir.");
+		        return false;
+			}
+		}
 
+		this.stockOpname.stock_opname_item = this.allStockOpnameItem;
 		this.stockOpnameService.createStockOpname(this.stockOpname).subscribe(
 	       	data => {
 	       		let toastOptions: ToastOptions = {
@@ -203,16 +209,20 @@ export class StockOpnameFormComponent {
 	         	return true;
 	       	},
 	       	error => {
-		        let toastOptions: ToastOptions = {
-		            title: "Error",
-		            msg: error,
-		            showClose: true,
-		            timeout: 5000,
-		            theme: 'material'
-		        };
-		        this.toastyService.error(toastOptions);
+	       		this.handleError("Catatan stock opname gagal ditambahkan");
 		        return Observable.throw(error);
 	       	}
 	    )
+	}
+
+	private handleError(error: any) {
+		let toastOptions: ToastOptions = {
+	        title: "Error",
+	        msg: error,
+	        showClose: true,
+	        timeout: 5000,
+	        theme: 'material'
+	    };
+    	this.toastyService.error(toastOptions);
 	}
 }

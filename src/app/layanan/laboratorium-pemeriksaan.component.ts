@@ -57,7 +57,7 @@ export class LaboratoriumPemeriksaanComponent implements OnInit {
 			.debounceTime(200)
 			.distinctUntilChanged()
 			.map(term => term.length < 2 ? []
-				: this.allTindakanReference.filter(tindakanReference => tindakanReference.nama.toLowerCase().indexOf(term.toLowerCase()) > -1));
+				: this.allTindakanReference.filter(tindakanReference => tindakanReference.nama.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10));
 
 	constructor(
 		private route: ActivatedRoute,

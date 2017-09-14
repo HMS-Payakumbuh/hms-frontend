@@ -60,7 +60,10 @@ export class ObatRusakFormComponent {
 
 	onChange(asal: number) {
 		this.stokObatService.getStokObatByLocation(asal).subscribe(
-			data => { this.allStokObatAtLocation = data }
+			data => { 
+				this.allStokObatAtLocation = data;				
+				this.allStokObatAtLocation = this.allStokObatAtLocation.filter(stokObat => stokObat.jumlah > 0); 
+			}
 		);
 	}
 

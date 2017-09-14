@@ -13,7 +13,7 @@ export class AppComponent {
 
 	constructor(
 		public authenticationService: AuthenticationService
-	) {}
+	) { }
 
 	logout() {
 		this.authenticationService.logout();

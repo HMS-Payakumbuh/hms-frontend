@@ -58,6 +58,7 @@ import { KlaimDetailComponent }        		from './pembayaran/klaim/klaim-detail.c
 import { AntrianComponent }         		from './antrian/antrian.component';
 import { DaftarAntrianComponent }         	from './antrian/daftar-antrian.component';
 import { AntrianDashboardComponent }        from './antrian/antrian-dashboard.component';
+import { AntrianTampilanComponent }        from './antrian/antrian-tampilan.component';
 import { PasienFormComponent }      		from './pasien/pasien-form.component';
 import { PasienIGDFormComponent }      		  from './pasien/pasien-igd-form.component';
 import { DaftarPasienIGDComponent }      		  from './antrian/daftar-pasien-igd.component';
@@ -105,7 +106,6 @@ import { PemakaianKamarOperasiListComponent }		from './layanan/pemakaian-kamar-o
 import { PemakaianKamarJenazahListComponent }		from './layanan/pemakaian-kamar-jenazah-list.component';
 
 import { TenagaMedisListComponent }       from './tenaga-medis/tenaga-medis-list.component';
-import { JadwalDokterListComponent }      from './tenaga-medis/jadwal-dokter-list.component';
 import { DiagnosisReferenceListComponent }from './layanan/diagnosis-reference-list.component';
 import { TindakanReferenceListComponent } from './layanan/tindakan-reference-list.component';
 
@@ -267,7 +267,6 @@ import { AppComponent }             from './app.component';
         KamarJenazahListComponent,
 
         TenagaMedisListComponent,
-        JadwalDokterListComponent,
         DiagnosisReferenceListComponent,
         TindakanReferenceListComponent,
 
@@ -284,6 +283,7 @@ import { AppComponent }             from './app.component';
         AntrianComponent,
         DaftarAntrianComponent,
         AntrianDashboardComponent,
+        AntrianTampilanComponent,
 
         DaftarStokObatComponent,
         DetailStokObatComponent,

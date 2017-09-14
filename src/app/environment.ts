@@ -33,7 +33,6 @@ export var ENV = {
 	hasilLabUrl: baseUrl + "/api/hasil_lab",
 	tenagaMedisUrl: baseUrl + "/api/tenaga_medis",
 	dokterUrl: baseUrl + "/api/dokter",
-	jadwalDokterUrl: baseUrl + "/api/jadwal_dokter",
 
 	tempattidurUrl : baseUrl + "/api/tempattidur",
 	rawatinapUrl : baseUrl + "/api/rawatinap",

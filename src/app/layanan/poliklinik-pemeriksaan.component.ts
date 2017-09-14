@@ -116,28 +116,28 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
 			.debounceTime(200)
 			.distinctUntilChanged()
 			.map(term => term.length < 2 ? []
-				: this.allTindakanReference.filter(tindakanReference => tindakanReference.nama.toLowerCase().indexOf(term.toLowerCase()) > -1));
+				: this.allTindakanReference.filter(tindakanReference => tindakanReference.nama.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10));
 
 	searchDiagnosis = (text$: Observable<string>) =>
 		text$
 			.debounceTime(200)
 			.distinctUntilChanged()
 			.map(term => term.length < 2 ? []
-				: this.allDiagnosisReference.filter(diagnosisReference => diagnosisReference.nama.toLowerCase().indexOf(term.toLowerCase()) > -1));
+				: this.allDiagnosisReference.filter(diagnosisReference => diagnosisReference.nama.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10));
 
   searchStokObat = (text$: Observable<string>) =>
 		text$
 			.debounceTime(200)
 			.distinctUntilChanged()
 			.map(term => term.length < 2 ? []
-				: this.allStokObatAtLocation.filter(stokObat => stokObat.jenis_obat.merek_obat.toLowerCase().indexOf(term.toLowerCase()) > -1));
+				: this.allStokObatAtLocation.filter(stokObat => stokObat.jenis_obat.merek_obat.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10));
 
   searchJenisObat = (text$: Observable<string>) =>
     text$
       .debounceTime(200)
       .distinctUntilChanged()
       .map(term => term.length < 2 ? []
-        : this.allJenisObat.filter(jenisObat => jenisObat.merek_obat.toLowerCase().indexOf(term.toLowerCase()) > -1));
+        : this.allJenisObat.filter(jenisObat => jenisObat.merek_obat.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10));
 
 	constructor(
 		private route: ActivatedRoute,
@@ -204,15 +204,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
               this.rekamMedis.np_dokter = JSON.parse(localStorage.getItem('currentUser')).no_pegawai;
             }
 
-            this.tindakanService.getAllTindakanReference().subscribe(
-              data => {
-                this.allTindakanReference = data;
-                this.addSelectedTindakan(
-                  this.allTindakanReference.find(tindakanReference => tindakanReference.kode === '89.03')
-                );
-              }
-            );
-
             if (JSON.parse(data.hasil_pemeriksaan) != null)
               this.hasilPemeriksaan = JSON.parse(data.hasil_pemeriksaan);
 
@@ -225,6 +216,15 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
               if (this.allAlergi[0] === '')
                 this.allAlergi = [];
             }
+
+            this.tindakanService.getAllTindakanReference().subscribe(
+              data => {
+                this.allTindakanReference = data;
+                this.addSelectedTindakan(
+                  this.allTindakanReference.find(tindakanReference => tindakanReference.kode === '89.03')
+                );
+              }
+            );
           }
           else {
             this.rekamMedis = new RekamMedis(
@@ -237,6 +237,10 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
               ''
             );
 
+            this.rekamMedisService.createRekamMedis(this.rekamMedis).subscribe(
+              data => {}
+            );
+
             this.tindakanService.getAllTindakanReference().subscribe(
               data => {
                 this.allTindakanReference = data;
@@ -244,10 +248,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
                   this.allTindakanReference.find(tindakanReference => tindakanReference.kode === '89.03')
                 );
               }
-            );
-
-            this.rekamMedisService.createRekamMedis(this.rekamMedis).subscribe(
-              data => {}
             );
           }
         }
@@ -262,6 +262,10 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
             ''
           );
 
+          this.rekamMedisService.createRekamMedis(this.rekamMedis).subscribe(
+            data => {}
+          );
+
           this.tindakanService.getAllTindakanReference().subscribe(
             data => {
               this.allTindakanReference = data;
@@ -269,10 +273,6 @@ export class PoliklinikPemeriksaanComponent implements OnInit {
                 this.allTindakanReference.find(tindakanReference => tindakanReference.kode === '89.03')
               );
             }
-          );
-
-          this.rekamMedisService.createRekamMedis(this.rekamMedis).subscribe(
-            data => {}
           );
         }
       }
