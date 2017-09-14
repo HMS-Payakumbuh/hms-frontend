@@ -1,5 +1,6 @@
 import { Component, OnInit, Input }		  from '@angular/core';
 import { ENV }	from '../../environment';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
 import { LaporanService } from './laporan.service';
 
@@ -37,7 +38,9 @@ export class LaporanComponent implements OnInit {
 
 	constructor(
 		private laporanService: LaporanService,
-		private lokasiObatService: LokasiObatService
+		private lokasiObatService: LokasiObatService,
+    	private toastyService: ToastyService,
+    	private toastyConfig: ToastyConfig
 	) {}
 
 	ngOnInit(): void {
@@ -86,25 +89,43 @@ export class LaporanComponent implements OnInit {
   	window.location.href = this.obatTebusUrl + '/export?tanggal_mulai=' + this.tanggal_mulai + '&tanggal_selesai=' + this.tanggal_selesai;
 	}
 
-  downloadLaporanObatTindakan() {
+  	downloadLaporanObatTindakan() {
     window.location.href = this.obatTindakanUrl + '/export?tanggal_mulai=' + this.tanggal_mulai + '&tanggal_selesai=' + this.tanggal_selesai;
-  }
+  	}
 
 	downloadLaporan() {
 		if (this.jenis == "Stok Obat") {
-			this.downloadLaporanStokObat()
+			this.downloadLaporanStokObat();
+			this.handleSuccess("Laporan stok obat berhasil diunduh");
 		} else if (this.jenis == "Obat Masuk") {
-			this.downloadLaporanObatMasuk()
+			this.downloadLaporanObatMasuk();
+			this.handleSuccess("Laporan obat masuk berhasil diunduh");
 		} else if (this.jenis == "Obat Pindah") {
-			this.downloadLaporanObatPindah()
+			this.downloadLaporanObatPindah();
+			this.handleSuccess("Laporan obat pindah berhasil diunduh");
 		} else if (this.jenis == "Obat Rusak") {
-			this.downloadLaporanObatRusak()
+			this.downloadLaporanObatRusak();
+			this.handleSuccess("Laporan obat rusak berhasil diunduh");
 		} else if (this.jenis == "Obat Eceran") {
-			this.downloadLaporanObatEceran()
+			this.downloadLaporanObatEceran();
+			this.handleSuccess("Laporan obat eceran berhasil diunduh");
 		} else if (this.jenis == "Obat Tebus") {
-			this.downloadLaporanObatTebus()
+			this.downloadLaporanObatTebus();
+			this.handleSuccess("Laporan obat tebus berhasil diunduh");
 		} else if (this.jenis == "Obat Tindakan") {
-      this.downloadLaporanObatTindakan()
-    } 
+      		this.downloadLaporanObatTindakan();
+			this.handleSuccess("Laporan obat tindakan berhasil diunduh");
+    	} 
+	}
+
+	private handleSuccess(message: any) {
+		let toastOptions: ToastOptions = {
+	        title: "Success",
+	        msg: message,
+	        showClose: true,
+	        timeout: 5000,
+	        theme: 'material'
+	    };
+    	this.toastyService.success(toastOptions);
 	}
 }
