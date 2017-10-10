@@ -270,6 +270,10 @@ export class AntrianComponent implements OnInit, OnDestroy {
   }
 
   checkHasilPemeriksaan() {
+    if (this.isRujukan) {
+      return true;
+    }
+    
     if (this.hasilPemeriksaan.berat_badan == '' || parseInt(this.hasilPemeriksaan.berat_badan) <= 0 || parseInt(this.hasilPemeriksaan.berat_badan) > 300) {
       return false;
     }
