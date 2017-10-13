@@ -55,13 +55,13 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th><mfDefaultSorter by="kode_pasien">Kode Pasien</mfDefaultSorter></th>
-									<th><mfDefaultSorter by="nama_pasien">Nama Pasien</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="pasien.kode_pasien">Kode Pasien</mfDefaultSorter></th>
+									<th><mfDefaultSorter by="pasien.nama_pasien">Nama Pasien</mfDefaultSorter></th>
 									<th><mfDefaultSorter by="waktu_masuk_pasien">Waktu Transaksi</mfDefaultSorter></th>
 									<th>Jenis Pasien</th>
 									<th></th>
 								</tr>
-								<tr *ngFor="let transaksi of mf.data | matchesStatus: status | filterNamaPasien: searchParam | filterTanggal: selectedDate | filterJenisPasien: jenis">
+								<tr *ngFor="let transaksi of mf.data | filterNamaPasien: searchParam | filterKodePasien: searchKode |  filterTanggal: selectedDate | filterJenisPasien: jenis">
 									<td class="text-left" *ngIf="transaksi.pasien">{{transaksi.pasien.kode_pasien}}</td>
 									<td class="text-left" *ngIf="transaksi.pasien">{{transaksi.pasien.nama_pasien}}</td>
 									<td class="text-left" *ngIf="transaksi.pasien">{{transaksi.waktu_masuk_pasien | date: 'dd/MM/y HH:mm'}}</td>

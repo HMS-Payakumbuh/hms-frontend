@@ -49,7 +49,7 @@ export class PembayaranComponent {
 		this.tanggal_akhir = null;
 		this.loading = true;
 		this.asuransiService.getAllAsuransi()
-			.subscribe(allAsuransi => this.initAsuransiList(allAsuransi));
+			.subscribe(allAsuransi => this.initAsuransiList(allAsuransi.allAsuransi));
 
 		this.pembayaranService.getAllPembayaran()
 			.subscribe(data => {

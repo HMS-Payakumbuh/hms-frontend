@@ -18,6 +18,7 @@ import { AsuransiService }		from '../pasien/asuransi.service';
 })
 
 export class TransaksiDetailComponent implements OnInit {
+	now: Date;
 	loading: boolean;
 	loading_bpjs: boolean;
 	response: any;
@@ -63,6 +64,7 @@ export class TransaksiDetailComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
+		this.now = new Date();
 		this.loading = true;
 		this.loading_bpjs = false;
 		this.asuransi = null;
@@ -172,19 +174,20 @@ export class TransaksiDetailComponent implements OnInit {
 		for (let item of value) {
 			console.log(item);
 			
-			let one_day = 1000*60*60*24;
+			let one_hour = 1000*60*60*1;
 			let masuk: Date = new Date(item.waktu_masuk);
 			let keluar: Date = new Date();
 
 			let masuk_ms = masuk.getTime();
 			let keluar_ms = keluar.getTime();
 
-			let days = Math.round((keluar_ms - masuk_ms)/one_day);
-			
-			this.listOfKamarRawatInap.push(item);
-			if (this.transaksi.no_sep === null) {
-				if (item.id_pembayaran === null) {
-					this.harga_total += parseInt(item.kamar_rawatinap.harga_per_hari) * this.howLong(item.waktu_masuk, item.waktu_keluar);
+			let hours = Math.round((keluar_ms - masuk_ms)/one_hour);
+			if (hours > 2) {
+				this.listOfKamarRawatInap.push(item);
+				if (this.transaksi.no_sep === null) {
+					if (item.id_pembayaran === null) {
+						this.harga_total += parseInt(item.kamar_rawatinap.harga_per_hari) * this.howLong(item.waktu_masuk, item.waktu_keluar);
+					}
 				}
 			}
 		}
@@ -402,7 +405,10 @@ export class TransaksiDetailComponent implements OnInit {
 					tutup = false;
 				}
 			}
-			if (i.waktu_keluar === null) {
+		}
+
+		for (let item of this.transaksi.pemakaian_kamar_rawat_inap) {
+			if (item.waktu_keluar === null) {
 				checkout = false;
 			}
 		}
@@ -425,12 +431,12 @@ export class TransaksiDetailComponent implements OnInit {
 				console.log(data);
 			});
 
-			if (bayar) {
-				this.createPembayaran(total_harga, 'bpjs', false, listOfTindakanId, listOfObatId, null, listOfKamarRawatInapId);
-			}
-			else {
-				setTimeout(() => this.ngOnInit(), 1000);	
-			}
+			setTimeout(() => this.ngOnInit(), 1000);	
+			// if (bayar) {
+			// 	this.createPembayaran(total_harga, 'bpjs', false, listOfTindakanId, listOfObatId, null, listOfKamarRawatInapId);
+			// }
+			// else {
+			// }
 		}
 		else {
 			if (!tutup) {

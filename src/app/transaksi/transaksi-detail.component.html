@@ -289,7 +289,7 @@
 							<td class="text-left">{{kamar.waktu_masuk}}</td>
 							<td class="text-left">{{kamar.waktu_keluar}}</td>
 							<td class="text-left">{{howLong(kamar.waktu_masuk, kamar.waktu_keluar)}} Hari @ Rp. {{kamar.kamar_rawatinap.harga_per_hari | number: '.2-2'}}</td>
-							<td class="text-right">Rp. {{kamar.harga | number: '.2-2'}}</td>
+							<td class="text-right">Rp. {{kamar.kamar_rawatinap.harga_per_hari * howLong(kamar.waktu_masuk, kamar.waktu_keluar) | number: '.2-2'}}</td>
 						</tr>
 						<tr *ngIf = "bayar_tambahan">
 							<td></td>
