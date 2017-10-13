@@ -70,13 +70,13 @@
 														<td></td>
 													</tr>
 													<tr>
-														<th><mfDefaultSorter by="nama_pasien">Nama Pasien</mfDefaultSorter></th>
+														<th><mfDefaultSorter by="asuransi.pasien.nama_pasien">Nama Pasien</mfDefaultSorter></th>
 														<th><mfDefaultSorter by="created_at">Tanggal Klaim</mfDefaultSorter></th>
 														<th>Nama Asuransi</th>
 														<th>Status Klaim</th>
 														<th></th>
 													</tr>
-													<tr *ngFor="let klaim of mf.data | filterNamaPasien: searchParam | filterCreatedAt: selectedDate | filterNamaAsuransi: nama_asuransi | matchesStatus: status">
+													<tr *ngFor="let klaim of mf.data | filterNamaPasienAsuransi: searchParam | filterCreatedAt: selectedDate | filterNamaAsuransi: nama_asuransi | matchesStatus: status">
 														<td>{{klaim.asuransi.pasien.nama_pasien}}</td>
 														<td>{{klaim.created_at}}</td>
 														<td>{{klaim.asuransi.nama_asuransi.toUpperCase()}}</td>
@@ -103,7 +103,7 @@
 								                <input id="tanggal_akhir" [dpDayPicker]="config" [(ngModel)]="tanggal_akhir" class="form-control" theme="dp-material" placeholder="Tanggal Akhir" required="true">
 				             				</div>
 				             				<div>
-				         						<button type="button" class="btn btn-info" (click)="download()">Unduh Data Pembayaran</button>
+				         						<button type="button" class="btn btn-info" (click)="download()">Unduh Data Klaim</button>
 				             				</div>
 										</div>
 									</div>

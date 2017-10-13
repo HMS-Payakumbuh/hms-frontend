@@ -12,6 +12,8 @@ import { AuthModule }               from './auth/auth.module';
 import { MatchesStatusPipe }            from './pipe/matches-status.pipe';
 import { FilterPasienPipe }         from './pipe/filter-pasien.pipe';
 import { FilterNamaPasienPipe }         from './pipe/filter-nama-pasien.pipe';
+import { FilterNamaPasienTransaksiPipe }         from './pipe/filter-nama-pasien-transaksi.pipe';
+import { FilterNamaPasienAsuransiPipe }         from './pipe/filter-nama-pasien-asuransi.pipe';
 import { FilterKodePasienPipe }         from './pipe/filter-kode-pasien.pipe';
 import { FilterTanggalPipe }            from './pipe/filter-tanggal.pipe';
 import { FilterCreatedAtPipe }            from './pipe/filter-created-at.pipe';
@@ -181,6 +183,8 @@ import { AppComponent }             from './app.component';
         MatchesStatusPipe,
         FilterPasienPipe,
         FilterNamaPasienPipe,
+        FilterNamaPasienTransaksiPipe,
+        FilterNamaPasienAsuransiPipe,
         FilterKodePasienPipe,
         FilterTanggalPipe,
         FilterCreatedAtPipe,
@@ -277,9 +281,6 @@ import { AppComponent }             from './app.component';
         PetugasLabDashboardComponent,
         DaftarPemakaianAmbulansComponent,
 
-        MatchesStatusPipe,
-        FilterNamaPasienPipe,
-        FilterTanggalPipe,
         AntrianComponent,
         DaftarAntrianComponent,
         AntrianDashboardComponent,

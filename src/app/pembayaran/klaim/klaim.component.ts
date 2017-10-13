@@ -23,7 +23,7 @@ export class KlaimComponent {
 	loading: boolean;
 	response: any;
 	allKlaim: any[];
-	allAsuransi = ['', 'tunai'];
+	allAsuransi = [''];
 
 	config = {
 		"format": "YYYY-MM-DD"
@@ -51,7 +51,7 @@ export class KlaimComponent {
 		this.tanggal_akhir = null;
 		this.loading = true;
 		this.asuransiService.getAllAsuransi()
-			.subscribe(allAsuransi => this.initAsuransiList(allAsuransi));
+			.subscribe(allAsuransi => this.initAsuransiList(allAsuransi.allAsuransi));
 
 		this.klaimService.getAllKlaim()
 			.subscribe(data => {
