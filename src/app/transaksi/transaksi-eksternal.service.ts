@@ -1,6 +1,7 @@
 import { Injectable }		from '@angular/core';
 import { Headers, Http, Response, RequestOptions, URLSearchParams }		from '@angular/http';
 import { Observable }		from 'rxjs/Rx';
+import { AuthHttp }			from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -12,7 +13,10 @@ export class TransaksiEksternalService {
 	private transaksiEksternalUrl = ENV.transaksiEksternalUrl;
 	private storedData: any = null;
 
-	constructor(private http:Http) {
+	constructor(
+		private http: Http,
+		private authHttp: AuthHttp
+	) {
 		this.storedData = null;
 	}
 
@@ -28,13 +32,13 @@ export class TransaksiEksternalService {
 		let requestOptions = new RequestOptions();
 		requestOptions.params = params;
 
-		return this.http.get(this.transaksiEksternalUrl, requestOptions)
+		return this.authHttp.get(this.transaksiEksternalUrl, requestOptions)
 			.map((res: Response) => res.json());
 	}
 
 	getTransaksi(id: number): Observable<any> {
 		const url = `${this.transaksiEksternalUrl}/${id}`;
-		return this.http.get(url)
+		return this.authHttp.get(url)
 			.map((res: Response) => res.json());
 	}
 }

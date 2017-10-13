@@ -60,18 +60,18 @@
 														<td></td>
 													</tr>
 													<tr>
-														<th><mfDefaultSorter by="nama_pasien">Nama Pasien</mfDefaultSorter></th>
+														<th><mfDefaultSorter by="transaksi.pasien.nama_pasien">Nama Pasien</mfDefaultSorter></th>
 														<th><mfDefaultSorter by="created_at">Waktu Pembayaran</mfDefaultSorter></th>
 														<th>Metode Pembayaran</th>
 														<th></th>
 													</tr>
-													<tr *ngFor="let pembayaran of mf.data | filterNamaPasien: searchParam | filterNamaAsuransi: asuransi | filterCreatedAt: selectedDate">
+													<tr *ngFor="let pembayaran of mf.data | filterNamaPasienTransaksi: searchParam | filterNamaAsuransi: asuransi | filterCreatedAt: selectedDate">
 														<td class="text-left" *ngIf="pembayaran.transaksi !== null">{{pembayaran.transaksi.pasien.nama_pasien}}</td>
 														<!-- <td *ngIf="pembayaran.transaksi === null && pembayaran.transaksi.obat_tebus.length > 0">{{pembayaran.transaksi.obat_tebus[0].resep.nama}}</td>
 														<td *ngIf="pembayaran.transaksi === null && pembayaran.transaksi.obat_eceran.length > 0">{{pembayaran.transaksi.obat_eceran[0].nama_pembeli}}</td> -->								
-														<td class="text-left">{{pembayaran.created_at}}</td>
-														<td class="text-left">{{pembayaran.metode_bayar.toUpperCase()}}</td>
-														<td><button type="button" class="btn btn-primary" [routerLink] = "['/pembayaran', pembayaran.id]">Details</button></td>
+														<td class="text-left" *ngIf="pembayaran.transaksi !== null">{{pembayaran.created_at}}</td>
+														<td class="text-left" *ngIf="pembayaran.transaksi !== null">{{pembayaran.metode_bayar.toUpperCase()}}</td>
+														<td *ngIf="pembayaran.transaksi !== null"><button type="button" class="btn btn-primary" [routerLink] = "['/pembayaran', pembayaran.id]">Details</button></td>
 													</tr>
 												</tbody>
 												<tfoot>
