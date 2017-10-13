@@ -33,7 +33,7 @@ export class AntrianDashboardComponent implements OnInit {
 		private antrianService : AntrianService,
 	    private poliklinikService: PoliklinikService,
 	    private laboratoriumService: LaboratoriumService,
-	) { this.socket = io('http://localhost') }
+	) { this.socket = io('http://167.205.35.41') }
 
 	ngOnInit() {
 		this.initAntrianFrontOffice();

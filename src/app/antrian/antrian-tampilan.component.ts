@@ -37,7 +37,7 @@ export class AntrianTampilanComponent implements OnInit {
     private poliklinikService: PoliklinikService,
     private laboratoriumService: LaboratoriumService
   ) {
-    this.socket = io('http://localhost');
+    this.socket = io('http://167.205.35.41');
   }
 
   ngOnInit() {
