@@ -103,7 +103,7 @@ export class DokterDashboardRawatinapComponent implements OnInit {
     private toastyService: ToastyService,
     private toastyConfig: ToastyConfig
 	) {
-    this.socket = io('http://localhost')
+    this.socket = io('http://167.205.35.41')
   }
 
   ngOnInit() {
