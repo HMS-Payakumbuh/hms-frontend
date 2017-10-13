@@ -50,30 +50,10 @@ export class DokterDashboardComponent implements OnInit {
   allProcessedAntrian: Antrian[] = [];
   allPoliklinik: Poliklinik[] = [];
 
-  allPemakaianRawat: any[] = [];
-  allPemakaianICU: any[] = [];
-  allPemakaianOperasi: any[] = [];
-  allPemakaianOperasiTemp:any[] = [];
-
-  allDaftarPemakaianRawatinap: any[] = [];
-  allDaftarPemakaianICU: any[] = [];
-  allDaftarPemakaianOperasi: any[] = [];
-
-  allJasaDokterRawatinap: any[] = [];
-  allJasaDokterOperasi: any[] = [];
-
   showPoliButton: boolean = true;
   poliklinikSelected: boolean = false;
-  rawatinapSelected: boolean = false;
-  icuSelected: boolean = false;
-  operasiSeleted: boolean = false;
   selectedPoliklinik: Poliklinik = new Poliklinik();
   selectedAmbulans: Ambulans = null;
-  selectedPemakaianRawatinap: any;
-  selectedPemakaianICU: any;
-  selectedPemakaianOperasi: any;
-
-  tindakanOperasi: any[];
 
   transaksiRujukan: Transaksi = null;
   transaksiAmbulans: any = null;
@@ -118,6 +98,7 @@ export class DokterDashboardComponent implements OnInit {
         
         if (this.allPoliklinik.length > 0) {
           this.selectedPoliklinik = this.allPoliklinik[0];
+          this.socket.on(this.selectedPoliklinik.nama, (message) => this.showDaftarPasien());
           this.showDaftarPasien();
         }
       }
@@ -189,7 +170,7 @@ export class DokterDashboardComponent implements OnInit {
   }
 
   updatePasienRujukan(message: any) {
-    if (this.allAntrian.find(antrian => antrian.id_transaksi == message.id_transaksi)) {
+    if (message.antrian) {
       this.showDaftarPasien();
     }
     else {

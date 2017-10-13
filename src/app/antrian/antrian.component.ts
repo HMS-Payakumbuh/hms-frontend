@@ -270,6 +270,10 @@ export class AntrianComponent implements OnInit, OnDestroy {
   }
 
   checkHasilPemeriksaan() {
+    if (this.isRujukan) {
+      return true;
+    }
+    
     if (this.hasilPemeriksaan.berat_badan == '' || parseInt(this.hasilPemeriksaan.berat_badan) <= 0 || parseInt(this.hasilPemeriksaan.berat_badan) > 300) {
       return false;
     }
@@ -339,7 +343,8 @@ export class AntrianComponent implements OnInit, OnDestroy {
               let request = {
                 no_pegawai: no_pegawai,
                 nama_poli: nama_poli,
-                id_transaksi: id_transaksi
+                id_transaksi: id_transaksi,
+                antrian: true
               }
               this.tenagaMedisService.periksa(request).subscribe(
                 data => {
@@ -362,7 +367,8 @@ export class AntrianComponent implements OnInit, OnDestroy {
           let request = {
             no_pegawai: no_pegawai,
             nama_poli: nama_poli,
-            id_transaksi: id_transaksi
+            id_transaksi: id_transaksi,
+            antrian: true
           }
           this.tenagaMedisService.periksa(request).subscribe(
             data => {
@@ -383,7 +389,8 @@ export class AntrianComponent implements OnInit, OnDestroy {
         let request = {
           no_pegawai: no_pegawai,
           nama_poli: nama_poli,
-          id_transaksi: id_transaksi
+          id_transaksi: id_transaksi,
+          antrian: false
         }
         this.tenagaMedisService.periksa(request).subscribe(
           data => {

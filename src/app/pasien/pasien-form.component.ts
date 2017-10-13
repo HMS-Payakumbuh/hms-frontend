@@ -351,7 +351,7 @@ export class PasienFormComponent implements OnInit {
               title: "Pendaftaran Antrian Sukses !",
               msg: "Pasien mendaftar ke "+nama_layanan+" dan mendapat nomor antrian "+data.no_antrian,
               showClose: true,
-              timeout: 0,
+              timeout: 5000,
               theme: 'material'
           };
 
@@ -523,7 +523,7 @@ export class PasienFormComponent implements OnInit {
                 title: "Registrasi Pasien Sukses !",
                 msg: "Pasien mendapat nomor pasien : "+data.json.kode_pasien,
                 showClose: true,
-                timeout: 0,
+                timeout: 5000,
                 theme: 'material'
               };
 
